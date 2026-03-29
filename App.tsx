@@ -33,7 +33,6 @@ import {
   MapPin
 } from 'lucide-react';
 import { NAV_LINKS, WHY_US, ROLES, STEPS, BLOG_POSTS, TALENT_HUBS, SERVICES } from './constants';
-import { GoogleGenAI } from "@google/genai";
 import { BlogPost, TalentHub } from './types';
 import GreetingBanner from './components/GreetingBanner';
 import { LanguageProvider } from './contexts/LanguageContext';
@@ -340,13 +339,15 @@ const TalentAdvisor: React.FC = () => {
     setLoading(true);
     setResult('');
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: `You are the TrivianEdge Intelligence Engine. A potential client is asking about scaling or talent strategy. Query: "${query}". Provide a concise, high-impact, futuristic executive response (max 80 words). Focus on how TrivianEdge solves the Ops-HR language gap and uses global talent pipelines. Sound elite, confident, and professional.`,
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: `You are the TrivianEdge Intelligence Engine. A potential client is asking about scaling or talent strategy. Query: "${query}". Provide a concise, high-impact, futuristic executive response (max 80 words). Focus on how TrivianEdge solves the Ops-HR language gap and uses global talent pipelines. Sound elite, confident, and professional.`,
+        }),
       });
-      
-      const text = response.text || "Connection timeout. Please re-initiate uplink.";
+      const data = await response.json() as { text?: string };
+      const text = data.text || "Connection timeout. Please re-initiate uplink.";
       let i = 0;
       const interval = setInterval(() => {
         setResult(text.slice(0, i));
