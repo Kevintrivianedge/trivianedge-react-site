@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
-import { X, Send, MessageSquare, Terminal, Loader2, User, Bot, Sparkles, Trash2, RefreshCw } from 'lucide-react';
+import { X, Send, MessageSquare, Terminal, Loader2, User, Bot, Sparkles, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SERVICES, TALENT_HUBS, ROLES, WHY_US } from '../constants';
 import { getCountryGreeting, getCountryAffectionateName } from '../utils/greetings';
@@ -318,7 +318,7 @@ ${userContext}
   }, [isOpen]);
 
   const handleSend = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || isTyping) return;
     
     // Initialize if not already done (backup)
     if (!chatSessionRef.current) initChat();
@@ -330,11 +330,12 @@ ${userContext}
     setIsTyping(true);
 
     try {
+        // Add placeholder for model response before awaiting the stream
+        setMessages(prev => [...prev, { role: 'model', text: "" }]);
+
         const result = await chatSessionRef.current.sendMessageStream({ message: userMsg });
         
         let fullResponse = "";
-        // Add placeholder for model response
-        setMessages(prev => [...prev, { role: 'model', text: "" }]);
 
         for await (const chunk of result) {
              const c = chunk as GenerateContentResponse;
@@ -343,17 +344,40 @@ ${userContext}
                  fullResponse += text;
                  setMessages(prev => {
                      const newMsgs = [...prev];
-                     const lastMsg = newMsgs[newMsgs.length - 1];
-                     if (lastMsg.role === 'model') {
-                        lastMsg.text = fullResponse;
+                     const lastIndex = newMsgs.length - 1;
+                     if (newMsgs[lastIndex].role === 'model') {
+                        newMsgs[lastIndex] = { ...newMsgs[lastIndex], text: fullResponse };
                      }
                      return newMsgs;
                  });
              }
         }
+
+        // If the stream completed but returned no text, show a fallback
+        if (!fullResponse) {
+            setMessages(prev => {
+                const newMsgs = [...prev];
+                const lastIndex = newMsgs.length - 1;
+                if (newMsgs[lastIndex].role === 'model' && !newMsgs[lastIndex].text) {
+                    newMsgs[lastIndex] = { ...newMsgs[lastIndex], text: "I received an empty response. Please try again." };
+                }
+                return newMsgs;
+            });
+        }
     } catch (error) {
         console.error("Chat error", error);
-        setMessages(prev => [...prev, { role: 'model', text: "Security protocol triggered. Connection interrupted. Please try again." }]);
+        const errText = "Security protocol triggered. Connection interrupted. Please try again.";
+        // Replace the empty placeholder with the error message; append only if no placeholder exists
+        setMessages(prev => {
+            const newMsgs = [...prev];
+            const lastIndex = newMsgs.length - 1;
+            if (newMsgs[lastIndex].role === 'model' && !newMsgs[lastIndex].text) {
+                newMsgs[lastIndex] = { ...newMsgs[lastIndex], text: errText };
+            } else {
+                newMsgs.push({ role: 'model', text: errText });
+            }
+            return newMsgs;
+        });
     } finally {
         setIsTyping(false);
     }
