@@ -1,0 +1,8 @@
+name = "trivianedge-react-site"
+main = "src/worker.ts"
+compatibility_date = "2025-01-01"
+tsconfig = "tsconfig.worker.json"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"

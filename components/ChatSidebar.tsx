@@ -1,6 +1,5 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
 import { X, Send, MessageSquare, Terminal, Loader2, User, Bot, Sparkles, Trash2, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SERVICES, TALENT_HUBS, ROLES, WHY_US } from '../constants';
@@ -11,6 +10,7 @@ import { GeoLocationData } from '../types';
 interface Message {
   role: 'user' | 'model';
   text: string;
+  isInitial?: boolean;
 }
 
 const VaraAvatar = ({ isTyping = false, size = 'md' }) => {
@@ -190,11 +190,11 @@ const VaraAvatar = ({ isTyping = false, size = 'md' }) => {
 export const ChatSidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'model', text: "Hi! I'm Vara, your AI guide from TrivianEdge.\n\nHow may I help you today?" }
+    { role: 'model', text: "Hi! I'm Vara, your AI guide from TrivianEdge.\n\nHow may I help you today?", isInitial: true }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const chatSessionRef = useRef<Chat | null>(null);
+  const systemContextRef = useRef<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -206,7 +206,7 @@ export const ChatSidebar: React.FC = () => {
   }, [messages, isTyping]);
 
   const initChat = () => {
-    if (!chatSessionRef.current) {
+    if (!systemContextRef.current) {
         try {
             // Get user context from session storage
             let userContext = "";
@@ -258,7 +258,7 @@ GENERAL RULE: Keep all responses extremely short (1-3 sentences max). NEVER ask 
                 }
             }
 
-            const SYSTEM_CONTEXT = `
+            systemContextRef.current = `
 You are Vara, the AI Intelligence Unit for TrivianEdge, a next-gen global talent and software solutions company.
 Your goal is to assist potential clients in understanding our offerings in a conversational, helpful, and highly personalized manner. You act like a consultant or psychologist, seeking to deeply understand the user's persona, psychology, and pain points before offering tailored solutions that make their lives better.
 
@@ -292,16 +292,8 @@ Guidelines:
 - Format responses nicely using bullet points ("- ") for lists and bolding ("**text**") for emphasis.
 ${userContext}
 `;
-
-            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-            chatSessionRef.current = ai.chats.create({
-                model: 'gemini-3-flash-preview',
-                config: {
-                    systemInstruction: SYSTEM_CONTEXT,
-                }
-            });
         } catch (error) {
-            console.error("Failed to initialize AI", error);
+            console.error("Failed to initialize chat context", error);
         }
     }
   };
@@ -320,36 +312,84 @@ ${userContext}
   const handleSend = async () => {
     if (!input.trim()) return;
     
-    // Initialize if not already done (backup)
-    if (!chatSessionRef.current) initChat();
-    if (!chatSessionRef.current) return;
+    // Initialize system context if not already done
+    if (!systemContextRef.current) initChat();
 
     const userMsg = input;
     setInput('');
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setIsTyping(true);
 
-    try {
-        const result = await chatSessionRef.current.sendMessageStream({ message: userMsg });
-        
-        let fullResponse = "";
-        // Add placeholder for model response
-        setMessages(prev => [...prev, { role: 'model', text: "" }]);
+    // Build history from conversation messages, excluding the initial welcome message
+    const history = messages.filter(m => !m.isInitial).map(m => ({
+        role: m.role,
+        parts: [{ text: m.text }],
+    }));
 
-        for await (const chunk of result) {
-             const c = chunk as GenerateContentResponse;
-             const text = c.text;
-             if (text) {
-                 fullResponse += text;
-                 setMessages(prev => {
-                     const newMsgs = [...prev];
-                     const lastMsg = newMsgs[newMsgs.length - 1];
-                     if (lastMsg.role === 'model') {
-                        lastMsg.text = fullResponse;
-                     }
-                     return newMsgs;
-                 });
-             }
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: userMsg,
+                history,
+                systemInstruction: systemContextRef.current,
+            }),
+        });
+
+        if (!response.ok || !response.body) {
+            throw new Error(`API error: ${response.status}`);
+        }
+
+        let fullResponse = '';
+        // Add placeholder for model response
+        setMessages(prev => [...prev, { role: 'model', text: '' }]);
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() ?? '';
+
+            for (const line of lines) {
+                if (!line.startsWith('data: ')) continue;
+                const data = line.slice(6).trim();
+                if (!data || data === '[DONE]') continue;
+                try {
+                    const parsed = JSON.parse(data);
+                    const text: string = parsed.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+                    if (text) {
+                        fullResponse += text;
+                        setMessages(prev => {
+                            const newMsgs = [...prev];
+                            const lastMsg = newMsgs[newMsgs.length - 1];
+                            if (lastMsg.role === 'model') {
+                                lastMsg.text = fullResponse;
+                            }
+                            return newMsgs;
+                        });
+                    }
+                } catch (_e) {
+                    // Skip unparseable SSE lines (e.g., empty data, incomplete JSON)
+                }
+            }
+        }
+
+        if (!fullResponse) {
+            setMessages(prev => {
+                const newMsgs = [...prev];
+                const lastMsg = newMsgs[newMsgs.length - 1];
+                if (lastMsg.role === 'model' && !lastMsg.text) {
+                    lastMsg.text = 'Security protocol triggered. Connection interrupted. Please try again.';
+                }
+                return newMsgs;
+            });
         }
     } catch (error) {
         console.error("Chat error", error);
@@ -360,8 +400,8 @@ ${userContext}
   };
 
   const handleClearChat = () => {
-    setMessages([{ role: 'model', text: "Hi! I'm Vara, your AI guide from TrivianEdge.\n\nHow may I help you today?" }]);
-    chatSessionRef.current = null;
+    setMessages([{ role: 'model', text: "Hi! I'm Vara, your AI guide from TrivianEdge.\n\nHow may I help you today?", isInitial: true }]);
+    systemContextRef.current = '';
     initChat();
   };
 
