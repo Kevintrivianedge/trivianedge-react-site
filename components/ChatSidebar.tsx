@@ -295,7 +295,7 @@ ${userContext}
 
             const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
             chatSessionRef.current = ai.chats.create({
-                model: 'gemini-3-flash-preview',
+                model: 'gemini-2.0-flash',
                 config: {
                     systemInstruction: SYSTEM_CONTEXT,
                 }

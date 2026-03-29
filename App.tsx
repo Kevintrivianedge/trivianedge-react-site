@@ -342,7 +342,7 @@ const TalentAdvisor: React.FC = () => {
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
+        model: 'gemini-2.0-flash',
         contents: `You are the TrivianEdge Intelligence Engine. A potential client is asking about scaling or talent strategy. Query: "${query}". Provide a concise, high-impact, futuristic executive response (max 80 words). Focus on how TrivianEdge solves the Ops-HR language gap and uses global talent pipelines. Sound elite, confident, and professional.`,
       });
       
