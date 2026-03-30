@@ -12,7 +12,8 @@ dist
 dist-ssr
 *.local
 
-# Editor directories and files
+# Large generated prompt files
+prompt_*.json
 .vscode/*
 !.vscode/extensions.json
 .idea
