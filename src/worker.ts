@@ -18,26 +18,38 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
 
-    // CORS preflight
+    // CORS preflight — handle first
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders });
     }
 
-    // API routes
-    if (url.pathname === '/api/chat' && request.method === 'POST') {
-      return handleChat(request, env);
+    // ALL /api/* routes — handled by worker, never fall through to assets
+    if (url.pathname.startsWith('/api/')) {
+      if (url.pathname === '/api/health') {
+        return new Response(
+          JSON.stringify({ status: 'ok', timestamp: Date.now(), gemini_key_set: !!env.GEMINI_API_KEY }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+        );
+      }
+      if (url.pathname === '/api/chat' && request.method === 'POST') {
+        return handleChat(request, env);
+      }
+      if (url.pathname === '/api/generate' && request.method === 'POST') {
+        return handleGenerate(request, env);
+      }
+      // Unknown /api/* route
+      return new Response(JSON.stringify({ error: 'Unknown API route' }), {
+        status: 404,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    if (url.pathname === '/api/generate' && request.method === 'POST') {
-      return handleGenerate(request, env);
-    }
-
-    // Serve static assets if present; otherwise don't crash
+    // Serve static assets (React SPA)
     if (env.ASSETS && typeof env.ASSETS.fetch === 'function') {
       return env.ASSETS.fetch(request);
     }
 
-    return new Response('Not found', { status: 404, headers: corsHeaders });
+    return new Response('Not found', { status: 404 });
   },
 } satisfies ExportedHandler<Env>;
 
