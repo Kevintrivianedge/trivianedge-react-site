@@ -52,7 +52,7 @@ async function handleChat(request: Request, env: Env): Promise<Response> {
   const message = typeof body.message === 'string' ? body.message : '';
   const history = Array.isArray(body.history) ? body.history : [];
   const model =
-    typeof body.model === 'string' && body.model ? body.model : 'gemini-1.5-flash';
+    typeof body.model === 'string' && body.model ? body.model : 'gemini-2.0-flash';
 
   const systemText =
     typeof body.systemInstruction === 'string' ? body.systemInstruction.trim() : '';
@@ -102,7 +102,7 @@ async function handleGenerate(request: Request, env: Env): Promise<Response> {
 
   const prompt = typeof body.prompt === 'string' ? body.prompt : '';
   const model =
-    typeof body.model === 'string' && body.model ? body.model : 'gemini-1.5-flash';
+    typeof body.model === 'string' && body.model ? body.model : 'gemini-2.0-flash';
 
   const geminiRes = await fetch(`${GEMINI_API_BASE}/${model}:generateContent`, {
     method: 'POST',
