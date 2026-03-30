@@ -52,13 +52,12 @@ async function handleChat(request: Request, env: Env): Promise<Response> {
   const message = typeof body.message === 'string' ? body.message : '';
   const history = Array.isArray(body.history) ? body.history : [];
   const model =
-    typeof body.model === 'string' && body.model ? body.model : 'gemini-2.0-flash';
+    typeof body.model === 'string' && body.model ? body.model : 'gemini-1.5-flash';
 
   const systemText =
     typeof body.systemInstruction === 'string' ? body.systemInstruction.trim() : '';
 
-  const contents: GeminiContent[] = [
-    ...history,
+  const contents: GeminiContent[] = [...history,
     { role: 'user', parts: [{ text: message }] },
   ];
 
@@ -103,7 +102,7 @@ async function handleGenerate(request: Request, env: Env): Promise<Response> {
 
   const prompt = typeof body.prompt === 'string' ? body.prompt : '';
   const model =
-    typeof body.model === 'string' && body.model ? body.model : 'gemini-2.0-flash';
+    typeof body.model === 'string' && body.model ? body.model : 'gemini-1.5-flash';
 
   const geminiRes = await fetch(`${GEMINI_API_BASE}/${model}:generateContent`, {
     method: 'POST',
@@ -125,7 +124,7 @@ async function handleGenerate(request: Request, env: Env): Promise<Response> {
   }
 
   const data = await geminiRes.json<{
-    candidates?: Array<{ content: { parts: Array<{ text: string }> } }>;
+    candidates?: Array<{ content: { parts: Array<{ text: string }> } }>; 
   }>();
 
   const text = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
