@@ -1,24 +1,29 @@
 export interface Env {
   GEMINI_API_KEY: string;
-  ASSETS: Fetcher;
+  ASSETS?: Fetcher; // optional so missing binding won't crash
 }
 
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 
-const corsHeaders = {
+const corsHeaders: Record<string, string> = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
+type GeminiPart = { text: string };
+type GeminiContent = { role: string; parts: GeminiPart[] };
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
 
+    // CORS preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders });
     }
 
+    // API routes
     if (url.pathname === '/api/chat' && request.method === 'POST') {
       return handleChat(request, env);
     }
@@ -27,24 +32,41 @@ export default {
       return handleGenerate(request, env);
     }
 
-    return env.ASSETS.fetch(request);
+    // Serve static assets if present; otherwise don't crash
+    if (env.ASSETS && typeof env.ASSETS.fetch === 'function') {
+      return env.ASSETS.fetch(request);
+    }
+
+    return new Response('Not found', { status: 404, headers: corsHeaders });
   },
 } satisfies ExportedHandler<Env>;
 
 async function handleChat(request: Request, env: Env): Promise<Response> {
   const body = await request.json<{
     message: string;
-    history: Array<{ role: string; parts: Array<{ text: string }> }>;
-    systemInstruction: string;
+    history?: GeminiContent[];
+    systemInstruction?: string;
     model?: string;
   }>();
 
-  const { message, history, systemInstruction, model = 'gemini-2.0-flash' } = body;
+  const message = typeof body.message === 'string' ? body.message : '';
+  const history = Array.isArray(body.history) ? body.history : [];
+  const model =
+    typeof body.model === 'string' && body.model ? body.model : 'gemini-2.0-flash';
 
-  const contents = [
+  const systemText =
+    typeof body.systemInstruction === 'string' ? body.systemInstruction.trim() : '';
+
+  const contents: GeminiContent[] = [
     ...history,
     { role: 'user', parts: [{ text: message }] },
   ];
+
+  // Build payload safely: only include system_instruction when non-empty
+  const geminiPayload: any = { contents };
+  if (systemText.length > 0) {
+    geminiPayload.system_instruction = { parts: [{ text: systemText }] };
+  }
 
   const geminiRes = await fetch(
     `${GEMINI_API_BASE}/${model}:streamGenerateContent?alt=sse`,
@@ -54,10 +76,7 @@ async function handleChat(request: Request, env: Env): Promise<Response> {
         'Content-Type': 'application/json',
         'x-goog-api-key': env.GEMINI_API_KEY,
       },
-      body: JSON.stringify({
-        system_instruction: { parts: [{ text: systemInstruction }] },
-        contents,
-      }),
+      body: JSON.stringify(geminiPayload),
     },
   );
 
@@ -81,21 +100,21 @@ async function handleChat(request: Request, env: Env): Promise<Response> {
 
 async function handleGenerate(request: Request, env: Env): Promise<Response> {
   const body = await request.json<{ prompt: string; model?: string }>();
-  const { prompt, model = 'gemini-2.0-flash' } = body;
 
-  const geminiRes = await fetch(
-    `${GEMINI_API_BASE}/${model}:generateContent`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': env.GEMINI_API_KEY,
-      },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      }),
+  const prompt = typeof body.prompt === 'string' ? body.prompt : '';
+  const model =
+    typeof body.model === 'string' && body.model ? body.model : 'gemini-2.0-flash';
+
+  const geminiRes = await fetch(`${GEMINI_API_BASE}/${model}:generateContent`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-goog-api-key': env.GEMINI_API_KEY,
     },
-  );
+    body: JSON.stringify({
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    }),
+  });
 
   if (!geminiRes.ok) {
     const err = await geminiRes.text();
@@ -108,6 +127,7 @@ async function handleGenerate(request: Request, env: Env): Promise<Response> {
   const data = await geminiRes.json<{
     candidates?: Array<{ content: { parts: Array<{ text: string }> } }>;
   }>();
+
   const text = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
 
   return new Response(JSON.stringify({ text }), {
