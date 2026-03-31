@@ -218,7 +218,7 @@ const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: Ta
       />
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-8">
-          <div className="text-4xl filter grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-110">{hub.flag}</div>
+          <div className="text-4xl transition-all duration-700 transform group-hover:scale-110">{hub.flag}</div>
           <div className="flex items-center gap-3">
             <div className="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 flex items-center gap-1">
                 <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest">View Analysis</span>

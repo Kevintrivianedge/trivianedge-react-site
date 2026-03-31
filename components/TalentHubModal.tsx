@@ -177,7 +177,13 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-xs text-muted font-mono uppercase tracking-widest">Pipeline Active • Ready for Deployment</span>
             </div>
-            <button className="group flex items-center gap-3 px-8 py-4 bg-white text-black rounded-xl font-bold uppercase tracking-widest hover:bg-cyan-400 hover:text-white transition-all shadow-lg hover:shadow-cyan-400/20">
+            <button
+              onClick={() => {
+                onClose();
+                setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 300);
+              }}
+              className="group flex items-center gap-3 px-8 py-4 bg-white text-black rounded-xl font-bold uppercase tracking-widest hover:bg-cyan-400 hover:text-white transition-all shadow-lg hover:shadow-cyan-400/20"
+            >
                 <span>Initiate Hiring Protocol</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
