@@ -575,3 +575,5 @@ ${userContext}
     </>
   );
 };
+
+export default ChatSidebar;

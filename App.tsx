@@ -57,7 +57,7 @@ import {
 } from './utils/seo';
 
 // Lazy-load heavy below-fold components for better LCP
-const ChatSidebar = lazy(() => import('./components/ChatSidebar').then(m => ({ default: m.ChatSidebar })));
+const ChatSidebar = lazy(() => import('./components/ChatSidebar'));
 
 const LogoIcon = ({ className = "w-10 h-10" }: { className?: string }) => (
   <svg viewBox="0 0 320 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">

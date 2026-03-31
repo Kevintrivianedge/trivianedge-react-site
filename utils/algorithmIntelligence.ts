@@ -163,19 +163,21 @@ export class AlgorithmIntelligenceEngine {
         log('CLS measurement not supported');
       }
 
-      // Measure INP (Interaction to Next Paint)
+      // Measure INP (Interaction to Next Paint) — uses 'event' entry type
+      // INP is calculated as the max duration of discrete interactions (click, keydown, pointerdown)
       try {
         const inpObserver = new PerformanceObserver((list) => {
-          const entries = list.getEntries() as Array<PerformanceEntry & { processingStart?: number; startTime: number }>;
+          const entries = list.getEntries() as Array<PerformanceEntry & { processingStart?: number; processingEnd?: number; startTime: number; duration: number }>;
           for (const entry of entries) {
-            const duration = (entry.processingStart ?? entry.startTime) - entry.startTime;
-            if (duration > vitals.inp) {
-              vitals.inp = duration;
+            // INP = time from input until next frame is painted (processingStart - startTime + render time)
+            const interactionDuration = entry.duration ?? 0;
+            if (interactionDuration > vitals.inp) {
+              vitals.inp = interactionDuration;
             }
           }
           log('INP:', `${vitals.inp.toFixed(0)}ms`, vitals.inp < 200 ? '✅ Good' : vitals.inp < 500 ? '⚠️ Needs improvement' : '❌ Poor');
         });
-        inpObserver.observe({ entryTypes: ['event'] });
+        inpObserver.observe({ entryTypes: ['event'], durationThreshold: 16 } as PerformanceObserverInit);
         this.observers.push(inpObserver);
       } catch {
         log('INP measurement not supported');
