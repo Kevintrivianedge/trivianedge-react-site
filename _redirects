@@ -1,4 +1,2 @@
 # Redirects
-
-# Exclude index.html and assets from wildcard redirect rule
-/^((?!index.html|assets/).)*$  /index.html  200
+/* /index.html 301
