@@ -1,5 +1,7 @@
 export interface Env {
   GEMINI_API_KEY: string;
+  // TODO: Set RESEND_API_KEY in Cloudflare Workers secrets (wrangler secret put RESEND_API_KEY)
+  RESEND_API_KEY?: string;
   ASSETS?: Fetcher; // optional so missing binding won't crash
 }
 
@@ -30,6 +32,10 @@ export default {
 
     if (url.pathname === '/api/generate' && request.method === 'POST') {
       return handleGenerate(request, env);
+    }
+
+    if (url.pathname === '/api/early-access' && request.method === 'POST') {
+      return handleEarlyAccess(request, env);
     }
 
     // Serve static assets if present; otherwise don't crash
@@ -130,6 +136,57 @@ async function handleGenerate(request: Request, env: Env): Promise<Response> {
   const text = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
 
   return new Response(JSON.stringify({ text }), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+async function handleEarlyAccess(request: Request, env: Env): Promise<Response> {
+  const body = await request.json<{ company?: string; email?: string; size?: string }>();
+
+  const company = typeof body.company === 'string' ? body.company.trim() : '';
+  const email = typeof body.email === 'string' ? body.email.trim() : '';
+  const size = typeof body.size === 'string' ? body.size.trim() : '';
+
+  if (!company || !email) {
+    return new Response(JSON.stringify({ success: false, error: 'Company name and email are required.' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  // Send notification email via Resend API
+  if (env.RESEND_API_KEY) {
+    const resendRes = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: 'Trivian Aria <aria@trivianedge.com>',
+        to: ['info@trivianedge.com'],
+        subject: `New Early Access Request — ${company}`,
+        html: `
+          <h2>New Early Access Request</h2>
+          <table cellpadding="8" style="border-collapse:collapse">
+            <tr><td><strong>Company</strong></td><td>${company}</td></tr>
+            <tr><td><strong>Email</strong></td><td>${email}</td></tr>
+            <tr><td><strong>Company Size</strong></td><td>${size}</td></tr>
+          </table>
+        `,
+      }),
+    });
+
+    if (!resendRes.ok) {
+      const err = await resendRes.text();
+      return new Response(JSON.stringify({ success: false, error: 'Failed to send notification. Please try again.' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+  }
+
+  return new Response(JSON.stringify({ success: true }), {
+    status: 200,
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 }
