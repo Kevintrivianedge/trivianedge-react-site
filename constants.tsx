@@ -27,19 +27,19 @@ export const NAV_LINKS = [
 
 export const SERVICES: ServiceCardProps[] = [
   {
-    title: "Global Talent & Remote Workforce Solutions",
-    description: "TrivianEdge architecturally aligns global talent acquisition with your operational goals. We go beyond traditional outsourcing by providing Recruitment-as-a-Service for both technical and non-technical roles, ensuring your distributed teams are culturally and operationally integrated.",
+    title: "Global Talent Deployment",
+    description: "We don't just source talent — we deploy it. From sourcing candidates in the Philippines and Canada for Cargo Login's 24/7 operations model, to building Keynotive's parallel sales teams across time zones, TrivianEdge treats every hire as a deployment problem, not a recruiting transaction.",
     icon: <Users className="w-8 h-8 text-cyan-400" />,
-    tags: ["Technical Recruiting", "Non-Tech Staffing", "Embedded Teams"],
+    tags: ["Cross-Timezone Deployment", "Non-Tech & Tech Staffing", "Embedded Operations"],
     features: [
-      "Technical Talent Sourcing (Devs, DevOps, AI)",
-      "Non-Technical Staffing (Ops, Finance, Admin)",
-      "Recruitment-as-a-Service Model",
-      "Offshore Workforce Scaling"
+      "Technical & Non-Technical Role Sourcing",
+      "Cross-Timezone Operations Design",
+      "30-Day Deployment Model",
+      "Operational Integration & Onboarding"
     ],
     outcomes: [
-      "40% Workforce Cost Reduction",
-      "2.4x Faster Time-to-Hire"
+      "Proven 24/7 Operational Coverage",
+      "Real Revenue Generated for Clients"
     ]
   },
   {
@@ -59,35 +59,35 @@ export const SERVICES: ServiceCardProps[] = [
     ]
   },
   {
-    title: "AI & Business Process Automation",
-    description: "Accelerate operational efficiency with TrivianEdge AI solutions. We implement intelligent process automation and custom LLM integrations to replace manual workflows, allowing your human talent to focus on high-value strategy.",
+    title: "Market Entry & Sales Deployment",
+    description: "When CyouMedia needed to enter Sri Lanka, we didn't just advise — we deployed a full sales strategy, sourced local companies, and acted as consultants on product scale and software development. When Hub-Flx needed to expand into UAE and GCC, we became the operational partner for that regional push.",
     icon: <Cpu className="w-8 h-8 text-magenta-400" />,
-    tags: ["AI Implementation", "Workflow Auto", "LLM Integration"],
+    tags: ["Market Entry", "Sales Strategy", "Regional Expansion"],
     features: [
-      "Intelligent Process Automation (IPA)",
-      "Custom LLM Integration & Training",
-      "Workflow Automation Consulting",
-      "Data-Driven Operational Optimization"
+      "Sales Strategy Deployment",
+      "Local Market Sourcing & Outreach",
+      "Regional Partnership Development",
+      "Product Scale Consulting"
     ],
     outcomes: [
-      "60% Reduction in Manual Tasks",
-      "Scalable Operational Architecture"
+      "Active Partnership for Mass-Scale Deployment",
+      "UAE/GCC Regional Expansion in Progress"
     ]
   },
   {
     title: "Remote Operations & Workforce Architecture",
-    description: "The blueprint for distributed success. We design the KPI frameworks, SLA governance, and cross-border operational structures that allow remote teams to function as a cohesive, high-performance unit.",
+    description: "The operational infrastructure that makes distributed teams actually work. We design the communication protocols, KPI frameworks, and handoff processes that allow teams in different time zones to operate as a single, synchronized unit — the way Cargo Login's Philippines and Canada teams do every day.",
     icon: <Layers className="w-8 h-8 text-emerald-400" />,
     tags: ["Ops Consulting", "KPI Design", "Team Structure"],
     features: [
       "Global Team Structuring & Design",
       "KPI Framework & SLA Governance",
-      "Remote Workforce Management",
-      "Cross-Border Ops Consulting"
+      "Cross-Timezone Handoff Protocols",
+      "Ongoing Performance Management"
     ],
     outcomes: [
-      "Seamless Distributed Alignment",
-      "Predictable Execution Standards"
+      "Streamlined Broken Processes",
+      "Predictable Execution Across Time Zones"
     ]
   },
   {
@@ -197,34 +197,42 @@ export const TALENT_HUBS: TalentHub[] = [
 
 export const WHY_US: WhyUsItem[] = [
   {
-    title: "Built by Operators",
-    description: "We aren't just recruiters. We are veterans of IT, Finance, and Healthcare who know what delivery actually looks like.",
-    icon: <Target className="w-6 h-6 text-cyan-400" />
+    title: "Cargo Login",
+    description: "Sourced candidates from the Philippines and Canada. While the USA team was offline, the Philippines team picked up all documentation and execution seamlessly, working alongside the Canadian hire dedicated to trucking operations.",
+    result: "Increased revenue and streamlined broken processes.",
+    url: "https://www.cargo-login.com",
+    icon: <Briefcase className="w-6 h-6 text-cyan-400" />
   },
   {
-    title: "AI-Driven Matching",
-    description: "Our proprietary algorithms analyze operational compatibility, not just keywords on a resume.",
-    icon: <Zap className="w-6 h-6 text-blue-400" />
+    title: "Keynotive",
+    description: "Managed two offshore teams operating across different time zones. Teams executed cold calling, email marketing, and business sign-ups in parallel — generating new revenue without adding overhead.",
+    result: "Multiple teams operating efficiently across time zones with measurable revenue growth.",
+    url: "https://www.keynotive.io",
+    icon: <TrendingUp className="w-6 h-6 text-violet-400" />
   },
   {
-    title: "Global Talent Without Chaos",
-    description: "Structured talent pipelines that integrate seamlessly into your existing workflows from day one.",
+    title: "CyouMedia",
+    description: "Deployed a full sales strategy and sourced Sri Lankan companies as a test market. TrivianEdge acted as consultants for product scale and software development, positioning the business for mass rollout.",
+    result: "Active partnership for ongoing mass-scale deployment.",
+    url: "https://cyoumedia.com",
     icon: <Globe className="w-6 h-6 text-emerald-400" />
   },
   {
-    title: "Cost Efficiency",
-    description: "Save up to 40% on labor costs without compromising on technical quality or communication standards.",
-    icon: <BarChart4 className="w-6 h-6 text-orange-400" />
+    title: "Hub-Flx",
+    description: "Founded in the UAE with roots in Singapore, the founder invited TrivianEdge to partner in bringing software products — Medtech, ERPs, and data migration tools — to UAE and GCC regions.",
+    result: "Strategic partnership for regional expansion in the Middle East.",
+    url: "https://www.hub-flx.com",
+    icon: <Network className="w-6 h-6 text-orange-400" />
   },
   {
-    title: "Structured Delivery",
-    description: "We implement SLA governance and KPI frameworks to ensure your remote team performs like a local unit.",
-    icon: <Layers className="w-6 h-6 text-magenta-400" />
+    title: "Built by Operators",
+    description: "We aren't just recruiters. We are operators who know what delivery actually looks like — from onboarding to execution, from sourcing to deployment.",
+    icon: <Target className="w-6 h-6 text-blue-400" />
   },
   {
     title: "Designed for Scale",
-    description: "Whether you need a single engineer or a 50-person ops department, our process is built for speed.",
-    icon: <TrendingUp className="w-6 h-6 text-violet-400" />
+    description: "Whether you need one hire or a full 24/7 operations team across three time zones, our deployment model is built for speed and accountability.",
+    icon: <Layers className="w-6 h-6 text-magenta-400" />
   }
 ];
 
@@ -283,6 +291,74 @@ export const STEPS: Step[] = [
 ];
 
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    id: "cargo-login-case-study",
+    title: "Cargo Login: How 24/7 Cross-Timezone Ops Increased Revenue",
+    excerpt: "Cargo Login needed more than a recruiter — they needed an operations partner who could source talent from two continents and keep their business running while the USA team slept.",
+    content: "When Cargo Login came to TrivianEdge, they had a problem that most logistics companies face but few admit out loud: their operations stopped when their US team went offline. Any documentation bottlenecks, any urgent processing that came in after hours sat unresolved until the next morning.\n\nThe solution wasn't just hiring. It was deploying a cross-timezone execution model.\n\nWe sourced two critical roles: a Philippines-based team member with deep expertise in logistics documentation, and a Canadian hire dedicated to their trucking business operations. The Philippines hire didn't just fill a gap — she became the bridge between their US workflows and the overnight execution cycle. Every evening, she picked up where the US team left off. Every morning, the US team started ahead of where they'd been the night before.\n\nThe Canadian hire brought operational continuity to the North American side of the business — someone fully embedded in the trucking ecosystem, who understood the regulatory landscape and operational language from day one.\n\nThe result: Cargo Login's revenue increased because their operations never stopped. Broken processes that had slowed them down for months were identified and streamlined because we had eyes on them across two time zones, not just one. This is the TrivianEdge model: we don't hire people and hand them over. We deploy them into your operational reality and make sure they stick.",
+    author: "TrivianEdge Editorial",
+    date: "Jan 15, 2025",
+    readTime: "5 min read",
+    category: "Case Study",
+    imageGradient: "from-cyan-500/20 to-blue-500/20",
+    slug: "cargo-login-case-study",
+    metaDescription: "How TrivianEdge deployed a Philippines + Canada cross-timezone team for Cargo Login, enabling 24/7 operations and measurable revenue growth.",
+    metaKeywords: ["cargo login", "cross-timezone operations", "logistics staffing", "Philippines talent", "TrivianEdge case study"],
+    datePublished: "2025-01-15",
+    dateModified: "2025-01-15",
+    imageUrl: "https://www.trivianedge.com/og-image.jpg",
+  },
+  {
+    id: "keynotive-case-study",
+    title: "Keynotive: Running Two Sales Teams Across Time Zones",
+    excerpt: "Keynotive needed to generate revenue fast. TrivianEdge deployed two parallel offshore teams handling cold calling, email marketing, and business sign-ups — all operating in different time zones.",
+    content: "Most companies treat offshore sales teams as an afterthought — a cost reduction play that rarely delivers real results. Keynotive came to us with a different mindset: they wanted to scale their sales capacity without scaling their overhead.\n\nWe deployed two teams in different time zones to run cold calling, email marketing, and business development sign-ups in parallel. This wasn't a sequential handoff model — both teams operated simultaneously, each owning their respective channels and time windows.\n\nThe key to making this work wasn't just hiring good callers. It was building the operational infrastructure around them: shared CRM access, standardized call scripts, daily performance reports that fed into Keynotive's core team, and a synchronization protocol that ensured no lead fell through the cracks between shifts.\n\nWithin the first quarter, Keynotive saw measurable improvements in pipeline volume and work effectiveness. The two-team model meant their sales engine never stopped — while one team was sleeping, the other was booking meetings and sending follow-ups.\n\nThis is execution, not headcount. The difference is everything.",
+    author: "TrivianEdge Editorial",
+    date: "Feb 03, 2025",
+    readTime: "4 min read",
+    category: "Case Study",
+    imageGradient: "from-violet-500/20 to-magenta-500/20",
+    slug: "keynotive-case-study",
+    metaDescription: "How TrivianEdge managed two parallel offshore sales teams for Keynotive across different time zones, generating revenue through cold calling and email marketing.",
+    metaKeywords: ["keynotive", "offshore sales teams", "cold calling outsourcing", "multi-timezone sales", "TrivianEdge case study"],
+    datePublished: "2025-02-03",
+    dateModified: "2025-02-03",
+    imageUrl: "https://www.trivianedge.com/og-image.jpg",
+  },
+  {
+    id: "cyoumedia-case-study",
+    title: "CyouMedia: Deploying a Sales Strategy in Sri Lanka",
+    excerpt: "CyouMedia needed a real market entry strategy for Sri Lanka. TrivianEdge sourced local companies, deployed a sales playbook, and became the consultants for their ongoing product scale.",
+    content: "CyouMedia had a product. They had ambition. What they needed was someone who could turn ambition into a real market entry — not a deck, not a roadmap, but actual companies using their tools in a new market.\n\nSri Lanka was chosen as the test market. TrivianEdge wasn't just tasked with sourcing. We became the deployment engine: identifying the right Sri Lankan companies to target, running the outreach, and acting as strategic consultants for how the product needed to evolve to fit the market.\n\nWe deployed a state-of-the-art sales strategy that combined local market knowledge with TrivianEdge's operational playbook. Our team sourced prospects, ran qualification calls, and closed the first wave of partnerships that gave CyouMedia proof of concept in a new geography.\n\nBeyond the initial deployment, we stayed on as consultants for product scale and software development guidance — ensuring that what worked in Sri Lanka could be replicated across other markets.\n\nThe result: CyouMedia now has an active partnership with TrivianEdge for mass-scale deployment across the region. The test market became the foundation for something much bigger.",
+    author: "TrivianEdge Editorial",
+    date: "Feb 20, 2025",
+    readTime: "5 min read",
+    category: "Case Study",
+    imageGradient: "from-emerald-500/20 to-teal-500/20",
+    slug: "cyoumedia-case-study",
+    metaDescription: "How TrivianEdge deployed a full sales strategy for CyouMedia in Sri Lanka, sourcing companies and acting as product scale consultants for market entry.",
+    metaKeywords: ["cyoumedia", "Sri Lanka market entry", "sales strategy deployment", "offshore consulting", "TrivianEdge case study"],
+    datePublished: "2025-02-20",
+    dateModified: "2025-02-20",
+    imageUrl: "https://www.trivianedge.com/og-image.jpg",
+  },
+  {
+    id: "hub-flx-case-study",
+    title: "Hub-Flx: Bringing Software Products to the UAE and GCC",
+    excerpt: "Founded in the UAE with roots in Singapore, Hub-Flx partnered with TrivianEdge to bring Medtech, ERPs, and data migration tools to the Middle East — a regional expansion that required more than a sales strategy.",
+    content: "Hub-Flx's founder had a clear vision: take software products that had proven themselves in one market and bring them to the UAE and broader GCC region — one of the fastest-growing technology adoption zones in the world.\n\nThe challenge wasn't product-market fit. The challenge was the execution of regional expansion: understanding the procurement landscape, building local relationships, navigating the regulatory environment, and deploying a product suite that includes Medtech solutions, ERPs, and data migration tools into a market with high expectations and specific compliance requirements.\n\nHub-Flx's founder invited TrivianEdge to become a strategic partner in this expansion. We weren't brought in as a recruitment agency or a marketing team. We were brought in as operators who could help map the territory and move through it with precision.\n\nOur role: identify the right entry points in the UAE market, position the software products for the GCC buyer persona, and build the partnerships that would give Hub-Flx credibility and commercial traction in a new region.\n\nThe result is an ongoing strategic partnership — one that continues to evolve as Hub-Flx grows its footprint across the Middle East. This is what TrivianEdge does: we don't just open doors. We walk through them with you.",
+    author: "TrivianEdge Editorial",
+    date: "Mar 10, 2025",
+    readTime: "6 min read",
+    category: "Case Study",
+    imageGradient: "from-orange-500/20 to-amber-500/20",
+    slug: "hub-flx-case-study",
+    metaDescription: "How TrivianEdge partnered with Hub-Flx to bring Medtech, ERPs, and data migration software to the UAE and GCC regions as a strategic expansion partner.",
+    metaKeywords: ["hub-flx", "UAE expansion", "GCC software market", "medtech deployment", "TrivianEdge case study"],
+    datePublished: "2025-03-10",
+    dateModified: "2025-03-10",
+    imageUrl: "https://www.trivianedge.com/og-image.jpg",
+  },
   {
     id: "1",
     title: "Why HR and Ops Are Always Arguing (And How to Fix It)",

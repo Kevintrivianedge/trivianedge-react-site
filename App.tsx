@@ -76,14 +76,14 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           <div className="reveal inline-flex items-center gap-3 px-4 py-2 rounded-full border border-border bg-surface backdrop-blur-md text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-8 text-text">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            Next-Gen Global Execution Platform
+            Canada-Based Deployment Partner
           </div>
           <h1 className="reveal text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight mb-8 leading-[1] text-text cursor-pointer">
-            <span className="glitch-text inline-block hover:text-cyan-400 transition-colors" data-text="The Bridge Between">The Bridge Between</span> <br className="hidden md:block" />
-            <span className="glitch-text inline-block bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600" data-text="AI, Ops, & Talent.">AI, Ops, &amp; Talent.</span>
+            <span className="glitch-text inline-block hover:text-cyan-400 transition-colors" data-text="Global Execution.">Global Execution.</span> <br className="hidden md:block" />
+            <span className="glitch-text inline-block bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600" data-text="At Scale.">At Scale.</span>
           </h1>
           <p className="reveal text-muted text-lg md:text-2xl max-w-3xl mb-12 leading-relaxed">
-            We empower startups and enterprises to scale without friction. Combining elite global talent pipelines with AI-driven operational software to ensure execution never fails.
+            Integrated teams across 6 time zones. 30-day deployment. Real clients. Real results. When you need to launch fast, enter a new market, or fix what broke with your last offshore team — you need more than a recruiter. You need a partner who understands that hiring is only 10% of the problem. The other 90% is deployment.
           </p>
           <div className="reveal flex flex-col sm:flex-row items-center gap-6">
             <a href="#contact" onClick={(e) => { e.preventDefault(); const el = document.getElementById('contact'); el?.scrollIntoView({behavior: 'smooth'}); }} className="w-full sm:w-auto px-10 py-5 bg-btn-bg text-btn-text rounded-2xl font-bold text-lg hover:bg-cyan-400 hover:text-white transition-all flex items-center justify-center gap-3 shadow-2xl shadow-surface group">
@@ -95,10 +95,10 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </a>
           </div>
           <div className="mt-20 pt-12 border-t border-border grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 opacity-70 hover:opacity-100 transition-opacity">
-            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">98%</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Talent Retention</span></div>
-            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">2.4x</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Execution Speed</span></div>
-            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">6+</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Strategic Regions</span></div>
-            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">AI-First</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Infrastructure</span></div>
+            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">4</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Active Clients</span></div>
+            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">6</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Time Zones</span></div>
+            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">30-Day</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Deployment</span></div>
+            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">24/7</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Operations</span></div>
           </div>
         </div>
       </section>
@@ -150,11 +150,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           <div className="text-center mb-16 reveal">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
                <CheckCircle2 className="w-3 h-3" />
-               Why TrivianEdge
+               Client Success Stories
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-text">The Execution Advantage</h2>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-text">Proven Results. Real Clients.</h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
-              We don't just fill seats. We build high-performance, operationally integrated remote teams.
+              We don't measure success by headcount. We measure it by revenue generated, processes fixed, and markets entered. Here's proof.
             </p>
           </div>
           
@@ -162,7 +162,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {WHY_US.map((item, idx) => (
               <div 
                 key={idx} 
-                className="reveal glass p-8 rounded-[2rem] border-border hover:border-cyan-500/30 transition-all duration-300 group hover:-translate-y-2 relative overflow-hidden"
+                className="reveal glass p-8 rounded-[2rem] border-border hover:border-cyan-500/30 transition-all duration-300 group hover:-translate-y-2 relative overflow-hidden flex flex-col"
                 style={{ transitionDelay: `${idx * 100}ms` }}
               >
                  <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-3xl group-hover:bg-cyan-500/10 transition-colors" />
@@ -170,7 +170,23 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   {item.icon}
                 </div>
                 <h3 className="text-xl font-bold mb-4 group-hover:text-cyan-400 transition-colors text-text">{item.title}</h3>
-                <p className="text-muted text-sm leading-relaxed">{item.description}</p>
+                <p className="text-muted text-sm leading-relaxed flex-grow">{item.description}</p>
+                {item.result && (
+                  <p className="mt-4 text-xs font-bold text-cyan-400 uppercase tracking-widest">
+                    ↗ {item.result}
+                  </p>
+                )}
+                {item.url && (
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-muted hover:text-cyan-400 transition-colors"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    {item.url.replace(/^https?:\/\/(?:www\.)?/, '')}
+                  </a>
+                )}
               </div>
             ))}
           </div>
@@ -276,9 +292,9 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           <div className="reveal glass p-12 rounded-[3rem] border-border text-center relative overflow-hidden bg-gradient-to-r from-cyan-500/5 to-violet-500/5">
             <div className="relative z-10">
-              <h3 className="text-2xl font-bold mb-4 text-text">Strategic Expansion Program</h3>
+              <h3 className="text-2xl font-bold mb-4 text-text">Active Partnership Program</h3>
               <p className="text-muted max-w-2xl mx-auto mb-8">
-                The global talent landscape evolves constantly. Our intelligence team continuously audits new regions, assessing digital infrastructure resilience, English proficiency standards, and specialty niche capabilities to ensure our partners stay ahead.
+                We are always looking for the next operational challenge. Our intelligence team continuously evaluates new markets, partners, and regions to ensure our clients stay ahead of the curve.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 {["Infrastructure Audit", "Communication Benchmarking", "Cultural Alignment", "Political Stability Scan"].map(item => (
@@ -338,8 +354,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-violet-600/5 blur-[120px] rounded-full -z-10" />
         <div className="max-w-4xl mx-auto reveal">
           <Layers className="w-12 h-12 text-cyan-400 mx-auto mb-10 opacity-50" />
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-10 tracking-tight leading-[1.1] text-text">Distributed Teams. <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-500">Autonomous Operations.</span> <br />Borderless Potential.</h2>
-          <p className="text-muted text-xl leading-relaxed">We are moving past the era of traditional hiring. The future belongs to borderless organizations powered by intelligent execution engines. TrivianEdge is the blueprint.</p>
+          <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-10 tracking-tight leading-[1.1] text-text">Stop Hiring Remote Workers. <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-500">Start Deploying</span> <br />Global Execution.</h2>
+          <p className="text-muted text-xl leading-relaxed">The competitive advantage isn't remote work. It's operational continuity across time zones — teams that don't stop when you do. TrivianEdge builds the infrastructure that makes that possible.</p>
         </div>
       </section>
 
@@ -351,9 +367,9 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-600/10 blur-[120px] rounded-full" />
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-violet-600/10 blur-[120px] rounded-full" />
             <div className="relative z-10">
-              <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-10 text-text">Scale Without Limits.</h2>
+              <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-10 text-text">Your Next Team Deploys in 30 Days.</h2>
               <p className="text-muted text-lg md:text-2xl max-w-2xl mx-auto mb-12 leading-relaxed">
-                Ready to engineer your future workforce? Connect with our global strategy team.
+                We're not hiring for you. We're deploying with you. From discovery to first week on the job, every milestone is tracked, every deliverable is owned, and every time zone is synchronized.
               </p>
 
               {/* Contact Details Grid */}
@@ -523,7 +539,7 @@ export default function App() {
             <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-16 mb-20 reveal">
               <div className="md:col-span-2">
                 <div className="mb-8"><Logo onClick={() => { navigate('/'); window.scrollTo({top: 0, behavior: 'smooth'}); }} /></div>
-                <p className="text-muted text-lg max-w-sm mb-10 leading-relaxed">Canada-based global talent architect and software solutions provider. Engineering the future of borderless execution.</p>
+                <p className="text-muted text-lg max-w-sm mb-10 leading-relaxed">Canada-based deployment partner. We don't fill seats. We fix broken execution. 6 time zones. 1 synchronized operation.</p>
                 <div className="flex gap-6">
                   <a 
                     href="https://www.linkedin.com/company/trivianedge/" 
