@@ -30,7 +30,7 @@ const TalentAdvisor: React.FC = () => {
         }
       }, 15);
     } catch (error) {
-      setResult("Something went wrong. Please try again in a moment.");
+      setResult("Failed to connect to the Intelligence Engine. Please try again in a moment.");
       setLoading(false);
     }
   };

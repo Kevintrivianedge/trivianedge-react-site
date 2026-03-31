@@ -178,6 +178,7 @@ async function handleEarlyAccess(request: Request, env: Env): Promise<Response> 
 
     if (!resendRes.ok) {
       const err = await resendRes.text();
+      console.error('[Trivian Worker] Resend API error:', err);
       return new Response(JSON.stringify({ success: false, error: 'Failed to send notification. Please try again.' }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

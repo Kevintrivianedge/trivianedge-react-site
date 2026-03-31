@@ -7,6 +7,7 @@ const BlogPostDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
+  // Search by slug first (preferred), then fall back to id for backwards compatibility
   const post = BLOG_POSTS.find(p => p.slug === slug || p.id === slug);
 
   if (!post) {

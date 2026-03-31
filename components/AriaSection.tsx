@@ -24,7 +24,8 @@ const AriaSection: React.FC = () => {
       } else {
         setError(data.error ?? 'Something went wrong. Please try again.');
       }
-    } catch {
+    } catch (err) {
+      console.error('[AriaSection] Early access submission error:', err);
       setError('Unable to submit. Please check your connection and try again.');
     } finally {
       setSubmitting(false);
