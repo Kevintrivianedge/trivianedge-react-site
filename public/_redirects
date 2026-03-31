@@ -1,16 +1,19 @@
-/assets/* /assets/:splat 200
-/*.js /*.js 200
-/*.css /*.css 200
-/*.json /*.json 200
-/*.png /*.png 200
-/*.jpg /*.jpg 200
-/*.jpeg /*.jpeg 200
-/*.gif /*.gif 200
-/*.svg /*.svg 200
-/*.webp /*.webp 200
-/*.ico /*.ico 200
-/*.woff /*.woff 200
-/*.woff2 /*.woff2 200
-/*.ttf /*.ttf 200
-/*.eot /*.eot 200
-/* /index.html 200
+/* Redirect Rules for Cloudflare Workers */
+
+// Simple Redirect Example:
+// Redirect /old-url to /new-url
+redirect("/old-url", "/new-url");
+
+// Permanent Redirect (301)
+// Redirect /temp to /new-temporary
+redirect("/temp", "/new-temporary", 301);
+
+// Redirect with status code
+// Redirect /another-old-url to /another-new-url with a 302 status
+redirect("/another-old-url", "/another-new-url", 302);
+
+// You can also add conditions to redirects:
+// Redirect /conditional-url based on some condition
+if (testCondition()) {
+    redirect("/conditional-url", "/conditional-new-url");
+}
