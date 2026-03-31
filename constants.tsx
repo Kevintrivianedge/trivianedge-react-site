@@ -21,6 +21,7 @@ export const NAV_LINKS = [
   { name: 'Talent Hubs', href: '#talent-hubs' },
   { name: 'Roles', href: '#roles' },
   { name: 'Process', href: '#process' },
+  { name: 'Aria', href: '#aria' },
   { name: 'Blog', href: '#blog' },
 ];
 
