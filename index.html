@@ -2,17 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>TrivianEdge | AI-Driven Global Talent & Software Solutions</title>
     <meta name="description" content="TrivianEdge bridges the gap between AI, Operations, and global talent. We empower startups and enterprises to scale without friction using elite global talent pipelines and AI-driven operational software.">
-    <meta name="keywords" content="global talent, AI staffing, remote teams, operational excellence, talent pipeline, Canada, TrivianEdge">
+    <meta name="keywords" content="global talent, AI staffing, remote teams, operational excellence, talent pipeline, Canada, TrivianEdge, remote workforce, AI automation, managed IT services">
+    <meta name="author" content="TrivianEdge">
+    <meta name="theme-color" content="#22d3ee">
+
+    <!-- Robots directives for all major engines -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://www.trivianedge.com/">
+
+    <!-- Geo tags -->
+    <meta name="geo.region" content="CA">
+    <meta name="geo.placename" content="Canada">
+
+    <!-- Open Graph -->
     <meta property="og:title" content="TrivianEdge | AI-Driven Global Talent & Software Solutions">
-    <meta property="og:description" content="TrivianEdge bridges the gap between AI, Operations, and global talent. Scale without friction.">
+    <meta property="og:description" content="TrivianEdge bridges the gap between AI, Operations, and global talent. Scale without friction using elite global talent pipelines and AI-driven operational software.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.trivianedge.com/">
+    <meta property="og:image" content="https://www.trivianedge.com/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="TrivianEdge">
+    <meta property="og:locale" content="en_CA">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@TrivianEdge">
+    <meta name="twitter:creator" content="@TrivianEdge">
+    <meta name="twitter:title" content="TrivianEdge | AI-Driven Global Talent & Software Solutions">
+    <meta name="twitter:description" content="TrivianEdge bridges the gap between AI, Operations, and global talent. Scale without friction.">
+    <meta name="twitter:image" content="https://www.trivianedge.com/og-image.jpg">
+
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; connect-src 'self' https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; connect-src 'self' https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:;">
+
+    <!-- DNS prefetch for performance -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -56,6 +94,10 @@
             color: var(--text);
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
+            /* Safe area insets for iPhone notch / home indicator */
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
         }
         h1, h2, h3, h4 {
             font-family: 'Space Grotesk', sans-serif;
@@ -256,6 +298,23 @@
             60% { clip-path: inset(20% 0 50% 0); transform: translate(-4px, -1px); }
             80% { clip-path: inset(60% 0 30% 0); transform: translate(4px, 1px); }
             100% { clip-path: inset(5% 0 80% 0); transform: translate(-4px, -2px); }
+        }
+        /* Disable heavy hover transforms on touch devices */
+        @media (hover: none) {
+            .hover-neon-glow:hover {
+                transform: none;
+                animation: none;
+            }
+            .service-card-glow:hover {
+                transform: none;
+            }
+        }
+
+        /* Mobile tap target minimum size */
+        @media (max-width: 640px) {
+            button, a {
+                min-height: 44px;
+            }
         }
     </style>
 <script type="importmap">

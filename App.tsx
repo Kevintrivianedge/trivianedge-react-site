@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { 
   ArrowRight, 
@@ -44,7 +44,20 @@ import Preloader from './components/Preloader';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ThemeToggle from './components/ThemeToggle';
 import { TalentHubModal } from './components/TalentHubModal';
-import { ChatSidebar } from './components/ChatSidebar';
+import SEOHead from './components/SEOHead';
+import AlgorithmMonitor from './components/AlgorithmMonitor';
+import { useAlgorithmIntelligence } from './hooks/useAlgorithmIntelligence';
+import { 
+  buildOrganizationSchema, 
+  buildWebSiteSchema, 
+  buildServiceSchema,
+  buildArticleSchema,
+  buildSoftwareApplicationSchema,
+  SEO_CONFIG
+} from './utils/seo';
+
+// Lazy-load heavy below-fold components for better LCP
+const ChatSidebar = lazy(() => import('./components/ChatSidebar').then(m => ({ default: m.ChatSidebar })));
 
 const LogoIcon = ({ className = "w-10 h-10" }: { className?: string }) => (
   <svg viewBox="0 0 320 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -254,17 +267,17 @@ const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: Ta
 };
 
 const BlogView: React.FC<{ onPostClick: (id: string) => void }> = ({ onPostClick }) => (
-  <section id="blog-list" className="py-32 px-6 min-h-screen">
+  <section id="blog-list" aria-label="Blog Posts" className="py-16 md:py-32 px-4 md:px-6 min-h-screen">
     <div className="max-w-7xl mx-auto">
       <div className="mb-20 reveal">
         <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-border bg-surface backdrop-blur-md text-[10px] font-bold tracking-[0.2em] uppercase mb-8 text-text">
           <BookOpen className="w-4 h-4 text-cyan-400" />
           Intel & Insights
         </div>
-        <h2 className="text-5xl md:text-7xl font-bold mb-6 text-text">Insights from the <br className="hidden md:block" /> <span className="text-gradient">Edge of Intelligence.</span></h2>
+        <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 text-text">Insights from the <br className="hidden md:block" /> <span className="text-gradient">Edge of Intelligence.</span></h2>
         <p className="text-muted text-lg max-w-2xl">Exploring the intersection of AI, global talent, and operational excellence.</p>
       </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {BLOG_POSTS.map((post, idx) => (
           <BlogCard key={post.id} post={post} onClick={onPostClick} index={idx} />
         ))}
@@ -274,7 +287,7 @@ const BlogView: React.FC<{ onPostClick: (id: string) => void }> = ({ onPostClick
 );
 
 const BlogPostDetail: React.FC<{ post: BlogPost; onBack: () => void }> = ({ post, onBack }) => (
-  <section className="py-32 px-6 min-h-screen relative">
+  <article aria-label={post.title} className="py-16 md:py-32 px-4 md:px-6 min-h-screen relative">
     <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-cyan-500/5 to-transparent -z-10" />
     <div className="max-w-4xl mx-auto">
       <button 
@@ -334,7 +347,7 @@ const BlogPostDetail: React.FC<{ post: BlogPost; onBack: () => void }> = ({ post
         </div>
       </div>
     </div>
-  </section>
+  </article>
 );
 
 const TalentAdvisor: React.FC = () => {
@@ -473,7 +486,7 @@ const AriaSection: React.FC = () => {
   };
 
   return (
-    <section id="aria" className="py-32 px-6 relative">
+    <section id="aria" aria-label="Trivian Aria HR Platform" className="py-16 md:py-32 px-4 md:px-6 relative">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-gradient-to-b from-cyan-500/5 to-violet-500/5 blur-[120px] rounded-full -z-10 pointer-events-none" />
       <div className="max-w-7xl mx-auto">
 
@@ -633,7 +646,7 @@ const ScrollToTop = () => {
   };
 
   return (
-    <div className={`fixed bottom-28 right-8 z-50 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}>
+    <div className={`fixed bottom-24 right-4 sm:bottom-28 sm:right-8 z-50 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}>
       <button
         onClick={scrollToTop}
         className="p-4 rounded-full bg-surface border border-border backdrop-blur-md hover-neon-glow group relative"
@@ -810,6 +823,7 @@ export default function App() {
   const [view, setView] = useState<'home' | 'blog' | string>('home');
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
   const [selectedHub, setSelectedHub] = useState<TalentHub | null>(null);
+  const { signals, recommendations } = useAlgorithmIntelligence();
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -847,13 +861,55 @@ export default function App() {
     setTimeout(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }), 50);
   };
 
+  // Determine SEO head content based on current view
+  const getSEOProps = () => {
+    if (view === 'blog' && selectedPost) {
+      return {
+        title: selectedPost.title,
+        description: selectedPost.metaDescription ?? selectedPost.excerpt,
+        keywords: selectedPost.metaKeywords?.join(', ') ?? SEO_CONFIG.defaultKeywords,
+        canonical: `${SEO_CONFIG.siteUrl}/blog/${selectedPost.slug ?? selectedPost.id}`,
+        ogType: 'article',
+        structuredData: buildArticleSchema({
+          title: selectedPost.title,
+          description: selectedPost.metaDescription ?? selectedPost.excerpt,
+          author: selectedPost.author,
+          date: selectedPost.datePublished ?? selectedPost.date,
+          url: `${SEO_CONFIG.siteUrl}/blog/${selectedPost.slug ?? selectedPost.id}`,
+          imageUrl: selectedPost.imageUrl,
+        }),
+      };
+    }
+    if (view === 'blog') {
+      return {
+        title: 'Intelligence Feed — Global Talent & AI Insights',
+        description: 'Explore TrivianEdge insights on global talent, AI-driven operations, and remote workforce strategy.',
+        canonical: `${SEO_CONFIG.siteUrl}/blog`,
+      };
+    }
+    // Home view — rich schema
+    return {
+      canonical: SEO_CONFIG.siteUrl,
+      structuredData: [
+        buildOrganizationSchema(),
+        buildWebSiteSchema(),
+        buildServiceSchema({ name: 'Global Talent Solutions', description: 'Elite global talent pipelines and AI-driven staffing solutions.' }),
+        buildSoftwareApplicationSchema(),
+      ],
+    };
+  };
+
   return (
     <ThemeProvider>
       <LanguageProvider>
+        <SEOHead {...getSEOProps()} />
+        <AlgorithmMonitor signals={signals} recommendations={recommendations} />
         <div className="bg-background min-h-screen text-text overflow-x-hidden selection:bg-cyan-500/30 transition-colors duration-300">
           <Preloader />
           <Navbar onViewChange={setView} />
-          <ChatSidebar />
+          <Suspense fallback={null}>
+            <ChatSidebar />
+          </Suspense>
           
           <AnimatePresence>
             {selectedHub && (
@@ -864,7 +920,7 @@ export default function App() {
           <main>
             {view === 'home' && (
               <>
-                <section className="relative min-h-[90vh] flex items-center pt-24 px-6 overflow-hidden">
+                <section aria-label="Hero" className="relative min-h-[90vh] flex items-center pt-24 px-4 sm:px-6 overflow-hidden">
                   <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/10 blur-[120px] rounded-full" />
                   <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-violet-600/10 blur-[120px] rounded-full" />
                   <div className="bg-grid absolute inset-0 opacity-20" />
@@ -876,7 +932,7 @@ export default function App() {
                       <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
                       Next-Gen Global Execution Platform
                     </div>
-                    <h1 className="reveal text-5xl md:text-8xl font-bold tracking-tight mb-8 leading-[1] text-text cursor-pointer">
+                    <h1 className="reveal text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight mb-8 leading-[1] text-text cursor-pointer">
                       <span className="glitch-text inline-block hover:text-cyan-400 transition-colors" data-text="The Bridge Between">The Bridge Between</span> <br className="hidden md:block" />
                       <span className="glitch-text inline-block bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600" data-text="AI, Ops, & Talent.">AI, Ops, & Talent.</span>
                     </h1>
@@ -892,7 +948,7 @@ export default function App() {
                         Explore Talent Hubs
                       </a>
                     </div>
-                    <div className="mt-20 pt-12 border-t border-border grid grid-cols-2 md:grid-cols-4 gap-8 opacity-70 hover:opacity-100 transition-opacity">
+                    <div className="mt-20 pt-12 border-t border-border grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 opacity-70 hover:opacity-100 transition-opacity">
                       <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">98%</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Talent Retention</span></div>
                       <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">2.4x</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Execution Speed</span></div>
                       <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">6+</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Strategic Regions</span></div>
@@ -901,7 +957,7 @@ export default function App() {
                   </div>
                 </section>
 
-                <section id="problem" className="py-32 px-6">
+                <section id="problem" aria-label="The Challenge" className="py-16 md:py-32 px-4 md:px-6">
                   <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20 items-center">
                     <div className="lg:w-1/2 reveal">
                       <div className="text-cyan-400 font-bold tracking-widest text-xs uppercase mb-4">The Challenge</div>
@@ -943,7 +999,7 @@ export default function App() {
                 </section>
 
                 {/* WHY US SECTION */}
-                <section id="why-us" className="py-24 px-6">
+                <section id="why-us" aria-label="Why TrivianEdge" className="py-16 md:py-24 px-4 md:px-6">
                   <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16 reveal">
                       <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
@@ -976,7 +1032,7 @@ export default function App() {
                 </section>
 
                 {/* CORE OFFERINGS SECTION */}
-                <section id="solutions" className="py-32 px-6 bg-surface">
+                <section id="solutions" aria-label="Core Services" className="py-16 md:py-32 px-4 md:px-6 bg-surface">
                   <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-20 reveal">
                       <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-[10px] font-bold uppercase tracking-widest mb-6">
@@ -1046,7 +1102,7 @@ export default function App() {
                 </section>
 
                 {/* TALENT HUBS SECTION */}
-                <section id="talent-hubs" className="py-32 px-6">
+                <section id="talent-hubs" aria-label="Global Talent Hubs" className="py-16 md:py-32 px-4 md:px-6">
                   <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-24 reveal">
                       <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
@@ -1091,7 +1147,7 @@ export default function App() {
                   </div>
                 </section>
 
-                <section id="roles" className="py-32 px-6 relative overflow-hidden bg-surface">
+                <section id="roles" aria-label="Elite Roles" className="py-16 md:py-32 px-4 md:px-6 relative overflow-hidden bg-surface">
                   <div className="max-w-7xl mx-auto">
                     <div className="flex flex-col md:flex-row justify-between items-end mb-20 reveal">
                       <div className="max-w-xl">
@@ -1120,7 +1176,7 @@ export default function App() {
                   </div>
                 </section>
 
-                <section id="process" className="py-32 px-6 bg-black">
+                <section id="process" aria-label="Deployment Protocol" className="py-16 md:py-32 px-4 md:px-6 bg-black">
                   <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-24 reveal">
                       <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white">The Deployment Protocol</h2>
@@ -1130,26 +1186,26 @@ export default function App() {
                   </div>
                 </section>
 
-                <section className="py-32 px-6"><div className="max-w-5xl mx-auto"><TalentAdvisor /></div></section>
+                <section aria-label="Talent Advisor" className="py-16 md:py-32 px-4 md:px-6"><div className="max-w-5xl mx-auto"><TalentAdvisor /></div></section>
 
-                <section id="future" className="py-32 px-6 relative text-center">
+                <section id="future" aria-label="Future Vision" className="py-16 md:py-32 px-4 md:px-6 relative text-center">
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-violet-600/5 blur-[120px] rounded-full -z-10" />
                   <div className="max-w-4xl mx-auto reveal">
                     <Layers className="w-12 h-12 text-cyan-400 mx-auto mb-10 opacity-50" />
-                    <h2 className="text-4xl md:text-7xl font-bold mb-10 tracking-tight leading-[1.1] text-text">Distributed Teams. <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-500">Autonomous Operations.</span> <br />Borderless Potential.</h2>
+                    <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-10 tracking-tight leading-[1.1] text-text">Distributed Teams. <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-500">Autonomous Operations.</span> <br />Borderless Potential.</h2>
                     <p className="text-muted text-xl leading-relaxed">We are moving past the era of traditional hiring. The future belongs to borderless organizations powered by intelligent execution engines. TrivianEdge is the blueprint.</p>
                   </div>
                 </section>
 
                 <AriaSection />
 
-                <section id="contact" className="py-32 px-6">
+                <section id="contact" aria-label="Contact Us" className="py-16 md:py-32 px-4 md:px-6">
                   <div className="max-w-7xl mx-auto reveal">
                     <div className="glass p-12 md:p-24 rounded-[4rem] border-border text-center relative overflow-hidden">
                       <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-600/10 blur-[120px] rounded-full" />
                       <div className="absolute bottom-0 left-0 w-96 h-96 bg-violet-600/10 blur-[120px] rounded-full" />
                       <div className="relative z-10">
-                        <h2 className="text-5xl md:text-7xl font-bold mb-10 text-text">Scale Without Limits.</h2>
+                        <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-10 text-text">Scale Without Limits.</h2>
                         <p className="text-muted text-lg md:text-2xl max-w-2xl mx-auto mb-12 leading-relaxed">
                           Ready to engineer your future workforce? Connect with our global strategy team.
                         </p>
@@ -1207,7 +1263,7 @@ export default function App() {
             )}
           </main>
 
-          <footer className="pt-32 pb-16 px-6 border-t border-border">
+          <footer className="pt-16 md:pt-32 pb-16 px-4 md:px-6 border-t border-border">
             <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-16 mb-20 reveal">
               <div className="md:col-span-2">
                 <div className="mb-8"><Logo onClick={() => { setView('home'); window.scrollTo({top: 0, behavior: 'smooth'}); }} /></div>

@@ -4,16 +4,23 @@
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 1.5rem 2rem;
+  padding: 1rem 1.25rem;
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.05);
   margin-bottom: 2rem;
-  min-height: 100px;
+  min-height: 80px;
   display: flex;
   align-items: center;
   transition: all 0.3s ease-in-out;
   position: relative;
   overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .greeting-container {
+    padding: 1.5rem 2rem;
+    min-height: 100px;
+  }
 }
 
 .greeting-content {
@@ -24,7 +31,7 @@
 
 .greeting-title {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.125rem;
   font-weight: 700;
   background: linear-gradient(90deg, #22d3ee 0%, #8b5cf6 100%);
   -webkit-background-clip: text;
@@ -32,13 +39,25 @@
   line-height: 1.2;
 }
 
+@media (min-width: 640px) {
+  .greeting-title {
+    font-size: 1.5rem;
+  }
+}
+
 .greeting-subtext {
   margin: 0.5rem 0 0 0;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: #94a3b8;
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+@media (min-width: 640px) {
+  .greeting-subtext {
+    font-size: 0.875rem;
+  }
 }
 
 /* RTL Specific Adjustments */
@@ -118,10 +137,4 @@
 
 @keyframes shimmer {
   100% { transform: translateX(100%); }
-}
-
-@media (max-width: 640px) {
-  .greeting-title {
-    font-size: 1.25rem;
-  }
 }

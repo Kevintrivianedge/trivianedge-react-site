@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Safe area insets for iPhone notch / home indicator */
+@layer base {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Disable heavy hover transforms on touch devices for performance */
+@media (hover: none) {
+  .hover-neon-glow:hover {
+    transform: none !important;
+    animation: none !important;
+  }
+  .service-card-glow:hover {
+    transform: none !important;
+  }
+}

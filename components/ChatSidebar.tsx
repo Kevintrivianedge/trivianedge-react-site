@@ -448,7 +448,7 @@ ${userContext}
       {/* Trigger Button - Bottom Right */}
       <button 
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-8 right-8 z-[150] p-4 rounded-full bg-gradient-to-tr from-cyan-600 to-violet-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.5)] hover:scale-110 transition-all duration-300 group ${isOpen ? 'hidden' : 'flex'} items-center justify-center`}
+        className={`fixed bottom-6 right-4 sm:bottom-8 sm:right-8 z-[150] p-4 rounded-full bg-gradient-to-tr from-cyan-600 to-violet-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.5)] hover:scale-110 transition-all duration-300 group ${isOpen ? 'hidden' : 'flex'} items-center justify-center`}
         aria-label="Open AI Assistant"
       >
         <MessageSquare className="w-6 h-6 animate-pulse" />
@@ -463,15 +463,15 @@ ${userContext}
         onClick={() => setIsOpen(false)}
       />
 
-      {/* Sidebar */}
-      <div className={`fixed inset-y-0 right-0 w-full md:w-[600px] bg-[#050508] border-l border-white/10 z-[200] transform transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-2xl flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      {/* Sidebar — full-width on mobile, 600px on larger screens */}
+      <div className={`fixed inset-y-0 right-0 w-full sm:w-[600px] bg-[#050508] border-l border-white/10 z-[200] transform transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-2xl flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-[80px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-500/10 blur-[80px] pointer-events-none" />
 
         {/* Header */}
-        <div className="p-6 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-cyan-900/10 to-transparent relative z-10">
+        <div className="p-4 sm:p-6 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-cyan-900/10 to-transparent relative z-10">
             <div className="flex items-center gap-4">
                 {/* Animated Vara Avatar */}
                 <VaraAvatar isTyping={isTyping} size="lg" />
@@ -488,14 +488,16 @@ ${userContext}
             <div className="flex items-center gap-1">
                 <button 
                     onClick={handleClearChat}
-                    className="p-2 hover:bg-white/10 rounded-lg transition-colors text-gray-400 hover:text-cyan-400"
+                    className="p-2 hover:bg-white/10 rounded-lg transition-colors text-gray-400 hover:text-cyan-400 min-w-[44px] min-h-[44px] flex items-center justify-center"
                     title="Reset Conversation"
+                    aria-label="Reset conversation"
                 >
                     <RefreshCw className="w-4 h-4" />
                 </button>
                 <button 
                     onClick={() => setIsOpen(false)} 
-                    className="p-2 hover:bg-white/10 rounded-lg transition-colors text-gray-400 hover:text-white"
+                    className="p-2 hover:bg-white/10 rounded-lg transition-colors text-gray-400 hover:text-white min-w-[44px] min-h-[44px] flex items-center justify-center"
+                    aria-label="Close AI Assistant"
                 >
                     <X className="w-5 h-5" />
                 </button>
@@ -503,7 +505,7 @@ ${userContext}
         </div>
 
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-cyan-900/20 scrollbar-track-transparent relative z-10">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 scrollbar-thin scrollbar-thumb-cyan-900/20 scrollbar-track-transparent relative z-10">
             <AnimatePresence initial={false}>
                 {messages.map((msg, idx) => (
                     <motion.div 
@@ -543,7 +545,7 @@ ${userContext}
         </div>
 
         {/* Input Area */}
-        <div className="p-6 border-t border-white/10 bg-black/20 backdrop-blur-md relative z-10">
+        <div className="p-4 sm:p-6 border-t border-white/10 bg-black/20 backdrop-blur-md relative z-10">
             <div className="relative group">
                 <input 
                     type="text" 
@@ -551,13 +553,15 @@ ${userContext}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                     placeholder="Inquire about our capabilities..."
+                    style={{ fontSize: '16px' }} // Prevent iOS zoom on focus
                     className="w-full bg-black/40 border border-white/10 rounded-xl py-4 pl-4 pr-12 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:bg-black/60 transition-all font-mono"
                     autoFocus={isOpen}
                 />
                 <button 
                     onClick={handleSend}
                     disabled={!input.trim() || isTyping}
-                    className="absolute right-2 top-2 p-2 rounded-lg bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all disabled:opacity-30 disabled:hover:bg-cyan-500/10 disabled:hover:text-cyan-400"
+                    className="absolute right-2 top-2 p-2 rounded-lg bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all disabled:opacity-30 disabled:hover:bg-cyan-500/10 disabled:hover:text-cyan-400 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                    aria-label="Send message"
                 >
                     {isTyping ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                 </button>

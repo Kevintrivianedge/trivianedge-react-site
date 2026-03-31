@@ -292,7 +292,13 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "Oct 12, 2024",
     readTime: "6 min read",
     category: "Operations",
-    imageGradient: "from-cyan-500/20 to-blue-500/20"
+    imageGradient: "from-cyan-500/20 to-blue-500/20",
+    slug: "hr-ops-alignment-guide",
+    metaDescription: "HR wants a perfect resume; Ops wants execution. Learn why this disconnect kills scale-ups and how TrivianEdge solves the HR-Ops language gap.",
+    metaKeywords: ["HR operations alignment", "hiring strategy", "operational staffing", "remote team management", "TrivianEdge"],
+    datePublished: "2024-10-12",
+    dateModified: "2024-10-12",
+    imageUrl: "https://www.trivianedge.com/og-image.jpg",
   },
   {
     id: "2",
@@ -303,7 +309,13 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "Sep 28, 2024",
     readTime: "8 min read",
     category: "AI & Tech",
-    imageGradient: "from-violet-500/20 to-magenta-500/20"
+    imageGradient: "from-violet-500/20 to-magenta-500/20",
+    slug: "end-of-body-shopping-global-talent",
+    metaDescription: "Traditional outsourcing body shopping is dead. Discover what's replacing it: autonomous global talent pipelines that actually deliver results.",
+    metaKeywords: ["global talent outsourcing", "AI staffing", "remote teams", "offshore development", "TrivianEdge"],
+    datePublished: "2024-09-28",
+    dateModified: "2024-09-28",
+    imageUrl: "https://www.trivianedge.com/og-image.jpg",
   },
   {
     id: "3",
@@ -314,7 +326,13 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "Sep 15, 2024",
     readTime: "5 min read",
     category: "Global Strategy",
-    imageGradient: "from-emerald-500/20 to-teal-500/20"
+    imageGradient: "from-emerald-500/20 to-teal-500/20",
+    slug: "global-tech-talent-beyond-silicon-valley",
+    metaDescription: "The best engineering talent isn't all in Silicon Valley. Discover emerging global tech hubs in Vietnam, Turkey, and beyond with TrivianEdge.",
+    metaKeywords: ["global tech talent", "Vietnam developers", "emerging tech hubs", "offshore engineering", "TrivianEdge global strategy"],
+    datePublished: "2024-09-15",
+    dateModified: "2024-09-15",
+    imageUrl: "https://www.trivianedge.com/og-image.jpg",
   },
   {
     id: "4",
@@ -325,7 +343,13 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "Nov 05, 2024",
     readTime: "4 min read",
     category: "Hiring",
-    imageGradient: "from-orange-500/20 to-red-500/20"
+    imageGradient: "from-orange-500/20 to-red-500/20",
+    slug: "real-cost-of-bad-hire",
+    metaDescription: "A bad hire costs more than money. Learn how poor hiring decisions silently destroy team morale and momentum — and how to prevent it.",
+    metaKeywords: ["bad hire cost", "hiring mistakes", "talent acquisition", "team morale", "operational alignment"],
+    datePublished: "2024-11-05",
+    dateModified: "2024-11-05",
+    imageUrl: "https://www.trivianedge.com/og-image.jpg",
   },
   {
     id: "5",
@@ -336,7 +360,13 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "Nov 18, 2024",
     readTime: "5 min read",
     category: "Culture",
-    imageGradient: "from-yellow-500/20 to-amber-500/20"
+    imageGradient: "from-yellow-500/20 to-amber-500/20",
+    slug: "culture-fit-vs-culture-add",
+    metaDescription: "Culture fit hiring creates echo chambers. Learn why culture add is the smarter strategy for building diverse, high-performing global teams.",
+    metaKeywords: ["culture fit vs culture add", "diversity hiring", "global team culture", "remote work culture", "team building"],
+    datePublished: "2024-11-18",
+    dateModified: "2024-11-18",
+    imageUrl: "https://www.trivianedge.com/og-image.jpg",
   },
   {
     id: "6",
@@ -347,6 +377,12 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "Dec 02, 2024",
     readTime: "6 min read",
     category: "Remote Work",
-    imageGradient: "from-pink-500/20 to-rose-500/20"
+    imageGradient: "from-pink-500/20 to-rose-500/20",
+    slug: "async-work-myth-remote-teams",
+    metaDescription: "Async work doesn't replace human connection. Learn how the most successful remote teams balance async productivity with essential synchronous communication.",
+    metaKeywords: ["async remote work", "remote team communication", "distributed teams", "work from home productivity", "TrivianEdge remote work"],
+    datePublished: "2024-12-02",
+    dateModified: "2024-12-02",
+    imageUrl: "https://www.trivianedge.com/og-image.jpg",
   }
 ];
