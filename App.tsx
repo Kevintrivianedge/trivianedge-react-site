@@ -137,9 +137,10 @@ const ProcessTimeline: React.FC = () => {
 };
 
 const BlogCard: React.FC<{ post: BlogPost; onClick: (id: string) => void; index: number }> = ({ post, onClick, index }) => (
-  <div 
+  <button
+    type="button"
     onClick={() => onClick(post.id)}
-    className="reveal glass group cursor-pointer p-8 rounded-[2.5rem] border-border hover-neon-glow overflow-hidden relative"
+    className="reveal glass group w-full text-left p-8 rounded-[2.5rem] border-border hover-neon-glow overflow-hidden relative"
     style={{ transitionDelay: `${index * 200}ms` }}
   >
     <div className={`absolute top-0 left-0 w-full h-32 bg-gradient-to-br ${post.imageGradient} opacity-20 group-hover:opacity-40 transition-opacity`} />
@@ -162,11 +163,11 @@ const BlogCard: React.FC<{ post: BlogPost; onClick: (id: string) => void; index:
         <ArrowRight className="w-5 h-5 text-muted group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
       </div>
     </div>
-  </div>
+  </button>
 );
 
 const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: TalentHub) => void }> = ({ hub, index, onClick }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -191,10 +192,11 @@ const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: Ta
   }, []);
 
   return (
-    <div 
+    <button
       ref={cardRef}
+      type="button"
       onClick={() => onClick(hub)}
-      className="reveal glass p-8 md:p-10 rounded-[2.5rem] border-border hover-neon-glow relative overflow-hidden group cursor-pointer"
+      className="reveal glass w-full text-left p-8 md:p-10 rounded-[2.5rem] border-border hover-neon-glow relative overflow-hidden group"
       style={{ transitionDelay: `${index * 100}ms` } as React.CSSProperties}
     >
       <div 
@@ -244,7 +246,7 @@ const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: Ta
           </div>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
@@ -320,9 +322,12 @@ const BlogPostDetail: React.FC<{ post: BlogPost; onBack: () => void }> = ({ post
         <div className="mt-24 p-12 glass border-border rounded-[3rem] text-center">
           <h3 className="text-2xl font-bold mb-6 text-text">Inspired by this insight?</h3>
           <p className="text-muted mb-10 max-w-md mx-auto">Learn how we can apply these operational strategies to your specific business scaling needs.</p>
-          <button className="px-10 py-5 bg-btn-bg text-btn-text rounded-2xl font-bold text-lg hover:bg-cyan-400 hover:text-white transition-all shadow-2xl shadow-surface">
+          <a 
+            href="mailto:info@trivianedge.com"
+            className="inline-block px-10 py-5 bg-btn-bg text-btn-text rounded-2xl font-bold text-lg hover:bg-cyan-400 hover:text-white transition-all shadow-2xl shadow-surface"
+          >
             Discuss Your Strategy
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -352,7 +357,10 @@ const TalentAdvisor: React.FC = () => {
       const interval = setInterval(() => {
         setResult(text.slice(0, i));
         i++;
-        if (i > text.length) clearInterval(interval);
+        if (i > text.length) {
+          clearInterval(interval);
+          setLoading(false);
+        }
       }, 15);
     } catch (error) {
       setResult("Security protocol triggered. AI Engine offline. Please contact human operators.");
@@ -651,6 +659,11 @@ export default function App() {
 
   const selectedPost = BLOG_POSTS.find(p => p.id === selectedPostId);
 
+  const scrollToSection = (sectionId: string) => {
+    setView('home');
+    setTimeout(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }), 50);
+  };
+
   return (
     <ThemeProvider>
       <LanguageProvider>
@@ -696,7 +709,7 @@ export default function App() {
                         Explore Talent Hubs
                       </a>
                     </div>
-                    <div className="mt-20 pt-12 border-t border-border grid grid-cols-2 md:grid-cols-4 gap-8 opacity-40 hover:opacity-100 transition-opacity">
+                    <div className="mt-20 pt-12 border-t border-border grid grid-cols-2 md:grid-cols-4 gap-8 opacity-70 hover:opacity-100 transition-opacity">
                       <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">98%</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Talent Retention</span></div>
                       <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">2.4x</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Execution Speed</span></div>
                       <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">6+</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Strategic Regions</span></div>
@@ -1019,18 +1032,21 @@ export default function App() {
                     href="https://www.linkedin.com/company/trivianedge/" 
                     target="_blank" 
                     rel="noopener noreferrer" 
+                    aria-label="TrivianEdge on LinkedIn"
                     className="p-3 glass rounded-xl hover:text-cyan-400 transition-all duration-300 border-border hover:scale-110 hover:shadow-[0_0_20px_-5px_rgba(34,211,238,0.6)] hover:border-cyan-400/30 text-text"
                   >
                     <Linkedin />
                   </a>
                   <a 
                     href="#" 
+                    aria-label="TrivianEdge on Twitter"
                     className="p-3 glass rounded-xl hover:text-cyan-400 transition-all duration-300 border-border hover:scale-110 hover:shadow-[0_0_20px_-5px_rgba(34,211,238,0.6)] hover:border-cyan-400/30 text-text"
                   >
                     <Twitter />
                   </a>
                   <a 
                     href="mailto:info@trivianedge.com" 
+                    aria-label="Email TrivianEdge"
                     className="p-3 glass rounded-xl hover:text-cyan-400 transition-all duration-300 border-border hover:scale-110 hover:shadow-[0_0_20px_-5px_rgba(34,211,238,0.6)] hover:border-cyan-400/30 text-text"
                   >
                     <Mail />
@@ -1040,24 +1056,24 @@ export default function App() {
               <div>
                 <h4 className="font-bold text-text mb-8 tracking-widest uppercase text-xs">Platform</h4>
                 <ul className="space-y-6 text-muted font-medium">
-                  <li><a href="#" onClick={(e) => { e.preventDefault(); setView('home'); setTimeout(() => document.getElementById('solutions')?.scrollIntoView({behavior: 'smooth'}), 50); }} className="hover:text-text transition-colors">Core Offerings</a></li>
-                  <li><a href="#" onClick={(e) => { e.preventDefault(); setView('home'); setTimeout(() => document.getElementById('talent-hubs')?.scrollIntoView({behavior: 'smooth'}), 50); }} className="hover:text-text transition-colors">Talent Hubs</a></li>
-                  <li><a href="#" onClick={(e) => { e.preventDefault(); setView('home'); setTimeout(() => document.getElementById('roles')?.scrollIntoView({behavior: 'smooth'}), 50); }} className="hover:text-text transition-colors">Global Roles</a></li>
+                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('solutions'); }} className="hover:text-text transition-colors">Core Offerings</a></li>
+                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('talent-hubs'); }} className="hover:text-text transition-colors">Talent Hubs</a></li>
+                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('roles'); }} className="hover:text-text transition-colors">Global Roles</a></li>
                   <li><a href="#" onClick={(e) => { e.preventDefault(); setView('blog'); setSelectedPostId(null); }} className="hover:text-text transition-colors">Intelligence Feed</a></li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-bold text-text mb-8 tracking-widest uppercase text-xs">Resources</h4>
                 <ul className="space-y-6 text-muted font-medium">
-                  <li><a href="#" className="hover:text-text transition-colors">Operating Model</a></li>
-                  <li><a href="#" className="hover:text-text transition-colors">Global Hubs</a></li>
-                  <li><a href="#" className="hover:text-text transition-colors">Legal & Compliance</a></li>
-                  <li><a href="#" className="hover:text-text transition-colors">Contact Support</a></li>
+                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('process'); }} className="hover:text-text transition-colors">Operating Model</a></li>
+                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('talent-hubs'); }} className="hover:text-text transition-colors">Global Hubs</a></li>
+                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="hover:text-text transition-colors">Legal & Compliance</a></li>
+                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="hover:text-text transition-colors">Contact Support</a></li>
                 </ul>
               </div>
             </div>
             <div className="max-w-7xl mx-auto pt-12 border-t border-border flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-mono tracking-widest uppercase text-muted reveal">
-              <p>© 2024 TRIVIANEDGE GLOBAL. ALL EXECUTION GUARANTEED.</p>
+              <p>© {new Date().getFullYear()} TRIVIANEDGE GLOBAL. ALL EXECUTION GUARANTEED.</p>
               <div className="flex gap-12"><a href="#" className="hover:text-text transition-colors">Privacy Protocol</a><a href="#" className="hover:text-text transition-colors">Terms of Engagement</a></div>
             </div>
           </footer>
