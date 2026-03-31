@@ -44,6 +44,8 @@ export interface WhyUsItem {
   title: string;
   description: string;
   icon: React.ReactNode;
+  url?: string;
+  result?: string;
 }
 
 export interface BlogPost {
