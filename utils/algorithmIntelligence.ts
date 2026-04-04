@@ -288,6 +288,10 @@ export class AlgorithmIntelligenceEngine {
    * @param callback - Called whenever new signals are available.
    */
   startMonitoring(callback: (signals: AlgorithmSignals) => void): () => void {
+    // Disconnect any observers from a previous monitoring session (HMR-safe — fixes #15).
+    this.observers.forEach((o) => o.disconnect());
+    this.observers = [];
+
     // Detect engine and network on start
     this.signals.engine = this.detectEngine();
     this.signals.networkQuality = this.detectNetworkQuality();

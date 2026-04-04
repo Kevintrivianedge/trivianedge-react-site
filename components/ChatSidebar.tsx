@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { X, Send, MessageSquare, Terminal, Loader2, User, Bot, Sparkles, Trash2, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SERVICES, TALENT_HUBS, ROLES, WHY_US } from '../constants';
@@ -13,7 +13,7 @@ interface Message {
   isInitial?: boolean;
 }
 
-const VaraAvatar = ({ isTyping = false, size = 'md' }) => {
+const AriaAvatar = ({ isTyping = false, size = 'md' }) => {
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [isInteracting, setIsInteracting] = useState(false);
     const avatarRef = useRef<HTMLDivElement>(null);
@@ -56,14 +56,19 @@ const VaraAvatar = ({ isTyping = false, size = 'md' }) => {
         setTimeout(() => setIsInteracting(false), 1500);
     };
 
-    // Generate random particles for thinking state
-    const particles = Array.from({ length: 5 }).map((_, i) => ({
-        id: i,
-        delay: i * 0.2,
-        duration: 1 + Math.random(),
-        x: (Math.random() - 0.5) * 40,
-        y: (Math.random() - 0.5) * 40 - 20,
-    }));
+    // Generate random particles for thinking state — stabilised with useMemo so positions
+    // don't reset on every re-render (which restarts the Framer Motion animation).
+    const particles = useMemo(
+        () =>
+            Array.from({ length: 5 }).map((_, i) => ({
+                id: i,
+                delay: i * 0.2,
+                duration: 1 + Math.random(),
+                x: (Math.random() - 0.5) * 40,
+                y: (Math.random() - 0.5) * 40 - 20,
+            })),
+        [], // computed once per AriaAvatar mount
+    );
 
     return (
         <motion.div 
@@ -190,11 +195,12 @@ const VaraAvatar = ({ isTyping = false, size = 'md' }) => {
 export const ChatSidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'model', text: "Hi! I'm Vara, your AI guide from TrivianEdge.\n\nHow may I help you today?", isInitial: true }
+    { role: 'model', text: "Hi! I'm Aria, your AI guide from TrivianEdge.\n\nHow may I help you today?", isInitial: true }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const systemContextRef = useRef<string>('');
+  const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -259,7 +265,7 @@ GENERAL RULE: Keep all responses extremely short (1-3 sentences max). NEVER ask 
             }
 
             systemContextRef.current = `
-You are Vara, the AI Intelligence Unit for TrivianEdge, a next-gen global talent and software solutions company.
+You are Aria, the AI Intelligence Unit for TrivianEdge, a next-gen global talent and software solutions company.
 Your goal is to assist potential clients in understanding our offerings in a conversational, helpful, and highly personalized manner. You act like a consultant or psychologist, seeking to deeply understand the user's persona, psychology, and pain points before offering tailored solutions that make their lives better.
 
 Company Profile:
@@ -281,7 +287,7 @@ ${ROLES.map(r => r.title + ": " + r.roles.join(', ')).join('\n')}
 ${WHY_US.map(w => `- ${w.title}: ${w.description}`).join('\n')}
 
 Guidelines:
-- Identity: You are Vara.
+- Identity: You are Aria.
 - Tone: Conversational, warm, professional, empathetic, and highly personalized. Do not sound like a rigid corporate bot.
 - Behavior: Give information PIECE BY PIECE. Never send a wall of text.
 - Questioning: Ask ONLY ONE question at a time. Wait for the user to respond before asking another question or moving to the next topic.
@@ -301,12 +307,24 @@ ${userContext}
   useEffect(() => {
     if (isOpen) {
         initChat();
-        // Lock body scroll
+        // Focus input when sidebar opens (#9 — autoFocus only fires on mount, not re-open)
+        setTimeout(() => inputRef.current?.focus(), 50);
+        // Lock body scroll using a counter so concurrent overlays don't conflict (#16)
+        const prev = parseInt(document.body.dataset.scrollLocks ?? '0', 10);
+        document.body.dataset.scrollLocks = String(prev + 1);
         document.body.style.overflow = 'hidden';
     } else {
-        document.body.style.overflow = 'unset';
+        const prev = parseInt(document.body.dataset.scrollLocks ?? '1', 10);
+        const next = Math.max(0, prev - 1);
+        document.body.dataset.scrollLocks = String(next);
+        if (next === 0) document.body.style.overflow = '';
     }
-    return () => { document.body.style.overflow = 'unset'; }
+    return () => {
+        const prev = parseInt(document.body.dataset.scrollLocks ?? '1', 10);
+        const next = Math.max(0, prev - 1);
+        document.body.dataset.scrollLocks = String(next);
+        if (next === 0) document.body.style.overflow = '';
+    };
   }, [isOpen]);
 
   const handleSend = async () => {
@@ -366,14 +384,13 @@ ${userContext}
                     const text: string = parsed.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
                     if (text) {
                         fullResponse += text;
-                        setMessages(prev => {
-                            const newMsgs = [...prev];
-                            const lastMsg = newMsgs[newMsgs.length - 1];
-                            if (lastMsg.role === 'model') {
-                                lastMsg.text = fullResponse;
-                            }
-                            return newMsgs;
-                        });
+                        setMessages(prev =>
+                            prev.map((msg, i) =>
+                                i === prev.length - 1 && msg.role === 'model'
+                                    ? { ...msg, text: fullResponse }
+                                    : msg,
+                            ),
+                        );
                     }
                 } catch (_e) {
                     // Skip unparseable SSE lines (e.g., empty data, incomplete JSON)
@@ -382,14 +399,13 @@ ${userContext}
         }
 
         if (!fullResponse) {
-            setMessages(prev => {
-                const newMsgs = [...prev];
-                const lastMsg = newMsgs[newMsgs.length - 1];
-                if (lastMsg.role === 'model' && !lastMsg.text) {
-                    lastMsg.text = 'Security protocol triggered. Connection interrupted. Please try again.';
-                }
-                return newMsgs;
-            });
+            setMessages(prev =>
+                prev.map((msg, i) =>
+                    i === prev.length - 1 && msg.role === 'model' && !msg.text
+                        ? { ...msg, text: 'Security protocol triggered. Connection interrupted. Please try again.' }
+                        : msg,
+                ),
+            );
         }
     } catch (error) {
         console.error("Chat error", error);
@@ -400,7 +416,7 @@ ${userContext}
   };
 
   const handleClearChat = () => {
-    setMessages([{ role: 'model', text: "Hi! I'm Vara, your AI guide from TrivianEdge.\n\nHow may I help you today?", isInitial: true }]);
+    setMessages([{ role: 'model', text: "Hi! I'm Aria, your AI guide from TrivianEdge.\n\nHow may I help you today?", isInitial: true }]);
     systemContextRef.current = '';
     initChat();
   };
@@ -473,10 +489,10 @@ ${userContext}
         {/* Header */}
         <div className="p-4 sm:p-6 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-cyan-900/10 to-transparent relative z-10">
             <div className="flex items-center gap-4">
-                {/* Animated Vara Avatar */}
-                <VaraAvatar isTyping={isTyping} size="lg" />
+                {/* Animated Aria Avatar */}
+                <AriaAvatar isTyping={isTyping} size="lg" />
                 <div>
-                    <h3 className="font-bold text-white text-xl tracking-tight font-['Space_Grotesk']">Vara</h3>
+                    <h3 className="font-bold text-white text-xl tracking-tight font-['Space_Grotesk']">Aria</h3>
                     <div className="flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_#10b981]" />
                         <span className="text-[10px] uppercase tracking-widest text-emerald-500/80 font-mono">
@@ -516,7 +532,7 @@ ${userContext}
                         className={`flex gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
                     >
                         <div className={`flex items-center justify-center flex-shrink-0 mt-1 ${msg.role === 'user' ? 'w-8 h-8 rounded-full bg-violet-500/20 text-violet-400 border border-violet-500/30 shadow-lg' : ''}`}>
-                            {msg.role === 'user' ? <User className="w-4 h-4" /> : <VaraAvatar size="sm" />}
+                            {msg.role === 'user' ? <User className="w-4 h-4" /> : <AriaAvatar size="sm" />}
                         </div>
                         <div className={`p-4 rounded-2xl max-w-[85%] text-sm leading-relaxed shadow-sm ${msg.role === 'user' ? 'bg-violet-500/10 border border-violet-500/20 text-violet-100 rounded-tr-none' : 'bg-white/5 border border-white/10 text-gray-300 rounded-tl-none'}`}>
                             {renderMessageText(msg.text)}
@@ -531,7 +547,7 @@ ${userContext}
                         className="flex gap-4"
                     >
                         <div className="flex items-center justify-center flex-shrink-0 mt-1">
-                            <VaraAvatar isTyping={true} size="sm" />
+                            <AriaAvatar isTyping={true} size="sm" />
                         </div>
                         <div className="p-4 rounded-2xl bg-white/5 border border-white/10 rounded-tl-none flex items-center gap-2">
                             <motion.div animate={{ y: [0, -5, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0 }} className="w-2 h-2 rounded-full bg-cyan-400/60" />
@@ -548,6 +564,7 @@ ${userContext}
         <div className="p-4 sm:p-6 border-t border-white/10 bg-black/20 backdrop-blur-md relative z-10">
             <div className="relative group">
                 <input 
+                    ref={inputRef}
                     type="text" 
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
@@ -555,7 +572,6 @@ ${userContext}
                     placeholder="Inquire about our capabilities..."
                     style={{ fontSize: '16px' }} // Prevent iOS zoom on focus
                     className="w-full bg-black/40 border border-white/10 rounded-xl py-4 pl-4 pr-12 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:bg-black/60 transition-all font-mono"
-                    autoFocus={isOpen}
                 />
                 <button 
                     onClick={handleSend}
@@ -568,7 +584,7 @@ ${userContext}
             </div>
             <div className="mt-4 flex items-center justify-center gap-2 opacity-50">
                 <Sparkles className="w-3 h-3 text-cyan-500" />
-                <span className="text-[10px] text-gray-500 uppercase tracking-widest font-mono">Secured by Gemini AI</span>
+                <span className="text-[10px] text-gray-500 uppercase tracking-widest font-mono">Powered by Aria AI · TrivianEdge</span>
             </div>
         </div>
       </div>

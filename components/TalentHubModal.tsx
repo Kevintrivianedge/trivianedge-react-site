@@ -22,11 +22,16 @@ const InfoRow = ({ icon, label, text }: { icon: React.ReactNode, label: string, 
 );
 
 export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) => {
-  // Prevent body scroll when modal is open
+  // Prevent body scroll when modal is open — uses a counter so concurrent overlays
+  // (e.g. ChatSidebar) don't prematurely clear the lock when one of them closes (#16).
   useEffect(() => {
+    const prev = parseInt(document.body.dataset.scrollLocks ?? '0', 10);
+    document.body.dataset.scrollLocks = String(prev + 1);
     document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'unset';
+      const next = Math.max(0, parseInt(document.body.dataset.scrollLocks ?? '1', 10) - 1);
+      document.body.dataset.scrollLocks = String(next);
+      if (next === 0) document.body.style.overflow = '';
     };
   }, []);
 

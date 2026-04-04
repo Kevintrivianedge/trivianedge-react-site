@@ -20,15 +20,18 @@ const TalentAdvisor: React.FC = () => {
       });
       const data = await response.json() as { text?: string };
       const text = data.text || "Connection timeout. Please re-initiate uplink.";
+      // Batch character reveals every 30ms instead of one state update per character
+      // to avoid hundreds of rapid re-renders.
       let i = 0;
+      const CHUNK = 3; // reveal this many characters per tick
       const interval = setInterval(() => {
+        i = Math.min(i + CHUNK, text.length);
         setResult(text.slice(0, i));
-        i++;
-        if (i > text.length) {
+        if (i >= text.length) {
           clearInterval(interval);
           setLoading(false);
         }
-      }, 15);
+      }, 30);
     } catch (error) {
       setResult("Failed to connect to the Intelligence Engine. Please try again in a moment.");
       setLoading(false);
