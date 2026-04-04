@@ -100,9 +100,14 @@ export default {
       return handleEarlyAccess(request, env, corsHeaders);
     }
 
-    // Serve static assets if present; otherwise don't crash
+    // Serve static assets; fall back to index.html for SPA client-side routing
     if (env.ASSETS && typeof env.ASSETS.fetch === 'function') {
-      return env.ASSETS.fetch(request);
+      const assetResponse = await env.ASSETS.fetch(request);
+      if (assetResponse.status === 404) {
+        const indexRequest = new Request(new URL('/index.html', request.url).toString());
+        return env.ASSETS.fetch(indexRequest);
+      }
+      return assetResponse;
     }
 
     return new Response('Not found', { status: 404, headers: corsHeaders });
