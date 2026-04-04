@@ -6,6 +6,7 @@ tsconfig = "tsconfig.worker.json"
 [assets]
 directory = "./dist"
 binding = "ASSETS"
+not_found_handling = "none"
 html_handling = "none"
 
 # IMPORTANT: Before deploying, set the GEMINI_API_KEY secret:

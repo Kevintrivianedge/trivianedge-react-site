@@ -73,11 +73,33 @@ export default {
     const origin = request.headers.get('Origin');
     const corsHeaders = makeCorsHeaders(origin);
 
-    // CORS preflight
+    // CORS preflight — handle first
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders });
     }
 
+    // ALL /api/* routes — handled by worker, never fall through to assets
+    if (url.pathname.startsWith('/api/')) {
+      if (url.pathname === '/api/health') {
+        return new Response(
+          JSON.stringify({ status: 'ok', timestamp: Date.now(), gemini_key_set: !!env.GEMINI_API_KEY }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+        );
+      }
+      if (url.pathname === '/api/chat' && request.method === 'POST') {
+        return handleChat(request, env);
+      }
+      if (url.pathname === '/api/generate' && request.method === 'POST') {
+        return handleGenerate(request, env);
+      }
+      // Unknown /api/* route
+      return new Response(JSON.stringify({ error: 'Unknown API route' }), {
+        status: 404,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Serve static assets (React SPA)
     // Rate limiting — keyed by the connecting IP.
     const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('X-Forwarded-For') ?? 'unknown';
     if (isRateLimited(ip)) {
@@ -110,7 +132,7 @@ export default {
       return assetResponse;
     }
 
-    return new Response('Not found', { status: 404, headers: corsHeaders });
+    return new Response('Not found', { status: 404 });
   },
 } satisfies ExportedHandler<Env>;
 
