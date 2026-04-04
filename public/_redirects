@@ -1,0 +1,2 @@
+# SPA routing is handled by the Cloudflare Worker (src/worker.ts).
+# This file intentionally has no redirect rules.
