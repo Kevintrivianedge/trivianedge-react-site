@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-CA">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +8,7 @@
     <meta name="description" content="TrivianEdge is Canada's leading BPO and offshore software development company. We deliver IT outsourcing, global talent deployment, and managed remote teams across 6 time zones. 30-day deployment. Up to 40% cost savings.">
     <meta name="keywords" content="BPO Canada, business process outsourcing, offshore software development, IT outsourcing, talent outsourcing, offshore development team, remote teams Canada, global staffing, managed IT services, AI staffing, custom software development, software development outsourcing, offshore BPO, outsourcing company Canada, TrivianEdge">
     <meta name="author" content="TrivianEdge Global">
+    <meta name="application-name" content="TrivianEdge">
     <meta name="theme-color" content="#22d3ee">
     <meta name="rating" content="general">
     <meta name="revisit-after" content="1 day">
@@ -24,6 +25,11 @@
 
     <!-- Canonical -->
     <link rel="canonical" href="https://www.trivianedge.com/">
+
+    <!-- Hreflang — international targeting -->
+    <link rel="alternate" hreflang="en" href="https://www.trivianedge.com/">
+    <link rel="alternate" hreflang="en-CA" href="https://www.trivianedge.com/">
+    <link rel="alternate" hreflang="x-default" href="https://www.trivianedge.com/">
 
     <!-- Geo tags — important for "BPO Canada" and "outsourcing Canada" queries -->
     <meta name="geo.region" content="CA-ON">
@@ -63,7 +69,10 @@
     <meta property="og:image:secure_url" content="https://www.trivianedge.com/og-image.svg">
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self' https://generativelanguage.googleapis.com https://ipapi.co https://api.open-meteo.com https://api.resend.com https://api2.amplitude.com https://api.amplitude.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; worker-src 'self' blob:;">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <link rel="manifest" href="/manifest.json">
+    <!-- CSP: 'unsafe-inline' in script-src is required for JSON-LD structured-data injected by react-helmet-async -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://generativelanguage.googleapis.com https://ipapi.co https://api.open-meteo.com https://api.resend.com https://api2.amplitude.com https://api.amplitude.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; worker-src 'self' blob:;">
 
     <!-- DNS prefetch for performance -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
