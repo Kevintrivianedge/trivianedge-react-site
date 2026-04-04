@@ -2,29 +2,38 @@ import React, { useRef, useEffect } from 'react';
 import { ArrowRight, Network, MessageSquare } from 'lucide-react';
 import { TalentHub } from '../types';
 
+// ---------------------------------------------------------------------------
+// Shared scroll bus — a single window scroll listener that fans out to all
+// registered card update callbacks. This replaces one listener per card (#23).
+// ---------------------------------------------------------------------------
+type ScrollCallback = () => void;
+const scrollCallbacks = new Set<ScrollCallback>();
+let sharedScrollAttached = false;
+
+function registerScrollCallback(cb: ScrollCallback): () => void {
+  if (!sharedScrollAttached) {
+    window.addEventListener('scroll', () => scrollCallbacks.forEach(fn => fn()), { passive: true });
+    sharedScrollAttached = true;
+  }
+  scrollCallbacks.add(cb);
+  cb(); // run once on mount
+  return () => scrollCallbacks.delete(cb);
+}
+
 const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: TalentHub) => void }> = ({ hub, index, onClick }) => {
   const cardRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const update = () => {
       if (!cardRef.current) return;
       const rect = cardRef.current.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
-      
       const centerOffset = (rect.top + rect.height / 2) - (viewportHeight / 2);
       const progress = centerOffset / (viewportHeight / 2);
-      
-      const shift1 = progress * -60;
-      const shift2 = progress * 30;
-      
-      cardRef.current.style.setProperty('--p-offset-1', `${shift1}px`);
-      cardRef.current.style.setProperty('--p-offset-2', `${shift2}px`);
+      cardRef.current.style.setProperty('--p-offset-1', `${progress * -60}px`);
+      cardRef.current.style.setProperty('--p-offset-2', `${progress * 30}px`);
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
+    return registerScrollCallback(update);
   }, []);
 
   return (
@@ -32,7 +41,7 @@ const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: Ta
       ref={cardRef}
       type="button"
       onClick={() => onClick(hub)}
-      className="reveal glass w-full text-left p-8 md:p-10 rounded-[2.5rem] border-border hover-neon-glow relative overflow-hidden group"
+      className="reveal glass tilt-card w-full text-left p-8 md:p-10 rounded-[2.5rem] border-border hover-neon-glow relative overflow-hidden group"
       style={{ transitionDelay: `${index * 100}ms` } as React.CSSProperties}
     >
       <div 

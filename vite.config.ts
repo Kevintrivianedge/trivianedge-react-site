@@ -27,6 +27,7 @@ export default defineConfig({
           motion: ['framer-motion'],
           icons: ['lucide-react'],
           seo: ['react-helmet-async'],
+          amplitude: ['@amplitude/unified'],
         },
       },
     },

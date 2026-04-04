@@ -6,7 +6,7 @@ const BlogCard: React.FC<{ post: BlogPost; onClick: (id: string) => void; index:
   <button
     type="button"
     onClick={() => onClick(post.id)}
-    className="reveal glass group w-full text-left p-8 rounded-[2.5rem] border-border hover-neon-glow overflow-hidden relative"
+    className="reveal glass tilt-card group w-full text-left p-8 rounded-[2.5rem] border-border hover-neon-glow overflow-hidden relative"
     style={{ transitionDelay: `${index * 200}ms` }}
   >
     <div className={`absolute top-0 left-0 w-full h-32 bg-gradient-to-br ${post.imageGradient} opacity-20 group-hover:opacity-40 transition-opacity`} />

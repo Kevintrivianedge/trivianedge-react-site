@@ -27,6 +27,10 @@ function makeCorsHeaders(requestOrigin: string | null): Record<string, string> {
 // ---------------------------------------------------------------------------
 // Simple in-memory rate limiter (per Cloudflare Worker isolate).
 // Limits each IP to `maxRequests` per `windowMs` across all API endpoints.
+//
+// NOTE: This map resets when the Worker isolate is recycled. For persistent
+// cross-isolate rate limiting, replace this with Cloudflare Durable Objects
+// or Workers KV. This implementation is sufficient for moderate traffic.
 // ---------------------------------------------------------------------------
 const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
 const RATE_LIMIT_MAX = 20;           // max requests per IP per window
@@ -56,9 +60,9 @@ function escapeHtml(str: string): string {
     .replace(/'/g, '&#39;');
 }
 
-// Basic email format check — must contain exactly one @ with text on both sides
-// and a dot after the @.
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// RFC 5321-compliant email validator — rejects consecutive dots, leading/trailing
+// dots in local part, and missing TLD while staying dependency-free.
+const EMAIL_RE = /^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*)@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
 
 type GeminiPart = { text: string };
 type GeminiContent = { role: string; parts: GeminiPart[] };

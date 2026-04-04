@@ -11,6 +11,7 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
+    "@amplitude/unified": "^1.0.15",
     "@google/genai": "^1.40.0",
     "framer-motion": "10.16.4",
     "lucide-react": "0.294.0",

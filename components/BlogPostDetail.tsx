@@ -3,6 +3,43 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
 import { BLOG_POSTS } from '../constants';
 
+// Lightweight inline markdown renderer — handles **bold**, *italic*, [links](url),
+// # headings, and ## sub-headings so blog content formats correctly (#19).
+function renderMarkdown(text: string): React.ReactNode[] {
+  const paragraphs = text.split('\n\n');
+  return paragraphs.map((para, pi) => {
+    // Heading H2
+    if (para.startsWith('## ')) {
+      return <h2 key={pi} className="text-2xl font-bold text-text mt-4 mb-2">{para.slice(3)}</h2>;
+    }
+    // Heading H1
+    if (para.startsWith('# ')) {
+      return <h2 key={pi} className="text-3xl font-bold text-text mt-6 mb-3">{para.slice(2)}</h2>;
+    }
+    // Parse inline bold, italic, links within a paragraph
+    const inlineTokens = para.split(/(\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\([^)]+\))/g);
+    const inline = inlineTokens.map((tok, ti) => {
+      if (tok.startsWith('**') && tok.endsWith('**')) {
+        return <strong key={ti} className="text-text font-bold">{tok.slice(2, -2)}</strong>;
+      }
+      if (tok.startsWith('*') && tok.endsWith('*')) {
+        return <em key={ti}>{tok.slice(1, -1)}</em>;
+      }
+      const linkMatch = tok.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      if (linkMatch) {
+        return (
+          <a key={ti} href={linkMatch[2]} target="_blank" rel="noopener noreferrer"
+            className="text-cyan-400 underline hover:text-cyan-300 transition-colors">
+            {linkMatch[1]}
+          </a>
+        );
+      }
+      return tok;
+    });
+    return <p key={pi}>{inline}</p>;
+  });
+}
+
 const BlogPostDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
@@ -69,10 +106,8 @@ const BlogPostDetail: React.FC = () => {
           </div>
 
           <div className="prose prose-invert prose-lg max-w-none">
-            <div className="text-muted leading-relaxed space-y-8 text-xl">
-              {post.content.split('\n\n').map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
+            <div className="text-muted leading-relaxed space-y-6 text-xl">
+              {renderMarkdown(post.content)}
             </div>
           </div>
 

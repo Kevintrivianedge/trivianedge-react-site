@@ -41,8 +41,14 @@ import {
   buildServiceSchema,
   buildArticleSchema,
   buildSoftwareApplicationSchema,
-  SEO_CONFIG
+  buildLocalBusinessSchema,
+  buildBPOFAQSchema,
+  buildBreadcrumbSchema,
+  SEO_CONFIG,
+  ALL_KEYWORDS,
+  KEYWORD_CLUSTERS,
 } from './utils/seo';
+import { getSEOTrendSignal, getTrendKeywords } from './utils/seoTrends';
 
 // Extracted components
 import Logo from './components/Logo';
@@ -74,16 +80,21 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           
           <GreetingBanner />
 
-          <div className="reveal inline-flex items-center gap-3 px-4 py-2 rounded-full border border-border bg-surface backdrop-blur-md text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-8 text-text">
+          <div className="reveal inline-flex items-center gap-3 px-4 py-2 rounded-full border border-border bg-surface backdrop-blur-md text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-6 text-text">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            Canada-Based Deployment Partner
+            Canada's #1 BPO &amp; Offshore Outsourcing Partner
+          </div>
+          <div className="reveal flex flex-wrap gap-2 mb-6">
+            {['BPO', 'Offshore Development', 'IT Outsourcing', 'Remote Teams', 'Software Dev'].map(tag => (
+              <span key={tag} className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">{tag}</span>
+            ))}
           </div>
           <h1 className="reveal text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight mb-8 leading-[1] text-text cursor-pointer">
             <span className="glitch-text inline-block hover:text-cyan-400 transition-colors" data-text="Global Execution.">Global Execution.</span> <br className="hidden md:block" />
             <span className="glitch-text inline-block bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600" data-text="At Scale.">At Scale.</span>
           </h1>
           <p className="reveal text-muted text-lg md:text-2xl max-w-3xl mb-12 leading-relaxed">
-            Integrated teams across 6 time zones. 30-day deployment. Real clients. Real results. When you need to launch fast, enter a new market, or fix what broke with your last offshore team — you need more than a recruiter. You need a partner who understands that hiring is only 10% of the problem. The other 90% is deployment.
+            Canada's leading <strong className="text-text">BPO and offshore outsourcing company</strong>. We deploy elite global talent, custom software development teams, and managed IT services across 6 time zones — with a proven 30-day deployment model and up to 40% cost savings.
           </p>
           <div className="reveal flex flex-col sm:flex-row items-center gap-6">
             <a href="#contact" onClick={(e) => { e.preventDefault(); const el = document.getElementById('contact'); el?.scrollIntoView({behavior: 'smooth'}); }} className="w-full sm:w-auto px-10 py-5 bg-btn-bg text-btn-text rounded-2xl font-bold text-lg hover:bg-cyan-400 hover:text-white transition-all flex items-center justify-center gap-3 shadow-2xl shadow-surface group">
@@ -95,10 +106,10 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </a>
           </div>
           <div className="mt-20 pt-12 border-t border-border grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 opacity-70 hover:opacity-100 transition-opacity">
-            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">4</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Active Clients</span></div>
+            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">4+</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Active Clients</span></div>
             <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">6</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Time Zones</span></div>
-            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">30-Day</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Deployment</span></div>
-            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">24/7</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Operations</span></div>
+            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">40%</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">Cost Savings</span></div>
+            <div className="flex flex-col gap-1"><span className="text-2xl font-bold text-text">24/7</span><span className="text-[10px] tracking-widest text-muted uppercase font-bold">BPO Coverage</span></div>
           </div>
         </div>
       </section>
@@ -361,6 +372,62 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
       <AriaSection />
 
+      {/* BPO FAQ Section — targets featured snippets for BPO/outsourcing queries */}
+      <section id="faq" aria-label="BPO & Outsourcing FAQ" className="py-16 md:py-24 px-4 md:px-6 bg-surface">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16 reveal">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono tracking-widest uppercase mb-6">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              BPO &amp; Outsourcing FAQ
+            </span>
+            <h2 className="text-3xl md:text-5xl font-bold text-text font-['Space_Grotesk'] mb-4">
+              Everything You Need to Know About <span className="text-holo">BPO &amp; Offshore Outsourcing</span>
+            </h2>
+            <p className="text-muted text-lg max-w-2xl mx-auto">
+              Answers to the most common questions about BPO, offshore software development, and IT outsourcing with TrivianEdge.
+            </p>
+          </div>
+          <div className="space-y-4 reveal">
+            {[
+              {
+                q: "What is BPO (Business Process Outsourcing)?",
+                a: "Business Process Outsourcing (BPO) is the practice of contracting specific business functions to a third-party provider. TrivianEdge offers comprehensive BPO services including offshore software development, IT outsourcing, customer support, finance & accounting, and back-office operations — all managed from Canada with teams across 6 global time zones."
+              },
+              {
+                q: "Why choose TrivianEdge for offshore software development?",
+                a: "TrivianEdge is a Canada-based BPO and offshore development company with a proven 30-day deployment model. We source elite software developers, DevOps engineers, and AI specialists from our global talent hubs — delivering up to 40% cost savings vs. local hiring, with zero compromise on quality."
+              },
+              {
+                q: "How much can I save with offshore outsourcing?",
+                a: "Companies typically save 40–60% on talent costs by partnering with TrivianEdge for offshore staffing and BPO services. Our global talent hubs — Philippines, Sri Lanka, Vietnam, Turkey, Eastern Europe — provide highly skilled professionals at a fraction of North American rates."
+              },
+              {
+                q: "What software development services does TrivianEdge outsource?",
+                a: "We provide offshore software development outsourcing for full-stack development, AI/ML engineering, cloud & DevOps, mobile app development, UI/UX design, cybersecurity, and data engineering — all as dedicated offshore teams tailored to your tech stack."
+              },
+              {
+                q: "How fast can TrivianEdge deploy an offshore team?",
+                a: "Our standard deployment timeline is 30 days from first conversation to an active, integrated team. This includes discovery, sourcing, vetting, onboarding, and operational integration — significantly faster than traditional hiring processes."
+              },
+              {
+                q: "Is TrivianEdge a Canadian BPO company?",
+                a: "Yes. TrivianEdge is headquartered in Toronto, Canada and operates as a Canada-based global BPO and outsourcing company. We manage offshore talent deployment, IT outsourcing, and managed services for clients across North America, the UK, Australia, and the Middle East."
+              },
+            ].map((item, i) => (
+              <details key={i} className="glass border-border rounded-2xl group overflow-hidden">
+                <summary className="flex items-center justify-between p-6 cursor-pointer text-text font-bold text-lg list-none select-none hover:text-cyan-400 transition-colors">
+                  <span>{item.q}</span>
+                  <span className="ml-4 text-cyan-400 text-2xl font-light group-open:rotate-45 transition-transform duration-300 flex-shrink-0">+</span>
+                </summary>
+                <div className="px-6 pb-6 text-muted leading-relaxed border-t border-border pt-4">
+                  {item.a}
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="contact" aria-label="Contact Us" className="py-16 md:py-32 px-4 md:px-6">
         <div className="max-w-7xl mx-auto reveal">
           <div className="glass p-12 md:p-24 rounded-[4rem] border-border text-center relative overflow-hidden">
@@ -417,59 +484,96 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
   );
 };
 
-// SEO logic — uses route location to determine page meta
+// SEO logic — trend-adaptive, uses rotating keyword emphasis for fresh signals
 function getSEOProps(pathname: string) {
+  const trendKeywords = getTrendKeywords();
+
   // Blog post detail
   if (pathname.startsWith('/blog/')) {
     const slug = pathname.replace('/blog/', '').replace(/\/$/, '');
     const post = BLOG_POSTS.find(p => p.slug === slug || p.id === slug);
+    const signal = getSEOTrendSignal('blog-post');
     if (post) {
+      const postUrl = `${SEO_CONFIG.siteUrl}/blog/${post.slug ?? post.id}`;
       return {
         title: post.title,
         description: post.metaDescription ?? post.excerpt,
-        keywords: post.metaKeywords?.join(', ') ?? SEO_CONFIG.defaultKeywords,
-        canonical: `${SEO_CONFIG.siteUrl}/blog/${post.slug ?? post.id}`,
+        keywords: [post.metaKeywords?.join(', '), trendKeywords].filter(Boolean).join(', '),
+        canonical: postUrl,
         ogType: 'article' as const,
-        structuredData: buildArticleSchema({
-          title: post.title,
-          description: post.metaDescription ?? post.excerpt,
-          author: post.author,
-          date: post.datePublished ?? post.date,
-          url: `${SEO_CONFIG.siteUrl}/blog/${post.slug ?? post.id}`,
-          imageUrl: post.imageUrl,
-        }),
+        structuredData: [
+          buildArticleSchema({
+            title: post.title,
+            description: post.metaDescription ?? post.excerpt,
+            author: post.author,
+            date: post.datePublished ?? post.date,
+            url: postUrl,
+            imageUrl: post.imageUrl,
+          }),
+          buildBreadcrumbSchema([
+            { name: 'Home', url: SEO_CONFIG.siteUrl },
+            { name: 'Blog', url: `${SEO_CONFIG.siteUrl}/blog` },
+            { name: post.title, url: postUrl },
+          ]),
+        ],
       };
     }
   }
   if (pathname === '/blog') {
+    const signal = getSEOTrendSignal('blog');
     return {
-      title: 'Intelligence Feed — Global Talent & AI Insights',
-      description: 'Explore TrivianEdge insights on global talent, AI-driven operations, and remote workforce strategy.',
+      title: signal.titleVariant,
+      description: signal.descriptionVariant,
+      keywords: `BPO insights, outsourcing blog, offshore development news, ${trendKeywords}`,
       canonical: `${SEO_CONFIG.siteUrl}/blog`,
+      structuredData: buildBreadcrumbSchema([
+        { name: 'Home', url: SEO_CONFIG.siteUrl },
+        { name: 'Intelligence Feed', url: `${SEO_CONFIG.siteUrl}/blog` },
+      ]),
     };
   }
   if (pathname === '/privacy') {
     return {
-      title: 'Privacy Protocol — TrivianEdge Global',
-      description: 'TrivianEdge Global privacy policy and data protection information.',
+      title: 'Privacy Protocol — TrivianEdge BPO & Outsourcing Company',
+      description: 'TrivianEdge Global privacy policy for BPO, outsourcing, and offshore services. PIPEDA and GDPR compliant.',
       canonical: `${SEO_CONFIG.siteUrl}/privacy`,
     };
   }
   if (pathname === '/terms') {
     return {
-      title: 'Terms of Engagement — TrivianEdge Global',
-      description: 'TrivianEdge Global terms of service and engagement.',
+      title: 'Terms of Engagement — TrivianEdge BPO & Outsourcing Services',
+      description: 'TrivianEdge terms of service for BPO, outsourcing, and offshore software development engagements.',
       canonical: `${SEO_CONFIG.siteUrl}/terms`,
     };
   }
-  // Home view — rich schema
+  // Home — maximum schema richness for BPO/outsourcing dominance
+  const signal = getSEOTrendSignal('home');
   return {
+    title: signal.titleVariant,
+    description: signal.descriptionVariant,
+    keywords: `${ALL_KEYWORDS}, ${trendKeywords}`,
     canonical: SEO_CONFIG.siteUrl,
     structuredData: [
       buildOrganizationSchema(),
+      buildLocalBusinessSchema(),
       buildWebSiteSchema(),
-      buildServiceSchema({ name: 'Global Talent Solutions', description: 'Elite global talent pipelines and AI-driven staffing solutions.' }),
+      buildServiceSchema({
+        name: 'BPO & Business Process Outsourcing',
+        description: 'Canada-based BPO services including offshore software development, IT outsourcing, talent staffing, and managed remote operations across 6 time zones.',
+        keywords: [...KEYWORD_CLUSTERS.bpo, ...KEYWORD_CLUSTERS.outsourcing],
+      }),
+      buildServiceSchema({
+        name: 'Offshore Software Development',
+        description: 'Dedicated offshore software development teams sourced from elite global talent hubs — Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe.',
+        keywords: [...KEYWORD_CLUSTERS.offshore, ...KEYWORD_CLUSTERS.softwareDev],
+      }),
+      buildServiceSchema({
+        name: 'Global Talent & IT Outsourcing',
+        description: 'AI-powered global talent acquisition and IT outsourcing for startups and enterprises. 30-day deployment, up to 40% cost savings.',
+        keywords: [...KEYWORD_CLUSTERS.talent, ...KEYWORD_CLUSTERS.outsourcing],
+      }),
       buildSoftwareApplicationSchema(),
+      buildBPOFAQSchema(),
     ],
   };
 }
@@ -545,7 +649,7 @@ export default function App() {
             <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-16 mb-20 reveal">
               <div className="md:col-span-2">
                 <div className="mb-8"><Logo onClick={() => { navigate('/'); window.scrollTo({top: 0, behavior: 'smooth'}); }} /></div>
-                <p className="text-muted text-lg max-w-sm mb-10 leading-relaxed">Canada-based deployment partner. We don't fill seats. We fix broken execution. 6 time zones. 1 synchronized operation.</p>
+                <p className="text-muted text-lg max-w-sm mb-10 leading-relaxed">Canada's BPO &amp; offshore outsourcing partner. We deploy elite software development teams and managed remote operations across 6 time zones. 30-day deployment. 40% cost savings.</p>
                 <div className="flex gap-6">
                   <a 
                     href="https://www.linkedin.com/company/trivianedge/" 

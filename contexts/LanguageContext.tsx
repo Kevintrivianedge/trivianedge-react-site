@@ -10,13 +10,19 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+const VALID_LANGUAGES: SupportedLanguage[] = ['en', 'fr', 'es', 'ar', 'si'];
+
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Initialize state synchronously to ensure children render immediately.
   // This prevents race conditions with IntersectionObservers in parent components.
   const [language, setLanguageState] = useState<SupportedLanguage>(() => {
     if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('user_language') as SupportedLanguage;
-      if (stored) return stored;
+      const stored = localStorage.getItem('user_language');
+      // Validate stored value against the known set of supported languages
+      // so tampered/outdated localStorage values don't cause undefined behaviour (#21).
+      if (stored && VALID_LANGUAGES.includes(stored as SupportedLanguage)) {
+        return stored as SupportedLanguage;
+      }
       return getLanguageFromBrowser();
     }
     return 'en';
