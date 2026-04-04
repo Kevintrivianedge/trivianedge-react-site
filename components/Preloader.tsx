@@ -49,7 +49,8 @@ export const Preloader: React.FC = () => {
   useEffect(() => {
     if (!isVisible) return;
 
-    // Run the animation for 2.5 seconds, then hide
+    // Bar animates for 2200ms, then we hide at 2200ms so the exit fade (500ms) starts
+    // immediately as the bar completes — no awkward gap (#22).
     const timer = setTimeout(() => {
       setIsVisible(false);
       try {
@@ -57,7 +58,7 @@ export const Preloader: React.FC = () => {
       } catch (e) {
         // ignore storage errors
       }
-    }, 2500);
+    }, 2200);
 
     return () => clearTimeout(timer);
   }, [isVisible]);
@@ -71,7 +72,7 @@ export const Preloader: React.FC = () => {
           initial={{ opacity: 1 }}
           exit={{ 
             opacity: 0,
-            transition: { duration: 0.8, ease: "easeInOut" } 
+            transition: { duration: 0.5, ease: "easeInOut" } 
           }}
         >
           {/* Ambient Background Glow */}
@@ -132,7 +133,7 @@ export const Preloader: React.FC = () => {
                 className="h-full bg-gradient-to-r from-cyan-400 to-violet-500"
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
-                transition={{ duration: 2, ease: "easeInOut" }}
+                transition={{ duration: 2.0, ease: "easeInOut" }}
               />
             </motion.div>
           </div>

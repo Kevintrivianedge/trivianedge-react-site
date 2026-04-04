@@ -44,6 +44,8 @@ export interface WhyUsItem {
   title: string;
   description: string;
   icon: React.ReactNode;
+  url?: string;
+  result?: string;
 }
 
 export interface BlogPost {
@@ -56,6 +58,14 @@ export interface BlogPost {
   readTime: string;
   category: string;
   imageGradient: string;
+  // SEO fields
+  slug?: string;
+  metaDescription?: string;
+  metaKeywords?: string[];
+  datePublished?: string;
+  dateModified?: string;
+  authorTwitter?: string;
+  imageUrl?: string;
 }
 
 // New Greeting & Geo Interfaces

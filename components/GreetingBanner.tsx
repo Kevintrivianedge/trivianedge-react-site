@@ -26,17 +26,11 @@ const GreetingBanner: React.FC = () => {
   const [temperature, setTemperature] = useState<number | null>(null);
   const [currentTime, setCurrentTime] = useState<string>('');
 
-  // Fetch Location & Timezone (Run once)
+  // Fetch Location & Timezone (Run once on mount)
   useEffect(() => {
-    // If we already have data from cache (optimistic init), we might still want to re-validate 
-    // or just rely on cache. For now, if we have data, we skip fetch to save bandwidth/time,
-    // assuming session storage is fresh enough for the session.
+    // If geo data is already in session storage, skip the fetch.
+    // Trigger temperature lookup separately via the geoData effect below.
     if (geoData) {
-      if (geoData.latitude && geoData.longitude && temperature === null) {
-        fetchTemperature(geoData.latitude, geoData.longitude).then(temp => {
-          if (temp !== null) setTemperature(temp);
-        });
-      }
       return;
     }
 
@@ -48,10 +42,6 @@ const GreetingBanner: React.FC = () => {
         if (isMounted) {
             setGeoData(data);
             setIsLoading(false);
-            if (data.latitude && data.longitude) {
-              const temp = await fetchTemperature(data.latitude, data.longitude);
-              if (isMounted && temp !== null) setTemperature(temp);
-            }
         }
       } catch (err) {
         if (isMounted) {
@@ -69,7 +59,19 @@ const GreetingBanner: React.FC = () => {
     initData();
 
     return () => { isMounted = false; };
-  }, [geoData, temperature]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // run once on mount; geoData is initialised from session storage synchronously
+
+  // Fetch temperature once we have coordinates — separate from the geo effect so
+  // adding temperature to that dep array doesn't cause unnecessary re-runs (#14).
+  useEffect(() => {
+    if (!geoData?.latitude || !geoData?.longitude) return;
+    let isMounted = true;
+    fetchTemperature(geoData.latitude, geoData.longitude).then(temp => {
+      if (isMounted && temp !== null) setTemperature(temp);
+    });
+    return () => { isMounted = false; };
+  }, [geoData]);
 
   useEffect(() => {
     if (!geoData) return;

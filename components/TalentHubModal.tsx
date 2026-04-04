@@ -22,11 +22,16 @@ const InfoRow = ({ icon, label, text }: { icon: React.ReactNode, label: string, 
 );
 
 export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) => {
-  // Prevent body scroll when modal is open
+  // Prevent body scroll when modal is open — uses a counter so concurrent overlays
+  // (e.g. ChatSidebar) don't prematurely clear the lock when one of them closes (#16).
   useEffect(() => {
+    const prev = parseInt(document.body.dataset.scrollLocks ?? '0', 10);
+    document.body.dataset.scrollLocks = String(prev + 1);
     document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'unset';
+      const next = Math.max(0, parseInt(document.body.dataset.scrollLocks ?? '1', 10) - 1);
+      document.body.dataset.scrollLocks = String(next);
+      if (next === 0) document.body.style.overflow = '';
     };
   }, []);
 
@@ -52,7 +57,7 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
   };
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4">
       {/* Backdrop */}
       <motion.div 
         className="absolute inset-0 bg-black/80 backdrop-blur-md"
@@ -62,9 +67,9 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
         onClick={onClose}
       />
       
-      {/* Modal Content */}
+      {/* Modal Content — full screen on mobile, max-w-5xl on larger screens */}
       <motion.div 
-        className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-[#020203] border border-border rounded-[2.5rem] shadow-2xl shadow-cyan-900/20 scrollbar-hide"
+        className="relative w-full h-full sm:h-auto sm:max-h-[90vh] sm:max-w-5xl overflow-y-auto bg-[#020203] border-0 sm:border sm:border-border rounded-none sm:rounded-[2.5rem] shadow-2xl shadow-cyan-900/20 scrollbar-hide"
         initial={{ scale: 0.9, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -76,7 +81,8 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
         {/* Close Button */}
         <button 
           onClick={onClose}
-          className="absolute top-6 right-6 p-2 rounded-full bg-surface border border-border text-muted hover:text-white hover:bg-white/10 transition-colors z-20"
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-surface border border-border text-muted hover:text-white hover:bg-white/10 transition-colors z-20 min-w-[44px] min-h-[44px] flex items-center justify-center"
+          aria-label="Close modal"
         >
           <X className="w-6 h-6" />
         </button>
@@ -177,7 +183,13 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-xs text-muted font-mono uppercase tracking-widest">Pipeline Active • Ready for Deployment</span>
             </div>
-            <button className="group flex items-center gap-3 px-8 py-4 bg-white text-black rounded-xl font-bold uppercase tracking-widest hover:bg-cyan-400 hover:text-white transition-all shadow-lg hover:shadow-cyan-400/20">
+            <button
+              onClick={() => {
+                onClose();
+                setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 300);
+              }}
+              className="group flex items-center gap-3 px-8 py-4 bg-white text-black rounded-xl font-bold uppercase tracking-widest hover:bg-cyan-400 hover:text-white transition-all shadow-lg hover:shadow-cyan-400/20"
+            >
                 <span>Initiate Hiring Protocol</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
