@@ -6,6 +6,7 @@ tsconfig = "tsconfig.worker.json"
 [assets]
 directory = "./dist"
 binding = "ASSETS"
+html_handling = "none"
 
 # IMPORTANT: Before deploying, set the GEMINI_API_KEY secret:
 # Run: wrangler secret put GEMINI_API_KEY
