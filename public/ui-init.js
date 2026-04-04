@@ -58,3 +58,28 @@
     });
   }, { passive: true });
 })();
+
+/* ── Magnetic button effect ── */
+(function() {
+  var activeBtn = null;
+  document.addEventListener('mousemove', function(e) {
+    if (!activeBtn) return;
+    var r = activeBtn.getBoundingClientRect();
+    var dx = e.clientX - (r.left + r.width / 2);
+    var dy = e.clientY - (r.top + r.height / 2);
+    activeBtn.style.transform = 'translate(' + (dx * 0.28).toFixed(2) + 'px, ' + (dy * 0.28).toFixed(2) + 'px)';
+  }, { passive: true });
+  document.addEventListener('mouseover', function(e) {
+    var t = e.target;
+    while (t && t !== document.body) {
+      if (t.classList && t.classList.contains('btn-magnetic')) { activeBtn = t; return; }
+      t = t.parentElement;
+    }
+  }, { passive: true });
+  document.addEventListener('mouseout', function(e) {
+    if (activeBtn && !activeBtn.contains(e.relatedTarget)) {
+      activeBtn.style.transform = '';
+      activeBtn = null;
+    }
+  }, { passive: true });
+})();
