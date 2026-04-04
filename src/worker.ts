@@ -7,11 +7,58 @@ export interface Env {
 
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 
-const corsHeaders: Record<string, string> = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-};
+// Restrict CORS to the production origin only.
+const ALLOWED_ORIGIN = 'https://www.trivianedge.com';
+
+function makeCorsHeaders(requestOrigin: string | null): Record<string, string> {
+  // Allow the canonical production origin and localhost for development.
+  const origin =
+    requestOrigin === ALLOWED_ORIGIN || requestOrigin?.startsWith('http://localhost')
+      ? (requestOrigin as string)
+      : ALLOWED_ORIGIN;
+  return {
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Vary': 'Origin',
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Simple in-memory rate limiter (per Cloudflare Worker isolate).
+// Limits each IP to `maxRequests` per `windowMs` across all API endpoints.
+// ---------------------------------------------------------------------------
+const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
+const RATE_LIMIT_MAX = 20;           // max requests per IP per window
+
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now >= entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+  entry.count += 1;
+  return entry.count > RATE_LIMIT_MAX;
+}
+
+// ---------------------------------------------------------------------------
+// HTML-escape helper — prevents XSS in outgoing Resend email bodies.
+// ---------------------------------------------------------------------------
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// Basic email format check — must contain exactly one @ with text on both sides
+// and a dot after the @.
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 type GeminiPart = { text: string };
 type GeminiContent = { role: string; parts: GeminiPart[] };
@@ -19,23 +66,34 @@ type GeminiContent = { role: string; parts: GeminiPart[] };
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
+    const origin = request.headers.get('Origin');
+    const corsHeaders = makeCorsHeaders(origin);
 
     // CORS preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders });
     }
 
+    // Rate limiting — keyed by the connecting IP.
+    const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('X-Forwarded-For') ?? 'unknown';
+    if (isRateLimited(ip)) {
+      return new Response(JSON.stringify({ error: 'Too many requests. Please wait a moment and try again.' }), {
+        status: 429,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     // API routes
     if (url.pathname === '/api/chat' && request.method === 'POST') {
-      return handleChat(request, env);
+      return handleChat(request, env, corsHeaders);
     }
 
     if (url.pathname === '/api/generate' && request.method === 'POST') {
-      return handleGenerate(request, env);
+      return handleGenerate(request, env, corsHeaders);
     }
 
     if (url.pathname === '/api/early-access' && request.method === 'POST') {
-      return handleEarlyAccess(request, env);
+      return handleEarlyAccess(request, env, corsHeaders);
     }
 
     // Serve static assets if present; otherwise don't crash
@@ -47,7 +105,7 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 
-async function handleChat(request: Request, env: Env): Promise<Response> {
+async function handleChat(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
   const body = await request.json<{
     message: string;
     history?: GeminiContent[];
@@ -103,7 +161,7 @@ async function handleChat(request: Request, env: Env): Promise<Response> {
   });
 }
 
-async function handleGenerate(request: Request, env: Env): Promise<Response> {
+async function handleGenerate(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
   const body = await request.json<{ prompt: string; model?: string }>();
 
   const prompt = typeof body.prompt === 'string' ? body.prompt : '';
@@ -139,7 +197,7 @@ async function handleGenerate(request: Request, env: Env): Promise<Response> {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 }
-async function handleEarlyAccess(request: Request, env: Env): Promise<Response> {
+async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
   const body = await request.json<{ company?: string; email?: string; size?: string }>();
 
   const company = typeof body.company === 'string' ? body.company.trim() : '';
@@ -153,8 +211,21 @@ async function handleEarlyAccess(request: Request, env: Env): Promise<Response> 
     });
   }
 
+  // Validate email format before accepting the submission.
+  if (!EMAIL_RE.test(email)) {
+    return new Response(JSON.stringify({ success: false, error: 'Please provide a valid email address.' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
   // Send notification email via Resend API
   if (env.RESEND_API_KEY) {
+    // HTML-escape all user-supplied values before interpolating into the email body.
+    const safeCompany = escapeHtml(company);
+    const safeEmail = escapeHtml(email);
+    const safeSize = escapeHtml(size);
+
     const resendRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -164,13 +235,13 @@ async function handleEarlyAccess(request: Request, env: Env): Promise<Response> 
       body: JSON.stringify({
         from: 'Trivian Aria <aria@trivianedge.com>',
         to: ['info@trivianedge.com'],
-        subject: `New Early Access Request — ${company}`,
+        subject: `New Early Access Request — ${safeCompany}`,
         html: `
           <h2>New Early Access Request</h2>
           <table cellpadding="8" style="border-collapse:collapse">
-            <tr><td><strong>Company</strong></td><td>${company}</td></tr>
-            <tr><td><strong>Email</strong></td><td>${email}</td></tr>
-            <tr><td><strong>Company Size</strong></td><td>${size}</td></tr>
+            <tr><td><strong>Company</strong></td><td>${safeCompany}</td></tr>
+            <tr><td><strong>Email</strong></td><td>${safeEmail}</td></tr>
+            <tr><td><strong>Company Size</strong></td><td>${safeSize}</td></tr>
           </table>
         `,
       }),

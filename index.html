@@ -42,7 +42,7 @@
     <meta name="twitter:image" content="https://www.trivianedge.com/og-image.jpg">
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; connect-src 'self' https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://generativelanguage.googleapis.com https://ipapi.co https://api.open-meteo.com https://api.resend.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:;">
 
     <!-- DNS prefetch for performance -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -317,21 +317,7 @@
             }
         }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@18.2.0?dev",
-    "react/jsx-runtime": "https://esm.sh/react@18.2.0/jsx-runtime?dev",
-    "react-dom": "https://esm.sh/react-dom@18.2.0?dev",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client?dev",
-    "lucide-react": "https://esm.sh/lucide-react@0.294.0?external=react,react-dom&dev",
-    "framer-motion": "https://esm.sh/framer-motion@10.16.4?external=react,react-dom&dev",
-    "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
-  }
-}
-</script>
+<!-- Vite bundles all dependencies — no browser importmap needed -->
 
 </head>
 <body>

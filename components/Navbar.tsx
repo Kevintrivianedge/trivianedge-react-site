@@ -24,14 +24,18 @@ const Navbar: React.FC = () => {
       navigate('/blog');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      navigate('/');
-      setTimeout(() => {
-        const id = href.replace('#', '');
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 50);
+      const id = href.replace('#', '');
+      if (window.location.pathname === '/') {
+        // Already on home — scroll immediately without a route change.
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        navigate('/');
+        // 150ms gives React Router + IntersectionObserver a comfortable margin
+        // to fully render the home page sections before we try to scroll.
+        setTimeout(() => {
+          document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        }, 150);
+      }
     }
   };
 

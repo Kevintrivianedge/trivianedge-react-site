@@ -500,8 +500,14 @@ export default function App() {
   }, [location.pathname]);
 
   const scrollToSection = (sectionId: string) => {
-    navigate('/');
-    setTimeout(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }), 50);
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Wait for React Router to render the home page before scrolling.
+      // 150ms gives the router + IntersectionObserver a comfortable margin.
+      setTimeout(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }), 150);
+    } else {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const seoProps = getSEOProps(location.pathname);
@@ -571,20 +577,20 @@ export default function App() {
               <div>
                 <h4 className="font-bold text-text mb-8 tracking-widest uppercase text-xs">Platform</h4>
                 <ul className="space-y-6 text-muted font-medium">
-                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('solutions'); }} className="hover:text-text transition-colors">Core Offerings</a></li>
-                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('talent-hubs'); }} className="hover:text-text transition-colors">Talent Hubs</a></li>
-                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('roles'); }} className="hover:text-text transition-colors">Global Roles</a></li>
-                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('aria'); }} className="hover:text-text transition-colors">Trivian Aria</a></li>
+                  <li><a href="/#solutions" onClick={(e) => { e.preventDefault(); scrollToSection('solutions'); }} className="hover:text-text transition-colors">Core Offerings</a></li>
+                  <li><a href="/#talent-hubs" onClick={(e) => { e.preventDefault(); scrollToSection('talent-hubs'); }} className="hover:text-text transition-colors">Talent Hubs</a></li>
+                  <li><a href="/#roles" onClick={(e) => { e.preventDefault(); scrollToSection('roles'); }} className="hover:text-text transition-colors">Global Roles</a></li>
+                  <li><a href="/#aria" onClick={(e) => { e.preventDefault(); scrollToSection('aria'); }} className="hover:text-text transition-colors">Trivian Aria</a></li>
                   <li><Link to="/blog" className="hover:text-text transition-colors">Intelligence Feed</Link></li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-bold text-text mb-8 tracking-widest uppercase text-xs">Resources</h4>
                 <ul className="space-y-6 text-muted font-medium">
-                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('process'); }} className="hover:text-text transition-colors">Operating Model</a></li>
-                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('talent-hubs'); }} className="hover:text-text transition-colors">Global Hubs</a></li>
+                  <li><a href="/#process" onClick={(e) => { e.preventDefault(); scrollToSection('process'); }} className="hover:text-text transition-colors">Operating Model</a></li>
+                  <li><a href="/#talent-hubs" onClick={(e) => { e.preventDefault(); scrollToSection('talent-hubs'); }} className="hover:text-text transition-colors">Global Hubs</a></li>
                   <li><Link to="/privacy" className="hover:text-text transition-colors">Legal &amp; Compliance</Link></li>
-                  <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="hover:text-text transition-colors">Contact Support</a></li>
+                  <li><a href="/#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="hover:text-text transition-colors">Contact Support</a></li>
                 </ul>
               </div>
             </div>

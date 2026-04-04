@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { X, Send, MessageSquare, Terminal, Loader2, User, Bot, Sparkles, Trash2, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SERVICES, TALENT_HUBS, ROLES, WHY_US } from '../constants';
@@ -56,14 +56,19 @@ const VaraAvatar = ({ isTyping = false, size = 'md' }) => {
         setTimeout(() => setIsInteracting(false), 1500);
     };
 
-    // Generate random particles for thinking state
-    const particles = Array.from({ length: 5 }).map((_, i) => ({
-        id: i,
-        delay: i * 0.2,
-        duration: 1 + Math.random(),
-        x: (Math.random() - 0.5) * 40,
-        y: (Math.random() - 0.5) * 40 - 20,
-    }));
+    // Generate random particles for thinking state — stabilised with useMemo so positions
+    // don't reset on every re-render (which restarts the Framer Motion animation).
+    const particles = useMemo(
+        () =>
+            Array.from({ length: 5 }).map((_, i) => ({
+                id: i,
+                delay: i * 0.2,
+                duration: 1 + Math.random(),
+                x: (Math.random() - 0.5) * 40,
+                y: (Math.random() - 0.5) * 40 - 20,
+            })),
+        [], // computed once per VaraAvatar mount
+    );
 
     return (
         <motion.div 
@@ -195,6 +200,7 @@ export const ChatSidebar: React.FC = () => {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const systemContextRef = useRef<string>('');
+  const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -301,12 +307,24 @@ ${userContext}
   useEffect(() => {
     if (isOpen) {
         initChat();
-        // Lock body scroll
+        // Focus input when sidebar opens (#9 — autoFocus only fires on mount, not re-open)
+        setTimeout(() => inputRef.current?.focus(), 50);
+        // Lock body scroll using a counter so concurrent overlays don't conflict (#16)
+        const prev = parseInt(document.body.dataset.scrollLocks ?? '0', 10);
+        document.body.dataset.scrollLocks = String(prev + 1);
         document.body.style.overflow = 'hidden';
     } else {
-        document.body.style.overflow = 'unset';
+        const prev = parseInt(document.body.dataset.scrollLocks ?? '1', 10);
+        const next = Math.max(0, prev - 1);
+        document.body.dataset.scrollLocks = String(next);
+        if (next === 0) document.body.style.overflow = '';
     }
-    return () => { document.body.style.overflow = 'unset'; }
+    return () => {
+        const prev = parseInt(document.body.dataset.scrollLocks ?? '1', 10);
+        const next = Math.max(0, prev - 1);
+        document.body.dataset.scrollLocks = String(next);
+        if (next === 0) document.body.style.overflow = '';
+    };
   }, [isOpen]);
 
   const handleSend = async () => {
@@ -366,14 +384,13 @@ ${userContext}
                     const text: string = parsed.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
                     if (text) {
                         fullResponse += text;
-                        setMessages(prev => {
-                            const newMsgs = [...prev];
-                            const lastMsg = newMsgs[newMsgs.length - 1];
-                            if (lastMsg.role === 'model') {
-                                lastMsg.text = fullResponse;
-                            }
-                            return newMsgs;
-                        });
+                        setMessages(prev =>
+                            prev.map((msg, i) =>
+                                i === prev.length - 1 && msg.role === 'model'
+                                    ? { ...msg, text: fullResponse }
+                                    : msg,
+                            ),
+                        );
                     }
                 } catch (_e) {
                     // Skip unparseable SSE lines (e.g., empty data, incomplete JSON)
@@ -382,14 +399,13 @@ ${userContext}
         }
 
         if (!fullResponse) {
-            setMessages(prev => {
-                const newMsgs = [...prev];
-                const lastMsg = newMsgs[newMsgs.length - 1];
-                if (lastMsg.role === 'model' && !lastMsg.text) {
-                    lastMsg.text = 'Security protocol triggered. Connection interrupted. Please try again.';
-                }
-                return newMsgs;
-            });
+            setMessages(prev =>
+                prev.map((msg, i) =>
+                    i === prev.length - 1 && msg.role === 'model' && !msg.text
+                        ? { ...msg, text: 'Security protocol triggered. Connection interrupted. Please try again.' }
+                        : msg,
+                ),
+            );
         }
     } catch (error) {
         console.error("Chat error", error);
@@ -548,6 +564,7 @@ ${userContext}
         <div className="p-4 sm:p-6 border-t border-white/10 bg-black/20 backdrop-blur-md relative z-10">
             <div className="relative group">
                 <input 
+                    ref={inputRef}
                     type="text" 
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
@@ -555,7 +572,6 @@ ${userContext}
                     placeholder="Inquire about our capabilities..."
                     style={{ fontSize: '16px' }} // Prevent iOS zoom on focus
                     className="w-full bg-black/40 border border-white/10 rounded-xl py-4 pl-4 pr-12 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:bg-black/60 transition-all font-mono"
-                    autoFocus={isOpen}
                 />
                 <button 
                     onClick={handleSend}
