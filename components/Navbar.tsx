@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
           <LanguageSelector />
           <ThemeToggle />
           
-          <a href="#contact" onClick={(e) => { e.preventDefault(); handleNavClick('#contact'); }} className="px-6 py-2.5 bg-btn-bg text-btn-text rounded-full text-xs font-bold uppercase tracking-widest hover:bg-cyan-400 hover:text-white transition-all">
+          <a href="#contact" onClick={(e) => { e.preventDefault(); handleNavClick('#contact'); }} className="px-6 py-2.5 bg-btn-bg text-btn-text rounded-full text-xs font-bold uppercase tracking-widest hover:bg-cyan-400 hover:text-white transition-all btn-magnetic">
             Talk To Us
           </a>
         </div>

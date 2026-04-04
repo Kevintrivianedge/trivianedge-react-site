@@ -60,7 +60,7 @@ const AriaSection: React.FC = () => {
           {ARIA_FEATURES.map((feature, i) => (
             <div
               key={feature.title}
-              className="reveal glass p-8 rounded-[2.5rem] border-border bg-surface hover:border-cyan-500/30 transition-all duration-300 group relative overflow-hidden"
+              className="reveal glass p-8 rounded-[2.5rem] border-border bg-surface hover:border-cyan-500/30 transition-all duration-300 group relative overflow-hidden tilt-card"
               style={{ animationDelay: `${i * 80}ms` }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />

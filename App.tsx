@@ -82,7 +82,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           
           <GreetingBanner />
 
-          <div className="reveal inline-flex items-center gap-3 px-4 py-2 rounded-full border border-border bg-surface backdrop-blur-md text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-6 text-text">
+          <div className="reveal inline-flex items-center gap-3 px-4 py-2 rounded-full border border-border bg-surface backdrop-blur-md text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-6 text-text float-badge">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
             Canada's #1 BPO &amp; Offshore Outsourcing Partner
           </div>
@@ -93,17 +93,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </div>
           <h1 className="reveal text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight mb-8 leading-[1] text-text cursor-pointer">
             <span className="glitch-text inline-block hover:text-cyan-400 transition-colors" data-text="Global Execution.">Global Execution.</span> <br className="hidden md:block" />
-            <span className="glitch-text inline-block bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600" data-text="At Scale.">At Scale.</span>
+            <span className="glitch-text inline-block text-holo" data-text="At Scale.">At Scale.</span>
           </h1>
           <p className="reveal text-muted text-lg md:text-2xl max-w-3xl mb-12 leading-relaxed">
-            Canada's leading <strong className="text-text">BPO and offshore outsourcing company</strong>. We deploy elite global talent, custom software development teams, and managed IT services across 6 time zones — with a proven 30-day deployment model and up to 40% cost savings.
+            Canada's leading <strong className="text-text highlight-cyan">BPO and offshore outsourcing company</strong>. We deploy elite global talent, custom software development teams, and managed IT services across 6 time zones — with a proven 30-day deployment model and up to 40% cost savings.
           </p>
           <div className="reveal flex flex-col sm:flex-row items-center gap-6">
-            <a href="#contact" onClick={(e) => { e.preventDefault(); const el = document.getElementById('contact'); el?.scrollIntoView({behavior: 'smooth'}); }} className="w-full sm:w-auto px-10 py-5 bg-btn-bg text-btn-text rounded-2xl font-bold text-lg hover:bg-cyan-400 hover:text-white transition-all flex items-center justify-center gap-3 shadow-2xl shadow-surface group">
+            <a href="#contact" onClick={(e) => { e.preventDefault(); const el = document.getElementById('contact'); el?.scrollIntoView({behavior: 'smooth'}); }} className="w-full sm:w-auto px-10 py-5 bg-btn-bg text-btn-text rounded-2xl font-bold text-lg hover:bg-cyan-400 hover:text-white transition-all flex items-center justify-center gap-3 shadow-2xl shadow-surface group btn-magnetic">
               Build Your Team
               <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
             </a>
-            <a href="#talent-hubs" onClick={(e) => { e.preventDefault(); const el = document.getElementById('talent-hubs'); el?.scrollIntoView({behavior: 'smooth'}); }} className="w-full sm:w-auto px-10 py-5 glass text-text rounded-2xl font-bold text-lg hover:bg-surface transition-all flex items-center justify-center">
+            <a href="#talent-hubs" onClick={(e) => { e.preventDefault(); const el = document.getElementById('talent-hubs'); el?.scrollIntoView({behavior: 'smooth'}); }} className="w-full sm:w-auto px-10 py-5 glass text-text rounded-2xl font-bold text-lg hover:bg-surface transition-all flex items-center justify-center btn-magnetic">
               Explore Talent Hubs
             </a>
           </div>
@@ -132,7 +132,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
           </div>
           <div className="lg:w-1/2 reveal">
-            <div className="glass p-10 rounded-[3rem] border-border relative overflow-hidden">
+            <div className="glass p-10 rounded-[3rem] border-border relative overflow-hidden tilt-card">
               <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 blur-3xl" />
               <div className="flex flex-col gap-12 relative z-10">
                 <div className="flex justify-between items-center px-4">
@@ -351,7 +351,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      <section id="process" aria-label="Deployment Protocol" className="py-16 md:py-32 px-4 md:px-6 bg-black">
+      <section id="process" aria-label="Deployment Protocol" className="py-16 md:py-32 px-4 md:px-6 bg-black neural-bg">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-24 reveal">
             <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white">The Deployment Protocol</h2>
@@ -367,7 +367,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-violet-600/5 blur-[120px] rounded-full -z-10" />
         <div className="max-w-4xl mx-auto reveal">
           <Layers className="w-12 h-12 text-cyan-400 mx-auto mb-10 opacity-50" />
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-10 tracking-tight leading-[1.1] text-text">Stop Hiring Remote Workers. <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-500">Start Deploying</span> <br />Global Execution.</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-10 tracking-tight leading-[1.1] text-text">Stop Hiring Remote Workers. <br /><span className="text-holo">Start Deploying</span> <br />Global Execution.</h2>
           <p className="text-muted text-xl leading-relaxed">The competitive advantage isn't remote work. It's operational continuity across time zones — teams that don't stop when you do. TrivianEdge builds the infrastructure that makes that possible.</p>
         </div>
       </section>
@@ -443,7 +443,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
               {/* Contact Details Grid */}
               <div className="grid md:grid-cols-3 gap-6 mb-16 max-w-5xl mx-auto text-left">
-                <div className="p-8 rounded-3xl bg-surface border border-border hover:border-cyan-500/30 transition-colors group">
+                <div className="p-8 rounded-3xl bg-surface border border-border hover:border-cyan-500/30 transition-colors group tilt-card">
                   <div className="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <MapPin className="w-6 h-6 text-cyan-400" />
                   </div>
@@ -451,7 +451,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   <p className="text-text font-medium leading-relaxed">37 Wiggens Ct,<br/>Toronto ON M1B 1K3,<br/>Canada</p>
                 </div>
 
-                <a href="tel:+18882028513" className="p-8 rounded-3xl bg-surface border border-border hover:border-cyan-500/30 transition-colors group block">
+                <a href="tel:+18882028513" className="p-8 rounded-3xl bg-surface border border-border hover:border-cyan-500/30 transition-colors group block tilt-card">
                   <div className="w-12 h-12 rounded-full bg-violet-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <Phone className="w-6 h-6 text-violet-400" />
                   </div>
@@ -459,7 +459,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   <p className="text-text font-medium group-hover:text-cyan-400 transition-colors">+1 888 202 8513</p>
                 </a>
 
-                <a href="mailto:info@trivianedge.com" className="p-8 rounded-3xl bg-surface border border-border hover:border-cyan-500/30 transition-colors group block">
+                <a href="mailto:info@trivianedge.com" className="p-8 rounded-3xl bg-surface border border-border hover:border-cyan-500/30 transition-colors group block tilt-card">
                   <div className="w-12 h-12 rounded-full bg-magenta-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <Mail className="w-6 h-6 text-magenta-400" />
                   </div>
