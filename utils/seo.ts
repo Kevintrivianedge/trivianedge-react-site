@@ -68,7 +68,13 @@ export function buildOrganizationSchema(): object {
     name: 'TrivianEdge',
     alternateName: ['TrivianEdge Global', 'TrivianEdge BPO'],
     url: SEO_CONFIG.siteUrl,
-    logo: `${SEO_CONFIG.siteUrl}/og-image.svg`,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SEO_CONFIG.siteUrl}/og-image.svg`,
+      width: SEO_CONFIG.ogImageWidth,
+      height: SEO_CONFIG.ogImageHeight,
+    },
+    image: `${SEO_CONFIG.siteUrl}/og-image.svg`,
     description: SEO_CONFIG.defaultDescription,
     foundingDate: '2023',
     numberOfEmployees: { '@type': 'QuantitativeValue', minValue: 10, maxValue: 50 },
@@ -359,5 +365,90 @@ export function buildSoftwareApplicationSchema(): object {
       'Leave management', 'Kanban recruitment pipeline',
       'Real-time analytics dashboard', 'Built-in AI assistant',
     ],
+  };
+}
+
+/** Schema.org WebPage — for informational/legal pages */
+export function buildWebPageSchema(page: {
+  name: string;
+  description: string;
+  url: string;
+  datePublished?: string;
+  dateModified?: string;
+  breadcrumb?: { name: string; url: string }[];
+}): object {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${page.url}#webpage`,
+    name: page.name,
+    description: page.description,
+    url: page.url,
+    inLanguage: 'en-CA',
+    isPartOf: { '@type': 'WebSite', '@id': `${SEO_CONFIG.siteUrl}/#website` },
+    about: { '@type': 'Organization', '@id': `${SEO_CONFIG.siteUrl}/#organization` },
+    datePublished: page.datePublished,
+    dateModified: page.dateModified,
+    breadcrumb: page.breadcrumb
+      ? buildBreadcrumbSchema(page.breadcrumb)
+      : undefined,
+  };
+}
+
+/** Schema.org ItemList — service catalogue for rich results */
+export function buildServiceItemListSchema(): object {
+  const services = [
+    {
+      name: 'BPO & Business Process Outsourcing',
+      description: 'Canada-based BPO services: offshore software development, IT outsourcing, talent staffing, and managed remote operations across 6 time zones.',
+      url: `${SEO_CONFIG.siteUrl}/#services`,
+    },
+    {
+      name: 'Offshore Software Development',
+      description: 'Dedicated offshore development teams sourced from elite global talent hubs — Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe.',
+      url: `${SEO_CONFIG.siteUrl}/#services`,
+    },
+    {
+      name: 'Global Talent & IT Outsourcing',
+      description: 'AI-powered global talent acquisition and IT outsourcing for startups and enterprises. 30-day deployment, up to 40% cost savings.',
+      url: `${SEO_CONFIG.siteUrl}/#services`,
+    },
+    {
+      name: 'Trivian Aria — AI-Powered HRIS',
+      description: "TrivianEdge's AI-powered HRIS platform automating HR, payroll, leave management, and workforce analytics.",
+      url: `${SEO_CONFIG.siteUrl}/#aria`,
+    },
+    {
+      name: 'Managed IT Services',
+      description: 'Enterprise-grade cloud infrastructure management, cybersecurity compliance support (SOC 2, ISO 27001), and distributed operations.',
+      url: `${SEO_CONFIG.siteUrl}/#services`,
+    },
+  ];
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'TrivianEdge BPO & Outsourcing Services',
+    description: 'Complete catalogue of TrivianEdge global BPO, offshore software development, and IT outsourcing services.',
+    url: `${SEO_CONFIG.siteUrl}/#services`,
+    numberOfItems: services.length,
+    itemListElement: services.map((service, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: service.name,
+      description: service.description,
+      url: service.url,
+      item: {
+        '@type': 'Service',
+        name: service.name,
+        description: service.description,
+        provider: {
+          '@type': 'Organization',
+          '@id': `${SEO_CONFIG.siteUrl}/#organization`,
+          name: 'TrivianEdge',
+        },
+        areaServed: 'Worldwide',
+      },
+    })),
   };
 }

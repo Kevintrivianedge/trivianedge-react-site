@@ -44,6 +44,8 @@ import {
   buildLocalBusinessSchema,
   buildBPOFAQSchema,
   buildBreadcrumbSchema,
+  buildWebPageSchema,
+  buildServiceItemListSchema,
   SEO_CONFIG,
   ALL_KEYWORDS,
   KEYWORD_CLUSTERS,
@@ -485,6 +487,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 };
 
 // SEO logic — trend-adaptive, uses rotating keyword emphasis for fresh signals
+const LEGAL_PAGES_DATE = '2025-01-01';
+
 function getSEOProps(pathname: string) {
   const trendKeywords = getTrendKeywords();
 
@@ -533,17 +537,47 @@ function getSEOProps(pathname: string) {
     };
   }
   if (pathname === '/privacy') {
+    const privacyUrl = `${SEO_CONFIG.siteUrl}/privacy`;
     return {
       title: 'Privacy Protocol — TrivianEdge BPO & Outsourcing Company',
       description: 'TrivianEdge Global privacy policy for BPO, outsourcing, and offshore services. PIPEDA and GDPR compliant.',
-      canonical: `${SEO_CONFIG.siteUrl}/privacy`,
+      canonical: privacyUrl,
+      noIndex: false,
+      structuredData: [
+        buildWebPageSchema({
+          name: 'Privacy Policy — TrivianEdge Global',
+          description: 'TrivianEdge Global privacy policy for BPO, outsourcing, and offshore services. PIPEDA and GDPR compliant.',
+          url: privacyUrl,
+          datePublished: LEGAL_PAGES_DATE,
+          dateModified: LEGAL_PAGES_DATE,
+          breadcrumb: [
+            { name: 'Home', url: SEO_CONFIG.siteUrl },
+            { name: 'Privacy Policy', url: privacyUrl },
+          ],
+        }),
+      ],
     };
   }
   if (pathname === '/terms') {
+    const termsUrl = `${SEO_CONFIG.siteUrl}/terms`;
     return {
       title: 'Terms of Engagement — TrivianEdge BPO & Outsourcing Services',
       description: 'TrivianEdge terms of service for BPO, outsourcing, and offshore software development engagements.',
-      canonical: `${SEO_CONFIG.siteUrl}/terms`,
+      canonical: termsUrl,
+      noIndex: false,
+      structuredData: [
+        buildWebPageSchema({
+          name: 'Terms of Engagement — TrivianEdge Global',
+          description: 'TrivianEdge terms of service for BPO, outsourcing, and offshore software development engagements.',
+          url: termsUrl,
+          datePublished: LEGAL_PAGES_DATE,
+          dateModified: LEGAL_PAGES_DATE,
+          breadcrumb: [
+            { name: 'Home', url: SEO_CONFIG.siteUrl },
+            { name: 'Terms of Engagement', url: termsUrl },
+          ],
+        }),
+      ],
     };
   }
   // Home — maximum schema richness for BPO/outsourcing dominance
@@ -557,6 +591,7 @@ function getSEOProps(pathname: string) {
       buildOrganizationSchema(),
       buildLocalBusinessSchema(),
       buildWebSiteSchema(),
+      buildServiceItemListSchema(),
       buildServiceSchema({
         name: 'BPO & Business Process Outsourcing',
         description: 'Canada-based BPO services including offshore software development, IT outsourcing, talent staffing, and managed remote operations across 6 time zones.',
