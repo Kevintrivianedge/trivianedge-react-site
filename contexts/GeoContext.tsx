@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { fetchGeoLocation } from '../utils/geoService';
+import { fetchGeoLocation, GEO_CACHE_KEY } from '../utils/geoService';
 import { GeoLocationData } from '../types';
 
 interface GeoContextType {
@@ -19,15 +19,14 @@ const GeoContext = createContext<GeoContextType>({ geoData: null, isLoading: tru
 export const GeoProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [geoData, setGeoData] = useState<GeoLocationData | null>(() => {
     if (typeof window === 'undefined') return null;
-    // Read from the cache that geoService writes so there is no flash on re-visit
-    const CACHE_KEY = 'trivian_geo_cache_v2';
-    const cached = localStorage.getItem(CACHE_KEY);
+    // Warm-start from the cache so there's no flash on return visits
+    const cached = localStorage.getItem(GEO_CACHE_KEY);
     if (cached) {
       try {
         const parsed = JSON.parse(cached) as { data: GeoLocationData; expiresAt: number };
         if (Date.now() < parsed.expiresAt) return parsed.data;
       } catch {
-        localStorage.removeItem(CACHE_KEY);
+        localStorage.removeItem(GEO_CACHE_KEY);
       }
     }
     return null;
