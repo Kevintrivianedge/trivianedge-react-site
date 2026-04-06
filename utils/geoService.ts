@@ -4,16 +4,28 @@ import { GeoLocationData } from '../types';
 // Using ipapi.co for this implementation.
 const API_URL = 'https://ipapi.co/json/';
 
-const CACHE_KEY = 'trivian_geo_cache_v1';
+const CACHE_KEY = 'trivian_geo_cache_v2';
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+interface GeoCache {
+  data: GeoLocationData;
+  expiresAt: number;
+}
 
 export const fetchGeoLocation = async (): Promise<GeoLocationData> => {
-  // 1. Check Session Storage (Privacy-safe: clears when tab closes)
-  const cached = sessionStorage.getItem(CACHE_KEY);
-  if (cached) {
-    try {
-        return JSON.parse(cached);
-    } catch (e) {
-        sessionStorage.removeItem(CACHE_KEY);
+  // 1. Check localStorage (persists across tabs; expires after 24 h)
+  if (typeof window !== 'undefined') {
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      try {
+        const parsed = JSON.parse(cached) as GeoCache;
+        if (Date.now() < parsed.expiresAt) {
+          return parsed.data;
+        }
+        localStorage.removeItem(CACHE_KEY);
+      } catch {
+        localStorage.removeItem(CACHE_KEY);
+      }
     }
   }
 
@@ -29,20 +41,23 @@ export const fetchGeoLocation = async (): Promise<GeoLocationData> => {
       throw new Error('Geo API failure');
     }
 
-    const data = await response.json();
+    const data = await response.json() as Record<string, unknown>;
 
     const geoData: GeoLocationData = {
-      country_code: data.country_code,
-      country_name: data.country_name,
-      timezone: data.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
-      city: data.city,
-      latitude: data.latitude,
-      longitude: data.longitude,
+      country_code: typeof data.country_code === 'string' ? data.country_code : 'US',
+      country_name: typeof data.country_name === 'string' ? data.country_name : 'Unknown',
+      timezone: typeof data.timezone === 'string' ? data.timezone : Intl.DateTimeFormat().resolvedOptions().timeZone,
+      city: typeof data.city === 'string' ? data.city : undefined,
+      latitude: typeof data.latitude === 'number' ? data.latitude : undefined,
+      longitude: typeof data.longitude === 'number' ? data.longitude : undefined,
     };
 
-    // 3. Cache result
-    sessionStorage.setItem(CACHE_KEY, JSON.stringify(geoData));
-    
+    // 3. Cache result in localStorage for 24 hours
+    if (typeof window !== 'undefined') {
+      const entry: GeoCache = { data: geoData, expiresAt: Date.now() + CACHE_TTL_MS };
+      localStorage.setItem(CACHE_KEY, JSON.stringify(entry));
+    }
+
     return geoData;
   } catch (error) {
     console.warn("Geolocation failed, falling back to defaults.", error);

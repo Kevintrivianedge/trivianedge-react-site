@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { SERVICES, TALENT_HUBS, ROLES, WHY_US } from '../constants';
 import { getCountryGreeting, getCountryAffectionateName } from '../utils/greetings';
 import { getTimeOfDay } from '../utils/getTimeOfDay';
-import { GeoLocationData } from '../types';
+import { useGeo } from '../contexts/GeoContext';
+import { API_ENDPOINTS } from '../constants/api';
 
 interface Message {
   role: 'user' | 'model';
@@ -202,6 +203,7 @@ export const ChatSidebar: React.FC = () => {
   const systemContextRef = useRef<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { geoData } = useGeo();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -214,12 +216,10 @@ export const ChatSidebar: React.FC = () => {
   const initChat = () => {
     if (!systemContextRef.current) {
         try {
-            // Get user context from session storage
+            // Get user context from geo data provided by GeoContext
             let userContext = "";
-            const cachedGeo = sessionStorage.getItem('trivian_geo_cache_v1');
-            if (cachedGeo) {
+            if (geoData) {
                 try {
-                    const geoData: GeoLocationData = JSON.parse(cachedGeo);
                     const timeOfDay = getTimeOfDay(geoData.timezone);
                     const greeting = getCountryGreeting(geoData.country_code, 'en', timeOfDay);
                     const affectionateName = getCountryAffectionateName(geoData.country_code, geoData.country_name);
@@ -260,7 +260,7 @@ Format the link EXACTLY like this:
 GENERAL RULE: Keep all responses extremely short (1-3 sentences max). NEVER ask more than one question in a single message. Never give unprompted lists of services.
 `;
                 } catch(e) {
-                    console.error("Failed to parse geo data for chat context", e);
+                    console.error("Failed to build geo context for chat", e);
                 }
             }
 
@@ -304,6 +304,12 @@ ${userContext}
     }
   };
 
+  // Reset system context when geoData arrives so the next initChat call
+  // builds the prompt with accurate location context.
+  useEffect(() => {
+    systemContextRef.current = '';
+  }, [geoData]);
+
   useEffect(() => {
     if (isOpen) {
         initChat();
@@ -345,7 +351,7 @@ ${userContext}
     }));
 
     try {
-        const response = await fetch('/api/chat', {
+        const response = await fetch(API_ENDPOINTS.CHAT, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -521,7 +527,12 @@ ${userContext}
         </div>
 
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 scrollbar-thin scrollbar-thumb-cyan-900/20 scrollbar-track-transparent relative z-10">
+        <div
+          className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 scrollbar-thin scrollbar-thumb-cyan-900/20 scrollbar-track-transparent relative z-10"
+          aria-live="polite"
+          aria-atomic="false"
+          aria-relevant="additions"
+        >
             <AnimatePresence initial={false}>
                 {messages.map((msg, idx) => (
                     <motion.div 

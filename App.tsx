@@ -29,6 +29,7 @@ import { TalentHub } from './types';
 import { useState } from 'react';
 import GreetingBanner from './components/GreetingBanner';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { GeoProvider } from './contexts/GeoContext';
 import Preloader from './components/Preloader';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { TalentHubModal } from './components/TalentHubModal';
@@ -64,6 +65,7 @@ import BlogView from './components/BlogView';
 import BlogPostDetail from './components/BlogPostDetail';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 // Lazy-load heavy below-fold components for better LCP
 const ChatSidebar = lazy(() => import('./components/ChatSidebar'));
@@ -654,14 +656,17 @@ export default function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
+        <GeoProvider>
         <SEOHead {...seoProps} />
         <AlgorithmMonitor signals={signals} recommendations={recommendations} />
         <div className="bg-background min-h-screen text-text overflow-x-hidden selection:bg-cyan-500/30 transition-colors duration-300">
           <Preloader />
           <Navbar />
-          <Suspense fallback={null}>
-            <ChatSidebar />
-          </Suspense>
+          <ErrorBoundary fallback={null}>
+            <Suspense fallback={null}>
+              <ChatSidebar />
+            </Suspense>
+          </ErrorBoundary>
           
           <AnimatePresence>
             {selectedHub && (
@@ -669,7 +674,7 @@ export default function App() {
             )}
           </AnimatePresence>
 
-          <main>
+          <main id="main-content">
             <Routes>
               <Route path="/" element={<HomePage setSelectedHub={setSelectedHub} />} />
               <Route path="/blog" element={<BlogView />} />
@@ -743,6 +748,7 @@ export default function App() {
           </footer>
           <ScrollToTop />
         </div>
+        </GeoProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

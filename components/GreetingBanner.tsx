@@ -1,66 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { fetchGeoLocation } from '../utils/geoService';
 import { getTimeOfDay } from '../utils/getTimeOfDay';
 import { getCountryGreeting, getCountryAffectionateName } from '../utils/greetings';
 import { fetchTemperature } from '../utils/weatherService';
-import { GreetingState, GeoLocationData } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useGeo } from '../contexts/GeoContext';
 import LanguageSelector from './LanguageSelector';
 import './GreetingBanner.css';
 
 const GreetingBanner: React.FC = () => {
   const { language, isRTL } = useLanguage();
-  
-  // Initialize state synchronously from cache if available to avoid skeleton flash
-  const [geoData, setGeoData] = useState<GeoLocationData | null>(() => {
-    if (typeof window !== 'undefined' && sessionStorage) {
-        const cached = sessionStorage.getItem('trivian_geo_cache_v1');
-        if (cached) {
-            try { return JSON.parse(cached); } catch(e) {}
-        }
-    }
-    return null;
-  });
-  
-  const [isLoading, setIsLoading] = useState<boolean>(() => !geoData);
+  const { geoData, isLoading } = useGeo();
+
   const [temperature, setTemperature] = useState<number | null>(null);
   const [currentTime, setCurrentTime] = useState<string>('');
-
-  // Fetch Location & Timezone (Run once on mount)
-  useEffect(() => {
-    // If geo data is already in session storage, skip the fetch.
-    // Trigger temperature lookup separately via the geoData effect below.
-    if (geoData) {
-      return;
-    }
-
-    let isMounted = true;
-
-    const initData = async () => {
-      try {
-        const data = await fetchGeoLocation();
-        if (isMounted) {
-            setGeoData(data);
-            setIsLoading(false);
-        }
-      } catch (err) {
-        if (isMounted) {
-            // Fallback
-            setGeoData({
-                country_code: 'US',
-                country_name: 'Unknown',
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            });
-            setIsLoading(false);
-        }
-      }
-    };
-
-    initData();
-
-    return () => { isMounted = false; };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // run once on mount; geoData is initialised from session storage synchronously
 
   // Fetch temperature once we have coordinates — separate from the geo effect so
   // adding temperature to that dep array doesn't cause unnecessary re-runs (#14).

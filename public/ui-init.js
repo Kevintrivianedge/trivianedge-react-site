@@ -44,9 +44,29 @@
 
 /* ── 3D card tilt (mouse-hover parallax) ── */
 (function() {
+  // Cache the card list and rect snapshots so we don't query the DOM or
+  // trigger layout (getBoundingClientRect) on every single mousemove event.
+  var cards = [];
+  var rects = [];
+
+  function refreshCards() {
+    cards = Array.prototype.slice.call(document.querySelectorAll('.tilt-card'));
+    rects = cards.map(function(c) { return c.getBoundingClientRect(); });
+  }
+
+  // Rebuild the snapshot after initial paint and whenever layout changes.
+  window.addEventListener('load', refreshCards, { passive: true });
+  window.addEventListener('resize', refreshCards, { passive: true });
+  document.addEventListener('scroll', refreshCards, { passive: true });
+  // Periodic refresh catches dynamically-added cards (e.g. lazy-loaded sections).
+  setInterval(refreshCards, 2000);
+  refreshCards();
+
   document.addEventListener('mousemove', function(e) {
-    document.querySelectorAll('.tilt-card').forEach(function(card) {
-      var r = card.getBoundingClientRect();
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      var r = rects[i];
+      if (!r) continue;
       var cx = r.left + r.width / 2;
       var cy = r.top + r.height / 2;
       var dx = (e.clientX - cx) / (r.width / 2);
@@ -55,7 +75,7 @@
         card.style.setProperty('--tilt-x', (-dy * 6).toFixed(2));
         card.style.setProperty('--tilt-y', (dx * 6).toFixed(2));
       }
-    });
+    }
   }, { passive: true });
 })();
 

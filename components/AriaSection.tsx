@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { ARIA_FEATURES } from '../constants/ariaFeatures';
+import { API_ENDPOINTS } from '../constants/api';
 
 const AriaSection: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -13,7 +14,7 @@ const AriaSection: React.FC = () => {
     setSubmitting(true);
     setError(null);
     try {
-      const response = await fetch('/api/early-access', {
+      const response = await fetch(API_ENDPOINTS.EARLY_ACCESS, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

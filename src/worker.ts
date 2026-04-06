@@ -11,9 +11,9 @@ const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models
 const ALLOWED_ORIGIN = 'https://www.trivianedge.com';
 
 function makeCorsHeaders(requestOrigin: string | null): Record<string, string> {
-  // Allow the canonical production origin and localhost for development.
+  // Allow the canonical production origin and localhost:3000 for development.
   const origin =
-    requestOrigin === ALLOWED_ORIGIN || requestOrigin?.startsWith('http://localhost')
+    requestOrigin === ALLOWED_ORIGIN || requestOrigin === 'http://localhost:3000'
       ? (requestOrigin as string)
       : ALLOWED_ORIGIN;
   return {
@@ -66,6 +66,40 @@ const EMAIL_RE = /^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^
 
 type GeminiPart = { text: string };
 type GeminiContent = { role: string; parts: GeminiPart[] };
+interface GeminiPayload {
+  contents: GeminiContent[];
+  system_instruction?: { parts: GeminiPart[] };
+}
+
+// ---------------------------------------------------------------------------
+// Content-Security-Policy applied to all HTML responses (static assets).
+// Explicitly allowlists only the origins the app actually needs:
+//   - Amplitude Analytics + Session Replay CDN
+//   - ipapi.co (geolocation)
+//   - Open-Meteo (weather)
+//   - Google Gemini API (proxied through the worker — never called from browser)
+// ---------------------------------------------------------------------------
+const CSP_HEADER =
+  "default-src 'self'; " +
+  "script-src 'self' https://cdn.amplitude.com; " +
+  "connect-src 'self' https://api.amplitude.com https://api2.amplitude.com " +
+    "https://sessionreplay.amplitude.com https://ipapi.co https://api.open-meteo.com; " +
+  "img-src 'self' data: https:; " +
+  "font-src 'self' https://fonts.gstatic.com; " +
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+  "frame-ancestors 'none'; " +
+  "base-uri 'self'; " +
+  "form-action 'self';";
+
+/** Attach CSP and security headers to a static-asset response. */
+function addSecurityHeaders(response: Response): Response {
+  const headers = new Headers(response.headers);
+  headers.set('Content-Security-Policy', CSP_HEADER);
+  headers.set('X-Content-Type-Options', 'nosniff');
+  headers.set('X-Frame-Options', 'DENY');
+  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  return new Response(response.body, { status: response.status, headers });
+}
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -127,9 +161,9 @@ export default {
       const assetResponse = await env.ASSETS.fetch(request);
       if (assetResponse.status === 404) {
         const indexRequest = new Request(new URL('/index.html', request.url).toString());
-        return env.ASSETS.fetch(indexRequest);
+        return addSecurityHeaders(await env.ASSETS.fetch(indexRequest));
       }
-      return assetResponse;
+      return addSecurityHeaders(assetResponse);
     }
 
     return new Response('Not found', { status: 404 });
@@ -157,7 +191,7 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
   ];
 
   // Build payload safely: only include system_instruction when non-empty
-  const geminiPayload: any = { contents };
+  const geminiPayload: GeminiPayload = { contents };
   if (systemText.length > 0) {
     geminiPayload.system_instruction = { parts: [{ text: systemText }] };
   }

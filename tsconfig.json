@@ -24,7 +24,8 @@
       ]
     },
     "allowImportingTsExtensions": true,
-    "noEmit": true
+    "noEmit": true,
+    "noImplicitAny": true
   },
   "exclude": ["src/worker.ts"]
 }
