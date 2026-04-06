@@ -259,13 +259,26 @@ export class AlgorithmIntelligenceEngine {
   }
 
   /**
-   * Report vitals to a hypothetical analytics endpoint.
-   * Currently just logs in dev mode — extend to send to your analytics provider.
+   * Report Core Web Vitals to Amplitude as a structured event.
+   * Falls back to a console log in development if Amplitude is not available.
    */
   reportVitals(vitals: object): void {
     log('Vitals report:', vitals);
-    // In production, you would POST to your analytics endpoint:
-    // fetch('/api/vitals', { method: 'POST', body: JSON.stringify(vitals) });
+    // Send to Amplitude if the SDK has been loaded by index.tsx
+    const win = globalThis as typeof globalThis & {
+      amplitude?: { track: (event: string, props: object) => void };
+    };
+    if (win.amplitude?.track) {
+      win.amplitude.track('Core Web Vitals', {
+        ...vitals,
+        engine: this.signals.engine,
+        networkQuality: this.signals.networkQuality,
+        pageSpeedScore: this.signals.pageSpeedScore,
+        mobileScore: this.signals.mobileScore,
+        schemaValid: this.signals.schemaValid,
+        url: globalThis.location?.href,
+      });
+    }
   }
 
   /**

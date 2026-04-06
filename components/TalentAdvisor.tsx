@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight, Terminal, Activity } from 'lucide-react';
+import { API_ENDPOINTS } from '../constants/api';
 
 const TalentAdvisor: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -11,7 +12,7 @@ const TalentAdvisor: React.FC = () => {
     setLoading(true);
     setResult('');
     try {
-      const response = await fetch('/api/generate', {
+      const response = await fetch(API_ENDPOINTS.GENERATE, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -57,7 +58,9 @@ const TalentAdvisor: React.FC = () => {
         </p>
         <div className="flex flex-col gap-4">
           <div className="relative">
+            <label htmlFor="talent-advisor-query" className="sr-only">Describe your scaling challenge</label>
             <textarea 
+              id="talent-advisor-query"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Describe your current scaling friction..."
@@ -82,7 +85,11 @@ const TalentAdvisor: React.FC = () => {
           </button>
         </div>
         {result && (
-          <div className="mt-8 p-6 bg-cyan-500/5 rounded-2xl border border-cyan-500/20 text-text animate-fade-in">
+          <div
+            className="mt-8 p-6 bg-cyan-500/5 rounded-2xl border border-cyan-500/20 text-text animate-fade-in"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             <div className="flex items-center gap-2 mb-3 text-[10px] font-mono text-cyan-400">
               <Activity className="w-3 h-3" />
               <span>OUTPUT RECEIVED</span>

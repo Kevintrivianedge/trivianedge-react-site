@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { X, MapPin, Clock, GraduationCap, Wifi, MessageSquare, Building2, CheckCircle2, Code2, ArrowRight } from 'lucide-react';
 import { TalentHub } from '../types';
@@ -21,7 +21,12 @@ const InfoRow = ({ icon, label, text }: { icon: React.ReactNode, label: string, 
   </div>
 );
 
+const MODAL_TITLE_ID = 'talent-hub-modal-title';
+
 export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) => {
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+
   // Prevent body scroll when modal is open — uses a counter so concurrent overlays
   // (e.g. ChatSidebar) don't prematurely clear the lock when one of them closes (#16).
   useEffect(() => {
@@ -34,6 +39,36 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
       if (next === 0) document.body.style.overflow = '';
     };
   }, []);
+
+  // Focus the close button when modal opens so keyboard users can act immediately.
+  useEffect(() => {
+    closeButtonRef.current?.focus();
+  }, []);
+
+  // Close on Escape key.
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      // Trap focus inside the modal.
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusable = Array.from(
+          modalRef.current.querySelectorAll<HTMLElement>(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter(el => !el.hasAttribute('disabled') && el.tabIndex >= 0);
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   // Animation variants for staggered reveal
   const containerVariants = {
@@ -57,7 +92,13 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
   };
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4">
+    <div
+      ref={modalRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={MODAL_TITLE_ID}
+      className="fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4"
+    >
       {/* Backdrop */}
       <motion.div 
         className="absolute inset-0 bg-black/80 backdrop-blur-md"
@@ -65,6 +106,7 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
+        aria-hidden="true"
       />
       
       {/* Modal Content — full screen on mobile, max-w-5xl on larger screens */}
@@ -76,10 +118,11 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
         transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
       >
         {/* Decorative Gradients */}
-        <div className={`absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl ${hub.gradient} opacity-20 blur-[100px] pointer-events-none`} />
+        <div className={`absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl ${hub.gradient} opacity-20 blur-[100px] pointer-events-none`} aria-hidden="true" />
         
         {/* Close Button */}
         <button 
+          ref={closeButtonRef}
           onClick={onClose}
           className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-surface border border-border text-muted hover:text-white hover:bg-white/10 transition-colors z-20 min-w-[44px] min-h-[44px] flex items-center justify-center"
           aria-label="Close modal"
@@ -100,7 +143,7 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-4">
                 Global Talent Node
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-text mb-4">{hub.country}</h2>
+              <h2 id={MODAL_TITLE_ID} className="text-4xl md:text-5xl font-bold text-text mb-4">{hub.country}</h2>
               <p className="text-xl text-cyan-400 font-mono mb-6">{hub.specialty}</p>
               <p className="text-muted text-lg leading-relaxed max-w-2xl">{hub.description}</p>
             </div>

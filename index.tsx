@@ -14,7 +14,7 @@ import App from './App';
 // keys are client-side identifiers designed to be embedded in browser code (like
 // a Google Analytics measurement ID). They do not grant write or admin access.
 // See: https://amplitude.com/docs/sdks/analytics/browser/browser-sdk-2#initialize-the-sdk
-amplitude.initAll('a74020325f807eb4bddead7b94dcbf22', {"analytics":{"autocapture":true},"sessionReplay":{"sampleRate":1}});
+amplitude.initAll('a74020325f807eb4bddead7b94dcbf22', {"analytics":{"autocapture":true},"sessionReplay":{"sampleRate":0.1}});
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

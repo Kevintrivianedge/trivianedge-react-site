@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Deploy
+    name: Lint → Type-check → Test → Build → Deploy
     steps:
       - uses: actions/checkout@v4
 
@@ -20,6 +20,12 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Type-check (frontend)
+        run: npx tsc --noEmit
+
+      - name: Run tests
+        run: npm run test
 
       - name: Build
         run: npm run build
