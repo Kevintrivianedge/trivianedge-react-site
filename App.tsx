@@ -14,6 +14,10 @@ import {
   CheckCircle2,
   TrendingUp,
   MapPin,
+  Server,
+  Users2,
+  ShieldCheck,
+  Cpu,
 } from 'lucide-react';
 import { Routes, Route, useLocation, useNavigate, Link, Navigate } from 'react-router-dom';
 import { WHY_US, BLOG_POSTS, TALENT_HUBS, SERVICES, ROLES } from './constants';
@@ -59,15 +63,19 @@ import MarqueeTicker from './components/MarqueeTicker';
 import WorldMapSVG from './components/WorldMapSVG';
 import CountUpStat from './components/CountUpStat';
 import GreetingBanner from './components/GreetingBanner';
+import BureaucracyVisualizer from './components/BureaucracyVisualizer';
+import TransparencyDashboard from './components/TransparencyDashboard';
+import CultureSyncQuiz from './components/CultureSyncQuiz';
+import SecurityShield from './components/SecurityShield';
 
 // Lazy-load heavy below-fold components for better LCP
 const ChatSidebar = lazy(() => import('./components/ChatSidebar'));
 
 // Rotating hero phrases
 const HERO_PHRASES = [
-  "Your dream team.\nReady in 30 days.",
-  "Global talent.\nLocal results.",
-  "Your business.\nAlways on.",
+  "From red tape\nto release.",
+  "You build the vision.\nWe run the system.",
+  "Global expansion.\nMinus the drag.",
 ];
 
 // Marquee trust ticker items
@@ -92,7 +100,6 @@ const TICKER_ITEMS = [
 const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = ({ setSelectedHub }) => {
   const navigate = useNavigate();
   const [phraseIndex, setPhraseIndex] = useState(0);
-  const [quizOption, setQuizOption] = useState<number | null>(null);
 
   // Rotate hero phrases every 3.5 s
   useEffect(() => {
@@ -134,7 +141,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {/* Trusted badge */}
             <div className="reveal inline-flex items-center gap-3 px-4 py-2 rounded-full border border-border bg-surface backdrop-blur-md text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-8 text-text">
               <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-              Canada's #1 BPO and Offshore Outsourcing Partner
+              Canada's RPO + Tech Infrastructure Partner
             </div>
 
             {/* Kinetic h1 */}
@@ -170,7 +177,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
 
             <p className="reveal text-muted text-lg md:text-xl max-w-2xl mb-12 leading-relaxed">
-              We hire great people around the world so you can focus on running your business. With talent across 6 countries, your team is up and running in 30 days, typically saving up to 40% compared to local hiring.
+              We handle the international hiring rules, payroll, legal compliance, and operational overhead — so your team focuses entirely on building the product. One partner. One execution model.
             </p>
 
             <div className="reveal flex flex-col sm:flex-row items-start gap-4 mb-20">
@@ -179,7 +186,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 onClick={e => { e.preventDefault(); scrollTo('contact'); }}
                 className="w-full sm:w-auto px-10 py-5 bg-btn-bg text-btn-text rounded-2xl font-bold text-lg hover:bg-cyan-400 hover:text-white transition-all flex items-center justify-center gap-3 shadow-2xl shadow-surface group btn-magnetic"
               >
-                Build Your Team
+                Get your operating blueprint
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
               </a>
               <a
@@ -212,45 +219,45 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 2: TRUST MARQUEE ===== */}
       <MarqueeTicker items={TICKER_ITEMS} speed={40} />
 
-      {/* ===== ACT 3: PAIN / ANALOGY ===== */}
+      {/* ===== ACT 3: GLOBAL BUSINESS OS ANALOGY ===== */}
       <section
         id="problem"
-        aria-label="The Challenge"
+        aria-label="The Global Business OS"
         className="py-20 md:py-32 px-4 md:px-6"
       >
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
           {/* Left: analogy text */}
           <div className="lg:w-1/2 reveal">
             <div className="text-cyan-400 font-bold tracking-widest text-xs uppercase mb-4">
-              Sound familiar?
+              The Aha Moment
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight text-text">
-              Your business stops<br />
-              <span className="text-rose-400">when your team does.</span>
+              TrivianEdge is your<br />
+              <span className="text-holo">Global Business OS.</span>
             </h2>
 
             <div className="glass p-8 rounded-3xl border-border mb-8 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 blur-3xl pointer-events-none" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 blur-3xl pointer-events-none" />
               <p className="text-muted text-base md:text-lg leading-relaxed relative z-10">
-                Imagine you own a restaurant. Your kitchen only opens at 9am and closes at 5pm. Customers want to eat at 2am.
+                Without TrivianEdge: every country is a different plug, a different rulebook, a different payroll law, and a different hiring maze.
                 <br /><br />
-                That is what your business looks like when you only have people in one time zone.
+                With TrivianEdge: one clean interface. One partner. One execution model.
                 <br /><br />
-                <strong className="text-text">TrivianEdge builds the team that keeps your restaurant open.</strong>
+                <strong className="text-text">You stop fighting paperwork and delays. You ship.</strong>
               </p>
             </div>
 
             <div className="space-y-4">
               {[
-                'Work stops when your local team logs off',
-                'Hiring great people takes months and costs a fortune',
-                'Growing into new markets feels impossible to manage',
+                { icon: '✗', text: 'Every market requires its own legal and payroll setup', bad: true },
+                { icon: '✗', text: 'Hiring great talent takes months and costs a fortune', bad: true },
+                { icon: '✗', text: 'Compliance failures slow expansion to a crawl', bad: true },
               ].map(item => (
-                <div key={item} className="flex items-center gap-3">
+                <div key={item.text} className="flex items-center gap-3">
                   <div className="w-5 h-5 rounded-full bg-rose-500/10 flex items-center justify-center border border-rose-500/20 flex-shrink-0">
                     <X className="w-3 h-3 text-rose-500" />
                   </div>
-                  <span className="text-muted font-medium text-sm">{item}</span>
+                  <span className="text-muted font-medium text-sm">{item.text}</span>
                 </div>
               ))}
             </div>
@@ -269,7 +276,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 glass p-5 rounded-2xl border-cyan-500/20">
                 <p className="text-cyan-400 text-[10px] font-mono uppercase tracking-widest mb-3">
-                  Your team. Always online. Always delivering.
+                  One partner. Every country. Full compliance.
                 </p>
                 <div className="flex items-center justify-between">
                   {['🇵🇭 Manila', '🇻🇳 Hanoi', '🇨🇦 Toronto'].map(city => (
@@ -281,6 +288,260 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== BPO VS RPO + TECH EDUCATION ===== */}
+      <section
+        id="bpo-vs-rpo"
+        aria-label="Why BPO Breaks"
+        className="py-20 md:py-32 px-4 md:px-6 bg-surface"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 reveal">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-rose-500/20 bg-rose-500/5 text-rose-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+              <X className="w-3 h-3" />
+              Why traditional BPO breaks
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">
+              BPO outsources tasks.<br />
+              <span className="text-holo">We build your infrastructure.</span>
+            </h2>
+            <p className="text-muted text-lg max-w-2xl mx-auto">
+              Traditional BPO was built for a different era. Here's why it fails modern tech companies — and what we built instead.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 reveal">
+            {/* Left: Traditional BPO */}
+            <div className="glass p-8 md:p-10 rounded-[2.5rem] border-rose-500/20 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-rose-500/5 blur-3xl pointer-events-none" />
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center">
+                  <X className="w-5 h-5 text-rose-400" />
+                </div>
+                <h3 className="text-xl font-bold text-text">Traditional BPO</h3>
+              </div>
+              <ul className="space-y-4">
+                {[
+                  'Transaction-focused — billed by task, not outcome',
+                  'Generic hiring funnels with weak fit screening',
+                  'Shallow quality ownership — accountability stops at delivery',
+                  'Limited visibility into what your team is actually doing',
+                  'Not built for product velocity or engineering teams',
+                ].map(item => (
+                  <li key={item} className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <X className="w-3 h-3 text-rose-400" />
+                    </div>
+                    <span className="text-muted text-sm leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right: TrivianEdge RPO + Tech */}
+            <div className="glass p-8 md:p-10 rounded-[2.5rem] border-cyan-500/20 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/10 blur-3xl pointer-events-none" />
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+                  <CheckCircle2 className="w-5 h-5 text-cyan-400" />
+                </div>
+                <h3 className="text-xl font-bold text-text">TrivianEdge RPO + Tech</h3>
+              </div>
+              <ul className="space-y-4">
+                {[
+                  'Outcome-focused talent strategy — we own the result',
+                  'Deep screening for role fit, team fit, and communication style',
+                  'Real-time visibility into hiring, onboarding, and delivery',
+                  'Built-in legal, payroll, and compliance infrastructure',
+                  'Direct tie to your product goals and engineering velocity',
+                ].map(item => (
+                  <li key={item} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-muted text-sm leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom statement */}
+          <div className="mt-8 reveal">
+            <div className="glass p-8 rounded-[2rem] border-border text-center">
+              <p className="text-xl md:text-2xl font-bold text-text">
+                BPO outsources tasks. TrivianEdge builds your operating infrastructure.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== DUAL-ENGINE SERVICE DEFINITION ===== */}
+      <section
+        id="dual-engine"
+        aria-label="Our Dual Engine"
+        className="py-20 md:py-32 px-4 md:px-6"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 reveal">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+              <Layers className="w-3 h-3" />
+              How We're Built
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">
+              Two engines.<br />One system.
+            </h2>
+            <p className="text-muted text-lg max-w-2xl mx-auto">
+              People and product are managed as one integrated operation — not handed off to separate vendors.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 reveal">
+            {/* Engine 1: Talent */}
+            <div className="glass p-10 rounded-[2.5rem] border-border hover:border-cyan-500/30 transition-all duration-500 group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/5 blur-3xl group-hover:bg-cyan-500/10 transition-colors duration-700 pointer-events-none" />
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 rounded-2xl bg-surface border border-border flex items-center justify-center group-hover:border-cyan-400/30 group-hover:bg-cyan-500/10 transition-all duration-500">
+                  <Users2 className="w-7 h-7 text-cyan-400" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">Engine 1</p>
+                  <h3 className="text-xl font-bold text-text">Talent Infrastructure</h3>
+                </div>
+              </div>
+              <p className="text-muted text-sm leading-relaxed mb-6">
+                We recruit niche tech and non-tech talent across 6 countries — then manage every step of the operational layer so you never have to.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  'Niche tech and non-tech role sourcing',
+                  'Deep vetting for skill, communication, and team compatibility',
+                  'Full onboarding, contracts, and payroll management',
+                  'International compliance handled in every jurisdiction',
+                ].map(item => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-muted">
+                    <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Engine 2: Software */}
+            <div className="glass p-10 rounded-[2.5rem] border-border hover:border-violet-500/30 transition-all duration-500 group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-violet-500/5 blur-3xl group-hover:bg-violet-500/10 transition-colors duration-700 pointer-events-none" />
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 rounded-2xl bg-surface border border-border flex items-center justify-center group-hover:border-violet-400/30 group-hover:bg-violet-500/10 transition-all duration-500">
+                  <Cpu className="w-7 h-7 text-violet-400" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-violet-400">Engine 2</p>
+                  <h3 className="text-xl font-bold text-text">Software Development</h3>
+                </div>
+              </div>
+              <p className="text-muted text-sm leading-relaxed mb-6">
+                In-house engineering teams that build your product with security-first practices, clear delivery milestones, and full IP protection.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  'In-house engineering teams, not contractors',
+                  'Security-first build practices from day one',
+                  'Product-aligned delivery with clear milestones',
+                  'Full IP ownership remains with you, always',
+                ].map(item => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-muted">
+                    <CheckCircle2 className="w-4 h-4 text-violet-400 flex-shrink-0 mt-0.5" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Bridge line */}
+          <div className="mt-8 reveal">
+            <div className="glass p-8 rounded-[2rem] border-border text-center">
+              <p className="text-xl md:text-2xl font-bold text-text">
+                People and product are managed as one system — not separate vendors.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== HEADACHE VALUE PROPOSITION ===== */}
+      <section
+        id="headache-removed"
+        aria-label="We Remove the Bureaucracy"
+        className="py-20 md:py-32 px-4 md:px-6 bg-surface"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-4xl mx-auto text-center reveal">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] font-bold uppercase tracking-widest mb-8">
+              <ShieldCheck className="w-3 h-3" />
+              The Headache We Take Away
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-text">
+              We remove the bureaucracy burden<br />
+              <span className="text-holo">so you stay focused on growth.</span>
+            </h2>
+            <p className="text-muted text-lg max-w-2xl mx-auto mb-16 leading-relaxed">
+              Every item below is something your team never has to touch. We own it entirely.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+            {[
+              {
+                icon: <Globe2 className="w-6 h-6 text-cyan-400" />,
+                title: 'International Hiring Rules',
+                desc: 'Every country has different employment laws, visa requirements, and work permit rules. We know them all.',
+                color: 'border-cyan-500/20 hover:border-cyan-500/40',
+                glow: 'bg-cyan-500/5',
+              },
+              {
+                icon: <Server className="w-6 h-6 text-violet-400" />,
+                title: 'Local Payroll & Legal',
+                desc: 'Payroll taxes, statutory deductions, and local legal requirements handled with zero errors across 6 jurisdictions.',
+                color: 'border-violet-500/20 hover:border-violet-500/40',
+                glow: 'bg-violet-500/5',
+              },
+              {
+                icon: <ShieldCheck className="w-6 h-6 text-emerald-400" />,
+                title: 'Cross-Border Compliance',
+                desc: 'Trade regulations, data protection laws, and bilateral agreement requirements navigated for every engagement.',
+                color: 'border-emerald-500/20 hover:border-emerald-500/40',
+                glow: 'bg-emerald-500/5',
+              },
+              {
+                icon: <TrendingUp className="w-6 h-6 text-orange-400" />,
+                title: 'Delivery Oversight',
+                desc: 'Sprint reviews, performance tracking, and escalation management — none of it lands on your plate.',
+                color: 'border-orange-500/20 hover:border-orange-500/40',
+                glow: 'bg-orange-500/5',
+              },
+            ].map(item => (
+              <div
+                key={item.title}
+                className={`glass p-8 rounded-[2rem] border transition-all duration-300 relative overflow-hidden group`}
+                style={{ borderColor: 'var(--border)' }}
+              >
+                <div className={`absolute top-0 right-0 w-28 h-28 ${item.glow} blur-3xl pointer-events-none`} />
+                <div className="w-12 h-12 rounded-2xl bg-surface border border-border flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+                  {item.icon}
+                </div>
+                <h4 className="font-bold text-text mb-2">{item.title}</h4>
+                <p className="text-muted text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center reveal">
+            <p className="text-xl md:text-2xl font-bold text-text">
+              Less admin noise. More execution clarity.
+            </p>
           </div>
         </div>
       </section>
@@ -487,6 +748,44 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
+      {/* ===== INTERACTIVE PROOF MODULES ===== */}
+      <section
+        id="interactive"
+        aria-label="Interactive Tools"
+        className="py-20 md:py-32 px-4 md:px-6"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 reveal">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+              <Zap className="w-3 h-3" />
+              Proof, Not Promises
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">
+              Complex in reality.<br />
+              <span className="text-holo">Simple in your experience.</span>
+            </h2>
+            <p className="text-muted text-lg max-w-2xl mx-auto">
+              Four tools that show — not tell — how TrivianEdge makes global expansion manageable.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="reveal">
+              <BureaucracyVisualizer />
+            </div>
+            <div className="reveal" style={{ transitionDelay: '80ms' }}>
+              <TransparencyDashboard />
+            </div>
+            <div className="reveal" style={{ transitionDelay: '160ms' }}>
+              <CultureSyncQuiz />
+            </div>
+            <div className="reveal" style={{ transitionDelay: '240ms' }}>
+              <SecurityShield />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ===== ACT 7: TALENT HUBS + WORLD MAP ===== */}
       <section
         id="talent-hubs"
@@ -563,147 +862,55 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 8: ARIA ===== */}
       <AriaSection />
 
-      {/* ===== "WHAT DO YOU NEED?" QUIZ ===== */}
-      <section aria-label="What Do You Need" className="py-20 md:py-24 px-4 md:px-6 bg-surface">
+      {/* ===== TRUST BRIDGE ===== */}
+      <section aria-label="Your Expansion Map" className="py-20 md:py-24 px-4 md:px-6 bg-surface">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12 reveal">
             <h2 className="text-3xl md:text-5xl font-bold mb-4 text-text">
-              What do you need right now?
+              See your expansion map.
             </h2>
-            <p className="text-muted text-lg">
-              Tell us what you are working on and we will show you exactly how we help.
+            <p className="text-muted text-lg max-w-2xl mx-auto">
+              Tell us where you want to hire, build, or expand. We'll map the exact steps — and then handle all of them.
             </p>
           </div>
 
-          <div className="reveal">
-            {/* Option selector */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              {[
-                { label: 'Grow my team', icon: '👥' },
-                { label: 'Enter a new market', icon: '🌏' },
-                { label: 'Fix my tech or back office', icon: '⚙️' },
-              ].map(({ label, icon }, i) => (
-                <button
-                  key={i}
-                  onClick={() => setQuizOption(quizOption === i ? null : i)}
-                  className={[
-                    'flex items-center gap-3 px-6 py-4 rounded-2xl border font-bold text-sm transition-all duration-300',
-                    quizOption === i
-                      ? 'border-cyan-500/50 bg-cyan-500/10 text-cyan-400'
-                      : 'border-border glass text-muted hover:border-cyan-500/20 hover:text-text',
-                  ].join(' ')}
+          <div className="reveal grid sm:grid-cols-3 gap-6">
+            {[
+              {
+                icon: '👥',
+                label: 'Grow my team',
+                desc: 'Niche tech and non-tech talent across 6 countries, deployed in 30 days.',
+                cta: 'Start hiring',
+              },
+              {
+                icon: '🌏',
+                label: 'Enter a new market',
+                desc: 'Sales strategy, local partnerships, and full market execution — not just advice.',
+                cta: 'Explore markets',
+              },
+              {
+                icon: '⚙️',
+                label: 'Build better software',
+                desc: 'In-house engineering teams with security-first practices and clear delivery milestones.',
+                cta: 'Start building',
+              },
+            ].map(item => (
+              <div
+                key={item.label}
+                className="glass p-8 rounded-[2rem] border-border hover:border-cyan-500/30 transition-all duration-300 group flex flex-col"
+              >
+                <span className="text-3xl mb-4 block">{item.icon}</span>
+                <h3 className="font-bold text-text text-lg mb-2 group-hover:text-cyan-400 transition-colors">{item.label}</h3>
+                <p className="text-muted text-sm leading-relaxed flex-grow mb-6">{item.desc}</p>
+                <a
+                  href="#contact"
+                  onClick={e => { e.preventDefault(); scrollTo('contact'); }}
+                  className="inline-flex items-center gap-2 text-sm font-bold text-cyan-400 hover:gap-3 transition-all"
                 >
-                  <span className="text-xl">{icon}</span>
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            <AnimatePresence mode="wait">
-              {quizOption !== null && (
-                <motion.div
-                  key={quizOption}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="glass p-8 md:p-10 rounded-[2rem] border-cyan-500/20"
-                >
-                  {quizOption === 0 && (
-                    <div className="flex flex-col md:flex-row gap-8 items-start">
-                      <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-text mb-3">We will find you the perfect person.</h3>
-                        <p className="text-muted leading-relaxed mb-4">
-                          Tell us the role, the skills you need, and the time zone that works best for you. We search our global network across 6 countries and have you interviewing top candidates within a week.
-                        </p>
-                        <ul className="space-y-2 mb-6">
-                          {[
-                            'Engineers, designers, ops leads, sales reps, and more',
-                            'Vetted and shortlisted within 5 business days',
-                            'Onboarded and working within 30 days',
-                          ].map(item => (
-                            <li key={item} className="flex items-center gap-2 text-sm text-muted">
-                              <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                        <a
-                          href="#contact"
-                          onClick={e => { e.preventDefault(); scrollTo('contact'); }}
-                          className="inline-flex items-center gap-2 px-6 py-3 bg-btn-bg text-btn-text rounded-xl font-bold text-sm hover:bg-cyan-400 hover:text-white transition-all"
-                        >
-                          Start the conversation <ArrowRight className="w-4 h-4" />
-                        </a>
-                      </div>
-                      <div className="grid grid-cols-2 gap-3 flex-shrink-0">
-                        {TALENT_HUBS.slice(0, 4).map(hub => (
-                          <div key={hub.id} className="glass p-3 rounded-xl border-border text-center min-w-[100px]">
-                            <div className="text-2xl mb-1">{hub.flag}</div>
-                            <div className="text-xs font-bold text-text">{hub.country}</div>
-                            <div className="text-[10px] text-muted mt-0.5 leading-tight">{hub.specialty.split(' ').slice(0, 2).join(' ')}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {quizOption === 1 && (
-                    <div>
-                      <h3 className="text-2xl font-bold text-text mb-3">We have done market entry before.</h3>
-                      <p className="text-muted leading-relaxed mb-4">
-                        We helped CyouMedia launch in Sri Lanka and Hub-Flx expand into the UAE and GCC. We do not just give advice. We build the strategy and execute it alongside you.
-                      </p>
-                      <ul className="space-y-2 mb-6">
-                        {[
-                          'Full sales strategy design and execution',
-                          'Local partner and customer sourcing',
-                          'Market research and product fit consulting',
-                        ].map(item => (
-                          <li key={item} className="flex items-center gap-2 text-sm text-muted">
-                            <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                      <a
-                        href="#contact"
-                        onClick={e => { e.preventDefault(); scrollTo('contact'); }}
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-btn-bg text-btn-text rounded-xl font-bold text-sm hover:bg-cyan-400 hover:text-white transition-all"
-                      >
-                        Explore your market <ArrowRight className="w-4 h-4" />
-                      </a>
-                    </div>
-                  )}
-                  {quizOption === 2 && (
-                    <div>
-                      <h3 className="text-2xl font-bold text-text mb-3">We keep your business running smoothly behind the scenes.</h3>
-                      <p className="text-muted leading-relaxed mb-4">
-                        From managed cloud infrastructure and cybersecurity to payroll, accounting, and back-office admin, we handle the operations that keep your business running so you can focus on growth.
-                      </p>
-                      <ul className="space-y-2 mb-6">
-                        {[
-                          '24/7 IT monitoring and cloud management',
-                          'Payroll, accounting, and virtual CFO services',
-                          'Compliance support and back-office outsourcing',
-                        ].map(item => (
-                          <li key={item} className="flex items-center gap-2 text-sm text-muted">
-                            <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                      <a
-                        href="#contact"
-                        onClick={e => { e.preventDefault(); scrollTo('contact'); }}
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-btn-bg text-btn-text rounded-xl font-bold text-sm hover:bg-cyan-400 hover:text-white transition-all"
-                      >
-                        Talk to our team <ArrowRight className="w-4 h-4" />
-                      </a>
-                    </div>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  {item.cta} <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -772,10 +979,10 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-violet-600/10 blur-[120px] rounded-full pointer-events-none" />
             <div className="relative z-10">
               <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-8 text-text">
-                Your next team member<br />starts in 30 days.
+                Your operating blueprint<br />starts here.
               </h2>
               <p className="text-muted text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-                Tell us what you need. We find the right person, handle the onboarding, and keep everything running from day one to long-term.
+                Tell us where you want to hire, build, or expand. We'll show you exactly how we handle the operational layer — and then execute it.
               </p>
 
               <div className="grid md:grid-cols-3 gap-6 mb-16 max-w-5xl mx-auto text-left">
@@ -796,8 +1003,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 </a>
 
                 <a href="mailto:info@trivianedge.com" className="p-8 rounded-3xl bg-surface border border-border hover:border-cyan-500/30 transition-colors group block tilt-card">
-                  <div className="w-12 h-12 rounded-full bg-magenta-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <Mail className="w-6 h-6 text-magenta-400" />
+                  <div className="w-12 h-12 rounded-full bg-fuchsia-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <Mail className="w-6 h-6 text-fuchsia-400" />
                   </div>
                   <h4 className="text-sm font-bold uppercase tracking-widest text-muted mb-2">Email Us</h4>
                   <p className="text-text font-medium group-hover:text-cyan-400 transition-colors">info@trivianedge.com</p>
@@ -807,7 +1014,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <div className="flex flex-col sm:flex-row justify-center gap-6">
                 <a href="mailto:info@trivianedge.com" className="px-12 py-6 bg-btn-bg text-btn-text rounded-2xl font-bold text-xl hover:bg-cyan-400 hover:text-white transition-all shadow-2xl shadow-cyan-500/10 flex items-center justify-center gap-2">
                   <Mail className="w-5 h-5" />
-                  Email Our Team
+                  Get your operating blueprint
                 </a>
                 <a href="tel:+18882028513" className="px-12 py-6 glass text-text rounded-2xl font-bold text-xl hover:bg-surface transition-all flex items-center justify-center gap-2">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
