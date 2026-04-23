@@ -805,12 +805,12 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </div>
 
           {/* Interactive world map */}
-          <div className="reveal glass rounded-[3rem] border-border p-4 md:p-8 mb-16 overflow-hidden">
+          <div className="reveal rounded-[3rem] border border-border bg-[rgba(10,10,20,0.7)] backdrop-blur-sm p-4 md:p-8 mb-12 overflow-hidden shadow-2xl shadow-black/30">
             <WorldMapSVG hubs={TALENT_HUBS} onHubClick={setSelectedHub} />
           </div>
 
           {/* Hub detail cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {TALENT_HUBS.map((hub, idx) => (
               <TalentHubCard key={hub.id} hub={hub} index={idx} onClick={setSelectedHub} />
             ))}

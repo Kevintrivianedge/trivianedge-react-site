@@ -74,16 +74,19 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
       <p className="mt-2 text-[10px] text-muted/70 text-right">Map data © MapSVG (CC BY 4.0)</p>
 
       {hoveredHub && (
-        <div className="absolute top-4 right-4 glass p-5 rounded-2xl border border-cyan-500/30 max-w-xs pointer-events-none animate-fade-in shadow-xl">
+        <div className="absolute top-4 right-4 bg-[#0a0a0f]/95 backdrop-blur-xl p-5 rounded-2xl border border-cyan-500/20 max-w-[220px] pointer-events-none shadow-2xl shadow-cyan-900/30">
           <div className="flex items-center gap-3 mb-3">
-            <span className="text-2xl">{hoveredHub.flag}</span>
+            <span className="text-3xl leading-none">{hoveredHub.flag}</span>
             <div>
-              <p className="font-bold text-text text-sm">{hoveredHub.country}</p>
-              <p className="text-cyan-400 text-[10px] font-mono uppercase tracking-widest">{hoveredHub.specialty}</p>
+              <p className="font-bold text-white text-sm leading-tight">{hoveredHub.country}</p>
+              <p className="text-cyan-400 text-[9px] font-mono uppercase tracking-widest mt-0.5">{hoveredHub.specialty}</p>
             </div>
           </div>
-          <p className="text-muted text-xs leading-relaxed line-clamp-3">{hoveredHub.description}</p>
-          <p className="mt-3 text-[10px] font-bold text-muted uppercase tracking-widest">{hoveredHub.timeZoneAlignment}</p>
+          <p className="text-[#8a8a9e] text-xs leading-relaxed line-clamp-2 mb-3">{hoveredHub.description}</p>
+          <div className="flex items-center gap-1.5 pt-3 border-t border-white/5">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+            <p className="text-[9px] font-mono text-[#8a8a9e] uppercase tracking-widest truncate">{hoveredHub.timeZoneAlignment}</p>
+          </div>
         </div>
       )}
     </div>

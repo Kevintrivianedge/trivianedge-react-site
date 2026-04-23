@@ -117,17 +117,36 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
         exit={{ scale: 0.9, opacity: 0, y: 20 }}
         transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
       >
-        {/* Decorative Gradients */}
-        <div className={`absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl ${hub.gradient} opacity-20 blur-[100px] pointer-events-none`} aria-hidden="true" />
-        
+        {/* Hero header strip — gradient with flag watermark */}
+        <div className={`relative h-36 sm:h-48 overflow-hidden rounded-none sm:rounded-t-[2.5rem] bg-gradient-to-br ${hub.gradient}`}>
+          <div className="absolute inset-0 bg-black/55" />
+          <div className="absolute -right-6 -top-4 text-[160px] leading-none opacity-[0.18] select-none pointer-events-none">
+            {hub.flag}
+          </div>
+          <div className="absolute inset-0 flex items-end p-6 sm:p-10">
+            <div className="flex items-end gap-5">
+              <span className="text-7xl sm:text-[5.5rem] drop-shadow-2xl select-none leading-none">{hub.flag}</span>
+              <div className="pb-1">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[9px] font-bold uppercase tracking-widest mb-2">
+                  Global Talent Node
+                </div>
+                <h2 id={MODAL_TITLE_ID} className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">{hub.country}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Decorative glow below header */}
+        <div className={`absolute top-0 left-0 w-full h-80 bg-gradient-to-b ${hub.gradient} opacity-[0.08] blur-3xl pointer-events-none`} aria-hidden="true" />
+
         {/* Close Button */}
         <button 
           ref={closeButtonRef}
           onClick={onClose}
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-surface border border-border text-muted hover:text-white hover:bg-white/10 transition-colors z-20 min-w-[44px] min-h-[44px] flex items-center justify-center"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2.5 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-white/80 hover:text-white hover:bg-black/70 transition-colors z-20 min-w-[40px] min-h-[40px] flex items-center justify-center"
           aria-label="Close modal"
         >
-          <X className="w-6 h-6" />
+          <X className="w-5 h-5" />
         </button>
 
         <motion.div 
@@ -136,17 +155,10 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
           initial="hidden"
           animate="visible"
         >
-          {/* Header */}
-          <motion.div variants={itemVariants} className="flex flex-col md:flex-row gap-8 items-start mb-10 pb-10 border-b border-border">
-            <div className="text-8xl flex-shrink-0 select-none drop-shadow-2xl transform hover:scale-110 transition-transform duration-500 cursor-default">{hub.flag}</div>
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-4">
-                Global Talent Node
-              </div>
-              <h2 id={MODAL_TITLE_ID} className="text-4xl md:text-5xl font-bold text-text mb-4">{hub.country}</h2>
-              <p className="text-xl text-cyan-400 font-mono mb-6">{hub.specialty}</p>
-              <p className="text-muted text-lg leading-relaxed max-w-2xl">{hub.description}</p>
-            </div>
+          {/* Specialty + Description */}
+          <motion.div variants={itemVariants} className="mb-10 pb-10 border-b border-border">
+            <p className="text-xl text-cyan-400 font-mono mb-4">{hub.specialty}</p>
+            <p className="text-muted text-lg leading-relaxed max-w-2xl">{hub.description}</p>
           </motion.div>
 
           {/* Grid Layout */}
