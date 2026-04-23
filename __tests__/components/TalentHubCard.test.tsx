@@ -27,7 +27,8 @@ describe('TalentHubCard', () => {
 
   it('renders the flag emoji', () => {
     render(<TalentHubCard hub={mockHub} index={0} onClick={vi.fn()} />);
-    expect(screen.getByText('🏳️')).toBeInTheDocument();
+    // Flag appears in two places (header + watermark), so check at least one instance
+    expect(screen.getAllByText('🏳️').length).toBeGreaterThanOrEqual(1);
   });
 
   it('renders the specialty', () => {
@@ -48,8 +49,8 @@ describe('TalentHubCard', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it('renders a "Global Hub" badge', () => {
+  it('renders an "Explore" action hint', () => {
     render(<TalentHubCard hub={mockHub} index={0} onClick={vi.fn()} />);
-    expect(screen.getByText('Global Hub')).toBeInTheDocument();
+    expect(screen.getByText('Explore')).toBeInTheDocument();
   });
 });
