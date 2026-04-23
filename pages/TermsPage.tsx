@@ -70,7 +70,7 @@ const TermsPage: React.FC = () => {
 
           <div className="p-6 rounded-2xl bg-violet-500/5 border border-violet-500/20">
             <p className="text-violet-400 text-sm font-mono">
-              Full terms in development — contact{' '}
+              Full terms in development. Contact{' '}
               <a href="mailto:info@trivianedge.com" className="underline hover:text-white transition-colors">
                 info@trivianedge.com
               </a>{' '}

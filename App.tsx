@@ -13,11 +13,10 @@ import {
   X,
   CheckCircle2,
   TrendingUp,
-  Phone,
   MapPin,
 } from 'lucide-react';
 import { Routes, Route, useLocation, useNavigate, Link, Navigate } from 'react-router-dom';
-import { NAV_LINKS, WHY_US, STEPS, BLOG_POSTS, TALENT_HUBS, SERVICES } from './constants';
+import { WHY_US, BLOG_POSTS, TALENT_HUBS, SERVICES } from './constants';
 import { TalentHub } from './types';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { GeoProvider } from './contexts/GeoContext';
@@ -194,7 +193,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <CountUpStat end={6}  suffix="" label="Countries We Source From" />
               <CountUpStat end={40} suffix="%" label="Average Cost Savings" />
               <CountUpStat end={30} suffix=" days" label="Average Time to Start" />
-              <CountUpStat end={24} suffix="/7" label="Operations Coverage" />
+              {/* 24/7 is a ratio, not a count — display as static */}
+              <div className="flex flex-col gap-1">
+                <span className="text-2xl md:text-3xl font-bold text-text tabular-nums">24/7</span>
+                <span className="text-[10px] tracking-widest text-muted uppercase font-bold leading-tight">
+                  Operations Coverage
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -739,7 +744,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
                 <a href="tel:+18882028513" className="p-8 rounded-3xl bg-surface border border-border hover:border-cyan-500/30 transition-colors group block tilt-card">
                   <div className="w-12 h-12 rounded-full bg-violet-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <ChevronRight className="w-6 h-6 text-violet-400 sr-only" aria-hidden="true" />
                     <svg className="w-6 h-6 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                   </div>
                   <h4 className="text-sm font-bold uppercase tracking-widest text-muted mb-2">Direct Line</h4>

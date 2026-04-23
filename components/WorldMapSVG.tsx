@@ -156,7 +156,7 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
               onMouseLeave={() => setHoveredId(null)}
               style={{ cursor: 'pointer' }}
               role="button"
-              aria-label={`${hub.country} talent hub — ${hub.specialty}`}
+              aria-label={`${hub.country} talent hub: ${hub.specialty}`}
             >
               {/* Outer pulse ring */}
               <circle

@@ -54,7 +54,7 @@ const ProcessTimeline: React.FC = () => {
                        </p>
                        <div className="mt-4 flex items-center gap-2 text-[10px] font-mono text-cyan-400 uppercase tracking-widest">
                           <Activity className="w-3 h-3" />
-                          <span>Status: {isActive ? 'Protocol Active' : 'Standby'}</span>
+                          <span>Status: {isActive ? 'In Progress' : 'Ready'}</span>
                        </div>
                     </div>
                   </div>

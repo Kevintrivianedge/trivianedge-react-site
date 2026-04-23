@@ -63,7 +63,7 @@ const PrivacyPage: React.FC = () => {
 
           <div className="p-6 rounded-2xl bg-cyan-500/5 border border-cyan-500/20">
             <p className="text-cyan-400 text-sm font-mono">
-              Full policy in development — contact{' '}
+              Full policy in development. Contact{' '}
               <a href="mailto:info@trivianedge.com" className="underline hover:text-white transition-colors">
                 info@trivianedge.com
               </a>{' '}
