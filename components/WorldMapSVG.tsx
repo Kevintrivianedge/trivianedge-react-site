@@ -50,7 +50,7 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
               onMouseLeave={() => setHoveredId(null)}
               onFocus={() => setHoveredId(hub.id)}
               onBlur={() => setHoveredId(null)}
-              className="absolute -translate-x-1/2 -translate-y-1/2 bg-transparent border-0 p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 rounded-full"
+              className="absolute -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-transparent border-0 p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 rounded-full"
               style={{ left: `${x}%`, top: `${y}%` }}
               aria-label={`${hub.country} talent hub: ${hub.specialty}`}
             >

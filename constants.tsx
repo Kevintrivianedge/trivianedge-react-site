@@ -20,7 +20,7 @@ import { ServiceCardProps, RoleCategory, Step, WhyUsItem, BlogPost, TalentHub } 
 export const NAV_LINKS = [
   { name: 'Talent Hubs', href: '#talent-hubs' },
   { name: 'Roles', href: '#roles' },
-  { name: 'Process', href: '#process' },
+  { name: 'Process', href: '#how-it-works' },
   { name: 'Aria', href: '#aria' },
   { name: 'Blog', href: '#blog' },
 ];
