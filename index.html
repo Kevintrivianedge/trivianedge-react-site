@@ -487,6 +487,12 @@
         /* --- Magnetic button effect (applied via JS) --- */
         .btn-magnetic { transition: transform 0.3s cubic-bezier(0.23,1,0.32,1); }
 
+        /* --- Marquee scroll animation --- */
+        @keyframes marquee-scroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-33.333%); }
+        }
+
         /* --- Bento grid helper --- */
         .bento-grid {
             display: grid;
