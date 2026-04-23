@@ -31,7 +31,7 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
         <img
           src="/world-map.svg"
           alt="Interactive world map showing TrivianEdge talent hubs"
-          className="absolute inset-0 h-full w-full object-contain opacity-90"
+          className="absolute inset-0 h-full w-full object-contain invert opacity-55"
           draggable={false}
         />
 
