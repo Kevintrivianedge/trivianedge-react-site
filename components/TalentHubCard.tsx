@@ -55,14 +55,14 @@ const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: Ta
       />
 
       {/* Flag watermark */}
-      <div className="absolute right-4 bottom-4 text-[90px] leading-none opacity-[0.05] group-hover:opacity-[0.10] transition-opacity duration-500 select-none pointer-events-none">
+      <div className="absolute right-4 bottom-4 text-[90px] leading-none opacity-[0.05] group-hover:opacity-[0.10] transition-opacity duration-500 select-none pointer-events-none" aria-hidden="true">
         {hub.flag}
       </div>
 
       <div className="relative z-10 p-7">
         {/* Header row */}
         <div className="flex items-start justify-between mb-5">
-          <span className="text-4xl transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6 inline-block">
+          <span className="text-4xl transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6 inline-block" aria-hidden="true">
             {hub.flag}
           </span>
           <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">

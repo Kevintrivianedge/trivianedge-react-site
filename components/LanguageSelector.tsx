@@ -21,10 +21,13 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = "", var
   const { language, setLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const firstOptionRef = useRef<HTMLButtonElement>(null);
 
   const textColor = variant === 'banner' ? 'text-gray-300 hover:text-white' : 'text-gray-400 hover:text-cyan-400';
   const dropdownBg = 'bg-[#0a0a0f] border border-[rgba(255,255,255,0.08)]';
 
+  // Close on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
@@ -35,14 +38,37 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = "", var
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Close on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+        triggerRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
+  // Move focus to first option when dropdown opens
+  useEffect(() => {
+    if (isOpen) {
+      firstOptionRef.current?.focus();
+    }
+  }, [isOpen]);
+
   const handleSelect = (code: SupportedLanguage) => {
     setLanguage(code);
     setIsOpen(false);
+    triggerRef.current?.focus();
   };
+
+  const languageEntries = Object.entries(LANGUAGE_NAMES) as [SupportedLanguage, string][];
 
   return (
     <div ref={containerRef} className={`relative ${className}`}>
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setIsOpen(o => !o)}
         className={`flex items-center gap-1.5 ${textColor} transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 rounded-md px-1 py-1`}
@@ -62,9 +88,10 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = "", var
           aria-label="Language options"
           className={`absolute right-0 mt-2 w-44 ${dropdownBg} rounded-2xl shadow-2xl shadow-black/40 overflow-hidden z-[150] backdrop-blur-xl`}
         >
-          {(Object.entries(LANGUAGE_NAMES) as [SupportedLanguage, string][]).map(([code, name]) => (
+          {languageEntries.map(([code, name], idx) => (
             <button
               key={code}
+              ref={idx === 0 ? firstOptionRef : undefined}
               role="option"
               aria-selected={code === language}
               type="button"
