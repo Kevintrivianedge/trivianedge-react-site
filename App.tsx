@@ -16,7 +16,7 @@ import {
   MapPin,
 } from 'lucide-react';
 import { Routes, Route, useLocation, useNavigate, Link, Navigate } from 'react-router-dom';
-import { WHY_US, BLOG_POSTS, TALENT_HUBS, SERVICES } from './constants';
+import { WHY_US, BLOG_POSTS, TALENT_HUBS, SERVICES, ROLES } from './constants';
 import { TalentHub } from './types';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { GeoProvider } from './contexts/GeoContext';
@@ -58,6 +58,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import MarqueeTicker from './components/MarqueeTicker';
 import WorldMapSVG from './components/WorldMapSVG';
 import CountUpStat from './components/CountUpStat';
+import GreetingBanner from './components/GreetingBanner';
 
 // Lazy-load heavy below-fold components for better LCP
 const ChatSidebar = lazy(() => import('./components/ChatSidebar'));
@@ -126,6 +127,9 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         />
 
         <div className="max-w-7xl mx-auto w-full relative z-10">
+          {/* Personalised greeting — geo-aware, language-aware */}
+          <GreetingBanner />
+
           <div className="max-w-4xl">
             {/* Trusted badge */}
             <div className="reveal inline-flex items-center gap-3 px-4 py-2 rounded-full border border-border bg-surface backdrop-blur-md text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-8 text-text">
@@ -510,6 +514,47 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {TALENT_HUBS.map((hub, idx) => (
               <TalentHubCard key={hub.id} hub={hub} index={idx} onClick={setSelectedHub} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== ROLES WE PLACE ===== */}
+      <section
+        id="roles"
+        aria-label="Roles We Place"
+        className="py-20 md:py-32 px-4 md:px-6 bg-surface"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 reveal">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+              <Globe2 className="w-3 h-3" />
+              What We Source
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">
+              Every role. Any time zone.
+            </h2>
+            <p className="text-muted text-lg max-w-2xl mx-auto">
+              From engineering leads to ops specialists, we source across every function your business needs to scale.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {ROLES.map((category) => (
+              <div
+                key={category.title}
+                className={`reveal glass p-10 rounded-[2.5rem] border-border bg-gradient-to-br ${category.gradient} relative overflow-hidden`}
+              >
+                <h3 className="text-xl font-bold text-text mb-6">{category.title}</h3>
+                <ul className="space-y-3">
+                  {category.roles.map((role) => (
+                    <li key={role} className="flex items-center gap-3 text-sm text-muted">
+                      <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+                      {role}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </div>
