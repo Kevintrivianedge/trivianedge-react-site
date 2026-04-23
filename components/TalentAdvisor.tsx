@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ArrowRight, Terminal, Activity } from 'lucide-react';
 import { API_ENDPOINTS } from '../constants/api';
 
@@ -6,9 +6,25 @@ const TalentAdvisor: React.FC = () => {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState('');
   const [loading, setLoading] = useState(false);
+  // Track the running typewriter interval so it can be cleared on unmount.
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Clean up any running interval when the component unmounts.
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
 
   const handleAskAI = async () => {
     if (!query || loading) return;
+    // Clear any previous typewriter before starting a new one.
+    if (intervalRef.current !== null) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
     setLoading(true);
     setResult('');
     try {
@@ -25,11 +41,12 @@ const TalentAdvisor: React.FC = () => {
       // to avoid hundreds of rapid re-renders.
       let i = 0;
       const CHUNK = 3; // reveal this many characters per tick
-      const interval = setInterval(() => {
+      intervalRef.current = setInterval(() => {
         i = Math.min(i + CHUNK, text.length);
         setResult(text.slice(0, i));
         if (i >= text.length) {
-          clearInterval(interval);
+          clearInterval(intervalRef.current!);
+          intervalRef.current = null;
           setLoading(false);
         }
       }, 30);

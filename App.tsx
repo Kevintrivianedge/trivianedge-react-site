@@ -1003,8 +1003,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 </a>
 
                 <a href="mailto:info@trivianedge.com" className="p-8 rounded-3xl bg-surface border border-border hover:border-cyan-500/30 transition-colors group block tilt-card">
-                  <div className="w-12 h-12 rounded-full bg-magenta-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <Mail className="w-6 h-6 text-magenta-400" />
+                  <div className="w-12 h-12 rounded-full bg-fuchsia-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <Mail className="w-6 h-6 text-fuchsia-400" />
                   </div>
                   <h4 className="text-sm font-bold uppercase tracking-widest text-muted mb-2">Email Us</h4>
                   <p className="text-text font-medium group-hover:text-cyan-400 transition-colors">info@trivianedge.com</p>
