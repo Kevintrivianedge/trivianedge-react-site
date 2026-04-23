@@ -52,7 +52,7 @@ export const KEYWORD_CLUSTERS = {
   ],
 };
 
-/** All target keywords flattened — used for meta keywords tag */
+/** All target keywords flattened used for meta keywords tag */
 export const ALL_KEYWORDS = Object.values(KEYWORD_CLUSTERS).flat().join(', ');
 
 // ---------------------------------------------------------------------------
@@ -114,7 +114,7 @@ export function buildOrganizationSchema(): object {
   };
 }
 
-/** Schema.org LocalBusiness — boosts local/regional BPO searches */
+/** Schema.org LocalBusiness boosts local/regional BPO searches */
 export function buildLocalBusinessSchema(): object {
   return {
     '@context': 'https://schema.org',
@@ -184,7 +184,7 @@ export function buildWebSiteSchema(): object {
   };
 }
 
-/** Schema.org Service — for individual service offerings */
+/** Schema.org Service for individual service offerings */
 export function buildServiceSchema(service: { name: string; description: string; keywords?: string[] }): object {
   return {
     '@context': 'https://schema.org',
@@ -202,7 +202,7 @@ export function buildServiceSchema(service: { name: string; description: string;
     serviceType: 'Business Process Outsourcing',
     offers: {
       '@type': 'Offer',
-      description: `TrivianEdge ${service.name} — contact us for a custom quote with up to 40% cost savings.`,
+      description: `TrivianEdge ${service.name} contact us for a custom quote with up to 40% cost savings.`,
       availability: 'https://schema.org/InStock',
     },
   };
@@ -228,6 +228,7 @@ export function buildArticleSchema(post: {
   description: string;
   author: string;
   date: string;
+  dateModified?: string;
   url: string;
   imageUrl?: string;
 }): object {
@@ -249,7 +250,7 @@ export function buildArticleSchema(post: {
       logo: { '@type': 'ImageObject', url: `${SEO_CONFIG.siteUrl}/og-image.svg` },
     },
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.dateModified ?? post.date,
     url: post.url,
     image: post.imageUrl ?? SEO_CONFIG.defaultOgImage,
     mainEntityOfPage: { '@type': 'WebPage', '@id': post.url },
@@ -261,7 +262,7 @@ export function buildArticleSchema(post: {
   };
 }
 
-/** BPO-focused FAQ schema — helps rank in Google featured snippets */
+/** BPO-focused FAQ schema helps rank in Google featured snippets */
 export function buildBPOFAQSchema(): object {
   return {
     '@context': 'https://schema.org',
@@ -272,7 +273,7 @@ export function buildBPOFAQSchema(): object {
         name: 'What is BPO (Business Process Outsourcing)?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Business Process Outsourcing (BPO) is the practice of contracting specific business functions to a third-party provider. TrivianEdge offers comprehensive BPO services including offshore software development, IT outsourcing, customer support, finance & accounting, and back-office operations — all managed from Canada with teams across 6 global time zones.',
+          text: 'Business Process Outsourcing means hiring a company to handle specific parts of your business on your behalf. Instead of building an in-house team for accounting, IT support, customer service, or software development, you partner with a specialist like TrivianEdge who manages those functions for you, usually at a much lower cost and faster pace.',
         },
       },
       {
@@ -280,15 +281,15 @@ export function buildBPOFAQSchema(): object {
         name: 'Why choose TrivianEdge for offshore software development?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'TrivianEdge is a Canada-based BPO and offshore development company specialising in 30-day talent deployment. We source elite software developers, DevOps engineers, and AI specialists from our global talent hubs in the Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe — delivering up to 40% cost savings compared to local hiring.',
+          text: 'TrivianEdge is a Canada-based BPO and offshore development company with a proven 30-day deployment model. We source skilled software developers, DevOps engineers, and AI specialists from our global talent hubs, delivering up to 40% cost savings compared to local hiring, with no compromise on quality.',
         },
       },
       {
         '@type': 'Question',
-        name: 'How does TrivianEdge\'s outsourcing model work?',
+        name: 'How does TrivianEdge\'s outsourcing process work?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Our outsourcing model follows a 4-step process: (1) Discovery & Blueprint — we analyse your operational needs; (2) AI-Powered Sourcing — we find the perfect match from our global talent hubs; (3) Deployment & Sync — rapid onboarding within 30 days; (4) Continuous Evolution — ongoing performance management and scaling.',
+          text: 'Our process has four steps: (1) You tell us what you need, and we spend time understanding your business and goals. (2) We find the right person from our network across 6 countries. (3) They start in 30 days, onboarded into your existing workflow. (4) We keep making it better by tracking performance and scaling your team as you grow.',
         },
       },
       {
@@ -296,23 +297,23 @@ export function buildBPOFAQSchema(): object {
         name: 'What is the difference between BPO and offshore outsourcing?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'BPO (Business Process Outsourcing) refers to delegating entire business functions (HR, accounting, customer service) to an external company. Offshore outsourcing specifically means those teams are in another country. TrivianEdge offers both — from offshore software development teams in the Philippines to complete BPO operations managed from Canada.',
+          text: 'BPO refers to delegating entire business functions like HR, accounting, or customer service to an external company. Offshore outsourcing specifically means those teams are located in another country. TrivianEdge offers both, from offshore software development teams in the Philippines to full BPO operations managed from Canada.',
         },
       },
       {
         '@type': 'Question',
-        name: 'How much can I save with TrivianEdge\'s offshore team?',
+        name: 'How much can I save with TrivianEdge?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Companies typically save 40-60% on talent costs by partnering with TrivianEdge for offshore staffing and BPO services. Our global talent hubs provide access to highly skilled professionals at a fraction of North American or Western European rates, without sacrificing quality or operational oversight.',
+          text: 'Most companies save between 40 and 60% on talent costs by partnering with TrivianEdge. Our global talent hubs across the Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe provide highly skilled professionals at a fraction of North American rates.',
         },
       },
       {
         '@type': 'Question',
-        name: 'What software development services does TrivianEdge outsource?',
+        name: 'What software development services does TrivianEdge provide?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'TrivianEdge provides offshore software development outsourcing for full-stack development, AI/ML engineering, cloud & DevOps, mobile app development, UI/UX design, cybersecurity, and data engineering. We build dedicated offshore development teams tailored to your technology stack and operational requirements.',
+          text: 'We provide offshore software development for full-stack development, AI and ML engineering, cloud and DevOps, mobile app development, UI/UX design, cybersecurity, and data engineering. All delivered as dedicated offshore teams built to match your tech stack.',
         },
       },
       {
@@ -327,7 +328,7 @@ export function buildBPOFAQSchema(): object {
   };
 }
 
-/** Schema.org FAQPage — generic */
+/** Schema.org FAQPage generic */
 export function buildFAQSchema(faqs: { question: string; answer: string }[]): object {
   return {
     '@context': 'https://schema.org',
@@ -348,7 +349,7 @@ export function buildSoftwareApplicationSchema(): object {
     name: 'Trivian Aria',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
-    description: "TrivianEdge's AI-powered HRIS platform — automating HR, payroll, leave management, recruitment pipeline, and workforce analytics in one unified platform.",
+    description: "TrivianEdge's AI-powered HRIS platform automating HR, payroll, leave management, recruitment pipeline, and workforce analytics in one unified platform.",
     offers: {
       '@type': 'Offer',
       price: '0',
@@ -368,7 +369,7 @@ export function buildSoftwareApplicationSchema(): object {
   };
 }
 
-/** Schema.org WebPage — for informational/legal pages */
+/** Schema.org WebPage for informational/legal pages */
 export function buildWebPageSchema(page: {
   name: string;
   description: string;
@@ -395,7 +396,7 @@ export function buildWebPageSchema(page: {
   };
 }
 
-/** Schema.org ItemList — service catalogue for rich results */
+/** Schema.org ItemList service catalogue for rich results */
 export function buildServiceItemListSchema(): object {
   const services = [
     {
@@ -405,7 +406,7 @@ export function buildServiceItemListSchema(): object {
     },
     {
       name: 'Offshore Software Development',
-      description: 'Dedicated offshore development teams sourced from elite global talent hubs — Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe.',
+      description: 'Dedicated offshore development teams sourced from elite global talent hubs Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe.',
       url: `${SEO_CONFIG.siteUrl}/#services`,
     },
     {
@@ -414,7 +415,7 @@ export function buildServiceItemListSchema(): object {
       url: `${SEO_CONFIG.siteUrl}/#services`,
     },
     {
-      name: 'Trivian Aria — AI-Powered HRIS',
+      name: 'Trivian Aria AI-Powered HRIS',
       description: "TrivianEdge's AI-powered HRIS platform automating HR, payroll, leave management, and workforce analytics.",
       url: `${SEO_CONFIG.siteUrl}/#aria`,
     },

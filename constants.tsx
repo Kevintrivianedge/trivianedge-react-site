@@ -27,83 +27,83 @@ export const NAV_LINKS = [
 
 export const SERVICES: ServiceCardProps[] = [
   {
-    title: "Global Talent Deployment",
-    description: "We don't just source talent — we deploy it. From sourcing candidates in the Philippines and Canada for Cargo Login's 24/7 operations model, to building Keynotive's parallel sales teams across time zones, TrivianEdge treats every hire as a deployment problem, not a recruiting transaction.",
+    title: "We Build Your Team",
+    description: "Think of us as your global hiring department, except we already know everyone. Whether you need a software engineer in Vietnam, a customer support team in the Philippines, or an ops lead in Toronto, we find the right person and get them working for you within 30 days.",
     icon: <Users className="w-8 h-8 text-cyan-400" />,
-    tags: ["Cross-Timezone Deployment", "Non-Tech & Tech Staffing", "Embedded Operations"],
+    tags: ["Global Hiring", "24/7 Coverage", "30-Day Start"],
     features: [
-      "Technical & Non-Technical Role Sourcing",
-      "Cross-Timezone Operations Design",
+      "Technical and Non-Technical Role Sourcing",
+      "Cross-Timezone Team Design",
       "30-Day Deployment Model",
-      "Operational Integration & Onboarding"
+      "Full Onboarding and Integration"
     ],
     outcomes: [
-      "Proven 24/7 Operational Coverage",
-      "Real Revenue Generated for Clients"
+      "Your team running 24/7 across time zones",
+      "Revenue keeps moving while you sleep"
     ]
   },
   {
-    title: "Managed Technical & IT Services",
-    description: "Enterprise-grade reliability for distributed organizations. TrivianEdge Managed IT Services provide comprehensive cloud infrastructure management and cybersecurity compliance support (SOC 2, ISO 27001), ensuring your remote operations are secure and scalable.",
+    title: "We Keep Your Tech Running",
+    description: "Your servers, your software, your security monitored and managed around the clock so you never wake up to a crisis. Think of it as having your own IT department, without the overhead of building one in-house.",
     icon: <ShieldCheck className="w-8 h-8 text-violet-400" />,
-    tags: ["Cybersecurity", "DevOps", "Cloud Ops"],
+    tags: ["Cybersecurity", "DevOps", "Cloud Management"],
     features: [
-      "24/7 Security Monitoring & SOC 2 Readiness",
+      "24/7 Security Monitoring and Compliance",
       "Cloud Infrastructure Management",
-      "DevOps & CI/CD Pipeline Services",
+      "DevOps and CI/CD Pipeline Services",
       "IT Support Outsourcing"
     ],
     outcomes: [
-      "99.99% Infrastructure Uptime",
-      "Zero Compliance Gaps"
+      "99.99% uptime across your infrastructure",
+      "Security gaps closed before they become problems"
     ]
   },
   {
-    title: "Market Entry & Sales Deployment",
-    description: "When CyouMedia needed to enter Sri Lanka, we didn't just advise — we deployed a full sales strategy, sourced local companies, and acted as consultants on product scale and software development. When Hub-Flx needed to expand into UAE and GCC, we became the operational partner for that regional push.",
+    title: "We Open New Doors for You",
+    description: "Want to sell in a new country? We build the entire strategy, find local partners, and run the outreach from day one. When CyouMedia wanted to enter Sri Lanka and Hub-Flx wanted to expand into the UAE, we did not just give advice. We did the work.",
     icon: <Cpu className="w-8 h-8 text-magenta-400" />,
-    tags: ["Market Entry", "Sales Strategy", "Regional Expansion"],
+    tags: ["Market Entry", "Sales Strategy", "Regional Growth"],
     features: [
-      "Sales Strategy Deployment",
-      "Local Market Sourcing & Outreach",
+      "Full Sales Strategy and Execution",
+      "Local Market Sourcing and Outreach",
       "Regional Partnership Development",
-      "Product Scale Consulting"
+      "Product Fit and Scale Consulting"
     ],
     outcomes: [
-      "Active Partnership for Mass-Scale Deployment",
-      "UAE/GCC Regional Expansion in Progress"
+      "Active partners and revenue in new markets",
+      "UAE and GCC regional expansion underway"
     ]
   },
   {
-    title: "Remote Operations & Workforce Architecture",
-    description: "The operational infrastructure that makes distributed teams actually work. We design the communication protocols, KPI frameworks, and handoff processes that allow teams in different time zones to operate as a single, synchronized unit — the way Cargo Login's Philippines and Canada teams do every day.",
+    title: "We Design How Your Team Works",
+    description: "When your team is spread across time zones, things can fall through the cracks. We design the systems, the handoffs, the check-ins, and the scorecards that keep everyone moving together like a relay race where the baton never drops.",
     icon: <Layers className="w-8 h-8 text-emerald-400" />,
     tags: ["Ops Consulting", "KPI Design", "Team Structure"],
     features: [
-      "Global Team Structuring & Design",
-      "KPI Framework & SLA Governance",
+      "Global Team Structuring and Design",
+      "KPI Frameworks and SLA Governance",
       "Cross-Timezone Handoff Protocols",
       "Ongoing Performance Management"
     ],
     outcomes: [
-      "Streamlined Broken Processes",
-      "Predictable Execution Across Time Zones"
+      "Broken processes fixed and streamlined",
+      "Predictable results across every time zone"
     ]
   },
   {
-    title: "Finance & Back-Office Managed Services",
-    description: "Scalable financial operations for growing enterprises. TrivianEdge provides dedicated remote accounting teams, virtual CFO services, and back-office support to ensure your financial infrastructure scales as fast as your revenue.",
+    title: "We Handle Your Back Office",
+    description: "Payroll, accounting, invoicing, admin. The stuff that is essential but eats up your time and does not grow your business. We take it completely off your plate so you can focus on the work that actually matters.",
     icon: <BarChart4 className="w-8 h-8 text-orange-400" />,
     tags: ["Virtual CFO", "Accounting", "Back-Office"],
     features: [
-      "Finance & Accounting Outsourcing",
-      "Virtual CFO & Financial Reporting",
-      "Payroll Processing & AR/AP Management",
-      "Back-Office Ops Outsourcing"
+      "Finance and Accounting Outsourcing",
+      "Virtual CFO and Financial Reporting",
+      "Payroll Processing and AR/AP Management",
+      "Back-Office Operations Outsourcing"
     ],
     outcomes: [
-      "Audit-Ready Financials",
-      "30% Reduction in Admin Overhead"
+      "Audit-ready financials at all times",
+      "30% reduction in admin overhead"
     ]
   }
 ];
@@ -198,15 +198,15 @@ export const TALENT_HUBS: TalentHub[] = [
 export const WHY_US: WhyUsItem[] = [
   {
     title: "Cargo Login",
-    description: "Sourced candidates from the Philippines and Canada. While the USA team was offline, the Philippines team picked up all documentation and execution seamlessly, working alongside the Canadian hire dedicated to trucking operations.",
-    result: "Increased revenue and streamlined broken processes.",
+    description: "Sourced candidates from the Philippines and Canada. While the US team was offline, the Philippines team picked up all documentation and execution seamlessly, working alongside a Canadian hire dedicated to trucking operations.",
+    result: "Revenue increased. Broken processes fixed.",
     url: "https://www.cargo-login.com",
     icon: <Briefcase className="w-6 h-6 text-cyan-400" />
   },
   {
     title: "Keynotive",
-    description: "Managed two offshore teams operating across different time zones. Teams executed cold calling, email marketing, and business sign-ups in parallel — generating new revenue without adding overhead.",
-    result: "Multiple teams operating efficiently across time zones with measurable revenue growth.",
+    description: "Managed two offshore teams operating across different time zones. Both teams ran cold calling, email marketing, and business sign-ups in parallel, generating new revenue without adding overhead.",
+    result: "Multiple teams running efficiently, measurable revenue growth.",
     url: "https://www.keynotive.io",
     icon: <TrendingUp className="w-6 h-6 text-violet-400" />
   },
@@ -219,19 +219,19 @@ export const WHY_US: WhyUsItem[] = [
   },
   {
     title: "Hub-Flx",
-    description: "Founded in the UAE with roots in Singapore, the founder invited TrivianEdge to partner in bringing software products — Medtech, ERPs, and data migration tools — to UAE and GCC regions.",
+    description: "Founded in the UAE with roots in Singapore, the founder invited TrivianEdge to partner in bringing software products including Medtech, ERPs, and data migration tools to UAE and GCC regions.",
     result: "Strategic partnership for regional expansion in the Middle East.",
     url: "https://www.hub-flx.com",
     icon: <Network className="w-6 h-6 text-orange-400" />
   },
   {
     title: "Built by Operators",
-    description: "We aren't just recruiters. We are operators who know what delivery actually looks like — from onboarding to execution, from sourcing to deployment.",
+    description: "We are not just recruiters. We are operators who know what delivery actually looks like, from onboarding to execution, from sourcing to results.",
     icon: <Target className="w-6 h-6 text-blue-400" />
   },
   {
     title: "Designed for Scale",
-    description: "Whether you need one hire or a full 24/7 operations team across three time zones, our deployment model is built for speed and accountability.",
+    description: "Whether you need one hire or a full 24/7 operations team across three time zones, our model is built for speed, accountability, and growth.",
     icon: <Layers className="w-6 h-6 text-magenta-400" />
   }
 ];
@@ -266,26 +266,26 @@ export const ROLES: RoleCategory[] = [
 export const STEPS: Step[] = [
   {
     number: "01",
-    title: "Discovery & Blueprint",
-    description: "We analyze your execution bottlenecks and operational language to define the exact profile required.",
+    title: "You Tell Us What You Need",
+    description: "We spend time understanding your business, your goals, and exactly what kind of person would make a real difference. No guesswork, no generic job descriptions.",
     icon: <Search className="w-6 h-6 text-cyan-400" />
   },
   {
     number: "02",
-    title: "AI-Powered Sourcing",
-    description: "Our engine scans global hubs (Philippines, Vietnam, Turkey, etc.) to find the top match.",
+    title: "We Find the Right Person",
+    description: "Our network spans 6 countries and hundreds of vetted candidates. We search, screen, and shortlist the best match for your role, usually within a week.",
     icon: <Globe className="w-6 h-6 text-violet-400" />
   },
   {
     number: "03",
-    title: "Deployment & Sync",
-    description: "Rapid onboarding and integration into your tech stack and communication channels.",
+    title: "They Start in 30 Days",
+    description: "We onboard your new team member and make sure they fit right into your existing workflow. Day one feels like they have been there for months.",
     icon: <Zap className="w-6 h-6 text-magenta-400" />
   },
   {
     number: "04",
-    title: "Continuous Evolution",
-    description: "Ongoing performance tracking and scaling as your business demands growth.",
+    title: "We Keep Making It Better",
+    description: "We track how things are going and scale your team as your business grows. Good results get built on. Anything that is not working gets fixed fast.",
     icon: <TrendingUp className="w-6 h-6 text-emerald-400" />
   }
 ];
@@ -294,8 +294,8 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     id: "cargo-login-case-study",
     title: "Cargo Login: How 24/7 Cross-Timezone Ops Increased Revenue",
-    excerpt: "Cargo Login needed more than a recruiter — they needed an operations partner who could source talent from two continents and keep their business running while the USA team slept.",
-    content: "When Cargo Login came to TrivianEdge, they had a problem that most logistics companies face but few admit out loud: their operations stopped when their US team went offline. Any documentation bottlenecks, any urgent processing that came in after hours sat unresolved until the next morning.\n\nThe solution wasn't just hiring. It was deploying a cross-timezone execution model.\n\nWe sourced two critical roles: a Philippines-based team member with deep expertise in logistics documentation, and a Canadian hire dedicated to their trucking business operations. The Philippines hire didn't just fill a gap — she became the bridge between their US workflows and the overnight execution cycle. Every evening, she picked up where the US team left off. Every morning, the US team started ahead of where they'd been the night before.\n\nThe Canadian hire brought operational continuity to the North American side of the business — someone fully embedded in the trucking ecosystem, who understood the regulatory landscape and operational language from day one.\n\nThe result: Cargo Login's revenue increased because their operations never stopped. Broken processes that had slowed them down for months were identified and streamlined because we had eyes on them across two time zones, not just one. This is the TrivianEdge model: we don't hire people and hand them over. We deploy them into your operational reality and make sure they stick.",
+    excerpt: "Cargo Login needed more than a recruiter they needed an operations partner who could source talent from two continents and keep their business running while the USA team slept.",
+    content: "When Cargo Login came to TrivianEdge, they had a problem that most logistics companies face but few admit out loud: their operations stopped when their US team went offline. Any documentation bottlenecks, any urgent processing that came in after hours sat unresolved until the next morning.\n\nThe solution wasn't just hiring. It was deploying a cross-timezone execution model.\n\nWe sourced two critical roles: a Philippines-based team member with deep expertise in logistics documentation, and a Canadian hire dedicated to their trucking business operations. The Philippines hire didn't just fill a gap she became the bridge between their US workflows and the overnight execution cycle. Every evening, she picked up where the US team left off. Every morning, the US team started ahead of where they'd been the night before.\n\nThe Canadian hire brought operational continuity to the North American side of the business someone fully embedded in the trucking ecosystem, who understood the regulatory landscape and operational language from day one.\n\nThe result: Cargo Login's revenue increased because their operations never stopped. Broken processes that had slowed them down for months were identified and streamlined because we had eyes on them across two time zones, not just one. This is the TrivianEdge model: we don't hire people and hand them over. We deploy them into your operational reality and make sure they stick.",
     author: "TrivianEdge Editorial",
     date: "Jan 15, 2025",
     readTime: "5 min read",
@@ -305,14 +305,14 @@ export const BLOG_POSTS: BlogPost[] = [
     metaDescription: "How TrivianEdge deployed a Philippines + Canada cross-timezone team for Cargo Login, enabling 24/7 operations and measurable revenue growth.",
     metaKeywords: ["cargo login", "cross-timezone operations", "logistics staffing", "Philippines talent", "TrivianEdge case study"],
     datePublished: "2025-01-15",
-    dateModified: "2025-01-15",
+    dateModified: "2026-04-23",
     imageUrl: "https://www.trivianedge.com/og-image.jpg",
   },
   {
     id: "keynotive-case-study",
     title: "Keynotive: Running Two Sales Teams Across Time Zones",
-    excerpt: "Keynotive needed to generate revenue fast. TrivianEdge deployed two parallel offshore teams handling cold calling, email marketing, and business sign-ups — all operating in different time zones.",
-    content: "Most companies treat offshore sales teams as an afterthought — a cost reduction play that rarely delivers real results. Keynotive came to us with a different mindset: they wanted to scale their sales capacity without scaling their overhead.\n\nWe deployed two teams in different time zones to run cold calling, email marketing, and business development sign-ups in parallel. This wasn't a sequential handoff model — both teams operated simultaneously, each owning their respective channels and time windows.\n\nThe key to making this work wasn't just hiring good callers. It was building the operational infrastructure around them: shared CRM access, standardized call scripts, daily performance reports that fed into Keynotive's core team, and a synchronization protocol that ensured no lead fell through the cracks between shifts.\n\nWithin the first quarter, Keynotive saw measurable improvements in pipeline volume and work effectiveness. The two-team model meant their sales engine never stopped — while one team was sleeping, the other was booking meetings and sending follow-ups.\n\nThis is execution, not headcount. The difference is everything.",
+    excerpt: "Keynotive needed to generate revenue fast. TrivianEdge deployed two parallel offshore teams handling cold calling, email marketing, and business sign-ups all operating in different time zones.",
+    content: "Most companies treat offshore sales teams as an afterthought a cost reduction play that rarely delivers real results. Keynotive came to us with a different mindset: they wanted to scale their sales capacity without scaling their overhead.\n\nWe deployed two teams in different time zones to run cold calling, email marketing, and business development sign-ups in parallel. This wasn't a sequential handoff model both teams operated simultaneously, each owning their respective channels and time windows.\n\nThe key to making this work wasn't just hiring good callers. It was building the operational infrastructure around them: shared CRM access, standardized call scripts, daily performance reports that fed into Keynotive's core team, and a synchronization protocol that ensured no lead fell through the cracks between shifts.\n\nWithin the first quarter, Keynotive saw measurable improvements in pipeline volume and work effectiveness. The two-team model meant their sales engine never stopped while one team was sleeping, the other was booking meetings and sending follow-ups.\n\nThis is execution, not headcount. The difference is everything.",
     author: "TrivianEdge Editorial",
     date: "Feb 03, 2025",
     readTime: "4 min read",
@@ -322,14 +322,14 @@ export const BLOG_POSTS: BlogPost[] = [
     metaDescription: "How TrivianEdge managed two parallel offshore sales teams for Keynotive across different time zones, generating revenue through cold calling and email marketing.",
     metaKeywords: ["keynotive", "offshore sales teams", "cold calling outsourcing", "multi-timezone sales", "TrivianEdge case study"],
     datePublished: "2025-02-03",
-    dateModified: "2025-02-03",
+    dateModified: "2026-04-23",
     imageUrl: "https://www.trivianedge.com/og-image.jpg",
   },
   {
     id: "cyoumedia-case-study",
     title: "CyouMedia: Deploying a Sales Strategy in Sri Lanka",
     excerpt: "CyouMedia needed a real market entry strategy for Sri Lanka. TrivianEdge sourced local companies, deployed a sales playbook, and became the consultants for their ongoing product scale.",
-    content: "CyouMedia had a product. They had ambition. What they needed was someone who could turn ambition into a real market entry — not a deck, not a roadmap, but actual companies using their tools in a new market.\n\nSri Lanka was chosen as the test market. TrivianEdge wasn't just tasked with sourcing. We became the deployment engine: identifying the right Sri Lankan companies to target, running the outreach, and acting as strategic consultants for how the product needed to evolve to fit the market.\n\nWe deployed a state-of-the-art sales strategy that combined local market knowledge with TrivianEdge's operational playbook. Our team sourced prospects, ran qualification calls, and closed the first wave of partnerships that gave CyouMedia proof of concept in a new geography.\n\nBeyond the initial deployment, we stayed on as consultants for product scale and software development guidance — ensuring that what worked in Sri Lanka could be replicated across other markets.\n\nThe result: CyouMedia now has an active partnership with TrivianEdge for mass-scale deployment across the region. The test market became the foundation for something much bigger.",
+    content: "CyouMedia had a product. They had ambition. What they needed was someone who could turn ambition into a real market entry not a deck, not a roadmap, but actual companies using their tools in a new market.\n\nSri Lanka was chosen as the test market. TrivianEdge wasn't just tasked with sourcing. We became the deployment engine: identifying the right Sri Lankan companies to target, running the outreach, and acting as strategic consultants for how the product needed to evolve to fit the market.\n\nWe deployed a state-of-the-art sales strategy that combined local market knowledge with TrivianEdge's operational playbook. Our team sourced prospects, ran qualification calls, and closed the first wave of partnerships that gave CyouMedia proof of concept in a new geography.\n\nBeyond the initial deployment, we stayed on as consultants for product scale and software development guidance ensuring that what worked in Sri Lanka could be replicated across other markets.\n\nThe result: CyouMedia now has an active partnership with TrivianEdge for mass-scale deployment across the region. The test market became the foundation for something much bigger.",
     author: "TrivianEdge Editorial",
     date: "Feb 20, 2025",
     readTime: "5 min read",
@@ -339,14 +339,14 @@ export const BLOG_POSTS: BlogPost[] = [
     metaDescription: "How TrivianEdge deployed a full sales strategy for CyouMedia in Sri Lanka, sourcing companies and acting as product scale consultants for market entry.",
     metaKeywords: ["cyoumedia", "Sri Lanka market entry", "sales strategy deployment", "offshore consulting", "TrivianEdge case study"],
     datePublished: "2025-02-20",
-    dateModified: "2025-02-20",
+    dateModified: "2026-04-23",
     imageUrl: "https://www.trivianedge.com/og-image.jpg",
   },
   {
     id: "hub-flx-case-study",
     title: "Hub-Flx: Bringing Software Products to the UAE and GCC",
-    excerpt: "Founded in the UAE with roots in Singapore, Hub-Flx partnered with TrivianEdge to bring Medtech, ERPs, and data migration tools to the Middle East — a regional expansion that required more than a sales strategy.",
-    content: "Hub-Flx's founder had a clear vision: take software products that had proven themselves in one market and bring them to the UAE and broader GCC region — one of the fastest-growing technology adoption zones in the world.\n\nThe challenge wasn't product-market fit. The challenge was the execution of regional expansion: understanding the procurement landscape, building local relationships, navigating the regulatory environment, and deploying a product suite that includes Medtech solutions, ERPs, and data migration tools into a market with high expectations and specific compliance requirements.\n\nHub-Flx's founder invited TrivianEdge to become a strategic partner in this expansion. We weren't brought in as a recruitment agency or a marketing team. We were brought in as operators who could help map the territory and move through it with precision.\n\nOur role: identify the right entry points in the UAE market, position the software products for the GCC buyer persona, and build the partnerships that would give Hub-Flx credibility and commercial traction in a new region.\n\nThe result is an ongoing strategic partnership — one that continues to evolve as Hub-Flx grows its footprint across the Middle East. This is what TrivianEdge does: we don't just open doors. We walk through them with you.",
+    excerpt: "Founded in the UAE with roots in Singapore, Hub-Flx partnered with TrivianEdge to bring Medtech, ERPs, and data migration tools to the Middle East a regional expansion that required more than a sales strategy.",
+    content: "Hub-Flx's founder had a clear vision: take software products that had proven themselves in one market and bring them to the UAE and broader GCC region one of the fastest-growing technology adoption zones in the world.\n\nThe challenge wasn't product-market fit. The challenge was the execution of regional expansion: understanding the procurement landscape, building local relationships, navigating the regulatory environment, and deploying a product suite that includes Medtech solutions, ERPs, and data migration tools into a market with high expectations and specific compliance requirements.\n\nHub-Flx's founder invited TrivianEdge to become a strategic partner in this expansion. We weren't brought in as a recruitment agency or a marketing team. We were brought in as operators who could help map the territory and move through it with precision.\n\nOur role: identify the right entry points in the UAE market, position the software products for the GCC buyer persona, and build the partnerships that would give Hub-Flx credibility and commercial traction in a new region.\n\nThe result is an ongoing strategic partnership one that continues to evolve as Hub-Flx grows its footprint across the Middle East. This is what TrivianEdge does: we don't just open doors. We walk through them with you.",
     author: "TrivianEdge Editorial",
     date: "Mar 10, 2025",
     readTime: "6 min read",
@@ -356,14 +356,14 @@ export const BLOG_POSTS: BlogPost[] = [
     metaDescription: "How TrivianEdge partnered with Hub-Flx to bring Medtech, ERPs, and data migration software to the UAE and GCC regions as a strategic expansion partner.",
     metaKeywords: ["hub-flx", "UAE expansion", "GCC software market", "medtech deployment", "TrivianEdge case study"],
     datePublished: "2025-03-10",
-    dateModified: "2025-03-10",
+    dateModified: "2026-04-23",
     imageUrl: "https://www.trivianedge.com/og-image.jpg",
   },
   {
     id: "1",
     title: "Why HR and Ops Are Always Arguing (And How to Fix It)",
     excerpt: "HR wants a perfect resume; Ops wants someone who can actually do the job. Here's why this disconnect is killing your scale-up.",
-    content: "If you've ever sat in a hiring meeting at a fast-growing tech company, you've probably witnessed the classic standoff. HR is thrilled because they found a candidate with a degree from a top-tier university and a resume full of buzzwords. Meanwhile, the Operations lead is pulling their hair out because the candidate couldn't explain how they'd actually solve a real-world deployment issue.\n\nIt's a tale as old as time: HR speaks the language of pedigree and 'culture fit,' while Ops speaks the language of execution and targets. When these two departments aren't on the same page, you end up hiring people who look great on paper but stumble when it's time to actually deliver.\n\nI've seen this happen so many times. A company hires a brilliant engineer who simply cannot adapt to the chaotic, fast-paced reality of a startup. It's not that they aren't smart; it's just that they were hired for their background, not their operational readiness.\n\nAt TrivianEdge, we realized that the only way to fix this is to change the conversation. We have to stop translating between HR and Ops and start using a shared language—the language of delivery. Instead of asking 'Where did they work before?', we need to ask 'Can they execute this specific project under these specific constraints?' When you align your hiring process with your actual operational goals, everything changes. You hire faster, onboard smoother, and actually hit those growth milestones you promised your investors.",
+    content: "If you've ever sat in a hiring meeting at a fast-growing tech company, you've probably witnessed the classic standoff. HR is thrilled because they found a candidate with a degree from a top-tier university and a resume full of buzzwords. Meanwhile, the Operations lead is pulling their hair out because the candidate couldn't explain how they'd actually solve a real-world deployment issue.\n\nIt's a tale as old as time: HR speaks the language of pedigree and 'culture fit,' while Ops speaks the language of execution and targets. When these two departments aren't on the same page, you end up hiring people who look great on paper but stumble when it's time to actually deliver.\n\nI've seen this happen so many times. A company hires a brilliant engineer who simply cannot adapt to the chaotic, fast-paced reality of a startup. It's not that they aren't smart; it's just that they were hired for their background, not their operational readiness.\n\nAt TrivianEdge, we realized that the only way to fix this is to change the conversation. We have to stop translating between HR and Ops and start using a shared language, the language of delivery. Instead of asking 'Where did they work before?', we need to ask 'Can they execute this specific project under these specific constraints?' When you align your hiring process with your actual operational goals, everything changes. You hire faster, onboard smoother, and actually hit those growth milestones you promised your investors.",
     author: "TrivianEdge Editorial",
     date: "Oct 12, 2024",
     readTime: "6 min read",
@@ -397,7 +397,7 @@ export const BLOG_POSTS: BlogPost[] = [
     id: "3",
     title: "Beyond Silicon Valley: Where the Real Tech Talent is Hiding",
     excerpt: "Silicon Valley might have the venture capital, but the next generation of top-tier engineering talent is emerging in places you might not expect.",
-    content: "If you ask the average person where the best software engineers live, they'll probably say Silicon Valley, maybe Seattle or New York. And sure, there's incredible talent there. But if you're only looking in the usual tech hubs, you are missing out on a massive, global shift.\n\nThe truth is, the actual muscle of software engineering is becoming incredibly distributed. We're seeing absolute powerhouse talent emerging from regions that weren't even on the radar a decade ago.\n\nTake Vietnam, for example. There's a generation of developers there who grew up with a heavy focus on STEM education and are now cutting their teeth in a wildly fast-paced startup ecosystem. They aren't just good coders; they are incredibly scrappy and adaptive. Or look at Turkey—it's become this amazing bridge between European business culture and deep technical expertise, producing engineers who are fantastic at tackling complex, messy operational challenges.\n\nI was talking to a CTO recently who was struggling to hire locally. We helped him build a small team in Istanbul, and he was blown away. Not just by their technical chops, but by their work ethic and how quickly they integrated with his core team.\n\nThe companies that win in the next decade won't be the ones fighting over the same expensive talent in San Francisco. They'll be the ones who figure out how to tap into these emerging global hubs and build truly borderless teams.",
+    content: "If you ask the average person where the best software engineers live, they'll probably say Silicon Valley, maybe Seattle or New York. And sure, there's incredible talent there. But if you're only looking in the usual tech hubs, you are missing out on a massive, global shift.\n\nThe truth is, the actual muscle of software engineering is becoming incredibly distributed. We're seeing absolute powerhouse talent emerging from regions that weren't even on the radar a decade ago.\n\nTake Vietnam, for example. There's a generation of developers there who grew up with a heavy focus on STEM education and are now cutting their teeth in a wildly fast-paced startup ecosystem. They aren't just good coders; they are incredibly scrappy and adaptive. Or look at Turkey, it's become this amazing bridge between European business culture and deep technical expertise, producing engineers who are fantastic at tackling complex, messy operational challenges.\n\nI was talking to a CTO recently who was struggling to hire locally. We helped him build a small team in Istanbul, and he was blown away. Not just by their technical chops, but by their work ethic and how quickly they integrated with his core team.\n\nThe companies that win in the next decade won't be the ones fighting over the same expensive talent in San Francisco. They'll be the ones who figure out how to tap into these emerging global hubs and build truly borderless teams.",
     author: "Global Strategy Director",
     date: "Sep 15, 2024",
     readTime: "5 min read",
@@ -414,14 +414,14 @@ export const BLOG_POSTS: BlogPost[] = [
     id: "4",
     title: "The Real Cost of a Bad Hire (And It's Not Just Money)",
     excerpt: "We all know bad hires are expensive. But the real damage? It's the silent toll it takes on your team's morale and momentum.",
-    content: "Let's be honest for a second. We've all been there. You're desperate to fill a role, the candidate looks great on paper, and they nailed the interview. Fast forward three months, and you're spending more time managing their mistakes than actually doing your own job.\n\nSure, the financial cost of a bad hire is painful—recruiting fees, onboarding time, severance. But that's just the tip of the iceberg. The real damage is the silent, creeping toll it takes on your best people. When a high performer has to constantly pick up the slack for someone who just isn't getting it, resentment builds. Fast. Suddenly, your top engineers are burning out, not because of the workload, but because of the friction.\n\nI remember talking to a founder last year who almost lost his entire core engineering team because of one toxic senior hire. It took them six months to recover their momentum after letting the person go.\n\nSo, how do we fix this? It starts with looking beyond the resume. Skills can be taught, but alignment—how someone communicates, how they handle failure, how they collaborate—is much harder to train. At TrivianEdge, we've started incorporating behavioral and operational alignment checks early in the process. It's not foolproof, but it catches the red flags that a standard technical interview usually misses. Because at the end of the day, you're not just hiring a set of skills; you're adding a new dynamic to your team's ecosystem.",
+    content: "Let's be honest for a second. We've all been there. You're desperate to fill a role, the candidate looks great on paper, and they nailed the interview. Fast forward three months, and you're spending more time managing their mistakes than actually doing your own job.\n\nSure, the financial cost of a bad hire is painful, recruiting fees, onboarding time, severance. But that's just the tip of the iceberg. The real damage is the silent, creeping toll it takes on your best people. When a high performer has to constantly pick up the slack for someone who just isn't getting it, resentment builds. Fast. Suddenly, your top engineers are burning out, not because of the workload, but because of the friction.\n\nI remember talking to a founder last year who almost lost his entire core engineering team because of one toxic senior hire. It took them six months to recover their momentum after letting the person go.\n\nSo, how do we fix this? It starts with looking beyond the resume. Skills can be taught, but alignment, how someone communicates, how they handle failure, how they collaborate, is much harder to train. At TrivianEdge, we've started incorporating behavioral and operational alignment checks early in the process. It's not foolproof, but it catches the red flags that a standard technical interview usually misses. Because at the end of the day, you're not just hiring a set of skills; you're adding a new dynamic to your team's ecosystem.",
     author: "Sarah Jenkins",
     date: "Nov 05, 2024",
     readTime: "4 min read",
     category: "Hiring",
     imageGradient: "from-orange-500/20 to-red-500/20",
     slug: "real-cost-of-bad-hire",
-    metaDescription: "A bad hire costs more than money. Learn how poor hiring decisions silently destroy team morale and momentum — and how to prevent it.",
+    metaDescription: "A bad hire costs more than money. Learn how poor hiring decisions silently destroy team morale and momentum and how to prevent it.",
     metaKeywords: ["bad hire cost", "hiring mistakes", "talent acquisition", "team morale", "operational alignment"],
     datePublished: "2024-11-05",
     dateModified: "2024-11-05",
@@ -431,7 +431,7 @@ export const BLOG_POSTS: BlogPost[] = [
     id: "5",
     title: "Why 'Culture Fit' is a Trap (And What to Look for Instead)",
     excerpt: "Hiring for 'culture fit' often just means hiring people exactly like you. Here's why you should be hiring for 'culture add' instead.",
-    content: "For years, 'culture fit' was the golden rule of hiring. If someone didn't pass the proverbial 'beer test' (would you want to grab a beer with them after work?), they didn't get the job. But here's the uncomfortable truth: hiring for culture fit is often just a polite way of saying 'we only hire people who look, think, and act exactly like us.'\n\nWhen you build a team of clones, you create an echo chamber. Everyone agrees on the strategy, everyone laughs at the same jokes, and nobody challenges the status quo. It feels great—until you hit a complex problem that requires a totally different perspective, and your team is completely paralyzed.\n\nInstead of looking for a culture fit, we need to start looking for a 'culture add.' What is your team currently missing? Do you have too many big-picture thinkers and not enough detail-oriented executors? Do you have a team of optimists who need a healthy dose of pragmatism?\n\nI recently worked with a startup that was struggling to launch their product. Their engineering team was brilliant but chaotic. They didn't need another rockstar coder; they needed someone who loved documentation and process. They hired a project manager who was the complete opposite of their typical 'culture fit'—she was quiet, methodical, and strictly 9-to-5. Within a month, she had the team running like a well-oiled machine.\n\nWhen you hire globally, this becomes even more important. Embracing different working styles, communication norms, and problem-solving approaches isn't just a nice-to-have; it's a competitive advantage. So next time you're interviewing, don't ask yourself if the candidate fits in. Ask yourself what they bring that you don't already have.",
+    content: "For years, 'culture fit' was the golden rule of hiring. If someone didn't pass the proverbial 'beer test' (would you want to grab a beer with them after work?), they didn't get the job. But here's the uncomfortable truth: hiring for culture fit is often just a polite way of saying 'we only hire people who look, think, and act exactly like us.'\n\nWhen you build a team of clones, you create an echo chamber. Everyone agrees on the strategy, everyone laughs at the same jokes, and nobody challenges the status quo. It feels great, until you hit a complex problem that requires a totally different perspective, and your team is completely paralyzed.\n\nInstead of looking for a culture fit, we need to start looking for a 'culture add.' What is your team currently missing? Do you have too many big-picture thinkers and not enough detail-oriented executors? Do you have a team of optimists who need a healthy dose of pragmatism?\n\nI recently worked with a startup that was struggling to launch their product. Their engineering team was brilliant but chaotic. They didn't need another rockstar coder; they needed someone who loved documentation and process. They hired a project manager who was the complete opposite of their typical 'culture fit', she was quiet, methodical, and strictly 9-to-5. Within a month, she had the team running like a well-oiled machine.\n\nWhen you hire globally, this becomes even more important. Embracing different working styles, communication norms, and problem-solving approaches isn't just a nice-to-have; it's a competitive advantage. So next time you're interviewing, don't ask yourself if the candidate fits in. Ask yourself what they bring that you don't already have.",
     author: "Marcus Chen",
     date: "Nov 18, 2024",
     readTime: "5 min read",
@@ -448,7 +448,7 @@ export const BLOG_POSTS: BlogPost[] = [
     id: "6",
     title: "The Asynchronous Work Myth: Why You Still Need to Talk",
     excerpt: "Async work is great for deep focus, but it's terrible for building trust. Here's how to strike the right balance in a remote team.",
-    content: "If you read enough tech blogs, you might start to believe that asynchronous work is the holy grail of productivity. Just write everything down in a Notion doc, assign a Jira ticket, and let your team work in blissful, uninterrupted silence. No meetings, no Slack pings, just pure deep work.\n\nIt sounds amazing in theory. In practice? It can be incredibly lonely and surprisingly inefficient.\n\nDon't get me wrong, I love async work. It's essential for getting complex tasks done, especially when your team is spread across three different time zones. But we've swung the pendulum too far. We've forgotten that humans are social creatures, and trust isn't built in a Google Doc comment thread.\n\nThink about the last time you had a misunderstanding over text or email. A slightly blunt message can spiral into a days-long passive-aggressive standoff. If you had just hopped on a quick five-minute call, you would have heard the tone of their voice, realized they were just stressed about a deadline, and resolved the issue instantly.\n\nIn our rush to optimize every minute of the workday, we've optimized out the human connection. At TrivianEdge, we've found that the most successful remote teams don't eliminate meetings; they just make them count. We use async for status updates and information sharing, but we mandate synchronous time for brainstorming, complex problem-solving, and—most importantly—just hanging out.\n\nYou don't need to go back to back-to-back Zoom calls. But if you haven't actually spoken to your lead developer in two weeks, it might be time to schedule a quick coffee chat. Trust me, it's worth the interruption.",
+    content: "If you read enough tech blogs, you might start to believe that asynchronous work is the holy grail of productivity. Just write everything down in a Notion doc, assign a Jira ticket, and let your team work in blissful, uninterrupted silence. No meetings, no Slack pings, just pure deep work.\n\nIt sounds amazing in theory. In practice? It can be incredibly lonely and surprisingly inefficient.\n\nDon't get me wrong, I love async work. It's essential for getting complex tasks done, especially when your team is spread across three different time zones. But we've swung the pendulum too far. We've forgotten that humans are social creatures, and trust isn't built in a Google Doc comment thread.\n\nThink about the last time you had a misunderstanding over text or email. A slightly blunt message can spiral into a days-long passive-aggressive standoff. If you had just hopped on a quick five-minute call, you would have heard the tone of their voice, realized they were just stressed about a deadline, and resolved the issue instantly.\n\nIn our rush to optimize every minute of the workday, we've optimized out the human connection. At TrivianEdge, we've found that the most successful remote teams don't eliminate meetings; they just make them count. We use async for status updates and information sharing, but we mandate synchronous time for brainstorming, complex problem-solving, and, most importantly, just hanging out.\n\nYou don't need to go back to back-to-back Zoom calls. But if you haven't actually spoken to your lead developer in two weeks, it might be time to schedule a quick coffee chat. Trust me, it's worth the interruption.",
     author: "Elena Rodriguez",
     date: "Dec 02, 2024",
     readTime: "6 min read",
