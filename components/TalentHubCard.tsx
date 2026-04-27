@@ -8,16 +8,23 @@ import { TalentHub } from '../types';
 // ---------------------------------------------------------------------------
 type ScrollCallback = () => void;
 const scrollCallbacks = new Set<ScrollCallback>();
-let sharedScrollAttached = false;
+let sharedScrollHandler: (() => void) | null = null;
 
 function registerScrollCallback(cb: ScrollCallback): () => void {
-  if (!sharedScrollAttached) {
-    window.addEventListener('scroll', () => scrollCallbacks.forEach(fn => fn()), { passive: true });
-    sharedScrollAttached = true;
+  if (!sharedScrollHandler) {
+    sharedScrollHandler = () => scrollCallbacks.forEach(fn => fn());
+    window.addEventListener('scroll', sharedScrollHandler, { passive: true });
   }
   scrollCallbacks.add(cb);
   cb(); // run once on mount
-  return () => scrollCallbacks.delete(cb);
+  return () => {
+    scrollCallbacks.delete(cb);
+    // Remove the shared listener when no cards are mounted
+    if (scrollCallbacks.size === 0 && sharedScrollHandler) {
+      window.removeEventListener('scroll', sharedScrollHandler);
+      sharedScrollHandler = null;
+    }
+  };
 }
 
 const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: TalentHub) => void }> = ({ hub, index, onClick }) => {

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { SupportedLanguage } from '../types';
 import { getLanguageFromBrowser, isRTL as checkRTL } from '../utils/countryLanguageMap';
 
@@ -33,10 +33,14 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     localStorage.setItem('user_language', lang);
   };
 
-  const isRTL = checkRTL(language);
+  // Memoise derived values so the Provider value object has a stable reference
+  // — prevents every useLanguage() consumer from re-rendering on every parent
+  // render even when language hasn't changed.
+  const isRTL = useMemo(() => checkRTL(language), [language]);
+  const value = useMemo(() => ({ language, setLanguage, isRTL }), [language, isRTL]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, isRTL }}>
+    <LanguageContext.Provider value={value}>
       <div dir={isRTL ? 'rtl' : 'ltr'} className="contents">
         {children}
       </div>

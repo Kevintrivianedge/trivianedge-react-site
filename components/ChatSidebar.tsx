@@ -14,6 +14,47 @@ interface Message {
   isInitial?: boolean;
 }
 
+// ---------------------------------------------------------------------------
+// Pure text-rendering helpers — defined at module level so they are never
+// recreated on component re-renders (important during streaming where
+// setMessages fires many times per second).
+// ---------------------------------------------------------------------------
+
+/** Parse **bold** markdown syntax into <strong> elements */
+function parseBold(text: string): React.ReactNode[] {
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, j) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={j} className="text-cyan-300 font-bold">{part.slice(2, -2)}</strong>;
+    }
+    return part;
+  });
+}
+
+/** Render a single chat message string with bullet points and bold support */
+function renderMessageText(text: string): React.ReactNode[] {
+  const lines = text.split('\n');
+  return lines.map((line, i) => {
+    if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
+      const content = line.replace(/^[-*]\s/, '');
+      return (
+        <div key={i} className="flex gap-2 ml-2 mb-1">
+          <span className="text-cyan-400 mt-1.5 text-[10px]">●</span>
+          <span className="flex-1">{parseBold(content)}</span>
+        </div>
+      );
+    }
+    if (!line.trim()) {
+      return <div key={i} className="h-2" />;
+    }
+    return (
+      <p key={i} className="mb-1 last:mb-0">
+        {parseBold(line)}
+      </p>
+    );
+  });
+}
+
 const AriaAvatar = ({ isTyping = false, size = 'md' }) => {
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [isInteracting, setIsInteracting] = useState(false);
@@ -23,9 +64,11 @@ const AriaAvatar = ({ isTyping = false, size = 'md' }) => {
     const eyeSize = size === 'sm' ? 'w-2 h-2' : size === 'lg' ? 'w-4 h-4' : 'w-3 h-3';
     const happyEyeClass = size === 'sm' ? 'w-1.5 h-1' : size === 'lg' ? 'w-3 h-1.5' : 'w-2 h-1';
     
-    // Mouse tracking for the eye
+    // Mouse tracking for the eye — only enabled for the lg avatar (sidebar header).
+    // Small avatars (message bubbles) don't need tracking and would otherwise
+    // register an additional global mousemove handler per message.
     useEffect(() => {
-        if (isTyping) return; // Don't track while thinking
+        if (isTyping || size !== 'lg') return; // Only track on the large sidebar avatar
         
         const handleMouseMove = (e: MouseEvent) => {
             if (!avatarRef.current) return;
@@ -40,14 +83,14 @@ const AriaAvatar = ({ isTyping = false, size = 'md' }) => {
             const distance = Math.min(Math.sqrt(deltaX * deltaX + deltaY * deltaY), 300);
             const angle = Math.atan2(deltaY, deltaX);
             
-            const maxEyeMove = size === 'lg' ? 6 : 3;
+            const maxEyeMove = 6;
             const moveX = Math.cos(angle) * (distance / 300) * maxEyeMove;
             const moveY = Math.sin(angle) * (distance / 300) * maxEyeMove;
             
             setMousePos({ x: moveX, y: moveY });
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
         return () => window.removeEventListener('mousemove', handleMouseMove);
     }, [isTyping, size]);
 
@@ -427,44 +470,6 @@ ${userContext}
     initChat();
   };
 
-  const renderMessageText = (text: string) => {
-    // Split by newlines to handle paragraphs and lists
-    const lines = text.split('\n');
-    return lines.map((line, i) => {
-        // Handle Bullet Points
-        if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
-            const content = line.replace(/^[-*]\s/, '');
-            return (
-                <div key={i} className="flex gap-2 ml-2 mb-1">
-                    <span className="text-cyan-400 mt-1.5 text-[10px]">●</span>
-                    <span className="flex-1">{parseBold(content)}</span>
-                </div>
-            );
-        }
-        // Handle Empty lines
-        if (!line.trim()) {
-            return <div key={i} className="h-2" />;
-        }
-        // Standard Paragraph
-        return (
-            <p key={i} className="mb-1 last:mb-0">
-                {parseBold(line)}
-            </p>
-        );
-    });
-  };
-
-  // Helper to parse **bold** text
-  const parseBold = (text: string) => {
-    const parts = text.split(/(\*\*.*?\*\*)/g);
-    return parts.map((part, j) => {
-        if (part.startsWith('**') && part.endsWith('**')) {
-            return <strong key={j} className="text-cyan-300 font-bold">{part.slice(2, -2)}</strong>;
-        }
-        return part;
-    });
-  };
-
   return (
     <>
       {/* Trigger Button - Bottom Right */}
@@ -533,23 +538,26 @@ ${userContext}
           aria-atomic="false"
           aria-relevant="additions"
         >
-            <AnimatePresence initial={false}>
-                {messages.map((msg, idx) => (
-                    <motion.div 
-                        key={idx} 
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                        className={`flex gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
-                    >
-                        <div className={`flex items-center justify-center flex-shrink-0 mt-1 ${msg.role === 'user' ? 'w-8 h-8 rounded-full bg-violet-500/20 text-violet-400 border border-violet-500/30 shadow-lg' : ''}`}>
-                            {msg.role === 'user' ? <User className="w-4 h-4" /> : <AriaAvatar size="sm" />}
-                        </div>
-                        <div className={`p-4 rounded-2xl max-w-[85%] text-sm leading-relaxed shadow-sm ${msg.role === 'user' ? 'bg-violet-500/10 border border-violet-500/20 text-violet-100 rounded-tr-none' : 'bg-white/5 border border-white/10 text-gray-300 rounded-tl-none'}`}>
-                            {renderMessageText(msg.text)}
-                        </div>
-                    </motion.div>
-                ))}
+            {/* Existing messages — rendered outside AnimatePresence so Framer
+                Motion's reconciler is not re-evaluated on every streaming chunk. */}
+            {messages.map((msg, idx) => (
+                <motion.div 
+                    key={idx} 
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className={`flex gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
+                >
+                    <div className={`flex items-center justify-center flex-shrink-0 mt-1 ${msg.role === 'user' ? 'w-8 h-8 rounded-full bg-violet-500/20 text-violet-400 border border-violet-500/30 shadow-lg' : ''}`}>
+                        {msg.role === 'user' ? <User className="w-4 h-4" /> : <AriaAvatar size="sm" />}
+                    </div>
+                    <div className={`p-4 rounded-2xl max-w-[85%] text-sm leading-relaxed shadow-sm ${msg.role === 'user' ? 'bg-violet-500/10 border border-violet-500/20 text-violet-100 rounded-tr-none' : 'bg-white/5 border border-white/10 text-gray-300 rounded-tl-none'}`}>
+                        {renderMessageText(msg.text)}
+                    </div>
+                </motion.div>
+            ))}
+            {/* Only the typing indicator needs AnimatePresence for exit animation */}
+            <AnimatePresence>
                 {isTyping && (
                     <motion.div 
                         initial={{ opacity: 0, y: 10 }}
