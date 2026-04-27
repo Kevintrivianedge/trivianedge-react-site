@@ -396,6 +396,179 @@ export function buildWebPageSchema(page: {
   };
 }
 
+// ---------------------------------------------------------------------------
+// New lightweight types for SEOHead and page-level schema composition
+// ---------------------------------------------------------------------------
+
+/** Generic Schema.org JSON-LD object */
+export type SchemaObject = Record<string, unknown>;
+
+/** Props accepted by the SEOHead component */
+export interface SEOConfig {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  schema?: SchemaObject | SchemaObject[];
+}
+
+/** A single FAQ item used by faqSchema() */
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+/** A single breadcrumb item used by breadcrumbSchema() */
+export interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+// ---------------------------------------------------------------------------
+// Slim schema helpers (new API — complement the build* functions above)
+// ---------------------------------------------------------------------------
+
+/** Returns a minimal Schema.org Organization for TrivianEdge */
+export function organizationSchema(): SchemaObject {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': 'https://www.trivianedge.com/#organization',
+    name: 'TrivianEdge',
+    alternateName: 'Trivian Edge',
+    url: 'https://www.trivianedge.com',
+    logo: 'https://www.trivianedge.com/logo.png',
+    description:
+      "Canada's leading BPO, RPO and AI Development company. 30-day deployment. Up to 40% cost savings across 6 time zones.",
+    areaServed: ['Canada', 'United States', 'United Kingdom', 'Australia'],
+    foundingLocation: 'Canada',
+    knowsAbout: [
+      'Business Process Outsourcing',
+      'Recruitment Process Outsourcing',
+      'AI Development Services',
+      'Offshore Software Development',
+      'IT Outsourcing',
+    ],
+    sameAs: [
+      'https://www.linkedin.com/company/trivianedge',
+      'https://clutch.co/profile/trivianedge',
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      availableLanguage: 'English',
+    },
+  };
+}
+
+/** Returns a minimal Schema.org WebSite for TrivianEdge */
+export function websiteSchema(): SchemaObject {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': 'https://www.trivianedge.com/#website',
+    url: 'https://www.trivianedge.com',
+    name: 'TrivianEdge',
+    description: "Canada's leading BPO, RPO and AI Development company",
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://www.trivianedge.com/?s={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
+  };
+}
+
+/** Returns a Schema.org Service for a specific TrivianEdge offering */
+export function serviceSchema(
+  name: string,
+  serviceType: string,
+  url: string,
+): SchemaObject {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name,
+    serviceType,
+    url,
+    provider: {
+      '@type': 'Organization',
+      '@id': 'https://www.trivianedge.com/#organization',
+      name: 'TrivianEdge',
+    },
+    areaServed: 'Canada',
+  };
+}
+
+/** Returns a Schema.org FAQPage from an array of FAQItem */
+export function faqSchema(faqs: FAQItem[]): SchemaObject {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
+/** Returns a Schema.org BreadcrumbList from an array of BreadcrumbItem */
+export function breadcrumbSchema(items: BreadcrumbItem[]): SchemaObject {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
+
+/** Returns a Schema.org Article authored and published by TrivianEdge */
+export function articleSchema(params: {
+  title: string;
+  description: string;
+  url: string;
+  datePublished: string;
+  dateModified: string;
+  image?: string;
+}): SchemaObject {
+  const schema: SchemaObject = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: params.title,
+    description: params.description,
+    url: params.url,
+    datePublished: params.datePublished,
+    dateModified: params.dateModified,
+    author: {
+      '@type': 'Organization',
+      '@id': 'https://www.trivianedge.com/#organization',
+      name: 'TrivianEdge',
+    },
+    publisher: {
+      '@type': 'Organization',
+      '@id': 'https://www.trivianedge.com/#organization',
+      name: 'TrivianEdge',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.trivianedge.com/logo.png',
+      },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': params.url },
+  };
+  if (params.image) {
+    schema['image'] = params.image;
+  }
+  return schema;
+}
+
 /** Schema.org ItemList service catalogue for rich results */
 export function buildServiceItemListSchema(): object {
   const services = [
