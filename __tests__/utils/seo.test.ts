@@ -106,8 +106,8 @@ describe('organizationSchema', () => {
     const schema = organizationSchema();
     const sameAs = schema['sameAs'] as string[];
     expect(Array.isArray(sameAs)).toBe(true);
-    expect(sameAs.some(url => url.includes('linkedin.com'))).toBe(true);
-    expect(sameAs.some(url => url.includes('clutch.co'))).toBe(true);
+    expect(sameAs.some(url => url.startsWith('https://www.linkedin.com/'))).toBe(true);
+    expect(sameAs.some(url => url.startsWith('https://clutch.co/'))).toBe(true);
   });
 
   it('includes knowsAbout array with all five service categories', () => {

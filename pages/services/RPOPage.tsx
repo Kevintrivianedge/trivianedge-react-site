@@ -47,7 +47,7 @@ const RPO_MODELS = [
     icon: Users,
     title: 'Full-Cycle RPO',
     description:
-      'End-to-end recruitment management embedded into your organisation.',
+      'End-to-end recruitment management embedded into your organization.',
     href: '/services/rpo/full-cycle-rpo',
   },
   {
