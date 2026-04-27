@@ -35,7 +35,8 @@ const AriaSection: React.FC = () => {
 
   return (
     <section id="aria" aria-label="Trivian Aria HR Platform" className="py-16 md:py-32 px-4 md:px-6 relative">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-gradient-to-b from-cyan-500/5 to-violet-500/5 blur-[120px] rounded-full -z-10 pointer-events-none" />
+      {/* Static radial gradient replaces blur-[120px] for zero GPU compositing cost */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full -z-10 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(34,211,238,0.05) 0%, rgba(139,92,246,0.05) 50%, transparent 80%)' }} />
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
@@ -78,8 +79,8 @@ const AriaSection: React.FC = () => {
 
         {/* Early Access CTA + Form */}
         <div className="reveal glass p-12 md:p-16 rounded-[3rem] border-border relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-600/10 blur-[120px] rounded-full pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-violet-600/10 blur-[120px] rounded-full pointer-events-none" />
+          <div className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.10) 0%, transparent 70%)' }} />
+          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%)' }} />
           <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
 
             {/* Left: CTA copy */}
