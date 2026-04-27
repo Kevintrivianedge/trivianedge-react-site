@@ -68,6 +68,10 @@ const BlogView                = lazy(() => import('./components/BlogView'));
 const BlogPostDetail          = lazy(() => import('./components/BlogPostDetail'));
 const PrivacyPage             = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage               = lazy(() => import('./pages/TermsPage'));
+const BPOPage                 = lazy(() => import('./pages/services/BPOPage'));
+const RPOPage                 = lazy(() => import('./pages/services/RPOPage'));
+const AIDevelopmentPage       = lazy(() => import('./pages/services/AIDevelopmentPage'));
+const ITOutsourcingPage       = lazy(() => import('./pages/services/ITOutsourcingPage'));
 const BureaucracyVisualizer   = lazy(() => import('./components/BureaucracyVisualizer'));
 const TransparencyDashboard   = lazy(() => import('./components/TransparencyDashboard'));
 const CultureSyncQuiz         = lazy(() => import('./components/CultureSyncQuiz'));
@@ -1245,6 +1249,10 @@ export default function App() {
                   <Route path="/blog/:slug" element={<BlogPostDetail />} />
                   <Route path="/privacy" element={<PrivacyPage />} />
                   <Route path="/terms" element={<TermsPage />} />
+                  <Route path="/services/bpo" element={<BPOPage />} />
+                  <Route path="/services/rpo" element={<RPOPage />} />
+                  <Route path="/services/ai-development" element={<AIDevelopmentPage />} />
+                  <Route path="/services/it-outsourcing" element={<ITOutsourcingPage />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </Suspense>
