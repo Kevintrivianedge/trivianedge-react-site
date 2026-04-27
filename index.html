@@ -80,8 +80,22 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- LCP hero image — preloaded so the browser fetches it in parallel with
+         JS/CSS rather than waiting for React to render the <img> element. -->
+    <link rel="preload" as="image"
+      href="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1920&q=55&auto=format&fit=crop"
+      fetchpriority="high">
+
+    <!-- Google Fonts — non-blocking load via preload + onload swap pattern.
+         font-display=swap in the URL already prevents invisible text; the
+         onload trick prevents the stylesheet from being render-blocking. -->
+    <link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    </noscript>
     <style>
         :root {
             /* Dark Theme (Default) */
@@ -181,10 +195,10 @@
             }
         }
 
-        @keyframes hue-rotate-border {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
+        /* hue-rotate-border was removed — filter:hue-rotate() forces GPU
+           recompositing on every animation frame and is applied to every hovered
+           service card simultaneously. The static gradient below is indistinguishable
+           visually and has zero per-frame cost. */
 
         @keyframes fade-in {
              from { opacity: 0; transform: translateY(10px); }
@@ -199,6 +213,7 @@
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
             position: relative;
             z-index: 1;
+            will-change: transform;
         }
         
         .hover-neon-glow::before {
@@ -224,12 +239,13 @@
         }
         
         .hover-neon-glow:hover::before {
+            /* Static gradient border — replaces hue-rotate-border animation */
             opacity: 1;
-            animation: hue-rotate-border 6s linear infinite;
         }
 
         .service-card-glow {
             transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            will-change: transform;
         }
         
         .service-card-glow:hover {

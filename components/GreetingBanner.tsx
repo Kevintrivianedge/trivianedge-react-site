@@ -27,16 +27,25 @@ const GreetingBanner: React.FC = () => {
 
   useEffect(() => {
     if (!geoData) return;
-    
+
+    // Create the formatter once per geoData/language change and reuse it in the
+    // interval — Intl.DateTimeFormat instantiation is expensive and should not
+    // be repeated every 60 seconds.
+    let formatter: Intl.DateTimeFormat;
+    try {
+      formatter = new Intl.DateTimeFormat(language, {
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZone: geoData.timezone,
+      });
+    } catch {
+      return;
+    }
+
     const updateTime = () => {
       try {
-        const formatter = new Intl.DateTimeFormat(language, {
-          hour: 'numeric',
-          minute: '2-digit',
-          timeZone: geoData.timezone,
-        });
         setCurrentTime(formatter.format(new Date()));
-      } catch (e) {
+      } catch {
         setCurrentTime('');
       }
     };

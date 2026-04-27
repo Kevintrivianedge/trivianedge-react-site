@@ -13,8 +13,17 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -112,15 +121,18 @@ const Navbar: React.FC = () => {
             variants={menuVariants}
             className="fixed inset-0 bg-background z-[90] md:hidden overflow-hidden flex flex-col"
           >
-            {/* Background Parallax Elements */}
+            {/* Background atmosphere elements — static radial gradients replace
+                blur-[80px] which creates a new compositing layer on mobile GPUs. */}
             <motion.div 
-               className="absolute top-[-10%] right-[-10%] w-[70vw] h-[70vw] bg-cyan-500/10 blur-[80px] rounded-full"
+               className="absolute top-[-10%] right-[-10%] w-[70vw] h-[70vw] rounded-full"
+               style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.10) 0%, transparent 70%)' }}
                initial={{ x: 100, opacity: 0 }}
                animate={{ x: 0, opacity: 1 }}
                transition={{ duration: 1, ease: "easeOut" }}
             />
              <motion.div 
-               className="absolute bottom-[-10%] left-[-10%] w-[70vw] h-[70vw] bg-violet-600/10 blur-[80px] rounded-full"
+               className="absolute bottom-[-10%] left-[-10%] w-[70vw] h-[70vw] rounded-full"
+               style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%)' }}
                initial={{ x: -100, opacity: 0 }}
                animate={{ x: 0, opacity: 1 }}
                transition={{ duration: 1, delay: 0.1, ease: "easeOut" }}

@@ -20,7 +20,14 @@ export default defineConfig({
     },
   },
   build: {
+    // Target modern browsers to avoid unnecessary transpilation/polyfill overhead.
+    target: 'es2020',
+    sourcemap: false,
     rollupOptions: {
+      // @google/genai is only used in the Cloudflare Worker (src/worker.ts) which
+      // is built separately via wrangler. Marking it external prevents it from
+      // being accidentally included in the browser bundle.
+      external: ['@google/genai'],
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
@@ -36,5 +43,7 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-helmet-async'],
+    // Exclude the server-only package from dependency pre-bundling.
+    exclude: ['@google/genai'],
   },
 });

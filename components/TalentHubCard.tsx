@@ -8,16 +8,23 @@ import { TalentHub } from '../types';
 // ---------------------------------------------------------------------------
 type ScrollCallback = () => void;
 const scrollCallbacks = new Set<ScrollCallback>();
-let sharedScrollAttached = false;
+let sharedScrollHandler: (() => void) | null = null;
 
 function registerScrollCallback(cb: ScrollCallback): () => void {
-  if (!sharedScrollAttached) {
-    window.addEventListener('scroll', () => scrollCallbacks.forEach(fn => fn()), { passive: true });
-    sharedScrollAttached = true;
+  if (!sharedScrollHandler) {
+    sharedScrollHandler = () => scrollCallbacks.forEach(fn => fn());
+    window.addEventListener('scroll', sharedScrollHandler, { passive: true });
   }
   scrollCallbacks.add(cb);
   cb(); // run once on mount
-  return () => scrollCallbacks.delete(cb);
+  return () => {
+    scrollCallbacks.delete(cb);
+    // Remove the shared listener when no cards are mounted
+    if (scrollCallbacks.size === 0 && sharedScrollHandler) {
+      window.removeEventListener('scroll', sharedScrollHandler);
+      sharedScrollHandler = null;
+    }
+  };
 }
 
 const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: TalentHub) => void }> = ({ hub, index, onClick }) => {
@@ -48,9 +55,10 @@ const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: Ta
         className={`absolute left-0 top-0 h-full w-1 bg-gradient-to-b ${hub.gradient} opacity-60 group-hover:opacity-100 transition-opacity duration-500`}
       />
 
-      {/* Parallax glow blob */}
+      {/* Parallax glow blob — opacity transition on hover; blur removed to avoid
+          triggering a new compositing layer on every hover on mobile GPUs. */}
       <div
-        className={`absolute -top-16 -right-16 w-64 h-64 bg-gradient-to-br ${hub.gradient} opacity-0 group-hover:opacity-20 blur-[80px] transition-opacity duration-700 pointer-events-none`}
+        className={`absolute -top-16 -right-16 w-64 h-64 bg-gradient-to-br ${hub.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none rounded-full`}
         style={{ transform: 'translate3d(0, var(--p-offset-1, 0), 0)', willChange: 'transform' }}
       />
 

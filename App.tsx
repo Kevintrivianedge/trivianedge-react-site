@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react';
+import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { 
   ArrowRight, 
@@ -26,7 +26,6 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import { GeoProvider } from './contexts/GeoContext';
 import Preloader from './components/Preloader';
 import { ThemeProvider } from './contexts/ThemeContext';
-import { TalentHubModal } from './components/TalentHubModal';
 import SEOHead from './components/SEOHead';
 import AlgorithmMonitor from './components/AlgorithmMonitor';
 import { useAlgorithmIntelligence } from './hooks/useAlgorithmIntelligence';
@@ -54,22 +53,25 @@ import ProcessTimeline from './components/ProcessTimeline';
 import TalentHubCard from './components/TalentHubCard';
 import AriaSection from './components/AriaSection';
 import ScrollToTop from './components/ScrollToTop';
-import BlogView from './components/BlogView';
-import BlogPostDetail from './components/BlogPostDetail';
-import PrivacyPage from './pages/PrivacyPage';
-import TermsPage from './pages/TermsPage';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import MarqueeTicker from './components/MarqueeTicker';
 import WorldMapSVG from './components/WorldMapSVG';
 import CountUpStat from './components/CountUpStat';
 import GreetingBanner from './components/GreetingBanner';
-import BureaucracyVisualizer from './components/BureaucracyVisualizer';
-import TransparencyDashboard from './components/TransparencyDashboard';
-import CultureSyncQuiz from './components/CultureSyncQuiz';
-import SecurityShield from './components/SecurityShield';
 
-// Lazy-load heavy below-fold components for better LCP
-const ChatSidebar = lazy(() => import('./components/ChatSidebar'));
+// Lazy-load route-level pages and heavy below-fold interactive modules.
+// This splits each into its own chunk so the main bundle only contains
+// the above-the-fold home page content.
+const ChatSidebar             = lazy(() => import('./components/ChatSidebar'));
+const TalentHubModal          = lazy(() => import('./components/TalentHubModal').then(m => ({ default: m.TalentHubModal })));
+const BlogView                = lazy(() => import('./components/BlogView'));
+const BlogPostDetail          = lazy(() => import('./components/BlogPostDetail'));
+const PrivacyPage             = lazy(() => import('./pages/PrivacyPage'));
+const TermsPage               = lazy(() => import('./pages/TermsPage'));
+const BureaucracyVisualizer   = lazy(() => import('./components/BureaucracyVisualizer'));
+const TransparencyDashboard   = lazy(() => import('./components/TransparencyDashboard'));
+const CultureSyncQuiz         = lazy(() => import('./components/CultureSyncQuiz'));
+const SecurityShield          = lazy(() => import('./components/SecurityShield'));
 
 // Rotating hero phrases
 const HERO_PHRASES = [
@@ -119,9 +121,10 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         aria-label="Hero"
         className="relative min-h-[95vh] flex items-center pt-24 px-4 sm:px-6 overflow-hidden"
       >
-        {/* Background atmosphere */}
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-violet-600/10 blur-[120px] rounded-full pointer-events-none" />
+        {/* Background atmosphere — static radial gradients replace the GPU-expensive
+            blur-[120px] filter. Visual result is identical but zero compositing cost. */}
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.10) 0%, transparent 70%)' }} />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%)' }} />
         <div className="bg-grid absolute inset-0 opacity-20 pointer-events-none" />
         {/* Subtle human photography overlay */}
         <img
@@ -771,16 +774,24 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="reveal">
-              <BureaucracyVisualizer />
+              <Suspense fallback={<div className="h-64 rounded-[2.5rem] bg-surface animate-pulse" />}>
+                <BureaucracyVisualizer />
+              </Suspense>
             </div>
             <div className="reveal" style={{ transitionDelay: '80ms' }}>
-              <TransparencyDashboard />
+              <Suspense fallback={<div className="h-64 rounded-[2.5rem] bg-surface animate-pulse" />}>
+                <TransparencyDashboard />
+              </Suspense>
             </div>
             <div className="reveal" style={{ transitionDelay: '160ms' }}>
-              <CultureSyncQuiz />
+              <Suspense fallback={<div className="h-64 rounded-[2.5rem] bg-surface animate-pulse" />}>
+                <CultureSyncQuiz />
+              </Suspense>
             </div>
             <div className="reveal" style={{ transitionDelay: '240ms' }}>
-              <SecurityShield />
+              <Suspense fallback={<div className="h-64 rounded-[2.5rem] bg-surface animate-pulse" />}>
+                <SecurityShield />
+              </Suspense>
             </div>
           </div>
         </div>
@@ -975,8 +986,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section id="contact" aria-label="Contact Us" className="py-20 md:py-32 px-4 md:px-6">
         <div className="max-w-7xl mx-auto reveal">
           <div className="glass p-12 md:p-24 rounded-[4rem] border-border text-center relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-600/10 blur-[120px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-violet-600/10 blur-[120px] rounded-full pointer-events-none" />
+            <div className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.10) 0%, transparent 70%)' }} />
+            <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%)' }} />
             <div className="relative z-10">
               <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-8 text-text">
                 Your operating blueprint<br />starts here.
@@ -1172,8 +1183,11 @@ export default function App() {
         });
     }, { threshold: 0.1 });
 
+    // Query only elements that haven't animated yet — this prevents previously
+    // animated elements from flashing back to their initial invisible state when
+    // the observer is disconnected and re-created on route change.
     const timer = setTimeout(() => {
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      document.querySelectorAll('.reveal:not(.active)').forEach(el => observer.observe(el));
     }, 100);
 
     return () => {
@@ -1193,7 +1207,9 @@ export default function App() {
     }
   };
 
-  const seoProps = getSEOProps(location.pathname);
+  // Memoised — getSEOProps builds multiple large JSON-LD schema objects on every
+  // call so it must not run on every render.
+  const seoProps = useMemo(() => getSEOProps(location.pathname), [location.pathname]);
 
   return (
     <ThemeProvider>
@@ -1212,19 +1228,27 @@ export default function App() {
           
           <AnimatePresence>
             {selectedHub && (
-              <TalentHubModal hub={selectedHub} onClose={() => setSelectedHub(null)} />
+              <ErrorBoundary fallback={null}>
+                <Suspense fallback={null}>
+                  <TalentHubModal hub={selectedHub} onClose={() => setSelectedHub(null)} />
+                </Suspense>
+              </ErrorBoundary>
             )}
           </AnimatePresence>
 
           <main id="main-content">
-            <Routes>
-              <Route path="/" element={<HomePage setSelectedHub={setSelectedHub} />} />
-              <Route path="/blog" element={<BlogView />} />
-              <Route path="/blog/:slug" element={<BlogPostDetail />} />
-              <Route path="/privacy" element={<PrivacyPage />} />
-              <Route path="/terms" element={<TermsPage />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
+            <ErrorBoundary fallback={null}>
+              <Suspense fallback={null}>
+                <Routes>
+                  <Route path="/" element={<HomePage setSelectedHub={setSelectedHub} />} />
+                  <Route path="/blog" element={<BlogView />} />
+                  <Route path="/blog/:slug" element={<BlogPostDetail />} />
+                  <Route path="/privacy" element={<PrivacyPage />} />
+                  <Route path="/terms" element={<TermsPage />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
           </main>
 
           <footer className="pt-16 md:pt-32 pb-16 px-4 md:px-6 border-t border-border">

@@ -7,15 +7,6 @@ import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
-// Initialize Amplitude Analytics + Session Replay once at the client entry point.
-// This runs only in the browser — index.tsx is never executed server-side.
-//
-// NOTE: The Amplitude project API key below is intentionally public — Amplitude
-// keys are client-side identifiers designed to be embedded in browser code (like
-// a Google Analytics measurement ID). They do not grant write or admin access.
-// See: https://amplitude.com/docs/sdks/analytics/browser/browser-sdk-2#initialize-the-sdk
-amplitude.initAll('a74020325f807eb4bddead7b94dcbf22', {"analytics":{"autocapture":true},"sessionReplay":{"sampleRate":0.1}});
-
 const rootElement = document.getElementById('root');
 if (!rootElement) {
   throw new Error("Could not find root element to mount to");
@@ -31,3 +22,20 @@ root.render(
     </HelmetProvider>
   </React.StrictMode>
 );
+
+// Initialize Amplitude after the first paint so it does not block ReactDOM.createRoot.
+// The Amplitude project API key is intentionally public — it is a client-side
+// identifier (like a GA measurement ID) and does not grant write or admin access.
+// See: https://amplitude.com/docs/sdks/analytics/browser/browser-sdk-2#initialize-the-sdk
+const initAmplitude = () => {
+  amplitude.initAll('a74020325f807eb4bddead7b94dcbf22', {
+    analytics: { autocapture: true },
+    sessionReplay: { sampleRate: 0.1 },
+  });
+};
+
+if (typeof requestIdleCallback !== 'undefined') {
+  requestIdleCallback(initAmplitude, { timeout: 4000 });
+} else {
+  setTimeout(initAmplitude, 1000);
+}
