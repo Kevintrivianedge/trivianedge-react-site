@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <!-- Left chevron arm with outer wing at top-left -->
+  <polygon points="5,5 22,5 12,18 44,18 50,90 12,50" fill="url(#g)"/>
+  <!-- Right chevron arm with outer wing at top-right (mirror) -->
+  <polygon points="95,5 78,5 88,18 56,18 50,90 88,50" fill="url(#g)"/>
+</svg>
