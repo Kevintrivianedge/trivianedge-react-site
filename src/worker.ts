@@ -107,13 +107,24 @@ export default {
     const origin = request.headers.get('Origin');
     const corsHeaders = makeCorsHeaders(origin);
 
-    // CORS preflight — handle first
+    // CORS preflight — handle before everything else
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders });
     }
 
-    // ALL /api/* routes — handled by worker, never fall through to assets
+    // ALL /api/* routes — rate-limited and CORS-gated in one place
     if (url.pathname.startsWith('/api/')) {
+      const ip =
+        request.headers.get('CF-Connecting-IP') ??
+        request.headers.get('X-Forwarded-For') ??
+        'unknown';
+      if (isRateLimited(ip)) {
+        return new Response(
+          JSON.stringify({ error: 'Too many requests. Please wait a moment and try again.' }),
+          { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+        );
+      }
+
       if (url.pathname === '/api/health') {
         return new Response(
           JSON.stringify({ status: 'ok', timestamp: Date.now(), gemini_key_set: !!env.GEMINI_API_KEY }),
@@ -121,39 +132,19 @@ export default {
         );
       }
       if (url.pathname === '/api/chat' && request.method === 'POST') {
-        return handleChat(request, env);
+        return handleChat(request, env, corsHeaders);
       }
       if (url.pathname === '/api/generate' && request.method === 'POST') {
-        return handleGenerate(request, env);
+        return handleGenerate(request, env, corsHeaders);
       }
-      // Unknown /api/* route
+      if (url.pathname === '/api/early-access' && request.method === 'POST') {
+        return handleEarlyAccess(request, env, corsHeaders);
+      }
+
       return new Response(JSON.stringify({ error: 'Unknown API route' }), {
         status: 404,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
-    }
-
-    // Serve static assets (React SPA)
-    // Rate limiting — keyed by the connecting IP.
-    const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('X-Forwarded-For') ?? 'unknown';
-    if (isRateLimited(ip)) {
-      return new Response(JSON.stringify({ error: 'Too many requests. Please wait a moment and try again.' }), {
-        status: 429,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    // API routes
-    if (url.pathname === '/api/chat' && request.method === 'POST') {
-      return handleChat(request, env, corsHeaders);
-    }
-
-    if (url.pathname === '/api/generate' && request.method === 'POST') {
-      return handleGenerate(request, env, corsHeaders);
-    }
-
-    if (url.pathname === '/api/early-access' && request.method === 'POST') {
-      return handleEarlyAccess(request, env, corsHeaders);
     }
 
     // Serve static assets; fall back to index.html for SPA client-side routing

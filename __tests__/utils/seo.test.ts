@@ -248,7 +248,7 @@ describe('articleSchema', () => {
     url: 'https://www.trivianedge.com/blog/bpo-guide',
     datePublished: '2024-01-01',
     dateModified: '2024-06-01',
-    image: 'https://www.trivianedge.com/og-image.svg',
+    image: 'https://www.trivianedge.com/og-image.png',
   };
 
   it('returns object with @type === "Article"', () => {
