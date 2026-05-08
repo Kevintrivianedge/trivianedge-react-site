@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { TalentHub } from '../types';
 
+// This SVG uses Mercator projection, not equirectangular.
+// Calibrated constants: y_top=2.778 (≈83°N), y_range=3.994 (covers to ≈57°S)
+// x uses a 10.7° offset from the standard -180° datum (map centered near 0°E).
 const project = (lng: number, lat: number): [number, number] => {
-  const x = ((lng + 180) / 360) * 100;
-  const y = ((90 - lat) / 180) * 100;
+  const x = ((lng + 169.3) / 360) * 100;
+  const yMercator = Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
+  const y = ((2.778 - yMercator) / 3.994) * 100;
   return [x, y];
 };
 
