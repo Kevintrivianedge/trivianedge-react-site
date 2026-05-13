@@ -368,10 +368,10 @@ const VentureStudioPage: React.FC = () => {
           <h1 className="display-hero text-5xl md:text-7xl font-bold text-text mb-5">
             Build your MVP with us.
             <br />
-            <span className="text-holo">No-charge founder lane.</span>
+            <span className="text-holo">Simple process. No red tape.</span>
           </h1>
           <p className="text-muted text-lg md:text-xl max-w-3xl mx-auto">
-            Tell us your idea in plain English. This qualification flow helps us decide whether your startup is a fit for our free MVP build program.
+            Tell us your idea in plain English. Think of this like a quick fit check before we start building together.
           </p>
         </motion.div>
 
@@ -469,7 +469,7 @@ const VentureStudioPage: React.FC = () => {
                     <select required value={form.readinessLevel} onChange={(e) => onChange('readinessLevel', e.target.value)} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text">
                       <option value="">Select</option>
                       <option value="validated">Validated demand with real signals</option>
-                      <option value="discovery">Discovery in progress</option>
+                          <option value="discovery">Some early validation in progress</option>
                       <option value="exploratory">Exploratory concept</option>
                     </select>
                   </label>
@@ -569,7 +569,7 @@ const VentureStudioPage: React.FC = () => {
               >
                 <p className="text-xs uppercase tracking-widest font-bold text-cyan-400 mb-2">Submission Received</p>
                 <h3 className="text-2xl font-bold text-text mb-2">Your Venture Studio packet is confirmed.</h3>
-                <p className="text-sm text-muted">Choose your scheduling path below to auto-book your founder call. We prefill your details where supported.</p>
+                <p className="text-sm text-muted">Next step: pick a booking option below and lock in your founder call.</p>
               </motion.div>
             )}
           </form>
@@ -581,7 +581,7 @@ const VentureStudioPage: React.FC = () => {
             <p className="text-sm text-muted leading-relaxed mb-6">{tier.note}</p>
 
             <div className="rounded-xl border border-border p-4 mb-6 space-y-2">
-              <p className="text-xs uppercase tracking-widest font-bold text-muted">Scoring Rubric</p>
+              <p className="text-xs uppercase tracking-widest font-bold text-muted">How We Score Fit</p>
               <p className="text-xs text-muted">Industry Fit: 20</p>
               <p className="text-xs text-muted">Readiness Level: 25</p>
               <p className="text-xs text-muted">Stage + Traction: 20</p>
@@ -592,8 +592,8 @@ const VentureStudioPage: React.FC = () => {
 
             <ul className="space-y-3 text-sm text-muted mb-6">
               <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-cyan-400" /> Fast founder response</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-cyan-400" /> Practical MVP scope</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-cyan-400" /> Clear user problem fit</li>
+              <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-cyan-400" /> Clear MVP scope</li>
+              <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-cyan-400" /> Real user problem fit</li>
             </ul>
 
             {submitted ? (

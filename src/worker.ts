@@ -53,7 +53,7 @@ function isRateLimited(ip: string): boolean {
 }
 
 // ---------------------------------------------------------------------------
-// HTML-escape helper — prevents XSS in outgoing Resend email bodies.
+// HTML-escape helper, prevents XSS in outgoing Resend email bodies.
 // ---------------------------------------------------------------------------
 function escapeHtml(str: string): string {
   return str
@@ -64,7 +64,7 @@ function escapeHtml(str: string): string {
     .replace(/'/g, '&#39;');
 }
 
-// RFC 5321-compliant email validator — rejects consecutive dots, leading/trailing
+// RFC 5321-compliant email validator, rejects consecutive dots, leading/trailing
 // dots in local part, and missing TLD while staying dependency-free.
 const EMAIL_RE = /^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*)@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
 
@@ -406,7 +406,7 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 //   - Amplitude Analytics + Session Replay CDN
 //   - ipapi.co (geolocation)
 //   - Open-Meteo (weather)
-//   - Google Gemini API (proxied through the worker — never called from browser)
+//   - Google Gemini API (proxied through the worker, never called from browser)
 // ---------------------------------------------------------------------------
 const CSP_HEADER =
   "default-src 'self'; " +
@@ -436,12 +436,12 @@ export default {
     const origin = request.headers.get('Origin');
     const corsHeaders = makeCorsHeaders(origin);
 
-    // CORS preflight — handle before everything else
+    // CORS preflight, handle before everything else
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders });
     }
 
-    // ALL /api/* routes — rate-limited and CORS-gated in one place
+    // ALL /api/* routes, rate-limited and CORS-gated in one place
     if (url.pathname.startsWith('/api/')) {
       const ip =
         request.headers.get('CF-Connecting-IP') ??
@@ -633,7 +633,7 @@ async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record
       body: JSON.stringify({
         from: 'Trivian Aria <aria@trivianedge.com>',
         to: ['info@trivianedge.com'],
-        subject: `New Early Access Request — ${safeCompany}`,
+        subject: `New Early Access Request | ${safeCompany}`,
         html: `
           <h2>New Early Access Request</h2>
           <table cellpadding="8" style="border-collapse:collapse">
@@ -709,7 +709,7 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
       body: JSON.stringify({
         from: 'TrivianEdge <inquiry@trivianedge.com>',
         to: ['info@trivianedge.com'],
-        subject: `New inquiry — ${safeCompany}`,
+        subject: `New inquiry | ${safeCompany}`,
         html: `
           <h2>New inquiry request</h2>
           <table cellpadding="8" style="border-collapse:collapse">

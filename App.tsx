@@ -134,29 +134,29 @@ const TICKER_ITEMS = [
 
 const PREMIUM_FEATURES = [
   {
-    title: 'White-Glove Talent Concierge',
-    description: 'Senior operators run role design, sourcing, interview calibration, and onboarding handoff so your internal leaders stay out of hiring chaos.',
+    title: 'Hiring Concierge Desk',
+    description: 'Like a private hiring desk for your business. We define roles, find people, vet them, and hand you ready-to-work talent.',
     icon: Users2,
     accent: 'text-cyan-400',
     border: 'border-cyan-500/20 hover:border-cyan-500/40',
   },
   {
-    title: 'Executive Delivery Command Center',
-    description: 'We monitor execution, SLAs, and cross-timezone handoffs like an operations desk, so work does not stall when one region signs off.',
+    title: '24/7 Delivery Control Room',
+    description: 'Think air traffic control for your operations. We manage handoffs so work keeps moving when one team logs off.',
     icon: TrendingUp,
     accent: 'text-violet-400',
     border: 'border-violet-500/20 hover:border-violet-500/40',
   },
   {
-    title: 'Compliance + Payroll Shield',
-    description: 'Employment law, payroll execution, and local regulatory compliance are handled in one layer across every market you operate in.',
+    title: 'Payroll and Compliance Shield',
+    description: 'We handle contracts, payroll, and local rules in each country so you scale without legal headaches.',
     icon: ShieldCheck,
     accent: 'text-emerald-400',
     border: 'border-emerald-500/20 hover:border-emerald-500/40',
   },
   {
-    title: 'Tech and Non-Tech Scale Engine',
-    description: 'We place engineers and product builders plus finance, support, operations, HR, and leadership roles with the same quality bar.',
+    title: 'Tech and Non-Tech Team Builder',
+    description: 'We hire developers, and we also hire ops, finance, support, HR, and managers. One partner for your full team.',
     icon: Layers,
     accent: 'text-orange-400',
     border: 'border-orange-500/20 hover:border-orange-500/40',
@@ -165,18 +165,18 @@ const PREMIUM_FEATURES = [
 
 const SERVICE_ANALOGIES = [
   {
-    title: 'Air Traffic Control For Global Teams',
-    copy: 'You keep flying the business. We coordinate routes, timing, and safe handoffs so every team lands on schedule.',
+    title: 'Like Air Traffic Control For Hiring',
+    copy: 'You focus on growth. We direct the right people into the right roles so nothing collides.',
     icon: MapPin,
   },
   {
-    title: 'Pit Crew For Fast-Growth Companies',
-    copy: 'While you drive growth, we handle talent swaps, compliance checks, and process tuning without slowing momentum.',
+    title: 'Like A Pit Crew For Your Company',
+    copy: 'While you run the race, we handle hiring changes, setup, and process fixes so you stay fast.',
     icon: Zap,
   },
   {
-    title: 'Operating System For People + Delivery',
-    copy: 'Instead of patching five vendors together, you get one system layer that connects hiring, onboarding, payroll, and execution.',
+    title: 'Like One Operating System For Your Team',
+    copy: 'Instead of juggling five vendors, you get one clean system for hiring, onboarding, payroll, and delivery.',
     icon: ExternalLink,
   },
 ];
@@ -247,7 +247,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         aria-label="Hero"
         className="relative min-h-[95vh] flex items-center pt-24 px-4 sm:px-6 overflow-hidden"
       >
-        {/* Background atmosphere — static radial gradients replace the GPU-expensive
+        {/* Background atmosphere, static radial gradients replace the GPU-expensive
             blur-[120px] filter. Visual result is identical but zero compositing cost. */}
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.10) 0%, transparent 70%)' }} />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%)' }} />
@@ -263,7 +263,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         />
 
         <div className="max-w-7xl mx-auto w-full relative z-10">
-          {/* Personalised greeting — geo-aware, language-aware */}
+          {/* Personalised greeting, geo-aware and language-aware */}
           <GreetingBanner />
 
           <div className="max-w-4xl">
@@ -333,7 +333,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <CountUpStat end={6}  suffix="" label="Countries We Source From" />
               <CountUpStat end={40} suffix="%" label="Average Cost Savings" />
               <CountUpStat end={30} suffix=" days" label="Average Time to Start" />
-              {/* 24/7 is a ratio, not a count — display as static */}
+              {/* 24/7 is a ratio, not a count, display as static */}
               <div className="flex flex-col gap-1">
                 <span className="text-2xl md:text-3xl font-bold text-text tabular-nums">24/7</span>
                 <span className="text-[10px] tracking-widest text-muted uppercase font-bold leading-tight">
@@ -369,7 +369,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      <SectionBridge label="Signal -> Strategy" />
+      <SectionBridge label="Signal to strategy" />
 
       {/* ===== ACT 2B: PREMIUM OPERATING LAYER ===== */}
       <section aria-label="Premium operating layer" className="section-shell px-4 md:px-6">
@@ -377,14 +377,14 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           <div className="text-center mb-14 reveal">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6 float-badge">
               <ShieldCheck className="w-3 h-3" />
-              Premium Operations Layer
+              Premium Growth Layer
             </div>
             <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
-              Built like a partner desk,<br />
-              <span className="text-holo">not a basic staffing vendor.</span>
+              Premium support that feels in-house,<br />
+              <span className="text-holo">without the hiring red tape.</span>
             </h2>
             <p className="text-muted text-lg max-w-3xl mx-auto">
-              We combine talent, process, and operational control into one managed system so founders and executives get leverage instead of extra admin.
+              We help you grow faster by bringing global talent to your doorstep, then we run the setup so your team stays focused on growth.
             </p>
           </div>
 
@@ -398,7 +398,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.25 }}
                   transition={{ duration: shouldReduceMotion ? 0.01 : 0.55, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className={`glass micro-lift-card rounded-[2rem] p-7 md:p-9 border relative overflow-hidden group ${feature.border}`}
+                  className={`glass micro-lift-card luxury-panel rounded-[2rem] p-7 md:p-9 border relative overflow-hidden group ${feature.border}`}
                 >
                   <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-b from-white/10 to-transparent blur-3xl pointer-events-none" />
                   <div className="flex items-start gap-4">
@@ -417,7 +417,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      <SectionBridge label="Strategy -> Execution" />
+      <SectionBridge label="Strategy to execution" />
 
       {/* ===== ACT 3: GLOBAL BUSINESS OS ANALOGY ===== */}
       <section
@@ -432,12 +432,12 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               Primary wedge
             </div>
             <h2 className="display-section text-4xl md:text-5xl font-bold mb-8 leading-tight text-text">
-              TrivianEdge helps you build a team<br />
-              <span className="text-holo">without the usual hiring mess.</span>
+              We help companies grow and hire faster<br />
+              <span className="text-holo">without the usual red tape.</span>
             </h2>
 
             <p className="text-muted text-base md:text-lg leading-relaxed mb-8 max-w-xl">
-              We help you hire, set up, and run offshore teams in plain English. We cover software and technical roles, plus operations, finance, support, and leadership hires in one model.
+              In simple terms, we bring global talent to your doorstep. Tech roles, non-tech roles, payroll, compliance, and operations are all handled in one place.
             </p>
 
             <div className="space-y-4">
@@ -492,7 +492,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
-                    className="glass micro-lift-card rounded-2xl border border-border p-4"
+                    className="glass micro-lift-card luxury-panel rounded-2xl border border-border p-4"
                   >
                     <div className="flex items-start gap-3">
                       <div className="w-8 h-8 rounded-xl bg-surface border border-border flex items-center justify-center mt-0.5">
@@ -511,7 +511,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      <SectionBridge label="Execution -> Structure" />
+      <SectionBridge label="Execution to structure" />
 
       {/* ===== BPO VS RPO + TECH EDUCATION ===== */}
       <section
@@ -527,16 +527,16 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
             <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
               Old-school outsourcing just passes work around.<br />
-              <span className="text-holo">We build the system around it.</span>
+              <span className="text-holo">We build the engine that runs it.</span>
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
-              If you need more than task-handling, you need a partner who can cover hiring, payroll, compliance, and delivery in one model.
+              If you want real growth, you need one partner that handles hiring, payroll, compliance, and delivery together.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 reveal">
             {/* Left: Traditional BPO */}
-            <div className="glass micro-lift-card p-8 md:p-10 rounded-[2.5rem] border-rose-500/20 relative overflow-hidden">
+            <div className="glass micro-lift-card luxury-panel p-8 md:p-10 rounded-[2.5rem] border-rose-500/20 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-rose-500/5 blur-3xl pointer-events-none" />
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center">
@@ -563,7 +563,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
 
             {/* Right: TrivianEdge RPO + Tech */}
-            <div className="glass micro-lift-card p-8 md:p-10 rounded-[2.5rem] border-cyan-500/20 relative overflow-hidden">
+            <div className="glass micro-lift-card luxury-panel p-8 md:p-10 rounded-[2.5rem] border-cyan-500/20 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/10 blur-3xl pointer-events-none" />
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
@@ -599,7 +599,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      <SectionBridge label="Structure -> Proof" />
+      <SectionBridge label="Structure to proof" />
 
       {/* ===== DUAL-ENGINE SERVICE DEFINITION ===== */}
       <section
@@ -617,13 +617,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               Two engines.<br />One system.
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
-              People and product are managed as one integrated operation — not handed off to separate vendors.
+              Your people and your product move together in one plan, not split across random vendors.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 reveal">
             {/* Engine 1: Talent */}
-            <div className="glass micro-lift-card p-10 rounded-[2.5rem] border-border hover:border-cyan-500/30 transition-all duration-500 group relative overflow-hidden">
+            <div className="glass micro-lift-card luxury-panel p-10 rounded-[2.5rem] border-border hover:border-cyan-500/30 transition-all duration-500 group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/5 blur-3xl group-hover:bg-cyan-500/10 transition-colors duration-700 pointer-events-none" />
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-14 h-14 rounded-2xl bg-surface border border-border flex items-center justify-center group-hover:border-cyan-400/30 group-hover:bg-cyan-500/10 transition-all duration-500">
@@ -635,7 +635,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 </div>
               </div>
               <p className="text-muted text-sm leading-relaxed mb-6">
-                We recruit niche tech and non-tech talent across 6 countries — then manage every step of the operational layer so you never have to.
+                We find great people across six countries, then handle onboarding, payroll, and daily operations so your team can focus on growth.
               </p>
               <ul className="space-y-3">
                 {[
@@ -653,7 +653,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
 
             {/* Engine 2: Software */}
-            <div className="glass micro-lift-card p-10 rounded-[2.5rem] border-border hover:border-violet-500/30 transition-all duration-500 group relative overflow-hidden">
+            <div className="glass micro-lift-card luxury-panel p-10 rounded-[2.5rem] border-border hover:border-violet-500/30 transition-all duration-500 group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-48 h-48 bg-violet-500/5 blur-3xl group-hover:bg-violet-500/10 transition-colors duration-700 pointer-events-none" />
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-14 h-14 rounded-2xl bg-surface border border-border flex items-center justify-center group-hover:border-violet-400/30 group-hover:bg-violet-500/10 transition-all duration-500">
@@ -687,14 +687,14 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           <div className="mt-8 reveal">
             <div className="glass p-8 rounded-[2rem] border-border text-center">
               <p className="text-xl md:text-2xl font-bold text-text">
-                People and product are managed as one system — not separate vendors.
+                One partner. One system. Less noise. Faster growth.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      <SectionBridge label="Proof -> Scale" />
+      <SectionBridge label="Proof to scale" />
 
       {/* ===== HEADACHE VALUE PROPOSITION ===== */}
       <section
@@ -709,11 +709,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               The Headache We Take Away
             </div>
             <h2 className="display-section text-4xl md:text-6xl font-bold mb-6 text-text">
-              We remove the bureaucracy burden<br />
+              We remove the admin burden<br />
               <span className="text-holo">so you stay focused on growth.</span>
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-16 leading-relaxed">
-              Every item below is something your team never has to touch. We own it entirely.
+              Everything below is work you do not need to touch. We own it for you.
             </p>
           </div>
 
@@ -743,14 +743,14 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               {
                 icon: <TrendingUp className="w-6 h-6 text-orange-400" />,
                 title: 'Delivery Oversight',
-                desc: 'Sprint reviews, performance tracking, and escalation management — none of it lands on your plate.',
+                desc: 'Progress tracking, handoffs, and issue management. We run it so your leaders are not buried in admin.',
                 color: 'border-orange-500/20 hover:border-orange-500/40',
                 glow: 'bg-orange-500/5',
               },
             ].map(item => (
               <div
                 key={item.title}
-                className={`glass micro-lift-card p-8 rounded-[2rem] border transition-all duration-300 relative overflow-hidden group`}
+                className={`glass micro-lift-card luxury-panel p-8 rounded-[2rem] border transition-all duration-300 relative overflow-hidden group`}
                 style={{ borderColor: 'var(--border)' }}
               >
                 <div className={`absolute top-0 right-0 w-28 h-28 ${item.glow} blur-3xl pointer-events-none`} />
@@ -867,7 +867,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
-                className="reveal glass micro-lift-card p-8 rounded-[2rem] border-border"
+                className="reveal glass micro-lift-card luxury-panel p-8 rounded-[2rem] border-border"
               >
                 <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400 mb-3">{study.function}</p>
                 <h3 className="text-2xl font-bold text-text mb-4">{study.company}</h3>
@@ -896,7 +896,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               Everything you need to grow,<br />without the growing pains.
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
-              Whether you need people, technology, or a way into a new market, we have done it before and we can do it for you.
+              Need talent, product delivery, or help entering a new market? We have done it before, and we can run it for you.
             </p>
           </div>
 
@@ -1031,7 +1031,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             ))}
           </div>
 
-          <div className="glass border border-cyan-500/20 rounded-[2rem] p-8 md:p-10 text-center reveal micro-lift-card">
+            <div className="glass border border-cyan-500/20 rounded-[2rem] p-8 md:p-10 text-center reveal micro-lift-card luxury-panel">
             <p className="text-sm uppercase tracking-widest font-bold text-cyan-400 mb-3">MVP Venture Offer</p>
             <h3 className="text-3xl md:text-4xl font-bold text-text mb-4">Do you have an idea? Tell us what it is.</h3>
             <p className="text-muted text-base md:text-lg max-w-3xl mx-auto mb-6">
@@ -1048,7 +1048,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      <SectionBridge label="Scale -> Launch" />
+      <SectionBridge label="Scale to launch" />
 
       {/* ===== ACT 7: TALENT HUBS + WORLD MAP ===== */}
       <section
@@ -1099,7 +1099,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <span className="text-holo">One quality bar.</span>
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
-              We are not only a tech staffing company. We build full teams across engineering, operations, finance, customer support, and business execution.
+              We are not just a tech company. We build full teams across engineering, operations, finance, support, and leadership.
             </p>
           </div>
 
@@ -1145,17 +1145,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%)' }} />
             <div className="relative z-10">
               <h2 className="display-section text-4xl sm:text-5xl md:text-7xl font-bold mb-8 text-text">
-                Start the inquiry
-                <br />and we will map the next step.
+                Tell us what you need,
+                <br />we will map the next move.
               </h2>
               <p className="text-muted text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-                Tell us what you need across tech or non-tech hiring, delivery ops, or expansion support, and we will build a practical plan with you.
+                Tech hiring, non-tech hiring, delivery support, market expansion. We will build a clear plan in plain English.
               </p>
 
-              <div className="mb-10 max-w-3xl mx-auto glass border border-violet-500/20 rounded-2xl p-6 md:p-8 micro-lift-card">
+              <div className="mb-10 max-w-3xl mx-auto glass border border-violet-500/20 rounded-2xl p-6 md:p-8 micro-lift-card luxury-panel">
                 <p className="text-[10px] uppercase tracking-widest font-bold text-violet-400 mb-2">Founder Option</p>
                 <p className="text-xl md:text-2xl font-bold text-text mb-2">Have an idea? We can build your MVP free of charge.</p>
-                <p className="text-sm md:text-base text-muted">Send your concept, target users, and problem statement. If it matches our build criteria, we will scope and ship an MVP with you.</p>
+                <p className="text-sm md:text-base text-muted">Send your idea in simple terms. If it is a fit, we will scope and build your MVP with you at no charge.</p>
                 <div className="mt-4">
                   <Link to="/venture-studio" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl premium-button micro-press-button font-bold text-sm">
                     Go To Venture Studio
@@ -1329,7 +1329,7 @@ export default function App() {
         });
     }, { threshold: 0.1 });
 
-    // Query only elements that haven't animated yet — this prevents previously
+    // Query only elements that haven't animated yet, this prevents previously
     // animated elements from flashing back to their initial invisible state when
     // the observer is disconnected and re-created on route change.
     const timer = setTimeout(() => {
@@ -1353,7 +1353,7 @@ export default function App() {
     }
   };
 
-  // Memoised — getSEOProps builds multiple large JSON-LD schema objects on every
+  // Memoised, getSEOProps builds multiple large JSON-LD schema objects on every
   // call so it must not run on every render.
   const seoProps = useMemo(() => getSEOProps(location.pathname), [location.pathname]);
 
