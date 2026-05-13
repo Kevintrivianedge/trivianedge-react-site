@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { Routes, Route, useLocation, useNavigate, Link, Navigate } from 'react-router-dom';
 import { WHY_US, BLOG_POSTS, TALENT_HUBS, SERVICES, ROLES } from './constants';
+import { CASE_STUDIES, TESTIMONIALS } from './constants/proof';
 import { TalentHub } from './types';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { GeoProvider } from './contexts/GeoContext';
@@ -28,6 +29,7 @@ import Preloader from './components/Preloader';
 import { ThemeProvider } from './contexts/ThemeContext';
 import SEOHead from './components/SEOHead';
 import AlgorithmMonitor from './components/AlgorithmMonitor';
+import InquiryForm from './components/InquiryForm';
 import { useAlgorithmIntelligence } from './hooks/useAlgorithmIntelligence';
 import { 
   buildOrganizationSchema, 
@@ -51,13 +53,10 @@ import Logo from './components/Logo';
 import Navbar from './components/Navbar';
 import ProcessTimeline from './components/ProcessTimeline';
 import TalentHubCard from './components/TalentHubCard';
-import AriaSection from './components/AriaSection';
 import ScrollToTop from './components/ScrollToTop';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import MarqueeTicker from './components/MarqueeTicker';
 import WorldMapSVG from './components/WorldMapSVG';
 import CountUpStat from './components/CountUpStat';
-import GreetingBanner from './components/GreetingBanner';
 
 // Lazy-load route-level pages and heavy below-fold interactive modules.
 // This splits each into its own chunk so the main bundle only contains
@@ -66,16 +65,15 @@ const ChatSidebar             = lazy(() => import('./components/ChatSidebar'));
 const TalentHubModal          = lazy(() => import('./components/TalentHubModal').then(m => ({ default: m.TalentHubModal })));
 const BlogView                = lazy(() => import('./components/BlogView'));
 const BlogPostDetail          = lazy(() => import('./components/BlogPostDetail'));
+const ContactPage             = lazy(() => import('./pages/ContactPage'));
+const ProofPage               = lazy(() => import('./pages/ProofPage'));
+const TrustPage               = lazy(() => import('./pages/TrustPage'));
 const PrivacyPage             = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage               = lazy(() => import('./pages/TermsPage'));
 const BPOPage                 = lazy(() => import('./pages/services/BPOPage'));
 const RPOPage                 = lazy(() => import('./pages/services/RPOPage'));
 const AIDevelopmentPage       = lazy(() => import('./pages/services/AIDevelopmentPage'));
 const ITOutsourcingPage       = lazy(() => import('./pages/services/ITOutsourcingPage'));
-const BureaucracyVisualizer   = lazy(() => import('./components/BureaucracyVisualizer'));
-const TransparencyDashboard   = lazy(() => import('./components/TransparencyDashboard'));
-const CultureSyncQuiz         = lazy(() => import('./components/CultureSyncQuiz'));
-const SecurityShield          = lazy(() => import('./components/SecurityShield'));
 
 // Rotating hero phrases
 const HERO_PHRASES = [
@@ -184,24 +182,24 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
 
             <p className="reveal text-muted text-lg md:text-xl max-w-2xl mb-12 leading-relaxed">
-              We handle the international hiring rules, payroll, legal compliance, and operational overhead — so your team focuses entirely on building the product. One partner. One execution model.
+              If your team is wasting time on hiring, payroll, compliance, or chasing the wrong people, we take that load off your plate. You get the people, the process, and the operating layer in one place.
             </p>
 
             <div className="reveal flex flex-col sm:flex-row items-start gap-4 mb-20">
               <a
                 href="#contact"
                 onClick={e => { e.preventDefault(); scrollTo('contact'); }}
-                className="w-full sm:w-auto px-10 py-5 bg-btn-bg text-btn-text rounded-2xl font-bold text-lg hover:bg-cyan-400 hover:text-white transition-all flex items-center justify-center gap-3 shadow-2xl shadow-surface group btn-magnetic"
+                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 group btn-magnetic premium-button"
               >
-                Get your operating blueprint
+                Start the conversation
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
               </a>
               <a
                 href="#how-it-works"
                 onClick={e => { e.preventDefault(); scrollTo('how-it-works'); }}
-                className="w-full sm:w-auto px-10 py-5 glass text-text rounded-2xl font-bold text-lg hover:bg-surface transition-all flex items-center justify-center gap-2 btn-magnetic"
+                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 btn-magnetic premium-button-secondary"
               >
-                See How It Works
+                How it works
                 <ChevronRight className="w-5 h-5" />
               </a>
             </div>
@@ -224,8 +222,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       </section>
 
       {/* ===== ACT 2: TRUST MARQUEE ===== */}
-      <MarqueeTicker items={TICKER_ITEMS} speed={40} />
-
       {/* ===== ACT 3: GLOBAL BUSINESS OS ANALOGY ===== */}
       <section
         id="problem"
@@ -235,24 +231,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
           {/* Left: analogy text */}
           <div className="lg:w-1/2 reveal">
-            <div className="text-cyan-400 font-bold tracking-widest text-xs uppercase mb-4">
-              The Aha Moment
+            <div className="text-cyan-700 font-bold tracking-widest text-xs uppercase mb-4">
+              Primary wedge
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight text-text">
-              TrivianEdge is your<br />
-              <span className="text-holo">Global Business OS.</span>
+              TrivianEdge helps you build a team<br />
+              <span className="text-holo">without the usual hiring mess.</span>
             </h2>
 
-            <div className="glass p-8 rounded-3xl border-border mb-8 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 blur-3xl pointer-events-none" />
-              <p className="text-muted text-base md:text-lg leading-relaxed relative z-10">
-                Without TrivianEdge: every country is a different plug, a different rulebook, a different payroll law, and a different hiring maze.
-                <br /><br />
-                With TrivianEdge: one clean interface. One partner. One execution model.
-                <br /><br />
-                <strong className="text-text">You stop fighting paperwork and delays. You ship.</strong>
-              </p>
-            </div>
+            <p className="text-muted text-base md:text-lg leading-relaxed mb-8 max-w-xl">
+              We help you hire, set up, and run offshore teams in plain English. No jargon, no mystery process, just a clean way to get work moving.
+            </p>
 
             <div className="space-y-4">
               {[
@@ -312,11 +301,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               Why traditional BPO breaks
             </div>
             <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">
-              BPO outsources tasks.<br />
-              <span className="text-holo">We build your infrastructure.</span>
+              Old-school outsourcing just passes work around.<br />
+              <span className="text-holo">We build the system around it.</span>
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
-              Traditional BPO was built for a different era. Here's why it fails modern tech companies — and what we built instead.
+              If you need more than task-handling, you need a partner who can cover hiring, payroll, compliance, and delivery in one model.
             </p>
           </div>
 
@@ -332,11 +321,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               </div>
               <ul className="space-y-4">
                 {[
-                  'Transaction-focused — billed by task, not outcome',
-                  'Generic hiring funnels with weak fit screening',
-                  'Shallow quality ownership — accountability stops at delivery',
-                  'Limited visibility into what your team is actually doing',
-                  'Not built for product velocity or engineering teams',
+                  'Pays for output, not business results',
+                  'Uses generic hiring funnels with weak fit screening',
+                  'Stops at delivery instead of owning the outcome',
+                  'Gives you limited visibility into the work',
+                  'Was not built for product teams that move fast',
                 ].map(item => (
                   <li key={item} className="flex items-start gap-3">
                     <div className="w-5 h-5 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -359,11 +348,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               </div>
               <ul className="space-y-4">
                 {[
-                  'Outcome-focused talent strategy — we own the result',
-                  'Deep screening for role fit, team fit, and communication style',
-                  'Real-time visibility into hiring, onboarding, and delivery',
-                  'Built-in legal, payroll, and compliance infrastructure',
-                  'Direct tie to your product goals and engineering velocity',
+                  'We own the result, not just the checklist',
+                  'We screen for skill, fit, and communication',
+                  'You can see hiring, onboarding, and delivery clearly',
+                  'Legal, payroll, and compliance are built in',
+                  'The work stays tied to your product goals',
                 ].map(item => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
@@ -378,7 +367,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           <div className="mt-8 reveal">
             <div className="glass p-8 rounded-[2rem] border-border text-center">
               <p className="text-xl md:text-2xl font-bold text-text">
-                BPO outsources tasks. TrivianEdge builds your operating infrastructure.
+                Outsourcing the task is easy. Building the system takes experience.
               </p>
             </div>
           </div>
@@ -584,65 +573,36 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           <div className="text-center mb-16 reveal">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
               <CheckCircle2 className="w-3 h-3" />
-              Real Companies. Real Results.
+              Proof, not promises.
             </div>
             <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">
-              We don't measure success by headcount.
+              Real work. Real outcomes.
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
-              We measure it by revenue generated, problems solved, and markets entered. Here is the proof.
+              Case studies and client feedback, presented without the usual marketing noise.
             </p>
           </div>
 
-          {/* Client cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {WHY_US.filter(item => item.url).map((item, idx) => (
-              <div
-                key={idx}
-                className="reveal glass p-8 rounded-[2rem] border-border hover:border-cyan-500/30 transition-all duration-300 group hover:-translate-y-2 relative overflow-hidden flex flex-col"
-                style={{ transitionDelay: `${idx * 80}ms` }}
-              >
-                <div className="absolute top-0 right-0 w-28 h-28 bg-cyan-500/5 blur-3xl group-hover:bg-cyan-500/10 transition-colors pointer-events-none" />
-                <div className="w-12 h-12 rounded-2xl bg-surface border border-border flex items-center justify-center mb-5 group-hover:scale-110 group-hover:border-cyan-500/30 transition-all duration-300">
-                  {item.icon}
-                </div>
-                <h3 className="text-lg font-bold mb-3 group-hover:text-cyan-400 transition-colors text-text">{item.title}</h3>
-                <p className="text-muted text-sm leading-relaxed flex-grow">{item.description}</p>
-                {item.result && (
-                  <p className="mt-4 text-xs font-bold text-cyan-400 uppercase tracking-widest">
-                    ↗ {item.result}
-                  </p>
-                )}
-                {item.url && (
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-muted hover:text-cyan-400 transition-colors"
-                  >
-                    <ExternalLink className="w-3 h-3" />
-                    {item.url.replace(/^https?:\/\/(?:www\.)?/, '')}
-                  </a>
-                )}
-              </div>
+          <div className="grid lg:grid-cols-2 gap-6 mb-8">
+            {CASE_STUDIES.slice(0, 2).map((study) => (
+              <article key={study.client} className="reveal glass p-8 rounded-[2rem] border-border">
+                <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 mb-3">{study.sector}</p>
+                <h3 className="text-2xl font-bold mb-4 text-text">{study.client}</h3>
+                <p className="text-muted text-sm md:text-base leading-relaxed mb-4"><strong className="text-text">Challenge:</strong> {study.challenge}</p>
+                <p className="text-muted text-sm md:text-base leading-relaxed mb-4"><strong className="text-text">Approach:</strong> {study.approach}</p>
+                <p className="text-muted text-sm md:text-base leading-relaxed"><strong className="text-text">Outcome:</strong> {study.outcome}</p>
+              </article>
             ))}
           </div>
 
-          {/* Operator callout cards */}
-          <div className="mt-6 grid md:grid-cols-2 gap-6">
-            {WHY_US.filter(item => !item.url).map((item, idx) => (
-              <div
-                key={idx}
-                className="reveal glass p-8 rounded-[2rem] border-border flex items-start gap-6 group hover:border-cyan-500/20 transition-all duration-300"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-surface border border-border flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  {item.icon}
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold mb-2 text-text group-hover:text-cyan-400 transition-colors">{item.title}</h3>
-                  <p className="text-muted text-sm leading-relaxed">{item.description}</p>
-                </div>
-              </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {TESTIMONIALS.map((item) => (
+              <blockquote key={item.author + item.role} className="reveal glass p-8 rounded-[2rem] border-border">
+                <p className="text-lg leading-relaxed text-text mb-6">“{item.quote}”</p>
+                <footer className="text-sm text-muted">
+                  <span className="font-semibold text-text">{item.author}</span>, {item.role}
+                </footer>
+              </blockquote>
             ))}
           </div>
         </div>
@@ -755,52 +715,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      {/* ===== INTERACTIVE PROOF MODULES ===== */}
-      <section
-        id="interactive"
-        aria-label="Interactive Tools"
-        className="py-20 md:py-32 px-4 md:px-6"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
-              <Zap className="w-3 h-3" />
-              Proof, Not Promises
-            </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">
-              Complex in reality.<br />
-              <span className="text-holo">Simple in your experience.</span>
-            </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto">
-              Four tools that show — not tell — how TrivianEdge makes global expansion manageable.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="reveal">
-              <Suspense fallback={<div className="h-64 rounded-[2.5rem] bg-surface animate-pulse" />}>
-                <BureaucracyVisualizer />
-              </Suspense>
-            </div>
-            <div className="reveal" style={{ transitionDelay: '80ms' }}>
-              <Suspense fallback={<div className="h-64 rounded-[2.5rem] bg-surface animate-pulse" />}>
-                <TransparencyDashboard />
-              </Suspense>
-            </div>
-            <div className="reveal" style={{ transitionDelay: '160ms' }}>
-              <Suspense fallback={<div className="h-64 rounded-[2.5rem] bg-surface animate-pulse" />}>
-                <CultureSyncQuiz />
-              </Suspense>
-            </div>
-            <div className="reveal" style={{ transitionDelay: '240ms' }}>
-              <Suspense fallback={<div className="h-64 rounded-[2.5rem] bg-surface animate-pulse" />}>
-                <SecurityShield />
-              </Suspense>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ===== ACT 7: TALENT HUBS + WORLD MAP ===== */}
       <section
         id="talent-hubs"
@@ -874,118 +788,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      {/* ===== ACT 8: ARIA ===== */}
-      <AriaSection />
-
-      {/* ===== TRUST BRIDGE ===== */}
-      <section aria-label="Your Expansion Map" className="py-20 md:py-24 px-4 md:px-6 bg-surface">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12 reveal">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-text">
-              See your expansion map.
-            </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto">
-              Tell us where you want to hire, build, or expand. We'll map the exact steps — and then handle all of them.
-            </p>
-          </div>
-
-          <div className="reveal grid sm:grid-cols-3 gap-6">
-            {[
-              {
-                icon: '👥',
-                label: 'Grow my team',
-                desc: 'Niche tech and non-tech talent across 6 countries, deployed in 30 days.',
-                cta: 'Start hiring',
-              },
-              {
-                icon: '🌏',
-                label: 'Enter a new market',
-                desc: 'Sales strategy, local partnerships, and full market execution — not just advice.',
-                cta: 'Explore markets',
-              },
-              {
-                icon: '⚙️',
-                label: 'Build better software',
-                desc: 'In-house engineering teams with security-first practices and clear delivery milestones.',
-                cta: 'Start building',
-              },
-            ].map(item => (
-              <div
-                key={item.label}
-                className="glass p-8 rounded-[2rem] border-border hover:border-cyan-500/30 transition-all duration-300 group flex flex-col"
-              >
-                <span className="text-3xl mb-4 block">{item.icon}</span>
-                <h3 className="font-bold text-text text-lg mb-2 group-hover:text-cyan-400 transition-colors">{item.label}</h3>
-                <p className="text-muted text-sm leading-relaxed flex-grow mb-6">{item.desc}</p>
-                <a
-                  href="#contact"
-                  onClick={e => { e.preventDefault(); scrollTo('contact'); }}
-                  className="inline-flex items-center gap-2 text-sm font-bold text-cyan-400 hover:gap-3 transition-all"
-                >
-                  {item.cta} <ArrowRight className="w-4 h-4" />
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== BPO FAQ SEO targeted featured snippets ===== */}
-      <section id="faq" aria-label="BPO and Outsourcing FAQ" className="py-20 md:py-24 px-4 md:px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12 reveal">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono tracking-widest uppercase mb-6">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-              Common Questions
-            </span>
-            <h2 className="text-3xl md:text-5xl font-bold text-text mb-4">
-              Everything you need to know about <span className="text-holo">BPO and Offshore Outsourcing</span>
-            </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto">
-              Plain answers to the questions we hear most often.
-            </p>
-          </div>
-          <div className="space-y-4 reveal">
-            {[
-              {
-                q: 'What is BPO (Business Process Outsourcing)?',
-                a: 'Business Process Outsourcing means hiring a company to handle specific parts of your business on your behalf. Instead of building an in-house team for accounting, IT support, customer service, or software development, you partner with a specialist like TrivianEdge who manages those functions for you, usually at a much lower cost and faster pace.',
-              },
-              {
-                q: 'Why choose TrivianEdge for offshore software development?',
-                a: 'TrivianEdge is a Canada-based BPO and offshore development company with a proven 30-day deployment model. We source skilled software developers, DevOps engineers, and AI specialists from our global talent hubs, delivering up to 40% cost savings compared to local hiring, with no compromise on quality.',
-              },
-              {
-                q: 'How much can I save with offshore outsourcing?',
-                a: 'Most companies save between 40 and 60% on talent costs by partnering with TrivianEdge. Our global talent hubs across the Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe provide highly skilled professionals at a fraction of North American rates.',
-              },
-              {
-                q: 'What software development services does TrivianEdge provide?',
-                a: 'We provide offshore software development for full-stack development, AI and ML engineering, cloud and DevOps, mobile app development, UI/UX design, cybersecurity, and data engineering. All delivered as dedicated offshore teams built to match your tech stack.',
-              },
-              {
-                q: 'How fast can TrivianEdge deploy an offshore team?',
-                a: 'Our standard process takes 30 days from your first conversation to an active, integrated team. This includes discovery, sourcing, vetting, onboarding, and integration into your workflows, which is significantly faster than traditional hiring.',
-              },
-              {
-                q: 'Is TrivianEdge a Canadian BPO company?',
-                a: 'Yes. TrivianEdge is headquartered in Toronto, Canada and operates as a Canada-based global BPO and outsourcing company. We manage offshore talent deployment, IT outsourcing, and managed services for clients across North America, the UK, Australia, and the Middle East.',
-              },
-            ].map((item, i) => (
-              <details key={i} className="glass border-border rounded-2xl group overflow-hidden">
-                <summary className="flex items-center justify-between p-6 cursor-pointer text-text font-bold text-base md:text-lg list-none select-none hover:text-cyan-400 transition-colors">
-                  <span>{item.q}</span>
-                  <span className="ml-4 text-cyan-400 text-2xl font-light group-open:rotate-45 transition-transform duration-300 flex-shrink-0">+</span>
-                </summary>
-                <div className="px-6 pb-6 text-muted leading-relaxed border-t border-border pt-4 text-sm md:text-base">
-                  {item.a}
-                </div>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ===== ACT 9: CTA + CONTACT ===== */}
       <section id="contact" aria-label="Contact Us" className="py-20 md:py-32 px-4 md:px-6">
         <div className="max-w-7xl mx-auto reveal">
@@ -994,46 +796,25 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%)' }} />
             <div className="relative z-10">
               <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-8 text-text">
-                Your operating blueprint<br />starts here.
+                Start the inquiry
+                <br />and we will map the next step.
               </h2>
               <p className="text-muted text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-                Tell us where you want to hire, build, or expand. We'll show you exactly how we handle the operational layer — and then execute it.
+                Tell us what you need, and use the form below to send a real request instead of a dead-end contact link.
               </p>
 
-              <div className="grid md:grid-cols-3 gap-6 mb-16 max-w-5xl mx-auto text-left">
-                <div className="p-8 rounded-3xl bg-surface border border-border hover:border-cyan-500/30 transition-colors group tilt-card">
-                  <div className="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <MapPin className="w-6 h-6 text-cyan-400" />
-                  </div>
-                  <h4 className="text-sm font-bold uppercase tracking-widest text-muted mb-2">Global HQ</h4>
-                  <p className="text-text font-medium leading-relaxed">37 Wiggens Ct,<br />Toronto ON M1B 1K3,<br />Canada</p>
-                </div>
-
-                <a href="tel:+18882028513" className="p-8 rounded-3xl bg-surface border border-border hover:border-cyan-500/30 transition-colors group block tilt-card">
-                  <div className="w-12 h-12 rounded-full bg-violet-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <svg className="w-6 h-6 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                  </div>
-                  <h4 className="text-sm font-bold uppercase tracking-widest text-muted mb-2">Direct Line</h4>
-                  <p className="text-text font-medium group-hover:text-cyan-400 transition-colors">+1 888 202 8513</p>
-                </a>
-
-                <a href="mailto:info@trivianedge.com" className="p-8 rounded-3xl bg-surface border border-border hover:border-cyan-500/30 transition-colors group block tilt-card">
-                  <div className="w-12 h-12 rounded-full bg-fuchsia-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <Mail className="w-6 h-6 text-fuchsia-400" />
-                  </div>
-                  <h4 className="text-sm font-bold uppercase tracking-widest text-muted mb-2">Email Us</h4>
-                  <p className="text-text font-medium group-hover:text-cyan-400 transition-colors">info@trivianedge.com</p>
-                </a>
+              <div className="max-w-4xl mx-auto text-left mb-10">
+                <InquiryForm />
               </div>
 
               <div className="flex flex-col sm:flex-row justify-center gap-6">
-                <a href="mailto:info@trivianedge.com" className="px-12 py-6 bg-btn-bg text-btn-text rounded-2xl font-bold text-xl hover:bg-cyan-400 hover:text-white transition-all shadow-2xl shadow-cyan-500/10 flex items-center justify-center gap-2">
+                <a href="mailto:info@trivianedge.com" className="px-12 py-6 bg-btn-bg text-btn-text rounded-2xl font-bold text-xl hover:opacity-90 transition-all shadow-2xl shadow-cyan-500/10 flex items-center justify-center gap-2">
                   <Mail className="w-5 h-5" />
-                  Get your operating blueprint
+                  Email the team
                 </a>
                 <a href="tel:+18882028513" className="px-12 py-6 glass text-text rounded-2xl font-bold text-xl hover:bg-surface transition-all flex items-center justify-center gap-2">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                  Call Now
+                  Call now
                 </a>
               </div>
             </div>
@@ -1245,6 +1026,9 @@ export default function App() {
               <Suspense fallback={null}>
                 <Routes>
                   <Route path="/" element={<HomePage setSelectedHub={setSelectedHub} />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/proof" element={<ProofPage />} />
+                  <Route path="/trust" element={<TrustPage />} />
                   <Route path="/blog" element={<BlogView />} />
                   <Route path="/blog/:slug" element={<BlogPostDetail />} />
                   <Route path="/privacy" element={<PrivacyPage />} />
@@ -1296,19 +1080,18 @@ export default function App() {
                 <h4 className="font-bold text-text mb-8 tracking-widest uppercase text-xs">Platform</h4>
                 <ul className="space-y-6 text-muted font-medium">
                   <li><a href="/#solutions" onClick={(e) => { e.preventDefault(); scrollToSection('solutions'); }} className="hover:text-text transition-colors">Our Services</a></li>
-                  <li><a href="/#talent-hubs" onClick={(e) => { e.preventDefault(); scrollToSection('talent-hubs'); }} className="hover:text-text transition-colors">Talent Hubs</a></li>
-                  <li><a href="/#how-it-works" onClick={(e) => { e.preventDefault(); scrollToSection('how-it-works'); }} className="hover:text-text transition-colors">How It Works</a></li>
-                  <li><a href="/#aria" onClick={(e) => { e.preventDefault(); scrollToSection('aria'); }} className="hover:text-text transition-colors">Trivian Aria</a></li>
+                  <li><Link to="/proof" className="hover:text-text transition-colors">Proof</Link></li>
+                  <li><Link to="/trust" className="hover:text-text transition-colors">Trust</Link></li>
                   <li><Link to="/blog" className="hover:text-text transition-colors">Blog</Link></li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-bold text-text mb-8 tracking-widest uppercase text-xs">Resources</h4>
                 <ul className="space-y-6 text-muted font-medium">
-                  <li><a href="/#how-it-works" onClick={(e) => { e.preventDefault(); scrollToSection('how-it-works'); }} className="hover:text-text transition-colors">How It Works</a></li>
-                  <li><a href="/#talent-hubs" onClick={(e) => { e.preventDefault(); scrollToSection('talent-hubs'); }} className="hover:text-text transition-colors">Global Hubs</a></li>
+                  <li><Link to="/contact" className="hover:text-text transition-colors">Contact</Link></li>
+                  <li><Link to="/proof" className="hover:text-text transition-colors">Case Studies</Link></li>
                   <li><Link to="/privacy" className="hover:text-text transition-colors">Privacy Policy</Link></li>
-                  <li><a href="/#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="hover:text-text transition-colors">Contact Us</a></li>
+                  <li><Link to="/trust" className="hover:text-text transition-colors">Security & Compliance</Link></li>
                 </ul>
               </div>
             </div>

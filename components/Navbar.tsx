@@ -29,7 +29,10 @@ const Navbar: React.FC = () => {
 
   const handleNavClick = (href: string) => {
     setIsOpen(false);
-    if (href === '#blog') {
+    if (href.startsWith('/')) {
+      navigate(href);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (href === '#blog') {
       navigate('/blog');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
@@ -99,8 +102,8 @@ const Navbar: React.FC = () => {
           <LanguageSelector />
           <ThemeToggle />
           
-          <a href="#contact" onClick={(e) => { e.preventDefault(); handleNavClick('#contact'); }} className="px-6 py-2.5 bg-btn-bg text-btn-text rounded-full text-xs font-bold uppercase tracking-widest hover:bg-cyan-400 hover:text-white transition-all btn-magnetic">
-            Talk To Us
+          <a href="/contact" onClick={(e) => { e.preventDefault(); handleNavClick('/contact'); }} className="px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all btn-magnetic premium-button">
+            Talk to us
           </a>
         </div>
 
@@ -168,12 +171,12 @@ const Navbar: React.FC = () => {
               </motion.div>
 
               <motion.a 
-                href="#contact" 
+                href="/contact" 
                 variants={itemVariants}
-                className="mt-4 px-10 py-4 bg-cyan-600 text-white rounded-2xl font-bold text-xl" 
-                onClick={(e) => { e.preventDefault(); handleNavClick('#contact'); }}
+                className="mt-4 px-10 py-4 rounded-2xl font-bold text-xl premium-button" 
+                onClick={(e) => { e.preventDefault(); handleNavClick('/contact'); }}
               >
-                Get Started
+                Start here
               </motion.a>
             </motion.div>
           </motion.div>

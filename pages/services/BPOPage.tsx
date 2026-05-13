@@ -130,13 +130,7 @@ const BPOPage: React.FC = () => {
               What is Business Process Outsourcing?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              BPO services Canada companies rely on allow businesses to delegate
-              non-core functions — from IT support and customer service to
-              finance processing and HR administration — to a specialist partner
-              like TrivianEdge. By outsourcing these operations, you eliminate
-              costly in-house overhead and gain access to a dedicated offshore
-              team deployed in just 30 days. Whether you need back-office
-              support or full-cycle{' '}
+              If your team is spending too much time on support work, payroll, admin, or other non-core tasks, TrivianEdge can take that load off your plate. We build offshore teams that handle the work cleanly, move quickly, and plug into your business in about 30 days. Whether you need back-office support or full-cycle{' '}
               <Link
                 to="/services/rpo"
                 className="text-cyan-400 hover:underline"
@@ -213,9 +207,9 @@ const BPOPage: React.FC = () => {
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-background font-bold rounded-full transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold premium-button"
             >
-              Get a Free Consultation
+              Get a free consultation
             </Link>
           </div>
         </section>

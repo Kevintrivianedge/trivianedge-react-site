@@ -112,13 +112,13 @@ const BlogPostDetail: React.FC = () => {
           </div>
 
           <div className="mt-24 p-12 glass border-border rounded-[3rem] text-center">
-            <h3 className="text-2xl font-bold mb-6 text-text">Inspired by this insight?</h3>
-            <p className="text-muted mb-10 max-w-md mx-auto">Learn how we can apply these operational strategies to your specific business scaling needs.</p>
+            <h3 className="text-2xl font-bold mb-6 text-text">Want the same kind of operating clarity?</h3>
+            <p className="text-muted mb-10 max-w-md mx-auto">Tell us what you are trying to build and we will show you the simplest path to get there.</p>
             <a 
               href="mailto:info@trivianedge.com"
-              className="inline-block px-10 py-5 bg-btn-bg text-btn-text rounded-2xl font-bold text-lg hover:bg-cyan-400 hover:text-white transition-all shadow-2xl shadow-surface"
+              className="inline-block px-10 py-5 rounded-2xl font-bold text-lg premium-button"
             >
-              Discuss Your Strategy
+              Discuss your strategy
             </a>
           </div>
         </div>

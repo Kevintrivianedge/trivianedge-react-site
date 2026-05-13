@@ -18,11 +18,10 @@ import {
 import { ServiceCardProps, RoleCategory, Step, WhyUsItem, BlogPost, TalentHub } from './types';
 
 export const NAV_LINKS = [
-  { name: 'Talent Hubs', href: '#talent-hubs' },
-  { name: 'Roles', href: '#roles' },
-  { name: 'Process', href: '#how-it-works' },
-  { name: 'Aria', href: '#aria' },
-  { name: 'Blog', href: '#blog' },
+  { name: 'Services', href: '#solutions' },
+  { name: 'Proof', href: '/proof' },
+  { name: 'Trust', href: '/trust' },
+  { name: 'Blog', href: '/blog' },
 ];
 
 export const SERVICES: ServiceCardProps[] = [

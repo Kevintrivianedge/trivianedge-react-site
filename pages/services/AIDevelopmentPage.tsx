@@ -275,9 +275,9 @@ const AIDevelopmentPage: React.FC = () => {
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-background font-bold rounded-full transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold premium-button"
             >
-              Start Your AI Project
+              Start your AI project
             </Link>
           </div>
         </section>

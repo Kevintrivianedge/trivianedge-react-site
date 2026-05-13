@@ -10,6 +10,8 @@ export const API_ENDPOINTS = {
   GENERATE: '/api/generate',
   /** Early-access signup form */
   EARLY_ACCESS: '/api/early-access',
+  /** Sales inquiry / booking request form */
+  INQUIRY: '/api/inquiry',
   /** Worker health-check */
   HEALTH: '/api/health',
 } as const;

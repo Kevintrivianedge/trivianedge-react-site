@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>TrivianEdge | #1 BPO &amp; Offshore Software Development Company | Canada</title>
-    <meta name="description" content="TrivianEdge is Canada's leading BPO and offshore software development company. We deliver IT outsourcing, global talent deployment, and managed remote teams across 6 time zones. 30-day deployment. Up to 40% cost savings.">
-    <meta name="keywords" content="BPO Canada, business process outsourcing, offshore software development, IT outsourcing, talent outsourcing, offshore development team, remote teams Canada, global staffing, managed IT services, AI staffing, custom software development, software development outsourcing, offshore BPO, outsourcing company Canada, TrivianEdge">
+    <title>TrivianEdge | Global Operations &amp; Offshore Talent Partner</title>
+    <meta name="description" content="TrivianEdge helps companies build offshore teams, run global operations, and move faster with a cleaner operating model. 30-day deployment and direct inquiry flow.">
+    <meta name="keywords" content="global operations, offshore talent, BPO Canada, business process outsourcing, offshore software development, IT outsourcing, talent deployment, managed remote teams, TrivianEdge">
     <meta name="author" content="TrivianEdge Global">
     <meta name="application-name" content="TrivianEdge">
-    <meta name="theme-color" content="#22d3ee">
+    <meta name="theme-color" content="#f8fafc">
     <meta name="rating" content="general">
     <meta name="revisit-after" content="1 day">
     <meta name="language" content="English">
@@ -38,15 +38,15 @@
     <meta name="ICBM" content="43.7731, -79.2386">
 
     <!-- Dublin Core -->
-    <meta name="DC.title" content="TrivianEdge — BPO &amp; Offshore Software Development Canada">
-    <meta name="DC.description" content="Canada's #1 BPO, offshore outsourcing, and software development company.">
+    <meta name="DC.title" content="TrivianEdge — Global Operations &amp; Offshore Talent Partner">
+    <meta name="DC.description" content="TrivianEdge helps companies build offshore teams and run global operations with less friction.">
     <meta name="DC.subject" content="BPO, Outsourcing, Offshore Software Development, IT Outsourcing">
     <meta name="DC.type" content="Service">
     <meta name="DC.language" content="en-CA">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="TrivianEdge | #1 BPO &amp; Offshore Software Development | Canada">
-    <meta property="og:description" content="Canada's leading BPO and offshore software development company. 30-day deployment. Global talent across 6 time zones. Up to 40% cost savings. Real clients, real results.">
+    <meta property="og:title" content="TrivianEdge | Global Operations &amp; Offshore Talent Partner">
+    <meta property="og:description" content="TrivianEdge helps companies build offshore teams, run global operations, and move faster with a cleaner operating model.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.trivianedge.com/">
     <meta property="og:image" content="https://www.trivianedge.com/og-image.png">
@@ -60,8 +60,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@TrivianEdge">
     <meta name="twitter:creator" content="@TrivianEdge">
-    <meta name="twitter:title" content="TrivianEdge | #1 BPO &amp; Offshore Software Development | Canada">
-    <meta name="twitter:description" content="Canada's leading BPO and offshore outsourcing company. 30-day deployment. Up to 40% cost savings.">
+    <meta name="twitter:title" content="TrivianEdge | Global Operations &amp; Offshore Talent Partner">
+    <meta name="twitter:description" content="TrivianEdge helps companies build offshore teams, run global operations, and move faster with a cleaner operating model.">
     <meta name="twitter:image" content="https://www.trivianedge.com/og-image.png">
     <meta name="twitter:image:alt" content="TrivianEdge BPO and Offshore Development">
 
@@ -101,11 +101,26 @@
     </noscript>
     <style>
         :root {
-            /* Dark Theme (Default) */
-            --cyan: #22d3ee;
-            --violet: #8b5cf6;
-            --magenta: #d946ef;
+            /* Light Theme (Default) */
+            --cyan: #0891b2;
+            --violet: #6366f1;
+            --magenta: #c026d3;
             
+            --background: #f8fafc;
+            --text: #0f172a;
+            --text-muted: #475569;
+            --surface: rgba(255, 255, 255, 0.78);
+            --border: rgba(15, 23, 42, 0.08);
+            
+            --glass-bg: rgba(255, 255, 255, 0.72);
+            --glass-border: rgba(15, 23, 42, 0.06);
+            --glass-shadow: rgba(15, 23, 42, 0.05);
+            
+            --btn-bg: #0f172a;
+            --btn-text: #ffffff;
+        }
+
+        [data-theme="dark"] {
             --background: #020203;
             --text: #ffffff;
             --text-muted: #9ca3af;
@@ -118,21 +133,6 @@
             
             --btn-bg: #ffffff;
             --btn-text: #000000;
-        }
-
-        [data-theme="light"] {
-            --background: #f8fafc;
-            --text: #0f172a;
-            --text-muted: #64748b;
-            --surface: rgba(0, 0, 0, 0.05);
-            --border: rgba(0, 0, 0, 0.1);
-            
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(0, 0, 0, 0.05);
-            --glass-shadow: rgba(0, 0, 0, 0.05);
-            
-            --btn-bg: #0f172a;
-            --btn-text: #ffffff;
         }
 
         body {
@@ -244,6 +244,73 @@
         .hover-neon-glow:hover::before {
             /* Static gradient border — replaces hue-rotate-border animation */
             opacity: 1;
+        }
+
+        .premium-button {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(8,145,178,1) 0%, rgba(99,102,241,1) 48%, rgba(192,38,211,1) 100%);
+            color: #fff;
+            box-shadow:
+                0 18px 40px rgba(8,145,178,0.18),
+                0 8px 24px rgba(99,102,241,0.12),
+                inset 0 1px 0 rgba(255,255,255,0.22);
+            border: 1px solid rgba(255,255,255,0.12);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        }
+
+        .premium-button::before {
+            content: "";
+            position: absolute;
+            inset: 1px;
+            border-radius: inherit;
+            background: linear-gradient(120deg, rgba(255,255,255,0.28), transparent 45%, transparent 55%, rgba(255,255,255,0.18));
+            transform: translateX(-120%);
+            transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .premium-button:hover {
+            transform: translateY(-1px) scale(1.01);
+            box-shadow:
+                0 22px 50px rgba(8,145,178,0.24),
+                0 10px 28px rgba(99,102,241,0.18),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+            filter: saturate(1.08);
+        }
+
+        .premium-button:hover::before {
+            transform: translateX(120%);
+        }
+
+        .premium-button-secondary {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(241,245,249,0.92) 100%);
+            color: var(--text);
+            border: 1px solid rgba(15,23,42,0.08);
+            box-shadow: 0 12px 32px rgba(15,23,42,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .premium-button-secondary:hover {
+            transform: translateY(-1px);
+            border-color: rgba(8,145,178,0.25);
+            box-shadow: 0 16px 36px rgba(15,23,42,0.1), 0 0 0 1px rgba(8,145,178,0.08) inset;
+        }
+
+        [data-theme="dark"] .premium-button-secondary {
+            background: linear-gradient(135deg, rgba(15,23,42,0.86) 0%, rgba(30,41,59,0.92) 100%);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12);
+        }
+
+        .premium-button-secondary:hover {
+            box-shadow: 0 16px 36px rgba(15,23,42,0.18), 0 0 0 1px rgba(34,211,238,0.08) inset;
         }
 
         .service-card-glow {

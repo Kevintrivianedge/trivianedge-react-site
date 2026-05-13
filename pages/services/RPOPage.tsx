@@ -107,7 +107,6 @@ const RPOPage: React.FC = () => {
       />
 
       <div className="bg-background min-h-screen text-text">
-        {/* Hero */}
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -123,7 +122,6 @@ const RPOPage: React.FC = () => {
               <span className="text-cyan-400">Canada</span>
             </h1>
 
-            {/* Trust bar */}
             <div className="flex flex-wrap justify-center gap-3 mt-8">
               {[
                 { icon: Clock, label: '30-Day Deployment' },
@@ -143,20 +141,13 @@ const RPOPage: React.FC = () => {
           </div>
         </motion.section>
 
-        {/* What is RPO */}
         <section className="py-20 px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-text mb-6">
               What is Recruitment Process Outsourcing?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              RPO services Canada businesses use to transform their talent
-              acquisition by embedding TrivianEdge directly into their HR team.
-              Unlike a traditional recruiter, we own your entire hiring process
-              — from sourcing strategy and candidate screening to offer
-              management and onboarding. This enables faster hiring, lower
-              cost-per-hire, and access to global talent across technology,
-              finance, and AI roles. Combine our RPO with{' '}
+              If you need to hire at speed, RPO lets TrivianEdge sit inside your hiring process and do the heavy lifting for you. We manage sourcing, screening, offers, and onboarding so your team can move faster with less friction. Combine our RPO with{' '}
               <Link
                 to="/services/bpo"
                 className="text-cyan-400 hover:underline"
@@ -175,7 +166,6 @@ const RPOPage: React.FC = () => {
           </div>
         </section>
 
-        {/* RPO Models */}
         <section className="py-20 px-4 md:px-6 bg-surface/30">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-text mb-12 text-center">
@@ -203,7 +193,6 @@ const RPOPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Stats */}
         <section className="py-20 px-4 md:px-6">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-text mb-12 text-center">
@@ -225,7 +214,6 @@ const RPOPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Industries */}
         <section className="py-20 px-4 md:px-6 bg-surface/30">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-text mb-10">
@@ -244,7 +232,6 @@ const RPOPage: React.FC = () => {
           </div>
         </section>
 
-        {/* FAQ */}
         <section className="py-20 px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-text mb-10 text-center">
@@ -254,7 +241,6 @@ const RPOPage: React.FC = () => {
           </div>
         </section>
 
-        {/* CTA */}
         <section className="py-24 px-4 md:px-6">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
@@ -265,9 +251,9 @@ const RPOPage: React.FC = () => {
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-background font-bold rounded-full transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold premium-button"
             >
-              Book a Free Consultation
+              Book a free consultation
             </Link>
           </div>
         </section>

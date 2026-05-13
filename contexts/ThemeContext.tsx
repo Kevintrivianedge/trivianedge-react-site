@@ -14,10 +14,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('theme');
       if (stored === 'dark' || stored === 'light') return stored;
-      // Default to dark as per original design
-      return 'dark'; 
+      // Default to light for a cleaner premium look.
+      return 'light'; 
     }
-    return 'dark';
+    return 'light';
   });
 
   useEffect(() => {

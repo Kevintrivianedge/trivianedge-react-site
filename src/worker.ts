@@ -140,6 +140,9 @@ export default {
       if (url.pathname === '/api/early-access' && request.method === 'POST') {
         return handleEarlyAccess(request, env, corsHeaders);
       }
+      if (url.pathname === '/api/inquiry' && request.method === 'POST') {
+        return handleInquiry(request, env, corsHeaders);
+      }
 
       return new Response(JSON.stringify({ error: 'Unknown API route' }), {
         status: 404,
@@ -307,6 +310,85 @@ async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record
       const err = await resendRes.text();
       console.error('[Trivian Worker] Resend API error:', err);
       return new Response(JSON.stringify({ success: false, error: 'Failed to send notification. Please try again.' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+  }
+
+  return new Response(JSON.stringify({ success: true }), {
+    status: 200,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
+async function handleInquiry(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
+  const body = await request.json<{
+    name?: string;
+    company?: string;
+    email?: string;
+    need?: string;
+    timeline?: string;
+    message?: string;
+  }>();
+
+  const name = typeof body.name === 'string' ? body.name.trim() : '';
+  const company = typeof body.company === 'string' ? body.company.trim() : '';
+  const email = typeof body.email === 'string' ? body.email.trim() : '';
+  const need = typeof body.need === 'string' ? body.need.trim() : '';
+  const timeline = typeof body.timeline === 'string' ? body.timeline.trim() : '';
+  const message = typeof body.message === 'string' ? body.message.trim() : '';
+
+  if (!name || !company || !email) {
+    return new Response(JSON.stringify({ success: false, error: 'Name, company, and email are required.' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  if (!EMAIL_RE.test(email)) {
+    return new Response(JSON.stringify({ success: false, error: 'Please provide a valid email address.' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  if (env.RESEND_API_KEY) {
+    const safeName = escapeHtml(name);
+    const safeCompany = escapeHtml(company);
+    const safeEmail = escapeHtml(email);
+    const safeNeed = escapeHtml(need);
+    const safeTimeline = escapeHtml(timeline);
+    const safeMessage = escapeHtml(message);
+
+    const resendRes = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: 'TrivianEdge <inquiry@trivianedge.com>',
+        to: ['info@trivianedge.com'],
+        subject: `New inquiry — ${safeCompany}`,
+        html: `
+          <h2>New inquiry request</h2>
+          <table cellpadding="8" style="border-collapse:collapse">
+            <tr><td><strong>Name</strong></td><td>${safeName}</td></tr>
+            <tr><td><strong>Company</strong></td><td>${safeCompany}</td></tr>
+            <tr><td><strong>Email</strong></td><td>${safeEmail}</td></tr>
+            <tr><td><strong>Need</strong></td><td>${safeNeed || 'Not specified'}</td></tr>
+            <tr><td><strong>Timeline</strong></td><td>${safeTimeline || 'Not specified'}</td></tr>
+            <tr><td><strong>Message</strong></td><td>${safeMessage || 'No message provided'}</td></tr>
+          </table>
+        `,
+      }),
+    });
+
+    if (!resendRes.ok) {
+      const err = await resendRes.text();
+      console.error('[Trivian Worker] Inquiry email error:', err);
+      return new Response(JSON.stringify({ success: false, error: 'Failed to send your inquiry. Please try again.' }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });

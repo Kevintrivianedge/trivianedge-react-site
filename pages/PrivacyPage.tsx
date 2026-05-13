@@ -43,7 +43,7 @@ const PrivacyPage: React.FC = () => {
           <div>
             <h2 className="text-xl font-bold text-text mb-4">Information We Collect</h2>
             <p className="text-muted leading-relaxed">
-              We may collect name, company name, email address, and company size when you submit forms on our website (such as the Trivian Aria early access request). We also collect standard website analytics data including page views and general geographic location.
+              We may collect name, company name, email address, and related request details when you submit forms on our website. We also collect standard website analytics data including page views and general geographic location.
             </p>
           </div>
 

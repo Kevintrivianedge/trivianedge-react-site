@@ -101,14 +101,7 @@ const ITOutsourcingPage: React.FC = () => {
               What is IT Outsourcing?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              IT outsourcing Canada companies use to access world-class
-              engineering talent without the cost and timeline of local hiring.
-              TrivianEdge delivers fully managed offshore software development
-              teams across custom software, cloud infrastructure, cybersecurity,
-              and systems integration — deployed within 30 days. Whether you
-              need a full engineering squad or specialist support, our offshore
-              teams integrate seamlessly with your existing workflow. Pair IT
-              outsourcing with our{' '}
+              If your product team needs engineering help without the delays and overhead of hiring locally, TrivianEdge can build the offshore setup for you. We deliver managed software teams across custom development, cloud, security, and systems integration in about 30 days. Pair IT outsourcing with our{' '}
               <Link
                 to="/services/ai-development"
                 className="text-cyan-400 hover:underline"
@@ -182,9 +175,9 @@ const ITOutsourcingPage: React.FC = () => {
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-background font-bold rounded-full transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold premium-button"
             >
-              Get a Free Consultation
+              Get a free consultation
             </Link>
           </div>
         </section>
