@@ -9,6 +9,17 @@ binding = "ASSETS"
 not_found_handling = "none"
 html_handling = "none"
 
+# Optional persistent analytics storage.
+# 1) Create namespace: wrangler kv namespace create ANALYTICS_KV
+# 2) Add the generated id below.
+# [[kv_namespaces]]
+# binding = "ANALYTICS_KV"
+# id = "<paste_namespace_id_here>"
+
 # IMPORTANT: Before deploying, set the GEMINI_API_KEY secret:
 # Run: wrangler secret put GEMINI_API_KEY
+# Also configure:
+# wrangler secret put CRM_WEBHOOK_URL
+# wrangler secret put CRM_WEBHOOK_SIGNING_SECRET
+# wrangler secret put ADMIN_API_TOKEN
 # Then deploy: npm run build && wrangler deploy

@@ -94,10 +94,10 @@
          font-display=swap in the URL already prevents invisible text; the
          onload trick prevents the stylesheet from being render-blocking. -->
     <link rel="preload" as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700;6..96,800&family=Manrope:wght@400;500;600;700;800&display=swap"
       onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700;6..96,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     </noscript>
     <style>
         :root {
@@ -105,6 +105,15 @@
             --cyan: #0891b2;
             --violet: #6366f1;
             --magenta: #c026d3;
+
+            /* Luxury typography and spacing scale */
+            --font-body: 'Manrope', sans-serif;
+            --font-display: 'Bodoni Moda', serif;
+            --tracking-display: -0.01em;
+            --leading-display: 1.02;
+            --space-section-y: clamp(5rem, 9vw, 9rem);
+            --space-stack-lg: clamp(1.5rem, 2.5vw, 2.25rem);
+            --space-stack-md: clamp(1rem, 1.6vw, 1.4rem);
             
             --background: #f8fafc;
             --text: #0f172a;
@@ -136,7 +145,7 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-body);
             background-color: var(--background);
             color: var(--text);
             overflow-x: hidden;
@@ -147,7 +156,37 @@
             padding-right: env(safe-area-inset-right);
         }
         h1, h2, h3, h4 {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
+            letter-spacing: var(--tracking-display);
+        }
+
+        .section-shell {
+            padding-top: var(--space-section-y);
+            padding-bottom: var(--space-section-y);
+        }
+
+        .display-hero {
+            font-size: clamp(2.75rem, 8vw, 7.25rem) !important;
+            letter-spacing: var(--tracking-display);
+            line-height: var(--leading-display);
+            text-wrap: balance;
+        }
+
+        .display-section {
+            font-size: clamp(2rem, 5.4vw, 4.5rem) !important;
+            letter-spacing: var(--tracking-display);
+            line-height: 1.04;
+            text-wrap: balance;
+        }
+
+        h3 {
+            font-size: clamp(1.35rem, 2.6vw, 2.1rem);
+            line-height: 1.16;
+        }
+
+        h4 {
+            font-size: clamp(1.08rem, 1.6vw, 1.35rem);
+            line-height: 1.24;
         }
         .glass {
             background: var(--glass-bg);
@@ -322,6 +361,70 @@
             transform: translateY(-5px) scale(1.02);
             animation: neon-glow-shift 3s infinite ease-in-out;
             border-color: rgba(34, 211, 238, 0.5);
+        }
+
+        .micro-lift-card {
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                        box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                        border-color 0.3s ease;
+            transform-origin: center;
+        }
+
+        .micro-lift-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 50px rgba(15, 23, 42, 0.12);
+        }
+
+        [data-theme="dark"] .micro-lift-card:hover {
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
+        }
+
+        .micro-press-button {
+            transition: transform 0.2s ease, box-shadow 0.25s ease;
+        }
+
+        .micro-press-button:active {
+            transform: translateY(1px) scale(0.99);
+        }
+
+        .choreo-bridge {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            gap: 1rem;
+            opacity: 0.95;
+        }
+
+        .choreo-label {
+            font-family: var(--font-body);
+            font-size: 0.625rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .choreo-line-track {
+            position: relative;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(34,211,238,0.15), rgba(99,102,241,0.08), transparent 80%);
+            overflow: hidden;
+        }
+
+        .choreo-line-fill {
+            width: 100%;
+            height: 100%;
+            transform-origin: left center;
+            background: linear-gradient(90deg, rgba(34,211,238,0.85), rgba(99,102,241,0.6), rgba(192,38,211,0.4));
+            box-shadow: 0 0 14px rgba(34,211,238,0.35);
+        }
+
+        @media (max-width: 768px) {
+            .choreo-bridge {
+                grid-template-columns: 1fr;
+                gap: 0.55rem;
+            }
         }
 
         .text-gradient {
@@ -666,6 +769,46 @@
         }
         .skip-link:focus {
             top: 0;
+        }
+
+        /* Respect motion sensitivity preferences */
+        @media (prefers-reduced-motion: reduce) {
+            html:focus-within {
+                scroll-behavior: auto;
+            }
+
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            #cursor-dot,
+            #cursor-ring,
+            #scroll-progress,
+            #aurora {
+                display: none !important;
+            }
+
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+
+            .hover-neon-glow:hover,
+            .service-card-glow:hover,
+            .micro-lift-card:hover,
+            .premium-button:hover,
+            .premium-button-secondary:hover {
+                transform: none !important;
+                animation: none !important;
+                box-shadow: none !important;
+            }
+
+            .choreo-line-fill {
+                transform: none !important;
+            }
         }
     </style>
 <!-- Vite bundles all dependencies — no browser importmap needed -->

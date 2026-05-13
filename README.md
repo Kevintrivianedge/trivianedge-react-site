@@ -25,6 +25,9 @@ Canada's #1 BPO & offshore software development platform, built on React + TypeS
 │  ├── /api/chat        — Gemini SSE chat  │
 │  ├── /api/generate    — single-shot AI   │
 │  ├── /api/early-access — Resend email    │
+│  ├── /api/analytics/events — persistent telemetry │
+│  ├── /api/venture/submit — CRM + booking hooks   │
+│  ├── /api/admin/venture-stats — funnel + conversion stats │
 │  └── static assets   — React SPA        │
 └────────────────┬─────────────────────────┘
                  │
@@ -74,6 +77,10 @@ Open [http://localhost:3000](http://localhost:3000).
 |--------|-------|-------------|
 | `GEMINI_API_KEY` | Worker secret | Google Gemini API key. Required for AI chat + generation. |
 | `RESEND_API_KEY` | Worker secret | Resend email API key. Optional — enables early-access email. |
+| `CRM_WEBHOOK_URL` | Worker secret | CRM incoming webhook URL for qualified Venture Studio submissions. |
+| `CRM_WEBHOOK_SIGNING_SECRET` | Worker secret | HMAC signing secret for outbound CRM webhooks (`X-Trivian-Signature`). |
+| `ADMIN_API_TOKEN` | Worker secret | Token required for `/api/admin/venture-stats` access. |
+| `ANALYTICS_KV` | Worker binding | Workers KV namespace for persistent server-side analytics events. |
 | `CLOUDFLARE_API_TOKEN` | GitHub secret | Wrangler auth token for CI/CD deploys. |
 | `CLOUDFLARE_ACCOUNT_ID` | GitHub secret | Your Cloudflare account ID. |
 
@@ -81,6 +88,23 @@ Set Worker secrets in production:
 ```bash
 wrangler secret put GEMINI_API_KEY
 wrangler secret put RESEND_API_KEY
+wrangler secret put CRM_WEBHOOK_URL
+wrangler secret put CRM_WEBHOOK_SIGNING_SECRET
+wrangler secret put ADMIN_API_TOKEN
+
+# Create and bind KV for persistent analytics
+wrangler kv namespace create ANALYTICS_KV
+# Add the returned namespace id into wrangler.toml under kv_namespaces.
+
+Admin stats endpoint example:
+```bash
+curl -H "X-Admin-Token: <ADMIN_API_TOKEN>" https://www.trivianedge.com/api/admin/venture-stats
+```
+
+CRM webhook reliability:
+- Qualified submissions attempt immediate CRM webhook delivery.
+- Failed deliveries are queued in KV (`crm_retry:*`) with exponential backoff + jitter.
+- Retry processing runs opportunistically on venture submit and admin stats endpoint calls.
 ```
 
 See `.env.example` for the full list.

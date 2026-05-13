@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { 
   ArrowRight, 
   ChevronRight,
@@ -75,6 +75,37 @@ const BPOPage                 = lazy(() => import('./pages/services/BPOPage'));
 const RPOPage                 = lazy(() => import('./pages/services/RPOPage'));
 const AIDevelopmentPage       = lazy(() => import('./pages/services/AIDevelopmentPage'));
 const ITOutsourcingPage       = lazy(() => import('./pages/services/ITOutsourcingPage'));
+const VentureStudioPage       = lazy(() => import('./pages/VentureStudioPage'));
+
+const SectionBridge: React.FC<{ label: string }> = ({ label }) => {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.8 }}
+      transition={{ duration: shouldReduceMotion ? 0.01 : 0.45 }}
+      className="px-4 md:px-6"
+      aria-hidden="true"
+    >
+      <div className="max-w-7xl mx-auto py-2 md:py-4">
+        <div className="choreo-bridge">
+          <span className="choreo-label">{label}</span>
+          <div className="choreo-line-track">
+            <motion.div
+              initial={{ scaleX: 0, opacity: 0.65 }}
+              whileInView={{ scaleX: 1, opacity: 1 }}
+              viewport={{ once: true, amount: 0.8 }}
+              transition={{ duration: shouldReduceMotion ? 0.01 : 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="choreo-line-fill"
+            />
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 // Rotating hero phrases
 const HERO_PHRASES = [
@@ -101,10 +132,102 @@ const TICKER_ITEMS = [
   { label: 'Costa Rica', value: '🇨🇷' },
 ];
 
+const PREMIUM_FEATURES = [
+  {
+    title: 'White-Glove Talent Concierge',
+    description: 'Senior operators run role design, sourcing, interview calibration, and onboarding handoff so your internal leaders stay out of hiring chaos.',
+    icon: Users2,
+    accent: 'text-cyan-400',
+    border: 'border-cyan-500/20 hover:border-cyan-500/40',
+  },
+  {
+    title: 'Executive Delivery Command Center',
+    description: 'We monitor execution, SLAs, and cross-timezone handoffs like an operations desk, so work does not stall when one region signs off.',
+    icon: TrendingUp,
+    accent: 'text-violet-400',
+    border: 'border-violet-500/20 hover:border-violet-500/40',
+  },
+  {
+    title: 'Compliance + Payroll Shield',
+    description: 'Employment law, payroll execution, and local regulatory compliance are handled in one layer across every market you operate in.',
+    icon: ShieldCheck,
+    accent: 'text-emerald-400',
+    border: 'border-emerald-500/20 hover:border-emerald-500/40',
+  },
+  {
+    title: 'Tech and Non-Tech Scale Engine',
+    description: 'We place engineers and product builders plus finance, support, operations, HR, and leadership roles with the same quality bar.',
+    icon: Layers,
+    accent: 'text-orange-400',
+    border: 'border-orange-500/20 hover:border-orange-500/40',
+  },
+];
+
+const SERVICE_ANALOGIES = [
+  {
+    title: 'Air Traffic Control For Global Teams',
+    copy: 'You keep flying the business. We coordinate routes, timing, and safe handoffs so every team lands on schedule.',
+    icon: MapPin,
+  },
+  {
+    title: 'Pit Crew For Fast-Growth Companies',
+    copy: 'While you drive growth, we handle talent swaps, compliance checks, and process tuning without slowing momentum.',
+    icon: Zap,
+  },
+  {
+    title: 'Operating System For People + Delivery',
+    copy: 'Instead of patching five vendors together, you get one system layer that connects hiring, onboarding, payroll, and execution.',
+    icon: ExternalLink,
+  },
+];
+
+const NON_TECH_CASE_STUDIES = [
+  {
+    company: 'Cargo Login',
+    function: 'Logistics Operations + Documentation',
+    challenge: 'Overnight documentation work stalled when the core US team went offline.',
+    approach: 'We designed a follow-the-sun operations desk using Philippines and Canada resources with structured handoffs.',
+    result: 'Backlog dropped, turnaround improved, and revenue continuity increased across shifts.',
+  },
+  {
+    company: 'Keynotive',
+    function: 'Business Development + Revenue Operations',
+    challenge: 'Needed parallel outbound execution across time zones without heavy overhead.',
+    approach: 'We launched coordinated non-tech teams for cold outreach, pipeline support, and partner onboarding.',
+    result: 'Higher meeting volume, faster response cycles, and measurable new revenue.',
+  },
+  {
+    company: 'Hub-Flx',
+    function: 'Market Expansion + Strategic Partnerships',
+    challenge: 'Expansion into UAE and GCC required local execution support and operator-level coordination.',
+    approach: 'We ran market-entry operations, stakeholder alignment, and execution support for rollout.',
+    result: 'Regional partnership framework activated with a clear path to scale.',
+  },
+];
+
+const AI_VENTURES = [
+  {
+    name: 'Trivian ARIA',
+    url: 'https://trivian-aria.com/',
+    summary: 'AI-first product layer focused on practical automation and decision support systems.',
+  },
+  {
+    name: 'Ancura Trivian',
+    url: 'https://www.ancura-trivian.com/',
+    summary: 'Specialized venture focused on applied AI workflows and operational intelligence.',
+  },
+  {
+    name: 'TrivanEdge Platform',
+    url: 'https://www.trivanedge.com/',
+    summary: 'Expansion-facing digital platform in our ecosystem as we build the future with AI.',
+  },
+];
+
 // Home page component 9-act narrative arc
 const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = ({ setSelectedHub }) => {
   const navigate = useNavigate();
   const [phraseIndex, setPhraseIndex] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
 
   // Rotate hero phrases every 3.5 s
   useEffect(() => {
@@ -151,14 +274,14 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
 
             {/* Kinetic h1 */}
-            <h1 className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight mb-6 leading-[1.05] text-text min-h-[2.3em] md:min-h-[1.8em]">
+            <h1 className="display-hero text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight mb-6 leading-[1.05] text-text min-h-[2.3em] md:min-h-[1.8em]">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={phraseIndex}
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -20 }}
+                  transition={{ duration: shouldReduceMotion ? 0.01 : 0.5, ease: [0.16, 1, 0.3, 1] }}
                   className="block"
                 >
                   {line1}
@@ -190,7 +313,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <a
                 href="#contact"
                 onClick={e => { e.preventDefault(); scrollTo('contact'); }}
-                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 group btn-magnetic premium-button"
+                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 group btn-magnetic premium-button micro-press-button"
               >
                 Start the conversation
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
@@ -198,7 +321,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <a
                 href="#how-it-works"
                 onClick={e => { e.preventDefault(); scrollTo('how-it-works'); }}
-                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 btn-magnetic premium-button-secondary"
+                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 btn-magnetic premium-button-secondary micro-press-button"
               >
                 How it works
                 <ChevronRight className="w-5 h-5" />
@@ -223,11 +346,84 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       </section>
 
       {/* ===== ACT 2: TRUST MARQUEE ===== */}
+      <section aria-label="Trust signals" className="py-5 md:py-7 border-y border-border/70 bg-surface/60 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="relative overflow-hidden">
+            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-14 md:w-28 bg-gradient-to-r from-background to-transparent z-10" />
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-14 md:w-28 bg-gradient-to-l from-background to-transparent z-10" />
+            <div
+              className="flex w-[300%] items-center gap-4 md:gap-6"
+              style={{ animation: 'marquee-scroll 22s linear infinite' }}
+            >
+              {[...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS].map((item, idx) => (
+                <div
+                  key={`${item.label}-${idx}`}
+                  className="inline-flex items-center gap-2 md:gap-3 px-3 md:px-4 py-2 rounded-full border border-border bg-background/70 whitespace-nowrap"
+                >
+                  <span className="text-sm md:text-base font-bold text-text">{item.value}</span>
+                  <span className="text-[10px] md:text-xs uppercase tracking-widest text-muted font-bold">{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <SectionBridge label="Signal -> Strategy" />
+
+      {/* ===== ACT 2B: PREMIUM OPERATING LAYER ===== */}
+      <section aria-label="Premium operating layer" className="section-shell px-4 md:px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-14 reveal">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6 float-badge">
+              <ShieldCheck className="w-3 h-3" />
+              Premium Operations Layer
+            </div>
+            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
+              Built like a partner desk,<br />
+              <span className="text-holo">not a basic staffing vendor.</span>
+            </h2>
+            <p className="text-muted text-lg max-w-3xl mx-auto">
+              We combine talent, process, and operational control into one managed system so founders and executives get leverage instead of extra admin.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 reveal">
+            {PREMIUM_FEATURES.map((feature, idx) => {
+              const Icon = feature.icon;
+              return (
+                <motion.article
+                  key={feature.title}
+                  initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: shouldReduceMotion ? 0.01 : 0.55, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  className={`glass micro-lift-card rounded-[2rem] p-7 md:p-9 border relative overflow-hidden group ${feature.border}`}
+                >
+                  <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-b from-white/10 to-transparent blur-3xl pointer-events-none" />
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-2xl border border-border bg-surface flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                      <Icon className={`w-6 h-6 ${feature.accent}`} />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-text mb-2">{feature.title}</h3>
+                      <p className="text-muted text-sm md:text-base leading-relaxed">{feature.description}</p>
+                    </div>
+                  </div>
+                </motion.article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <SectionBridge label="Strategy -> Execution" />
+
       {/* ===== ACT 3: GLOBAL BUSINESS OS ANALOGY ===== */}
       <section
         id="problem"
         aria-label="The Global Business OS"
-        className="py-20 md:py-32 px-4 md:px-6"
+        className="section-shell px-4 md:px-6"
       >
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
           {/* Left: analogy text */}
@@ -235,13 +431,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <div className="text-cyan-700 font-bold tracking-widest text-xs uppercase mb-4">
               Primary wedge
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight text-text">
+            <h2 className="display-section text-4xl md:text-5xl font-bold mb-8 leading-tight text-text">
               TrivianEdge helps you build a team<br />
               <span className="text-holo">without the usual hiring mess.</span>
             </h2>
 
             <p className="text-muted text-base md:text-lg leading-relaxed mb-8 max-w-xl">
-              We help you hire, set up, and run offshore teams in plain English. No jargon, no mystery process, just a clean way to get work moving.
+              We help you hire, set up, and run offshore teams in plain English. We cover software and technical roles, plus operations, finance, support, and leadership hires in one model.
             </p>
 
             <div className="space-y-4">
@@ -285,15 +481,43 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 </div>
               </div>
             </div>
+
+            <div className="grid gap-3 mt-8">
+              {SERVICE_ANALOGIES.map((item, idx) => {
+                const Icon = item.icon;
+                return (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -18 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
+                    className="glass micro-lift-card rounded-2xl border border-border p-4"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-surface border border-border flex items-center justify-center mt-0.5">
+                        <Icon className="w-4 h-4 text-cyan-400" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-text mb-1">{item.title}</p>
+                        <p className="text-xs md:text-sm text-muted leading-relaxed">{item.copy}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
+
+      <SectionBridge label="Execution -> Structure" />
 
       {/* ===== BPO VS RPO + TECH EDUCATION ===== */}
       <section
         id="bpo-vs-rpo"
         aria-label="Why BPO Breaks"
-        className="py-20 md:py-32 px-4 md:px-6 bg-surface"
+        className="section-shell px-4 md:px-6 bg-surface"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -301,7 +525,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <X className="w-3 h-3" />
               Why traditional BPO breaks
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">
+            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
               Old-school outsourcing just passes work around.<br />
               <span className="text-holo">We build the system around it.</span>
             </h2>
@@ -312,7 +536,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           <div className="grid md:grid-cols-2 gap-6 reveal">
             {/* Left: Traditional BPO */}
-            <div className="glass p-8 md:p-10 rounded-[2.5rem] border-rose-500/20 relative overflow-hidden">
+            <div className="glass micro-lift-card p-8 md:p-10 rounded-[2.5rem] border-rose-500/20 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-rose-500/5 blur-3xl pointer-events-none" />
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center">
@@ -339,7 +563,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
 
             {/* Right: TrivianEdge RPO + Tech */}
-            <div className="glass p-8 md:p-10 rounded-[2.5rem] border-cyan-500/20 relative overflow-hidden">
+            <div className="glass micro-lift-card p-8 md:p-10 rounded-[2.5rem] border-cyan-500/20 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/10 blur-3xl pointer-events-none" />
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
@@ -375,11 +599,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
+      <SectionBridge label="Structure -> Proof" />
+
       {/* ===== DUAL-ENGINE SERVICE DEFINITION ===== */}
       <section
         id="dual-engine"
         aria-label="Our Dual Engine"
-        className="py-20 md:py-32 px-4 md:px-6"
+        className="section-shell px-4 md:px-6"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -387,7 +613,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <Layers className="w-3 h-3" />
               How We're Built
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">
+            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
               Two engines.<br />One system.
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
@@ -397,7 +623,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           <div className="grid md:grid-cols-2 gap-8 reveal">
             {/* Engine 1: Talent */}
-            <div className="glass p-10 rounded-[2.5rem] border-border hover:border-cyan-500/30 transition-all duration-500 group relative overflow-hidden">
+            <div className="glass micro-lift-card p-10 rounded-[2.5rem] border-border hover:border-cyan-500/30 transition-all duration-500 group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/5 blur-3xl group-hover:bg-cyan-500/10 transition-colors duration-700 pointer-events-none" />
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-14 h-14 rounded-2xl bg-surface border border-border flex items-center justify-center group-hover:border-cyan-400/30 group-hover:bg-cyan-500/10 transition-all duration-500">
@@ -427,7 +653,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
 
             {/* Engine 2: Software */}
-            <div className="glass p-10 rounded-[2.5rem] border-border hover:border-violet-500/30 transition-all duration-500 group relative overflow-hidden">
+            <div className="glass micro-lift-card p-10 rounded-[2.5rem] border-border hover:border-violet-500/30 transition-all duration-500 group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-48 h-48 bg-violet-500/5 blur-3xl group-hover:bg-violet-500/10 transition-colors duration-700 pointer-events-none" />
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-14 h-14 rounded-2xl bg-surface border border-border flex items-center justify-center group-hover:border-violet-400/30 group-hover:bg-violet-500/10 transition-all duration-500">
@@ -468,11 +694,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
+      <SectionBridge label="Proof -> Scale" />
+
       {/* ===== HEADACHE VALUE PROPOSITION ===== */}
       <section
         id="headache-removed"
         aria-label="We Remove the Bureaucracy"
-        className="py-20 md:py-32 px-4 md:px-6 bg-surface"
+        className="section-shell px-4 md:px-6 bg-surface"
       >
         <div className="max-w-7xl mx-auto">
           <div className="max-w-4xl mx-auto text-center reveal">
@@ -480,7 +708,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <ShieldCheck className="w-3 h-3" />
               The Headache We Take Away
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-text">
+            <h2 className="display-section text-4xl md:text-6xl font-bold mb-6 text-text">
               We remove the bureaucracy burden<br />
               <span className="text-holo">so you stay focused on growth.</span>
             </h2>
@@ -522,7 +750,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             ].map(item => (
               <div
                 key={item.title}
-                className={`glass p-8 rounded-[2rem] border transition-all duration-300 relative overflow-hidden group`}
+                className={`glass micro-lift-card p-8 rounded-[2rem] border transition-all duration-300 relative overflow-hidden group`}
                 style={{ borderColor: 'var(--border)' }}
               >
                 <div className={`absolute top-0 right-0 w-28 h-28 ${item.glow} blur-3xl pointer-events-none`} />
@@ -547,7 +775,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="how-it-works"
         aria-label="How It Works"
-        className="py-20 md:py-32 px-4 md:px-6 bg-surface"
+        className="section-shell px-4 md:px-6 bg-surface"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -555,7 +783,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <Zap className="w-3 h-3" />
               Simple 4-Step Process
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">How We Get You Set Up</h2>
+            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">How We Get You Set Up</h2>
             <p className="text-muted text-lg max-w-xl mx-auto">
               From first conversation to your new team member's first day, the whole process takes about 30 days.
             </p>
@@ -568,7 +796,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="why-us"
         aria-label="Client Results"
-        className="py-20 md:py-32 px-4 md:px-6"
+        className="section-shell px-4 md:px-6"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -576,7 +804,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <CheckCircle2 className="w-3 h-3" />
               Proof, not promises.
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">
+            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
               Real work. Real outcomes.
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
@@ -586,7 +814,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           <div className="grid lg:grid-cols-2 gap-6 mb-8">
             {CASE_STUDIES.slice(0, 2).map((study) => (
-              <article key={study.client} className="reveal glass p-8 rounded-[2rem] border-border">
+              <article key={study.client} className="reveal glass micro-lift-card p-8 rounded-[2rem] border-border">
                 <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 mb-3">{study.sector}</p>
                 <h3 className="text-2xl font-bold mb-4 text-text">{study.client}</h3>
                 <p className="text-muted text-sm md:text-base leading-relaxed mb-4"><strong className="text-text">Challenge:</strong> {study.challenge}</p>
@@ -598,7 +826,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           <div className="grid md:grid-cols-2 gap-6">
             {TESTIMONIALS.map((item) => (
-              <blockquote key={item.author + item.role} className="reveal glass p-8 rounded-[2rem] border-border">
+              <blockquote key={item.author + item.role} className="reveal glass micro-lift-card p-8 rounded-[2rem] border-border">
                 <p className="text-lg leading-relaxed text-text mb-6">“{item.quote}”</p>
                 <footer className="text-sm text-muted">
                   <span className="font-semibold text-text">{item.author}</span>, {item.role}
@@ -609,11 +837,54 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
+      {/* ===== ACT 5B: NON-TECH CASE STUDIES ===== */}
+      <section
+        id="non-tech-proof"
+        aria-label="Non-technical success stories"
+        className="section-shell px-4 md:px-6 bg-surface"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 reveal">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+              <Users2 className="w-3 h-3" />
+              Non-Tech Success Stories
+            </div>
+            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
+              We do not only place developers.
+              <br />
+              <span className="text-holo">We scale operations teams too.</span>
+            </h2>
+            <p className="text-muted text-lg max-w-3xl mx-auto">
+              These are business-side and delivery-side wins where non-technical roles created direct performance gains.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-6">
+            {NON_TECH_CASE_STUDIES.map((study, idx) => (
+              <motion.article
+                key={study.company}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
+                className="reveal glass micro-lift-card p-8 rounded-[2rem] border-border"
+              >
+                <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400 mb-3">{study.function}</p>
+                <h3 className="text-2xl font-bold text-text mb-4">{study.company}</h3>
+                <p className="text-sm text-muted leading-relaxed mb-3"><span className="text-text font-semibold">Challenge:</span> {study.challenge}</p>
+                <p className="text-sm text-muted leading-relaxed mb-3"><span className="text-text font-semibold">Approach:</span> {study.approach}</p>
+                <p className="text-sm text-muted leading-relaxed"><span className="text-text font-semibold">Result:</span> {study.result}</p>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ===== ACT 6: SERVICES BENTO GRID ===== */}
       <section
         id="solutions"
         aria-label="Our Services"
-        className="py-20 md:py-32 px-4 md:px-6 bg-surface"
+        className="section-shell px-4 md:px-6 bg-surface"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -621,7 +892,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <Layers className="w-3 h-3" />
               What We Do
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">
+            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
               Everything you need to grow,<br />without the growing pains.
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
@@ -639,7 +910,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   key={idx}
                   className={[
                     'reveal glass p-10 rounded-[2.5rem] border-border hover:border-cyan-500/30',
-                    'transition-all duration-500 group relative overflow-hidden service-card-glow flex flex-col',
+                    'transition-all duration-500 group relative overflow-hidden service-card-glow micro-lift-card flex flex-col',
                     isWide ? 'md:col-span-2' : '',
                     isFull ? 'md:col-span-3' : '',
                   ].join(' ')}
@@ -716,11 +987,74 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
+      {/* ===== ACT 6B: AI VENTURE ECOSYSTEM ===== */}
+      <section
+        id="ai-ecosystem"
+        aria-label="AI venture ecosystem"
+        className="section-shell px-4 md:px-6"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 reveal">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+              <Cpu className="w-3 h-3" />
+              Building The Future With AI
+            </div>
+            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
+              Explore the ventures we are building
+              <br />
+              <span className="text-holo">across the Trivian ecosystem.</span>
+            </h2>
+            <p className="text-muted text-lg max-w-3xl mx-auto">
+              These platforms represent where we are heading: practical AI systems, execution-first products, and real business impact.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
+            {AI_VENTURES.map((venture, idx) => (
+              <motion.a
+                key={venture.name}
+                href={venture.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
+                className="reveal glass micro-lift-card rounded-[2rem] p-8 border-border block group"
+              >
+                <div className="flex items-center justify-between gap-4 mb-3">
+                  <h3 className="text-2xl font-bold text-text group-hover:text-cyan-400 transition-colors duration-300">{venture.name}</h3>
+                  <ExternalLink className="w-5 h-5 text-cyan-400" />
+                </div>
+                <p className="text-sm text-muted leading-relaxed">{venture.summary}</p>
+              </motion.a>
+            ))}
+          </div>
+
+          <div className="glass border border-cyan-500/20 rounded-[2rem] p-8 md:p-10 text-center reveal micro-lift-card">
+            <p className="text-sm uppercase tracking-widest font-bold text-cyan-400 mb-3">MVP Venture Offer</p>
+            <h3 className="text-3xl md:text-4xl font-bold text-text mb-4">Do you have an idea? Tell us what it is.</h3>
+            <p className="text-muted text-base md:text-lg max-w-3xl mx-auto mb-6">
+              We are opening a founder lane for selected ideas: if your concept fits, we will help you build an MVP free of charge.
+            </p>
+            <a
+              href="/venture-studio"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl premium-button micro-press-button font-bold"
+            >
+              Start Venture Studio Qualification
+              <ArrowRight className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <SectionBridge label="Scale -> Launch" />
+
       {/* ===== ACT 7: TALENT HUBS + WORLD MAP ===== */}
       <section
         id="talent-hubs"
         aria-label="Global Talent Hubs"
-        className="py-20 md:py-32 px-4 md:px-6"
+        className="section-shell px-4 md:px-6"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -728,7 +1062,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <Globe2 className="w-3 h-3" />
               Where Your Team Comes From
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">Great people. Everywhere.</h2>
+            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">Great people. Everywhere.</h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
               We source from 6 countries selected for their talent quality, English proficiency, and timezone fit with your business. Hover any pin to explore.
             </p>
@@ -752,7 +1086,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="roles"
         aria-label="Roles We Place"
-        className="py-20 md:py-32 px-4 md:px-6 bg-surface"
+        className="section-shell px-4 md:px-6 bg-surface"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -760,19 +1094,33 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <Globe2 className="w-3 h-3" />
               What We Source
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-text">
-              Every role. Any time zone.
+            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
+              Tech roles and non-tech roles.<br />
+              <span className="text-holo">One quality bar.</span>
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
-              From engineering leads to ops specialists, we source across every function your business needs to scale.
+              We are not only a tech staffing company. We build full teams across engineering, operations, finance, customer support, and business execution.
             </p>
+          </div>
+
+          <div className="reveal mb-8 grid md:grid-cols-3 gap-4">
+            {[
+              { label: 'Technical Roles', value: 'Engineering, Product, Data, Security' },
+              { label: 'Business Roles', value: 'Finance, HR, Admin, Customer Support' },
+              { label: 'Leadership Roles', value: 'Ops Leads, Delivery Managers, Project Owners' },
+            ].map((item) => (
+              <div key={item.label} className="glass micro-lift-card rounded-2xl border border-border p-5">
+                <p className="text-[10px] uppercase tracking-widest font-bold text-cyan-400 mb-2">{item.label}</p>
+                <p className="text-sm text-text font-semibold">{item.value}</p>
+              </div>
+            ))}
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             {ROLES.map((category) => (
               <div
                 key={category.title}
-                className={`reveal glass p-10 rounded-[2.5rem] border-border bg-gradient-to-br ${category.gradient} relative overflow-hidden`}
+                className={`reveal glass micro-lift-card p-10 rounded-[2.5rem] border-border bg-gradient-to-br ${category.gradient} relative overflow-hidden`}
               >
                 <h3 className="text-xl font-bold text-text mb-6">{category.title}</h3>
                 <ul className="space-y-3">
@@ -790,30 +1138,42 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       </section>
 
       {/* ===== ACT 9: CTA + CONTACT ===== */}
-      <section id="contact" aria-label="Contact Us" className="py-20 md:py-32 px-4 md:px-6">
+      <section id="contact" aria-label="Contact Us" className="section-shell px-4 md:px-6">
         <div className="max-w-7xl mx-auto reveal">
           <div className="glass p-12 md:p-24 rounded-[4rem] border-border text-center relative overflow-hidden">
             <div className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.10) 0%, transparent 70%)' }} />
             <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%)' }} />
             <div className="relative z-10">
-              <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-8 text-text">
+              <h2 className="display-section text-4xl sm:text-5xl md:text-7xl font-bold mb-8 text-text">
                 Start the inquiry
                 <br />and we will map the next step.
               </h2>
               <p className="text-muted text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-                Tell us what you need, and use the form below to send a real request instead of a dead-end contact link.
+                Tell us what you need across tech or non-tech hiring, delivery ops, or expansion support, and we will build a practical plan with you.
               </p>
+
+              <div className="mb-10 max-w-3xl mx-auto glass border border-violet-500/20 rounded-2xl p-6 md:p-8 micro-lift-card">
+                <p className="text-[10px] uppercase tracking-widest font-bold text-violet-400 mb-2">Founder Option</p>
+                <p className="text-xl md:text-2xl font-bold text-text mb-2">Have an idea? We can build your MVP free of charge.</p>
+                <p className="text-sm md:text-base text-muted">Send your concept, target users, and problem statement. If it matches our build criteria, we will scope and ship an MVP with you.</p>
+                <div className="mt-4">
+                  <Link to="/venture-studio" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl premium-button micro-press-button font-bold text-sm">
+                    Go To Venture Studio
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
 
               <div className="max-w-4xl mx-auto text-left mb-10">
                 <InquiryForm />
               </div>
 
               <div className="flex flex-col sm:flex-row justify-center gap-6">
-                <a href="mailto:info@trivianedge.com" className="px-12 py-6 bg-btn-bg text-btn-text rounded-2xl font-bold text-xl hover:opacity-90 transition-all shadow-2xl shadow-cyan-500/10 flex items-center justify-center gap-2">
+                <a href="mailto:info@trivianedge.com" className="px-12 py-6 bg-btn-bg text-btn-text rounded-2xl font-bold text-xl hover:opacity-90 transition-all shadow-2xl shadow-cyan-500/10 flex items-center justify-center gap-2 micro-press-button">
                   <Mail className="w-5 h-5" />
                   Email the team
                 </a>
-                <a href="tel:+18882028513" className="px-12 py-6 glass text-text rounded-2xl font-bold text-xl hover:bg-surface transition-all flex items-center justify-center gap-2">
+                <a href="tel:+18882028513" className="px-12 py-6 glass text-text rounded-2xl font-bold text-xl hover:bg-surface transition-all flex items-center justify-center gap-2 micro-press-button">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                   Call now
                 </a>
@@ -1038,6 +1398,7 @@ export default function App() {
                   <Route path="/services/rpo" element={<RPOPage />} />
                   <Route path="/services/ai-development" element={<AIDevelopmentPage />} />
                   <Route path="/services/it-outsourcing" element={<ITOutsourcingPage />} />
+                  <Route path="/venture-studio" element={<VentureStudioPage />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </Suspense>
@@ -1083,6 +1444,7 @@ export default function App() {
                   <li><a href="/#solutions" onClick={(e) => { e.preventDefault(); scrollToSection('solutions'); }} className="hover:text-text transition-colors">Our Services</a></li>
                   <li><Link to="/proof" className="hover:text-text transition-colors">Proof</Link></li>
                   <li><Link to="/trust" className="hover:text-text transition-colors">Trust</Link></li>
+                  <li><Link to="/venture-studio" className="hover:text-text transition-colors">Venture Studio</Link></li>
                   <li><Link to="/blog" className="hover:text-text transition-colors">Blog</Link></li>
                 </ul>
               </div>
@@ -1091,6 +1453,7 @@ export default function App() {
                 <ul className="space-y-6 text-muted font-medium">
                   <li><Link to="/contact" className="hover:text-text transition-colors">Contact</Link></li>
                   <li><Link to="/proof" className="hover:text-text transition-colors">Case Studies</Link></li>
+                  <li><Link to="/venture-studio" className="hover:text-text transition-colors">MVP Qualification</Link></li>
                   <li><Link to="/privacy" className="hover:text-text transition-colors">Privacy Policy</Link></li>
                   <li><Link to="/trust" className="hover:text-text transition-colors">Security & Compliance</Link></li>
                 </ul>
