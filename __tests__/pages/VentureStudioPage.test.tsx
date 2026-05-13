@@ -92,6 +92,29 @@ describe('VentureStudioPage', () => {
     expect(screen.getByText('Step 1 of 4')).toBeInTheDocument();
   });
 
+  it('requires a typed custom industry when Other is selected', async () => {
+    (globalThis as unknown as { fetch: FetchMock }).fetch = buildFetchMock();
+
+    render(<VentureStudioPage />);
+
+    fireEvent.change(screen.getByLabelText('Full Name'), { target: { value: 'John Founder' } });
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'john@startup.com' } });
+    fireEvent.change(screen.getByLabelText('Company'), { target: { value: 'Startup Inc' } });
+    fireEvent.change(screen.getByLabelText('Industry'), { target: { value: 'other' } });
+
+    expect(screen.getByLabelText('Your Industry')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByText('Founder Profile')).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Your Industry'), { target: { value: 'Construction Tech' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Problem + Market')).toBeInTheDocument();
+    });
+  });
+
   it('submits successfully and shows booking actions in confirmation state', async () => {
     const fetchMock = buildFetchMock();
     (globalThis as unknown as { fetch: FetchMock }).fetch = fetchMock;

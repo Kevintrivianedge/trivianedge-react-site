@@ -7,6 +7,7 @@ type FormState = {
   email: string;
   company: string;
   industry: string;
+  industryOther: string;
   businessModel: string;
   ideaSummary: string;
   problem: string;
@@ -23,6 +24,7 @@ const INITIAL_FORM: FormState = {
   email: '',
   company: '',
   industry: '',
+  industryOther: '',
   businessModel: '',
   ideaSummary: '',
   problem: '',
@@ -40,6 +42,16 @@ const STEPS = [
   { id: 'readiness', label: 'Build Readiness' },
   { id: 'review', label: 'Review + Submit' },
 ] as const;
+
+const INDUSTRY_LABELS: Record<string, string> = {
+  fintech: 'FinTech',
+  healthtech: 'HealthTech',
+  'b2b-saas': 'B2B SaaS',
+  logistics: 'Logistics',
+  ecommerce: 'Ecommerce',
+  edtech: 'EdTech',
+  other: 'Other',
+};
 
 const STEP_GUIDANCE = [
   {
@@ -227,6 +239,13 @@ const VentureStudioPage: React.FC = () => {
 
   const tier = useMemo(() => getQualificationTier(readinessScore), [readinessScore]);
 
+  const resolvedIndustry = useMemo(() => {
+    if (form.industry === 'other') {
+      return form.industryOther.trim() || 'Other';
+    }
+    return INDUSTRY_LABELS[form.industry] ?? form.industry;
+  }, [form.industry, form.industryOther]);
+
   const onChange = (key: keyof FormState, value: string) => {
     setForm(prev => ({ ...prev, [key]: value }));
   };
@@ -243,7 +262,10 @@ const VentureStudioPage: React.FC = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          form,
+          form: {
+            ...form,
+            industry: resolvedIndustry,
+          },
           score: readinessScore,
           tier: tier.title,
           locale,
@@ -281,7 +303,7 @@ const VentureStudioPage: React.FC = () => {
       trackAnalytics('venture_submit', {
         score: readinessScore,
         tier: tier.title,
-        industry: form.industry,
+        industry: resolvedIndustry,
         readiness: form.readinessLevel,
         qualified: result.qualified ?? false,
       });
@@ -296,7 +318,13 @@ const VentureStudioPage: React.FC = () => {
   };
 
   const stepValidations: Array<() => boolean> = [
-    () => Boolean(form.fullName && form.email && form.company && form.industry),
+    () => Boolean(
+      form.fullName &&
+      form.email &&
+      form.company &&
+      form.industry &&
+      (form.industry !== 'other' || form.industryOther.trim())
+    ),
     () => Boolean(form.ideaSummary && form.problem && form.users && form.businessModel),
     () => Boolean(form.readinessLevel && form.stage && form.timeline && form.aiDepth && form.founderCommitment),
     () => true,
@@ -356,6 +384,7 @@ const VentureStudioPage: React.FC = () => {
         `Name: ${form.fullName}`,
         `Email: ${form.email}`,
         `Company: ${form.company}`,
+        `Industry: ${resolvedIndustry}`,
         `Idea Summary: ${form.ideaSummary}`,
         `Problem: ${form.problem}`,
         `Users: ${form.users}`,
@@ -369,7 +398,7 @@ const VentureStudioPage: React.FC = () => {
     );
 
     return `mailto:info@trivianedge.com?subject=${subject}&body=${body}`;
-  }, [form, readinessScore, tier.title]);
+  }, [form, readinessScore, tier.title, resolvedIndustry]);
 
   return (
     <section className="section-shell px-4 md:px-6" aria-label="Venture Studio MVP qualification">
@@ -449,6 +478,19 @@ const VentureStudioPage: React.FC = () => {
                     </select>
                   </label>
                 </div>
+
+                {form.industry === 'other' && (
+                  <label className="space-y-2 block">
+                    <span className="text-xs uppercase tracking-widest font-bold text-muted">Your Industry</span>
+                    <input
+                      required
+                      placeholder="For example: Construction Tech"
+                      value={form.industryOther}
+                      onChange={(e) => onChange('industryOther', e.target.value)}
+                      className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text"
+                    />
+                  </label>
+                )}
               </>
             )}
 
@@ -544,7 +586,7 @@ const VentureStudioPage: React.FC = () => {
               <div className="rounded-2xl border border-border bg-surface p-5 space-y-3">
                 <p className="text-xs uppercase tracking-widest font-bold text-muted">Final Review</p>
                 <p className="text-sm text-muted"><span className="font-semibold text-text">Founder:</span> {form.fullName} ({form.email})</p>
-                <p className="text-sm text-muted"><span className="font-semibold text-text">Company:</span> {form.company} • {form.industry}</p>
+                <p className="text-sm text-muted"><span className="font-semibold text-text">Company:</span> {form.company} • {resolvedIndustry}</p>
                 <p className="text-sm text-muted"><span className="font-semibold text-text">Idea:</span> {form.ideaSummary}</p>
                 <p className="text-sm text-muted"><span className="font-semibold text-text">Readiness:</span> {form.readinessLevel} • {form.timeline}</p>
               </div>

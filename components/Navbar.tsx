@@ -83,16 +83,18 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className={`fixed top-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'glass py-4 shadow-2xl' : 'bg-transparent py-8'}`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center relative z-[101]">
-        <Logo onClick={() => { navigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} />
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center relative z-[101] gap-4">
+        <div className="shrink-0">
+          <Logo onClick={() => { navigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} />
+        </div>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-5 xl:gap-8 shrink-0 ml-4 xl:ml-8">
           {NAV_LINKS.map(link => (
             <a 
               key={link.name} 
               href={link.href} 
               onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-              className="text-xs font-bold uppercase tracking-widest text-muted hover:text-cyan-400 transition-colors"
+              className="text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest text-muted hover:text-cyan-400 transition-colors"
             >
               {link.name}
             </a>
@@ -107,7 +109,7 @@ const Navbar: React.FC = () => {
           </a>
         </div>
 
-        <div className="md:hidden flex items-center gap-4">
+        <div className="lg:hidden flex items-center gap-4">
             <ThemeToggle />
             <button className="p-2 text-text" onClick={() => setIsOpen(!isOpen)}>
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -122,7 +124,7 @@ const Navbar: React.FC = () => {
             animate="open"
             exit="exit"
             variants={menuVariants}
-            className="fixed inset-0 bg-background z-[90] md:hidden overflow-hidden flex flex-col"
+            className="fixed inset-0 bg-background z-[90] lg:hidden overflow-hidden flex flex-col"
           >
             {/* Background atmosphere elements — static radial gradients replace
                 blur-[80px] which creates a new compositing layer on mobile GPUs. */}
