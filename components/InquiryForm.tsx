@@ -48,7 +48,7 @@ const InquiryForm: React.FC = () => {
       }
     } catch (err) {
       console.error('[InquiryForm] submission error:', err);
-      setError('Unable to submit right now. Please try again or email info@trivianedge.com.');
+      setError('Unable to submit right now. Please try again or email kevin.v@trivianedge.com.');
     } finally {
       setSubmitting(false);
     }

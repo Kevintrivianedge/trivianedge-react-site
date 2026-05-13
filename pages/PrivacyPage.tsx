@@ -72,7 +72,7 @@ const PrivacyPage: React.FC = () => {
             <h2 className="text-xl font-bold text-text mb-4">Contact</h2>
             <p className="text-muted leading-relaxed">
               For privacy requests or questions, contact us at{' '}
-              <a href="mailto:info@trivianedge.com" className="underline hover:text-cyan-400 transition-colors">info@trivianedge.com</a>.
+              <a href="mailto:kevin.v@trivianedge.com" className="underline hover:text-cyan-400 transition-colors">kevin.v@trivianedge.com</a>.
             </p>
           </div>
 

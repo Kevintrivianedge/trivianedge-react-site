@@ -1169,7 +1169,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               </div>
 
               <div className="flex flex-col sm:flex-row justify-center gap-6">
-                <a href="mailto:info@trivianedge.com" className="px-12 py-6 bg-btn-bg text-btn-text rounded-2xl font-bold text-xl hover:opacity-90 transition-all shadow-2xl shadow-cyan-500/10 flex items-center justify-center gap-2 micro-press-button">
+                <a href="mailto:kevin.v@trivianedge.com" className="px-12 py-6 bg-btn-bg text-btn-text rounded-2xl font-bold text-xl hover:opacity-90 transition-all shadow-2xl shadow-cyan-500/10 flex items-center justify-center gap-2 micro-press-button">
                   <Mail className="w-5 h-5" />
                   Email the team
                 </a>
@@ -1430,7 +1430,7 @@ export default function App() {
                     <Twitter />
                   </a>
                   <a 
-                    href="mailto:info@trivianedge.com" 
+                    href="mailto:kevin.v@trivianedge.com" 
                     aria-label="Email TrivianEdge"
                     className="p-3 glass rounded-xl hover:text-cyan-400 transition-all duration-300 border-border hover:scale-110 hover:shadow-[0_0_20px_-5px_rgba(34,211,238,0.6)] hover:border-cyan-400/30 text-text"
                   >

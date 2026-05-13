@@ -397,7 +397,7 @@ const VentureStudioPage: React.FC = () => {
       ].join('\n')
     );
 
-    return `mailto:info@trivianedge.com?subject=${subject}&body=${body}`;
+    return `mailto:kevin.v@trivianedge.com?subject=${subject}&body=${body}`;
   }, [form, readinessScore, tier.title, resolvedIndustry]);
 
   return (

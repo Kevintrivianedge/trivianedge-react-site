@@ -48,7 +48,7 @@ const ContactPage: React.FC = () => {
                 </div>
                 <div className="glass p-6 rounded-3xl border-border">
                   <p className="text-xs uppercase tracking-widest font-bold text-muted mb-2">Email</p>
-                  <a href="mailto:info@trivianedge.com" className="text-text font-semibold hover:text-cyan-500 transition-colors">info@trivianedge.com</a>
+                  <a href="mailto:kevin.v@trivianedge.com" className="text-text font-semibold hover:text-cyan-500 transition-colors">kevin.v@trivianedge.com</a>
                 </div>
               </div>
 
@@ -68,7 +68,7 @@ const ContactPage: React.FC = () => {
               <Phone className="w-5 h-5 text-cyan-500" />
               <span>Prefer to call? Use the direct line.</span>
             </a>
-            <a href="mailto:info@trivianedge.com" className="glass p-6 rounded-3xl border-border flex items-center gap-4 hover:border-cyan-500/30 transition-colors">
+            <a href="mailto:kevin.v@trivianedge.com" className="glass p-6 rounded-3xl border-border flex items-center gap-4 hover:border-cyan-500/30 transition-colors">
               <Mail className="w-5 h-5 text-cyan-500" />
               <span>Prefer email? Send the team a message.</span>
             </a>

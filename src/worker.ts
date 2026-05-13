@@ -38,10 +38,13 @@ function makeCorsHeaders(requestOrigin: string | null): Record<string, string> {
 // ---------------------------------------------------------------------------
 const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
 const RATE_LIMIT_MAX = 20;           // max requests per IP per window
+const RATE_LIMIT_KV_PREFIX = 'rate_limit';
+const RATE_LIMIT_KV_TTL_SECONDS = Math.ceil(RATE_LIMIT_WINDOW_MS / 1000) + 60;
 
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const textEncoder = new TextEncoder();
 
-function isRateLimited(ip: string): boolean {
+function isRateLimitedInMemory(ip: string): boolean {
   const now = Date.now();
   const entry = rateLimitMap.get(ip);
   if (!entry || now >= entry.resetAt) {
@@ -50,6 +53,52 @@ function isRateLimited(ip: string): boolean {
   }
   entry.count += 1;
   return entry.count > RATE_LIMIT_MAX;
+}
+
+function anonymizeIp(ip: string): string {
+  if (!ip || ip === 'unknown') return 'unknown';
+  if (ip.includes('.')) {
+    const parts = ip.split('.');
+    if (parts.length === 4) {
+      return `${parts[0]}.${parts[1]}.${parts[2]}.0`;
+    }
+  }
+  if (ip.includes(':')) {
+    const parts = ip.split(':').filter(Boolean);
+    if (parts.length > 0) {
+      return `${parts.slice(0, 4).join(':')}::`;
+    }
+  }
+  return 'unknown';
+}
+
+async function hashIdentifier(value: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', textEncoder.encode(value));
+  return toHex(digest).slice(0, 32);
+}
+
+async function isRateLimited(ip: string, env: Env): Promise<boolean> {
+  if (env.ANALYTICS_KV) {
+    const bucket = Math.floor(Date.now() / RATE_LIMIT_WINDOW_MS);
+    const hashedIp = await hashIdentifier(ip || 'unknown');
+    const key = `${RATE_LIMIT_KV_PREFIX}:${bucket}:${hashedIp}`;
+    const currentRaw = await env.ANALYTICS_KV.get(key);
+    const current = currentRaw ? Number.parseInt(currentRaw, 10) : 0;
+    const next = Number.isFinite(current) ? current + 1 : 1;
+    await env.ANALYTICS_KV.put(key, String(next), { expirationTtl: RATE_LIMIT_KV_TTL_SECONDS });
+    return next > RATE_LIMIT_MAX;
+  }
+
+  return isRateLimitedInMemory(ip);
+}
+
+async function parseJsonBody<T>(request: Request): Promise<{ ok: true; data: T } | { ok: false; error: string }> {
+  try {
+    const data = await request.json<T>();
+    return { ok: true, data };
+  } catch {
+    return { ok: false, error: 'Invalid JSON payload.' };
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -144,13 +193,28 @@ function toHex(buffer: ArrayBuffer): string {
 async function signWebhookPayload(secret: string, timestamp: string, payload: string): Promise<string> {
   const key = await crypto.subtle.importKey(
     'raw',
-    new TextEncoder().encode(secret),
+    textEncoder.encode(secret),
     { name: 'HMAC', hash: 'SHA-256' },
     false,
     ['sign'],
   );
-  const signed = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`${timestamp}.${payload}`));
+  const signed = await crypto.subtle.sign('HMAC', key, textEncoder.encode(`${timestamp}.${payload}`));
   return toHex(signed);
+}
+
+async function timingSafeEqual(a: string, b: string): Promise<boolean> {
+  if (!a || !b) return false;
+  const hashA = new Uint8Array(await crypto.subtle.digest('SHA-256', textEncoder.encode(a)));
+  const hashB = new Uint8Array(await crypto.subtle.digest('SHA-256', textEncoder.encode(b)));
+
+  let diff = hashA.length ^ hashB.length;
+  const length = Math.max(hashA.length, hashB.length);
+  for (let i = 0; i < length; i += 1) {
+    const left = i < hashA.length ? hashA[i] : 0;
+    const right = i < hashB.length ? hashB[i] : 0;
+    diff |= left ^ right;
+  }
+  return diff === 0;
 }
 
 function getBackoffMs(attempt: number): number {
@@ -277,12 +341,14 @@ async function processDueCrmRetries(env: Env, batchSize = 5): Promise<{ processe
   return { processed: due.length, success, failed };
 }
 
-function isAdminAuthorized(request: Request, env: Env): boolean {
+async function isAdminAuthorized(request: Request, env: Env): Promise<boolean> {
   if (!env.ADMIN_API_TOKEN) return false;
   const headerToken = request.headers.get('X-Admin-Token') ?? '';
   const bearer = request.headers.get('Authorization') ?? '';
   const bearerToken = bearer.startsWith('Bearer ') ? bearer.slice(7).trim() : '';
-  return headerToken === env.ADMIN_API_TOKEN || bearerToken === env.ADMIN_API_TOKEN;
+  const headerAuthorized = await timingSafeEqual(headerToken, env.ADMIN_API_TOKEN);
+  if (headerAuthorized) return true;
+  return timingSafeEqual(bearerToken, env.ADMIN_API_TOKEN);
 }
 
 async function getKvJsonRecords<T>(env: Env, prefix: string, max = 2000): Promise<T[]> {
@@ -447,7 +513,7 @@ export default {
         request.headers.get('CF-Connecting-IP') ??
         request.headers.get('X-Forwarded-For') ??
         'unknown';
-      if (isRateLimited(ip)) {
+      if (await isRateLimited(ip, env)) {
         return new Response(
           JSON.stringify({ error: 'Too many requests. Please wait a moment and try again.' }),
           { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
@@ -504,12 +570,21 @@ export default {
 } satisfies ExportedHandler<Env>;
 
 async function handleChat(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
-  const body = await request.json<{
+  const parsed = await parseJsonBody<{
     message: string;
     history?: GeminiContent[];
     systemInstruction?: string;
     model?: string;
-  }>();
+  }>(request);
+
+  if (!parsed.ok) {
+    return new Response(JSON.stringify({ error: parsed.error }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const body = parsed.data;
 
   const message = typeof body.message === 'string' ? body.message : '';
   const history = Array.isArray(body.history) ? body.history : [];
@@ -560,7 +635,15 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
 }
 
 async function handleGenerate(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
-  const body = await request.json<{ prompt: string; model?: string }>();
+  const parsed = await parseJsonBody<{ prompt: string; model?: string }>(request);
+  if (!parsed.ok) {
+    return new Response(JSON.stringify({ error: parsed.error }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const body = parsed.data;
 
   const prompt = typeof body.prompt === 'string' ? body.prompt : '';
   const model =
@@ -596,7 +679,15 @@ async function handleGenerate(request: Request, env: Env, corsHeaders: Record<st
   });
 }
 async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
-  const body = await request.json<{ company?: string; email?: string; size?: string }>();
+  const parsed = await parseJsonBody<{ company?: string; email?: string; size?: string }>(request);
+  if (!parsed.ok) {
+    return new Response(JSON.stringify({ success: false, error: parsed.error }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const body = parsed.data;
 
   const company = typeof body.company === 'string' ? body.company.trim() : '';
   const email = typeof body.email === 'string' ? body.email.trim() : '';
@@ -632,7 +723,7 @@ async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record
       },
       body: JSON.stringify({
         from: 'Trivian Aria <aria@trivianedge.com>',
-        to: ['info@trivianedge.com'],
+        to: ['kevin.v@trivianedge.com'],
         subject: `New Early Access Request | ${safeCompany}`,
         html: `
           <h2>New Early Access Request</h2>
@@ -662,14 +753,22 @@ async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record
 }
 
 async function handleInquiry(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
-  const body = await request.json<{
+  const parsed = await parseJsonBody<{
     name?: string;
     company?: string;
     email?: string;
     need?: string;
     timeline?: string;
     message?: string;
-  }>();
+  }>(request);
+  if (!parsed.ok) {
+    return new Response(JSON.stringify({ success: false, error: parsed.error }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const body = parsed.data;
 
   const name = typeof body.name === 'string' ? body.name.trim() : '';
   const company = typeof body.company === 'string' ? body.company.trim() : '';
@@ -708,7 +807,7 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
       },
       body: JSON.stringify({
         from: 'TrivianEdge <inquiry@trivianedge.com>',
-        to: ['info@trivianedge.com'],
+        to: ['kevin.v@trivianedge.com'],
         subject: `New inquiry | ${safeCompany}`,
         html: `
           <h2>New inquiry request</h2>
@@ -741,7 +840,15 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
 }
 
 async function handleAnalyticsEvent(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
-  const body = await request.json<AnalyticsEventBody>();
+  const parsed = await parseJsonBody<AnalyticsEventBody>(request);
+  if (!parsed.ok) {
+    return new Response(JSON.stringify({ success: false, error: parsed.error }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const body = parsed.data;
   const event = typeof body.event === 'string' ? body.event.trim() : '';
   const payload = body.payload && typeof body.payload === 'object' ? body.payload : {};
   const sessionId = typeof body.sessionId === 'string' ? body.sessionId : 'unknown';
@@ -753,11 +860,12 @@ async function handleAnalyticsEvent(request: Request, env: Env, corsHeaders: Rec
     });
   }
 
+  const requestIp = request.headers.get('CF-Connecting-IP') ?? 'unknown';
   const record = {
     event,
     payload,
     sessionId,
-    ip: request.headers.get('CF-Connecting-IP') ?? 'unknown',
+    ip: anonymizeIp(requestIp),
     ua: request.headers.get('User-Agent') ?? 'unknown',
     ts: new Date().toISOString(),
   };
@@ -771,7 +879,15 @@ async function handleAnalyticsEvent(request: Request, env: Env, corsHeaders: Rec
 }
 
 async function handleVentureSubmit(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
-  const body = await request.json<VentureSubmissionBody>();
+  const parsed = await parseJsonBody<VentureSubmissionBody>(request);
+  if (!parsed.ok) {
+    return new Response(JSON.stringify({ success: false, error: parsed.error }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const body = parsed.data;
   const form = body.form && typeof body.form === 'object' ? body.form : {};
   const score = typeof body.score === 'number' ? body.score : 0;
   const tier = typeof body.tier === 'string' ? body.tier : 'Unknown';
@@ -796,6 +912,7 @@ async function handleVentureSubmit(request: Request, env: Env, corsHeaders: Reco
     });
   }
 
+  const requestIp = request.headers.get('CF-Connecting-IP') ?? 'unknown';
   const booking = buildBookingLinks(name, email, locale, timezone);
   const qualified = score >= 82;
   const submissionRecord = {
@@ -809,7 +926,7 @@ async function handleVentureSubmit(request: Request, env: Env, corsHeaders: Reco
     timezone,
     form,
     booking,
-    ip: request.headers.get('CF-Connecting-IP') ?? 'unknown',
+    ip: anonymizeIp(requestIp),
     ts: new Date().toISOString(),
   };
 
@@ -870,7 +987,7 @@ async function handleVentureSubmit(request: Request, env: Env, corsHeaders: Reco
 }
 
 async function handleAdminVentureStats(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
-  if (!isAdminAuthorized(request, env)) {
+  if (!(await isAdminAuthorized(request, env))) {
     return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
       status: 401,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
