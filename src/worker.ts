@@ -172,6 +172,79 @@ type CrmRetryRecord = {
   lastError?: string;
 };
 
+async function sendVentureSubmissionEmail(env: Env, payload: {
+  name: string;
+  email: string;
+  company: string;
+  score: number;
+  tier: string;
+  qualified: boolean;
+  locale: string;
+  timezone: string;
+  form: Record<string, unknown>;
+  booking: {
+    primaryProvider: string;
+    primaryUrl: string;
+    fallbackProvider: string;
+    fallbackUrl: string;
+  };
+}): Promise<{ attempted: boolean; success: boolean; status?: number; error?: string }> {
+  if (!env.RESEND_API_KEY) {
+    return { attempted: false, success: false, error: 'RESEND_API_KEY not configured' };
+  }
+
+  const safeName = escapeHtml(payload.name);
+  const safeEmail = escapeHtml(payload.email);
+  const safeCompany = escapeHtml(payload.company);
+  const safeTier = escapeHtml(payload.tier);
+  const safeLocale = escapeHtml(payload.locale);
+  const safeTimezone = escapeHtml(payload.timezone);
+  const safeFormJson = escapeHtml(JSON.stringify(payload.form, null, 2));
+  const safePrimaryUrl = escapeHtml(payload.booking.primaryUrl);
+  const safeFallbackUrl = escapeHtml(payload.booking.fallbackUrl);
+
+  const resendRes = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+    },
+    body: JSON.stringify({
+      from: 'TrivianEdge Venture Studio <venture@trivianedge.com>',
+      to: ['kevin.v@trivianedge.com'],
+      subject: `New Venture Studio Submission | ${safeCompany}`,
+      html: `
+        <h2>New Venture Studio Submission</h2>
+        <table cellpadding="8" style="border-collapse:collapse">
+          <tr><td><strong>Founder</strong></td><td>${safeName}</td></tr>
+          <tr><td><strong>Email</strong></td><td>${safeEmail}</td></tr>
+          <tr><td><strong>Company</strong></td><td>${safeCompany}</td></tr>
+          <tr><td><strong>Score</strong></td><td>${payload.score}</td></tr>
+          <tr><td><strong>Tier</strong></td><td>${safeTier}</td></tr>
+          <tr><td><strong>Qualified</strong></td><td>${payload.qualified ? 'Yes' : 'No'}</td></tr>
+          <tr><td><strong>Locale</strong></td><td>${safeLocale}</td></tr>
+          <tr><td><strong>Timezone</strong></td><td>${safeTimezone}</td></tr>
+          <tr><td><strong>Primary Booking</strong></td><td><a href="${safePrimaryUrl}">${safePrimaryUrl}</a></td></tr>
+          <tr><td><strong>Fallback Booking</strong></td><td><a href="${safeFallbackUrl}">${safeFallbackUrl}</a></td></tr>
+        </table>
+        <h3>Raw Form Payload</h3>
+        <pre style="white-space:pre-wrap;font-family:ui-monospace,Menlo,Monaco,Consolas,monospace">${safeFormJson}</pre>
+      `,
+    }),
+  });
+
+  if (!resendRes.ok) {
+    return {
+      attempted: true,
+      success: false,
+      status: resendRes.status,
+      error: await resendRes.text(),
+    };
+  }
+
+  return { attempted: true, success: true, status: resendRes.status };
+}
+
 async function persistEvent(env: Env, keyPrefix: string, payload: Record<string, unknown>): Promise<void> {
   if (!env.ANALYTICS_KV) return;
   const key = `${keyPrefix}:${Date.now()}:${crypto.randomUUID()}`;
@@ -933,6 +1006,28 @@ async function handleVentureSubmit(request: Request, env: Env, corsHeaders: Reco
   await persistEvent(env, 'venture_submission', submissionRecord);
 
   let crm: { attempted: boolean; success: boolean; status?: number } = { attempted: false, success: false };
+  const notification = await sendVentureSubmissionEmail(env, {
+    name,
+    email,
+    company,
+    score,
+    tier,
+    qualified,
+    locale,
+    timezone,
+    form,
+    booking,
+  });
+
+  await persistEvent(env, 'venture_email_notification', {
+    attempted: notification.attempted,
+    success: notification.success,
+    status: notification.status ?? 0,
+    leadEmail: email,
+    company,
+    ts: new Date().toISOString(),
+  });
+
   if (qualified && env.CRM_WEBHOOK_URL) {
     const crmPayload: CrmWebhookPayload = {
       pipeline: 'venture_studio',
@@ -978,6 +1073,7 @@ async function handleVentureSubmit(request: Request, env: Env, corsHeaders: Reco
       qualified,
       booking,
       crm,
+      notification,
     }),
     {
       status: 200,

@@ -210,6 +210,7 @@ const VentureStudioPage: React.FC = () => {
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
   const [submitted, setSubmitted] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [stepError, setStepError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [bookingLinks, setBookingLinks] = useState<{
@@ -219,6 +220,7 @@ const VentureStudioPage: React.FC = () => {
     fallbackUrl: string;
   } | null>(null);
   const [crmStatus, setCrmStatus] = useState<{ attempted: boolean; success: boolean; status?: number } | null>(null);
+  const [notificationStatus, setNotificationStatus] = useState<{ attempted: boolean; success: boolean; status?: number } | null>(null);
   const shouldReduceMotion = useReducedMotion();
   const submittedRef = useRef(false);
   const stepRef = useRef(0);
@@ -247,6 +249,7 @@ const VentureStudioPage: React.FC = () => {
   }, [form.industry, form.industryOther]);
 
   const onChange = (key: keyof FormState, value: string) => {
+    if (stepError) setStepError(null);
     setForm(prev => ({ ...prev, [key]: value }));
   };
 
@@ -284,6 +287,7 @@ const VentureStudioPage: React.FC = () => {
           fallbackUrl: string;
         };
         crm?: { attempted: boolean; success: boolean; status?: number };
+        notification?: { attempted: boolean; success: boolean; status?: number };
       };
 
       if (!response.ok || !result.success) {
@@ -297,6 +301,7 @@ const VentureStudioPage: React.FC = () => {
 
       setBookingLinks(result.booking ?? null);
       setCrmStatus(result.crm ?? null);
+      setNotificationStatus(result.notification ?? null);
       setSubmitted(true);
       submittedRef.current = true;
       setCurrentStep(STEPS.length);
@@ -331,7 +336,12 @@ const VentureStudioPage: React.FC = () => {
   ];
 
   const goNextStep = () => {
-    if (!stepValidations[currentStep]()) return;
+    if (!stepValidations[currentStep]()) {
+      setStepError('Please complete all required fields in this step to continue.');
+      return;
+    }
+
+    setStepError(null);
     const nextStep = Math.min(currentStep + 1, STEPS.length - 1);
     trackAnalytics('venture_step_completed', {
       step_id: STEPS[currentStep].id,
@@ -341,6 +351,7 @@ const VentureStudioPage: React.FC = () => {
   };
 
   const goPrevStep = () => {
+    setStepError(null);
     const nextStep = Math.max(currentStep - 1, 0);
     setCurrentStep(nextStep);
   };
@@ -443,6 +454,11 @@ const VentureStudioPage: React.FC = () => {
                   <p className="text-[11px] uppercase tracking-widest font-bold text-cyan-400 mb-1">{STEP_GUIDANCE[currentStep].title}</p>
                   <p className="text-xs text-muted">{STEP_GUIDANCE[currentStep].hint}</p>
                 </div>
+                {stepError && (
+                  <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3">
+                    <p className="text-xs font-semibold text-amber-300">{stepError}</p>
+                  </div>
+                )}
               </div>
             )}
 
@@ -593,24 +609,24 @@ const VentureStudioPage: React.FC = () => {
             )}
 
             {!submitted && (
-              <div className="flex items-center justify-between gap-3 pt-2">
+              <div className="grid grid-cols-2 gap-3 pt-2 md:flex md:items-center md:justify-between">
                 <button
                   type="button"
                   onClick={goPrevStep}
                   disabled={currentStep === 0}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-border text-text font-semibold disabled:opacity-40"
+                  className="inline-flex w-full md:w-auto items-center justify-center gap-2 px-5 py-4 rounded-2xl border border-border text-text font-semibold disabled:opacity-40"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Back
                 </button>
 
                 {currentStep < STEPS.length - 1 ? (
-                  <button type="button" onClick={goNextStep} className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl premium-button micro-press-button font-bold">
+                  <button type="button" onClick={goNextStep} className="inline-flex w-full md:w-auto items-center justify-center gap-2 px-7 py-4 rounded-2xl premium-button micro-press-button font-bold">
                     Continue
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 ) : (
-                  <button type="submit" disabled={submitting} className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl premium-button micro-press-button font-bold disabled:opacity-60">
+                  <button type="submit" disabled={submitting} className="inline-flex w-full md:w-auto items-center justify-center gap-2 px-7 py-4 rounded-2xl premium-button micro-press-button font-bold disabled:opacity-60">
                     Submit Qualification
                     <ArrowRight className="w-4 h-4" />
                   </button>
@@ -651,6 +667,18 @@ const VentureStudioPage: React.FC = () => {
               <p className="text-xs text-muted">Timeline and commitment increase priority.</p>
             </div>
 
+            <div className="rounded-xl border border-violet-500/20 bg-violet-500/5 p-4 mb-6 space-y-3">
+              <p className="text-xs uppercase tracking-widest font-bold text-violet-300">Launch Traction Stack</p>
+              <div className="flex flex-wrap gap-2">
+                {['AWS', 'Azure', 'Google Cloud', 'Cloudflare', 'Stripe'].map((platform) => (
+                  <span key={platform} className="px-2.5 py-1 rounded-full bg-surface border border-border text-[11px] font-semibold text-text">
+                    {platform}
+                  </span>
+                ))}
+              </div>
+              <p className="text-xs text-muted">We design MVPs to be cloud-ready from day one so launch and scale are faster.</p>
+            </div>
+
             <ul className="space-y-3 text-sm text-muted mb-6">
               <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-cyan-400" /> Fast founder response</li>
               <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-cyan-400" /> Clear MVP scope</li>
@@ -684,6 +712,11 @@ const VentureStudioPage: React.FC = () => {
                 {crmStatus?.attempted && (
                   <p className="text-xs text-muted text-center">
                     CRM handoff: {crmStatus.success ? 'Lead synced successfully.' : `Webhook returned status ${crmStatus.status ?? 'unknown'}.`}
+                  </p>
+                )}
+                {notificationStatus && (
+                  <p className="text-xs text-muted text-center">
+                    Email delivery: {notificationStatus.success ? 'Sent to kevin.v@trivianedge.com' : `Delivery issue (status ${notificationStatus.status ?? 'unknown'})`}
                   </p>
                 )}
               </div>
