@@ -41,6 +41,25 @@ const STEPS = [
   { id: 'review', label: 'Review + Submit' },
 ] as const;
 
+const STEP_GUIDANCE = [
+  {
+    title: 'Basic founder details',
+    hint: 'Takes about 30 seconds. This helps us route your submission quickly.',
+  },
+  {
+    title: 'Problem and first users',
+    hint: 'Keep this practical. One clear problem and one clear user segment is enough.',
+  },
+  {
+    title: 'Execution readiness',
+    hint: 'Answer based on your current reality, not your target state.',
+  },
+  {
+    title: 'Quick final check',
+    hint: 'Confirm details and submit. We handle the follow-up workflow from here.',
+  },
+] as const;
+
 const INDUSTRY_WEIGHT: Record<string, number> = {
   fintech: 20,
   healthtech: 18,
@@ -391,6 +410,10 @@ const VentureStudioPage: React.FC = () => {
                   ))}
                 </div>
                 <p className="text-xs text-muted">{STEPS[currentStep].label}</p>
+                <div className="rounded-xl border border-border/70 bg-surface/60 px-4 py-3">
+                  <p className="text-[11px] uppercase tracking-widest font-bold text-cyan-400 mb-1">{STEP_GUIDANCE[currentStep].title}</p>
+                  <p className="text-xs text-muted">{STEP_GUIDANCE[currentStep].hint}</p>
+                </div>
               </div>
             )}
 
@@ -399,18 +422,18 @@ const VentureStudioPage: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <label className="space-y-2">
                     <span className="text-xs uppercase tracking-widest font-bold text-muted">Full Name</span>
-                    <input required value={form.fullName} onChange={(e) => onChange('fullName', e.target.value)} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text" />
+                    <input required placeholder="Jane Founder" value={form.fullName} onChange={(e) => onChange('fullName', e.target.value)} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text" />
                   </label>
                   <label className="space-y-2">
                     <span className="text-xs uppercase tracking-widest font-bold text-muted">Email</span>
-                    <input type="email" required value={form.email} onChange={(e) => onChange('email', e.target.value)} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text" />
+                    <input type="email" required placeholder="jane@company.com" value={form.email} onChange={(e) => onChange('email', e.target.value)} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text" />
                   </label>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <label className="space-y-2 block">
                     <span className="text-xs uppercase tracking-widest font-bold text-muted">Company</span>
-                    <input required value={form.company} onChange={(e) => onChange('company', e.target.value)} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text" />
+                    <input required placeholder="Acme Labs" value={form.company} onChange={(e) => onChange('company', e.target.value)} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text" />
                   </label>
                   <label className="space-y-2">
                     <span className="text-xs uppercase tracking-widest font-bold text-muted">Industry</span>
@@ -433,18 +456,18 @@ const VentureStudioPage: React.FC = () => {
               <>
                 <label className="space-y-2 block">
                   <span className="text-xs uppercase tracking-widest font-bold text-muted">Idea Summary</span>
-                  <textarea required value={form.ideaSummary} onChange={(e) => onChange('ideaSummary', e.target.value)} rows={3} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text" />
+                  <textarea required placeholder="AI co-pilot for field service reporting." value={form.ideaSummary} onChange={(e) => onChange('ideaSummary', e.target.value)} rows={3} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text" />
                 </label>
 
                 <label className="space-y-2 block">
                   <span className="text-xs uppercase tracking-widest font-bold text-muted">What problem are you solving?</span>
-                  <textarea required value={form.problem} onChange={(e) => onChange('problem', e.target.value)} rows={3} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text" />
+                  <textarea required placeholder="Teams lose hours writing manual reports and miss critical updates." value={form.problem} onChange={(e) => onChange('problem', e.target.value)} rows={3} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text" />
                 </label>
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <label className="space-y-2 block">
                     <span className="text-xs uppercase tracking-widest font-bold text-muted">Who are the first users?</span>
-                    <input required value={form.users} onChange={(e) => onChange('users', e.target.value)} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text" />
+                    <input required placeholder="Ops managers at 50 to 500 person service companies" value={form.users} onChange={(e) => onChange('users', e.target.value)} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-text" />
                   </label>
                   <label className="space-y-2">
                     <span className="text-xs uppercase tracking-widest font-bold text-muted">Business Model</span>
@@ -521,10 +544,9 @@ const VentureStudioPage: React.FC = () => {
               <div className="rounded-2xl border border-border bg-surface p-5 space-y-3">
                 <p className="text-xs uppercase tracking-widest font-bold text-muted">Final Review</p>
                 <p className="text-sm text-muted"><span className="font-semibold text-text">Founder:</span> {form.fullName} ({form.email})</p>
-                <p className="text-sm text-muted"><span className="font-semibold text-text">Company:</span> {form.company}</p>
-                <p className="text-sm text-muted"><span className="font-semibold text-text">Industry:</span> {form.industry}</p>
+                <p className="text-sm text-muted"><span className="font-semibold text-text">Company:</span> {form.company} • {form.industry}</p>
                 <p className="text-sm text-muted"><span className="font-semibold text-text">Idea:</span> {form.ideaSummary}</p>
-                <p className="text-sm text-muted"><span className="font-semibold text-text">Readiness:</span> {form.readinessLevel}</p>
+                <p className="text-sm text-muted"><span className="font-semibold text-text">Readiness:</span> {form.readinessLevel} • {form.timeline}</p>
               </div>
             )}
 
@@ -582,12 +604,9 @@ const VentureStudioPage: React.FC = () => {
 
             <div className="rounded-xl border border-border p-4 mb-6 space-y-2">
               <p className="text-xs uppercase tracking-widest font-bold text-muted">How We Score Fit</p>
-              <p className="text-xs text-muted">Industry Fit: 20</p>
-              <p className="text-xs text-muted">Readiness Level: 25</p>
-              <p className="text-xs text-muted">Stage + Traction: 20</p>
-              <p className="text-xs text-muted">Timeline Urgency: 10</p>
-              <p className="text-xs text-muted">AI Scope Strength: 15</p>
-              <p className="text-xs text-muted">Founder Commitment: 10</p>
+              <p className="text-xs text-muted">Readiness + traction carry the highest weight.</p>
+              <p className="text-xs text-muted">Industry fit and AI scope are secondary multipliers.</p>
+              <p className="text-xs text-muted">Timeline and commitment increase priority.</p>
             </div>
 
             <ul className="space-y-3 text-sm text-muted mb-6">
