@@ -36,45 +36,59 @@ const TermsPage: React.FC = () => {
           <div>
             <h2 className="text-xl font-bold text-text mb-4">Overview</h2>
             <p className="text-muted leading-relaxed">
-              These terms govern the use of TrivianEdge Global's website, services, and the Trivian Aria platform. By accessing our website or using our services, you agree to be bound by these terms.
+              These terms govern use of the TrivianEdge website and related service interactions. By accessing this site or engaging our services, you agree to these terms alongside any signed proposal, statement of work, or master agreement.
             </p>
           </div>
 
           <div>
             <h2 className="text-xl font-bold text-text mb-4">Use of Services</h2>
             <p className="text-muted leading-relaxed">
-              TrivianEdge provides global talent solutions, managed IT services, AI & business process automation, remote operations consulting, and finance & back-office managed services. Specific service agreements and deliverables are governed by individual statements of work agreed upon between TrivianEdge and each client.
+              TrivianEdge provides global talent, outsourcing, and operational support services. Scope, timelines, pricing, and delivery responsibilities are defined in client-specific agreements. Website content is informational and does not by itself create a service commitment.
             </p>
           </div>
 
           <div>
             <h2 className="text-xl font-bold text-text mb-4">Trivian Aria Early Access</h2>
             <p className="text-muted leading-relaxed">
-              The Trivian Aria platform is currently in Phase 1 development. Early access is provided on a best-effort basis. Features, availability, and terms of the free tier are subject to change as the product develops. TrivianEdge reserves the right to modify, suspend, or discontinue any aspect of the service with reasonable notice.
+              Where Trivian Aria early access is offered, it is provided on a best-effort basis. Features and availability may change as the product evolves. We may modify, pause, or discontinue early-access features with reasonable notice.
             </p>
           </div>
 
           <div>
             <h2 className="text-xl font-bold text-text mb-4">Intellectual Property</h2>
             <p className="text-muted leading-relaxed">
-              All content on this website including text, graphics, logos, and software is the property of TrivianEdge Global and is protected by applicable intellectual property laws. Unauthorized use is prohibited.
+              Website content, brand assets, documents, and software elements are owned by TrivianEdge or its licensors and protected by applicable intellectual property laws. You may not copy, republish, or commercially reuse content without prior written permission.
             </p>
           </div>
 
           <div>
             <h2 className="text-xl font-bold text-text mb-4">Limitation of Liability</h2>
             <p className="text-muted leading-relaxed">
-              TrivianEdge Global shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services. Our total liability shall not exceed the fees paid by you in the three months preceding the claim.
+              To the extent permitted by law, TrivianEdge is not liable for indirect, incidental, special, or consequential damages arising from website use. Service liability terms for active clients are governed by signed commercial agreements.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold text-text mb-4">Client Responsibilities</h2>
+            <p className="text-muted leading-relaxed">
+              Clients are responsible for providing accurate business and project information, timely approvals, and authorized points of contact for delivery decisions. Delays in required client inputs may affect delivery timelines.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold text-text mb-4">Governing Terms and Updates</h2>
+            <p className="text-muted leading-relaxed">
+              We may update these terms from time to time to reflect service and legal changes. Updated terms apply from the date posted on this page unless a signed agreement states otherwise.
             </p>
           </div>
 
           <div className="p-6 rounded-2xl bg-violet-500/5 border border-violet-500/20">
             <p className="text-violet-400 text-sm font-mono">
-              Full terms in development. Contact{' '}
+              For legal enquiries, contact{' '}
               <a href="mailto:info@trivianedge.com" className="underline hover:text-white transition-colors">
                 info@trivianedge.com
               </a>{' '}
-              for legal enquiries.
+              and reference "Terms of Engagement" in the subject line.
             </p>
           </div>
         </div>

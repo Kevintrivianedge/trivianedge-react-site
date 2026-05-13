@@ -36,38 +36,49 @@ const PrivacyPage: React.FC = () => {
           <div>
             <h2 className="text-xl font-bold text-text mb-4">Overview</h2>
             <p className="text-muted leading-relaxed">
-              This privacy policy describes how TrivianEdge Global collects, uses, and protects information provided by users of our website and services. We are committed to ensuring that your privacy is protected in compliance with applicable data protection laws including PIPEDA (Canada) and GDPR (where applicable).
+              This policy explains what information TrivianEdge collects, how we use it, and the controls we apply to protect it. We keep this policy practical and easy to read. Our handling approach is aligned with applicable privacy obligations, including PIPEDA (Canada) and GDPR principles where relevant.
             </p>
           </div>
 
           <div>
             <h2 className="text-xl font-bold text-text mb-4">Information We Collect</h2>
             <p className="text-muted leading-relaxed">
-              We may collect name, company name, email address, and related request details when you submit forms on our website. We also collect standard website analytics data including page views and general geographic location.
+              We collect information you provide directly, such as your name, company name, email address, and request details when you submit forms. We also collect basic analytics signals such as page views, device/browser context, and general region to help us improve website performance and user experience.
             </p>
           </div>
 
           <div>
             <h2 className="text-xl font-bold text-text mb-4">How We Use Your Information</h2>
             <p className="text-muted leading-relaxed">
-              Information submitted through our forms is used solely to respond to your inquiry, process your request for early access, and communicate relevant product updates. We do not sell, trade, or otherwise transfer your personally identifiable information to third parties.
+              We use submitted information to respond to inquiries, handle service requests, and share relevant follow-up communication. We do not sell your personal information. We only share data with service providers that support core operations such as website infrastructure, communications delivery, and analytics processing.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold text-text mb-4">Retention and Access</h2>
+            <p className="text-muted leading-relaxed">
+              We retain personal data only as long as needed for the purpose it was collected, or as required by law. You may request access, correction, or deletion of your information by contacting us. We will review and respond to requests within a reasonable period.
             </p>
           </div>
 
           <div>
             <h2 className="text-xl font-bold text-text mb-4">Data Security</h2>
             <p className="text-muted leading-relaxed">
-              We implement industry-standard security measures to protect your personal information. Our infrastructure is hosted on Cloudflare's global edge network with encryption in transit and at rest.
+              We apply practical technical and organizational safeguards, including encrypted transport, restricted API exposure, and monitored cloud infrastructure controls. No online system is risk-free, but we continuously improve controls to reduce operational and security risk.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold text-text mb-4">Contact</h2>
+            <p className="text-muted leading-relaxed">
+              For privacy requests or questions, contact us at{' '}
+              <a href="mailto:info@trivianedge.com" className="underline hover:text-cyan-400 transition-colors">info@trivianedge.com</a>.
             </p>
           </div>
 
           <div className="p-6 rounded-2xl bg-cyan-500/5 border border-cyan-500/20">
             <p className="text-cyan-400 text-sm font-mono">
-              Full policy in development. Contact{' '}
-              <a href="mailto:info@trivianedge.com" className="underline hover:text-white transition-colors">
-                info@trivianedge.com
-              </a>{' '}
-              for privacy enquiries.
+              This page is reviewed periodically to reflect service, legal, and operational updates.
             </p>
           </div>
         </div>

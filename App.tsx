@@ -51,6 +51,7 @@ import { getSEOTrendSignal, getTrendKeywords } from './utils/seoTrends';
 // Extracted components
 import Logo from './components/Logo';
 import Navbar from './components/Navbar';
+import GreetingBanner from './components/GreetingBanner';
 import ProcessTimeline from './components/ProcessTimeline';
 import TalentHubCard from './components/TalentHubCard';
 import ScrollToTop from './components/ScrollToTop';
