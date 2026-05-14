@@ -245,7 +245,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 1: HERO ===== */}
       <section
         aria-label="Hero"
-        className="relative min-h-[95vh] flex items-center pt-24 px-4 sm:px-6 overflow-hidden"
+        className="relative min-h-[95vh] flex items-center pt-20 sm:pt-24 px-4 sm:px-6 overflow-hidden"
       >
         {/* Background atmosphere, static radial gradients replace the GPU-expensive
             blur-[120px] filter. Visual result is identical but zero compositing cost. */}
@@ -274,7 +274,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
 
             {/* Kinetic h1 */}
-            <h1 className="display-hero text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight mb-6 leading-[1.05] text-text min-h-[2.3em] md:min-h-[1.8em]">
+            <h1 className="display-hero text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight mb-6 leading-[1.05] text-text min-h-[3.5em] sm:min-h-[2.3em] md:min-h-[1.8em]">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={phraseIndex}
@@ -305,11 +305,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               ))}
             </div>
 
-            <p className="reveal text-muted text-lg md:text-xl max-w-2xl mb-12 leading-relaxed">
+            <p className="reveal text-muted text-lg md:text-xl max-w-2xl mb-8 md:mb-12 leading-relaxed">
               If your team is wasting time on hiring, payroll, compliance, or chasing the wrong people, we take that load off your plate. You get the people, the process, and the operating layer in one place.
             </p>
 
-            <div className="reveal flex flex-col sm:flex-row items-start gap-4 mb-20">
+            <div className="reveal flex flex-col sm:flex-row items-start gap-4 mb-12 md:mb-20">
               <a
                 href="#contact"
                 onClick={e => { e.preventDefault(); scrollTo('contact'); }}
@@ -379,7 +379,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <ShieldCheck className="w-3 h-3" />
               Premium Growth Layer
             </div>
-            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
+            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
               Premium support that feels in-house,<br />
               <span className="text-holo">without the hiring red tape.</span>
             </h2>
@@ -525,7 +525,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <X className="w-3 h-3" />
               Why traditional BPO breaks
             </div>
-            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
+            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
               Old-school outsourcing just passes work around.<br />
               <span className="text-holo">We build the engine that runs it.</span>
             </h2>
@@ -613,7 +613,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <Layers className="w-3 h-3" />
               How We're Built
             </div>
-            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
+            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
               Two engines.<br />One system.
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
@@ -708,7 +708,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <ShieldCheck className="w-3 h-3" />
               The Headache We Take Away
             </div>
-            <h2 className="display-section text-4xl md:text-6xl font-bold mb-6 text-text">
+            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-text">
               We remove the admin burden<br />
               <span className="text-holo">so you stay focused on growth.</span>
             </h2>
@@ -783,7 +783,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <Zap className="w-3 h-3" />
               Simple 4-Step Process
             </div>
-            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">How We Get You Set Up</h2>
+            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">How We Get You Set Up</h2>
             <p className="text-muted text-lg max-w-xl mx-auto">
               From first conversation to your new team member's first day, the whole process takes about 30 days.
             </p>
@@ -804,7 +804,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <CheckCircle2 className="w-3 h-3" />
               Proof, not promises.
             </div>
-            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
+            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
               Real work. Real outcomes.
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
@@ -849,7 +849,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <Users2 className="w-3 h-3" />
               Non-Tech Success Stories
             </div>
-            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
+            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
               We do not only place developers.
               <br />
               <span className="text-holo">We scale operations teams too.</span>
@@ -892,7 +892,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <Layers className="w-3 h-3" />
               What We Do
             </div>
-            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
+            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
               Everything you need to grow,<br />without the growing pains.
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
@@ -901,7 +901,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </div>
 
           {/* Bento grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {SERVICES.map((service, idx) => {
               const isWide = idx === 0 || idx === 3;
               const isFull = idx === 4;
@@ -909,7 +909,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 <div
                   key={idx}
                   className={[
-                    'reveal glass p-10 rounded-[2.5rem] border-border hover:border-cyan-500/30',
+                    'reveal glass p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border-border hover:border-cyan-500/30',
                     'transition-all duration-500 group relative overflow-hidden service-card-glow micro-lift-card flex flex-col',
                     isWide ? 'md:col-span-2' : '',
                     isFull ? 'md:col-span-3' : '',
@@ -930,7 +930,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                     {service.description}
                   </p>
 
-                  <div className={`grid gap-6 pt-6 border-t border-border mt-auto ${isFull ? 'md:grid-cols-3' : isWide ? 'md:grid-cols-2' : 'grid-cols-1'}`}>
+                  <div className={`grid gap-4 md:gap-6 pt-6 border-t border-border mt-auto ${isFull ? 'md:grid-cols-3' : isWide ? 'md:grid-cols-2' : 'grid-cols-1'}`}>
                     <div>
                       <h5 className="text-[10px] font-bold uppercase tracking-widest text-muted mb-3 flex items-center gap-1.5">
                         <Layers className="w-3 h-3" /> What is included
@@ -999,7 +999,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <Cpu className="w-3 h-3" />
               Building The Future With AI
             </div>
-            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
+            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
               Explore the ventures we are building
               <br />
               <span className="text-holo">across the Trivian ecosystem.</span>
@@ -1062,7 +1062,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <Globe2 className="w-3 h-3" />
               Where Your Team Comes From
             </div>
-            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">Great people. Everywhere.</h2>
+            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">Great people. Everywhere.</h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
               We source from 6 countries selected for their talent quality, English proficiency, and timezone fit with your business. Hover any pin to explore.
             </p>
@@ -1094,7 +1094,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <Globe2 className="w-3 h-3" />
               What We Source
             </div>
-            <h2 className="display-section text-4xl md:text-6xl font-bold mb-4 text-text">
+            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
               Tech roles and non-tech roles.<br />
               <span className="text-holo">One quality bar.</span>
             </h2>
@@ -1140,13 +1140,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 9: CTA + CONTACT ===== */}
       <section id="contact" aria-label="Contact Us" className="section-shell px-4 md:px-6">
         <div className="max-w-7xl mx-auto reveal">
-          <div className="glass p-12 md:p-24 rounded-[4rem] border-border text-center relative overflow-hidden">
+          <div className="glass p-6 sm:p-10 md:p-24 rounded-[2rem] sm:rounded-[3rem] md:rounded-[4rem] border-border text-center relative overflow-hidden">
             <div className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.10) 0%, transparent 70%)' }} />
             <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%)' }} />
             <div className="relative z-10">
-              <h2 className="display-section text-4xl sm:text-5xl md:text-7xl font-bold mb-8 text-text">
+              <h2 className="display-section text-3xl sm:text-5xl md:text-7xl font-bold mb-8 text-text">
                 Tell us what you need,
-                <br />we will map the next move.
+                <br className="hidden sm:block" />we will map the next move.
               </h2>
               <p className="text-muted text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
                 Tech hiring, non-tech hiring, delivery support, market expansion. We will build a clear plan in plain English.
@@ -1169,11 +1169,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               </div>
 
               <div className="flex flex-col sm:flex-row justify-center gap-6">
-                <a href="mailto:kevin.v@trivianedge.com" className="px-12 py-6 bg-btn-bg text-btn-text rounded-2xl font-bold text-xl hover:opacity-90 transition-all shadow-2xl shadow-cyan-500/10 flex items-center justify-center gap-2 micro-press-button">
+                <a href="mailto:kevin.v@trivianedge.com" className="px-6 sm:px-12 py-4 sm:py-6 bg-btn-bg text-btn-text rounded-2xl font-bold text-base sm:text-xl hover:opacity-90 transition-all shadow-2xl shadow-cyan-500/10 flex items-center justify-center gap-2 micro-press-button">
                   <Mail className="w-5 h-5" />
                   Email the team
                 </a>
-                <a href="tel:+18882028513" className="px-12 py-6 glass text-text rounded-2xl font-bold text-xl hover:bg-surface transition-all flex items-center justify-center gap-2 micro-press-button">
+                <a href="tel:+18882028513" className="px-6 sm:px-12 py-4 sm:py-6 glass text-text rounded-2xl font-bold text-base sm:text-xl hover:bg-surface transition-all flex items-center justify-center gap-2 micro-press-button">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                   Call now
                 </a>

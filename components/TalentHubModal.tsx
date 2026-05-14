@@ -111,7 +111,7 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
       
       {/* Modal Content — full screen on mobile, max-w-5xl on larger screens */}
       <motion.div 
-        className="relative w-full h-full sm:h-auto sm:max-h-[90vh] sm:max-w-5xl overflow-y-auto bg-[#020203] border-0 sm:border sm:border-border rounded-none sm:rounded-[2.5rem] shadow-2xl shadow-cyan-900/20 scrollbar-hide"
+        className="relative w-full h-[100dvh] sm:h-auto sm:max-h-[90vh] sm:max-w-5xl overflow-y-auto bg-[#020203] border-0 sm:border sm:border-border rounded-none sm:rounded-[2.5rem] shadow-2xl shadow-cyan-900/20 scrollbar-hide"
         initial={{ scale: 0.9, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: 20 }}

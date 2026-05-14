@@ -83,7 +83,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className={`fixed top-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'glass py-4 shadow-2xl' : 'bg-transparent py-8'}`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center relative z-[101] gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex justify-between items-center relative z-[101] gap-4">
         <div className="shrink-0">
           <Logo onClick={() => { navigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} />
         </div>
@@ -111,7 +111,12 @@ const Navbar: React.FC = () => {
 
         <div className="lg:hidden flex items-center gap-4">
             <ThemeToggle />
-            <button className="p-2 text-text" onClick={() => setIsOpen(!isOpen)}>
+            <button
+              className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-text"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle navigation"
+              aria-expanded={isOpen}
+            >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
         </div>
