@@ -21,6 +21,13 @@ export default {
         border: 'var(--border)',
         'btn-bg': 'var(--btn-bg)',
         'btn-text': 'var(--btn-text)',
+        // Override built-in cyan with brand teal-green (#00C49A)
+        cyan: {
+          400: '#00C49A',
+          500: '#00A882',
+          600: '#008C6B',
+          700: '#007158',
+        },
       }
     }
   },

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion, useInView } from 'framer-motion';
 import { 
   ArrowRight, 
   ChevronRight,
@@ -62,7 +62,6 @@ import CountUpStat from './components/CountUpStat';
 // Lazy-load route-level pages and heavy below-fold interactive modules.
 // This splits each into its own chunk so the main bundle only contains
 // the above-the-fold home page content.
-const ChatSidebar             = lazy(() => import('./components/ChatSidebar'));
 const TalentHubModal          = lazy(() => import('./components/TalentHubModal').then(m => ({ default: m.TalentHubModal })));
 const BlogView                = lazy(() => import('./components/BlogView'));
 const BlogPostDetail          = lazy(() => import('./components/BlogPostDetail'));
@@ -249,7 +248,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       >
         {/* Background atmosphere, static radial gradients replace the GPU-expensive
             blur-[120px] filter. Visual result is identical but zero compositing cost. */}
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.10) 0%, transparent 70%)' }} />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(0,196,154,0.10) 0%, transparent 70%)' }} />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%)' }} />
         <div className="bg-grid absolute inset-0 opacity-20 pointer-events-none" />
         {/* Subtle human photography overlay */}
@@ -262,16 +261,26 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           decoding="async"
         />
 
-        <div className="max-w-7xl mx-auto w-full relative z-10">
+        <motion.div
+          className="max-w-7xl mx-auto w-full relative z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+        >
           {/* Personalised greeting, geo-aware and language-aware */}
           <GreetingBanner />
 
           <div className="max-w-4xl">
             {/* Trusted badge */}
-            <div className="reveal inline-flex items-center gap-3 px-4 py-2 rounded-full border border-border bg-surface backdrop-blur-md text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-8 text-text">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-border bg-surface backdrop-blur-md text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-8 text-text"
+            >
               <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
               Canada's RPO + Tech Infrastructure Partner
-            </div>
+            </motion.div>
 
             {/* Kinetic h1 */}
             <h1 className="display-hero text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight mb-6 leading-[1.05] text-text min-h-[3.5em] sm:min-h-[2.3em] md:min-h-[1.8em]">
@@ -305,11 +314,21 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               ))}
             </div>
 
-            <p className="reveal text-muted text-lg md:text-xl max-w-2xl mb-8 md:mb-12 leading-relaxed">
-              If your team is wasting time on hiring, payroll, compliance, or chasing the wrong people, we take that load off your plate. You get the people, the process, and the operating layer in one place.
-            </p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="text-muted text-lg md:text-xl max-w-2xl mb-8 md:mb-12 leading-relaxed"
+            >
+              Build offshore teams, streamline global operations, and move faster — without the overhead. TrivianEdge is Canada's leading BPO and RPO partner, deploying talent across 6 countries in 30 days. Trusted by scale-ups and enterprises across North America and Europe.
+            </motion.p>
 
-            <div className="reveal flex flex-col sm:flex-row items-start gap-4 mb-12 md:mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col sm:flex-row items-start gap-4 mb-12 md:mb-20"
+            >
               <a
                 href="#contact"
                 onClick={e => { e.preventDefault(); scrollTo('contact'); }}
@@ -326,10 +345,15 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 How it works
                 <ChevronRight className="w-5 h-5" />
               </a>
-            </div>
+            </motion.div>
 
             {/* Animated stats row */}
-            <div className="reveal pt-8 border-t border-border grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
+              className="pt-8 border-t border-border grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8"
+            >
               <CountUpStat end={6}  suffix="" label="Countries We Source From" />
               <CountUpStat end={40} suffix="%" label="Average Cost Savings" />
               <CountUpStat end={30} suffix=" days" label="Average Time to Start" />
@@ -340,13 +364,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   Operations Coverage
                 </span>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ===== ACT 2: TRUST MARQUEE ===== */}
-      <section aria-label="Trust signals" className="py-5 md:py-7 border-y border-border/70 bg-surface/60 overflow-hidden">
+      <section aria-label="Trust signals" className="py-5 md:py-7 border-y border-border/70 bg-[#f8fafc] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="relative overflow-hidden">
             <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-14 md:w-28 bg-gradient-to-r from-background to-transparent z-10" />
@@ -380,11 +404,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               Premium Growth Layer
             </div>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
-              Premium support that feels in-house,<br />
-              <span className="text-holo">without the hiring red tape.</span>
+              Offshore outsourcing, reinvented<br />
+              <span className="text-holo">for modern global operations.</span>
             </h2>
             <p className="text-muted text-lg max-w-3xl mx-auto">
-              We help you grow faster by bringing global talent to your doorstep, then we run the setup so your team stays focused on growth.
+              We bring senior-calibre offshore talent to your team in 30 days — fully compliant, directly managed, and built to scale. No body-shopping, no hidden markups, no time-zone friction.
             </p>
           </div>
 
@@ -517,7 +541,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="bpo-vs-rpo"
         aria-label="Why BPO Breaks"
-        className="section-shell px-4 md:px-6 bg-surface"
+        className="section-shell px-4 md:px-6 bg-[#f8fafc]"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -700,7 +724,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="headache-removed"
         aria-label="We Remove the Bureaucracy"
-        className="section-shell px-4 md:px-6 bg-surface"
+        className="section-shell px-4 md:px-6 bg-[#f8fafc]"
       >
         <div className="max-w-7xl mx-auto">
           <div className="max-w-4xl mx-auto text-center reveal">
@@ -775,7 +799,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="how-it-works"
         aria-label="How It Works"
-        className="section-shell px-4 md:px-6 bg-surface"
+        className="section-shell px-4 md:px-6 bg-[#f8fafc]"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -807,9 +831,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
               Real work. Real outcomes.
             </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto">
+            <p className="text-muted text-lg max-w-2xl mx-auto mb-6">
               Case studies and client feedback, presented without the usual marketing noise.
             </p>
+            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-sm font-semibold text-cyan-600">
+              <TrendingUp className="w-4 h-4" />
+              $2.1M in client savings across 14 engagements in the last 12 months
+            </div>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-6 mb-8">
@@ -841,7 +869,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="non-tech-proof"
         aria-label="Non-technical success stories"
-        className="section-shell px-4 md:px-6 bg-surface"
+        className="section-shell px-4 md:px-6 bg-[#f8fafc]"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -884,7 +912,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="solutions"
         aria-label="Our Services"
-        className="section-shell px-4 md:px-6 bg-surface"
+        className="section-shell px-4 md:px-6 bg-[#f8fafc]"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -893,10 +921,10 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               What We Do
             </div>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
-              Everything you need to grow,<br />without the growing pains.
+              BPO, RPO, AI development,<br />and IT outsourcing — under one roof.
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
-              Need talent, product delivery, or help entering a new market? We have done it before, and we can run it for you.
+              Whether you need offshore software engineers, managed back-office operations, or a Canadian-overseen IT team — we handle talent sourcing, onboarding, and delivery end-to-end.
             </p>
           </div>
 
@@ -1086,7 +1114,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="roles"
         aria-label="Roles We Place"
-        className="section-shell px-4 md:px-6 bg-surface"
+        className="section-shell px-4 md:px-6 bg-[#f8fafc]"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -1141,7 +1169,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section id="contact" aria-label="Contact Us" className="section-shell px-4 md:px-6">
         <div className="max-w-7xl mx-auto reveal">
           <div className="glass p-6 sm:p-10 md:p-24 rounded-[2rem] sm:rounded-[3rem] md:rounded-[4rem] border-border text-center relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.10) 0%, transparent 70%)' }} />
+            <div className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(0,196,154,0.10) 0%, transparent 70%)' }} />
             <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%)' }} />
             <div className="relative z-10">
               <h2 className="display-section text-3xl sm:text-5xl md:text-7xl font-bold mb-8 text-text">
@@ -1474,12 +1502,6 @@ export default function App() {
         <div className="bg-background min-h-screen text-text overflow-x-hidden selection:bg-cyan-500/30 transition-colors duration-300">
           <Preloader />
           <Navbar />
-          <ErrorBoundary fallback={null}>
-            <Suspense fallback={null}>
-              <ChatSidebar />
-            </Suspense>
-          </ErrorBoundary>
-          
           <AnimatePresence>
             {selectedHub && (
               <ErrorBoundary fallback={null}>
@@ -1524,7 +1546,7 @@ export default function App() {
                     target="_blank" 
                     rel="noopener noreferrer" 
                     aria-label="TrivianEdge on LinkedIn"
-                    className="p-3 glass rounded-xl hover:text-cyan-400 transition-all duration-300 border-border hover:scale-110 hover:shadow-[0_0_20px_-5px_rgba(34,211,238,0.6)] hover:border-cyan-400/30 text-text"
+                    className="p-3 glass rounded-xl hover:text-cyan-400 transition-all duration-300 border-border hover:scale-110 hover:shadow-[0_0_20px_-5px_rgba(0,196,154,0.6)] hover:border-cyan-400/30 text-text"
                   >
                     <Linkedin />
                   </a>
@@ -1533,14 +1555,14 @@ export default function App() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="TrivianEdge on X (Twitter)"
-                    className="p-3 glass rounded-xl hover:text-cyan-400 transition-all duration-300 border-border hover:scale-110 hover:shadow-[0_0_20px_-5px_rgba(34,211,238,0.6)] hover:border-cyan-400/30 text-text"
+                    className="p-3 glass rounded-xl hover:text-cyan-400 transition-all duration-300 border-border hover:scale-110 hover:shadow-[0_0_20px_-5px_rgba(0,196,154,0.6)] hover:border-cyan-400/30 text-text"
                   >
                     <Twitter />
                   </a>
                   <a 
                     href="mailto:kevin.v@trivianedge.com" 
                     aria-label="Email TrivianEdge"
-                    className="p-3 glass rounded-xl hover:text-cyan-400 transition-all duration-300 border-border hover:scale-110 hover:shadow-[0_0_20px_-5px_rgba(34,211,238,0.6)] hover:border-cyan-400/30 text-text"
+                    className="p-3 glass rounded-xl hover:text-cyan-400 transition-all duration-300 border-border hover:scale-110 hover:shadow-[0_0_20px_-5px_rgba(0,196,154,0.6)] hover:border-cyan-400/30 text-text"
                   >
                     <Mail />
                   </a>
