@@ -18,7 +18,7 @@ const FAQS = [
   {
     question: 'What is RPO?',
     answer:
-      'Recruitment Process Outsourcing (RPO) is when TrivianEdge manages your entire hiring function as an embedded extension of your HR team — from sourcing to onboarding.',
+      'Recruitment Process Outsourcing (RPO) is when TrivianEdge manages your entire hiring function as an embedded extension of your HR team, from sourcing to onboarding.',
   },
   {
     question: 'How is RPO different from a staffing agency?',
@@ -118,7 +118,7 @@ const RPOPage: React.FC = () => {
               Recruitment Process Outsourcing
             </p>
             <h1 className="text-4xl md:text-6xl font-bold text-text mb-6 leading-tight">
-              Recruitment Process Outsourcing (RPO) Services —{' '}
+              Recruitment Process Outsourcing (RPO) Services:{' '}
               <span className="text-cyan-400">Canada</span>
             </h1>
 

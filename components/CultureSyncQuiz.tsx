@@ -21,27 +21,27 @@ const QUESTIONS: Question[] = [
     id: 1,
     question: 'How does your team prefer to make decisions?',
     options: [
-      { label: 'Fast — bias toward action, iterate later', value: 'fast' },
-      { label: 'Structured — clear frameworks and documented outcomes', value: 'structured' },
-      { label: 'Deliberate — thorough analysis before committing', value: 'deliberate' },
+      { label: 'Fast: bias toward action, iterate later', value: 'fast' },
+      { label: 'Structured: clear frameworks and documented outcomes', value: 'structured' },
+      { label: 'Deliberate: thorough analysis before committing', value: 'deliberate' },
     ],
   },
   {
     id: 2,
     question: 'How does your team communicate day-to-day?',
     options: [
-      { label: 'Async-first — Slack, Notion, no unnecessary calls', value: 'async' },
-      { label: 'Hybrid — daily standups, async for everything else', value: 'hybrid' },
-      { label: 'Synchronous — regular video check-ins and live collaboration', value: 'sync' },
+      { label: 'Async-first: Slack, Notion, no unnecessary calls', value: 'async' },
+      { label: 'Hybrid: daily standups, async for everything else', value: 'hybrid' },
+      { label: 'Synchronous: regular video check-ins and live collaboration', value: 'sync' },
     ],
   },
   {
     id: 3,
     question: 'How much independence do you give your team?',
     options: [
-      { label: 'High — set goals and get out of the way', value: 'high' },
-      { label: 'Balanced — clear ownership with regular reviews', value: 'balanced' },
-      { label: 'Managed — close oversight with defined SLAs', value: 'managed' },
+      { label: 'High: set goals and get out of the way', value: 'high' },
+      { label: 'Balanced: clear ownership with regular reviews', value: 'balanced' },
+      { label: 'Managed: close oversight with defined SLAs', value: 'managed' },
     ],
   },
   {
@@ -58,7 +58,7 @@ const QUESTIONS: Question[] = [
 const PROFILES: Record<string, Profile> = {
   agile: {
     title: 'Agile Global Builder',
-    tagline: 'You move fast. Your team needs to keep up — across any time zone.',
+    tagline: 'You move fast. Your team needs to keep up across any time zone.',
     traits: [
       'Bias toward execution over perfection',
       'Comfortable with ambiguity and rapid iteration',

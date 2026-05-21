@@ -68,7 +68,7 @@ const ITOutsourcingPage: React.FC = () => {
               IT Outsourcing & Offshore Development
             </p>
             <h1 className="text-4xl md:text-6xl font-bold text-text mb-6 leading-tight">
-              IT Outsourcing Canada —{' '}
+              IT Outsourcing Canada:{' '}
               <span className="text-cyan-400">
                 Offshore Software Development Teams
               </span>

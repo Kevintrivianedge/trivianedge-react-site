@@ -43,17 +43,17 @@ const AriaSection: React.FC = () => {
         <div className="text-center mb-20 reveal">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono tracking-widest uppercase mb-8">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            Now in Development — Phase 1
+            Now in Development: Phase 1
           </span>
           <h2 className="text-4xl md:text-7xl font-bold mb-6 tracking-tight leading-[1.1] font-['Space_Grotesk'] text-text">
             Meet Trivian Aria.<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-500">HR on Autopilot.</span>
           </h2>
           <p className="text-muted text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-6">
-            Trivian Aria is TrivianEdge's proprietary AI-powered HRIS platform — built to eliminate the Ops-HR language gap from within. We've begun Phase 1 development and are opening early access to select companies completely free.
+            Trivian Aria is TrivianEdge's proprietary AI-powered HRIS platform, built to eliminate the Ops-HR language gap from within. We've begun Phase 1 development and are opening early access to select companies completely free.
           </p>
           <p className="text-muted text-base max-w-2xl mx-auto leading-relaxed">
-            Aria brings together AI-powered HR management, full employee lifecycle tracking, automated payroll, leave management, a Kanban recruitment pipeline, real-time analytics, and a built-in AI assistant — all in a single unified platform built on React, TypeScript, and Supabase.
+            Aria brings together AI-powered HR management, full employee lifecycle tracking, automated payroll, leave management, a Kanban recruitment pipeline, real-time analytics, and a built-in AI assistant. All in a single unified platform built on React, TypeScript, and Supabase.
           </p>
         </div>
 
@@ -93,7 +93,7 @@ const AriaSection: React.FC = () => {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-500">10 Employees.</span>
               </h3>
               <p className="text-muted text-base leading-relaxed mb-4">
-                Phase 1 is live. Companies can sign up for early access and use Trivian Aria completely free for teams of up to 10 employees — no credit card required, no strings attached.
+                Phase 1 is live. Companies can sign up for early access and use Trivian Aria completely free for teams of up to 10 employees. No credit card required, no strings attached.
               </p>
               <ul className="space-y-3">
                 {['No credit card required', 'Full Phase 1 feature set', 'Priority onboarding support', 'Free forever for ≤ 10 employees'].map((item) => (
@@ -162,7 +162,7 @@ const AriaSection: React.FC = () => {
                     disabled={submitting}
                     className="group relative overflow-hidden bg-btn-bg text-btn-text font-bold py-4 px-8 rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] mt-2 flex items-center justify-center gap-2 disabled:opacity-70 disabled:grayscale"
                   >
-                    {submitting ? 'Submitting...' : 'Request Early Access — It\'s Free'}
+                    {submitting ? 'Submitting...' : "Request Early Access, It's Free"}
                     {!submitting && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
                   </button>
                 </form>

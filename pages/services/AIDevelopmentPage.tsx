@@ -116,7 +116,7 @@ const AIDevelopmentPage: React.FC = () => {
     <>
       <SEOHead
         title="AI Development Services Canada | Machine Learning & LLM | TrivianEdge"
-        description="Build custom AI solutions with TrivianEdge's offshore AI team. Generative AI, LLM integration, ML models, AI automation — deployed in 30 days."
+        description="Build custom AI solutions with TrivianEdge's offshore AI team. Generative AI, LLM integration, ML models, AI automation, deployed in 30 days."
         schema={[
           serviceSchema(
             'AI Development Services',
@@ -148,7 +148,7 @@ const AIDevelopmentPage: React.FC = () => {
               AI Development Services
             </p>
             <h1 className="text-4xl md:text-6xl font-bold text-text mb-6 leading-tight">
-              AI Development Services —{' '}
+              AI Development Services:{' '}
               <span className="text-cyan-400">
                 Canada's Offshore AI Engineering Partner
               </span>

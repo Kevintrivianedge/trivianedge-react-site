@@ -97,7 +97,7 @@ const BPOPage: React.FC = () => {
               Business Process Outsourcing
             </p>
             <h1 className="text-4xl md:text-6xl font-bold text-text mb-6 leading-tight">
-              BPO Services Canada —{' '}
+              BPO Services Canada:{' '}
               <span className="text-cyan-400">
                 Business Process Outsourcing
               </span>

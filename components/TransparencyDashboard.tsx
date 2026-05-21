@@ -176,12 +176,12 @@ const TABS: Tab[] = [
         drawer: {
           title: 'Sprint Overview',
           lines: [
-            'Client A — Backend API (Sprint 4/6)',
-            'Client B — Mobile UI (Sprint 2/4)',
-            'Client B — Data pipeline (Sprint 1/3)',
-            'Client C — Dashboard v2 (Sprint 3/5)',
-            'Client C — DevOps infra (Sprint 2/4)',
-            'Client C — Auth service (Sprint 1/2)',
+            'Client A: Backend API (Sprint 4/6)',
+            'Client B: Mobile UI (Sprint 2/4)',
+            'Client B: Data pipeline (Sprint 1/3)',
+            'Client C: Dashboard v2 (Sprint 3/5)',
+            'Client C: DevOps infra (Sprint 2/4)',
+            'Client C: Auth service (Sprint 1/2)',
           ],
         },
       },

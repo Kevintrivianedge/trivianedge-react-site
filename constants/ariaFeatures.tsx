@@ -5,12 +5,12 @@ export const ARIA_FEATURES = [
   {
     icon: <Bot className="w-7 h-7 text-cyan-400" />,
     title: 'ARIA AI Assistant',
-    description: 'Ask anything about your workforce. Get instant insights powered by built-in AI — no third-party tools needed.',
+    description: 'Ask anything about your workforce. Get instant insights powered by built-in AI, no third-party tools needed.',
   },
   {
     icon: <Users className="w-7 h-7 text-violet-400" />,
     title: 'Employee Management',
-    description: 'Full lifecycle management from onboarding to offboarding — contracts, profiles, documents, and role history in one place.',
+    description: 'Full lifecycle management from onboarding to offboarding: contracts, profiles, documents, and role history in one place.',
   },
   {
     icon: <Calendar className="w-7 h-7 text-cyan-400" />,
@@ -20,16 +20,16 @@ export const ARIA_FEATURES = [
   {
     icon: <Search className="w-7 h-7 text-violet-400" />,
     title: 'Recruitment Pipeline',
-    description: 'Kanban-style hiring board to track every candidate through every stage — from sourcing to offer letter.',
+    description: 'Kanban-style hiring board to track every candidate through every stage, from sourcing to offer letter.',
   },
   {
     icon: <Zap className="w-7 h-7 text-cyan-400" />,
     title: 'Payroll Automation',
-    description: 'Accurate, automated payroll processing at scale — configured to your pay schedules, deductions, and compliance rules.',
+    description: 'Accurate, automated payroll processing at scale, configured to your pay schedules, deductions, and compliance rules.',
   },
   {
     icon: <BarChart4 className="w-7 h-7 text-violet-400" />,
     title: 'Reports & Analytics',
-    description: 'Real-time workforce insights and performance dashboards — headcount trends, attrition, leave utilisation, and more.',
+    description: 'Real-time workforce insights and performance dashboards: headcount trends, attrition, leave utilisation, and more.',
   },
 ];

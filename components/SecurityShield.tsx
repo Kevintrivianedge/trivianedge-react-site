@@ -133,7 +133,7 @@ const SecurityShield: React.FC = () => {
             className="p-6 rounded-2xl bg-surface border border-border"
           >
             <p className="text-[10px] font-bold uppercase tracking-widest text-muted mb-3">
-              {activeLayer.label} — what it prevents
+              {activeLayer.label}: what it prevents
             </p>
             <ul className="space-y-2">
               {activeLayer.prevents.map((item, i) => (

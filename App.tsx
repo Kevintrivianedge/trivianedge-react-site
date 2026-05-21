@@ -320,7 +320,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
               className="text-muted text-lg md:text-xl max-w-2xl mb-8 md:mb-12 leading-relaxed"
             >
-              Build offshore teams, streamline global operations, and move faster — without the overhead. TrivianEdge is Canada's leading BPO and RPO partner, deploying talent across 6 countries in 30 days. Trusted by scale-ups and enterprises across North America and Europe.
+              Build offshore teams, streamline global operations, and move faster. TrivianEdge is Canada's leading BPO and RPO partner, deploying talent across 6 countries in 30 days. Trusted by scale-ups and enterprises across North America and Europe.
             </motion.p>
 
             <motion.div
@@ -408,7 +408,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <span className="text-holo">for modern global operations.</span>
             </h2>
             <p className="text-muted text-lg max-w-3xl mx-auto">
-              We bring senior-calibre offshore talent to your team in 30 days — fully compliant, directly managed, and built to scale. No body-shopping, no hidden markups, no time-zone friction.
+              We bring senior-calibre offshore talent to your team in 30 days: fully compliant, directly managed, and built to scale. No body-shopping, no hidden markups, no time-zone friction.
             </p>
           </div>
 
@@ -921,10 +921,10 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               What We Do
             </div>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
-              BPO, RPO, AI development,<br />and IT outsourcing — under one roof.
+              BPO, RPO, AI development,<br />and IT outsourcing, under one roof.
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
-              Whether you need offshore software engineers, managed back-office operations, or a Canadian-overseen IT team — we handle talent sourcing, onboarding, and delivery end-to-end.
+              Whether you need offshore software engineers, managed back-office operations, or a Canadian-overseen IT team, we handle talent sourcing, onboarding, and delivery end-to-end.
             </p>
           </div>
 
@@ -1268,7 +1268,7 @@ function getSEOProps(pathname: string) {
   if (pathname === '/contact') {
     const url = `${SEO_CONFIG.siteUrl}/contact`;
     return {
-      title: 'Contact TrivianEdge — Start Your Global Hiring Conversation',
+      title: 'Contact TrivianEdge: Start Your Global Hiring Conversation',
       description: 'Reach out to TrivianEdge to discuss offshore talent, BPO, RPO, or AI software delivery. 30-day deployment. Up to 40% cost savings.',
       keywords: `contact TrivianEdge, hire offshore team, BPO inquiry, RPO consultation, ${trendKeywords}`,
       canonical: url,
@@ -1281,7 +1281,7 @@ function getSEOProps(pathname: string) {
   if (pathname === '/proof') {
     const url = `${SEO_CONFIG.siteUrl}/proof`;
     return {
-      title: 'Client Proof — TrivianEdge Case Studies & Results',
+      title: 'Client Proof: TrivianEdge Case Studies & Results',
       description: 'Real results from TrivianEdge clients. Case studies covering offshore software delivery, cross-timezone operations, and talent deployment.',
       keywords: `TrivianEdge case studies, offshore outsourcing results, BPO proof, client success, ${trendKeywords}`,
       canonical: url,
@@ -1294,7 +1294,7 @@ function getSEOProps(pathname: string) {
   if (pathname === '/trust') {
     const url = `${SEO_CONFIG.siteUrl}/trust`;
     return {
-      title: 'Security & Compliance — TrivianEdge Trust Centre',
+      title: 'Security & Compliance: TrivianEdge Trust Centre',
       description: 'TrivianEdge security and compliance overview. PIPEDA, GDPR, data protection, and operational transparency for global outsourcing.',
       keywords: `TrivianEdge trust, outsourcing security, BPO compliance, GDPR outsourcing, ${trendKeywords}`,
       canonical: url,
@@ -1307,7 +1307,7 @@ function getSEOProps(pathname: string) {
   if (pathname === '/venture-studio') {
     const url = `${SEO_CONFIG.siteUrl}/venture-studio`;
     return {
-      title: 'Venture Studio — Build Your MVP with TrivianEdge',
+      title: 'Venture Studio: Build Your MVP with TrivianEdge',
       description: 'Submit your idea to TrivianEdge Venture Studio. Qualified founders get a free MVP build with a dedicated offshore engineering team.',
       keywords: `venture studio, free MVP build, offshore development, startup MVP, TrivianEdge, ${trendKeywords}`,
       canonical: url,
@@ -1320,7 +1320,7 @@ function getSEOProps(pathname: string) {
   if (pathname === '/services/bpo') {
     const url = `${SEO_CONFIG.siteUrl}/services/bpo`;
     return {
-      title: 'BPO Services — TrivianEdge Business Process Outsourcing',
+      title: 'BPO Services: TrivianEdge Business Process Outsourcing',
       description: 'Managed BPO services from TrivianEdge. Offshore operations, back-office support, and process delivery across 6 global time zones.',
       keywords: `BPO services, business process outsourcing, offshore BPO, managed operations, ${trendKeywords}`,
       canonical: url,
@@ -1334,7 +1334,7 @@ function getSEOProps(pathname: string) {
   if (pathname === '/services/rpo') {
     const url = `${SEO_CONFIG.siteUrl}/services/rpo`;
     return {
-      title: 'RPO Services — TrivianEdge Recruitment Process Outsourcing',
+      title: 'RPO Services: TrivianEdge Recruitment Process Outsourcing',
       description: 'End-to-end RPO from TrivianEdge. Global talent acquisition, candidate sourcing, and managed hiring pipelines. 30-day deployment.',
       keywords: `RPO services, recruitment process outsourcing, global hiring, talent acquisition, ${trendKeywords}`,
       canonical: url,
@@ -1348,7 +1348,7 @@ function getSEOProps(pathname: string) {
   if (pathname === '/services/ai-development') {
     const url = `${SEO_CONFIG.siteUrl}/services/ai-development`;
     return {
-      title: 'AI Development Services — TrivianEdge Offshore AI Engineering',
+      title: 'AI Development Services: TrivianEdge Offshore AI Engineering',
       description: 'Offshore AI and ML development from TrivianEdge. Dedicated AI engineering teams for automation, LLM integration, and custom AI products.',
       keywords: `AI development, offshore AI engineers, machine learning outsourcing, LLM development, ${trendKeywords}`,
       canonical: url,
@@ -1362,7 +1362,7 @@ function getSEOProps(pathname: string) {
   if (pathname === '/services/it-outsourcing') {
     const url = `${SEO_CONFIG.siteUrl}/services/it-outsourcing`;
     return {
-      title: 'IT Outsourcing Services — TrivianEdge Global Tech Delivery',
+      title: 'IT Outsourcing Services: TrivianEdge Global Tech Delivery',
       description: 'Dedicated IT outsourcing from TrivianEdge. Offshore software engineers, QA, DevOps, and full-stack teams across 6 time zones.',
       keywords: `IT outsourcing, offshore software development, dedicated dev teams, tech outsourcing, ${trendKeywords}`,
       canonical: url,
