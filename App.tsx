@@ -1237,6 +1237,114 @@ function getSEOProps(pathname: string) {
       ]),
     };
   }
+  if (pathname === '/contact') {
+    const url = `${SEO_CONFIG.siteUrl}/contact`;
+    return {
+      title: 'Contact TrivianEdge — Start Your Global Hiring Conversation',
+      description: 'Reach out to TrivianEdge to discuss offshore talent, BPO, RPO, or AI software delivery. 30-day deployment. Up to 40% cost savings.',
+      keywords: `contact TrivianEdge, hire offshore team, BPO inquiry, RPO consultation, ${trendKeywords}`,
+      canonical: url,
+      structuredData: buildBreadcrumbSchema([
+        { name: 'Home', url: SEO_CONFIG.siteUrl },
+        { name: 'Contact', url },
+      ]),
+    };
+  }
+  if (pathname === '/proof') {
+    const url = `${SEO_CONFIG.siteUrl}/proof`;
+    return {
+      title: 'Client Proof — TrivianEdge Case Studies & Results',
+      description: 'Real results from TrivianEdge clients. Case studies covering offshore software delivery, cross-timezone operations, and talent deployment.',
+      keywords: `TrivianEdge case studies, offshore outsourcing results, BPO proof, client success, ${trendKeywords}`,
+      canonical: url,
+      structuredData: buildBreadcrumbSchema([
+        { name: 'Home', url: SEO_CONFIG.siteUrl },
+        { name: 'Proof', url },
+      ]),
+    };
+  }
+  if (pathname === '/trust') {
+    const url = `${SEO_CONFIG.siteUrl}/trust`;
+    return {
+      title: 'Security & Compliance — TrivianEdge Trust Centre',
+      description: 'TrivianEdge security and compliance overview. PIPEDA, GDPR, data protection, and operational transparency for global outsourcing.',
+      keywords: `TrivianEdge trust, outsourcing security, BPO compliance, GDPR outsourcing, ${trendKeywords}`,
+      canonical: url,
+      structuredData: buildBreadcrumbSchema([
+        { name: 'Home', url: SEO_CONFIG.siteUrl },
+        { name: 'Trust Centre', url },
+      ]),
+    };
+  }
+  if (pathname === '/venture-studio') {
+    const url = `${SEO_CONFIG.siteUrl}/venture-studio`;
+    return {
+      title: 'Venture Studio — Build Your MVP with TrivianEdge',
+      description: 'Submit your idea to TrivianEdge Venture Studio. Qualified founders get a free MVP build with a dedicated offshore engineering team.',
+      keywords: `venture studio, free MVP build, offshore development, startup MVP, TrivianEdge, ${trendKeywords}`,
+      canonical: url,
+      structuredData: buildBreadcrumbSchema([
+        { name: 'Home', url: SEO_CONFIG.siteUrl },
+        { name: 'Venture Studio', url },
+      ]),
+    };
+  }
+  if (pathname === '/services/bpo') {
+    const url = `${SEO_CONFIG.siteUrl}/services/bpo`;
+    return {
+      title: 'BPO Services — TrivianEdge Business Process Outsourcing',
+      description: 'Managed BPO services from TrivianEdge. Offshore operations, back-office support, and process delivery across 6 global time zones.',
+      keywords: `BPO services, business process outsourcing, offshore BPO, managed operations, ${trendKeywords}`,
+      canonical: url,
+      structuredData: buildBreadcrumbSchema([
+        { name: 'Home', url: SEO_CONFIG.siteUrl },
+        { name: 'Services', url: `${SEO_CONFIG.siteUrl}/services/bpo` },
+        { name: 'BPO', url },
+      ]),
+    };
+  }
+  if (pathname === '/services/rpo') {
+    const url = `${SEO_CONFIG.siteUrl}/services/rpo`;
+    return {
+      title: 'RPO Services — TrivianEdge Recruitment Process Outsourcing',
+      description: 'End-to-end RPO from TrivianEdge. Global talent acquisition, candidate sourcing, and managed hiring pipelines. 30-day deployment.',
+      keywords: `RPO services, recruitment process outsourcing, global hiring, talent acquisition, ${trendKeywords}`,
+      canonical: url,
+      structuredData: buildBreadcrumbSchema([
+        { name: 'Home', url: SEO_CONFIG.siteUrl },
+        { name: 'Services', url: `${SEO_CONFIG.siteUrl}/services/rpo` },
+        { name: 'RPO', url },
+      ]),
+    };
+  }
+  if (pathname === '/services/ai-development') {
+    const url = `${SEO_CONFIG.siteUrl}/services/ai-development`;
+    return {
+      title: 'AI Development Services — TrivianEdge Offshore AI Engineering',
+      description: 'Offshore AI and ML development from TrivianEdge. Dedicated AI engineering teams for automation, LLM integration, and custom AI products.',
+      keywords: `AI development, offshore AI engineers, machine learning outsourcing, LLM development, ${trendKeywords}`,
+      canonical: url,
+      structuredData: buildBreadcrumbSchema([
+        { name: 'Home', url: SEO_CONFIG.siteUrl },
+        { name: 'Services', url: `${SEO_CONFIG.siteUrl}/services/ai-development` },
+        { name: 'AI Development', url },
+      ]),
+    };
+  }
+  if (pathname === '/services/it-outsourcing') {
+    const url = `${SEO_CONFIG.siteUrl}/services/it-outsourcing`;
+    return {
+      title: 'IT Outsourcing Services — TrivianEdge Global Tech Delivery',
+      description: 'Dedicated IT outsourcing from TrivianEdge. Offshore software engineers, QA, DevOps, and full-stack teams across 6 time zones.',
+      keywords: `IT outsourcing, offshore software development, dedicated dev teams, tech outsourcing, ${trendKeywords}`,
+      canonical: url,
+      structuredData: buildBreadcrumbSchema([
+        { name: 'Home', url: SEO_CONFIG.siteUrl },
+        { name: 'Services', url: `${SEO_CONFIG.siteUrl}/services/it-outsourcing` },
+        { name: 'IT Outsourcing', url },
+      ]),
+    };
+  }
   if (pathname === '/privacy') {
     const privacyUrl = `${SEO_CONFIG.siteUrl}/privacy`;
     return {

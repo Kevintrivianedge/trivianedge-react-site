@@ -580,6 +580,15 @@ export default {
       return new Response(null, { status: 204, headers: corsHeaders });
     }
 
+    // Normalise trailing slashes: /contact/ → /contact (301).
+    // Keeps canonical URLs consistent and prevents Google from indexing both.
+    // Exempt the root path (/) and any path already without a trailing slash.
+    if (url.pathname !== '/' && url.pathname.endsWith('/')) {
+      const canonical = new URL(request.url);
+      canonical.pathname = url.pathname.replace(/\/+$/, '');
+      return Response.redirect(canonical.toString(), 301);
+    }
+
     // ALL /api/* routes, rate-limited and CORS-gated in one place
     if (url.pathname.startsWith('/api/')) {
       const ip =
