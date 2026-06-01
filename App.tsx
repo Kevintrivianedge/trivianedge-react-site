@@ -224,9 +224,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 1: HERO ===== */}
       <section
         aria-label="Hero"
-        className="relative min-h-screen flex flex-col px-4 sm:px-6 overflow-hidden"
+        className="hero-mesh relative min-h-screen flex flex-col px-4 sm:px-6 overflow-hidden"
       >
-        <div className="absolute top-0 right-0 w-[55%] h-[70%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at top right, rgba(0,196,154,0.07) 0%, transparent 65%)' }} />
 
         {/* Hero content — flex-1 so it expands and pushes stats to the bottom */}
         <motion.div
@@ -909,25 +908,26 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       </section>
 
       {/* ===== ACT 8: CTA + CONTACT ===== */}
-      <section id="contact" aria-label="Contact Us" className="section-shell px-4 md:px-6">
-          <div className="max-w-7xl mx-auto reveal text-center">
-            <h2 className="display-section text-3xl sm:text-5xl md:text-7xl font-bold mb-5 text-text">
+      <section id="contact" aria-label="Contact Us" className="section-dark section-shell px-4 md:px-6">
+          <div className="max-w-7xl mx-auto reveal text-center relative z-10">
+            <p className="text-xs font-bold tracking-[0.25em] uppercase text-cyan-400 mb-6">Get started</p>
+            <h2 className="display-section text-3xl sm:text-5xl md:text-7xl font-bold mb-5 text-white">
               Tell us what you need.
             </h2>
-            <p className="text-muted text-lg md:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
+            <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
               Tech hiring, non-tech hiring, delivery support, market expansion.
             </p>
 
-            <div className="max-w-4xl mx-auto text-left mb-8">
+            <div className="max-w-4xl mx-auto text-left mb-10 rounded-3xl bg-white p-6 md:p-10 shadow-[0_0_60px_rgba(0,196,154,0.15)]">
               <InquiryForm />
             </div>
 
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a href="mailto:kevin.v@trivianedge.com" className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border border-border/70 text-text font-bold text-base hover:bg-surface transition-all">
+              <a href="mailto:kevin.v@trivianedge.com" className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border border-white/10 text-white font-bold text-base hover:border-cyan-400/40 hover:bg-white/5 transition-all">
                 <Mail className="w-5 h-5" />
                 Email
               </a>
-              <a href="tel:+18882028513" className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border border-border/70 text-text font-bold text-base hover:bg-surface transition-all">
+              <a href="tel:+18882028513" className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border border-white/10 text-white font-bold text-base hover:border-cyan-400/40 hover:bg-white/5 transition-all">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                 Call
               </a>
