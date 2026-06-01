@@ -5,12 +5,14 @@ interface CountUpStatProps {
   suffix?: string;
   label: string;
   duration?: number;
+  textClass?: string;
+  labelClass?: string;
 }
 
 /**
  * Animates a number from 0 to `end` when the element scrolls into view.
  */
-const CountUpStat: React.FC<CountUpStatProps> = ({ end, suffix = '', label, duration = 1800 }) => {
+const CountUpStat: React.FC<CountUpStatProps> = ({ end, suffix = '', label, duration = 1800, textClass = 'text-text', labelClass = 'text-muted' }) => {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const animated = useRef(false);
@@ -45,11 +47,11 @@ const CountUpStat: React.FC<CountUpStatProps> = ({ end, suffix = '', label, dura
 
   return (
     <div ref={ref} className="flex flex-col gap-1">
-      <span className="text-2xl md:text-3xl font-bold text-text tabular-nums">
+      <span className={`text-2xl md:text-3xl font-bold tabular-nums ${textClass}`}>
         {count}
         {suffix}
       </span>
-      <span className="text-[10px] tracking-widest text-muted uppercase font-bold leading-tight">
+      <span className={`text-[10px] tracking-widest uppercase font-bold leading-tight ${labelClass}`}>
         {label}
       </span>
     </div>

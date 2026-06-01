@@ -224,7 +224,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 1: HERO ===== */}
       <section
         aria-label="Hero"
-        className="hero-mesh relative min-h-screen flex flex-col px-4 sm:px-6 overflow-hidden"
+        className="hero-dark relative min-h-screen flex flex-col px-4 sm:px-6 overflow-hidden"
       >
 
         {/* Hero content — flex-1 so it expands and pushes stats to the bottom */}
@@ -239,12 +239,12 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-xs font-bold tracking-[0.25em] uppercase text-cyan-500 mb-8"
+              className="text-xs font-bold tracking-[0.25em] uppercase text-cyan-400 mb-8"
             >
               Canada's Global Operations Partner
             </motion.p>
 
-            <h1 className="display-hero font-bold tracking-tight mb-8 leading-[1.02] text-text">
+            <h1 className="display-hero font-bold tracking-tight mb-8 leading-[1.02] text-white">
               <motion.span
                 className="block"
                 initial={{ opacity: 0, y: 30 }}
@@ -267,7 +267,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="text-muted text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light"
+              className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light"
             >
               Offshore teams deployed in 30 days. Hiring, payroll, compliance, and delivery, handled entirely by us.
             </motion.p>
@@ -289,7 +289,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <a
                 href="#how-it-works"
                 onClick={e => { e.preventDefault(); scrollTo('how-it-works'); }}
-                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 btn-magnetic premium-button-secondary micro-press-button"
+                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 btn-magnetic premium-button-secondary micro-press-button text-white border-white/20 hover:border-white/40 hover:bg-white/5"
               >
                 How it works
                 <ChevronRight className="w-5 h-5" />
@@ -305,13 +305,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           animate={{ opacity: 1 }}
           transition={{ delay: 1.0, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="max-w-7xl mx-auto border-t border-border/30 pt-8 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16">
-            <CountUpStat end={6}  suffix="" label="Countries We Source From" />
-            <CountUpStat end={40} suffix="%" label="Average Cost Savings" />
-            <CountUpStat end={30} suffix=" days" label="Average Time to Start" />
+          <div className="max-w-7xl mx-auto border-t border-white/15 pt-8 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16">
+            <CountUpStat end={6}  suffix="" label="Countries We Source From" textClass="text-white" labelClass="text-white/55" />
+            <CountUpStat end={40} suffix="%" label="Average Cost Savings" textClass="text-white" labelClass="text-white/55" />
+            <CountUpStat end={30} suffix=" days" label="Average Time to Start" textClass="text-white" labelClass="text-white/55" />
             <div className="flex flex-col gap-1">
-              <span className="text-3xl md:text-4xl font-bold text-text tabular-nums">24/7</span>
-              <span className="text-xs tracking-widest text-muted uppercase font-semibold leading-tight mt-1">Operations Coverage</span>
+              <span className="text-3xl md:text-4xl font-bold text-white tabular-nums">24/7</span>
+              <span className="text-xs tracking-widest text-white/55 uppercase font-semibold leading-tight mt-1">Operations Coverage</span>
             </div>
           </div>
         </motion.div>
