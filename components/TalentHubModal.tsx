@@ -120,12 +120,15 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
         {/* Hero header strip — gradient with flag watermark */}
         <div className={`relative h-36 sm:h-48 overflow-hidden rounded-none sm:rounded-t-[2.5rem] bg-gradient-to-br ${hub.gradient}`}>
           <div className="absolute inset-0 bg-black/55" />
-          <div className="absolute -right-6 -top-4 text-[160px] leading-none opacity-[0.18] select-none pointer-events-none">
-            {hub.flag}
-          </div>
           <div className="absolute inset-0 flex items-end p-6 sm:p-10">
             <div className="flex items-end gap-5">
-              <span className="text-7xl sm:text-[5.5rem] drop-shadow-2xl select-none leading-none">{hub.flag}</span>
+              <img
+                src={`https://flagcdn.com/w160/${hub.flagCode}.png`}
+                width={88}
+                height={66}
+                alt={hub.country}
+                className="rounded-lg object-cover shadow-2xl drop-shadow-2xl"
+              />
               <div className="pb-1">
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[9px] font-bold uppercase tracking-widest mb-2">
                   Global Talent Node

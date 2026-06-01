@@ -15,6 +15,7 @@ export interface TalentHub {
   id: string;
   country: string;
   flag: string;
+  flagCode: string;
   specialty: string;
   description: string;
   infrastructure: string;

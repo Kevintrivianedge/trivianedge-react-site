@@ -71,7 +71,14 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
               {isHovered && (
                 <span className="absolute left-1/2 top-1/2 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/20 animate-ping" />
               )}
-              <span className="absolute left-1/2 -top-6 -translate-x-1/2 text-sm md:text-base">{hub.flag}</span>
+              <img
+                src={`https://flagcdn.com/w40/${hub.flagCode}.png`}
+                width={20}
+                height={15}
+                alt={hub.country}
+                className="absolute left-1/2 -top-6 -translate-x-1/2 rounded-sm object-cover shadow-sm"
+                loading="lazy"
+              />
             </button>
           );
         })}
@@ -82,7 +89,7 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
       {hoveredHub && (
         <div className="absolute top-4 right-4 bg-[#0a0a0f]/95 backdrop-blur-xl p-5 rounded-2xl border border-cyan-500/20 max-w-[min(220px,75vw)] pointer-events-none shadow-2xl shadow-cyan-900/30">
           <div className="flex items-center gap-3 mb-3">
-            <span className="text-3xl leading-none">{hoveredHub.flag}</span>
+            <img src={`https://flagcdn.com/w40/${hoveredHub.flagCode}.png`} width={28} height={21} alt={hoveredHub.country} className="rounded flex-shrink-0 object-cover" />
             <div>
               <p className="font-bold text-white text-sm leading-tight">{hoveredHub.country}</p>
               <p className="text-cyan-400 text-[9px] font-mono uppercase tracking-widest mt-0.5">{hoveredHub.specialty}</p>

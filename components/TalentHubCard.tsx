@@ -62,17 +62,16 @@ const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: Ta
         style={{ transform: 'translate3d(0, var(--p-offset-1, 0), 0)', willChange: 'transform' }}
       />
 
-      {/* Flag watermark */}
-      <div className="absolute right-4 bottom-4 text-[90px] leading-none opacity-[0.05] group-hover:opacity-[0.10] transition-opacity duration-500 select-none pointer-events-none" aria-hidden="true">
-        {hub.flag}
-      </div>
-
       <div className="relative z-10 p-7">
         {/* Header row */}
         <div className="flex items-start justify-between mb-5">
-          <span className="text-4xl transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6 inline-block" aria-hidden="true">
-            {hub.flag}
-          </span>
+          <img
+            src={`https://flagcdn.com/w80/${hub.flagCode}.png`}
+            width={48}
+            height={36}
+            alt={hub.country}
+            className="rounded-md object-cover shadow-md transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3"
+          />
           <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
             <span className="text-[10px] font-bold text-text/70 uppercase tracking-widest">Explore</span>
             <ArrowRight className="w-3.5 h-3.5 text-text/70" />

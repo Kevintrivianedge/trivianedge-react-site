@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { NAV_LINKS } from '../constants';
-import LanguageSelector from './LanguageSelector';
 import ThemeToggle from './ThemeToggle';
 import Logo from './Logo';
 
@@ -105,8 +104,6 @@ const Navbar: React.FC = () => {
             </a>
           ))}
           
-          <div className="h-4 w-px bg-border mx-2"></div>
-          <LanguageSelector />
           <ThemeToggle />
           
           <a href="/contact" onClick={(e) => { e.preventDefault(); handleNavClick('/contact'); }} className="px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all btn-magnetic premium-button">
@@ -162,10 +159,6 @@ const Navbar: React.FC = () => {
                   {link.name}
                 </motion.a>
               ))}
-
-              <motion.div variants={itemVariants} className="mt-2">
-                 <LanguageSelector />
-              </motion.div>
 
               <motion.a
                 href="/contact"

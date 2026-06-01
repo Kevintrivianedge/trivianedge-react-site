@@ -427,15 +427,22 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           <div className="lg:w-1/2 reveal">
             <div className="grid grid-cols-2 gap-4 mb-4">
               {[
-                { flag: '🇵🇭', country: 'Philippines', note: 'Top English-speaking tech + ops talent' },
-                { flag: '🇻🇳', country: 'Vietnam', note: 'Strong engineering and software teams' },
-                { flag: '🇱🇰', country: 'Sri Lanka', note: 'Finance, accounting, and back-office' },
-                { flag: '🇹🇷', country: 'Turkey', note: 'Design, development, and IT support' },
-                { flag: '🇿🇦', country: 'South Africa', note: 'Customer success and business ops' },
-                { flag: '🇨🇷', country: 'Costa Rica', note: 'Tech teams, US timezone alignment' },
+                { code: 'ph', country: 'Philippines', note: 'Top English-speaking tech + ops talent' },
+                { code: 'vn', country: 'Vietnam', note: 'Strong engineering and software teams' },
+                { code: 'lk', country: 'Sri Lanka', note: 'Finance, accounting, and back-office' },
+                { code: 'tr', country: 'Turkey', note: 'Design, development, and IT support' },
+                { code: 'za', country: 'South Africa', note: 'Customer success and business ops' },
+                { code: 'cr', country: 'Costa Rica', note: 'Tech teams, US timezone alignment' },
               ].map(item => (
                 <div key={item.country} className="glass rounded-2xl border border-border p-4 flex items-start gap-3">
-                  <span className="text-2xl leading-none mt-0.5">{item.flag}</span>
+                  <img
+                    src={`https://flagcdn.com/w40/${item.code}.png`}
+                    width={24}
+                    height={18}
+                    alt={item.country}
+                    className="mt-0.5 rounded-sm flex-shrink-0 object-cover"
+                    loading="lazy"
+                  />
                   <div>
                     <p className="font-bold text-text text-sm">{item.country}</p>
                     <p className="text-muted text-xs leading-relaxed mt-0.5">{item.note}</p>
@@ -878,7 +885,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           {/* Hub detail cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {TALENT_HUBS.slice(0, 2).map((hub, idx) => (
+            {TALENT_HUBS.map((hub, idx) => (
               <TalentHubCard key={hub.id} hub={hub} index={idx} onClick={setSelectedHub} />
             ))}
           </div>

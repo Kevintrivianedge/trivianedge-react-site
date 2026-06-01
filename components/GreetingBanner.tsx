@@ -4,7 +4,6 @@ import { getCountryGreeting, getCountryAffectionateName } from '../utils/greetin
 import { fetchTemperature } from '../utils/weatherService';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useGeo } from '../contexts/GeoContext';
-import LanguageSelector from './LanguageSelector';
 import './GreetingBanner.css';
 
 const GreetingBanner: React.FC = () => {
@@ -96,11 +95,6 @@ const GreetingBanner: React.FC = () => {
             </p>
         </div>
         
-        {!isLoading && (
-          <div className="flex items-center gap-2 sm:self-center bg-white/5 rounded-full px-4 py-1.5 border border-white/5 backdrop-blur-sm">
-             <LanguageSelector variant="banner" />
-          </div>
-        )}
       </div>
     </div>
   );
