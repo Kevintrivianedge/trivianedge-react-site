@@ -100,29 +100,41 @@ const PREMIUM_FEATURES = [
     title: 'We Find the People',
     description: 'Tell us the role and the skills you need. We search across six countries, screen every candidate, and only send you people who are ready to start.',
     icon: Users2,
-    accent: 'text-text/70',
-    border: 'border-border',
+    accent: 'text-cyan-500',
+    iconBg: 'from-cyan-400/20 to-cyan-400/5',
+    iconBorder: 'border-cyan-400/25',
+    glow: 'bg-cyan-400/8',
+    metric: '30 days to hire',
   },
   {
     title: 'We Handle the Paperwork',
     description: 'Contracts, payroll, taxes, and local employment laws in every country, all taken care of. You never deal with foreign government offices or compliance filings.',
     icon: ShieldCheck,
-    accent: 'text-text/70',
-    border: 'border-border',
+    accent: 'text-violet-500',
+    iconBg: 'from-violet-400/20 to-violet-400/5',
+    iconBorder: 'border-violet-400/25',
+    glow: 'bg-violet-400/8',
+    metric: '6 countries covered',
   },
   {
     title: 'We Keep the Work Moving',
     description: 'With teams across multiple time zones, your work never sits idle overnight. Handoffs are managed, progress is tracked, and issues get flagged before they become problems.',
     icon: TrendingUp,
-    accent: 'text-text/70',
-    border: 'border-border',
+    accent: 'text-emerald-500',
+    iconBg: 'from-emerald-400/20 to-emerald-400/5',
+    iconBorder: 'border-emerald-400/25',
+    glow: 'bg-emerald-400/8',
+    metric: '24/7 coverage',
   },
   {
     title: 'Tech and Non-Tech, Both',
     description: 'We hire developers, but also customer support, finance, HR, operations, and sales. One partner covers your full team, not just the technical side.',
     icon: Layers,
-    accent: 'text-text/70',
-    border: 'border-border',
+    accent: 'text-amber-500',
+    iconBg: 'from-amber-400/20 to-amber-400/5',
+    iconBorder: 'border-amber-400/25',
+    glow: 'bg-amber-400/8',
+    metric: '40% avg. savings',
   },
 ];
 
@@ -229,12 +241,12 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
         {/* Hero content — flex-1 so it expands and pushes stats to the bottom */}
         <motion.div
-          className="flex-1 flex items-center max-w-7xl mx-auto w-full relative z-10 pt-20 pb-8 gap-12 xl:gap-20"
+          className="flex-1 flex items-center max-w-7xl mx-auto w-full relative z-10 pt-20 pb-8 gap-8 xl:gap-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="flex-1 min-w-0 max-w-[640px]">
+          <div className="flex-1 min-w-0 max-w-[760px]">
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -327,14 +339,36 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </motion.div>
         </motion.div>
 
-        {/* Bottom stats strip — flows naturally below content, never overlaps */}
+        {/* Mobile-only 2×2 stat grid — shown below buttons on small screens */}
         <motion.div
-          className="w-full px-0 pb-10 relative z-10"
+          className="lg:hidden w-full px-0 pb-6 relative z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9, duration: 0.8 }}
+        >
+          <div className="max-w-7xl mx-auto grid grid-cols-2 gap-3">
+            {[
+              { value: '30 days', label: 'Avg. time to hire' },
+              { value: '40%',     label: 'Cost savings' },
+              { value: '6',       label: 'Countries sourced' },
+              { value: '24/7',    label: 'Ops coverage' },
+            ].map(s => (
+              <div key={s.label} className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+                <p className="text-xl font-bold text-white leading-none mb-1">{s.value}</p>
+                <p className="text-[10px] uppercase tracking-widest text-white/45 font-semibold">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Bottom stats strip — desktop */}
+        <motion.div
+          className="hidden lg:block w-full px-0 pb-10 relative z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.0, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="max-w-7xl mx-auto border-t border-white/15 pt-8 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16">
+          <div className="max-w-7xl mx-auto border-t border-white/15 pt-8 grid grid-cols-4 gap-16">
             <CountUpStat end={6}  suffix="" label="Countries We Source From" textClass="text-white" labelClass="text-white/55" />
             <CountUpStat end={40} suffix="%" label="Average Cost Savings" textClass="text-white" labelClass="text-white/55" />
             <CountUpStat end={30} suffix=" days" label="Average Time to Start" textClass="text-white" labelClass="text-white/55" />
@@ -347,25 +381,24 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       </section>
 
       {/* ===== ACT 2: TRUST MARQUEE ===== */}
-      <section aria-label="Trust signals" className="py-5 md:py-7 border-y border-border overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="relative overflow-hidden">
-            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-14 md:w-28 bg-gradient-to-r from-background to-transparent z-10" />
-            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-14 md:w-28 bg-gradient-to-l from-background to-transparent z-10" />
-            <div
-              className="flex w-[300%] items-center gap-4 md:gap-6"
-              style={{ animation: 'marquee-scroll 22s linear infinite' }}
-            >
-              {[...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS].map((item, idx) => (
-                <div
-                  key={`${item.label}-${idx}`}
-                  className="inline-flex items-center gap-2 md:gap-3 px-3 md:px-4 py-2 rounded-full border border-border bg-background/70 whitespace-nowrap"
-                >
-                  <span className="text-sm md:text-base font-bold text-text">{item.value}</span>
-                  <span className="text-[10px] md:text-xs uppercase tracking-widest text-muted font-bold">{item.label}</span>
-                </div>
-              ))}
-            </div>
+      <section aria-label="Trust signals" className="py-6 md:py-10 border-y border-border overflow-hidden bg-[#fafafa]">
+        <p className="text-center text-[10px] font-bold uppercase tracking-[0.25em] text-text/35 mb-5">Trusted by operators and scale-ups across North America</p>
+        <div className="relative overflow-hidden">
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-[#fafafa] to-transparent z-10" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-[#fafafa] to-transparent z-10" />
+          <div
+            className="flex w-[300%] items-center gap-5 md:gap-8"
+            style={{ animation: 'marquee-scroll 28s linear infinite' }}
+          >
+            {[...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS].map((item, idx) => (
+              <div
+                key={`${item.label}-${idx}`}
+                className="inline-flex items-center gap-3 md:gap-4 px-5 md:px-6 py-3 rounded-2xl border border-border bg-white whitespace-nowrap shadow-sm"
+              >
+                <span className="text-base md:text-lg font-black text-text tabular-nums">{item.value}</span>
+                <span className="text-[10px] md:text-xs uppercase tracking-widest text-muted font-bold">{item.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -398,15 +431,20 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.25 }}
                   transition={{ duration: shouldReduceMotion ? 0.01 : 0.55, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className={`card-glow bg-surface/70 rounded-[1.75rem] p-7 md:p-9 border relative overflow-hidden ${feature.border}`}
+                  className="bg-white rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group"
+                  style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
                 >
+                  <div className={`absolute -top-8 -right-8 w-32 h-32 ${feature.glow} blur-3xl pointer-events-none rounded-full`} />
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-2xl border border-border bg-background flex items-center justify-center">
+                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${feature.iconBg} border ${feature.iconBorder} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
                       <Icon className={`w-6 h-6 ${feature.accent}`} />
                     </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-text mb-2">{feature.title}</h3>
-                      <p className="text-muted text-sm md:text-base leading-relaxed">{feature.description}</p>
+                    <div className="min-w-0">
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <h3 className="text-xl font-bold text-text">{feature.title}</h3>
+                        <span className={`hidden md:inline text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border ${feature.iconBorder} ${feature.accent} opacity-70 whitespace-nowrap`}>{feature.metric}</span>
+                      </div>
+                      <p className="text-text/60 text-sm leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 </motion.article>
@@ -510,53 +548,63 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 reveal">
-            {/* Left: Traditional BPO */}
-            <div className="glass micro-lift-card luxury-panel p-8 md:p-10 rounded-[2.5rem] border-border relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-border/30 blur-3xl pointer-events-none" />
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center">
+            {/* Left: Traditional BPO — cold/negative treatment */}
+            <div className="micro-lift-card p-8 md:p-10 rounded-[2.5rem] border border-rose-200/60 bg-rose-50/40 relative overflow-hidden">
+              <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-rose-300/15 blur-3xl pointer-events-none" />
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-2xl bg-rose-100 border border-rose-200 flex items-center justify-center">
                   <X className="w-5 h-5 text-rose-400" />
                 </div>
-                <h3 className="text-xl font-bold text-text">Traditional BPO</h3>
+                <div>
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-rose-400/70 mb-0.5">The old way</p>
+                  <h3 className="text-xl font-bold text-gray-500">Traditional BPO</h3>
+                </div>
               </div>
-              <ul className="space-y-4">
+              <p className="text-rose-400/70 text-xs font-semibold uppercase tracking-widest mb-6 pl-[52px]">What you're probably used to</p>
+              <ul className="space-y-3">
                 {[
-                  'They bill for hours, not results. You take on all the risk.',
-                  'They send you whoever is available, not who is right',
+                  'They bill for hours, not results — you take on all the risk',
+                  'They send whoever is available, not who is right',
                   'Once work is delivered, they disappear with no accountability',
-                  'You can\'t see what\'s happening or who is working on what',
+                  'No visibility into who is working or what is happening',
                   'Slow to adapt when your needs change mid-project',
                 ].map(item => (
                   <li key={item} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-5 h-5 rounded-full bg-rose-100 border border-rose-200 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <X className="w-3 h-3 text-rose-400" />
                     </div>
-                    <span className="text-muted text-sm leading-relaxed">{item}</span>
+                    <span className="text-gray-400 text-sm leading-relaxed line-through decoration-rose-200">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Right: TrivianEdge RPO + Tech */}
-            <div className="glass micro-lift-card luxury-panel p-8 md:p-10 rounded-[2.5rem] border-border relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-black/5 blur-3xl pointer-events-none" />
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-2xl bg-surface border border-border flex items-center justify-center">
-                  <CheckCircle2 className="w-5 h-5 text-text/70" />
+            {/* Right: TrivianEdge — warm/positive treatment */}
+            <div className="micro-lift-card p-8 md:p-10 rounded-[2.5rem] border border-cyan-400/25 bg-[#f2fbf8] relative overflow-hidden" style={{ boxShadow: '0 4px 32px rgba(0,196,154,0.1)' }}>
+              <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-cyan-400/12 blur-3xl pointer-events-none" />
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-2xl bg-cyan-400/15 border border-cyan-400/25 flex items-center justify-center">
+                  <CheckCircle2 className="w-5 h-5 text-cyan-500" />
                 </div>
-                <h3 className="text-xl font-bold text-text">TrivianEdge RPO + Tech</h3>
+                <div>
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-cyan-500/70 mb-0.5">The TrivianEdge way</p>
+                  <h3 className="text-xl font-bold text-text">TrivianEdge RPO + Tech</h3>
+                </div>
               </div>
-              <ul className="space-y-4">
+              <p className="text-cyan-600 text-xs font-semibold uppercase tracking-widest mb-6 pl-[52px]">Outcome-driven, always</p>
+              <ul className="space-y-3">
                 {[
                   'We own the outcome, not just the task list',
                   'We hand-pick people for your specific role and culture',
-                  'Full visibility into hiring, onboarding, and progress',
+                  'Full visibility into hiring, onboarding, and every milestone',
                   'Payroll, contracts, and compliance included from day one',
                   'We adjust quickly when your priorities shift',
                 ].map(item => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-text/70 flex-shrink-0 mt-0.5" />
-                    <span className="text-muted text-sm leading-relaxed">{item}</span>
+                    <div className="w-5 h-5 rounded-full bg-cyan-400/15 border border-cyan-400/25 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <CheckCircle2 className="w-3 h-3 text-cyan-500" />
+                    </div>
+                    <span className="text-text/80 text-sm leading-relaxed font-medium">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -843,7 +891,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6">
-            {NON_TECH_CASE_STUDIES.slice(0, 2).map((study, idx) => (
+            {NON_TECH_CASE_STUDIES.map((study, idx) => (
               <motion.article
                 key={study.company}
                 initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
@@ -1332,65 +1380,54 @@ export default function App() {
             </ErrorBoundary>
           </main>
 
-          <footer className="pt-10 md:pt-16 pb-10 px-4 md:px-6 border-t border-border/60 opacity-80 hover:opacity-100 transition-opacity duration-300">
-            <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-10 mb-10 reveal">
+          <footer className="bg-[#020306] text-white pt-16 md:pt-20 pb-10 px-4 md:px-6">
+            <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-10 mb-14">
               <div className="md:col-span-2">
-                <div className="mb-8"><Logo onClick={() => { navigate('/'); window.scrollTo({top: 0, behavior: 'smooth'}); }} /></div>
-                <p className="text-muted text-base max-w-sm mb-8 leading-relaxed">Canada's BPO and offshore outsourcing partner.</p>
-                <div className="flex gap-4">
-                  <a 
-                    href="https://www.linkedin.com/company/trivianedge/" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    aria-label="TrivianEdge on LinkedIn"
-                    className="p-3 glass rounded-xl text-text/70 hover:text-text transition-all duration-300 border-border hover:scale-110 hover:border-border"
-                  >
-                    <Linkedin />
+                <div className="mb-6">
+                  <Logo onClick={() => { navigate('/'); window.scrollTo({top: 0, behavior: 'smooth'}); }} />
+                </div>
+                <p className="text-white/45 text-sm max-w-xs mb-8 leading-relaxed">Build offshore teams that run at full capacity. Hiring, payroll, compliance, and delivery — handled end to end.</p>
+                <div className="flex gap-3">
+                  <a href="https://www.linkedin.com/company/trivianedge/" target="_blank" rel="noopener noreferrer" aria-label="TrivianEdge on LinkedIn"
+                    className="w-9 h-9 rounded-xl bg-white/6 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200">
+                    <Linkedin className="w-4 h-4" />
                   </a>
-                  <a 
-                    href="https://x.com/trivianedge"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="TrivianEdge on X (Twitter)"
-                    className="p-3 glass rounded-xl text-text/70 hover:text-text transition-all duration-300 border-border hover:scale-110 hover:border-border"
-                  >
-                    <Twitter />
+                  <a href="https://x.com/trivianedge" target="_blank" rel="noopener noreferrer" aria-label="TrivianEdge on X (Twitter)"
+                    className="w-9 h-9 rounded-xl bg-white/6 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200">
+                    <Twitter className="w-4 h-4" />
                   </a>
-                  <a 
-                    href="mailto:kevin.v@trivianedge.com" 
-                    aria-label="Email TrivianEdge"
-                    className="p-3 glass rounded-xl text-text/70 hover:text-text transition-all duration-300 border-border hover:scale-110 hover:border-border"
-                  >
-                    <Mail />
+                  <a href="mailto:kevin.v@trivianedge.com" aria-label="Email TrivianEdge"
+                    className="w-9 h-9 rounded-xl bg-white/6 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200">
+                    <Mail className="w-4 h-4" />
                   </a>
                 </div>
               </div>
               <div>
-                <h4 className="font-bold text-text mb-8 tracking-widest uppercase text-xs">Platform</h4>
-                <ul className="space-y-4 text-muted font-medium">
-                  <li><a href="/#solutions" onClick={(e) => { e.preventDefault(); scrollToSection('solutions'); }} className="hover:text-text transition-colors">Our Services</a></li>
-                  <li><Link to="/proof" className="hover:text-text transition-colors">Proof</Link></li>
-                  <li><Link to="/trust" className="hover:text-text transition-colors">Trust</Link></li>
-                  <li><Link to="/venture-studio" className="hover:text-text transition-colors">Venture Studio</Link></li>
-                  <li><Link to="/blog" className="hover:text-text transition-colors">Blog</Link></li>
+                <h4 className="font-bold text-white/30 mb-6 tracking-widest uppercase text-[10px]">Platform</h4>
+                <ul className="space-y-3">
+                  <li><a href="/#solutions" onClick={(e) => { e.preventDefault(); scrollToSection('solutions'); }} className="text-white/55 hover:text-white text-sm transition-colors">Our Services</a></li>
+                  <li><Link to="/proof" className="text-white/55 hover:text-white text-sm transition-colors">Proof</Link></li>
+                  <li><Link to="/trust" className="text-white/55 hover:text-white text-sm transition-colors">Trust</Link></li>
+                  <li><Link to="/venture-studio" className="text-white/55 hover:text-white text-sm transition-colors">Venture Studio</Link></li>
+                  <li><Link to="/blog" className="text-white/55 hover:text-white text-sm transition-colors">Blog</Link></li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold text-text mb-8 tracking-widest uppercase text-xs">Resources</h4>
-                <ul className="space-y-4 text-muted font-medium">
-                  <li><Link to="/contact" className="hover:text-text transition-colors">Contact</Link></li>
-                  <li><Link to="/proof" className="hover:text-text transition-colors">Case Studies</Link></li>
-                  <li><Link to="/venture-studio" className="hover:text-text transition-colors">MVP Qualification</Link></li>
-                  <li><Link to="/privacy" className="hover:text-text transition-colors">Privacy Policy</Link></li>
-                  <li><Link to="/trust" className="hover:text-text transition-colors">Security & Compliance</Link></li>
+                <h4 className="font-bold text-white/30 mb-6 tracking-widest uppercase text-[10px]">Resources</h4>
+                <ul className="space-y-3">
+                  <li><Link to="/contact" className="text-white/55 hover:text-white text-sm transition-colors">Contact</Link></li>
+                  <li><Link to="/proof" className="text-white/55 hover:text-white text-sm transition-colors">Case Studies</Link></li>
+                  <li><Link to="/venture-studio" className="text-white/55 hover:text-white text-sm transition-colors">MVP Qualification</Link></li>
+                  <li><Link to="/privacy" className="text-white/55 hover:text-white text-sm transition-colors">Privacy Policy</Link></li>
+                  <li><Link to="/trust" className="text-white/55 hover:text-white text-sm transition-colors">Security & Compliance</Link></li>
                 </ul>
               </div>
             </div>
-            <div className="max-w-7xl mx-auto pt-12 border-t border-border flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-mono tracking-widest uppercase text-muted reveal">
-              <p>© {new Date().getFullYear()} TRIVIANEDGE GLOBAL. ALL RIGHTS RESERVED.</p>
-              <div className="flex gap-12">
-                <Link to="/privacy" className="hover:text-text transition-colors">Privacy Protocol</Link>
-                <Link to="/terms" className="hover:text-text transition-colors">Terms of Engagement</Link>
+            <div className="max-w-7xl mx-auto pt-8 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest uppercase text-white/25">
+              <p>© {new Date().getFullYear()} TrivianEdge Global — Canada's Offshore Operations Partner</p>
+              <div className="flex gap-8">
+                <Link to="/privacy" className="hover:text-white/60 transition-colors">Privacy</Link>
+                <Link to="/terms" className="hover:text-white/60 transition-colors">Terms</Link>
               </div>
             </div>
           </footer>

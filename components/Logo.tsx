@@ -18,11 +18,6 @@ const Logo = ({ onClick, showTagline = true }: { onClick?: () => void; showTagli
       <span className="text-2xl font-bold tracking-tight text-text">
         Trivian<span className="text-muted font-normal">Edge</span>
       </span>
-      {showTagline && (
-        <span className="ml-3 text-[10px] md:text-xs font-bold tracking-[0.2em] text-muted uppercase opacity-80 pt-1.5">
-          Solutions
-        </span>
-      )}
     </div>
   </div>
 );

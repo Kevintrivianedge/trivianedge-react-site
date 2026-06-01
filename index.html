@@ -135,13 +135,28 @@
             --text-muted: #9ca3af;
             --surface: rgba(255, 255, 255, 0.05);
             --border: rgba(255, 255, 255, 0.1);
-            
+
             --glass-bg: rgba(255, 255, 255, 0.02);
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-shadow: rgba(0, 0, 0, 0.5);
-            
+
             --btn-bg: #ffffff;
             --btn-text: #000000;
+        }
+
+        /* ── Dark mode overrides for new white-bg card components ── */
+        [data-theme="dark"] .quote-card {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(0,196,154,0.15);
+        }
+        [data-theme="dark"] .quote-card::before {
+            color: rgba(0,196,154,0.12);
+        }
+        [data-theme="dark"] .section-tint {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+        }
+        [data-theme="dark"] .hero-fade-out::after {
+            background: linear-gradient(to bottom, transparent 0%, #020203 100%);
         }
 
         body {
@@ -166,7 +181,7 @@
         }
 
         .display-hero {
-            font-size: clamp(2.75rem, 8vw, 7.25rem) !important;
+            font-size: clamp(2.75rem, 6.5vw, 5.75rem) !important;
             letter-spacing: var(--tracking-display);
             line-height: var(--leading-display);
             text-wrap: balance;
@@ -464,7 +479,7 @@
             -webkit-backdrop-filter: blur(24px);
             border-radius: 20px;
             padding: 20px 24px;
-            min-width: 210px;
+            min-width: 185px;
             display: flex;
             flex-direction: column;
             gap: 3px;
