@@ -343,7 +343,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
 
       {/* ===== ACT 2B: PREMIUM OPERATING LAYER ===== */}
-      <section aria-label="Premium operating layer" className="section-shell px-4 md:px-6">
+      <section aria-label="Premium operating layer" className="section-tint section-shell px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14 reveal">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-surface text-text/70 text-[10px] font-bold uppercase tracking-widest mb-6 float-badge">
@@ -369,7 +369,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.25 }}
                   transition={{ duration: shouldReduceMotion ? 0.01 : 0.55, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className={`bg-surface/70 rounded-[1.75rem] p-7 md:p-9 border relative overflow-hidden ${feature.border}`}
+                  className={`card-glow bg-surface/70 rounded-[1.75rem] p-7 md:p-9 border relative overflow-hidden ${feature.border}`}
                 >
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-2xl border border-border bg-background flex items-center justify-center">
@@ -456,7 +456,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="bpo-vs-rpo"
         aria-label="Why BPO Breaks"
-        className="section-shell px-4 md:px-6 border-t border-border"
+        className="section-tint section-shell px-4 md:px-6 border-t border-border"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -638,7 +638,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="headache-removed"
         aria-label="We Remove the Bureaucracy"
-        className="section-shell px-4 md:px-6 border-t border-border"
+        className="section-tint section-shell px-4 md:px-6 border-t border-border"
       >
         <div className="max-w-7xl mx-auto">
           <div className="max-w-4xl mx-auto text-center reveal">
@@ -734,7 +734,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="why-us"
         aria-label="Client Results"
-        className="section-shell px-4 md:px-6"
+        className="section-tint section-shell px-4 md:px-6"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -820,7 +820,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="solutions"
         aria-label="Our Services"
-        className="section-shell px-4 md:px-6 border-t border-border"
+        className="section-tint section-shell px-4 md:px-6 border-t border-border"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -889,7 +889,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="faq"
         aria-label="Frequently Asked Questions"
-        className="section-shell px-4 md:px-6 border-t border-border"
+        className="section-tint section-shell px-4 md:px-6 border-t border-border"
       >
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12 reveal">
