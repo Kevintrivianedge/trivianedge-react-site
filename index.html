@@ -117,7 +117,7 @@
             
             --background: #ffffff;
             --text: #0f172a;
-            --text-muted: #475569;
+            --text-muted: #334155;
             --surface: rgba(255, 255, 255, 0.78);
             --border: rgba(15, 23, 42, 0.08);
             
@@ -456,6 +456,137 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        /* ── Hero floating metric cards ── */
+        .hero-metric-card {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.13);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 20px;
+            padding: 20px 24px;
+            min-width: 210px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            transition: background 0.3s, border-color 0.3s, transform 0.3s;
+        }
+        .hero-metric-card:hover {
+            background: rgba(255,255,255,0.11);
+            border-color: rgba(0,196,154,0.35);
+            transform: translateY(-3px);
+        }
+        .hero-metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+        .hero-metric-unit {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.7);
+            margin-left: 2px;
+        }
+        .hero-metric-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: rgba(255,255,255,0.45);
+            margin-top: 4px;
+        }
+        .hero-metric-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #00C49A;
+            display: inline-block;
+            margin-right: 6px;
+            box-shadow: 0 0 8px rgba(0,196,154,0.7);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        /* ── Hero → white section gradient fade ── */
+        .hero-fade-out {
+            position: relative;
+            z-index: 2;
+        }
+        .hero-fade-out::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: 0;
+            right: 0;
+            height: 160px;
+            background: linear-gradient(to bottom, transparent 0%, #ffffff 100%);
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        /* ── Premium quote card ── */
+        .quote-card {
+            position: relative;
+            background: #ffffff;
+            border: 1px solid rgba(0,196,154,0.15);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            overflow: hidden;
+        }
+        .quote-card::before {
+            content: '\201C';
+            position: absolute;
+            top: -10px;
+            left: 24px;
+            font-size: 8rem;
+            font-weight: 900;
+            color: rgba(0,196,154,0.15);
+            line-height: 1;
+            font-family: Georgia, serif;
+            pointer-events: none;
+        }
+
+        /* ── Numbered process step ── */
+        .step-number {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1;
+            background: linear-gradient(135deg, rgba(0,196,154,0.5) 0%, rgba(0,196,154,0.15) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.04em;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* ── Service card dark treatments ── */
+        .service-dark {
+            background: linear-gradient(145deg, #030d0a 0%, #050f0b 100%);
+            border-color: rgba(0,196,154,0.18) !important;
+            color: #ffffff;
+        }
+        .service-dark h3 { color: #ffffff; }
+        .service-dark p  { color: rgba(255,255,255,0.65); }
+        .service-dark li { color: rgba(255,255,255,0.65); }
+        .service-dark .service-metric { color: #00C49A; }
+
+        /* ── Case study metric pill ── */
+        .metric-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,196,154,0.1);
+            border: 1px solid rgba(0,196,154,0.25);
+            border-radius: 999px;
+            padding: 4px 14px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #00C49A;
+            margin-bottom: 1rem;
+        }
+
         @keyframes mesh-breathe {
             0%, 100% { opacity: 1; }
             50%       { opacity: 0.82; }

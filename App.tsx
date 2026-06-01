@@ -18,7 +18,7 @@ import {
   Cpu,
 } from 'lucide-react';
 import { Routes, Route, useLocation, useNavigate, Link, Navigate } from 'react-router-dom';
-import { WHY_US, BLOG_POSTS, TALENT_HUBS, SERVICES, ROLES } from './constants';
+import { WHY_US, BLOG_POSTS, TALENT_HUBS, SERVICES, ROLES, STEPS } from './constants';
 import { CASE_STUDIES, TESTIMONIALS } from './constants/proof';
 import { TalentHub } from './types';
 import { LanguageProvider } from './contexts/LanguageContext';
@@ -224,17 +224,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 1: HERO ===== */}
       <section
         aria-label="Hero"
-        className="hero-dark relative min-h-screen flex flex-col px-4 sm:px-6 overflow-hidden"
+        className="hero-dark hero-fade-out relative min-h-screen flex flex-col px-4 sm:px-6 overflow-hidden"
       >
 
         {/* Hero content — flex-1 so it expands and pushes stats to the bottom */}
         <motion.div
-          className="flex-1 flex items-center max-w-7xl mx-auto w-full relative z-10 pt-20 pb-8"
+          className="flex-1 flex items-center max-w-7xl mx-auto w-full relative z-10 pt-20 pb-8 gap-12 xl:gap-20"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="max-w-5xl">
+          <div className="flex-1 min-w-0 max-w-[640px]">
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -296,6 +296,35 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               </a>
             </motion.div>
           </div>
+
+          {/* Right-side floating metric cards — desktop only */}
+          <motion.div
+            className="hidden lg:flex flex-col gap-4 flex-shrink-0"
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.0, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {[
+              { value: '30', unit: ' days', label: 'Average time to hire', live: true },
+              { value: '40', unit: '%',     label: 'Average cost savings', live: false },
+              { value: '6',  unit: '',      label: 'Countries we source from', live: false },
+              { value: '24/7', unit: '',    label: 'Operations coverage', live: true },
+            ].map((card, i) => (
+              <motion.div
+                key={card.label}
+                className="hero-metric-card"
+                initial={{ opacity: 0, x: 24 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7, delay: 1.0 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  {card.live && <span className="hero-metric-dot" />}
+                  <span className="hero-metric-label">{card.label}</span>
+                </div>
+                <span className="hero-metric-value">{card.value}<span className="hero-metric-unit">{card.unit}</span></span>
+              </motion.div>
+            ))}
+          </motion.div>
         </motion.div>
 
         {/* Bottom stats strip — flows naturally below content, never overlaps */}
@@ -569,11 +598,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           <div className="grid md:grid-cols-2 gap-8 reveal">
             {/* Engine 1: Talent */}
-            <div className="glass micro-lift-card luxury-panel p-10 rounded-[2.5rem] border-border transition-all duration-500 group relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-black/5 blur-3xl pointer-events-none" />
+            <div className="micro-lift-card p-10 rounded-[2.5rem] border border-border bg-white transition-all duration-500 group relative overflow-hidden" style={{ boxShadow: '0 4px 32px rgba(0,196,154,0.08), 0 1px 3px rgba(0,0,0,0.06)' }}>
+              <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-cyan-400/8 blur-3xl pointer-events-none" />
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-surface border border-border flex items-center justify-center">
-                  <Users2 className="w-7 h-7 text-text/70" />
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-400/15 to-cyan-400/5 border border-cyan-400/20 flex items-center justify-center">
+                  <Users2 className="w-7 h-7 text-cyan-500" />
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-widest text-text/70">Engine 1</p>
@@ -599,11 +628,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
 
             {/* Engine 2: Software */}
-            <div className="glass micro-lift-card luxury-panel p-10 rounded-[2.5rem] border-border transition-all duration-500 group relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-black/5 blur-3xl pointer-events-none" />
+            <div className="micro-lift-card p-10 rounded-[2.5rem] border border-border bg-white transition-all duration-500 group relative overflow-hidden" style={{ boxShadow: '0 4px 32px rgba(99,102,241,0.08), 0 1px 3px rgba(0,0,0,0.06)' }}>
+              <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-violet-400/8 blur-3xl pointer-events-none" />
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-surface border border-border flex items-center justify-center">
-                  <Cpu className="w-7 h-7 text-text/70" />
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-400/15 to-violet-400/5 border border-violet-400/20 flex items-center justify-center">
+                  <Cpu className="w-7 h-7 text-violet-500" />
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-widest text-text/70">Engine 2</p>
@@ -664,46 +693,22 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
             {[
-              {
-                icon: <Globe2 className="w-6 h-6 text-text/70" />,
-                title: 'Foreign Employment Law',
-                desc: 'Every country has its own rules about contracts, termination, benefits, and working hours. We know them all and apply them correctly so you never get a surprise fine or lawsuit.',
-                color: 'border-border',
-                glow: 'bg-black/5',
-              },
-              {
-                icon: <Server className="w-6 h-6 text-text/70" />,
-                title: 'Payroll in Multiple Countries',
-                desc: 'Running payroll in Canada is complicated enough. In six countries simultaneously, it\'s a full-time job. We handle it with zero errors, every month.',
-                color: 'border-border',
-                glow: 'bg-black/5',
-              },
-              {
-                icon: <ShieldCheck className="w-6 h-6 text-text/70" />,
-                title: 'Compliance and Data Rules',
-                desc: 'Data protection, privacy laws, and export rules differ in every market. We make sure your business stays clean and compliant without you needing to read 200-page legal guides.',
-                color: 'border-border',
-                glow: 'bg-black/5',
-              },
-              {
-                icon: <TrendingUp className="w-6 h-6 text-text/70" />,
-                title: 'Day-to-Day Ops Management',
-                desc: 'Progress updates, team handoffs, issue tracking, and performance oversight, all managed by us so your leadership can stay focused on the actual business.',
-                color: 'border-border',
-                glow: 'bg-black/5',
-              },
+              { icon: <Globe2 className="w-6 h-6 text-cyan-500" />,   iconBg: 'from-cyan-400/20 to-cyan-400/5',   border: 'border-cyan-400/20',   glow: 'bg-cyan-400/10',   title: 'Foreign Employment Law',      desc: 'Every country has its own rules about contracts, termination, and benefits. We know them all and apply them correctly so you never get a surprise fine or lawsuit.' },
+              { icon: <Server className="w-6 h-6 text-violet-500" />,  iconBg: 'from-violet-400/20 to-violet-400/5', border: 'border-violet-400/20', glow: 'bg-violet-400/10', title: 'Payroll in Multiple Countries', desc: 'Running payroll in Canada is complicated enough. In six countries at once it\'s a full-time job. We handle it with zero errors, every month.' },
+              { icon: <ShieldCheck className="w-6 h-6 text-emerald-500" />, iconBg: 'from-emerald-400/20 to-emerald-400/5', border: 'border-emerald-400/20', glow: 'bg-emerald-400/10', title: 'Compliance and Data Rules', desc: 'Data protection, privacy laws, and export rules differ in every market. We keep your business clean and compliant without 200-page legal guides.' },
+              { icon: <TrendingUp className="w-6 h-6 text-amber-500" />, iconBg: 'from-amber-400/20 to-amber-400/5', border: 'border-amber-400/20', glow: 'bg-amber-400/10', title: 'Day-to-Day Ops Management', desc: 'Progress updates, handoffs, issue tracking, and performance oversight — all managed by us so your leadership stays focused on the actual business.' },
             ].map(item => (
               <div
                 key={item.title}
-                className={`glass micro-lift-card luxury-panel p-8 rounded-[2rem] border transition-all duration-300 relative overflow-hidden group`}
-                style={{ borderColor: 'var(--border)' }}
+                className={`micro-lift-card bg-white p-8 rounded-[2rem] border ${item.border} transition-all duration-300 relative overflow-hidden group`}
+                style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
               >
-                <div className={`absolute top-0 right-0 w-28 h-28 ${item.glow} blur-3xl pointer-events-none`} />
-                <div className="w-12 h-12 rounded-2xl bg-surface border border-border flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+                <div className={`absolute -top-8 -right-8 w-28 h-28 ${item.glow} blur-3xl pointer-events-none rounded-full`} />
+                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${item.iconBg} border ${item.border} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
                   {item.icon}
                 </div>
                 <h4 className="font-bold text-text mb-2">{item.title}</h4>
-                <p className="text-muted text-sm leading-relaxed">{item.desc}</p>
+                <p className="text-text/60 text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -733,7 +738,29 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               From first conversation to your new team member's first day, the whole process takes about 30 days.
             </p>
           </div>
-          <ProcessTimeline />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 reveal">
+            {STEPS.map((step, idx) => (
+              <motion.div
+                key={step.number}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="relative group"
+              >
+                {/* Connector line between steps */}
+                {idx < STEPS.length - 1 && (
+                  <div className="hidden lg:block absolute top-9 left-full w-full h-px bg-gradient-to-r from-border to-transparent z-0 -translate-y-px" style={{ width: 'calc(100% - 2rem)', left: '2rem' }} />
+                )}
+                <span className="step-number">{step.number}</span>
+                <div className="w-12 h-12 rounded-2xl border border-border bg-surface flex items-center justify-center mb-5 group-hover:border-cyan-400/40 group-hover:bg-cyan-400/5 transition-all duration-300">
+                  {step.icon}
+                </div>
+                <h3 className="text-lg font-bold text-text mb-3 leading-snug">{step.title}</h3>
+                <p className="text-muted text-sm leading-relaxed">{step.description}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -757,23 +784,35 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-6 mb-8">
+          <div className="grid lg:grid-cols-2 gap-6 mb-6">
             {CASE_STUDIES.slice(0, 2).map((study) => (
-              <article key={study.client} className="reveal glass micro-lift-card p-8 rounded-[2rem] border-border">
-                <p className="text-xs font-bold uppercase tracking-widest text-text/70 mb-3">{study.sector}</p>
-                <h3 className="text-2xl font-bold mb-4 text-text">{study.client}</h3>
-                <p className="text-muted text-sm md:text-base leading-relaxed mb-4"><strong className="text-text">Challenge:</strong> {study.challenge}</p>
-                <p className="text-muted text-sm md:text-base leading-relaxed"><strong className="text-text">Outcome:</strong> {study.outcome}</p>
+              <article key={study.client} className="reveal micro-lift-card rounded-[2rem] border border-border bg-white overflow-hidden" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,196,154,0.08)' }}>
+                <div className="h-1 w-full bg-gradient-to-r from-cyan-400 to-cyan-600/50" />
+                <div className="p-8 md:p-10">
+                  <span className="metric-pill">{study.sector}</span>
+                  <h3 className="text-2xl md:text-3xl font-bold mb-1 text-text">{study.client}</h3>
+                  <p className="text-muted text-sm mb-6 leading-relaxed">{study.challenge}</p>
+                  <div className="rounded-2xl bg-[#f2fbf8] border border-cyan-400/15 p-5">
+                    <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 mb-2">Outcome</p>
+                    <p className="text-text/85 text-sm md:text-base leading-relaxed font-medium">{study.outcome}</p>
+                  </div>
+                </div>
               </article>
             ))}
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {TESTIMONIALS.slice(0, 1).map((item) => (
-              <blockquote key={item.author + item.role} className="reveal glass micro-lift-card p-8 rounded-[2rem] border-border">
-                <p className="text-lg leading-relaxed text-text mb-6">“{item.quote}”</p>
-                <footer className="text-sm text-muted">
-                  <span className="font-semibold text-text">{item.author}</span>, {item.role}
+            {TESTIMONIALS.slice(0, 2).map((item) => (
+              <blockquote key={item.author + item.role} className="reveal quote-card micro-lift-card">
+                <p className="relative z-10 text-lg leading-relaxed text-text/90 mb-8 pt-8">{item.quote}</p>
+                <footer className="flex items-center gap-3 border-t border-border/50 pt-5">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                    {item.author[0]}
+                  </div>
+                  <div>
+                    <p className="font-bold text-text text-sm">{item.author}</p>
+                    <p className="text-muted text-xs">{item.role}</p>
+                  </div>
                 </footer>
               </blockquote>
             ))}
@@ -811,12 +850,19 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
-                className="reveal glass micro-lift-card luxury-panel p-8 rounded-[2rem] border-border"
+                className="reveal micro-lift-card rounded-[2rem] border border-border bg-white overflow-hidden"
+                style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,196,154,0.08)' }}
               >
-                <p className="text-[10px] font-bold uppercase tracking-widest text-text/70 mb-3">{study.function}</p>
-                <h3 className="text-2xl font-bold text-text mb-4">{study.company}</h3>
-                <p className="text-sm text-muted leading-relaxed mb-3"><span className="text-text font-semibold">Challenge:</span> {study.challenge}</p>
-                <p className="text-sm text-muted leading-relaxed"><span className="text-text font-semibold">Result:</span> {study.result}</p>
+                <div className="h-1 w-full bg-gradient-to-r from-cyan-400 to-cyan-600/50" />
+                <div className="p-8">
+                  <span className="metric-pill">{study.function}</span>
+                  <h3 className="text-2xl font-bold text-text mb-3">{study.company}</h3>
+                  <p className="text-sm text-muted leading-relaxed mb-4">{study.challenge}</p>
+                  <div className="rounded-xl bg-[#f2fbf8] border border-cyan-400/15 p-4">
+                    <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 mb-1">Result</p>
+                    <p className="text-text/85 text-sm leading-relaxed font-medium">{study.result}</p>
+                  </div>
+                </div>
               </motion.article>
             ))}
           </div>
@@ -840,23 +886,41 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </p>
           </div>
 
-          {/* Simplified service list */}
-          <div className="grid gap-4">
+          <div className="grid md:grid-cols-3 gap-6 reveal">
             {SERVICES.slice(0, 3).map((service, idx) => (
-              <div
+              <motion.div
                 key={idx}
-                className="reveal rounded-[1.5rem] border border-border/70 bg-transparent p-5 md:p-6"
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="service-dark micro-lift-card rounded-[2rem] border p-8 md:p-10 flex flex-col gap-5 group relative overflow-hidden"
               >
-                <div className="flex items-start justify-between gap-6">
-                  <div className="min-w-0">
-                    <h3 className="text-lg md:text-xl font-bold text-text mb-2">{service.title}</h3>
-                    <p className="text-muted text-sm md:text-base leading-relaxed max-w-3xl">{service.description}</p>
-                  </div>
-                  <div className="hidden md:block text-right text-[10px] uppercase tracking-[0.22em] text-text/45 whitespace-nowrap">
-                    {service.tags.slice(0, 2).join(' · ')}
-                  </div>
+                {/* Glow orb per card */}
+                <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full opacity-20 blur-3xl pointer-events-none"
+                  style={{ background: idx === 0 ? 'radial-gradient(#00C49A, transparent)' : idx === 1 ? 'radial-gradient(#6366f1, transparent)' : 'radial-gradient(#c026d3, transparent)' }}
+                />
+                <div className="w-14 h-14 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                  {service.icon}
                 </div>
-              </div>
+                <div>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {service.tags.slice(0, 2).map(tag => (
+                      <span key={tag} className="text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/10 text-white/50">{tag}</span>
+                    ))}
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3 leading-snug">{service.title}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed">{service.description.split('.')[0]}.</p>
+                </div>
+                <ul className="mt-auto space-y-2 pt-4 border-t border-white/8">
+                  {service.outcomes.map(o => (
+                    <li key={o} className="flex items-start gap-2 text-xs text-white/55">
+                      <span className="text-cyan-400 mt-0.5 flex-shrink-0">✓</span>
+                      {o}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -879,7 +943,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </div>
 
           {/* Interactive world map */}
-          <div className="reveal rounded-[3rem] border border-border bg-background/80 p-4 md:p-8 mb-12 overflow-hidden shadow-none">
+          <div className="reveal rounded-[3rem] border border-cyan-400/15 bg-[#f4fcf9] p-4 md:p-8 mb-12 overflow-hidden relative" style={{ boxShadow: '0 0 60px rgba(0,196,154,0.08), inset 0 1px 0 rgba(255,255,255,0.8)' }}>
             <WorldMapSVG hubs={TALENT_HUBS} onHubClick={setSelectedHub} />
           </div>
 
