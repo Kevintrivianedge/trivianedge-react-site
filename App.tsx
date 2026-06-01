@@ -224,12 +224,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 1: HERO ===== */}
       <section
         aria-label="Hero"
-        className="relative min-h-screen flex items-center px-4 sm:px-6 overflow-hidden"
+        className="relative min-h-screen flex flex-col px-4 sm:px-6 overflow-hidden"
       >
         <div className="absolute top-0 right-0 w-[55%] h-[70%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at top right, rgba(0,196,154,0.07) 0%, transparent 65%)' }} />
 
+        {/* Hero content — flex-1 so it expands and pushes stats to the bottom */}
         <motion.div
-          className="max-w-7xl mx-auto w-full relative z-10 pt-20"
+          className="flex-1 flex items-center max-w-7xl mx-auto w-full relative z-10 pt-20 pb-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
@@ -298,9 +299,9 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </div>
         </motion.div>
 
-        {/* Bottom stats strip — anchored to bottom of hero viewport */}
+        {/* Bottom stats strip — flows naturally below content, never overlaps */}
         <motion.div
-          className="absolute bottom-0 left-0 right-0 px-4 sm:px-6 pb-10"
+          className="w-full px-0 pb-10 relative z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.0, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}

@@ -1,0 +1,24 @@
+# ── Hashed JS/CSS bundles (Vite appends content hash) — cache 1 year ──
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# ── Static media in /public (no hash, so shorter TTL) ──
+/*.svg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+/*.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+/*.ico
+  Cache-Control: public, max-age=86400
+
+# ── Service Worker / manifest ──
+/manifest.json
+  Cache-Control: public, max-age=3600
+
+# ── HTML pages: no-store so browsers always re-validate ──
+/*
+  Cache-Control: public, no-cache
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  X-XSS-Protection: 1; mode=block

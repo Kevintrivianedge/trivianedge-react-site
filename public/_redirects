@@ -1,0 +1,6 @@
+# Canonicalise to https://www.trivianedge.com
+# Non-www → www (both http and https)
+http://trivianedge.com/*   https://www.trivianedge.com/:splat  301
+https://trivianedge.com/*  https://www.trivianedge.com/:splat  301
+# Plain http www → https www
+http://www.trivianedge.com/*  https://www.trivianedge.com/:splat  301
