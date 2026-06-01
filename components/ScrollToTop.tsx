@@ -34,7 +34,7 @@ const ScrollToTop = () => {
         className="p-4 rounded-full bg-surface border border-border backdrop-blur-md hover-neon-glow group relative"
         aria-label="Scroll to top"
       >
-        <ArrowUp className="w-6 h-6 text-muted group-hover:text-cyan-400 transition-colors" />
+        <ArrowUp className="w-6 h-6 text-muted group-hover:text-text transition-colors" />
       </button>
     </div>
   );

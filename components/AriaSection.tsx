@@ -36,18 +36,18 @@ const AriaSection: React.FC = () => {
   return (
     <section id="aria" aria-label="Trivian Aria HR Platform" className="py-16 md:py-32 px-4 md:px-6 relative">
       {/* Static radial gradient replaces blur-[120px] for zero GPU compositing cost */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full -z-10 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(34,211,238,0.05) 0%, rgba(139,92,246,0.05) 50%, transparent 80%)' }} />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full -z-10 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(15,23,42,0.05) 0%, transparent 80%)' }} />
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
         <div className="text-center mb-20 reveal">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono tracking-widest uppercase mb-8">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-border text-text/70 text-xs font-mono tracking-widest uppercase mb-8">
+            <span className="w-2 h-2 rounded-full bg-text/60 animate-pulse" />
             Now in Development: Phase 1
           </span>
           <h2 className="text-4xl md:text-7xl font-bold mb-6 tracking-tight leading-[1.1] font-['Space_Grotesk'] text-text">
             Meet Trivian Aria.<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-500">HR on Autopilot.</span>
+            <span className="text-text/70">HR on Autopilot.</span>
           </h2>
           <p className="text-muted text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-6">
             Trivian Aria is TrivianEdge's proprietary AI-powered HRIS platform, built to eliminate the Ops-HR language gap from within. We've begun Phase 1 development and are opening early access to select companies completely free.
@@ -62,12 +62,12 @@ const AriaSection: React.FC = () => {
           {ARIA_FEATURES.map((feature, i) => (
             <div
               key={feature.title}
-              className="reveal glass p-8 rounded-[2.5rem] border-border bg-surface hover:border-cyan-500/30 transition-all duration-300 group relative overflow-hidden tilt-card"
+              className="reveal glass p-8 rounded-[2.5rem] border-border bg-surface transition-all duration-300 group relative overflow-hidden tilt-card"
               style={{ animationDelay: `${i * 80}ms` }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative z-10">
-                <div className="p-3 rounded-2xl bg-surface border border-border inline-flex mb-6 group-hover:scale-110 transition-transform">
+                <div className="p-3 rounded-2xl bg-surface border border-border inline-flex mb-6">
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-bold text-text mb-3 font-['Space_Grotesk']">{feature.title}</h3>
@@ -79,18 +79,18 @@ const AriaSection: React.FC = () => {
 
         {/* Early Access CTA + Form */}
         <div className="reveal glass p-12 md:p-16 rounded-[3rem] border-border relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.10) 0%, transparent 70%)' }} />
-          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%)' }} />
+          <div className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,23,42,0.08) 0%, transparent 70%)' }} />
+          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,23,42,0.05) 0%, transparent 70%)' }} />
           <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
 
             {/* Left: CTA copy */}
             <div>
-              <span className="inline-block px-4 py-1.5 rounded-full text-xs font-mono tracking-widest uppercase mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-500 border border-cyan-500/20">
+              <span className="inline-block px-4 py-1.5 rounded-full text-xs font-mono tracking-widest uppercase mb-6 text-text/70 border border-border">
                 Early Access
               </span>
               <h3 className="text-3xl md:text-5xl font-bold mb-6 text-text font-['Space_Grotesk'] leading-tight">
                 Free for up to<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-500">10 Employees.</span>
+                <span className="text-text/70">10 Employees.</span>
               </h3>
               <p className="text-muted text-base leading-relaxed mb-4">
                 Phase 1 is live. Companies can sign up for early access and use Trivian Aria completely free for teams of up to 10 employees. No credit card required, no strings attached.
@@ -98,7 +98,7 @@ const AriaSection: React.FC = () => {
               <ul className="space-y-3">
                 {['No credit card required', 'Full Phase 1 feature set', 'Priority onboarding support', 'Free forever for ≤ 10 employees'].map((item) => (
                   <li key={item} className="flex items-center gap-3 text-sm text-muted">
-                    <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-text/70 shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -109,8 +109,8 @@ const AriaSection: React.FC = () => {
             <div>
               {submitted ? (
                 <div className="flex flex-col items-center justify-center gap-6 py-12 text-center">
-                  <div className="p-4 rounded-full bg-cyan-500/10 border border-cyan-500/20">
-                    <CheckCircle2 className="w-10 h-10 text-cyan-400" />
+                  <div className="p-4 rounded-full bg-surface border border-border">
+                    <CheckCircle2 className="w-10 h-10 text-text/70" />
                   </div>
                   <h4 className="text-2xl font-bold text-text font-['Space_Grotesk']">You're on the list.</h4>
                   <p className="text-muted text-sm leading-relaxed max-w-xs">

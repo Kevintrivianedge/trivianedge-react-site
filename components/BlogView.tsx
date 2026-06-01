@@ -50,7 +50,7 @@ const BlogView: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="mb-20 reveal">
           <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-border bg-surface backdrop-blur-md text-[10px] font-bold tracking-[0.2em] uppercase mb-8 text-text">
-            <BookOpen className="w-4 h-4 text-cyan-400" />
+            <BookOpen className="w-4 h-4 text-text/70" />
             Intel & Insights
           </div>
           <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 text-text">Practical ideas for <br className="hidden md:block" /> <span className="text-gradient">building faster, cleaner operations.</span></h2>
@@ -97,7 +97,7 @@ const BlogView: React.FC = () => {
               type="button"
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
               disabled={safePage === 1}
-              className="p-3 rounded-full border border-border bg-surface text-muted hover:text-cyan-400 hover:border-cyan-500/40 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className="p-3 rounded-full border border-border bg-surface text-muted hover:text-text hover:border-border transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Previous page"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -109,7 +109,7 @@ const BlogView: React.FC = () => {
               type="button"
               onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
               disabled={safePage === totalPages}
-              className="p-3 rounded-full border border-border bg-surface text-muted hover:text-cyan-400 hover:border-cyan-500/40 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className="p-3 rounded-full border border-border bg-surface text-muted hover:text-text hover:border-border transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Next page"
             >
               <ChevronRight className="w-5 h-5" />

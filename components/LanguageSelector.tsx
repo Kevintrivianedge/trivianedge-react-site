@@ -24,7 +24,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = "", var
   const triggerRef = useRef<HTMLButtonElement>(null);
   const firstOptionRef = useRef<HTMLButtonElement>(null);
 
-  const textColor = variant === 'banner' ? 'text-gray-300 hover:text-white' : 'text-gray-400 hover:text-cyan-400';
+  const textColor = variant === 'banner' ? 'text-gray-300 hover:text-white' : 'text-gray-400 hover:text-text';
   const dropdownBg = 'bg-[#0a0a0f] border border-[rgba(255,255,255,0.08)]';
 
   // Close on outside click
@@ -71,7 +71,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = "", var
         ref={triggerRef}
         type="button"
         onClick={() => setIsOpen(o => !o)}
-        className={`flex items-center gap-1.5 ${textColor} transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 rounded-md px-1 py-1`}
+        className={`flex items-center gap-1.5 ${textColor} transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-border/70 rounded-md px-1 py-1`}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label="Select Language"
@@ -98,13 +98,13 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = "", var
               onClick={() => handleSelect(code)}
               className={`w-full flex items-center gap-3 px-4 py-3 text-sm text-left transition-colors ${
                 code === language
-                  ? 'bg-cyan-500/10 text-cyan-400'
+                  ? 'bg-surface text-text'
                   : 'text-gray-300 hover:bg-white/5 hover:text-white'
               }`}
             >
               <span className="text-base leading-none">{LANGUAGE_FLAGS[code]}</span>
               <span className="flex-1 font-medium">{name}</span>
-              {code === language && <Check className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />}
+              {code === language && <Check className="w-3.5 h-3.5 text-text/70 flex-shrink-0" />}
             </button>
           ))}
         </div>
