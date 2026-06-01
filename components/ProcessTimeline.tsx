@@ -36,7 +36,7 @@ const ProcessTimeline: React.FC = () => {
               </div>
 
               {/* Content Card */}
-              <div className={`flex-1 rounded-3xl border transition-all duration-500 overflow-hidden ${isActive ? 'bg-surface border-border' : 'bg-transparent border-transparent hover:bg-surface'}`}>
+              <div className={`flex-1 rounded-3xl border transition-all duration-500 overflow-hidden ${isActive ? 'bg-surface border-cyan-500/30' : 'bg-transparent border-transparent hover:bg-surface'}`}>
                 <div className="p-6 md:p-8">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className={`text-xl md:text-2xl font-bold transition-colors ${isActive ? 'text-text' : 'text-muted group-hover:text-text'}`}>

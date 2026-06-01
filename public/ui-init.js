@@ -39,6 +39,9 @@
     });
   }
   document.addEventListener('scroll', check, { passive: true });
+  // Run immediately so above-fold elements are visible without requiring a scroll
+  check();
+  window.addEventListener('load', check);
   setInterval(check, 400);
 })();
 

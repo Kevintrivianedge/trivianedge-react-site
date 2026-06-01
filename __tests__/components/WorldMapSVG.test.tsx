@@ -40,6 +40,13 @@ describe('WorldMapSVG', () => {
     expect(screen.queryByText(firstHub.specialty)).toBeNull();
   });
 
+  it('map img does not have the invert class (would make it invisible on white background)', () => {
+    const { container } = render(<WorldMapSVG hubs={TALENT_HUBS} />);
+    const mapImg = container.querySelector('img[alt*="world map"]');
+    expect(mapImg).not.toBeNull();
+    expect(mapImg!.className).not.toMatch(/\binvert\b/);
+  });
+
   it('tooltip has an overflow-safe max-width (max-w-[min(220px,75vw)])', () => {
     render(<WorldMapSVG hubs={TALENT_HUBS} />);
     const firstHub = TALENT_HUBS[0];
