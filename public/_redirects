@@ -1,6 +1,4 @@
-# Canonicalise to https://www.trivianedge.com
-# Non-www → www (both http and https)
-http://trivianedge.com/*   https://www.trivianedge.com/:splat  301
-https://trivianedge.com/*  https://www.trivianedge.com/:splat  301
-# Plain http www → https www
-http://www.trivianedge.com/*  https://www.trivianedge.com/:splat  301
+# Wrangler _redirects only supports relative source paths.
+# HTTP→HTTPS and www canonicalization must be configured in the
+# Cloudflare dashboard: SSL/TLS > "Always Use HTTPS" and a Redirect Rule
+# for trivianedge.com/* → https://www.trivianedge.com/:splat
