@@ -19,28 +19,64 @@ import { serviceSchema, faqSchema, breadcrumbSchema } from '../../utils/seo';
 
 const FAQS = [
   {
-    question: 'What is BPO?',
+    question: 'What is BPO and how does it work?',
     answer:
-      'Business Process Outsourcing (BPO) is when a company delegates non-core operations to an expert provider like TrivianEdge, reducing costs and increasing efficiency.',
+      'Business Process Outsourcing (BPO) means hiring an outside company to run specific parts of your business operations — like customer support, data entry, back-office admin, or finance processing. Instead of building and managing those teams yourself, TrivianEdge recruits, hires, onboards, and manages them for you. You get the output without the overhead.',
   },
   {
     question: 'How much does BPO cost in Canada?',
     answer:
-      'TrivianEdge BPO services reduce operational costs by up to 40% versus in-house teams. Contact us for a custom quote.',
+      'Most TrivianEdge clients reduce operational costs by 40–60% compared to hiring locally in Canada, the US, or the UK. The exact savings depend on the role type, team size, and country. Our offshore talent hubs in the Philippines, Vietnam, Sri Lanka, and Eastern Europe offer senior-level staff at significantly lower rates than North American markets. Contact us for a custom quote.',
   },
   {
-    question: 'How fast can TrivianEdge deploy a BPO team?',
-    answer: 'We deploy fully operational offshore BPO teams within 30 days.',
-  },
-  {
-    question: 'What does TrivianEdge BPO cover?',
+    question: 'How quickly can TrivianEdge deploy a BPO team?',
     answer:
-      'IT support, back-office operations, customer service, data entry, finance processing, and more.',
+      'We deploy fully operational offshore BPO teams within 30 days. After an initial discovery call, we identify the right talent, run screening, handle contracts and payroll setup, and integrate the team into your workflow — all within the 30-day window.',
+  },
+  {
+    question: 'What types of work does TrivianEdge BPO cover?',
+    answer:
+      'We handle IT support, back-office operations, customer service, data entry and processing, finance and accounting tasks, HR administration, and more. Both technical and non-technical roles are in scope. If your business needs a repetitive or volume-heavy function handled reliably, BPO is the right solution.',
+  },
+  {
+    question: 'What countries does TrivianEdge source BPO talent from?',
+    answer:
+      'We source from the Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica. Each hub is selected for English proficiency, talent quality, and timezone alignment with North American, UK, and Australian clients.',
+  },
+  {
+    question: 'How is TrivianEdge BPO different from a traditional call center?',
+    answer:
+      'A call center is a specific type of BPO focused on inbound and outbound phone support. TrivianEdge BPO covers a much broader range — back-office admin, finance, data, IT support, and operations. We also go beyond just placing staff: we manage compliance, payroll, performance, and daily operations so you never deal with the admin side.',
+  },
+  {
+    question: 'Do I need to set up a foreign entity to use TrivianEdge BPO?',
+    answer:
+      'No. That is the entire point. TrivianEdge acts as your employer of record in each country. You never need to register a local company, open a foreign payroll account, or navigate local employment law. We handle all of that so you can hire globally without any entity setup.',
+  },
+  {
+    question: 'Can I manage the BPO team directly?',
+    answer:
+      'Yes. Your offshore BPO team is fully embedded into your workflow. They use your tools, follow your processes, and report to your managers. TrivianEdge handles all the HR, compliance, and payroll administration in the background — you run the day-to-day work.',
+  },
+  {
+    question: 'What industries benefit most from BPO services?',
+    answer:
+      'BPO works across virtually every industry: technology companies, e-commerce, financial services, healthcare administration, logistics, legal firms, and professional services. Any business with operational tasks that do not require physical presence in a specific city is a strong BPO candidate.',
+  },
+  {
+    question: 'How do you ensure quality and accountability in offshore BPO teams?',
+    answer:
+      'Every candidate goes through multi-stage screening covering technical skill, English communication, and role-specific assessments. Once placed, performance is tracked against clear KPIs. TrivianEdge handles performance management and escalation so quality issues get addressed immediately, not weeks later.',
+  },
+  {
+    question: 'What is the minimum team size for TrivianEdge BPO?',
+    answer:
+      'We can deploy a single offshore role or a team of 50+. Most clients start with 1–3 people and scale over time. There is no minimum headcount requirement.',
   },
   {
     question: 'Is TrivianEdge BPO available outside Canada?',
     answer:
-      'Yes. We serve clients in the US, UK, Australia and globally across 6 time zones.',
+      'Yes. TrivianEdge is headquartered in Toronto, Canada, but we serve clients across the US, UK, Australia, the Middle East, and Europe. Our operations model is built for global delivery.',
   },
 ];
 
@@ -186,12 +222,81 @@ const BPOPage: React.FC = () => {
           </div>
         </section>
 
-        {/* FAQ */}
+        {/* How it works */}
+        <section className="py-20 px-4 md:px-6">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold text-text mb-4">
+              How TrivianEdge BPO Works
+            </h2>
+            <p className="text-muted text-lg mb-12 leading-relaxed">
+              From your first call to your team's first day of work, the whole process takes about 30 days.
+            </p>
+            <div className="space-y-8">
+              {[
+                {
+                  step: '01',
+                  title: 'Discovery call',
+                  desc: 'We learn what your business needs: which functions to outsource, what skills are required, and how your team works. This usually takes 30–60 minutes.',
+                },
+                {
+                  step: '02',
+                  title: 'We find and screen candidates',
+                  desc: 'Our team searches across 6 talent hubs, runs technical assessments, and screens for communication skills and role fit. We only present candidates who are genuinely ready.',
+                },
+                {
+                  step: '03',
+                  title: 'You approve and we handle the rest',
+                  desc: 'Once you select your team, TrivianEdge handles contracts, payroll setup, compliance filings, and equipment. You do none of the admin work.',
+                },
+                {
+                  step: '04',
+                  title: 'Your team starts work',
+                  desc: 'Your offshore BPO team integrates into your workflow, using your tools and reporting to your managers. TrivianEdge handles all ongoing HR and payroll in the background.',
+                },
+              ].map(item => (
+                <div key={item.step} className="flex gap-6">
+                  <div className="text-4xl font-bold text-cyan-400/30 leading-none w-12 shrink-0">{item.step}</div>
+                  <div>
+                    <h3 className="font-bold text-text text-lg mb-2">{item.title}</h3>
+                    <p className="text-muted text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Why TrivianEdge */}
         <section className="py-20 px-4 md:px-6 bg-surface/30">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-text mb-10 text-center">
+            <h2 className="text-3xl font-bold text-text mb-6">
+              What Makes TrivianEdge BPO Different
+            </h2>
+            <div className="space-y-4">
+              {[
+                { title: 'We act as your employer of record', desc: 'No foreign entity setup needed. We are the legal employer in each country, which means you hire globally without any of the legal complexity.' },
+                { title: 'Payroll and compliance are our problem, not yours', desc: 'Taxes, statutory deductions, local employment law, data privacy compliance — all handled correctly in every jurisdiction, every month.' },
+                { title: 'You control the work, we control the operations', desc: 'Your BPO team follows your processes and reports to your managers. TrivianEdge manages HR, performance, and admin in the background.' },
+                { title: 'We scale with you', desc: 'Start with one person, grow to 50. There is no long-term contract forcing you to maintain a fixed headcount. Scale up or down as your business requires.' },
+              ].map(item => (
+                <div key={item.title} className="glass rounded-2xl border-border p-6">
+                  <h3 className="font-bold text-text mb-2">{item.title}</h3>
+                  <p className="text-muted text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="py-20 px-4 md:px-6">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold text-text mb-4 text-center">
               Frequently Asked Questions
             </h2>
+            <p className="text-muted text-center mb-10">
+              Everything you need to know about BPO services and working with TrivianEdge.
+            </p>
             <Accordion items={FAQS} />
           </div>
         </section>

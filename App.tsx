@@ -41,6 +41,7 @@ import {
   buildWebPageSchema,
   buildServiceItemListSchema,
   buildBPOHowToSchema,
+  buildFAQSchema,
   SEO_CONFIG,
   ALL_KEYWORDS,
   KEYWORD_CLUSTERS,
@@ -50,6 +51,7 @@ import { getSEOTrendSignal, getTrendKeywords } from './utils/seoTrends';
 // Extracted components
 import Logo from './components/Logo';
 import Navbar from './components/Navbar';
+import Accordion from './components/Accordion';
 import ProcessTimeline from './components/ProcessTimeline';
 import TalentHubCard from './components/TalentHubCard';
 import ScrollToTop from './components/ScrollToTop';
@@ -163,6 +165,49 @@ const AI_VENTURES = [
     name: 'TrivanEdge Platform',
     url: 'https://www.trivanedge.com/',
     summary: 'Expansion-facing digital platform in our ecosystem as we build the future with AI.',
+  },
+];
+
+const HOME_FAQS = [
+  {
+    question: 'What does TrivianEdge do?',
+    answer: 'TrivianEdge helps businesses hire people in other countries and build software. We handle all the hard parts: finding candidates, running payroll, managing local employment law, and keeping your team running. You tell us what you need and we deliver it in about 30 days.',
+  },
+  {
+    question: 'Where is TrivianEdge based?',
+    answer: 'TrivianEdge is headquartered in Toronto, Ontario, Canada. We serve clients across North America, the UK, Australia, and the Middle East. Our talent operations span six countries: the Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica.',
+  },
+  {
+    question: 'How quickly can TrivianEdge deploy a team?',
+    answer: 'Our standard deployment timeline is 30 days. That covers candidate sourcing, screening, legal setup, payroll, and onboarding. For urgent needs, we can move faster depending on the role type and location.',
+  },
+  {
+    question: 'How much does it cost to work with TrivianEdge?',
+    answer: 'Most clients save 40–60% compared to hiring locally in Canada, the US, or the UK. Exact pricing depends on the role, country, and team size. We offer a free consultation where we scope the engagement and give you a clear cost estimate.',
+  },
+  {
+    question: 'What types of roles can TrivianEdge hire for?',
+    answer: 'Both technical and non-technical roles. Technical: software engineers, AI developers, DevOps, QA, data scientists. Non-technical: operations, customer support, finance, HR, sales, and executive assistants. We hire the full team, not just developers.',
+  },
+  {
+    question: 'Do I need to set up a company in another country to work with TrivianEdge?',
+    answer: 'No. TrivianEdge acts as the employer of record in each country, which means you hire globally without setting up any foreign entities, payroll accounts, or legal structures. We take care of all of that.',
+  },
+  {
+    question: 'What is the difference between BPO and RPO?',
+    answer: 'BPO (Business Process Outsourcing) means we run an ongoing business function for you — like customer support, back-office admin, or data processing. RPO (Recruitment Process Outsourcing) means we run your hiring process as an embedded part of your HR team. Both can be combined, and TrivianEdge offers both under one roof.',
+  },
+  {
+    question: 'Can TrivianEdge build software and AI for my business?',
+    answer: 'Yes. Our software development team builds custom applications, platforms, and AI-powered tools. We integrate with OpenAI, Anthropic, and other AI APIs, and we build everything from scratch or on top of your existing systems. You own 100% of the code.',
+  },
+  {
+    question: 'How do you handle payroll and legal compliance in other countries?',
+    answer: 'We handle it completely. TrivianEdge manages payroll taxes, statutory deductions, employment contracts, and compliance filings in every country where we operate. You receive a single invoice from us. We deal with all the local complexity.',
+  },
+  {
+    question: 'Is there a minimum team size or contract length?',
+    answer: 'No minimum headcount — we can start with one person. Contract terms depend on the engagement model. Many clients start with a project-based arrangement and move to an ongoing model once they see results.',
   },
 ];
 
@@ -840,6 +885,28 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
+      {/* ===== FAQ ===== */}
+      <section
+        id="faq"
+        aria-label="Frequently Asked Questions"
+        className="section-shell px-4 md:px-6 border-t border-border"
+      >
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-12 reveal">
+            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-text/55 mb-4">Common questions</p>
+            <h2 className="display-section text-4xl sm:text-5xl font-bold mb-4 text-text">
+              Everything you wanted to know.
+            </h2>
+            <p className="text-muted text-lg max-w-xl mx-auto">
+              Plain answers to the questions people ask us most before they get in touch.
+            </p>
+          </div>
+          <div className="reveal">
+            <Accordion items={HOME_FAQS} />
+          </div>
+        </div>
+      </section>
+
       {/* ===== ACT 8: CTA + CONTACT ===== */}
       <section id="contact" aria-label="Contact Us" className="section-shell px-4 md:px-6">
           <div className="max-w-7xl mx-auto reveal text-center">
@@ -1103,6 +1170,7 @@ function getSEOProps(pathname: string) {
       buildSoftwareApplicationSchema(),
       buildBPOFAQSchema(),
       buildBPOHowToSchema(),
+      buildFAQSchema(HOME_FAQS),
     ],
   };
 }

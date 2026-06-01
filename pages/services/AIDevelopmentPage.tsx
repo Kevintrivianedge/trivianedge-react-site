@@ -17,27 +17,62 @@ const FAQS = [
   {
     question: 'What AI development services does TrivianEdge offer?',
     answer:
-      'We build generative AI applications, LLM integrations, machine learning models, AI automation pipelines, and AI chatbots using OpenAI, Anthropic, HuggingFace, TensorFlow, and PyTorch.',
+      'TrivianEdge builds generative AI applications, LLM integrations, machine learning models, AI automation pipelines, AI chatbots, and MLOps infrastructure. We work with OpenAI, Anthropic Claude, HuggingFace, LangChain, TensorFlow, PyTorch, AWS SageMaker, and Azure AI. Whether you need a standalone AI product or AI embedded into your existing software, our team handles the full build.',
   },
   {
-    question: 'How much does AI development outsourcing cost?',
+    question: 'How much does AI development cost with TrivianEdge?',
     answer:
-      'TrivianEdge offshore AI development saves up to 40% versus onshore teams. Book a free consultation for a project estimate.',
+      'TrivianEdge offshore AI development typically saves 40–60% compared to onshore North American or UK teams. A senior AI engineer in Canada or the US costs $150,000–$200,000 per year. Through our offshore model, you access the same skill level at significantly lower cost. We scope each project individually — contact us for an estimate based on your specific requirements.',
   },
   {
-    question: 'How quickly can an AI project start?',
+    question: 'How quickly can an AI development project start?',
     answer:
-      'We deploy a dedicated offshore AI development team within 30 days of engagement.',
+      'We assemble and deploy a dedicated offshore AI development team within 30 days of engagement. The first week is scoping and technical architecture, week two covers environment setup and sprint planning, and active development begins in week three.',
   },
   {
-    question: 'Can TrivianEdge integrate OpenAI and Anthropic APIs?',
+    question: 'Can TrivianEdge integrate OpenAI and Anthropic APIs into my existing software?',
     answer:
-      'Yes. Our engineers are experienced with OpenAI GPT-4o, Anthropic Claude, HuggingFace, LangChain, AWS SageMaker, and Azure AI.',
+      'Yes. Our engineers are experienced with OpenAI GPT-4o, Anthropic Claude 3, HuggingFace models, LangChain, LlamaIndex, and all major AI APIs. We can add AI capabilities to your existing product — whether that is a web app, mobile app, internal tool, or enterprise system — without rebuilding what already works.',
   },
   {
     question: 'Do you build custom LLMs or fine-tune existing models?',
     answer:
-      'Yes. TrivianEdge builds custom LLM apps and fine-tunes open-source models like LLaMA and Mistral for specific business use cases.',
+      'Yes. TrivianEdge builds custom LLM applications and fine-tunes open-source models like LLaMA, Mistral, and Falcon for specific business use cases. If you need a model that understands your industry terminology, your product data, or your customer patterns, fine-tuning is often the right approach and we handle the entire process.',
+  },
+  {
+    question: 'What is the difference between AI development and traditional software development?',
+    answer:
+      'Traditional software follows exact rules you program in advance. AI software learns from data and makes predictions, decisions, or generates content in ways you cannot fully script. AI development requires expertise in model training, data pipelines, vector databases, prompt engineering, and inference optimization — skills that go beyond standard software engineering.',
+  },
+  {
+    question: 'Can you add AI to software I have already built?',
+    answer:
+      'Yes. This is one of the most common engagements. We audit your existing codebase, identify where AI adds the most value (document processing, customer support automation, recommendation engines, predictive analytics), and integrate the AI layer cleanly without breaking what already works.',
+  },
+  {
+    question: 'What industries do you build AI solutions for?',
+    answer:
+      'We build AI for technology companies, financial services, healthcare, legal tech, logistics, e-commerce, real estate, and professional services. Common applications include document intelligence, customer service automation, fraud detection, content generation, data analysis, and predictive modeling.',
+  },
+  {
+    question: 'Who owns the AI model and code TrivianEdge builds?',
+    answer:
+      'You own 100% of the code, models, and intellectual property. TrivianEdge never retains any rights to what we build for your business. This is written into every engagement agreement.',
+  },
+  {
+    question: 'How do you handle data privacy when building AI?',
+    answer:
+      'We follow a security-first development approach from day one. Your data never flows to third-party training pipelines without your explicit consent. We design AI systems that comply with GDPR, PIPEDA, HIPAA (where applicable), and other relevant regulations. All data handling is documented and auditable.',
+  },
+  {
+    question: 'Can TrivianEdge maintain and improve the AI after launch?',
+    answer:
+      'Yes. AI systems need ongoing monitoring, retraining, and improvement as your data grows and your requirements change. We offer ongoing support and MLOps services to keep your AI performing well after the initial launch — including performance monitoring, model drift detection, and feature updates.',
+  },
+  {
+    question: 'Do I need to provide training data for my AI project?',
+    answer:
+      'It depends on the type of AI. For fine-tuned models, some existing data is helpful but not always required — we can help you structure and label data as part of the engagement. For applications built on top of existing LLMs like GPT-4 or Claude, minimal custom data is needed. We assess your data situation during the initial scoping call and recommend the right approach.',
   },
 ];
 
