@@ -99,6 +99,12 @@ const SectionBridge: React.FC<{ label: string }> = ({ label }) => {
   );
 };
 
+const HERO_PHRASES = [
+  "From red tape\nto release.",
+  "You build the vision.\nWe run the system.",
+  "Global expansion.\nMinus the drag.",
+];
+
 const HERO_MESSAGE = 'Build the team.\nRun the system.';
 const HERO_PROOF = '30-day deployment across 6 countries with compliant hiring, payroll, and delivery.';
 
