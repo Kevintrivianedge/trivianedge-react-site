@@ -1,19 +1,17 @@
 import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import { AnimatePresence, motion, useReducedMotion, useInView } from 'framer-motion';
 import { 
-  ArrowRight, 
+  ArrowRight,
   ChevronRight,
   Globe2,
-  Zap, 
+  Zap,
   Mail,
   Linkedin,
   Twitter,
-  ExternalLink,
   Layers,
   X,
   CheckCircle2,
   TrendingUp,
-  MapPin,
   Server,
   Users2,
   ShieldCheck,
@@ -97,50 +95,32 @@ const TICKER_ITEMS = [
 
 const PREMIUM_FEATURES = [
   {
-    title: 'Hiring Concierge Desk',
-    description: 'Like a private hiring desk for your business. We define roles, find people, vet them, and hand you ready-to-work talent.',
+    title: 'We Find the People',
+    description: 'Tell us the role and the skills you need. We search across six countries, screen every candidate, and only send you people who are ready to start.',
     icon: Users2,
     accent: 'text-text/70',
     border: 'border-border',
   },
   {
-    title: '24/7 Delivery Control Room',
-    description: 'Think air traffic control for your operations. We manage handoffs so work keeps moving when one team logs off.',
-    icon: TrendingUp,
-    accent: 'text-text/70',
-    border: 'border-border',
-  },
-  {
-    title: 'Payroll and Compliance Shield',
-    description: 'We handle contracts, payroll, and local rules in each country so you scale without legal headaches.',
+    title: 'We Handle the Paperwork',
+    description: 'Contracts, payroll, taxes, and local employment laws in every country, all taken care of. You never deal with foreign government offices or compliance filings.',
     icon: ShieldCheck,
     accent: 'text-text/70',
     border: 'border-border',
   },
   {
-    title: 'Tech and Non-Tech Team Builder',
-    description: 'We hire developers, and we also hire ops, finance, support, HR, and managers. One partner for your full team.',
-    icon: Layers,
+    title: 'We Keep the Work Moving',
+    description: 'With teams across multiple time zones, your work never sits idle overnight. Handoffs are managed, progress is tracked, and issues get flagged before they become problems.',
+    icon: TrendingUp,
     accent: 'text-text/70',
     border: 'border-border',
   },
-];
-
-const SERVICE_ANALOGIES = [
   {
-    title: 'Like Air Traffic Control For Hiring',
-    copy: 'You focus on growth. We direct the right people into the right roles so nothing collides.',
-    icon: MapPin,
-  },
-  {
-    title: 'Like A Pit Crew For Your Company',
-    copy: 'While you run the race, we handle hiring changes, setup, and process fixes so you stay fast.',
-    icon: Zap,
-  },
-  {
-    title: 'Like One Operating System For Your Team',
-    copy: 'Instead of juggling five vendors, you get one clean system for hiring, onboarding, payroll, and delivery.',
-    icon: ExternalLink,
+    title: 'Tech and Non-Tech, Both',
+    description: 'We hire developers, but also customer support, finance, HR, operations, and sales. One partner covers your full team, not just the technical side.',
+    icon: Layers,
+    accent: 'text-text/70',
+    border: 'border-border',
   },
 ];
 
@@ -199,13 +179,12 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 1: HERO ===== */}
       <section
         aria-label="Hero"
-        className="relative min-h-screen flex items-center pt-28 pb-20 px-4 sm:px-6 overflow-hidden"
+        className="relative min-h-screen flex items-center px-4 sm:px-6 overflow-hidden"
       >
-        {/* Subtle teal glow, top-right — like Apple product page atmosphere */}
         <div className="absolute top-0 right-0 w-[55%] h-[70%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at top right, rgba(0,196,154,0.07) 0%, transparent 65%)' }} />
 
         <motion.div
-          className="max-w-7xl mx-auto w-full relative z-10"
+          className="max-w-7xl mx-auto w-full relative z-10 pt-20"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
@@ -252,7 +231,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col sm:flex-row items-start gap-4 mb-16 md:mb-24"
+              className="flex flex-col sm:flex-row items-start gap-4"
             >
               <a
                 href="#contact"
@@ -271,25 +250,24 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 <ChevronRight className="w-5 h-5" />
               </a>
             </motion.div>
+          </div>
+        </motion.div>
 
-            {/* Animated stats row */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-              className="pt-10 border-t border-border/50 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12"
-            >
-              <CountUpStat end={6}  suffix="" label="Countries We Source From" />
-              <CountUpStat end={40} suffix="%" label="Average Cost Savings" />
-              <CountUpStat end={30} suffix=" days" label="Average Time to Start" />
-              {/* 24/7 is a ratio, not a count, display as static */}
-              <div className="flex flex-col gap-1">
-                <span className="text-3xl md:text-4xl font-bold text-text tabular-nums">24/7</span>
-                <span className="text-xs tracking-widest text-muted uppercase font-semibold leading-tight mt-1">
-                  Operations Coverage
-                </span>
-              </div>
-            </motion.div>
+        {/* Bottom stats strip — anchored to bottom of hero viewport */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 px-4 sm:px-6 pb-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.0, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="max-w-7xl mx-auto border-t border-border/30 pt-8 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16">
+            <CountUpStat end={6}  suffix="" label="Countries We Source From" />
+            <CountUpStat end={40} suffix="%" label="Average Cost Savings" />
+            <CountUpStat end={30} suffix=" days" label="Average Time to Start" />
+            <div className="flex flex-col gap-1">
+              <span className="text-3xl md:text-4xl font-bold text-text tabular-nums">24/7</span>
+              <span className="text-xs tracking-widest text-muted uppercase font-semibold leading-tight mt-1">Operations Coverage</span>
+            </div>
           </div>
         </motion.div>
       </section>
@@ -325,14 +303,14 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           <div className="text-center mb-14 reveal">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-surface text-text/70 text-[10px] font-bold uppercase tracking-widest mb-6 float-badge">
               <ShieldCheck className="w-3 h-3" />
-              Premium Growth Layer
+              What we do
             </div>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
-              Offshore outsourcing, reinvented<br />
-              <span className="text-holo">for modern global operations.</span>
+              We hire people for your business.<br />
+              <span className="text-holo">In any country. In 30 days.</span>
             </h2>
             <p className="text-muted text-lg max-w-3xl mx-auto">
-              We bring senior-calibre offshore talent to your team in 30 days: fully compliant, directly managed, and built to scale. No body-shopping, no hidden markups, no time-zone friction.
+              Most companies spend months setting up payroll, compliance, and contracts before they can hire a single person overseas. We take all of that off your plate and hand you a ready-to-work team member in 30 days.
             </p>
           </div>
 
@@ -372,86 +350,57 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         className="section-shell px-4 md:px-6"
       >
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
-          {/* Left: analogy text */}
+          {/* Left: problem statement */}
           <div className="lg:w-1/2 reveal">
-            <div className="text-cyan-700 font-bold tracking-widest text-xs uppercase mb-4">
-              Primary wedge
-            </div>
+            <p className="text-cyan-500 font-bold tracking-widest text-xs uppercase mb-4">The problem we solve</p>
             <h2 className="display-section text-4xl md:text-5xl font-bold mb-8 leading-tight text-text">
-              We help companies grow and hire faster<br />
-              <span className="text-holo">without the usual red tape.</span>
+              Hiring globally is hard.<br />
+              <span className="text-holo">We make it simple.</span>
             </h2>
 
-            <p className="text-muted text-base md:text-lg leading-relaxed mb-8 max-w-xl">
-              In simple terms, we bring global talent to your doorstep. Tech roles, non-tech roles, payroll, compliance, and operations are all handled in one place.
+            <p className="text-muted text-base md:text-lg leading-relaxed mb-10 max-w-xl">
+              Want to hire someone in the Philippines, Vietnam, or Eastern Europe? Normally you'd need to register a local company, open a payroll account, navigate foreign employment law, and wait months. We handle every single one of those steps for you.
             </p>
 
             <div className="space-y-4">
               {[
-                { icon: '✗', text: 'Every market requires its own legal and payroll setup', bad: true },
-                { icon: '✗', text: 'Hiring great talent takes months and costs a fortune', bad: true },
-                { icon: '✗', text: 'Compliance failures slow expansion to a crawl', bad: true },
+                'Setting up legal entities in foreign countries takes 3–6 months',
+                'Local payroll, taxes, and contracts differ in every jurisdiction',
+                'Finding and vetting quality talent takes time most teams don\'t have',
               ].map(item => (
-                <div key={item.text} className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-rose-500/10 flex items-center justify-center border border-rose-500/20 flex-shrink-0">
+                <div key={item} className="flex items-start gap-3">
+                  <div className="w-5 h-5 rounded-full bg-rose-500/10 flex items-center justify-center border border-rose-500/20 flex-shrink-0 mt-0.5">
                     <X className="w-3 h-3 text-rose-500" />
                   </div>
-                  <span className="text-muted font-medium text-sm">{item.text}</span>
+                  <span className="text-muted font-medium text-sm leading-relaxed">{item}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right: visual */}
+          {/* Right: clean country + outcome cards — no photos */}
           <div className="lg:w-1/2 reveal">
-            <div className="relative rounded-[3rem] overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=70&auto=format&fit=crop"
-                alt="Diverse global team collaborating across time zones"
-                className="w-full h-[420px] object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 glass p-5 rounded-2xl border-border">
-                <p className="text-text/70 text-[10px] font-mono uppercase tracking-widest mb-3">
-                  One partner. Every country. Full compliance.
-                </p>
-                <div className="flex items-center justify-between">
-                  {['🇵🇭 Manila', '🇻🇳 Hanoi', '🇨🇦 Toronto'].map(city => (
-                    <span key={city} className="text-xs font-bold text-text">{city}</span>
-                  ))}
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              {[
+                { flag: '🇵🇭', country: 'Philippines', note: 'Top English-speaking tech + ops talent' },
+                { flag: '🇻🇳', country: 'Vietnam', note: 'Strong engineering and software teams' },
+                { flag: '🇱🇰', country: 'Sri Lanka', note: 'Finance, accounting, and back-office' },
+                { flag: '🇹🇷', country: 'Turkey', note: 'Design, development, and IT support' },
+                { flag: '🇿🇦', country: 'South Africa', note: 'Customer success and business ops' },
+                { flag: '🇨🇷', country: 'Costa Rica', note: 'Tech teams, US timezone alignment' },
+              ].map(item => (
+                <div key={item.country} className="glass rounded-2xl border border-border p-4 flex items-start gap-3">
+                  <span className="text-2xl leading-none mt-0.5">{item.flag}</span>
+                  <div>
+                    <p className="font-bold text-text text-sm">{item.country}</p>
+                    <p className="text-muted text-xs leading-relaxed mt-0.5">{item.note}</p>
+                  </div>
                 </div>
-                <div className="h-1.5 bg-surface rounded-full mt-3 overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-cyan-400 to-violet-500 w-full animate-pulse" />
-                </div>
-              </div>
+              ))}
             </div>
-
-            <div className="grid gap-3 mt-8">
-              {SERVICE_ANALOGIES.map((item, idx) => {
-                const Icon = item.icon;
-                return (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -18 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
-                    className="glass micro-lift-card luxury-panel rounded-2xl border border-border p-4"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-surface border border-border flex items-center justify-center mt-0.5">
-                        <Icon className="w-4 h-4 text-text/70" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-bold text-text mb-1">{item.title}</p>
-                        <p className="text-xs md:text-sm text-muted leading-relaxed">{item.copy}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
+            <div className="glass rounded-2xl border border-border/60 p-5 text-center">
+              <p className="text-text font-bold text-base">Your team. Up and running in 30 days.</p>
+              <p className="text-muted text-xs mt-1">Fully compliant, payroll sorted, contracts signed.</p>
             </div>
           </div>
         </div>
@@ -471,11 +420,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               Why traditional BPO breaks
             </div>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
-              Old-school outsourcing just passes work around.<br />
-              <span className="text-holo">We build the engine that runs it.</span>
+              Most outsourcing firms just pass<br />
+              <span className="text-holo">the work to someone cheaper.</span>
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
-              If you want real growth, you need one partner that handles hiring, payroll, compliance, and delivery together.
+              We do something different. We build the team around your business, handle all the admin, and stay responsible for the outcome, not just the hours billed.
             </p>
           </div>
 
@@ -491,11 +440,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               </div>
               <ul className="space-y-4">
                 {[
-                  'Pays for output, not business results',
-                  'Uses generic hiring funnels with weak fit screening',
-                  'Stops at delivery instead of owning the outcome',
-                  'Gives you limited visibility into the work',
-                  'Was not built for product teams that move fast',
+                  'They bill for hours, not results. You take on all the risk.',
+                  'They send you whoever is available, not who is right',
+                  'Once work is delivered, they disappear with no accountability',
+                  'You can\'t see what\'s happening or who is working on what',
+                  'Slow to adapt when your needs change mid-project',
                 ].map(item => (
                   <li key={item} className="flex items-start gap-3">
                     <div className="w-5 h-5 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -518,11 +467,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               </div>
               <ul className="space-y-4">
                 {[
-                  'We own the result, not just the checklist',
-                  'We screen for skill, fit, and communication',
-                  'You can see hiring, onboarding, and delivery clearly',
-                  'Legal, payroll, and compliance are built in',
-                  'The work stays tied to your product goals',
+                  'We own the outcome, not just the task list',
+                  'We hand-pick people for your specific role and culture',
+                  'Full visibility into hiring, onboarding, and progress',
+                  'Payroll, contracts, and compliance included from day one',
+                  'We adjust quickly when your priorities shift',
                 ].map(item => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-text/70 flex-shrink-0 mt-0.5" />
@@ -558,10 +507,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               How We're Built
             </div>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
-              Two engines.<br />One system.
+              Need people?<br />Need software built?<br />
+              <span className="text-holo">We do both.</span>
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
-              Your people and your product move together in one plan, not split across random vendors.
+              Most companies use three or four different vendors for hiring, payroll, and software. We bring it all under one roof so nothing falls through the cracks.
             </p>
           </div>
 
@@ -579,14 +529,14 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 </div>
               </div>
               <p className="text-muted text-sm leading-relaxed mb-6">
-                We find great people across six countries, then handle onboarding, payroll, and daily operations so your team can focus on growth.
+                Think of us as your hiring department, HR team, and payroll office all in one. You tell us what you need and we find the right person, get them set up legally, and put them to work.
               </p>
               <ul className="space-y-3">
                 {[
-                  'Niche tech and non-tech role sourcing',
-                  'Deep vetting for skill, communication, and team compatibility',
-                  'Full onboarding, contracts, and payroll management',
-                  'International compliance handled in every jurisdiction',
+                  'Tech roles (developers, engineers, QA, DevOps)',
+                  'Non-tech roles (operations, finance, support, sales)',
+                  'Contracts, payroll, and compliance in every country',
+                  'Ongoing management so you stay focused on your business',
                 ].map(item => (
                   <li key={item} className="flex items-start gap-3 text-sm text-muted">
                     <CheckCircle2 className="w-4 h-4 text-text/70 flex-shrink-0 mt-0.5" />
@@ -609,14 +559,14 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 </div>
               </div>
               <p className="text-muted text-sm leading-relaxed mb-6">
-                In-house engineering teams that build your product with security-first practices, clear delivery milestones, and full IP protection.
+                Need an app, a platform, or a custom tool built? We have a dedicated engineering team that builds software the right way: clear milestones, clean code, and everything owned by you.
               </p>
               <ul className="space-y-3">
                 {[
-                  'In-house engineering teams, not contractors',
-                  'Security-first build practices from day one',
-                  'Product-aligned delivery with clear milestones',
-                  'Full IP ownership remains with you, always',
+                  'Custom software, web apps, and internal tools',
+                  'AI and automation built into your existing workflows',
+                  'You own 100% of the code and IP, always',
+                  'No surprise costs: scoped, planned, and delivered',
                 ].map(item => (
                   <li key={item} className="flex items-start gap-3 text-sm text-muted">
                     <CheckCircle2 className="w-4 h-4 text-text/70 flex-shrink-0 mt-0.5" />
@@ -652,11 +602,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               The Headache We Take Away
             </div>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-text">
-              We remove the admin burden<br />
-              <span className="text-holo">so you stay focused on growth.</span>
+              Here's what you<br />
+              <span className="text-holo">never have to deal with.</span>
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-16 leading-relaxed">
-              Everything below is work you do not need to touch. We own it for you.
+              Every item below is something businesses normally spend weeks handling themselves. We take it all off your desk, permanently.
             </p>
           </div>
 
@@ -664,29 +614,29 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {[
               {
                 icon: <Globe2 className="w-6 h-6 text-text/70" />,
-                title: 'International Hiring Rules',
-                desc: 'Every country has different employment laws, visa requirements, and work permit rules. We know them all.',
+                title: 'Foreign Employment Law',
+                desc: 'Every country has its own rules about contracts, termination, benefits, and working hours. We know them all and apply them correctly so you never get a surprise fine or lawsuit.',
                 color: 'border-border',
                 glow: 'bg-black/5',
               },
               {
                 icon: <Server className="w-6 h-6 text-text/70" />,
-                title: 'Local Payroll & Legal',
-                desc: 'Payroll taxes, statutory deductions, and local legal requirements handled with zero errors across 6 jurisdictions.',
+                title: 'Payroll in Multiple Countries',
+                desc: 'Running payroll in Canada is complicated enough. In six countries simultaneously, it\'s a full-time job. We handle it with zero errors, every month.',
                 color: 'border-border',
                 glow: 'bg-black/5',
               },
               {
                 icon: <ShieldCheck className="w-6 h-6 text-text/70" />,
-                title: 'Cross-Border Compliance',
-                desc: 'Trade regulations, data protection laws, and bilateral agreement requirements navigated for every engagement.',
+                title: 'Compliance and Data Rules',
+                desc: 'Data protection, privacy laws, and export rules differ in every market. We make sure your business stays clean and compliant without you needing to read 200-page legal guides.',
                 color: 'border-border',
                 glow: 'bg-black/5',
               },
               {
                 icon: <TrendingUp className="w-6 h-6 text-text/70" />,
-                title: 'Delivery Oversight',
-                desc: 'Progress tracking, handoffs, and issue management. We run it so your leaders are not buried in admin.',
+                title: 'Day-to-Day Ops Management',
+                desc: 'Progress updates, team handoffs, issue tracking, and performance oversight, all managed by us so your leadership can stay focused on the actual business.',
                 color: 'border-border',
                 glow: 'bg-black/5',
               },
