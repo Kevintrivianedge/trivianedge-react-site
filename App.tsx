@@ -31,9 +31,9 @@ import SEOHead from './components/SEOHead';
 import AlgorithmMonitor from './components/AlgorithmMonitor';
 import InquiryForm from './components/InquiryForm';
 import { useAlgorithmIntelligence } from './hooks/useAlgorithmIntelligence';
-import { 
-  buildOrganizationSchema, 
-  buildWebSiteSchema, 
+import {
+  buildOrganizationSchema,
+  buildWebSiteSchema,
   buildServiceSchema,
   buildArticleSchema,
   buildSoftwareApplicationSchema,
@@ -42,6 +42,7 @@ import {
   buildBreadcrumbSchema,
   buildWebPageSchema,
   buildServiceItemListSchema,
+  buildBPOHowToSchema,
   SEO_CONFIG,
   ALL_KEYWORDS,
   KEYWORD_CLUSTERS,
@@ -143,22 +144,22 @@ const PREMIUM_FEATURES = [
     title: '24/7 Delivery Control Room',
     description: 'Think air traffic control for your operations. We manage handoffs so work keeps moving when one team logs off.',
     icon: TrendingUp,
-    accent: 'text-violet-400',
-    border: 'border-violet-500/20 hover:border-violet-500/40',
+    accent: 'text-cyan-400',
+    border: 'border-cyan-500/20 hover:border-cyan-500/40',
   },
   {
     title: 'Payroll and Compliance Shield',
     description: 'We handle contracts, payroll, and local rules in each country so you scale without legal headaches.',
     icon: ShieldCheck,
-    accent: 'text-emerald-400',
-    border: 'border-emerald-500/20 hover:border-emerald-500/40',
+    accent: 'text-cyan-400',
+    border: 'border-cyan-500/20 hover:border-cyan-500/40',
   },
   {
     title: 'Tech and Non-Tech Team Builder',
     description: 'We hire developers, and we also hire ops, finance, support, HR, and managers. One partner for your full team.',
     icon: Layers,
-    accent: 'text-orange-400',
-    border: 'border-orange-500/20 hover:border-orange-500/40',
+    accent: 'text-cyan-400',
+    border: 'border-cyan-500/20 hover:border-cyan-500/40',
   },
 ];
 
@@ -230,7 +231,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
   // Rotate hero phrases every 3.5 s
   useEffect(() => {
-    const id = setInterval(() => setPhraseIndex(i => (i + 1) % HERO_PHRASES.length), 3500);
+    const id = setInterval(() => setPhraseIndex(i => (i + 1) % HERO_PHRASES.length), 6000);
     return () => clearInterval(id);
   }, []);
 
@@ -370,7 +371,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       </section>
 
       {/* ===== ACT 2: TRUST MARQUEE ===== */}
-      <section aria-label="Trust signals" className="py-5 md:py-7 border-y border-border/70 bg-[#f8fafc] overflow-hidden">
+      <section aria-label="Trust signals" className="py-5 md:py-7 border-y border-border overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="relative overflow-hidden">
             <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-14 md:w-28 bg-gradient-to-r from-background to-transparent z-10" />
@@ -541,11 +542,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="bpo-vs-rpo"
         aria-label="Why BPO Breaks"
-        className="section-shell px-4 md:px-6 bg-[#f8fafc]"
+        className="section-shell px-4 md:px-6 border-t border-border"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-rose-500/20 bg-rose-500/5 text-rose-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
               <X className="w-3 h-3" />
               Why traditional BPO breaks
             </div>
@@ -560,8 +561,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           <div className="grid md:grid-cols-2 gap-6 reveal">
             {/* Left: Traditional BPO */}
-            <div className="glass micro-lift-card luxury-panel p-8 md:p-10 rounded-[2.5rem] border-rose-500/20 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-rose-500/5 blur-3xl pointer-events-none" />
+            <div className="glass micro-lift-card luxury-panel p-8 md:p-10 rounded-[2.5rem] border-border relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-border/30 blur-3xl pointer-events-none" />
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center">
                   <X className="w-5 h-5 text-rose-400" />
@@ -633,7 +634,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
               <Layers className="w-3 h-3" />
               How We're Built
             </div>
@@ -677,14 +678,14 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
 
             {/* Engine 2: Software */}
-            <div className="glass micro-lift-card luxury-panel p-10 rounded-[2.5rem] border-border hover:border-violet-500/30 transition-all duration-500 group relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-violet-500/5 blur-3xl group-hover:bg-violet-500/10 transition-colors duration-700 pointer-events-none" />
+            <div className="glass micro-lift-card luxury-panel p-10 rounded-[2.5rem] border-border hover:border-cyan-500/30 transition-all duration-500 group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/5 blur-3xl group-hover:bg-cyan-500/10 transition-colors duration-700 pointer-events-none" />
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-surface border border-border flex items-center justify-center group-hover:border-violet-400/30 group-hover:bg-violet-500/10 transition-all duration-500">
-                  <Cpu className="w-7 h-7 text-violet-400" />
+                <div className="w-14 h-14 rounded-2xl bg-surface border border-border flex items-center justify-center group-hover:border-cyan-400/30 group-hover:bg-cyan-500/10 transition-all duration-500">
+                  <Cpu className="w-7 h-7 text-cyan-400" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-violet-400">Engine 2</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">Engine 2</p>
                   <h3 className="text-xl font-bold text-text">Software Development</h3>
                 </div>
               </div>
@@ -699,7 +700,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   'Full IP ownership remains with you, always',
                 ].map(item => (
                   <li key={item} className="flex items-start gap-3 text-sm text-muted">
-                    <CheckCircle2 className="w-4 h-4 text-violet-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
                     {item}
                   </li>
                 ))}
@@ -724,11 +725,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="headache-removed"
         aria-label="We Remove the Bureaucracy"
-        className="section-shell px-4 md:px-6 bg-[#f8fafc]"
+        className="section-shell px-4 md:px-6 border-t border-border"
       >
         <div className="max-w-7xl mx-auto">
           <div className="max-w-4xl mx-auto text-center reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] font-bold uppercase tracking-widest mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-8">
               <ShieldCheck className="w-3 h-3" />
               The Headache We Take Away
             </div>
@@ -751,25 +752,25 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 glow: 'bg-cyan-500/5',
               },
               {
-                icon: <Server className="w-6 h-6 text-violet-400" />,
+                icon: <Server className="w-6 h-6 text-cyan-400" />,
                 title: 'Local Payroll & Legal',
                 desc: 'Payroll taxes, statutory deductions, and local legal requirements handled with zero errors across 6 jurisdictions.',
-                color: 'border-violet-500/20 hover:border-violet-500/40',
-                glow: 'bg-violet-500/5',
+                color: 'border-cyan-500/20 hover:border-cyan-500/40',
+                glow: 'bg-cyan-500/5',
               },
               {
-                icon: <ShieldCheck className="w-6 h-6 text-emerald-400" />,
+                icon: <ShieldCheck className="w-6 h-6 text-cyan-400" />,
                 title: 'Cross-Border Compliance',
                 desc: 'Trade regulations, data protection laws, and bilateral agreement requirements navigated for every engagement.',
-                color: 'border-emerald-500/20 hover:border-emerald-500/40',
-                glow: 'bg-emerald-500/5',
+                color: 'border-cyan-500/20 hover:border-cyan-500/40',
+                glow: 'bg-cyan-500/5',
               },
               {
-                icon: <TrendingUp className="w-6 h-6 text-orange-400" />,
+                icon: <TrendingUp className="w-6 h-6 text-cyan-400" />,
                 title: 'Delivery Oversight',
                 desc: 'Progress tracking, handoffs, and issue management. We run it so your leaders are not buried in admin.',
-                color: 'border-orange-500/20 hover:border-orange-500/40',
-                glow: 'bg-orange-500/5',
+                color: 'border-cyan-500/20 hover:border-cyan-500/40',
+                glow: 'bg-cyan-500/5',
               },
             ].map(item => (
               <div
@@ -799,11 +800,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="how-it-works"
         aria-label="How It Works"
-        className="section-shell px-4 md:px-6 bg-[#f8fafc]"
+        className="section-shell px-4 md:px-6 border-t border-border"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
               <Zap className="w-3 h-3" />
               Simple 4-Step Process
             </div>
@@ -869,11 +870,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="non-tech-proof"
         aria-label="Non-technical success stories"
-        className="section-shell px-4 md:px-6 bg-[#f8fafc]"
+        className="section-shell px-4 md:px-6 border-t border-border"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
               <Users2 className="w-3 h-3" />
               Non-Tech Success Stories
             </div>
@@ -912,11 +913,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="solutions"
         aria-label="Our Services"
-        className="section-shell px-4 md:px-6 bg-[#f8fafc]"
+        className="section-shell px-4 md:px-6 border-t border-border"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
               <Layers className="w-3 h-3" />
               What We Do
             </div>
@@ -1023,7 +1024,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
               <Cpu className="w-3 h-3" />
               Building The Future With AI
             </div>
@@ -1114,7 +1115,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="roles"
         aria-label="Roles We Place"
-        className="section-shell px-4 md:px-6 bg-[#f8fafc]"
+        className="section-shell px-4 md:px-6 border-t border-border"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -1180,8 +1181,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 Tech hiring, non-tech hiring, delivery support, market expansion. We will build a clear plan in plain English.
               </p>
 
-              <div className="mb-10 max-w-3xl mx-auto glass border border-violet-500/20 rounded-2xl p-6 md:p-8 micro-lift-card luxury-panel">
-                <p className="text-[10px] uppercase tracking-widest font-bold text-violet-400 mb-2">Founder Option</p>
+              <div className="mb-10 max-w-3xl mx-auto glass border border-cyan-500/20 rounded-2xl p-6 md:p-8 micro-lift-card luxury-panel">
+                <p className="text-[10px] uppercase tracking-widest font-bold text-cyan-400 mb-2">Founder Option</p>
                 <p className="text-xl md:text-2xl font-bold text-text mb-2">Have an idea? We can build your MVP free of charge.</p>
                 <p className="text-sm md:text-base text-muted">Send your idea in simple terms. If it is a fit, we will scope and build your MVP with you at no charge.</p>
                 <div className="mt-4">
@@ -1446,6 +1447,7 @@ function getSEOProps(pathname: string) {
       }),
       buildSoftwareApplicationSchema(),
       buildBPOFAQSchema(),
+      buildBPOHowToSchema(),
     ],
   };
 }

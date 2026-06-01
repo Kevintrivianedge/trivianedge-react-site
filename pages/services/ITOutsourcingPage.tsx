@@ -12,9 +12,10 @@ import {
   TrendingDown,
   Globe2,
   CheckCircle2,
+  ChevronDown,
 } from 'lucide-react';
 import SEOHead from '../../components/SEOHead';
-import { serviceSchema, breadcrumbSchema } from '../../utils/seo';
+import { serviceSchema, faqSchema, breadcrumbSchema } from '../../utils/seo';
 
 const IT_SERVICES = [
   { icon: Code2, label: 'Custom Software Development' },
@@ -32,18 +33,65 @@ const STATS = [
   { value: '100%', label: 'Embedded' },
 ];
 
+const FAQS = [
+  {
+    question: 'What is IT outsourcing and how does it work?',
+    answer:
+      'IT outsourcing means partnering with an external company to manage or deliver technology functions on your behalf. Instead of building an in-house engineering team, you work with TrivianEdge to access skilled developers, cloud engineers, and IT specialists from global talent hubs. We handle sourcing, contracts, payroll, and day-to-day management, so your team can focus on core product work.',
+  },
+  {
+    question: 'How quickly can TrivianEdge deploy an IT outsourcing team?',
+    answer:
+      'TrivianEdge deploys offshore IT teams in 30 days or less. After an initial discovery call, we search our network across the Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe and present matched candidates within days. Once approved, your team is onboarded and embedded into your existing workflow within the 30-day window.',
+  },
+  {
+    question: 'What IT outsourcing services does TrivianEdge provide?',
+    answer:
+      'TrivianEdge delivers custom software development, web and mobile application development, cybersecurity and compliance support, cloud infrastructure and DevOps, CI/CD and engineering operations, and systems integration. All delivered as dedicated offshore teams built to match your tech stack and time zone.',
+  },
+  {
+    question: 'How much can I save with IT outsourcing through TrivianEdge?',
+    answer:
+      'Most clients save between 40% and 60% on engineering costs compared to local hiring. Our offshore talent hubs in the Philippines, Sri Lanka, and Eastern Europe provide senior-level developers and engineers at significantly lower rates than North American or Western European markets, with no compromise on quality or communication.',
+  },
+  {
+    question: 'Is TrivianEdge a Canadian IT outsourcing company?',
+    answer:
+      'Yes. TrivianEdge is headquartered in Toronto, Ontario, Canada. We are a Canada-based IT outsourcing and offshore software development company serving clients across North America, the UK, Australia, and the Middle East. Our operations, contracts, and client management are run from Canada, giving you a local partner with global reach.',
+  },
+  {
+    question: 'What is the difference between IT outsourcing and offshore software development?',
+    answer:
+      'IT outsourcing is the broader practice of delegating technology functions to an external provider. Offshore software development specifically means that the development team is located in another country. TrivianEdge offers both: managed IT outsourcing from Canada and dedicated offshore development teams across multiple time zones.',
+  },
+  {
+    question: 'Can I outsource just one part of my IT function?',
+    answer:
+      'Absolutely. TrivianEdge scales to your needs. You can outsource a single function like DevOps, QA testing, or backend development, or engage us for a full offshore engineering team. We build the right model for your stage, whether you are a startup needing your first dedicated developer or an enterprise scaling a distributed team.',
+  },
+  {
+    question: 'How does TrivianEdge ensure code quality and security for offshore teams?',
+    answer:
+      'All candidates go through a rigorous vetting process including technical assessments, communication evaluations, and background checks. Offshore teams follow your code review processes, use your tooling, and integrate with your project management and CI/CD pipelines. We also support compliance requirements including SOC 2 and ISO 27001 alignment.',
+  },
+];
+
 const ITOutsourcingPage: React.FC = () => {
+  const [openIndex, setOpenIndex] = React.useState<number | null>(null);
+
   return (
     <>
       <SEOHead
         title="IT Outsourcing Canada | Offshore Software Development | TrivianEdge"
         description="Access global tech talent with TrivianEdge. IT outsourcing and offshore software development teams. 30-day deployment. Up to 40% cost savings."
+        keywords="IT outsourcing Canada, offshore software development, IT outsourcing company, managed IT services, offshore development team, software development outsourcing, TrivianEdge IT outsourcing"
         schema={[
           serviceSchema(
             'IT Outsourcing Services',
             'Information Technology Outsourcing',
             'https://www.trivianedge.com/services/it-outsourcing',
           ),
+          faqSchema(FAQS.map((f) => ({ question: f.question, answer: f.answer }))),
           breadcrumbSchema([
             { name: 'Home', url: 'https://www.trivianedge.com' },
             { name: 'Services', url: 'https://www.trivianedge.com/services' },
@@ -158,6 +206,46 @@ const ITOutsourcingPage: React.FC = () => {
                     {value}
                   </p>
                   <p className="text-muted text-sm font-medium">{label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="py-20 px-4 md:px-6 bg-surface/30">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold text-text mb-4 text-center">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-muted text-center mb-10">
+              Everything you need to know about IT outsourcing and offshore software development with TrivianEdge.
+            </p>
+            <div className="space-y-3">
+              {FAQS.map((faq, i) => (
+                <div
+                  key={i}
+                  className="glass rounded-2xl border-border overflow-hidden"
+                >
+                  <button
+                    className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
+                    onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                    aria-expanded={openIndex === i}
+                  >
+                    <span className="font-semibold text-text text-sm md:text-base">
+                      {faq.question}
+                    </span>
+                    <ChevronDown
+                      className={`w-5 h-5 text-cyan-400 flex-shrink-0 transition-transform duration-200 ${
+                        openIndex === i ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  {openIndex === i && (
+                    <div className="px-6 pb-5 text-muted text-sm leading-relaxed border-t border-border/40 pt-4">
+                      {faq.answer}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

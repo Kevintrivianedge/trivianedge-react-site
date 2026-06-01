@@ -1,6 +1,36 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, CalendarDays, CheckCircle2, Sparkles } from 'lucide-react';
+import SEOHead from '../components/SEOHead';
+import { serviceSchema, faqSchema, breadcrumbSchema } from '../utils/seo';
+
+const VENTURE_FAQS = [
+  {
+    question: 'What is TrivianEdge Venture Studio?',
+    answer:
+      'TrivianEdge Venture Studio is a build partnership for founders and operators who have a validated idea and need a technical co-builder. We pair your concept with TrivianEdge\'s offshore engineering talent and AI development capabilities to take you from concept to shipped MVP.',
+  },
+  {
+    question: 'Who is the Venture Studio for?',
+    answer:
+      'The Venture Studio is designed for early-stage founders, business owners with a SaaS or platform idea, and operators who want to build a digital product but lack an in-house technical team. We work with FinTech, HealthTech, B2B SaaS, Logistics, EdTech, and other sectors.',
+  },
+  {
+    question: 'How does the Venture Studio application process work?',
+    answer:
+      'You complete our qualification form covering your founder profile, problem definition, market, build readiness, and AI depth requirements. Our team reviews your submission and schedules a discovery call. If there is a strong fit, we outline a build partnership and deployment plan.',
+  },
+  {
+    question: 'What do I get from a Venture Studio engagement?',
+    answer:
+      'Accepted ventures receive access to TrivianEdge\'s offshore software development team, AI engineering resources, product management support, and our 30-day MVP deployment methodology. We move fast and stay embedded until your product is live.',
+  },
+  {
+    question: 'Do I need to have funding to apply to the Venture Studio?',
+    answer:
+      'No. You do not need existing funding to apply. We evaluate ventures based on founder commitment, idea viability, market clarity, and build readiness, not current funding status. We do discuss resource planning and investment readiness during the discovery process.',
+  },
+];
 
 type FormState = {
   fullName: string;
@@ -125,7 +155,7 @@ const getQualificationTier = (score: number) => {
     return {
       title: 'Priority Build Candidate',
       note: 'Strong fit for the free MVP lane. We should schedule a founder call this week.',
-      tone: 'text-emerald-400',
+      tone: 'text-cyan-400',
     };
   }
   if (score >= 62) {
@@ -412,6 +442,24 @@ const VentureStudioPage: React.FC = () => {
   }, [form, readinessScore, tier.title, resolvedIndustry]);
 
   return (
+    <>
+      <SEOHead
+        title="Venture Studio | Build Your MVP with TrivianEdge"
+        description="TrivianEdge Venture Studio pairs early-stage founders with offshore engineering talent and AI development to ship your MVP in 30 days. Apply now."
+        keywords="venture studio Canada, MVP development, startup build partner, offshore MVP development, AI startup, SaaS MVP, TrivianEdge venture studio"
+        schema={[
+          serviceSchema(
+            'Venture Studio MVP Development',
+            'Software Development and Startup Incubation',
+            'https://www.trivianedge.com/venture-studio',
+          ),
+          faqSchema(VENTURE_FAQS.map((f) => ({ question: f.question, answer: f.answer }))),
+          breadcrumbSchema([
+            { name: 'Home', url: 'https://www.trivianedge.com' },
+            { name: 'Venture Studio', url: 'https://www.trivianedge.com/venture-studio' },
+          ]),
+        ]}
+      />
     <section className="section-shell px-4 md:px-6" aria-label="Venture Studio MVP qualification">
       <div className="max-w-5xl mx-auto">
         <motion.div
@@ -420,7 +468,7 @@ const VentureStudioPage: React.FC = () => {
           transition={{ duration: shouldReduceMotion ? 0.01 : 0.5 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-6">
             <Sparkles className="w-3 h-3" />
             Venture Studio
           </div>
@@ -667,7 +715,7 @@ const VentureStudioPage: React.FC = () => {
               <p className="text-xs text-muted">Timeline and commitment increase priority.</p>
             </div>
 
-            <div className="rounded-xl border border-violet-500/20 bg-violet-500/5 p-4 mb-6 space-y-3">
+            <div className="rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-4 mb-6 space-y-3">
               <p className="text-xs uppercase tracking-widest font-bold text-violet-300">Launch Traction Stack</p>
               <div className="flex flex-wrap gap-2">
                 {['AWS', 'Azure', 'Google Cloud', 'Cloudflare', 'Stripe'].map((platform) => (
@@ -727,6 +775,7 @@ const VentureStudioPage: React.FC = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

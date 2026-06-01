@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import VentureStudioPage from '../../pages/VentureStudioPage';
 
 type FetchMock = ReturnType<typeof vi.fn>;
@@ -84,7 +86,7 @@ describe('VentureStudioPage', () => {
   it('keeps user on step 1 when required founder fields are empty', () => {
     (globalThis as unknown as { fetch: FetchMock }).fetch = buildFetchMock();
 
-    render(<VentureStudioPage />);
+    render(<HelmetProvider><MemoryRouter><VentureStudioPage /></MemoryRouter></HelmetProvider>);
 
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
 
@@ -95,7 +97,7 @@ describe('VentureStudioPage', () => {
   it('requires a typed custom industry when Other is selected', async () => {
     (globalThis as unknown as { fetch: FetchMock }).fetch = buildFetchMock();
 
-    render(<VentureStudioPage />);
+    render(<HelmetProvider><MemoryRouter><VentureStudioPage /></MemoryRouter></HelmetProvider>);
 
     fireEvent.change(screen.getByLabelText('Full Name'), { target: { value: 'John Founder' } });
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'john@startup.com' } });
@@ -119,7 +121,7 @@ describe('VentureStudioPage', () => {
     const fetchMock = buildFetchMock();
     (globalThis as unknown as { fetch: FetchMock }).fetch = fetchMock;
 
-    render(<VentureStudioPage />);
+    render(<HelmetProvider><MemoryRouter><VentureStudioPage /></MemoryRouter></HelmetProvider>);
     await fillAndAdvanceToReview();
 
     fireEvent.click(screen.getByRole('button', { name: 'Submit Qualification' }));
@@ -143,7 +145,7 @@ describe('VentureStudioPage', () => {
     });
     (globalThis as unknown as { fetch: FetchMock }).fetch = fetchMock;
 
-    render(<VentureStudioPage />);
+    render(<HelmetProvider><MemoryRouter><VentureStudioPage /></MemoryRouter></HelmetProvider>);
     await fillAndAdvanceToReview();
 
     fireEvent.click(screen.getByRole('button', { name: 'Submit Qualification' }));

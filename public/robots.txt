@@ -1,7 +1,16 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /payments/
+Disallow: /private/
+Disallow: /account/
+Disallow: /login/
+Disallow: /register/
+Disallow: /checkout/
 
+# Google — no crawl delay, allow all public content
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 0
@@ -9,23 +18,70 @@ Crawl-delay: 0
 User-agent: Googlebot-Image
 Allow: /
 
+# Bing
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
 
+# Yahoo Slurp
 User-agent: Slurp
 Allow: /
 Crawl-delay: 1
 
+# DuckDuckGo
 User-agent: DuckDuckBot
 Allow: /
 
+# Baidu
 User-agent: Baiduspider
 Allow: /
 Crawl-delay: 2
 
+# Yandex
 User-agent: YandexBot
 Allow: /
 Crawl-delay: 2
+
+# AI crawlers — allow full public indexing for AEO visibility
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /payments/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /payments/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /payments/
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /payments/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /payments/
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
 
 Sitemap: https://www.trivianedge.com/sitemap.xml

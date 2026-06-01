@@ -569,6 +569,96 @@ export function articleSchema(params: {
   return schema;
 }
 
+// ---------------------------------------------------------------------------
+// HowTo schema — surfaces TrivianEdge process steps in rich results & AI answers
+// ---------------------------------------------------------------------------
+
+export interface HowToStep {
+  name: string;
+  text: string;
+  url?: string;
+  image?: string;
+}
+
+export interface HowToSupply {
+  name: string;
+}
+
+export interface HowToTool {
+  name: string;
+}
+
+/**
+ * Returns a Schema.org HowTo for any tutorial or step-by-step guide.
+ * Add to SEOHead `schema` prop on process-oriented pages.
+ */
+export function howToSchema(params: {
+  name: string;
+  description: string;
+  totalTime?: string;
+  image?: string;
+  supply?: HowToSupply[];
+  tool?: HowToTool[];
+  steps: HowToStep[];
+}): SchemaObject {
+  const schema: SchemaObject = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: params.name,
+    description: params.description,
+    step: params.steps.map((step, i) => {
+      const s: SchemaObject = {
+        '@type': 'HowToStep',
+        position: i + 1,
+        name: step.name,
+        text: step.text,
+      };
+      if (step.url) s['url'] = step.url;
+      if (step.image) s['image'] = step.image;
+      return s;
+    }),
+  };
+  if (params.totalTime) schema['totalTime'] = params.totalTime;
+  if (params.image) schema['image'] = params.image;
+  if (params.supply?.length)
+    schema['supply'] = params.supply.map((s) => ({ '@type': 'HowToSupply', name: s.name }));
+  if (params.tool?.length)
+    schema['tool'] = params.tool.map((t) => ({ '@type': 'HowToTool', name: t.name }));
+  return schema;
+}
+
+/** Pre-built HowTo for TrivianEdge's 4-step BPO/outsourcing onboarding process */
+export function buildBPOHowToSchema(): SchemaObject {
+  return howToSchema({
+    name: 'How to Outsource a Business Function with TrivianEdge',
+    description:
+      'A step-by-step guide to deploying an offshore team or outsourcing a business process through TrivianEdge in 30 days.',
+    totalTime: 'P30D',
+    steps: [
+      {
+        name: 'Tell Us What You Need',
+        text: 'Submit an inquiry describing the role, function, or process you want to outsource. TrivianEdge schedules a discovery call to understand your business, team structure, tech stack, and goals.',
+        url: 'https://www.trivianedge.com/contact',
+      },
+      {
+        name: 'We Find the Right Match',
+        text: 'TrivianEdge searches its global talent network across the Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe to identify candidates who match your requirements in skills, time zone, and culture.',
+        url: 'https://www.trivianedge.com/services/bpo',
+      },
+      {
+        name: 'Your Team Starts in 30 Days',
+        text: 'Your hire is onboarded and integrated into your existing workflow within 30 days. TrivianEdge handles contracts, compliance, payroll, and equipment so you can focus on results.',
+        url: 'https://www.trivianedge.com/services/bpo',
+      },
+      {
+        name: 'We Keep Making It Better',
+        text: 'TrivianEdge monitors performance, provides ongoing management support, and scales your team as your business grows. You get a dedicated point of contact and regular check-ins.',
+        url: 'https://www.trivianedge.com/trust',
+      },
+    ],
+  });
+}
+
 /** Schema.org ItemList service catalogue for rich results */
 export function buildServiceItemListSchema(): object {
   const services = [

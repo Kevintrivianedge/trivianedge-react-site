@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, CalendarDays, Phone, Mail } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import InquiryForm from '../components/InquiryForm';
+import { buildLocalBusinessSchema, breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
 
 const ContactPage: React.FC = () => {
   const navigate = useNavigate();
@@ -12,6 +13,23 @@ const ContactPage: React.FC = () => {
       <SEOHead
         title="Contact TrivianEdge | Book a Call or Send an Inquiry"
         description="Start a booking or inquiry with TrivianEdge. Tell us what you need and we will respond with the next step."
+        keywords="contact TrivianEdge, book a call, BPO inquiry, offshore team consultation, outsourcing quote Canada"
+        schema={[
+          buildLocalBusinessSchema(),
+          {
+            '@context': 'https://schema.org',
+            '@type': 'ContactPage',
+            '@id': `${SEO_CONFIG.siteUrl}/contact#webpage`,
+            name: 'Contact TrivianEdge',
+            description: 'Book a call or submit an inquiry to TrivianEdge for BPO, offshore software development, IT outsourcing, and global talent services.',
+            url: `${SEO_CONFIG.siteUrl}/contact`,
+            isPartOf: { '@type': 'WebSite', '@id': `${SEO_CONFIG.siteUrl}/#website` },
+          },
+          breadcrumbSchema([
+            { name: 'Home', url: SEO_CONFIG.siteUrl },
+            { name: 'Contact', url: `${SEO_CONFIG.siteUrl}/contact` },
+          ]),
+        ]}
       />
 
       <div className="bg-background min-h-screen text-text px-4 md:px-6 py-16 md:py-24">

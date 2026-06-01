@@ -157,35 +157,35 @@ const Navbar: React.FC = () => {
               className="flex flex-col items-center justify-center h-full gap-8 relative z-10"
               variants={containerVariants}
             >
-              <motion.a 
-                href="/" 
+              <motion.a
+                href="/"
                 variants={itemVariants}
-                className="text-4xl font-bold text-text hover:text-cyan-400 transition-colors font-['Space_Grotesk']" 
+                className="text-2xl font-bold text-text hover:text-cyan-400 transition-colors"
                 onClick={(e) => { e.preventDefault(); setIsOpen(false); navigate('/'); window.scrollTo({ top: 0 }); }}
               >
                 Home
               </motion.a>
 
               {NAV_LINKS.map(link => (
-                <motion.a 
-                  key={link.name} 
-                  href={link.href} 
+                <motion.a
+                  key={link.name}
+                  href={link.href}
                   variants={itemVariants}
-                  className="text-4xl font-bold text-text hover:text-cyan-400 transition-colors font-['Space_Grotesk']" 
+                  className="text-2xl font-bold text-text hover:text-cyan-400 transition-colors"
                   onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
                 >
                   {link.name}
                 </motion.a>
               ))}
 
-              <motion.div variants={itemVariants} className="my-4 scale-125">
+              <motion.div variants={itemVariants} className="mt-2">
                  <LanguageSelector />
               </motion.div>
 
-              <motion.a 
-                href="/contact" 
+              <motion.a
+                href="/contact"
                 variants={itemVariants}
-                className="mt-4 px-10 py-4 rounded-2xl font-bold text-xl premium-button" 
+                className="mt-4 px-10 py-4 rounded-full font-bold text-base uppercase tracking-widest premium-button"
                 onClick={(e) => { e.preventDefault(); handleNavClick('/contact'); }}
               >
                 Start here

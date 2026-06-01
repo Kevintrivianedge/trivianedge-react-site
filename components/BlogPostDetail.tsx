@@ -2,6 +2,8 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
 import { BLOG_POSTS } from '../constants';
+import SEOHead from './SEOHead';
+import { articleSchema, breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
 
 // Lightweight inline markdown renderer — handles **bold**, *italic*, [links](url),
 // # headings, and ## sub-headings so blog content formats correctly (#19).
@@ -64,7 +66,32 @@ const BlogPostDetail: React.FC = () => {
     );
   }
 
+  const postUrl = `${SEO_CONFIG.siteUrl}/blog/${post.slug ?? post.id}`;
+
   return (
+    <>
+      <SEOHead
+        title={post.title}
+        description={(post as any).metaDescription ?? post.excerpt}
+        keywords={(post as any).metaKeywords?.join(', ')}
+        ogType="article"
+        ogImage={(post as any).imageUrl ?? SEO_CONFIG.defaultOgImage}
+        schema={[
+          articleSchema({
+            title: post.title,
+            description: (post as any).metaDescription ?? post.excerpt,
+            url: postUrl,
+            datePublished: (post as any).datePublished ?? post.date,
+            dateModified: (post as any).dateModified ?? (post as any).datePublished ?? post.date,
+            image: (post as any).imageUrl,
+          }),
+          breadcrumbSchema([
+            { name: 'Home', url: SEO_CONFIG.siteUrl },
+            { name: 'Blog', url: `${SEO_CONFIG.siteUrl}/blog` },
+            { name: post.title, url: postUrl },
+          ]),
+        ]}
+      />
     <article aria-label={post.title} className="py-16 md:py-32 px-4 md:px-6 min-h-screen relative">
       <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-cyan-500/5 to-transparent -z-10" />
       <div className="max-w-4xl mx-auto">
@@ -124,6 +151,7 @@ const BlogPostDetail: React.FC = () => {
         </div>
       </div>
     </article>
+    </>
   );
 };
 

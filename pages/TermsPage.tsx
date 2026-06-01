@@ -18,8 +18,8 @@ const TermsPage: React.FC = () => {
         </button>
 
         <div className="flex items-center gap-4 mb-12">
-          <div className="p-3 rounded-2xl bg-violet-500/10 border border-violet-500/20">
-            <FileText className="w-8 h-8 text-violet-400" />
+          <div className="p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
+            <FileText className="w-8 h-8 text-cyan-400" />
           </div>
           <div>
             <h1 className="text-3xl md:text-5xl font-bold text-text">Terms of Engagement</h1>
@@ -29,7 +29,7 @@ const TermsPage: React.FC = () => {
 
         <div className="glass p-10 md:p-16 rounded-[3rem] border-border space-y-8">
           <div>
-            <p className="text-xs font-mono tracking-widest uppercase text-violet-400 mb-2">Last Updated</p>
+            <p className="text-xs font-mono tracking-widest uppercase text-cyan-400 mb-2">Last Updated</p>
             <p className="text-muted">March 2026</p>
           </div>
 
@@ -82,8 +82,8 @@ const TermsPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-violet-500/5 border border-violet-500/20">
-            <p className="text-violet-400 text-sm font-mono">
+          <div className="p-6 rounded-2xl bg-cyan-500/5 border border-cyan-500/20">
+            <p className="text-cyan-400 text-sm font-mono">
               For legal enquiries, contact{' '}
               <a href="mailto:kevin.v@trivianedge.com" className="underline hover:text-white transition-colors">
                 kevin.v@trivianedge.com
