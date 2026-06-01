@@ -52,7 +52,6 @@ import { getSEOTrendSignal, getTrendKeywords } from './utils/seoTrends';
 // Extracted components
 import Logo from './components/Logo';
 import Navbar from './components/Navbar';
-import GreetingBanner from './components/GreetingBanner';
 import ProcessTimeline from './components/ProcessTimeline';
 import TalentHubCard from './components/TalentHubCard';
 import ScrollToTop from './components/ScrollToTop';
@@ -77,36 +76,6 @@ const AIDevelopmentPage       = lazy(() => import('./pages/services/AIDevelopmen
 const ITOutsourcingPage       = lazy(() => import('./pages/services/ITOutsourcingPage'));
 const VentureStudioPage       = lazy(() => import('./pages/VentureStudioPage'));
 
-const SectionBridge: React.FC<{ label: string }> = ({ label }) => {
-  const shouldReduceMotion = useReducedMotion();
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.8 }}
-      transition={{ duration: shouldReduceMotion ? 0.01 : 0.45 }}
-      className="px-4 md:px-6"
-      aria-hidden="true"
-    >
-      <div className="max-w-7xl mx-auto py-6 md:py-8">
-        <div className="flex items-center gap-4">
-          <span className="choreo-label">{label}</span>
-          <div className="h-px flex-1 bg-border" />
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
-const HERO_PHRASES = [
-  "From red tape\nto release.",
-  "You build the vision.\nWe run the system.",
-  "Global expansion.\nMinus the drag.",
-];
-
-const HERO_MESSAGE = 'Build the team.\nRun the system.';
-const HERO_PROOF = '30-day deployment across 6 countries with compliant hiring, payroll, and delivery.';
 
 // Marquee trust ticker items
 const TICKER_ITEMS = [
@@ -220,31 +189,20 @@ const AI_VENTURES = [
 // Home page component 9-act narrative arc
 const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = ({ setSelectedHub }) => {
   const navigate = useNavigate();
-  const [phraseIndex, setPhraseIndex] = useState(0);
   const shouldReduceMotion = useReducedMotion();
-
-  // Rotate hero phrases every 3.5 s
-  useEffect(() => {
-    const id = setInterval(() => setPhraseIndex(i => (i + 1) % HERO_PHRASES.length), 6000);
-    return () => clearInterval(id);
-  }, []);
 
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-
-  const [line1, line2] = HERO_PHRASES[phraseIndex].split('\n');
 
   return (
     <>
       {/* ===== ACT 1: HERO ===== */}
       <section
         aria-label="Hero"
-        className="relative min-h-[95vh] flex items-center pt-20 sm:pt-24 px-4 sm:px-6 overflow-hidden"
+        className="relative min-h-screen flex items-center pt-28 pb-20 px-4 sm:px-6 overflow-hidden"
       >
-        {/* Minimal atmospheric background */}
-        <div className="absolute top-[-12%] left-[-8%] w-[46%] h-[46%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,23,42,0.08) 0%, transparent 70%)' }} />
-        <div className="absolute bottom-[-12%] right-[-8%] w-[42%] h-[42%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(15,23,42,0.05) 0%, transparent 72%)' }} />
-        <div className="absolute inset-x-0 top-0 h-px bg-border/70 pointer-events-none" />
+        {/* Subtle teal glow, top-right — like Apple product page atmosphere */}
+        <div className="absolute top-0 right-0 w-[55%] h-[70%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at top right, rgba(0,196,154,0.07) 0%, transparent 65%)' }} />
 
         <motion.div
           className="max-w-7xl mx-auto w-full relative z-10"
@@ -252,44 +210,49 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           animate={{ opacity: 1 }}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Personalised greeting, geo-aware and language-aware */}
-          <GreetingBanner />
+          <div className="max-w-5xl">
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-xs font-bold tracking-[0.25em] uppercase text-cyan-500 mb-8"
+            >
+              Canada's Global Operations Partner
+            </motion.p>
 
-          <div className="max-w-4xl">
-            {/* Trusted badge */}
-            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-border bg-surface text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-8 text-text">
-              <span className="w-2 h-2 rounded-full bg-text/60" />
-              Global operations infrastructure
-            </div>
-
-            <h1 className="display-hero text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight mb-6 leading-[1.05] text-text max-w-4xl">
-              <span className="block">Build the team.</span>
-              <span className="block text-holo">Run the system.</span>
+            <h1 className="display-hero font-bold tracking-tight mb-8 leading-[1.02] text-text">
+              <motion.span
+                className="block"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.0, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              >
+                Build the team.
+              </motion.span>
+              <motion.span
+                className="block text-holo"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.0, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+              >
+                Run the system.
+              </motion.span>
             </h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="text-muted text-lg md:text-xl max-w-2xl mb-4 md:mb-6 leading-relaxed"
+              transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="text-muted text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light"
             >
-              {HERO_PROOF}
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              className="text-text/72 text-base md:text-lg max-w-2xl mb-8 md:mb-12 leading-relaxed"
-            >
-              TrivianEdge handles hiring, compliance, payroll, and delivery in one operating model so your team stays focused on growth.
+              Offshore teams deployed in 30 days. Hiring, payroll, compliance, and delivery, handled entirely by us.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col sm:flex-row items-start gap-4 mb-12 md:mb-20"
+              transition={{ duration: 0.9, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col sm:flex-row items-start gap-4 mb-16 md:mb-24"
             >
               <a
                 href="#contact"
@@ -314,15 +277,15 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-              className="pt-8 border-t border-border grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8"
+              className="pt-10 border-t border-border/50 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12"
             >
               <CountUpStat end={6}  suffix="" label="Countries We Source From" />
               <CountUpStat end={40} suffix="%" label="Average Cost Savings" />
               <CountUpStat end={30} suffix=" days" label="Average Time to Start" />
               {/* 24/7 is a ratio, not a count, display as static */}
               <div className="flex flex-col gap-1">
-                <span className="text-2xl md:text-3xl font-bold text-text tabular-nums">24/7</span>
-                <span className="text-[10px] tracking-widest text-muted uppercase font-bold leading-tight">
+                <span className="text-3xl md:text-4xl font-bold text-text tabular-nums">24/7</span>
+                <span className="text-xs tracking-widest text-muted uppercase font-semibold leading-tight mt-1">
                   Operations Coverage
                 </span>
               </div>
@@ -355,7 +318,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      <SectionBridge label="Signal to strategy" />
 
       {/* ===== ACT 2B: PREMIUM OPERATING LAYER ===== */}
       <section aria-label="Premium operating layer" className="section-shell px-4 md:px-6">
@@ -402,7 +364,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      <SectionBridge label="Strategy to execution" />
 
       {/* ===== ACT 3: GLOBAL BUSINESS OS ANALOGY ===== */}
       <section
@@ -496,7 +457,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      <SectionBridge label="Execution to structure" />
 
       {/* ===== BPO VS RPO + TECH EDUCATION ===== */}
       <section
@@ -584,7 +544,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      <SectionBridge label="Structure to proof" />
 
       {/* ===== DUAL-ENGINE SERVICE DEFINITION ===== */}
       <section
@@ -679,7 +638,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      <SectionBridge label="Proof to scale" />
 
       {/* ===== HEADACHE VALUE PROPOSITION ===== */}
       <section
@@ -902,7 +860,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      <SectionBridge label="Scale to launch" />
 
       {/* ===== ACT 7: TALENT HUBS + WORLD MAP ===== */}
       <section

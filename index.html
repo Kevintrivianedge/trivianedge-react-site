@@ -550,97 +550,6 @@
            2050-READY DESIGN SYSTEM
            ================================================================ */
 
-        /* --- Custom Cursor (desktop only) --- */
-        @media (hover: hover) and (pointer: fine) {
-            * { cursor: none !important; }
-        }
-        #cursor-dot {
-            display: none;
-            width: 8px; height: 8px;
-            background: var(--cyan);
-            border-radius: 50%;
-            position: fixed; top: 0; left: 0;
-            pointer-events: none; z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background 0.2s;
-            box-shadow: 0 0 12px var(--cyan), 0 0 24px rgba(0,196,154,0.4);
-        }
-        #cursor-ring {
-            display: none;
-            width: 36px; height: 36px;
-            border: 1.5px solid rgba(0,196,154,0.5);
-            border-radius: 50%;
-            position: fixed; top: 0; left: 0;
-            pointer-events: none; z-index: 99998;
-            transform: translate(-50%, -50%);
-            transition: width 0.35s cubic-bezier(0.23,1,0.32,1),
-                        height 0.35s cubic-bezier(0.23,1,0.32,1),
-                        border-color 0.35s;
-        }
-        body:has(a:hover, button:hover) #cursor-dot {
-            width: 14px; height: 14px;
-            background: var(--violet);
-            box-shadow: 0 0 20px var(--violet), 0 0 40px rgba(139,92,246,0.4);
-        }
-        body:has(a:hover, button:hover) #cursor-ring {
-            width: 56px; height: 56px;
-            border-color: rgba(139,92,246,0.5);
-        }
-        @media (hover: none) {
-            #cursor-dot, #cursor-ring { display: none; }
-        }
-
-        /* --- Scroll Progress Bar --- */
-        #scroll-progress {
-            position: fixed; top: 0; left: 0; height: 1px; z-index: 9998;
-            background: rgba(15,23,42,0.65);
-            width: 0%; transition: width 0.1s linear;
-            box-shadow: none;
-        }
-
-        /* --- Grain / Noise Texture Overlay --- */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 9997;
-            opacity: 0.012;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            background-size: 200px 200px;
-        }
-
-        /* --- Aurora / Mesh Gradient Background --- */
-        #aurora {
-            display: none;
-        }
-        #aurora::before {
-            content: '';
-            position: absolute;
-            width: 80vw; height: 80vh;
-            top: -20%; left: -20%;
-            background: radial-gradient(ellipse, rgba(0,196,154,0.06) 0%, transparent 70%);
-            animation: aurora-1 18s ease-in-out infinite alternate;
-        }
-        #aurora::after {
-            content: '';
-            position: absolute;
-            width: 70vw; height: 70vh;
-            bottom: -20%; right: -20%;
-            background: radial-gradient(ellipse, rgba(139,92,246,0.07) 0%, transparent 70%);
-            animation: aurora-2 22s ease-in-out infinite alternate;
-        }
-        @keyframes aurora-1 {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(10%, 8%) scale(1.1); }
-            100% { transform: translate(-5%, 15%) scale(0.95); }
-        }
-        @keyframes aurora-2 {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-8%, -10%) scale(1.08); }
-            100% { transform: translate(12%, -5%) scale(1.02); }
-        }
-
         /* --- Enhanced Glassmorphism --- */
         .glass {
             background:
@@ -840,13 +749,6 @@
                 scroll-behavior: auto !important;
             }
 
-            #cursor-dot,
-            #cursor-ring,
-            #scroll-progress,
-            #aurora {
-                display: none !important;
-            }
-
             .reveal {
                 opacity: 1 !important;
                 transform: none !important;
@@ -873,13 +775,6 @@
 <body>
     <!-- Skip to main content, visible on keyboard focus for screen reader / keyboard users (WCAG 2.1 AA) -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <!-- 2050-ready UI, aurora + cursor + scroll progress overlays -->
-    <div id="aurora" aria-hidden="true">
-      <div style="position:absolute;width:55vw;height:55vh;top:45%;left:35%;background:radial-gradient(ellipse,rgba(217,70,239,0.05) 0%,transparent 70%);animation:aurora-2 26s ease-in-out infinite alternate-reverse;pointer-events:none"></div>
-    </div>
-    <div id="scroll-progress" aria-hidden="true"></div>
-    <div id="cursor-dot" aria-hidden="true"></div>
-    <div id="cursor-ring" aria-hidden="true"></div>
     <div id="root"></div>
 <script type="module" src="/index.tsx"></script>
 <script src="/ui-init.js" defer></script>
