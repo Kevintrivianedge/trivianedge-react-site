@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import { AnimatePresence, motion, useReducedMotion, useInView } from 'framer-motion';
-import { 
+import {
   ArrowRight,
   ChevronRight,
-  Globe2,
   Zap,
   Mail,
   Linkedin,
@@ -12,10 +11,8 @@ import {
   X,
   CheckCircle2,
   TrendingUp,
-  Server,
   Users2,
   ShieldCheck,
-  Cpu,
 } from 'lucide-react';
 import { Routes, Route, useLocation, useNavigate, Link } from 'react-router-dom';
 import { WHY_US, TALENT_HUBS, SERVICES, ROLES, STEPS } from './constants';
@@ -129,7 +126,7 @@ const PREMIUM_FEATURES = [
     iconBorder: 'border-emerald-400/25',
     glow: 'bg-emerald-400/8',
     metric: '24/7 coverage',
-    link: '/services/bpo',
+    link: '/services/it-outsourcing',
   },
   {
     title: 'Tech and Non-Tech, Both',
@@ -140,31 +137,7 @@ const PREMIUM_FEATURES = [
     iconBorder: 'border-amber-400/25',
     glow: 'bg-amber-400/8',
     metric: '40% avg. savings',
-    link: '/services/ai-development',
-  },
-];
-
-const NON_TECH_CASE_STUDIES = [
-  {
-    company: 'Cargo Login',
-    function: 'Logistics Operations + Documentation',
-    challenge: 'Overnight documentation work stalled when the core US team went offline.',
-    approach: 'We designed a follow-the-sun operations desk using Philippines and Canada resources with structured handoffs.',
-    result: 'Backlog dropped, turnaround improved, and revenue continuity increased across shifts.',
-  },
-  {
-    company: 'Keynotive',
-    function: 'Business Development + Revenue Operations',
-    challenge: 'Needed parallel outbound execution across time zones without heavy overhead.',
-    approach: 'We launched coordinated non-tech teams for cold outreach, pipeline support, and partner onboarding.',
-    result: 'Higher meeting volume, faster response cycles, and measurable new revenue.',
-  },
-  {
-    company: 'Hub-Flx',
-    function: 'Market Expansion + Strategic Partnerships',
-    challenge: 'Expansion into UAE and GCC required local execution support and operator-level coordination.',
-    approach: 'We ran market-entry operations, stakeholder alignment, and execution support for rollout.',
-    result: 'Regional partnership framework activated with a clear path to scale.',
+    link: '/services',
   },
 ];
 
@@ -415,8 +388,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       </section>
 
 
-      {/* ===== ACT 2B: PREMIUM OPERATING LAYER ===== */}
-      <section aria-label="Premium operating layer" className="section-tint section-shell px-4 md:px-6">
+      {/* ===== ACT 2B: WHAT WE DO ===== */}
+      <section aria-label="What we do" className="section-tint section-shell px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14 reveal">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-surface text-text/70 text-[10px] font-bold uppercase tracking-widest mb-6 float-badge">
@@ -428,7 +401,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <span className="text-holo">In any country. In 30 days.</span>
             </h2>
             <p className="text-muted text-lg max-w-3xl mx-auto">
-              Most companies spend months setting up payroll, compliance, and contracts before they can hire a single person overseas. We take all of that off your plate and hand you a ready-to-work team member in 30 days.
+              Most companies juggle three or four vendors for hiring, payroll, and software. We bring people and software delivery under one roof, so nothing falls through the cracks.
             </p>
           </div>
 
@@ -442,7 +415,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.25 }}
                   transition={{ duration: shouldReduceMotion ? 0.01 : 0.55, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className="bg-white rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300"
+                  className="card-glow bg-white rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300"
                   style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
                   onClick={() => navigate(feature.link)}
                 >
@@ -469,83 +442,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-
-      {/* ===== ACT 3: GLOBAL BUSINESS OS ANALOGY ===== */}
-      <section
-        id="problem"
-        aria-label="The Global Business OS"
-        className="section-shell px-4 md:px-6"
-      >
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
-          {/* Left: problem statement */}
-          <div className="lg:w-1/2 reveal">
-            <p className="text-cyan-500 font-bold tracking-widest text-xs uppercase mb-4">The problem we solve</p>
-            <h2 className="display-section text-4xl md:text-5xl font-bold mb-8 leading-tight text-text">
-              Hiring globally is hard.<br />
-              <span className="text-holo">We make it simple.</span>
-            </h2>
-
-            <p className="text-muted text-base md:text-lg leading-relaxed mb-10 max-w-xl">
-              Want to hire someone in the Philippines, Vietnam, or Eastern Europe? Normally you'd need to register a local company, open a payroll account, navigate foreign employment law, and wait months. We handle every single one of those steps for you.
-            </p>
-
-            <div className="space-y-4">
-              {[
-                'Setting up legal entities in foreign countries takes 3–6 months',
-                'Local payroll, taxes, and contracts differ in every jurisdiction',
-                'Finding and vetting quality talent takes time most teams don\'t have',
-              ].map(item => (
-                <div key={item} className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full bg-rose-500/10 flex items-center justify-center border border-rose-500/20 flex-shrink-0 mt-0.5">
-                    <X className="w-3 h-3 text-rose-500" />
-                  </div>
-                  <span className="text-muted font-medium text-sm leading-relaxed">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: clean country + outcome cards — no photos */}
-          <div className="lg:w-1/2 reveal">
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              {[
-                { code: 'ph', country: 'Philippines', note: 'Top English-speaking tech + ops talent' },
-                { code: 'vn', country: 'Vietnam', note: 'Strong engineering and software teams' },
-                { code: 'lk', country: 'Sri Lanka', note: 'Finance, accounting, and back-office' },
-                { code: 'tr', country: 'Turkey', note: 'Design, development, and IT support' },
-                { code: 'za', country: 'South Africa', note: 'Customer success and business ops' },
-                { code: 'cr', country: 'Costa Rica', note: 'Tech teams, US timezone alignment' },
-              ].map(item => (
-                <div key={item.country} className="glass rounded-2xl border border-border p-4 flex items-start gap-3">
-                  <img
-                    src={`https://flagcdn.com/w40/${item.code}.png`}
-                    width={24}
-                    height={18}
-                    alt={item.country}
-                    className="mt-0.5 rounded-sm flex-shrink-0 object-cover"
-                    loading="lazy"
-                  />
-                  <div>
-                    <p className="font-bold text-text text-sm">{item.country}</p>
-                    <p className="text-muted text-xs leading-relaxed mt-0.5">{item.note}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="glass rounded-2xl border border-border/60 p-5 text-center">
-              <p className="text-text font-bold text-base">Your team. Up and running in 30 days.</p>
-              <p className="text-muted text-xs mt-1">Fully compliant, payroll sorted, contracts signed.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* ===== BPO VS RPO + TECH EDUCATION ===== */}
+      {/* ===== ACT 3: OLD WAY VS TRIVIANEDGE ===== */}
       <section
         id="bpo-vs-rpo"
         aria-label="Why BPO Breaks"
-        className="section-tint section-shell px-4 md:px-6 border-t border-border"
+        className="section-shell px-4 md:px-6 border-t border-border"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -595,7 +496,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
 
             {/* Right: TrivianEdge — warm/positive treatment */}
-            <div className="micro-lift-card p-8 md:p-10 rounded-[2.5rem] border border-cyan-400/25 bg-[#f2fbf8] relative overflow-hidden" style={{ boxShadow: '0 4px 32px rgba(0,196,154,0.1)' }}>
+            <div className="micro-lift-card card-glow p-8 md:p-10 rounded-[2.5rem] border border-cyan-400/25 bg-[#f2fbf8] relative overflow-hidden" style={{ boxShadow: '0 4px 32px rgba(0,196,154,0.1)' }}>
               <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-cyan-400/12 blur-3xl pointer-events-none" />
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-10 h-10 rounded-2xl bg-cyan-400/15 border border-cyan-400/25 flex items-center justify-center">
@@ -629,157 +530,10 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           {/* Bottom statement */}
           <div className="mt-8 reveal">
             <div className="glass p-8 rounded-[2rem] border-border text-center">
-              <p className="text-xl md:text-2xl font-bold text-text">
+              <p className="text-xl md:text-2xl font-bold text-holo">
                 Outsourcing the task is easy. Building the system takes experience.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* ===== DUAL-ENGINE SERVICE DEFINITION ===== */}
-      <section
-        id="dual-engine"
-        aria-label="Our Dual Engine"
-        className="section-shell px-4 md:px-6"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-surface text-text/70 text-[10px] font-bold uppercase tracking-widest mb-6">
-              <Layers className="w-3 h-3" />
-              How We're Built
-            </div>
-            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
-              Need people?<br />Need software built?<br />
-              <span className="text-holo">We do both.</span>
-            </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto">
-              Most companies use three or four different vendors for hiring, payroll, and software. We bring it all under one roof so nothing falls through the cracks.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 reveal">
-            {/* Engine 1: Talent */}
-            <div className="micro-lift-card p-10 rounded-[2.5rem] border border-border bg-white transition-all duration-500 group relative overflow-hidden" style={{ boxShadow: '0 4px 32px rgba(0,196,154,0.08), 0 1px 3px rgba(0,0,0,0.06)' }}>
-              <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-cyan-400/8 blur-3xl pointer-events-none" />
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-400/15 to-cyan-400/5 border border-cyan-400/20 flex items-center justify-center">
-                  <Users2 className="w-7 h-7 text-cyan-500" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-text/70">Engine 1</p>
-                  <h3 className="text-xl font-bold text-text">Talent Infrastructure</h3>
-                </div>
-              </div>
-              <p className="text-muted text-sm leading-relaxed mb-6">
-                Think of us as your hiring department, HR team, and payroll office all in one. You tell us what you need and we find the right person, get them set up legally, and put them to work.
-              </p>
-              <ul className="space-y-3">
-                {[
-                  'Tech roles (developers, engineers, QA, DevOps)',
-                  'Non-tech roles (operations, finance, support, sales)',
-                  'Contracts, payroll, and compliance in every country',
-                  'Ongoing management so you stay focused on your business',
-                ].map(item => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-muted">
-                    <CheckCircle2 className="w-4 h-4 text-text/70 flex-shrink-0 mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Engine 2: Software */}
-            <div className="micro-lift-card p-10 rounded-[2.5rem] border border-border bg-white transition-all duration-500 group relative overflow-hidden" style={{ boxShadow: '0 4px 32px rgba(99,102,241,0.08), 0 1px 3px rgba(0,0,0,0.06)' }}>
-              <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-violet-400/8 blur-3xl pointer-events-none" />
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-400/15 to-violet-400/5 border border-violet-400/20 flex items-center justify-center">
-                  <Cpu className="w-7 h-7 text-violet-500" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-text/70">Engine 2</p>
-                  <h3 className="text-xl font-bold text-text">Software Development</h3>
-                </div>
-              </div>
-              <p className="text-muted text-sm leading-relaxed mb-6">
-                Need an app, a platform, or a custom tool built? We have a dedicated engineering team that builds software the right way: clear milestones, clean code, and everything owned by you.
-              </p>
-              <ul className="space-y-3">
-                {[
-                  'Custom software, web apps, and internal tools',
-                  'AI and automation built into your existing workflows',
-                  'You own 100% of the code and IP, always',
-                  'No surprise costs: scoped, planned, and delivered',
-                ].map(item => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-muted">
-                    <CheckCircle2 className="w-4 h-4 text-text/70 flex-shrink-0 mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Bridge line */}
-          <div className="mt-8 reveal">
-            <div className="glass p-8 rounded-[2rem] border-border text-center">
-              <p className="text-xl md:text-2xl font-bold text-text">
-                One partner. One system. Less noise. Faster growth.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* ===== HEADACHE VALUE PROPOSITION ===== */}
-      <section
-        id="headache-removed"
-        aria-label="We Remove the Bureaucracy"
-        className="section-tint section-shell px-4 md:px-6 border-t border-border"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="max-w-4xl mx-auto text-center reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-surface text-text/70 text-[10px] font-bold uppercase tracking-widest mb-8">
-              <ShieldCheck className="w-3 h-3" />
-              The Headache We Take Away
-            </div>
-            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-text">
-              Here's what you<br />
-              <span className="text-holo">never have to deal with.</span>
-            </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto mb-16 leading-relaxed">
-              Every item below is something businesses normally spend weeks handling themselves. We take it all off your desk, permanently.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
-            {[
-              { icon: <Globe2 className="w-6 h-6 text-cyan-500" />,   iconBg: 'from-cyan-400/20 to-cyan-400/5',   border: 'border-cyan-400/20',   glow: 'bg-cyan-400/10',   title: 'Foreign Employment Law',      desc: 'Every country has its own rules about contracts, termination, and benefits. We know them all and apply them correctly so you never get a surprise fine or lawsuit.' },
-              { icon: <Server className="w-6 h-6 text-violet-500" />,  iconBg: 'from-violet-400/20 to-violet-400/5', border: 'border-violet-400/20', glow: 'bg-violet-400/10', title: 'Payroll in Multiple Countries', desc: 'Running payroll in Canada is complicated enough. In six countries at once it\'s a full-time job. We handle it with zero errors, every month.' },
-              { icon: <ShieldCheck className="w-6 h-6 text-emerald-500" />, iconBg: 'from-emerald-400/20 to-emerald-400/5', border: 'border-emerald-400/20', glow: 'bg-emerald-400/10', title: 'Compliance and Data Rules', desc: 'Data protection, privacy laws, and export rules differ in every market. We keep your business clean and compliant without 200-page legal guides.' },
-              { icon: <TrendingUp className="w-6 h-6 text-amber-500" />, iconBg: 'from-amber-400/20 to-amber-400/5', border: 'border-amber-400/20', glow: 'bg-amber-400/10', title: 'Day-to-Day Ops Management', desc: 'Progress updates, handoffs, issue tracking, and performance oversight — all managed by us so your leadership stays focused on the actual business.' },
-            ].map(item => (
-              <div
-                key={item.title}
-                className={`micro-lift-card bg-white p-8 rounded-[2rem] border ${item.border} transition-all duration-300 relative overflow-hidden group`}
-                style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
-              >
-                <div className={`absolute -top-8 -right-8 w-28 h-28 ${item.glow} blur-3xl pointer-events-none rounded-full`} />
-                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${item.iconBg} border ${item.border} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
-                  {item.icon}
-                </div>
-                <h4 className="font-bold text-text mb-2">{item.title}</h4>
-                <p className="text-text/60 text-sm leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 text-center reveal">
-            <p className="text-xl md:text-2xl font-bold text-text">
-              Less admin noise. More execution clarity.
-            </p>
           </div>
         </div>
       </section>
@@ -788,7 +542,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="how-it-works"
         aria-label="How It Works"
-        className="section-shell px-4 md:px-6 border-t border-border"
+        className="section-tint section-shell px-4 md:px-6 border-t border-border"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -831,7 +585,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section
         id="why-us"
         aria-label="Client Results"
-        className="section-tint section-shell px-4 md:px-6"
+        className="section-shell px-4 md:px-6 border-t border-border"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
@@ -840,27 +594,35 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               Proof, not promises.
             </div>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
-              Real work. Real outcomes.
+              Real work. <span className="text-holo">Real outcomes.</span>
             </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto mb-4">
-              Case studies and client feedback, stripped down to the essentials.
+            <p className="text-muted text-lg max-w-2xl mx-auto">
+              Four engagements, tech and non-tech alike, stripped down to the essentials.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-6 mb-6">
-            {CASE_STUDIES.slice(0, 2).map((study) => (
-              <article key={study.client} className="reveal micro-lift-card rounded-[2rem] border border-border bg-white overflow-hidden" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,196,154,0.08)' }}>
-                <div className="h-1 w-full bg-gradient-to-r from-cyan-400 to-cyan-600/50" />
-                <div className="p-8 md:p-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            {CASE_STUDIES.map((study, idx) => (
+              <motion.article
+                key={study.client}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
+                className="reveal card-glow micro-lift-card rounded-[2rem] border border-border bg-white overflow-hidden"
+                style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,196,154,0.08)' }}
+              >
+                <div className="h-1 w-full bg-gradient-to-r from-cyan-400 via-violet-400 to-cyan-600/50" />
+                <div className="p-6 md:p-7">
                   <span className="metric-pill">{study.sector}</span>
-                  <h3 className="text-2xl md:text-3xl font-bold mb-1 text-text">{study.client}</h3>
-                  <p className="text-muted text-sm mb-6 leading-relaxed">{study.challenge}</p>
-                  <div className="rounded-2xl bg-[#f2fbf8] border border-cyan-400/15 p-5">
-                    <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 mb-2">Outcome</p>
-                    <p className="text-text/85 text-sm md:text-base leading-relaxed font-medium">{study.outcome}</p>
+                  <h3 className="text-xl font-bold mb-2 text-text">{study.client}</h3>
+                  <p className="text-muted text-xs mb-4 leading-relaxed">{study.challenge}</p>
+                  <div className="rounded-xl bg-[#f2fbf8] border border-cyan-400/15 p-4">
+                    <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 mb-1">Outcome</p>
+                    <p className="text-text/85 text-sm leading-relaxed font-medium">{study.outcome}</p>
                   </div>
                 </div>
-              </article>
+              </motion.article>
             ))}
           </div>
 
@@ -869,7 +631,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <blockquote key={item.author + item.role} className="reveal quote-card micro-lift-card">
                 <p className="relative z-10 text-lg leading-relaxed text-text/90 mb-8 pt-8">{item.quote}</p>
                 <footer className="flex items-center gap-3 border-t border-border/50 pt-5">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
                     {item.author[0]}
                   </div>
                   <div>
@@ -878,55 +640,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   </div>
                 </footer>
               </blockquote>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== ACT 5B: NON-TECH CASE STUDIES ===== */}
-      <section
-        id="non-tech-proof"
-        aria-label="Non-technical success stories"
-        className="section-shell px-4 md:px-6 border-t border-border"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-surface text-text/70 text-[10px] font-bold uppercase tracking-widest mb-6">
-              <Users2 className="w-3 h-3" />
-              Non-Tech Success Stories
-            </div>
-            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
-              We do not only place developers.
-              <br />
-              <span className="text-holo">We scale operations teams too.</span>
-            </h2>
-            <p className="text-muted text-lg max-w-3xl mx-auto">
-              Non-technical roles become a growth lever when the system is structured correctly.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-6">
-            {NON_TECH_CASE_STUDIES.map((study, idx) => (
-              <motion.article
-                key={study.company}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
-                className="reveal micro-lift-card rounded-[2rem] border border-border bg-white overflow-hidden"
-                style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,196,154,0.08)' }}
-              >
-                <div className="h-1 w-full bg-gradient-to-r from-cyan-400 to-cyan-600/50" />
-                <div className="p-8">
-                  <span className="metric-pill">{study.function}</span>
-                  <h3 className="text-2xl font-bold text-text mb-3">{study.company}</h3>
-                  <p className="text-sm text-muted leading-relaxed mb-4">{study.challenge}</p>
-                  <div className="rounded-xl bg-[#f2fbf8] border border-cyan-400/15 p-4">
-                    <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 mb-1">Result</p>
-                    <p className="text-text/85 text-sm leading-relaxed font-medium">{study.result}</p>
-                  </div>
-                </div>
-              </motion.article>
             ))}
           </div>
         </div>

@@ -112,7 +112,7 @@
             --font-display: 'Manrope', sans-serif;
             --tracking-display: -0.01em;
             --leading-display: 1.02;
-            --space-section-y: clamp(3.5rem, 5.5vw, 5.5rem);
+            --space-section-y: clamp(4rem, 6.5vw, 7rem);
             --space-stack-lg: clamp(1.5rem, 2.5vw, 2.25rem);
             --space-stack-md: clamp(1rem, 1.6vw, 1.4rem);
             
@@ -849,13 +849,18 @@
             transition: transform 0.5s ease;
         }
 
-        /* --- Holographic gradient text variant --- */
+        @keyframes holo-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* --- Brand gradient text variant, used for headline emphasis spans --- */
         .text-holo {
-            background: linear-gradient(180deg, var(--text) 0%, var(--text-muted) 100%);
-            background-size: 100% 100%;
+            background: linear-gradient(120deg, var(--cyan) 0%, var(--violet) 55%, var(--magenta) 100%);
+            background-size: 200% 100%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: none;
+            animation: holo-shift 8s ease-in-out infinite;
         }
 
         /* --- Magnetic button effect (applied via JS) --- */
