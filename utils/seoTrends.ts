@@ -72,10 +72,10 @@ const TITLE_VARIANTS: Record<PageContext, string[]> = {
 
 const DESC_VARIANTS: Record<PageContext, string[]> = {
   home: [
-    'TrivianEdge is Canada\'s leading BPO and offshore software development company. We deploy elite global talent, custom software teams, and managed IT services across 6 time zones. Up to 40% cost savings. 30-day deployment. Real clients, real results.',
-    'Looking for a trusted BPO or outsourcing partner? TrivianEdge provides offshore software development, IT outsourcing, and talent staffing from Canada. 30-day deployment. 6 global time zones. 40% cost reduction guaranteed.',
-    'TrivianEdge — Canada\'s offshore outsourcing and BPO company. We build dedicated software development teams, manage remote operations, and deliver AI-driven staffing for startups and enterprises worldwide.',
-    'Stop recruiting. Start deploying. TrivianEdge is the #1 BPO and offshore development company in Canada. Global talent hubs in the Philippines, Sri Lanka, Vietnam & more. 30-day deployment.',
+    'Canada\'s BPO and offshore software development company. Elite global talent deployed in 30 days. Up to 40% cost savings across 6 time zones.',
+    'TrivianEdge: offshore BPO, software teams, and IT outsourcing from Canada. 30-day deployment, 6 time zones, 40% cost reduction.',
+    'TrivianEdge deploys dedicated software teams, managed BPO, and AI-driven staffing for startups worldwide. Canada\'s offshore partner.',
+    'Stop recruiting. Start deploying. Canada\'s BPO and offshore development company. Philippines, Sri Lanka, Vietnam & more. 30 days.',
   ],
   blog: [
     'Expert insights on BPO, offshore software development, IT outsourcing, and global talent from TrivianEdge — Canada\'s premier outsourcing partner.',

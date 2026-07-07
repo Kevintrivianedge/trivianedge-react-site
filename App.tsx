@@ -75,6 +75,7 @@ const RPOPage                 = lazy(() => import('./pages/services/RPOPage'));
 const AIDevelopmentPage       = lazy(() => import('./pages/services/AIDevelopmentPage'));
 const ITOutsourcingPage       = lazy(() => import('./pages/services/ITOutsourcingPage'));
 const VentureStudioPage       = lazy(() => import('./pages/VentureStudioPage'));
+const ServicesPage            = lazy(() => import('./pages/ServicesPage'));
 
 
 // Marquee trust ticker items
@@ -105,6 +106,7 @@ const PREMIUM_FEATURES = [
     iconBorder: 'border-cyan-400/25',
     glow: 'bg-cyan-400/8',
     metric: '30 days to hire',
+    link: '/services/rpo',
   },
   {
     title: 'We Handle the Paperwork',
@@ -115,6 +117,7 @@ const PREMIUM_FEATURES = [
     iconBorder: 'border-violet-400/25',
     glow: 'bg-violet-400/8',
     metric: '6 countries covered',
+    link: '/services/bpo',
   },
   {
     title: 'We Keep the Work Moving',
@@ -125,6 +128,7 @@ const PREMIUM_FEATURES = [
     iconBorder: 'border-emerald-400/25',
     glow: 'bg-emerald-400/8',
     metric: '24/7 coverage',
+    link: '/services/bpo',
   },
   {
     title: 'Tech and Non-Tech, Both',
@@ -135,6 +139,7 @@ const PREMIUM_FEATURES = [
     iconBorder: 'border-amber-400/25',
     glow: 'bg-amber-400/8',
     metric: '40% avg. savings',
+    link: '/services/ai-development',
   },
 ];
 
@@ -227,6 +232,7 @@ const HOME_FAQS = [
 const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = ({ setSelectedHub }) => {
   const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
+  const [marqueepaused, setMarqueePaused] = useState(false);
 
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -383,12 +389,16 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 2: TRUST MARQUEE ===== */}
       <section aria-label="Trust signals" className="py-6 md:py-10 border-y border-border overflow-hidden bg-[#fafafa]">
         <p className="text-center text-[10px] font-bold uppercase tracking-[0.25em] text-text/35 mb-5">Trusted by operators and scale-ups across North America</p>
-        <div className="relative overflow-hidden">
+        <div
+          className="relative overflow-hidden"
+          onMouseEnter={() => setMarqueePaused(true)}
+          onMouseLeave={() => setMarqueePaused(false)}
+        >
           <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-[#fafafa] to-transparent z-10" />
           <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-[#fafafa] to-transparent z-10" />
           <div
             className="flex w-[300%] items-center gap-5 md:gap-8"
-            style={{ animation: 'marquee-scroll 28s linear infinite' }}
+            style={{ animation: 'marquee-scroll 28s linear infinite', animationPlayState: marqueepaused ? 'paused' : 'running' }}
           >
             {[...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS].map((item, idx) => (
               <div
@@ -431,20 +441,24 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.25 }}
                   transition={{ duration: shouldReduceMotion ? 0.01 : 0.55, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className="bg-white rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group"
+                  className="bg-white rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300"
                   style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
+                  onClick={() => navigate(feature.link)}
                 >
                   <div className={`absolute -top-8 -right-8 w-32 h-32 ${feature.glow} blur-3xl pointer-events-none rounded-full`} />
                   <div className="flex items-start gap-4">
                     <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${feature.iconBg} border ${feature.iconBorder} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
                       <Icon className={`w-6 h-6 ${feature.accent}`} />
                     </div>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-2 mb-2">
                         <h3 className="text-xl font-bold text-text">{feature.title}</h3>
                         <span className={`hidden md:inline text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border ${feature.iconBorder} ${feature.accent} opacity-70 whitespace-nowrap`}>{feature.metric}</span>
                       </div>
-                      <p className="text-text/60 text-sm leading-relaxed">{feature.description}</p>
+                      <p className="text-text/60 text-sm leading-relaxed mb-3">{feature.description}</p>
+                      <span className={`inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider ${feature.accent} group-hover:gap-2 transition-all duration-200`}>
+                        Learn more <ChevronRight className="w-3 h-3" />
+                      </span>
                     </div>
                   </div>
                 </motion.article>
@@ -1160,6 +1174,19 @@ function getSEOProps(pathname: string) {
       ]),
     };
   }
+  if (pathname === '/services') {
+    const url = `${SEO_CONFIG.siteUrl}/services`;
+    return {
+      title: 'Services | TrivianEdge — BPO, RPO, AI Development & IT Outsourcing',
+      description: 'Explore TrivianEdge\'s full service offering: BPO, RPO, AI Development, and IT Outsourcing. Offshore teams deployed in 30 days across 6 countries.',
+      keywords: `BPO services, RPO services, AI development, IT outsourcing, offshore teams, TrivianEdge, ${trendKeywords}`,
+      canonical: url,
+      structuredData: buildBreadcrumbSchema([
+        { name: 'Home', url: SEO_CONFIG.siteUrl },
+        { name: 'Services', url },
+      ]),
+    };
+  }
   if (pathname === '/services/bpo') {
     const url = `${SEO_CONFIG.siteUrl}/services/bpo`;
     return {
@@ -1369,6 +1396,7 @@ export default function App() {
                   <Route path="/blog/:slug" element={<BlogPostDetail />} />
                   <Route path="/privacy" element={<PrivacyPage />} />
                   <Route path="/terms" element={<TermsPage />} />
+                  <Route path="/services" element={<ServicesPage />} />
                   <Route path="/services/bpo" element={<BPOPage />} />
                   <Route path="/services/rpo" element={<RPOPage />} />
                   <Route path="/services/ai-development" element={<AIDevelopmentPage />} />
@@ -1381,7 +1409,7 @@ export default function App() {
           </main>
 
           <footer className="bg-[#020306] text-white pt-16 md:pt-20 pb-10 px-4 md:px-6">
-            <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-10 mb-14">
+            <div className="max-w-7xl mx-auto grid md:grid-cols-5 gap-8 mb-14">
               <div className="md:col-span-2">
                 <div className="mb-6">
                   <Logo onClick={() => { navigate('/'); window.scrollTo({top: 0, behavior: 'smooth'}); }} />
@@ -1403,9 +1431,18 @@ export default function App() {
                 </div>
               </div>
               <div>
+                <h4 className="font-bold text-white/30 mb-6 tracking-widest uppercase text-[10px]">Services</h4>
+                <ul className="space-y-3">
+                  <li><Link to="/services" className="text-white/55 hover:text-white text-sm transition-colors">All Services</Link></li>
+                  <li><Link to="/services/bpo" className="text-white/55 hover:text-white text-sm transition-colors">BPO</Link></li>
+                  <li><Link to="/services/rpo" className="text-white/55 hover:text-white text-sm transition-colors">RPO</Link></li>
+                  <li><Link to="/services/ai-development" className="text-white/55 hover:text-white text-sm transition-colors">AI Development</Link></li>
+                  <li><Link to="/services/it-outsourcing" className="text-white/55 hover:text-white text-sm transition-colors">IT Outsourcing</Link></li>
+                </ul>
+              </div>
+              <div>
                 <h4 className="font-bold text-white/30 mb-6 tracking-widest uppercase text-[10px]">Platform</h4>
                 <ul className="space-y-3">
-                  <li><a href="/#solutions" onClick={(e) => { e.preventDefault(); scrollToSection('solutions'); }} className="text-white/55 hover:text-white text-sm transition-colors">Our Services</a></li>
                   <li><Link to="/proof" className="text-white/55 hover:text-white text-sm transition-colors">Proof</Link></li>
                   <li><Link to="/trust" className="text-white/55 hover:text-white text-sm transition-colors">Trust</Link></li>
                   <li><Link to="/venture-studio" className="text-white/55 hover:text-white text-sm transition-colors">Venture Studio</Link></li>

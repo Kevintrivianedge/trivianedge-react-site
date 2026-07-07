@@ -121,12 +121,23 @@ const BPOPage: React.FC = () => {
       />
 
       <div className="bg-background min-h-screen text-text">
+        {/* Breadcrumb */}
+        <nav aria-label="Breadcrumb" className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-2">
+          <ol className="flex items-center gap-2 text-xs text-muted">
+            <li><Link to="/" className="hover:text-cyan-400 transition-colors">Home</Link></li>
+            <li className="text-border">/</li>
+            <li><Link to="/services" className="hover:text-cyan-400 transition-colors">Services</Link></li>
+            <li className="text-border">/</li>
+            <li className="text-text font-medium">BPO</li>
+          </ol>
+        </nav>
+
         {/* Hero */}
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="pt-32 pb-20 px-4 md:px-6 text-center"
+          className="pt-8 pb-20 px-4 md:px-6 text-center"
         >
           <div className="max-w-4xl mx-auto">
             <p className="text-xs font-mono tracking-widest uppercase text-cyan-400 mb-4">

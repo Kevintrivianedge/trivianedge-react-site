@@ -18,7 +18,7 @@ import {
 import { ServiceCardProps, RoleCategory, Step, WhyUsItem, BlogPost, TalentHub } from './types';
 
 export const NAV_LINKS = [
-  { name: 'Services', href: '#solutions' },
+  { name: 'Services', href: '/services' },
   { name: 'Venture Studio', href: '/venture-studio' },
   { name: 'Proof', href: '/proof' },
   { name: 'Trust', href: '/trust' },
