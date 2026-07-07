@@ -8,6 +8,7 @@ const mockHub: TalentHub = {
   id: 'test-hub',
   country: 'Test Country',
   flag: '🏳️',
+  flagCode: 'xx',
   specialty: 'Test Specialty',
   description: 'A description of the test hub.',
   infrastructure: 'Excellent infrastructure.',
@@ -25,10 +26,11 @@ describe('TalentHubCard', () => {
     expect(screen.getByText('Test Country')).toBeInTheDocument();
   });
 
-  it('renders the flag emoji', () => {
+  it('renders the flag image using flagCode', () => {
     render(<TalentHubCard hub={mockHub} index={0} onClick={vi.fn()} />);
-    // Flag appears in two places (header + watermark), so check at least one instance
-    expect(screen.getAllByText('🏳️').length).toBeGreaterThanOrEqual(1);
+    const flagImg = screen.getByAltText('Test Country') as HTMLImageElement;
+    expect(flagImg).toBeInTheDocument();
+    expect(flagImg.src).toContain('flagcdn.com/w80/xx.png');
   });
 
   it('renders the specialty', () => {

@@ -14,7 +14,7 @@ const ContactPage: React.FC = () => {
         title="Contact TrivianEdge | Book a Call or Send an Inquiry"
         description="Start a booking or inquiry with TrivianEdge. Tell us what you need and we will respond with the next step."
         keywords="contact TrivianEdge, book a call, BPO inquiry, offshore team consultation, outsourcing quote Canada"
-        schema={[
+        structuredData={[
           buildLocalBusinessSchema(),
           {
             '@context': 'https://schema.org',
