@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { X, Send, MessageSquare, Terminal, Loader2, User, Bot, Sparkles, Trash2, RefreshCw } from 'lucide-react';
+import { X, Send, MessageSquare, Terminal, Loader2, User, Bot, Sparkles, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SERVICES, TALENT_HUBS, ROLES, WHY_US } from '../constants';
 import { getCountryGreeting, getCountryAffectionateName } from '../utils/greetings';
@@ -377,7 +377,7 @@ ${userContext}
   }, [isOpen]);
 
   const handleSend = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || isTyping) return;
     
     // Initialize system context if not already done
     if (!systemContextRef.current) initChat();
