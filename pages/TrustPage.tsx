@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, ShieldCheck, Lock, Server, FileCheck } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import { TRUST_PILLARS } from '../constants/proof';
+import { breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
 
 const TrustPage: React.FC = () => {
   const navigate = useNavigate();
@@ -12,6 +13,13 @@ const TrustPage: React.FC = () => {
       <SEOHead
         title="Trust | Security and Compliance at TrivianEdge"
         description="Security, data handling, compliance posture, and operational controls for TrivianEdge's lead capture and service delivery model."
+        canonical={`${SEO_CONFIG.siteUrl}/trust`}
+        schema={[
+          breadcrumbSchema([
+            { name: 'Home', url: SEO_CONFIG.siteUrl },
+            { name: 'Trust', url: `${SEO_CONFIG.siteUrl}/trust` },
+          ]),
+        ]}
       />
 
       <div className="bg-background min-h-screen text-text px-4 md:px-6 py-16 md:py-24">

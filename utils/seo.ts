@@ -208,20 +208,6 @@ export function buildServiceSchema(service: { name: string; description: string;
   };
 }
 
-/** Schema.org BreadcrumbList */
-export function buildBreadcrumbSchema(items: { name: string; url: string }[]): object {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.name,
-      item: item.url,
-    })),
-  };
-}
-
 /** Schema.org Article for blog posts */
 export function buildArticleSchema(post: {
   title: string;
@@ -328,19 +314,6 @@ export function buildBPOFAQSchema(): object {
   };
 }
 
-/** Schema.org FAQPage generic */
-export function buildFAQSchema(faqs: { question: string; answer: string }[]): object {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
-    })),
-  };
-}
-
 /** Schema.org SoftwareApplication for Trivian Aria */
 export function buildSoftwareApplicationSchema(): object {
   return {
@@ -391,7 +364,7 @@ export function buildWebPageSchema(page: {
     datePublished: page.datePublished,
     dateModified: page.dateModified,
     breadcrumb: page.breadcrumb
-      ? buildBreadcrumbSchema(page.breadcrumb)
+      ? breadcrumbSchema(page.breadcrumb)
       : undefined,
   };
 }

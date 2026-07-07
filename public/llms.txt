@@ -1,0 +1,26 @@
+# TrivianEdge
+
+> Canada-based BPO and offshore software development company. TrivianEdge deploys offshore teams in 30 days, delivering up to 40% cost savings across 6 global time zones. Services span Business Process Outsourcing (BPO), Recruitment Process Outsourcing (RPO), AI Development, and IT Outsourcing.
+
+TrivianEdge is headquartered in Toronto, Ontario, Canada and sources talent from global hubs including the Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe. TrivianEdge acts as employer of record in each country, so clients never need to set up a foreign entity.
+
+## Services
+
+- [Services overview](https://www.trivianedge.com/services): All four TrivianEdge service lines in one place.
+- [BPO](https://www.trivianedge.com/services/bpo): Business Process Outsourcing — offshore back-office, customer support, finance, and HR admin teams.
+- [RPO](https://www.trivianedge.com/services/rpo): Recruitment Process Outsourcing — embedded hiring, sourcing, screening, and onboarding.
+- [AI Development](https://www.trivianedge.com/services/ai-development): Offshore AI engineering — generative AI, LLM integration, machine learning, and MLOps.
+- [IT Outsourcing](https://www.trivianedge.com/services/it-outsourcing): Offshore software development, cloud/DevOps, QA, and systems integration.
+
+## Company
+
+- [Proof](https://www.trivianedge.com/proof): Case studies and client testimonials.
+- [Trust](https://www.trivianedge.com/trust): Security, compliance, and data-handling posture (PIPEDA, GDPR).
+- [Venture Studio](https://www.trivianedge.com/venture-studio): Free MVP builds for qualified startup founders.
+- [Contact](https://www.trivianedge.com/contact): Book a call or submit an inquiry.
+
+## Optional
+
+- [Blog](https://www.trivianedge.com/blog): Insights on BPO, outsourcing, and offshore software development.
+- [Privacy Policy](https://www.trivianedge.com/privacy)
+- [Terms of Engagement](https://www.trivianedge.com/terms)

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Users2, ShieldCheck, Cpu, Server } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import { breadcrumbSchema } from '../utils/seo';
@@ -57,6 +57,8 @@ const SERVICES_HUB = [
 ];
 
 const ServicesPage: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <>
       <SEOHead
@@ -83,9 +85,9 @@ const ServicesPage: React.FC = () => {
 
         {/* Hero */}
         <motion.section
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: shouldReduceMotion ? 0.01 : 0.6 }}
           className="pt-10 pb-16 px-4 md:px-6 text-center"
         >
           <div className="max-w-3xl mx-auto">
@@ -117,9 +119,9 @@ const ServicesPage: React.FC = () => {
               return (
                 <motion.div
                   key={service.shortName}
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: shouldReduceMotion ? 0.01 : 0.5, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <Link
                     to={service.href}

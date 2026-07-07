@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Star, ExternalLink, ArrowRight } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import { CASE_STUDIES, TESTIMONIALS } from '../constants/proof';
+import { breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
 
 const ProofPage: React.FC = () => {
   const navigate = useNavigate();
@@ -12,6 +13,13 @@ const ProofPage: React.FC = () => {
       <SEOHead
         title="Proof | TrivianEdge Case Studies and Client Feedback"
         description="Case studies, testimonials, and proof of delivery from TrivianEdge's global outsourcing and talent operations work."
+        canonical={`${SEO_CONFIG.siteUrl}/proof`}
+        schema={[
+          breadcrumbSchema([
+            { name: 'Home', url: SEO_CONFIG.siteUrl },
+            { name: 'Proof', url: `${SEO_CONFIG.siteUrl}/proof` },
+          ]),
+        ]}
       />
 
       <div className="bg-background min-h-screen text-text px-4 md:px-6 py-16 md:py-24">

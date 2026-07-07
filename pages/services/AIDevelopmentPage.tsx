@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   Sparkles,
   MessageSquare,
@@ -147,6 +147,8 @@ const COMPARISON_ROWS = [
 ];
 
 const AIDevelopmentPage: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <>
       <SEOHead
@@ -186,7 +188,7 @@ const AIDevelopmentPage: React.FC = () => {
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: shouldReduceMotion ? 0.01 : 0.6 }}
           className="pt-8 pb-20 px-4 md:px-6 text-center"
         >
           <div className="max-w-4xl mx-auto">
@@ -213,6 +215,32 @@ const AIDevelopmentPage: React.FC = () => {
             </div>
           </div>
         </motion.section>
+
+        {/* What is AI Development Outsourcing */}
+        <section className="py-20 px-4 md:px-6">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold text-text mb-6">
+              What is AI Development Outsourcing?
+            </h2>
+            <p className="text-muted text-lg leading-relaxed">
+              AI development outsourcing means partnering with an external team to design, build, and deploy AI products — generative AI features, LLM integrations, or custom machine learning models — instead of hiring an in-house AI team from scratch. TrivianEdge assembles a dedicated offshore AI engineering team within 30 days, giving you senior AI talent at up to 40% lower cost than local hiring. Pair AI development with our{' '}
+              <Link
+                to="/services/it-outsourcing"
+                className="text-cyan-400 hover:underline"
+              >
+                IT outsourcing services
+              </Link>{' '}
+              or{' '}
+              <Link
+                to="/services/rpo"
+                className="text-cyan-400 hover:underline"
+              >
+                RPO services
+              </Link>{' '}
+              to build a complete offshore engineering operation.
+            </p>
+          </div>
+        </section>
 
         {/* AI Services Grid */}
         <section className="py-20 px-4 md:px-6">

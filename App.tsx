@@ -17,8 +17,8 @@ import {
   ShieldCheck,
   Cpu,
 } from 'lucide-react';
-import { Routes, Route, useLocation, useNavigate, Link, Navigate } from 'react-router-dom';
-import { WHY_US, BLOG_POSTS, TALENT_HUBS, SERVICES, ROLES, STEPS } from './constants';
+import { Routes, Route, useLocation, useNavigate, Link } from 'react-router-dom';
+import { WHY_US, TALENT_HUBS, SERVICES, ROLES, STEPS } from './constants';
 import { CASE_STUDIES, TESTIMONIALS } from './constants/proof';
 import { TalentHub } from './types';
 import { LanguageProvider } from './contexts/LanguageContext';
@@ -37,11 +37,11 @@ import {
   buildSoftwareApplicationSchema,
   buildLocalBusinessSchema,
   buildBPOFAQSchema,
-  buildBreadcrumbSchema,
+  breadcrumbSchema,
   buildWebPageSchema,
   buildServiceItemListSchema,
   buildBPOHowToSchema,
-  buildFAQSchema,
+  faqSchema,
   SEO_CONFIG,
   ALL_KEYWORDS,
   KEYWORD_CLUSTERS,
@@ -76,6 +76,7 @@ const AIDevelopmentPage       = lazy(() => import('./pages/services/AIDevelopmen
 const ITOutsourcingPage       = lazy(() => import('./pages/services/ITOutsourcingPage'));
 const VentureStudioPage       = lazy(() => import('./pages/VentureStudioPage'));
 const ServicesPage            = lazy(() => import('./pages/ServicesPage'));
+const NotFoundPage            = lazy(() => import('./pages/NotFoundPage'));
 
 
 // Marquee trust ticker items
@@ -1072,43 +1073,15 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 };
 
 // SEO logic trend-adaptive, uses rotating keyword emphasis for fresh signals
-const LEGAL_PAGES_DATE = '2025-01-01';
+const LEGAL_PAGES_PUBLISHED = '2025-01-01';
+const LEGAL_PAGES_MODIFIED = '2026-05-13';
 
 function getSEOProps(pathname: string) {
   const trendKeywords = getTrendKeywords();
 
-  // Blog post detail
-  if (pathname.startsWith('/blog/')) {
-    const slug = pathname.replace('/blog/', '').replace(/\/$/, '');
-    const post = BLOG_POSTS.find(p => p.slug === slug || p.id === slug);
-    const signal = getSEOTrendSignal('blog-post');
-    if (post) {
-      const postUrl = `${SEO_CONFIG.siteUrl}/blog/${post.slug ?? post.id}`;
-      return {
-        title: post.title,
-        description: post.metaDescription ?? post.excerpt,
-        keywords: [post.metaKeywords?.join(', '), trendKeywords].filter(Boolean).join(', '),
-        canonical: postUrl,
-        ogType: 'article' as const,
-        structuredData: [
-          buildArticleSchema({
-            title: post.title,
-            description: post.metaDescription ?? post.excerpt,
-            author: post.author,
-            date: post.datePublished ?? post.date,
-            dateModified: post.dateModified ?? post.datePublished ?? post.date,
-            url: postUrl,
-            imageUrl: post.imageUrl,
-          }),
-          buildBreadcrumbSchema([
-            { name: 'Home', url: SEO_CONFIG.siteUrl },
-            { name: 'Blog', url: `${SEO_CONFIG.siteUrl}/blog` },
-            { name: post.title, url: postUrl },
-          ]),
-        ],
-      };
-    }
-  }
+  // Blog post detail: BlogPostDetail renders its own complete <SEOHead> (title,
+  // article schema, breadcrumb) so this only needs to fall through to the
+  // generic default below — it must NOT also build a competing SEOHead here.
   if (pathname === '/blog') {
     const signal = getSEOTrendSignal('blog');
     return {
@@ -1116,133 +1089,17 @@ function getSEOProps(pathname: string) {
       description: signal.descriptionVariant,
       keywords: `BPO insights, outsourcing blog, offshore development news, ${trendKeywords}`,
       canonical: `${SEO_CONFIG.siteUrl}/blog`,
-      structuredData: buildBreadcrumbSchema([
+      structuredData: breadcrumbSchema([
         { name: 'Home', url: SEO_CONFIG.siteUrl },
         { name: 'Intelligence Feed', url: `${SEO_CONFIG.siteUrl}/blog` },
       ]),
     };
   }
-  if (pathname === '/contact') {
-    const url = `${SEO_CONFIG.siteUrl}/contact`;
-    return {
-      title: 'Contact TrivianEdge: Start Your Global Hiring Conversation',
-      description: 'Reach out to TrivianEdge to discuss offshore talent, BPO, RPO, or AI software delivery. 30-day deployment. Up to 40% cost savings.',
-      keywords: `contact TrivianEdge, hire offshore team, BPO inquiry, RPO consultation, ${trendKeywords}`,
-      canonical: url,
-      structuredData: buildBreadcrumbSchema([
-        { name: 'Home', url: SEO_CONFIG.siteUrl },
-        { name: 'Contact', url },
-      ]),
-    };
-  }
-  if (pathname === '/proof') {
-    const url = `${SEO_CONFIG.siteUrl}/proof`;
-    return {
-      title: 'Client Proof: TrivianEdge Case Studies & Results',
-      description: 'Real results from TrivianEdge clients. Case studies covering offshore software delivery, cross-timezone operations, and talent deployment.',
-      keywords: `TrivianEdge case studies, offshore outsourcing results, BPO proof, client success, ${trendKeywords}`,
-      canonical: url,
-      structuredData: buildBreadcrumbSchema([
-        { name: 'Home', url: SEO_CONFIG.siteUrl },
-        { name: 'Proof', url },
-      ]),
-    };
-  }
-  if (pathname === '/trust') {
-    const url = `${SEO_CONFIG.siteUrl}/trust`;
-    return {
-      title: 'Security & Compliance: TrivianEdge Trust Centre',
-      description: 'TrivianEdge security and compliance overview. PIPEDA, GDPR, data protection, and operational transparency for global outsourcing.',
-      keywords: `TrivianEdge trust, outsourcing security, BPO compliance, GDPR outsourcing, ${trendKeywords}`,
-      canonical: url,
-      structuredData: buildBreadcrumbSchema([
-        { name: 'Home', url: SEO_CONFIG.siteUrl },
-        { name: 'Trust Centre', url },
-      ]),
-    };
-  }
-  if (pathname === '/venture-studio') {
-    const url = `${SEO_CONFIG.siteUrl}/venture-studio`;
-    return {
-      title: 'Venture Studio: Build Your MVP with TrivianEdge',
-      description: 'Submit your idea to TrivianEdge Venture Studio. Qualified founders get a free MVP build with a dedicated offshore engineering team.',
-      keywords: `venture studio, free MVP build, offshore development, startup MVP, TrivianEdge, ${trendKeywords}`,
-      canonical: url,
-      structuredData: buildBreadcrumbSchema([
-        { name: 'Home', url: SEO_CONFIG.siteUrl },
-        { name: 'Venture Studio', url },
-      ]),
-    };
-  }
-  if (pathname === '/services') {
-    const url = `${SEO_CONFIG.siteUrl}/services`;
-    return {
-      title: 'Services | TrivianEdge — BPO, RPO, AI Development & IT Outsourcing',
-      description: 'Explore TrivianEdge\'s full service offering: BPO, RPO, AI Development, and IT Outsourcing. Offshore teams deployed in 30 days across 6 countries.',
-      keywords: `BPO services, RPO services, AI development, IT outsourcing, offshore teams, TrivianEdge, ${trendKeywords}`,
-      canonical: url,
-      structuredData: buildBreadcrumbSchema([
-        { name: 'Home', url: SEO_CONFIG.siteUrl },
-        { name: 'Services', url },
-      ]),
-    };
-  }
-  if (pathname === '/services/bpo') {
-    const url = `${SEO_CONFIG.siteUrl}/services/bpo`;
-    return {
-      title: 'BPO Services: TrivianEdge Business Process Outsourcing',
-      description: 'Managed BPO services from TrivianEdge. Offshore operations, back-office support, and process delivery across 6 global time zones.',
-      keywords: `BPO services, business process outsourcing, offshore BPO, managed operations, ${trendKeywords}`,
-      canonical: url,
-      structuredData: buildBreadcrumbSchema([
-        { name: 'Home', url: SEO_CONFIG.siteUrl },
-        { name: 'Services', url: `${SEO_CONFIG.siteUrl}/services/bpo` },
-        { name: 'BPO', url },
-      ]),
-    };
-  }
-  if (pathname === '/services/rpo') {
-    const url = `${SEO_CONFIG.siteUrl}/services/rpo`;
-    return {
-      title: 'RPO Services: TrivianEdge Recruitment Process Outsourcing',
-      description: 'End-to-end RPO from TrivianEdge. Global talent acquisition, candidate sourcing, and managed hiring pipelines. 30-day deployment.',
-      keywords: `RPO services, recruitment process outsourcing, global hiring, talent acquisition, ${trendKeywords}`,
-      canonical: url,
-      structuredData: buildBreadcrumbSchema([
-        { name: 'Home', url: SEO_CONFIG.siteUrl },
-        { name: 'Services', url: `${SEO_CONFIG.siteUrl}/services/rpo` },
-        { name: 'RPO', url },
-      ]),
-    };
-  }
-  if (pathname === '/services/ai-development') {
-    const url = `${SEO_CONFIG.siteUrl}/services/ai-development`;
-    return {
-      title: 'AI Development Services: TrivianEdge Offshore AI Engineering',
-      description: 'Offshore AI and ML development from TrivianEdge. Dedicated AI engineering teams for automation, LLM integration, and custom AI products.',
-      keywords: `AI development, offshore AI engineers, machine learning outsourcing, LLM development, ${trendKeywords}`,
-      canonical: url,
-      structuredData: buildBreadcrumbSchema([
-        { name: 'Home', url: SEO_CONFIG.siteUrl },
-        { name: 'Services', url: `${SEO_CONFIG.siteUrl}/services/ai-development` },
-        { name: 'AI Development', url },
-      ]),
-    };
-  }
-  if (pathname === '/services/it-outsourcing') {
-    const url = `${SEO_CONFIG.siteUrl}/services/it-outsourcing`;
-    return {
-      title: 'IT Outsourcing Services: TrivianEdge Global Tech Delivery',
-      description: 'Dedicated IT outsourcing from TrivianEdge. Offshore software engineers, QA, DevOps, and full-stack teams across 6 time zones.',
-      keywords: `IT outsourcing, offshore software development, dedicated dev teams, tech outsourcing, ${trendKeywords}`,
-      canonical: url,
-      structuredData: buildBreadcrumbSchema([
-        { name: 'Home', url: SEO_CONFIG.siteUrl },
-        { name: 'Services', url: `${SEO_CONFIG.siteUrl}/services/it-outsourcing` },
-        { name: 'IT Outsourcing', url },
-      ]),
-    };
-  }
+  // /contact, /proof, /trust, /venture-studio, /services, /services/* each render
+  // their own complete page-level <SEOHead> (title, description, canonical, schema).
+  // Building competing metadata for them here would duplicate structured data and
+  // let the two titles drift out of sync, so they fall through to the generic
+  // default below instead.
   if (pathname === '/privacy') {
     const privacyUrl = `${SEO_CONFIG.siteUrl}/privacy`;
     return {
@@ -1255,8 +1112,8 @@ function getSEOProps(pathname: string) {
           name: 'Privacy Policy TrivianEdge Global',
           description: 'TrivianEdge Global privacy policy for BPO, outsourcing, and offshore services. PIPEDA and GDPR compliant.',
           url: privacyUrl,
-          datePublished: LEGAL_PAGES_DATE,
-          dateModified: LEGAL_PAGES_DATE,
+          datePublished: LEGAL_PAGES_PUBLISHED,
+          dateModified: LEGAL_PAGES_MODIFIED,
           breadcrumb: [
             { name: 'Home', url: SEO_CONFIG.siteUrl },
             { name: 'Privacy Policy', url: privacyUrl },
@@ -1277,8 +1134,8 @@ function getSEOProps(pathname: string) {
           name: 'Terms of Engagement TrivianEdge Global',
           description: 'TrivianEdge terms of service for BPO, outsourcing, and offshore software development engagements.',
           url: termsUrl,
-          datePublished: LEGAL_PAGES_DATE,
-          dateModified: LEGAL_PAGES_DATE,
+          datePublished: LEGAL_PAGES_PUBLISHED,
+          dateModified: LEGAL_PAGES_MODIFIED,
           breadcrumb: [
             { name: 'Home', url: SEO_CONFIG.siteUrl },
             { name: 'Terms of Engagement', url: termsUrl },
@@ -1287,38 +1144,47 @@ function getSEOProps(pathname: string) {
       ],
     };
   }
-  // Home maximum schema richness for BPO/outsourcing dominance
-  const signal = getSEOTrendSignal('home');
+  if (pathname === '/') {
+    // Home maximum schema richness for BPO/outsourcing dominance
+    const signal = getSEOTrendSignal('home');
+    return {
+      title: signal.titleVariant,
+      description: signal.descriptionVariant,
+      keywords: `${ALL_KEYWORDS}, ${trendKeywords}`,
+      canonical: SEO_CONFIG.siteUrl,
+      structuredData: [
+        buildOrganizationSchema(),
+        buildLocalBusinessSchema(),
+        buildWebSiteSchema(),
+        buildServiceItemListSchema(),
+        buildServiceSchema({
+          name: 'BPO & Business Process Outsourcing',
+          description: 'Canada-based BPO services including offshore software development, IT outsourcing, talent staffing, and managed remote operations across 6 time zones.',
+          keywords: [...KEYWORD_CLUSTERS.bpo, ...KEYWORD_CLUSTERS.outsourcing],
+        }),
+        buildServiceSchema({
+          name: 'Offshore Software Development',
+          description: 'Dedicated offshore software development teams sourced from elite global talent hubs Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe.',
+          keywords: [...KEYWORD_CLUSTERS.offshore, ...KEYWORD_CLUSTERS.softwareDev],
+        }),
+        buildServiceSchema({
+          name: 'Global Talent & IT Outsourcing',
+          description: 'AI-powered global talent acquisition and IT outsourcing for startups and enterprises. 30-day deployment, up to 40% cost savings.',
+          keywords: [...KEYWORD_CLUSTERS.talent, ...KEYWORD_CLUSTERS.outsourcing],
+        }),
+        buildSoftwareApplicationSchema(),
+        buildBPOFAQSchema(),
+        buildBPOHowToSchema(),
+        faqSchema(HOME_FAQS),
+      ],
+    };
+  }
+  // Every other route (contact, proof, trust, venture-studio, services/*, blog
+  // post detail, 404) owns a complete page-level <SEOHead> rendered inside the
+  // route component itself, which overrides this fallback once it mounts.
   return {
-    title: signal.titleVariant,
-    description: signal.descriptionVariant,
-    keywords: `${ALL_KEYWORDS}, ${trendKeywords}`,
-    canonical: SEO_CONFIG.siteUrl,
-    structuredData: [
-      buildOrganizationSchema(),
-      buildLocalBusinessSchema(),
-      buildWebSiteSchema(),
-      buildServiceItemListSchema(),
-      buildServiceSchema({
-        name: 'BPO & Business Process Outsourcing',
-        description: 'Canada-based BPO services including offshore software development, IT outsourcing, talent staffing, and managed remote operations across 6 time zones.',
-        keywords: [...KEYWORD_CLUSTERS.bpo, ...KEYWORD_CLUSTERS.outsourcing],
-      }),
-      buildServiceSchema({
-        name: 'Offshore Software Development',
-        description: 'Dedicated offshore software development teams sourced from elite global talent hubs Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe.',
-        keywords: [...KEYWORD_CLUSTERS.offshore, ...KEYWORD_CLUSTERS.softwareDev],
-      }),
-      buildServiceSchema({
-        name: 'Global Talent & IT Outsourcing',
-        description: 'AI-powered global talent acquisition and IT outsourcing for startups and enterprises. 30-day deployment, up to 40% cost savings.',
-        keywords: [...KEYWORD_CLUSTERS.talent, ...KEYWORD_CLUSTERS.outsourcing],
-      }),
-      buildSoftwareApplicationSchema(),
-      buildBPOFAQSchema(),
-      buildBPOHowToSchema(),
-      buildFAQSchema(HOME_FAQS),
-    ],
+    description: SEO_CONFIG.defaultDescription,
+    canonical: `${SEO_CONFIG.siteUrl}${pathname}`,
   };
 }
 
@@ -1402,7 +1268,7 @@ export default function App() {
                   <Route path="/services/ai-development" element={<AIDevelopmentPage />} />
                   <Route path="/services/it-outsourcing" element={<ITOutsourcingPage />} />
                   <Route path="/venture-studio" element={<VentureStudioPage />} />
-                  <Route path="*" element={<Navigate to="/" replace />} />
+                  <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </Suspense>
             </ErrorBoundary>

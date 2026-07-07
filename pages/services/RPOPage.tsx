@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   Users,
   Target,
@@ -118,6 +118,8 @@ const INDUSTRIES = [
 ];
 
 const RPOPage: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <>
       <SEOHead
@@ -156,7 +158,7 @@ const RPOPage: React.FC = () => {
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: shouldReduceMotion ? 0.01 : 0.6 }}
           className="pt-8 pb-20 px-4 md:px-6 text-center"
         >
           <div className="max-w-4xl mx-auto">
@@ -193,7 +195,7 @@ const RPOPage: React.FC = () => {
               What is Recruitment Process Outsourcing?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              If you need to hire at speed, RPO lets TrivianEdge sit inside your hiring process and do the heavy lifting for you. We manage sourcing, screening, offers, and onboarding so your team can move faster with less friction. Combine our RPO with{' '}
+              Recruitment Process Outsourcing (RPO) is when an external partner manages some or all of your hiring process — sourcing, screening, interviewing, and onboarding — as an extension of your team. TrivianEdge's RPO service sits inside your hiring process and does the heavy lifting, so you can hire at speed with less friction. Combine our RPO with{' '}
               <Link
                 to="/services/bpo"
                 className="text-cyan-400 hover:underline"

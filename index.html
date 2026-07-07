@@ -23,8 +23,9 @@
     <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large">
 
-    <!-- Canonical -->
-    <link rel="canonical" href="https://www.trivianedge.com/">
+    <!-- Canonical is intentionally omitted here: SEOHead (react-helmet-async) injects
+         the correct per-route canonical on every page once React mounts. A static tag
+         here would always point at "/" and conflict with it on every other route. -->
 
     <!-- Hreflang, international targeting -->
     <link rel="alternate" hreflang="en" href="https://www.trivianedge.com/">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   Code2,
   Globe,
@@ -12,9 +12,9 @@ import {
   TrendingDown,
   Globe2,
   CheckCircle2,
-  ChevronDown,
 } from 'lucide-react';
 import SEOHead from '../../components/SEOHead';
+import Accordion from '../../components/Accordion';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '../../utils/seo';
 
 const IT_SERVICES = [
@@ -77,7 +77,7 @@ const FAQS = [
 ];
 
 const ITOutsourcingPage: React.FC = () => {
-  const [openIndex, setOpenIndex] = React.useState<number | null>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <>
@@ -119,7 +119,7 @@ const ITOutsourcingPage: React.FC = () => {
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: shouldReduceMotion ? 0.01 : 0.6 }}
           className="pt-8 pb-20 px-4 md:px-6 text-center"
         >
           <div className="max-w-4xl mx-auto">
@@ -160,7 +160,7 @@ const ITOutsourcingPage: React.FC = () => {
               What is IT Outsourcing?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              If your product team needs engineering help without the delays and overhead of hiring locally, TrivianEdge can build the offshore setup for you. We deliver managed software teams across custom development, cloud, security, and systems integration in about 30 days. Pair IT outsourcing with our{' '}
+              IT outsourcing is the practice of partnering with an external company to deliver technology functions — like software development, cloud infrastructure, or systems integration — instead of building and managing an in-house engineering team. TrivianEdge builds managed offshore software teams across custom development, cloud, security, and systems integration in about 30 days. Pair IT outsourcing with our{' '}
               <Link
                 to="/services/ai-development"
                 className="text-cyan-400 hover:underline"
@@ -232,34 +232,7 @@ const ITOutsourcingPage: React.FC = () => {
             <p className="text-muted text-center mb-10">
               Everything you need to know about IT outsourcing and offshore software development with TrivianEdge.
             </p>
-            <div className="space-y-3">
-              {FAQS.map((faq, i) => (
-                <div
-                  key={i}
-                  className="glass rounded-2xl border-border overflow-hidden"
-                >
-                  <button
-                    className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
-                    onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                    aria-expanded={openIndex === i}
-                  >
-                    <span className="font-semibold text-text text-sm md:text-base">
-                      {faq.question}
-                    </span>
-                    <ChevronDown
-                      className={`w-5 h-5 text-cyan-400 flex-shrink-0 transition-transform duration-200 ${
-                        openIndex === i ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </button>
-                  {openIndex === i && (
-                    <div className="px-6 pb-5 text-muted text-sm leading-relaxed border-t border-border/40 pt-4">
-                      {faq.answer}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+            <Accordion items={FAQS} />
           </div>
         </section>
 

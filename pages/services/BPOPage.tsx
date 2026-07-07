@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   Server,
   Layers,
@@ -97,6 +97,8 @@ const STATS = [
 ];
 
 const BPOPage: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <>
       <SEOHead
@@ -136,7 +138,7 @@ const BPOPage: React.FC = () => {
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: shouldReduceMotion ? 0.01 : 0.6 }}
           className="pt-8 pb-20 px-4 md:px-6 text-center"
         >
           <div className="max-w-4xl mx-auto">
@@ -177,7 +179,7 @@ const BPOPage: React.FC = () => {
               What is Business Process Outsourcing?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              If your team is spending too much time on support work, payroll, admin, or other non-core tasks, TrivianEdge can take that load off your plate. We build offshore teams that handle the work cleanly, move quickly, and plug into your business in about 30 days. Whether you need back-office support or full-cycle{' '}
+              Business Process Outsourcing (BPO) is the practice of hiring an external partner to run specific business operations — like customer support, back-office admin, or finance processing — on your behalf. TrivianEdge builds offshore BPO teams that plug into your business in about 30 days, handling the work cleanly so your team can focus on what matters most. Whether you need back-office support or full-cycle{' '}
               <Link
                 to="/services/rpo"
                 className="text-cyan-400 hover:underline"

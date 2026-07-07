@@ -84,4 +84,38 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
+User-agent: Applebot-Extended
+Allow: /
+
+# Common Crawl — feeds training data for many third-party LLMs
+User-agent: CCBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: Meta-ExternalAgent
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
 Sitemap: https://www.trivianedge.com/sitemap.xml
+
+# llms.txt — structured summary for LLM/agent crawlers (llmstxt.org)
+# https://www.trivianedge.com/llms.txt
