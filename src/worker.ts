@@ -642,10 +642,24 @@ export default {
       });
     }
 
-    // Serve static assets; fall back to index.html for SPA client-side routing
+    // Serve static assets. Client-side-routed paths (e.g. /services/bpo) have no
+    // literal matching file, so env.ASSETS.fetch 404s on the exact request path
+    // (html_handling is "none" — no automatic extension/index resolution).
+    // Before falling back to the bare SPA shell, try the build-time prerendered
+    // snapshot at <path>/index.html (see scripts/prerender.mjs): this is what
+    // lets non-JS-executing crawlers (GPTBot, ClaudeBot, PerplexityBot) actually
+    // see real page content instead of an empty <div id="root">.
     if (env.ASSETS && typeof env.ASSETS.fetch === 'function') {
       const assetResponse = await env.ASSETS.fetch(request);
       if (assetResponse.status === 404) {
+        const snapshotPath = `${url.pathname.replace(/\/$/, '')}/index.html`;
+        const snapshotResponse = await env.ASSETS.fetch(
+          new Request(new URL(snapshotPath, request.url).toString()),
+        );
+        if (snapshotResponse.status !== 404) {
+          return addSecurityHeaders(snapshotResponse);
+        }
+
         const indexRequest = new Request(new URL('/index.html', request.url).toString());
         return addSecurityHeaders(await env.ASSETS.fetch(indexRequest));
       }

@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Star, ExternalLink, ArrowRight } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import { CASE_STUDIES, TESTIMONIALS } from '../constants/proof';
-import { breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
+import { breadcrumbSchema, reviewSchema, SEO_CONFIG } from '../utils/seo';
 
 const ProofPage: React.FC = () => {
   const navigate = useNavigate();
@@ -19,6 +19,7 @@ const ProofPage: React.FC = () => {
             { name: 'Home', url: SEO_CONFIG.siteUrl },
             { name: 'Proof', url: `${SEO_CONFIG.siteUrl}/proof` },
           ]),
+          ...TESTIMONIALS.map(reviewSchema),
         ]}
       />
 

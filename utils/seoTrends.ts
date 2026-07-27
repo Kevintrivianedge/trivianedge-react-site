@@ -7,14 +7,11 @@
  * consistently high-value terms for BPO, outsourcing, offshore and software
  * development verticals.
  *
- * The engine rotates emphasis between keyword clusters based on:
- *   1. Day-of-week patterns (B2B search spikes mid-week)
- *   2. Month/quarter patterns (hiring surges Q1, Q3)
- *   3. Real-time signals (detected crawler bot, network quality)
- *   4. Page context (home vs blog vs service page)
- *
- * This means every crawl by Google/Bing sees slightly different emphasis,
- * simulating natural content freshness signals.
+ * The engine rotates secondary keyword emphasis (the meta keywords tag and
+ * schema keyword arrays, neither of which factors into ranking directly) based
+ * on day/week seeds. Title and meta description are intentionally NOT rotated
+ * — they're pinned to a single fixed variant per page, since those are the
+ * fields search engines actually cache and match against for SERP snippets.
  */
 
 export interface SEOTrendSignal {
@@ -120,8 +117,13 @@ export function getSEOTrendSignal(context: PageContext = 'home'): SEOTrendSignal
   const secondary2 = rotate(OFFSHORE_POOL, weekSeed);
   const secondary3 = rotate(SOFTWARE_POOL, daySeed + weekSeed);
 
-  const titleVariant = rotate(TITLE_VARIANTS[context] ?? TITLE_VARIANTS.home, weekSeed);
-  const descriptionVariant = rotate(DESC_VARIANTS[context] ?? DESC_VARIANTS.home, daySeed);
+  // Title and meta description are pinned to a single fixed variant (not rotated).
+  // Search engines cache and match on these exact strings for SERP snippets and
+  // title matching — flapping them daily/weekly dilutes keyword-to-title
+  // consistency and risks title-rewrite / freshness-manipulation penalties for
+  // no real benefit, since nothing about the underlying content actually changed.
+  const titleVariant = (TITLE_VARIANTS[context] ?? TITLE_VARIANTS.home)[0];
+  const descriptionVariant = (DESC_VARIANTS[context] ?? DESC_VARIANTS.home)[0];
 
   const schemaEmphasis = [
     rotate(BPO_POOL, daySeed + 2),

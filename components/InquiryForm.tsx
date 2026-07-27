@@ -72,8 +72,9 @@ const InquiryForm: React.FC = () => {
     <form onSubmit={handleSubmit} className="glass p-8 md:p-10 rounded-[2rem] border-border space-y-5">
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Name</label>
+          <label htmlFor="inquiry-name" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Name</label>
           <input
+            id="inquiry-name"
             type="text"
             required
             value={form.name}
@@ -83,8 +84,9 @@ const InquiryForm: React.FC = () => {
           />
         </div>
         <div>
-          <label className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Company</label>
+          <label htmlFor="inquiry-company" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Company</label>
           <input
+            id="inquiry-company"
             type="text"
             required
             value={form.company}
@@ -97,8 +99,9 @@ const InquiryForm: React.FC = () => {
 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Email</label>
+          <label htmlFor="inquiry-email" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Email</label>
           <input
+            id="inquiry-email"
             type="email"
             required
             value={form.email}
@@ -108,8 +111,9 @@ const InquiryForm: React.FC = () => {
           />
         </div>
         <div>
-          <label className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Primary need</label>
+          <label htmlFor="inquiry-need" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Primary need</label>
           <select
+            id="inquiry-need"
             value={form.need}
             onChange={(e) => setForm({ ...form, need: e.target.value })}
             className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none focus:border-cyan-500/40 transition-colors appearance-none cursor-pointer"
@@ -125,8 +129,9 @@ const InquiryForm: React.FC = () => {
 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Timing</label>
+          <label htmlFor="inquiry-timeline" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Timing</label>
           <select
+            id="inquiry-timeline"
             value={form.timeline}
             onChange={(e) => setForm({ ...form, timeline: e.target.value })}
             className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none focus:border-cyan-500/40 transition-colors appearance-none cursor-pointer"
@@ -138,8 +143,9 @@ const InquiryForm: React.FC = () => {
           </select>
         </div>
         <div>
-          <label className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Message</label>
+          <label htmlFor="inquiry-message" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Message</label>
           <textarea
+            id="inquiry-message"
             value={form.message}
             onChange={(e) => setForm({ ...form, message: e.target.value })}
             className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:text-muted/70 focus:outline-none focus:border-cyan-500/40 transition-colors min-h-[120px]"

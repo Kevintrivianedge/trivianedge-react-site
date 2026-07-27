@@ -1,5 +1,6 @@
 
 import './src/tailwind.css';
+import './src/theme.css';
 import * as amplitude from '@amplitude/unified';
 import React from 'react';
 import ReactDOM from 'react-dom/client';

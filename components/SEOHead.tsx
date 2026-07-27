@@ -32,7 +32,17 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   schema,
 }) => {
   const location = useLocation();
-  const pageTitle = title ? `${title} | ${SEO_CONFIG.siteName}` : SEO_CONFIG.defaultTitle;
+  // Several callers (service pages, seoTrends title variants, privacy/terms)
+  // already bake "TrivianEdge" into their title string. Appending the site
+  // name unconditionally produced "... TrivianEdge | TrivianEdge" in every
+  // <title>, og:title and twitter:title — invisible before because only
+  // client-side react-helmet ever rendered it, but now baked verbatim into
+  // the build-time prerendered snapshot crawlers actually read.
+  const pageTitle = !title
+    ? SEO_CONFIG.defaultTitle
+    : title.includes(SEO_CONFIG.siteName)
+      ? title
+      : `${title} | ${SEO_CONFIG.siteName}`;
   const canonicalUrl =
     canonical ?? `${SEO_CONFIG.siteUrl}${location.pathname}`;
   const robotsContent = noIndex

@@ -503,15 +503,55 @@ export function breadcrumbSchema(items: BreadcrumbItem[]): SchemaObject {
   };
 }
 
+/**
+ * Returns a Schema.org Review for a client testimonial.
+ *
+ * `author` on these testimonials is an anonymized title ("Founder",
+ * "Operations Lead"), not a real person's name, so it's attributed to the
+ * client company (`role`, the one real identifiable entity in the data) via
+ * an Organization author rather than fabricating a Person name.
+ *
+ * Deliberately omits `reviewRating` / `aggregateRating` — these are prose
+ * quotes with no real numeric score behind them. Inventing a rating value to
+ * qualify for star rich-results would be fabricated structured data, which
+ * Google's guidelines treat as spam. This still carries genuine E-E-A-T value
+ * via reviewBody + a named, real reviewing organization.
+ */
+export function reviewSchema(testimonial: { quote: string; author: string; role: string }): SchemaObject {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Review',
+    reviewBody: testimonial.quote,
+    author: {
+      '@type': 'Organization',
+      name: testimonial.role,
+    },
+    itemReviewed: {
+      '@type': 'Organization',
+      '@id': 'https://www.trivianedge.com/#organization',
+      name: 'TrivianEdge',
+    },
+  };
+}
+
 /** Returns a Schema.org Article authored and published by TrivianEdge */
+// Bylines that are role titles or a general editorial credit rather than a named
+// individual — these get Organization authorship so we don't mis-mark a job
+// title as a schema.org Person (which would be inaccurate structured data).
+const GENERIC_BYLINES = new Set(['TrivianEdge Editorial', 'AI Research Lead', 'Global Strategy Director']);
+
 export function articleSchema(params: {
   title: string;
   description: string;
   url: string;
   datePublished: string;
   dateModified: string;
+  author?: string;
   image?: string;
 }): SchemaObject {
+  const authorName = params.author?.trim();
+  const isNamedPerson = Boolean(authorName) && !GENERIC_BYLINES.has(authorName!);
+
   const schema: SchemaObject = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -520,11 +560,13 @@ export function articleSchema(params: {
     url: params.url,
     datePublished: params.datePublished,
     dateModified: params.dateModified,
-    author: {
-      '@type': 'Organization',
-      '@id': 'https://www.trivianedge.com/#organization',
-      name: 'TrivianEdge',
-    },
+    author: isNamedPerson
+      ? { '@type': 'Person', name: authorName }
+      : {
+          '@type': 'Organization',
+          '@id': 'https://www.trivianedge.com/#organization',
+          name: 'TrivianEdge',
+        },
     publisher: {
       '@type': 'Organization',
       '@id': 'https://www.trivianedge.com/#organization',

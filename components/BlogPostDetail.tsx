@@ -83,6 +83,7 @@ const BlogPostDetail: React.FC = () => {
             url: postUrl,
             datePublished: (post as any).datePublished ?? post.date,
             dateModified: (post as any).dateModified ?? (post as any).datePublished ?? post.date,
+            author: post.author,
             image: (post as any).imageUrl,
           }),
           breadcrumbSchema([

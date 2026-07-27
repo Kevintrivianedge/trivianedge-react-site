@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
 export interface AccordionItem {
@@ -37,22 +37,19 @@ const Accordion: React.FC<AccordionProps> = ({ items }) => {
                 <ChevronDown className="w-5 h-5" />
               </motion.span>
             </button>
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  key="answer"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.25, ease: 'easeInOut' }}
-                  className="overflow-hidden"
-                >
-                  <p className="px-6 pb-5 text-muted leading-relaxed">
-                    {item.answer}
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* Answer stays in the DOM even when collapsed (height/opacity animated,
+                not conditionally mounted) so crawlers that don't execute JS or click
+                interactions — GPTBot, ClaudeBot, PerplexityBot — can still read it. */}
+            <motion.div
+              initial={false}
+              animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
+              className="overflow-hidden"
+            >
+              <p className="px-6 pb-5 text-muted leading-relaxed">
+                {item.answer}
+              </p>
+            </motion.div>
           </div>
         );
       })}
