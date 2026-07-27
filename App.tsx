@@ -8,14 +8,13 @@ import {
   Linkedin,
   Twitter,
   Layers,
-  X,
   CheckCircle2,
   TrendingUp,
   Users2,
   ShieldCheck,
 } from 'lucide-react';
 import { Routes, Route, useLocation, useNavigate, Link } from 'react-router-dom';
-import { WHY_US, TALENT_HUBS, SERVICES, ROLES, STEPS } from './constants';
+import { TALENT_HUBS, STEPS } from './constants';
 import { CASE_STUDIES, TESTIMONIALS } from './constants/proof';
 import { TalentHub } from './types';
 import { LanguageProvider } from './contexts/LanguageContext';
@@ -54,7 +53,6 @@ import TalentHubCard from './components/TalentHubCard';
 import ScrollToTop from './components/ScrollToTop';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import WorldMapSVG from './components/WorldMapSVG';
-import CountUpStat from './components/CountUpStat';
 
 // Lazy-load route-level pages and heavy below-fold interactive modules.
 // This splits each into its own chunk so the main bundle only contains
@@ -74,25 +72,12 @@ const ITOutsourcingPage       = lazy(() => import('./pages/services/ITOutsourcin
 const VentureStudioPage       = lazy(() => import('./pages/VentureStudioPage'));
 const ServicesPage            = lazy(() => import('./pages/ServicesPage'));
 const NotFoundPage            = lazy(() => import('./pages/NotFoundPage'));
+const ChatSidebar             = lazy(() => import('./components/ChatSidebar'));
 
 
-// Marquee trust ticker items
-const TICKER_ITEMS = [
-  { value: '6', label: 'talent-rich countries' },
-  { value: '40%', label: 'average cost savings' },
-  { label: 'Cargo Login', value: '↗' },
-  { value: '30', label: 'day deployment model' },
-  { label: 'Keynotive', value: '↗' },
-  { value: '24/7', label: 'operations coverage' },
-  { label: 'CyouMedia', value: '↗' },
-  { label: 'Philippines', value: '🇵🇭' },
-  { label: 'Vietnam', value: '🇻🇳' },
-  { label: 'Sri Lanka', value: '🇱🇰' },
-  { label: 'Hub-Flx', value: '↗' },
-  { label: 'Turkey', value: '🇹🇷' },
-  { label: 'South Africa', value: '🇿🇦' },
-  { label: 'Costa Rica', value: '🇨🇷' },
-];
+// Trust strip — real named clients only, kept separate from the hero's numeric stats
+// so the strip isn't mixing unlike content types (numbers, names, flags) in one place.
+const TRUST_CLIENTS = ['Cargo Login', 'Keynotive', 'Hub-Flx'];
 
 const PREMIUM_FEATURES = [
   {
@@ -110,10 +95,10 @@ const PREMIUM_FEATURES = [
     title: 'We Handle the Paperwork',
     description: 'Contracts, payroll, taxes, and local employment laws in every country, all taken care of. You never deal with foreign government offices or compliance filings.',
     icon: ShieldCheck,
-    accent: 'text-violet-500',
-    iconBg: 'from-violet-400/20 to-violet-400/5',
-    iconBorder: 'border-violet-400/25',
-    glow: 'bg-violet-400/8',
+    accent: 'text-cyan-500',
+    iconBg: 'from-cyan-400/20 to-cyan-400/5',
+    iconBorder: 'border-cyan-400/25',
+    glow: 'bg-cyan-400/8',
     metric: '6 countries covered',
     link: '/services/bpo',
   },
@@ -121,10 +106,10 @@ const PREMIUM_FEATURES = [
     title: 'We Keep the Work Moving',
     description: 'With teams across multiple time zones, your work never sits idle overnight. Handoffs are managed, progress is tracked, and issues get flagged before they become problems.',
     icon: TrendingUp,
-    accent: 'text-emerald-500',
-    iconBg: 'from-emerald-400/20 to-emerald-400/5',
-    iconBorder: 'border-emerald-400/25',
-    glow: 'bg-emerald-400/8',
+    accent: 'text-cyan-500',
+    iconBg: 'from-cyan-400/20 to-cyan-400/5',
+    iconBorder: 'border-cyan-400/25',
+    glow: 'bg-cyan-400/8',
     metric: '24/7 coverage',
     link: '/services/it-outsourcing',
   },
@@ -132,10 +117,10 @@ const PREMIUM_FEATURES = [
     title: 'Tech and Non-Tech, Both',
     description: 'We hire developers, but also customer support, finance, HR, operations, and sales. One partner covers your full team, not just the technical side.',
     icon: Layers,
-    accent: 'text-amber-500',
-    iconBg: 'from-amber-400/20 to-amber-400/5',
-    iconBorder: 'border-amber-400/25',
-    glow: 'bg-amber-400/8',
+    accent: 'text-cyan-500',
+    iconBg: 'from-cyan-400/20 to-cyan-400/5',
+    iconBorder: 'border-cyan-400/25',
+    glow: 'bg-cyan-400/8',
     metric: '40% avg. savings',
     link: '/services',
   },
@@ -206,7 +191,6 @@ const HOME_FAQS = [
 const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = ({ setSelectedHub }) => {
   const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
-  const [marqueepaused, setMarqueePaused] = useState(false);
 
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -319,9 +303,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </motion.div>
         </motion.div>
 
-        {/* Mobile-only 2×2 stat grid — shown below buttons on small screens */}
+        {/* Mobile-only 2×2 stat grid — shown below buttons on small screens.
+            This is the only stat rendering on mobile; desktop uses the floating
+            cards above instead, so the numbers never repeat within a breakpoint. */}
         <motion.div
-          className="lg:hidden w-full px-0 pb-6 relative z-10"
+          className="lg:hidden w-full px-0 pb-10 relative z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9, duration: 0.8 }}
@@ -340,53 +326,24 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             ))}
           </div>
         </motion.div>
-
-        {/* Bottom stats strip — desktop */}
-        <motion.div
-          className="hidden lg:block w-full px-0 pb-10 relative z-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.0, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <div className="max-w-7xl mx-auto border-t border-white/15 pt-8 grid grid-cols-4 gap-16">
-            <CountUpStat end={6}  suffix="" label="Countries We Source From" textClass="text-white" labelClass="text-white/55" />
-            <CountUpStat end={40} suffix="%" label="Average Cost Savings" textClass="text-white" labelClass="text-white/55" />
-            <CountUpStat end={30} suffix=" days" label="Average Time to Start" textClass="text-white" labelClass="text-white/55" />
-            <div className="flex flex-col gap-1">
-              <span className="text-3xl md:text-4xl font-bold text-white tabular-nums">24/7</span>
-              <span className="text-xs tracking-widest text-white/55 uppercase font-semibold leading-tight mt-1">Operations Coverage</span>
-            </div>
-          </div>
-        </motion.div>
       </section>
 
-      {/* ===== ACT 2: TRUST MARQUEE ===== */}
-      <section aria-label="Trust signals" className="py-6 md:py-10 border-y border-border overflow-hidden bg-[#fafafa]">
-        <p className="text-center text-[10px] font-bold uppercase tracking-[0.25em] text-text/35 mb-5">Trusted by operators and scale-ups across North America</p>
-        <div
-          className="relative overflow-hidden"
-          onMouseEnter={() => setMarqueePaused(true)}
-          onMouseLeave={() => setMarqueePaused(false)}
-        >
-          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-[#fafafa] to-transparent z-10" />
-          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-[#fafafa] to-transparent z-10" />
-          <div
-            className="flex w-[300%] items-center gap-5 md:gap-8"
-            style={{ animation: 'marquee-scroll 28s linear infinite', animationPlayState: marqueepaused ? 'paused' : 'running' }}
-          >
-            {[...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS].map((item, idx) => (
-              <div
-                key={`${item.label}-${idx}`}
-                className="inline-flex items-center gap-3 md:gap-4 px-5 md:px-6 py-3 rounded-2xl border border-border bg-white whitespace-nowrap shadow-sm"
+      {/* ===== ACT 2: TRUST STRIP ===== */}
+      <section aria-label="Trust signals" className="py-8 md:py-10 border-y border-border bg-[#fafafa]">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-text/35 whitespace-nowrap">Trusted by operators across North America</p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {TRUST_CLIENTS.map(name => (
+              <span
+                key={name}
+                className="inline-flex items-center px-5 py-2.5 rounded-full border border-border bg-white text-sm font-bold text-text/70 whitespace-nowrap"
               >
-                <span className="text-base md:text-lg font-black text-text tabular-nums">{item.value}</span>
-                <span className="text-[10px] md:text-xs uppercase tracking-widest text-muted font-bold">{item.label}</span>
-              </div>
+                {name}
+              </span>
             ))}
           </div>
         </div>
       </section>
-
 
       {/* ===== ACT 2B: WHAT WE DO ===== */}
       <section aria-label="What we do" className="section-tint section-shell px-4 md:px-6">
@@ -439,101 +396,21 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               );
             })}
           </div>
-        </div>
-      </section>
 
-      {/* ===== ACT 3: OLD WAY VS TRIVIANEDGE ===== */}
-      <section
-        id="bpo-vs-rpo"
-        aria-label="Why BPO Breaks"
-        className="section-shell px-4 md:px-6 border-t border-border"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-surface text-text/70 text-[10px] font-bold uppercase tracking-widest mb-6">
-              <X className="w-3 h-3" />
-              Why traditional BPO breaks
-            </div>
-            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
-              Most outsourcing firms just pass<br />
-              <span className="text-holo">the work to someone cheaper.</span>
-            </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto">
-              We do something different. We build the team around your business, handle all the admin, and stay responsible for the outcome, not just the hours billed.
+          {/* Closing statement + link to the full services catalogue, replacing what
+              used to be two separate sections (a "vs. traditional BPO" comparison and
+              a services bento grid) that repeated this same content. */}
+          <div className="mt-10 reveal flex flex-col items-center gap-6 text-center">
+            <p className="text-xl md:text-2xl font-bold text-holo max-w-2xl">
+              Outsourcing the task is easy. Building the system takes experience.
             </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6 reveal">
-            {/* Left: Traditional BPO — cold/negative treatment */}
-            <div className="micro-lift-card p-8 md:p-10 rounded-[2.5rem] border border-rose-200/60 bg-rose-50/40 relative overflow-hidden">
-              <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-rose-300/15 blur-3xl pointer-events-none" />
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-2xl bg-rose-100 border border-rose-200 flex items-center justify-center">
-                  <X className="w-5 h-5 text-rose-400" />
-                </div>
-                <div>
-                  <p className="text-[9px] font-bold uppercase tracking-widest text-rose-400/70 mb-0.5">The old way</p>
-                  <h3 className="text-xl font-bold text-gray-500">Traditional BPO</h3>
-                </div>
-              </div>
-              <p className="text-rose-400/70 text-xs font-semibold uppercase tracking-widest mb-6 pl-[52px]">What you're probably used to</p>
-              <ul className="space-y-3">
-                {[
-                  'They bill for hours, not results — you take on all the risk',
-                  'They send whoever is available, not who is right',
-                  'Once work is delivered, they disappear with no accountability',
-                  'No visibility into who is working or what is happening',
-                  'Slow to adapt when your needs change mid-project',
-                ].map(item => (
-                  <li key={item} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-rose-100 border border-rose-200 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <X className="w-3 h-3 text-rose-400" />
-                    </div>
-                    <span className="text-gray-400 text-sm leading-relaxed line-through decoration-rose-200">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Right: TrivianEdge — warm/positive treatment */}
-            <div className="micro-lift-card card-glow p-8 md:p-10 rounded-[2.5rem] border border-cyan-400/25 bg-[#f2fbf8] relative overflow-hidden" style={{ boxShadow: '0 4px 32px rgba(0,196,154,0.1)' }}>
-              <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-cyan-400/12 blur-3xl pointer-events-none" />
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-2xl bg-cyan-400/15 border border-cyan-400/25 flex items-center justify-center">
-                  <CheckCircle2 className="w-5 h-5 text-cyan-500" />
-                </div>
-                <div>
-                  <p className="text-[9px] font-bold uppercase tracking-widest text-cyan-500/70 mb-0.5">The TrivianEdge way</p>
-                  <h3 className="text-xl font-bold text-text">TrivianEdge RPO + Tech</h3>
-                </div>
-              </div>
-              <p className="text-cyan-600 text-xs font-semibold uppercase tracking-widest mb-6 pl-[52px]">Outcome-driven, always</p>
-              <ul className="space-y-3">
-                {[
-                  'We own the outcome, not just the task list',
-                  'We hand-pick people for your specific role and culture',
-                  'Full visibility into hiring, onboarding, and every milestone',
-                  'Payroll, contracts, and compliance included from day one',
-                  'We adjust quickly when your priorities shift',
-                ].map(item => (
-                  <li key={item} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-cyan-400/15 border border-cyan-400/25 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <CheckCircle2 className="w-3 h-3 text-cyan-500" />
-                    </div>
-                    <span className="text-text/80 text-sm leading-relaxed font-medium">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Bottom statement */}
-          <div className="mt-8 reveal">
-            <div className="glass p-8 rounded-[2rem] border-border text-center">
-              <p className="text-xl md:text-2xl font-bold text-holo">
-                Outsourcing the task is easy. Building the system takes experience.
-              </p>
-            </div>
+            <Link
+              to="/services"
+              className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-cyan-600 hover:text-cyan-700 transition-colors"
+            >
+              Explore all services
+              <ChevronRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -597,11 +474,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               Real work. <span className="text-holo">Real outcomes.</span>
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
-              Four engagements, tech and non-tech alike, stripped down to the essentials.
+              Real engagements, tech and non-tech alike, stripped down to the essentials.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
             {CASE_STUDIES.map((study, idx) => (
               <motion.article
                 key={study.client}
@@ -644,64 +521,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </div>
         </div>
       </section>
-
-      {/* ===== ACT 6: SERVICES BENTO GRID ===== */}
-      <section
-        id="solutions"
-        aria-label="Our Services"
-        className="section-tint section-shell px-4 md:px-6 border-t border-border"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 reveal">
-            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-text/55 mb-4">What we do</p>
-            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
-              BPO, RPO, AI development,<br />and IT outsourcing, under one roof.
-            </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto">
-              Offshore teams, managed operations, and delivery support in one place.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6 reveal">
-            {SERVICES.slice(0, 3).map((service, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="service-dark micro-lift-card rounded-[2rem] border p-8 md:p-10 flex flex-col gap-5 group relative overflow-hidden"
-              >
-                {/* Glow orb per card */}
-                <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full opacity-20 blur-3xl pointer-events-none"
-                  style={{ background: idx === 0 ? 'radial-gradient(#00C49A, transparent)' : idx === 1 ? 'radial-gradient(#6366f1, transparent)' : 'radial-gradient(#c026d3, transparent)' }}
-                />
-                <div className="w-14 h-14 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                  {service.icon}
-                </div>
-                <div>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {service.tags.slice(0, 2).map(tag => (
-                      <span key={tag} className="text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/10 text-white/50">{tag}</span>
-                    ))}
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3 leading-snug">{service.title}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed">{service.description.split('.')[0]}.</p>
-                </div>
-                <ul className="mt-auto space-y-2 pt-4 border-t border-white/8">
-                  {service.outcomes.map(o => (
-                    <li key={o} className="flex items-start gap-2 text-xs text-white/55">
-                      <span className="text-cyan-400 mt-0.5 flex-shrink-0">✓</span>
-                      {o}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
 
       {/* ===== ACT 7: TALENT HUBS + WORLD MAP ===== */}
       <section
@@ -765,20 +584,16 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               Tech hiring, non-tech hiring, delivery support, market expansion.
             </p>
 
-            <div className="max-w-4xl mx-auto text-left mb-10 rounded-3xl bg-white p-6 md:p-10 shadow-[0_0_60px_rgba(0,196,154,0.15)]">
+            <div className="max-w-4xl mx-auto text-left mb-6 rounded-3xl bg-white p-6 md:p-10 shadow-[0_0_60px_rgba(0,196,154,0.15)]">
               <InquiryForm />
             </div>
 
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a href="mailto:kevin.v@trivianedge.com" className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border border-white/10 text-white font-bold text-base hover:border-cyan-400/40 hover:bg-white/5 transition-all">
-                <Mail className="w-5 h-5" />
-                Email
-              </a>
-              <a href="tel:+18882028513" className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border border-white/10 text-white font-bold text-base hover:border-cyan-400/40 hover:bg-white/5 transition-all">
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                Call
-              </a>
-            </div>
+            <p className="text-white/45 text-sm">
+              Prefer to reach out directly?{' '}
+              <a href="mailto:kevin.v@trivianedge.com" className="text-white/70 hover:text-cyan-400 underline underline-offset-4 transition-colors">Email us</a>
+              {' '}or{' '}
+              <a href="tel:+18882028513" className="text-white/70 hover:text-cyan-400 underline underline-offset-4 transition-colors">call +1 888-202-8513</a>.
+            </p>
           </div>
       </section>
     </>
@@ -1048,6 +863,11 @@ export default function App() {
             </div>
           </footer>
           <ScrollToTop />
+          <ErrorBoundary fallback={null}>
+            <Suspense fallback={null}>
+              <ChatSidebar />
+            </Suspense>
+          </ErrorBoundary>
         </div>
         </GeoProvider>
       </LanguageProvider>

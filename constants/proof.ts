@@ -36,14 +36,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     highlights: ['Outbound scaling', 'Parallel teams', 'Low-overhead growth'],
   },
   {
-    client: 'CyouMedia',
-    sector: 'Market entry',
-    challenge: 'The company needed a way to validate a new market before committing to a larger rollout.',
-    approach: 'Handled sales strategy, sourced local companies in Sri Lanka, and supported product-scale thinking for a wider launch.',
-    outcome: 'The engagement turned into an active partnership that moved the company closer to mass-scale deployment.',
-    highlights: ['Market validation', 'Local sourcing', 'Scale planning'],
-  },
-  {
     client: 'Hub-Flx',
     sector: 'Regional expansion',
     challenge: 'The founder needed a partner who could help take software products into UAE and GCC markets without losing momentum.',

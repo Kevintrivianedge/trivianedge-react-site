@@ -85,12 +85,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- LCP hero image, preloaded so the browser fetches it in parallel with
-         JS/CSS rather than waiting for React to render the <img> element. -->
-    <link rel="preload" as="image"
-      href="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1920&q=55&auto=format&fit=crop"
-      fetchpriority="high">
-
     <!-- Google Fonts, non-blocking load via preload + onload swap pattern.
          font-display=swap in the URL already prevents invisible text; the
          onload trick prevents the stylesheet from being render-blocking. -->
@@ -104,8 +98,8 @@
         :root {
             /* Light Theme (Default) */
             --cyan: #00C49A;
+            /* Reserved secondary accent — used once, deliberately, on the chat launcher only. */
             --violet: #6366f1;
-            --magenta: #c026d3;
 
             /* Luxury typography and spacing scale */
             --font-body: 'Manrope', sans-serif;
@@ -196,8 +190,9 @@
         }
 
         h3 {
-            font-size: clamp(1.35rem, 2.6vw, 2.1rem);
-            line-height: 1.16;
+            font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+            font-weight: 600;
+            line-height: 1.2;
         }
 
         h4 {
@@ -280,7 +275,7 @@
             inset: -1px;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(135deg, var(--cyan), var(--violet), var(--magenta), var(--cyan));
+            background: linear-gradient(135deg, var(--cyan), var(--violet), var(--cyan));
             background-size: 300% 300%;
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask-composite: exclude;
@@ -723,63 +718,6 @@
             background-repeat: repeat-x;
         }
 
-        /* Digital Glitch Effect - Refined */
-        .glitch-text {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .glitch-text::before,
-        .glitch-text::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-        
-        .glitch-text:hover::before,
-        .glitch-text:hover::after {
-            opacity: 1;
-        }
-
-        .glitch-text:hover::before {
-            color: var(--cyan);
-            z-index: -1;
-            animation: glitch-anim-1 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-            left: -2px;
-            text-shadow: 2px 0 var(--magenta);
-        }
-        
-        .glitch-text:hover::after {
-            color: var(--magenta);
-            z-index: -2;
-            animation: glitch-anim-2 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite reverse;
-            left: 2px;
-            text-shadow: -2px 0 var(--cyan);
-        }
-        
-        @keyframes glitch-anim-1 {
-            0% { clip-path: inset(20% 0 80% 0); transform: translate(-4px, 1px); }
-            20% { clip-path: inset(60% 0 10% 0); transform: translate(4px, -1px); }
-            40% { clip-path: inset(40% 0 50% 0); transform: translate(-4px, -2px); }
-            60% { clip-path: inset(80% 0 5% 0); transform: translate(4px, 2px); }
-            80% { clip-path: inset(10% 0 70% 0); transform: translate(-4px, 2px); }
-            100% { clip-path: inset(30% 0 20% 0); transform: translate(4px, -2px); }
-        }
-        
-        @keyframes glitch-anim-2 {
-            0% { clip-path: inset(10% 0 60% 0); transform: translate(4px, -1px); }
-            20% { clip-path: inset(30% 0 20% 0); transform: translate(-4px, 2px); }
-            40% { clip-path: inset(70% 0 10% 0); transform: translate(4px, 2px); }
-            60% { clip-path: inset(20% 0 50% 0); transform: translate(-4px, -1px); }
-            80% { clip-path: inset(60% 0 30% 0); transform: translate(4px, 1px); }
-            100% { clip-path: inset(5% 0 80% 0); transform: translate(-4px, -2px); }
-        }
         /* Disable heavy hover transforms on touch devices */
         @media (hover: none) {
             .hover-neon-glow:hover {
@@ -856,7 +794,7 @@
 
         /* --- Brand gradient text variant, used for headline emphasis spans --- */
         .text-holo {
-            background: linear-gradient(120deg, var(--cyan) 0%, var(--violet) 55%, var(--magenta) 100%);
+            background: linear-gradient(120deg, var(--cyan) 0%, #00e6b8 100%);
             background-size: 200% 100%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -888,7 +826,7 @@
             inset: -2px;
             border-radius: inherit;
             padding: 2px;
-            background: linear-gradient(135deg, var(--cyan), var(--violet), var(--magenta), var(--cyan));
+            background: linear-gradient(135deg, var(--cyan), var(--violet), var(--cyan));
             background-size: 300% 300%;
             animation: holo-shift 4s linear infinite;
             -webkit-mask: linear-gradient(#fff 0 0) content-box,

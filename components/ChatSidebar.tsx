@@ -2,7 +2,8 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { X, Send, MessageSquare, Terminal, Loader2, User, Bot, Sparkles, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SERVICES, TALENT_HUBS, ROLES, WHY_US } from '../constants';
+import { SERVICES, TALENT_HUBS, ROLES } from '../constants';
+import { CASE_STUDIES } from '../constants/proof';
 import { getCountryGreeting, getCountryAffectionateName } from '../utils/greetings';
 import { getTimeOfDay } from '../utils/getTimeOfDay';
 import { useGeo } from '../contexts/GeoContext';
@@ -326,8 +327,8 @@ ${SERVICES.map(s => `- ${s.title}: ${s.description}`).join('\n')}
 3. Roles We Place:
 ${ROLES.map(r => r.title + ": " + r.roles.join(', ')).join('\n')}
 
-4. Why Us (Value Props):
-${WHY_US.map(w => `- ${w.title}: ${w.description}`).join('\n')}
+4. Why Us (Client Results):
+${CASE_STUDIES.map(c => `- ${c.client} (${c.sector}): ${c.challenge} ${c.approach} Outcome: ${c.outcome}`).join('\n')}
 
 Guidelines:
 - Identity: You are Aria.

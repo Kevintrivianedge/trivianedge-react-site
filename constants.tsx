@@ -1,21 +1,17 @@
 
 import React from 'react';
-import { 
-  Cpu, 
-  Globe, 
-  Zap, 
-  Target, 
-  ShieldCheck, 
-  BarChart4, 
+import {
+  Cpu,
+  Globe,
+  Zap,
+  ShieldCheck,
+  BarChart4,
   Layers,
   Users,
-  Briefcase,
   TrendingUp,
-  Search,
-  MessageSquare,
-  Network
+  Search
 } from 'lucide-react';
-import { ServiceCardProps, RoleCategory, Step, WhyUsItem, BlogPost, TalentHub } from './types';
+import { ServiceCardProps, RoleCategory, Step, BlogPost, TalentHub } from './types';
 
 export const NAV_LINKS = [
   { name: 'Services', href: '/services' },
@@ -60,8 +56,8 @@ export const SERVICES: ServiceCardProps[] = [
   },
   {
     title: "We Open New Doors for You",
-    description: "Want to sell in a new country? We build the entire strategy, find local partners, and run the outreach from day one. When CyouMedia wanted to enter Sri Lanka and Hub-Flx wanted to expand into the UAE, we did not just give advice. We did the work.",
-    icon: <Cpu className="w-8 h-8 text-magenta-400" />,
+    description: "Want to sell in a new country? We build the entire strategy, find local partners, and run the outreach from day one. When Hub-Flx wanted to expand into the UAE, we did not just give advice. We did the work.",
+    icon: <Cpu className="w-8 h-8 text-cyan-400" />,
     tags: ["Market Entry", "Sales Strategy", "Regional Growth"],
     features: [
       "Full Sales Strategy and Execution",
@@ -201,47 +197,6 @@ export const TALENT_HUBS: TalentHub[] = [
   }
 ];
 
-export const WHY_US: WhyUsItem[] = [
-  {
-    title: "Cargo Login",
-    description: "Sourced candidates from the Philippines and Canada. While the US team was offline, the Philippines team picked up all documentation and execution seamlessly, working alongside a Canadian hire dedicated to trucking operations.",
-    result: "Revenue increased. Broken processes fixed.",
-    url: "https://www.cargo-login.com",
-    icon: <Briefcase className="w-6 h-6 text-cyan-400" />
-  },
-  {
-    title: "Keynotive",
-    description: "Managed two offshore teams operating across different time zones. Both teams ran cold calling, email marketing, and business sign-ups in parallel, generating new revenue without adding overhead.",
-    result: "Multiple teams running efficiently, measurable revenue growth.",
-    url: "https://www.keynotive.io",
-    icon: <TrendingUp className="w-6 h-6 text-violet-400" />
-  },
-  {
-    title: "CyouMedia",
-    description: "Deployed a full sales strategy and sourced Sri Lankan companies as a test market. TrivianEdge acted as consultants for product scale and software development, positioning the business for mass rollout.",
-    result: "Active partnership for ongoing mass-scale deployment.",
-    url: "https://cyoumedia.com",
-    icon: <Globe className="w-6 h-6 text-emerald-400" />
-  },
-  {
-    title: "Hub-Flx",
-    description: "Founded in the UAE with roots in Singapore, the founder invited TrivianEdge to partner in bringing software products including Medtech, ERPs, and data migration tools to UAE and GCC regions.",
-    result: "Strategic partnership for regional expansion in the Middle East.",
-    url: "https://www.hub-flx.com",
-    icon: <Network className="w-6 h-6 text-orange-400" />
-  },
-  {
-    title: "Built by Operators",
-    description: "We are not just recruiters. We are operators who know what delivery actually looks like, from onboarding to execution, from sourcing to results.",
-    icon: <Target className="w-6 h-6 text-blue-400" />
-  },
-  {
-    title: "Designed for Scale",
-    description: "Whether you need one hire or a full 24/7 operations team across three time zones, our model is built for speed, accountability, and growth.",
-    icon: <Layers className="w-6 h-6 text-magenta-400" />
-  }
-];
-
 export const ROLES: RoleCategory[] = [
   {
     title: "Tech & Engineering",
@@ -257,7 +212,7 @@ export const ROLES: RoleCategory[] = [
   },
   {
     title: "Operations & Delivery",
-    gradient: "from-violet-500/20 to-magenta-500/20",
+    gradient: "from-cyan-500/20 to-violet-500/20",
     roles: [
       "Operational Lead / Managers",
       "Financial Analysts",
@@ -280,19 +235,19 @@ export const STEPS: Step[] = [
     number: "02",
     title: "We Find the Right Person",
     description: "Our network spans 6 countries and hundreds of vetted candidates. We search, screen, and shortlist the best match for your role, usually within a week.",
-    icon: <Globe className="w-6 h-6 text-violet-400" />
+    icon: <Globe className="w-6 h-6 text-cyan-400" />
   },
   {
     number: "03",
     title: "They Start in 30 Days",
     description: "We onboard your new team member and make sure they fit right into your existing workflow. Day one feels like they have been there for months.",
-    icon: <Zap className="w-6 h-6 text-magenta-400" />
+    icon: <Zap className="w-6 h-6 text-cyan-400" />
   },
   {
     number: "04",
     title: "We Keep Making It Better",
     description: "We track how things are going and scale your team as your business grows. Good results get built on. Anything that is not working gets fixed fast.",
-    icon: <TrendingUp className="w-6 h-6 text-emerald-400" />
+    icon: <TrendingUp className="w-6 h-6 text-cyan-400" />
   }
 ];
 
@@ -323,28 +278,11 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "Feb 03, 2025",
     readTime: "4 min read",
     category: "Case Study",
-    imageGradient: "from-violet-500/20 to-magenta-500/20",
+    imageGradient: "from-cyan-500/20 to-violet-500/20",
     slug: "keynotive-case-study",
     metaDescription: "Case study: Keynotive scaled outbound sales with two offshore teams across time zones, improving pipeline consistency and execution visibility.",
     metaKeywords: ["keynotive", "offshore sales teams", "cold calling outsourcing", "multi-timezone sales", "TrivianEdge case study"],
     datePublished: "2025-02-03",
-    dateModified: "2026-04-23",
-    imageUrl: "https://www.trivianedge.com/og-image.jpg",
-  },
-  {
-    id: "cyoumedia-case-study",
-    title: "CyouMedia: Deploying a Sales Strategy in Sri Lanka",
-    excerpt: "CyouMedia needed a practical market-entry path in Sri Lanka, not just strategic advice. TrivianEdge handled targeting, outreach, and early partnership development while supporting scale decisions. Read the full story.",
-    content: "CyouMedia needed more than strategy slides. They needed real market traction in a new country.\n\nSri Lanka was selected as the entry market, and TrivianEdge handled execution: account targeting, outreach flow, qualification support, and early partnership development.\n\nAlongside sales activity, we advised on product adaptation so conversations reflected local realities instead of generic global messaging.\n\nThis produced practical validation in-market: live discussions, partner interest, and a clearer signal on where the product fit best.\n\nFrom there, the engagement moved into longer-term expansion support. The first market was treated as a disciplined launch environment, not a one-off test.",
-    author: "TrivianEdge Editorial",
-    date: "Feb 20, 2025",
-    readTime: "5 min read",
-    category: "Case Study",
-    imageGradient: "from-emerald-500/20 to-teal-500/20",
-    slug: "cyoumedia-case-study",
-    metaDescription: "Case study: CyouMedia entered Sri Lanka with TrivianEdge support for targeting, outreach, and partnership-led market validation.",
-    metaKeywords: ["cyoumedia", "Sri Lanka market entry", "sales strategy deployment", "offshore consulting", "TrivianEdge case study"],
-    datePublished: "2025-02-20",
     dateModified: "2026-04-23",
     imageUrl: "https://www.trivianedge.com/og-image.jpg",
   },
@@ -391,7 +329,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "Sep 28, 2024",
     readTime: "8 min read",
     category: "AI & Tech",
-    imageGradient: "from-violet-500/20 to-magenta-500/20",
+    imageGradient: "from-cyan-500/20 to-violet-500/20",
     slug: "end-of-body-shopping-global-talent",
     metaDescription: "Body shopping is being replaced by outcome-led global teams. Learn how to build offshore capability with ownership, context, and quality.",
     metaKeywords: ["global talent outsourcing", "AI staffing", "remote teams", "offshore development", "TrivianEdge"],
