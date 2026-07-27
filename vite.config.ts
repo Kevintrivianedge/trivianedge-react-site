@@ -28,10 +28,6 @@ export default defineConfig({
     reportCompressedSize: false,
     assetsInlineLimit: 4096,
     rollupOptions: {
-      // @google/genai is only used in the Cloudflare Worker (src/worker.ts) which
-      // is built separately via wrangler. Marking it external prevents it from
-      // being accidentally included in the browser bundle.
-      external: ['@google/genai'],
       output: {
         manualChunks: {
           'vendor-react': ['react', 'react-dom'],
@@ -53,7 +49,5 @@ export default defineConfig({
       'react-helmet-async',
       'framer-motion',
     ],
-    // Exclude the server-only package from dependency pre-bundling.
-    exclude: ['@google/genai'],
   },
 });

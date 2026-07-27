@@ -1,5 +1,5 @@
 export interface Env {
-  GEMINI_API_KEY: string;
+  ANTHROPIC_API_KEY: string;
   // TODO: Set RESEND_API_KEY in Cloudflare Workers secrets (wrangler secret put RESEND_API_KEY)
   RESEND_API_KEY?: string;
   CRM_WEBHOOK_URL?: string;
@@ -9,7 +9,10 @@ export interface Env {
   ASSETS?: Fetcher; // optional so missing binding won't crash
 }
 
-const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
+const ANTHROPIC_API_BASE = 'https://api.anthropic.com/v1/messages';
+const ANTHROPIC_VERSION = '2023-06-01';
+const ANTHROPIC_DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
+const ANTHROPIC_DEFAULT_MAX_TOKENS = 1024;
 
 // Restrict CORS to the production origin only.
 const ALLOWED_ORIGIN = 'https://www.trivianedge.com';
@@ -117,11 +120,13 @@ function escapeHtml(str: string): string {
 // dots in local part, and missing TLD while staying dependency-free.
 const EMAIL_RE = /^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*)@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
 
-type GeminiPart = { text: string };
-type GeminiContent = { role: string; parts: GeminiPart[] };
-interface GeminiPayload {
-  contents: GeminiContent[];
-  system_instruction?: { parts: GeminiPart[] };
+type AnthropicMessage = { role: 'user' | 'assistant'; content: string };
+interface AnthropicPayload {
+  model: string;
+  max_tokens: number;
+  messages: AnthropicMessage[];
+  system?: string;
+  stream?: boolean;
 }
 
 type AnalyticsEventBody = {
@@ -545,7 +550,7 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 //   - Amplitude Analytics + Session Replay CDN
 //   - ipapi.co (geolocation)
 //   - Open-Meteo (weather)
-//   - Google Gemini API (proxied through the worker, never called from browser)
+//   - Anthropic API (proxied through the worker, never called from browser)
 // ---------------------------------------------------------------------------
 const CSP_HEADER =
   "default-src 'self'; " +
@@ -604,7 +609,7 @@ export default {
 
       if (url.pathname === '/api/health') {
         return new Response(
-          JSON.stringify({ status: 'ok', timestamp: Date.now(), gemini_key_set: !!env.GEMINI_API_KEY }),
+          JSON.stringify({ status: 'ok', timestamp: Date.now(), anthropic_key_set: !!env.ANTHROPIC_API_KEY }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
         );
       }
@@ -654,7 +659,7 @@ export default {
 async function handleChat(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
   const parsed = await parseJsonBody<{
     message: string;
-    history?: GeminiContent[];
+    history?: AnthropicMessage[];
     systemInstruction?: string;
     model?: string;
   }>(request);
@@ -671,42 +676,44 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
   const message = typeof body.message === 'string' ? body.message : '';
   const history = Array.isArray(body.history) ? body.history : [];
   const model =
-    typeof body.model === 'string' && body.model ? body.model : 'gemini-2.0-flash';
+    typeof body.model === 'string' && body.model ? body.model : ANTHROPIC_DEFAULT_MODEL;
 
   const systemText =
     typeof body.systemInstruction === 'string' ? body.systemInstruction.trim() : '';
 
-  const contents: GeminiContent[] = [...history,
-    { role: 'user', parts: [{ text: message }] },
+  const messages: AnthropicMessage[] = [...history,
+    { role: 'user', content: message },
   ];
 
-  // Build payload safely: only include system_instruction when non-empty
-  const geminiPayload: GeminiPayload = { contents };
+  const anthropicPayload: AnthropicPayload = {
+    model,
+    max_tokens: ANTHROPIC_DEFAULT_MAX_TOKENS,
+    messages,
+    stream: true,
+  };
   if (systemText.length > 0) {
-    geminiPayload.system_instruction = { parts: [{ text: systemText }] };
+    anthropicPayload.system = systemText;
   }
 
-  const geminiRes = await fetch(
-    `${GEMINI_API_BASE}/${model}:streamGenerateContent?alt=sse`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': env.GEMINI_API_KEY,
-      },
-      body: JSON.stringify(geminiPayload),
+  const anthropicRes = await fetch(ANTHROPIC_API_BASE, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': env.ANTHROPIC_API_KEY,
+      'anthropic-version': ANTHROPIC_VERSION,
     },
-  );
+    body: JSON.stringify(anthropicPayload),
+  });
 
-  if (!geminiRes.ok) {
-    const err = await geminiRes.text();
+  if (!anthropicRes.ok) {
+    const err = await anthropicRes.text();
     return new Response(JSON.stringify({ error: err }), {
-      status: geminiRes.status,
+      status: anthropicRes.status,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 
-  return new Response(geminiRes.body, {
+  return new Response(anthropicRes.body, {
     headers: {
       ...corsHeaders,
       'Content-Type': 'text/event-stream',
@@ -729,32 +736,35 @@ async function handleGenerate(request: Request, env: Env, corsHeaders: Record<st
 
   const prompt = typeof body.prompt === 'string' ? body.prompt : '';
   const model =
-    typeof body.model === 'string' && body.model ? body.model : 'gemini-2.0-flash';
+    typeof body.model === 'string' && body.model ? body.model : ANTHROPIC_DEFAULT_MODEL;
 
-  const geminiRes = await fetch(`${GEMINI_API_BASE}/${model}:generateContent`, {
+  const anthropicRes = await fetch(ANTHROPIC_API_BASE, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-goog-api-key': env.GEMINI_API_KEY,
+      'x-api-key': env.ANTHROPIC_API_KEY,
+      'anthropic-version': ANTHROPIC_VERSION,
     },
     body: JSON.stringify({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-    }),
+      model,
+      max_tokens: ANTHROPIC_DEFAULT_MAX_TOKENS,
+      messages: [{ role: 'user', content: prompt }],
+    } satisfies AnthropicPayload),
   });
 
-  if (!geminiRes.ok) {
-    const err = await geminiRes.text();
+  if (!anthropicRes.ok) {
+    const err = await anthropicRes.text();
     return new Response(JSON.stringify({ error: err }), {
-      status: geminiRes.status,
+      status: anthropicRes.status,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 
-  const data = await geminiRes.json<{
-    candidates?: Array<{ content: { parts: Array<{ text: string }> } }>; 
+  const data = await anthropicRes.json<{
+    content?: Array<{ type: string; text?: string }>;
   }>();
 
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+  const text = data.content?.find(block => block.type === 'text')?.text ?? '';
 
   return new Response(JSON.stringify({ text }), {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },

@@ -390,8 +390,8 @@ ${userContext}
 
     // Build history from conversation messages, excluding the initial welcome message
     const history = messages.filter(m => !m.isInitial).map(m => ({
-        role: m.role,
-        parts: [{ text: m.text }],
+        role: m.role === 'model' ? 'assistant' as const : 'user' as const,
+        content: m.text,
     }));
 
     try {
@@ -433,7 +433,10 @@ ${userContext}
                 if (!data || data === '[DONE]') continue;
                 try {
                     const parsed = JSON.parse(data);
-                    const text: string = parsed.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+                    const text: string =
+                        parsed.type === 'content_block_delta' && parsed.delta?.type === 'text_delta'
+                            ? parsed.delta.text ?? ''
+                            : '';
                     if (text) {
                         fullResponse += text;
                         setMessages(prev =>
@@ -461,7 +464,7 @@ ${userContext}
         }
     } catch (error) {
         console.error("Chat error", error);
-        // A 400/401/403 from our own worker means the Gemini API key is missing or
+        // A 400/401/403 from our own worker means the Anthropic API key is missing or
         // invalid server-side (a config problem), not a transient network failure —
         // surface that distinctly so it's diagnosable from the UI instead of reading
         // as a generic "try again" that will never actually succeed.

@@ -4,7 +4,7 @@
  * hard-coding path strings across components.
  */
 export const API_ENDPOINTS = {
-  /** Gemini streaming chat (SSE) */
+  /** Anthropic streaming chat (SSE) */
   CHAT: '/api/chat',
   /** Single-shot text generation */
   GENERATE: '/api/generate',

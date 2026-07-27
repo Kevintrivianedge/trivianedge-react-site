@@ -16,8 +16,8 @@ html_handling = "none"
 # binding = "ANALYTICS_KV"
 # id = "<paste_namespace_id_here>"
 
-# IMPORTANT: Before deploying, set the GEMINI_API_KEY secret:
-# Run: wrangler secret put GEMINI_API_KEY
+# IMPORTANT: Before deploying, set the ANTHROPIC_API_KEY secret:
+# Run: wrangler secret put ANTHROPIC_API_KEY
 # Also configure:
 # wrangler secret put CRM_WEBHOOK_URL
 # wrangler secret put CRM_WEBHOOK_SIGNING_SECRET

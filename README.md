@@ -22,7 +22,7 @@ Canada's #1 BPO & offshore software development platform, built on React + TypeS
                  ▼
 ┌──────────────────────────────────────────┐
 │  Cloudflare Workers  (src/worker.ts)     │
-│  ├── /api/chat        — Gemini SSE chat  │
+│  ├── /api/chat        — Anthropic SSE chat │
 │  ├── /api/generate    — single-shot AI   │
 │  ├── /api/early-access — Resend email    │
 │  ├── /api/analytics/events — persistent telemetry │
@@ -34,12 +34,12 @@ Canada's #1 BPO & offshore software development platform, built on React + TypeS
       ┌──────────┴──────────┐
       │                     │
       ▼                     ▼
-  Google Gemini API     Resend Email API
-  (GEMINI_API_KEY)      (RESEND_API_KEY)
+  Anthropic API          Resend Email API
+  (ANTHROPIC_API_KEY)    (RESEND_API_KEY)
 ```
 
 **Key design decisions:**
-- The Gemini API is never called from the browser. All AI calls are proxied through the Cloudflare Worker so the API key is never exposed.
+- The Anthropic API is never called from the browser. All AI calls are proxied through the Cloudflare Worker so the API key is never exposed.
 - Geolocation is fetched once via `GeoContext` and shared to all consumers (GreetingBanner, ChatSidebar). Result is cached in `localStorage` for 24 hours.
 
 ---
@@ -55,7 +55,7 @@ npm install
 # 2. Configure Worker secrets for local dev
 #    Create a file at the repo root called .dev.vars (already in .gitignore)
 cat > .dev.vars <<EOF
-GEMINI_API_KEY=your_google_gemini_api_key
+ANTHROPIC_API_KEY=your_anthropic_api_key
 RESEND_API_KEY=your_resend_api_key_optional
 EOF
 
@@ -75,7 +75,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 | Secret | Where | Description |
 |--------|-------|-------------|
-| `GEMINI_API_KEY` | Worker secret | Google Gemini API key. Required for AI chat + generation. |
+| `ANTHROPIC_API_KEY` | Worker secret | Anthropic API key. Required for AI chat (Aria) + generation. |
 | `RESEND_API_KEY` | Worker secret | Resend email API key. Optional — enables early-access email. |
 | `CRM_WEBHOOK_URL` | Worker secret | CRM incoming webhook URL for qualified Venture Studio submissions. |
 | `CRM_WEBHOOK_SIGNING_SECRET` | Worker secret | HMAC signing secret for outbound CRM webhooks (`X-Trivian-Signature`). |
@@ -86,7 +86,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 Set Worker secrets in production:
 ```bash
-wrangler secret put GEMINI_API_KEY
+wrangler secret put ANTHROPIC_API_KEY
 wrangler secret put RESEND_API_KEY
 wrangler secret put CRM_WEBHOOK_URL
 wrangler secret put CRM_WEBHOOK_SIGNING_SECRET

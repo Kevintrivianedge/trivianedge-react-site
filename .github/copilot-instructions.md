@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-TrivianEdge is a React/TypeScript single-page application (SPA) for TrivianEdge Solutions — an AI & global talent solutions company. The site features an AI-powered chat assistant (backed by Google Gemini), dynamic geo-aware greetings, a talent hub explorer, blog posts, and a theme/language switcher.
+TrivianEdge is a React/TypeScript single-page application (SPA) for TrivianEdge Solutions — an AI & global talent solutions company. The site features an AI-powered chat assistant (Aria, backed by Anthropic's Claude), dynamic geo-aware greetings, a talent hub explorer, blog posts, and a theme/language switcher.
 
 ## Tech Stack
 
@@ -11,7 +11,7 @@ TrivianEdge is a React/TypeScript single-page application (SPA) for TrivianEdge 
 - **Styling**: Tailwind CSS (utility-first, applied via class names)
 - **Animation**: Framer Motion
 - **Icons**: Lucide React
-- **AI Integration**: Google Gemini API (`@google/genai`) — proxied through a Cloudflare Worker (`src/worker.ts`) via `/api/chat` (SSE) and `/api/generate` endpoints. The frontend uses `fetch()` directly, not the SDK.
+- **AI Integration**: Anthropic API — proxied through a Cloudflare Worker (`src/worker.ts`) via `/api/chat` (SSE) and `/api/generate` endpoints. The frontend uses `fetch()` directly, not the SDK.
 - **Deployment**: Cloudflare Workers (see `wrangler.toml`)
 
 ## Project Structure
@@ -23,7 +23,7 @@ TrivianEdge is a React/TypeScript single-page application (SPA) for TrivianEdge 
 ├── index.html               # HTML shell
 ├── types.ts                 # Shared TypeScript interfaces and types
 ├── constants.tsx            # Static data: nav links, services, roles, blog posts, talent hubs, etc.
-├── vite.config.ts           # Vite config (exposes GEMINI_API_KEY as process.env)
+├── vite.config.ts           # Vite dev server / build config
 ├── tsconfig.json            # TypeScript config (target: ES2022, bundler module resolution)
 ├── components/
 │   ├── ChatSidebar.tsx      # AI chat sidebar (calls Cloudflare Worker /api/chat)
@@ -62,7 +62,7 @@ npm run preview
 
 ## Environment Variables
 
-- `GEMINI_API_KEY` — Required. Set in `.env.local` for local development. For Cloudflare Worker deployment, store as a Worker secret named `GEMINI_API_KEY`.
+- `ANTHROPIC_API_KEY` — Required. Set in `.dev.vars` for local `wrangler dev`. For Cloudflare Worker deployment, store as a Worker secret named `ANTHROPIC_API_KEY` (`wrangler secret put ANTHROPIC_API_KEY`).
 
 ## Coding Conventions
 
@@ -77,7 +77,7 @@ npm run preview
 
 ## Key Architectural Notes
 
-- The Gemini AI calls are **not made directly from the browser**. They go through a Cloudflare Worker (`src/worker.ts`) at `/api/chat` (streaming SSE) and `/api/generate`. The API key lives only in the Worker secret, never in the frontend bundle.
+- The Anthropic AI calls are **not made directly from the browser**. They go through a Cloudflare Worker (`src/worker.ts`) at `/api/chat` (streaming SSE) and `/api/generate`. The API key lives only in the Worker secret, never in the frontend bundle.
 - `App.tsx` is a large monolithic file containing all page sections. When adding new sections or features, follow the existing pattern of inline React components inside `App.tsx`, or extract to `components/` if the component is sufficiently complex.
 - The `LanguageContext` and `ThemeContext` wrap the entire app in `index.tsx`. Always access language/theme state via the provided context hooks, not local state.
 - Geo-location and weather data are fetched client-side in `utils/geoService.ts` and `utils/weatherService.ts`. These are used by `GreetingBanner` to personalise the greeting.
