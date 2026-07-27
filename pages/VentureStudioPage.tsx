@@ -482,7 +482,7 @@ const VentureStudioPage: React.FC = () => {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-[1.25fr_0.75fr] gap-6">
+        <div className="grid lg:grid-cols-[1.25fr_0.75fr] gap-6 reveal" style={{ transitionDelay: '80ms' }}>
           <form onSubmit={onSubmit} className="glass rounded-[2rem] p-7 md:p-9 border border-border space-y-5">
             <h2 className="display-section text-3xl font-bold text-text">Founder Intake</h2>
 

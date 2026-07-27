@@ -13,7 +13,7 @@ const NotFoundPage: React.FC = () => {
       />
 
       <div className="bg-background min-h-screen text-text px-4 md:px-6 py-24 md:py-32 flex items-center">
-        <div className="max-w-2xl mx-auto text-center">
+        <div className="max-w-2xl mx-auto text-center reveal">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-700 text-xs font-bold uppercase tracking-widest mb-8">
             <Compass className="w-3 h-3" />
             404 — Page not found

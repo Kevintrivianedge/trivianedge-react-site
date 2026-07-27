@@ -32,7 +32,7 @@ const TrustPage: React.FC = () => {
             <span className="text-xs font-bold uppercase tracking-widest">Back</span>
           </button>
 
-          <div className="max-w-3xl mb-14">
+          <div className="max-w-3xl mb-14 reveal">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-700 text-xs font-bold uppercase tracking-widest mb-6">
               <ShieldCheck className="w-3 h-3" />
               Trust and security
@@ -48,7 +48,7 @@ const TrustPage: React.FC = () => {
               const icons = [Lock, Server, FileCheck, ShieldCheck];
               const Icon = icons[index] ?? ShieldCheck;
               return (
-                <section key={pillar.title} className="glass p-8 rounded-[2rem] border-border">
+                <section key={pillar.title} style={{ transitionDelay: `${index * 80}ms` }} className="glass p-8 rounded-[2rem] border-border reveal">
                   <div className="w-12 h-12 rounded-2xl bg-surface border border-border flex items-center justify-center mb-5">
                     <Icon className="w-5 h-5 text-cyan-600" />
                   </div>
@@ -66,7 +66,7 @@ const TrustPage: React.FC = () => {
             })}
           </div>
 
-          <div className="glass p-8 md:p-10 rounded-[2rem] border-border flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="glass p-8 md:p-10 rounded-[2rem] border-border flex flex-col md:flex-row md:items-center md:justify-between gap-6 reveal">
             <div>
               <h2 className="text-2xl font-bold mb-2">Want a direct response?</h2>
               <p className="text-muted">Use the inquiry flow and we will follow up with the next step.</p>

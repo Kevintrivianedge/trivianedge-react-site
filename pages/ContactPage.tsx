@@ -43,7 +43,7 @@ const ContactPage: React.FC = () => {
           </button>
 
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-start">
-            <div>
+            <div className="reveal">
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-700 text-xs font-bold uppercase tracking-widest mb-6">
                 <CalendarDays className="w-3 h-3" />
                 Booking and inquiry flow
@@ -56,17 +56,17 @@ const ContactPage: React.FC = () => {
               </p>
 
               <div className="grid sm:grid-cols-3 gap-4 mb-10">
-                <div className="glass p-6 rounded-3xl border-border">
+                <div className="glass p-6 rounded-3xl border-border min-w-0 reveal">
                   <p className="text-xs uppercase tracking-widest font-bold text-muted mb-2">Response</p>
                   <p className="text-text font-semibold">Same business day when possible</p>
                 </div>
-                <div className="glass p-6 rounded-3xl border-border">
+                <div className="glass p-6 rounded-3xl border-border min-w-0 reveal" style={{ transitionDelay: '60ms' }}>
                   <p className="text-xs uppercase tracking-widest font-bold text-muted mb-2">Direct line</p>
-                  <a href="tel:+18882028513" className="text-text font-semibold hover:text-cyan-500 transition-colors">+1 888 202 8513</a>
+                  <a href="tel:+18882028513" className="text-text font-semibold hover:text-cyan-500 transition-colors break-words">+1 888 202 8513</a>
                 </div>
-                <div className="glass p-6 rounded-3xl border-border">
+                <div className="glass p-6 rounded-3xl border-border min-w-0 reveal" style={{ transitionDelay: '120ms' }}>
                   <p className="text-xs uppercase tracking-widest font-bold text-muted mb-2">Email</p>
-                  <a href="mailto:kevin.v@trivianedge.com" className="text-text font-semibold hover:text-cyan-500 transition-colors">kevin.v@trivianedge.com</a>
+                  <a href="mailto:kevin.v@trivianedge.com" className="text-text font-semibold hover:text-cyan-500 transition-colors break-words">kevin.v@trivianedge.com</a>
                 </div>
               </div>
 
@@ -76,17 +76,17 @@ const ContactPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="pb-16 sm:pb-0">
+            <div className="pb-16 sm:pb-0 reveal" style={{ transitionDelay: '100ms' }}>
               <InquiryForm />
             </div>
           </div>
 
           <div className="mt-12 grid md:grid-cols-2 gap-4">
-            <a href="tel:+18882028513" className="glass p-6 rounded-3xl border-border flex items-center gap-4 hover:border-cyan-500/30 transition-colors">
+            <a href="tel:+18882028513" className="glass p-6 rounded-3xl border-border flex items-center gap-4 hover:border-cyan-500/30 transition-colors reveal">
               <Phone className="w-5 h-5 text-cyan-500" />
               <span>Prefer to call? Use the direct line.</span>
             </a>
-            <a href="mailto:kevin.v@trivianedge.com" className="glass p-6 rounded-3xl border-border flex items-center gap-4 hover:border-cyan-500/30 transition-colors">
+            <a href="mailto:kevin.v@trivianedge.com" className="glass p-6 rounded-3xl border-border flex items-center gap-4 hover:border-cyan-500/30 transition-colors reveal" style={{ transitionDelay: '60ms' }}>
               <Mail className="w-5 h-5 text-cyan-500" />
               <span>Prefer email? Send the team a message.</span>
             </a>

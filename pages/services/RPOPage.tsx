@@ -190,7 +190,7 @@ const RPOPage: React.FC = () => {
         </motion.section>
 
         <section className="py-20 px-4 md:px-6">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-6">
               What is Recruitment Process Outsourcing?
             </h2>
@@ -216,15 +216,16 @@ const RPOPage: React.FC = () => {
 
         <section className="py-20 px-4 md:px-6 bg-surface/30">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-text mb-12 text-center">
+            <h2 className="text-3xl font-bold text-text mb-12 text-center reveal">
               Our RPO Models
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
-              {RPO_MODELS.map(({ icon: Icon, title, description, href }) => (
+              {RPO_MODELS.map(({ icon: Icon, title, description, href }, idx) => (
                 <Link
                   key={title}
                   to={href}
-                  className="glass rounded-2xl p-8 border-border hover:border-cyan-500/40 transition-colors group"
+                  style={{ transitionDelay: `${idx * 60}ms` }}
+                  className="glass rounded-2xl p-8 border-border hover:border-cyan-500/40 transition-colors group reveal"
                 >
                   <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 w-fit mb-4">
                     <Icon className="w-6 h-6 text-cyan-400" />
@@ -243,14 +244,15 @@ const RPOPage: React.FC = () => {
 
         <section className="py-20 px-4 md:px-6">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-text mb-12 text-center">
+            <h2 className="text-3xl font-bold text-text mb-12 text-center reveal">
               Why Choose TrivianEdge RPO?
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {STATS.map(({ value, label }) => (
+              {STATS.map(({ value, label }, idx) => (
                 <div
                   key={label}
-                  className="glass rounded-2xl p-6 border-border text-center"
+                  style={{ transitionDelay: `${idx * 60}ms` }}
+                  className="glass rounded-2xl p-6 border-border text-center reveal"
                 >
                   <p className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">
                     {value}
@@ -263,7 +265,7 @@ const RPOPage: React.FC = () => {
         </section>
 
         <section className="py-20 px-4 md:px-6 bg-surface/30">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="max-w-3xl mx-auto text-center reveal">
             <h2 className="text-3xl font-bold text-text mb-10">
               Industries We Place Talent In
             </h2>
@@ -282,7 +284,7 @@ const RPOPage: React.FC = () => {
 
         {/* How it works */}
         <section className="py-20 px-4 md:px-6">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-4">How Our RPO Process Works</h2>
             <p className="text-muted text-lg mb-12 leading-relaxed">
               From your first conversation to your first hire, the whole process runs in about 30 days.
@@ -308,7 +310,7 @@ const RPOPage: React.FC = () => {
         </section>
 
         <section className="py-20 px-4 md:px-6 bg-surface/30">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-4 text-center">Frequently Asked Questions</h2>
             <p className="text-muted text-center mb-10">
               Everything you need to know about RPO and how TrivianEdge handles your hiring.
@@ -318,7 +320,7 @@ const RPOPage: React.FC = () => {
         </section>
 
         <section className="py-24 px-4 md:px-6">
-          <div className="max-w-2xl mx-auto text-center">
+          <div className="max-w-2xl mx-auto text-center reveal">
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
               Start Hiring in 30 Days
             </h2>

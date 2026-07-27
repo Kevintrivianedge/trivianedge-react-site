@@ -190,7 +190,7 @@ const AIDevelopmentPage: React.FC = () => {
 
         {/* What is AI Development Outsourcing */}
         <section className="py-20 px-4 md:px-6">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-6">
               What is AI Development Outsourcing?
             </h2>
@@ -217,15 +217,16 @@ const AIDevelopmentPage: React.FC = () => {
         {/* AI Services Grid */}
         <section className="py-20 px-4 md:px-6 bg-surface/30">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-text mb-12 text-center">
+            <h2 className="text-3xl font-bold text-text mb-12 text-center reveal">
               Our AI Development Services
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {AI_SERVICES.map(({ icon: Icon, title, href }) => (
+              {AI_SERVICES.map(({ icon: Icon, title, href }, idx) => (
                 <Link
                   key={title}
                   to={href}
-                  className="glass rounded-2xl p-6 border-border hover:border-cyan-500/40 transition-colors group"
+                  style={{ transitionDelay: `${idx * 60}ms` }}
+                  className="glass rounded-2xl p-6 border-border hover:border-cyan-500/40 transition-colors group reveal"
                 >
                   <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 w-fit mb-4">
                     <Icon className="w-6 h-6 text-cyan-400" />
@@ -241,7 +242,7 @@ const AIDevelopmentPage: React.FC = () => {
 
         {/* FAQ */}
         <section className="py-20 px-4 md:px-6">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-10 text-center">
               Frequently Asked Questions
             </h2>
@@ -251,7 +252,7 @@ const AIDevelopmentPage: React.FC = () => {
 
         {/* Talent callout */}
         <section className="py-10 px-4 md:px-6 bg-surface/30">
-          <div className="max-w-2xl mx-auto glass rounded-2xl border-border p-8 text-center">
+          <div className="max-w-2xl mx-auto glass rounded-2xl border-border p-8 text-center reveal">
             <p className="text-muted mb-3 text-lg font-medium">
               Need AI talent, not AI services?
             </p>
@@ -266,7 +267,7 @@ const AIDevelopmentPage: React.FC = () => {
 
         {/* CTA */}
         <section className="py-24 px-4 md:px-6">
-          <div className="max-w-2xl mx-auto text-center">
+          <div className="max-w-2xl mx-auto text-center reveal">
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
               Launch Your AI Project in 30 Days
             </h2>

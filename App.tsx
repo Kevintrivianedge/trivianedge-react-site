@@ -781,23 +781,33 @@ export default function App() {
           <main id="main-content">
             <ErrorBoundary fallback={null}>
               <Suspense fallback={null}>
-                <Routes>
-                  <Route path="/" element={<HomePage setSelectedHub={setSelectedHub} />} />
-                  <Route path="/contact" element={<ContactPage />} />
-                  <Route path="/proof" element={<ProofPage />} />
-                  <Route path="/trust" element={<TrustPage />} />
-                  <Route path="/blog" element={<BlogView />} />
-                  <Route path="/blog/:slug" element={<BlogPostDetail />} />
-                  <Route path="/privacy" element={<PrivacyPage />} />
-                  <Route path="/terms" element={<TermsPage />} />
-                  <Route path="/services" element={<ServicesPage />} />
-                  <Route path="/services/bpo" element={<BPOPage />} />
-                  <Route path="/services/rpo" element={<RPOPage />} />
-                  <Route path="/services/ai-development" element={<AIDevelopmentPage />} />
-                  <Route path="/services/it-outsourcing" element={<ITOutsourcingPage />} />
-                  <Route path="/venture-studio" element={<VentureStudioPage />} />
-                  <Route path="*" element={<NotFoundPage />} />
-                </Routes>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={location.pathname}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.22, ease: 'easeOut' }}
+                  >
+                    <Routes location={location}>
+                      <Route path="/" element={<HomePage setSelectedHub={setSelectedHub} />} />
+                      <Route path="/contact" element={<ContactPage />} />
+                      <Route path="/proof" element={<ProofPage />} />
+                      <Route path="/trust" element={<TrustPage />} />
+                      <Route path="/blog" element={<BlogView />} />
+                      <Route path="/blog/:slug" element={<BlogPostDetail />} />
+                      <Route path="/privacy" element={<PrivacyPage />} />
+                      <Route path="/terms" element={<TermsPage />} />
+                      <Route path="/services" element={<ServicesPage />} />
+                      <Route path="/services/bpo" element={<BPOPage />} />
+                      <Route path="/services/rpo" element={<RPOPage />} />
+                      <Route path="/services/ai-development" element={<AIDevelopmentPage />} />
+                      <Route path="/services/it-outsourcing" element={<ITOutsourcingPage />} />
+                      <Route path="/venture-studio" element={<VentureStudioPage />} />
+                      <Route path="*" element={<NotFoundPage />} />
+                    </Routes>
+                  </motion.div>
+                </AnimatePresence>
               </Suspense>
             </ErrorBoundary>
           </main>

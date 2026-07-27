@@ -17,7 +17,7 @@ const PrivacyPage: React.FC = () => {
           <span className="text-xs font-bold uppercase tracking-widest">Back to Home</span>
         </button>
 
-        <div className="flex items-center gap-4 mb-12">
+        <div className="flex items-center gap-4 mb-12 reveal">
           <div className="p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
             <ShieldCheck className="w-8 h-8 text-cyan-400" />
           </div>
@@ -27,7 +27,7 @@ const PrivacyPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="glass p-10 md:p-16 rounded-[3rem] border-border space-y-8">
+        <div className="glass p-10 md:p-16 rounded-[3rem] border-border space-y-8 reveal" style={{ transitionDelay: '80ms' }}>
           <div>
             <p className="text-xs font-mono tracking-widest uppercase text-cyan-400 mb-2">Last Updated</p>
             <p className="text-muted">March 2026</p>
@@ -72,7 +72,7 @@ const PrivacyPage: React.FC = () => {
             <h2 className="text-xl font-bold text-text mb-4">Contact</h2>
             <p className="text-muted leading-relaxed">
               For privacy requests or questions, contact us at{' '}
-              <a href="mailto:kevin.v@trivianedge.com" className="underline hover:text-cyan-400 transition-colors">kevin.v@trivianedge.com</a>.
+              <a href="mailto:kevin.v@trivianedge.com" className="underline hover:text-cyan-400 transition-colors break-words">kevin.v@trivianedge.com</a>.
             </p>
           </div>
 

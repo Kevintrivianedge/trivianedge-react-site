@@ -32,7 +32,7 @@ const ProofPage: React.FC = () => {
             <span className="text-xs font-bold uppercase tracking-widest">Back</span>
           </button>
 
-          <div className="max-w-3xl mb-14">
+          <div className="max-w-3xl mb-14 reveal">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-700 text-xs font-bold uppercase tracking-widest mb-6">
               <Star className="w-3 h-3" />
               Proof over promises
@@ -44,8 +44,8 @@ const ProofPage: React.FC = () => {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-6 mb-16">
-            {CASE_STUDIES.map((study) => (
-              <article key={study.client} className="glass p-8 rounded-[2rem] border-border">
+            {CASE_STUDIES.map((study, idx) => (
+              <article key={study.client} style={{ transitionDelay: `${idx * 80}ms` }} className="glass p-8 rounded-[2rem] border-border reveal">
                 <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 mb-3">{study.sector}</p>
                 <h2 className="text-2xl font-bold mb-4">{study.client}</h2>
                 <div className="space-y-4 text-muted leading-relaxed text-sm md:text-base">
@@ -64,11 +64,11 @@ const ProofPage: React.FC = () => {
             ))}
           </div>
 
-          <div className="mb-16">
+          <div className="mb-16 reveal">
             <h2 className="text-3xl font-bold mb-6">Client feedback</h2>
             <div className="grid md:grid-cols-2 gap-6">
-              {TESTIMONIALS.map((item) => (
-                <blockquote key={item.author + item.role} className="glass p-8 rounded-[2rem] border-border">
+              {TESTIMONIALS.map((item, idx) => (
+                <blockquote key={item.author + item.role} style={{ transitionDelay: `${idx * 80}ms` }} className="glass p-8 rounded-[2rem] border-border reveal">
                   <p className="text-lg leading-relaxed text-text mb-6">“{item.quote}”</p>
                   <footer className="text-sm text-muted">
                     <span className="font-semibold text-text">{item.author}</span>, {item.role}
@@ -78,7 +78,7 @@ const ProofPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="glass p-8 md:p-10 rounded-[2rem] border-border flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="glass p-8 md:p-10 rounded-[2rem] border-border flex flex-col md:flex-row md:items-center md:justify-between gap-6 reveal">
             <div>
               <h2 className="text-2xl font-bold mb-2">Need the operating model, not just the story?</h2>
               <p className="text-muted">Review the trust page for security and compliance details, then send an inquiry when you are ready.</p>

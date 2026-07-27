@@ -174,7 +174,7 @@ const BPOPage: React.FC = () => {
 
         {/* What is BPO */}
         <section className="py-20 px-4 md:px-6">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-6">
               What is Business Process Outsourcing?
             </h2>
@@ -194,14 +194,15 @@ const BPOPage: React.FC = () => {
         {/* What BPO Covers */}
         <section className="py-20 px-4 md:px-6 bg-surface/30">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-text mb-12 text-center">
+            <h2 className="text-3xl font-bold text-text mb-12 text-center reveal">
               What TrivianEdge BPO Covers
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {SERVICES.map(({ icon: Icon, label }) => (
+              {SERVICES.map(({ icon: Icon, label }, idx) => (
                 <div
                   key={label}
-                  className="glass rounded-2xl p-6 border-border flex flex-col items-center gap-3 text-center"
+                  style={{ transitionDelay: `${idx * 60}ms` }}
+                  className="glass rounded-2xl p-6 border-border flex flex-col items-center gap-3 text-center reveal"
                 >
                   <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
                     <Icon className="w-6 h-6 text-cyan-400" />
@@ -216,14 +217,15 @@ const BPOPage: React.FC = () => {
         {/* Why Choose */}
         <section className="py-20 px-4 md:px-6">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-text mb-12 text-center">
+            <h2 className="text-3xl font-bold text-text mb-12 text-center reveal">
               Why Choose TrivianEdge BPO?
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {STATS.map(({ value, label }) => (
+              {STATS.map(({ value, label }, idx) => (
                 <div
                   key={label}
-                  className="glass rounded-2xl p-6 border-border text-center"
+                  style={{ transitionDelay: `${idx * 60}ms` }}
+                  className="glass rounded-2xl p-6 border-border text-center reveal"
                 >
                   <p className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">
                     {value}
@@ -237,7 +239,7 @@ const BPOPage: React.FC = () => {
 
         {/* How it works */}
         <section className="py-20 px-4 md:px-6">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-4">
               How TrivianEdge BPO Works
             </h2>
@@ -282,7 +284,7 @@ const BPOPage: React.FC = () => {
         {/* Why TrivianEdge */}
         <section className="py-20 px-4 md:px-6 bg-surface/30">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-text mb-6">
+            <h2 className="text-3xl font-bold text-text mb-6 reveal">
               What Makes TrivianEdge BPO Different
             </h2>
             <div className="space-y-4">
@@ -291,8 +293,8 @@ const BPOPage: React.FC = () => {
                 { title: 'Payroll and compliance are our problem, not yours', desc: 'Taxes, statutory deductions, local employment law, data privacy compliance — all handled correctly in every jurisdiction, every month.' },
                 { title: 'You control the work, we control the operations', desc: 'Your BPO team follows your processes and reports to your managers. TrivianEdge manages HR, performance, and admin in the background.' },
                 { title: 'We scale with you', desc: 'Start with one person, grow to 50. There is no long-term contract forcing you to maintain a fixed headcount. Scale up or down as your business requires.' },
-              ].map(item => (
-                <div key={item.title} className="glass rounded-2xl border-border p-6">
+              ].map((item, idx) => (
+                <div key={item.title} style={{ transitionDelay: `${idx * 60}ms` }} className="glass rounded-2xl border-border p-6 reveal">
                   <h3 className="font-bold text-text mb-2">{item.title}</h3>
                   <p className="text-muted text-sm leading-relaxed">{item.desc}</p>
                 </div>
@@ -303,7 +305,7 @@ const BPOPage: React.FC = () => {
 
         {/* FAQ */}
         <section className="py-20 px-4 md:px-6">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-4 text-center">
               Frequently Asked Questions
             </h2>
@@ -316,7 +318,7 @@ const BPOPage: React.FC = () => {
 
         {/* CTA */}
         <section className="py-24 px-4 md:px-6">
-          <div className="max-w-2xl mx-auto text-center">
+          <div className="max-w-2xl mx-auto text-center reveal">
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
               Deploy Your BPO Team in 30 Days
             </h2>
