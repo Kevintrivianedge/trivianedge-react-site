@@ -716,7 +716,7 @@ const VentureStudioPage: React.FC = () => {
             </div>
 
             <div className="rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-4 mb-6 space-y-3">
-              <p className="text-xs uppercase tracking-widest font-bold text-violet-300">Launch Traction Stack</p>
+              <p className="text-xs uppercase tracking-widest font-bold text-cyan-600">Launch Traction Stack</p>
               <div className="flex flex-wrap gap-2">
                 {['AWS', 'Azure', 'Google Cloud', 'Cloudflare', 'Stripe'].map((platform) => (
                   <span key={platform} className="px-2.5 py-1 rounded-full bg-surface border border-border text-[11px] font-semibold text-text">

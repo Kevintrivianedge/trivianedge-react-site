@@ -9,14 +9,14 @@ export const LogoIcon = ({ className = "w-10 h-10" }: { className?: string }) =>
   </svg>
 );
 
-const Logo = ({ onClick, showTagline = true }: { onClick?: () => void; showTagline?: boolean }) => (
+const Logo = ({ onClick, light = false }: { onClick?: () => void; light?: boolean }) => (
   <div className="flex items-center gap-3 group cursor-pointer" onClick={onClick}>
     <div className="relative w-12 h-8 flex items-center justify-center">
       <LogoIcon className="w-full h-full transition-transform duration-500 group-hover:scale-110" />
     </div>
     <div className="flex items-center font-['Space_Grotesk']">
-      <span className="text-2xl font-bold tracking-tight text-text">
-        Trivian<span className="text-muted font-normal">Edge</span>
+      <span className={`text-2xl font-bold tracking-tight ${light ? 'text-white' : 'text-text'}`}>
+        Trivian<span className={light ? 'text-white/60 font-normal' : 'text-muted font-normal'}>Edge</span>
       </span>
     </div>
   </div>

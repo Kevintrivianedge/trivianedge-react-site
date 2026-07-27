@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { NAV_LINKS } from '../constants';
 import ThemeToggle from './ThemeToggle';
 import Logo from './Logo';
@@ -10,7 +10,14 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const drawerRef = useRef<HTMLDivElement>(null);
+
+  // Only the homepage opens on a permanently-dark hero section, so the
+  // transparent, unscrolled navbar needs light text there specifically —
+  // every other route starts on a theme-aware light/dark background where
+  // the default theme-aware text colors are already correct.
+  const onDarkHero = location.pathname === '/' && !scrolled;
 
   // Mobile drawer: trap focus, close on Escape, lock background scroll,
   // and restore focus to whatever triggered it (the hamburger button) on close.
@@ -129,16 +136,16 @@ const Navbar: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex justify-between items-center relative z-[101] gap-4">
         <div className="shrink-0">
-          <Logo onClick={() => { navigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} />
+          <Logo light={onDarkHero} onClick={() => { navigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} />
         </div>
 
         <div className="hidden lg:flex items-center gap-5 xl:gap-8 shrink-0 ml-4 xl:ml-8">
           {NAV_LINKS.map(link => (
-            <a 
-              key={link.name} 
-              href={link.href} 
+            <a
+              key={link.name}
+              href={link.href}
               onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-              className="text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest text-muted hover:text-cyan-400 transition-colors"
+              className={`text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest hover:text-cyan-400 transition-colors ${onDarkHero ? 'text-white/70' : 'text-muted'}`}
             >
               {link.name}
             </a>
@@ -154,7 +161,7 @@ const Navbar: React.FC = () => {
         <div className="lg:hidden flex items-center gap-4">
             <ThemeToggle />
             <button
-              className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-text"
+              className={`p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center ${onDarkHero ? 'text-white' : 'text-text'}`}
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle navigation"
               aria-expanded={isOpen}

@@ -806,7 +806,7 @@ export default function App() {
             <div className="max-w-7xl mx-auto grid md:grid-cols-5 gap-8 mb-14">
               <div className="md:col-span-2">
                 <div className="mb-6">
-                  <Logo onClick={() => { navigate('/'); window.scrollTo({top: 0, behavior: 'smooth'}); }} />
+                  <Logo light onClick={() => { navigate('/'); window.scrollTo({top: 0, behavior: 'smooth'}); }} />
                 </div>
                 <p className="text-white/45 text-sm max-w-xs mb-8 leading-relaxed">Build offshore teams that run at full capacity. Hiring, payroll, compliance, and delivery — handled end to end.</p>
                 <div className="flex gap-3">

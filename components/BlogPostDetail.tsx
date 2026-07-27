@@ -121,7 +121,7 @@ const BlogPostDetail: React.FC = () => {
           <h1 className="text-4xl md:text-6xl font-bold mb-12 leading-tight text-text">{post.title}</h1>
           
           <div className="flex items-center gap-4 mb-16 p-6 glass border-border rounded-3xl w-fit">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center p-0.5">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-cyan-700 flex items-center justify-center p-0.5">
               <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
                 <User className="w-6 h-6 text-cyan-400" />
               </div>
