@@ -698,7 +698,7 @@ export function buildServiceItemListSchema(): object {
     },
     {
       name: 'Managed IT Services',
-      description: 'Enterprise-grade cloud infrastructure management, cybersecurity compliance support (SOC 2, ISO 27001), and distributed operations.',
+      description: 'Enterprise-grade cloud infrastructure management, cybersecurity-aware operations, and distributed delivery.',
       url: `${SEO_CONFIG.siteUrl}/#services`,
     },
   ];

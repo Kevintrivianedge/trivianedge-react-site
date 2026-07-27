@@ -72,7 +72,7 @@ const FAQS = [
   {
     question: 'How does TrivianEdge ensure code quality and security for offshore teams?',
     answer:
-      'All candidates go through a rigorous vetting process including technical assessments, communication evaluations, and background checks. Offshore teams follow your code review processes, use your tooling, and integrate with your project management and CI/CD pipelines. We also support compliance requirements including SOC 2 and ISO 27001 alignment.',
+      'All candidates go through a rigorous vetting process including technical assessments, communication evaluations, and background checks. Offshore teams follow your code review processes, use your tooling, and integrate with your project management and CI/CD pipelines. We work within whatever compliance framework your organization already operates under, rather than asserting certifications of our own.',
   },
 ];
 

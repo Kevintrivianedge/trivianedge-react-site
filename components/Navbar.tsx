@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, X } from 'lucide-react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { NAV_LINKS } from '../constants';
 import ThemeToggle from './ThemeToggle';
@@ -9,9 +9,43 @@ import Logo from './Logo';
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [expandedMobile, setExpandedMobile] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const drawerRef = useRef<HTMLDivElement>(null);
+  const dropdownCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Desktop dropdown: close on route change, outside click, or Escape.
+  useEffect(() => {
+    setOpenDropdown(null);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!openDropdown) return;
+    const handleOutside = (e: MouseEvent) => {
+      if (!(e.target as HTMLElement).closest('[data-nav-dropdown]')) {
+        setOpenDropdown(null);
+      }
+    };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpenDropdown(null);
+    };
+    document.addEventListener('mousedown', handleOutside);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handleOutside);
+      document.removeEventListener('keydown', handleKey);
+    };
+  }, [openDropdown]);
+
+  const openDropdownNow = (name: string) => {
+    if (dropdownCloseTimer.current) clearTimeout(dropdownCloseTimer.current);
+    setOpenDropdown(name);
+  };
+  const scheduleDropdownClose = () => {
+    dropdownCloseTimer.current = setTimeout(() => setOpenDropdown(null), 150);
+  };
 
   // Only the homepage opens on a permanently-dark hero section, so the
   // transparent, unscrolled navbar needs light text there specifically —
@@ -141,16 +175,58 @@ const Navbar: React.FC = () => {
 
         <div className="hidden lg:flex items-center gap-5 xl:gap-8 shrink-0 ml-4 xl:ml-8">
           {NAV_LINKS.map(link => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-              className={`text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest hover:text-cyan-400 transition-colors ${onDarkHero ? 'text-white/70' : 'text-muted'}`}
-            >
-              {link.name}
-            </a>
+            link.children ? (
+              <div
+                key={link.name}
+                data-nav-dropdown
+                className="relative"
+                onMouseEnter={() => openDropdownNow(link.name)}
+                onMouseLeave={scheduleDropdownClose}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenDropdown(openDropdown === link.name ? null : link.name)}
+                  aria-expanded={openDropdown === link.name}
+                  className={`flex items-center gap-1 text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest hover:text-cyan-400 transition-colors ${onDarkHero ? 'text-white/70' : 'text-muted'}`}
+                >
+                  {link.name}
+                  <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === link.name ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {openDropdown === link.name && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute top-full left-0 mt-3 w-64 rounded-2xl bg-background border border-border shadow-[0_20px_50px_rgba(15,23,42,0.14)] py-2 z-[110]"
+                    >
+                      {link.children.map(child => (
+                        <Link
+                          key={child.href}
+                          to={child.href}
+                          onClick={() => setOpenDropdown(null)}
+                          className={`block px-4 py-2.5 text-xs font-semibold text-text hover:text-cyan-400 hover:bg-cyan-400/5 transition-colors ${'isSub' in child && child.isSub ? 'pl-7 text-muted' : ''}`}
+                        >
+                          {child.name}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ) : (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
+                className={`text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest hover:text-cyan-400 transition-colors ${onDarkHero ? 'text-white/70' : 'text-muted'}`}
+              >
+                {link.name}
+              </a>
+            )
           ))}
-          
+
           <ThemeToggle />
           
           <a href="/contact" onClick={(e) => { e.preventDefault(); handleNavClick('/contact'); }} className="px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all btn-magnetic premium-button">
@@ -182,12 +258,12 @@ const Navbar: React.FC = () => {
             animate="open"
             exit="exit"
             variants={menuVariants}
-            className="fixed inset-0 bg-background z-[90] lg:hidden overflow-hidden flex flex-col"
+            className="fixed inset-0 bg-background z-[90] lg:hidden overflow-y-auto flex flex-col"
           >
             <div className="absolute inset-x-0 top-0 h-px bg-border/70" />
 
-            <motion.div 
-              className="flex flex-col items-center justify-center h-full gap-8 relative z-10"
+            <motion.div
+              className="flex flex-col items-center justify-center min-h-full gap-8 relative z-10 py-24"
               variants={containerVariants}
             >
               <motion.a
@@ -200,15 +276,50 @@ const Navbar: React.FC = () => {
               </motion.a>
 
               {NAV_LINKS.map(link => (
-                <motion.a
-                  key={link.name}
-                  href={link.href}
-                  variants={itemVariants}
-                  className="text-2xl font-bold text-text hover:text-cyan-400 transition-colors"
-                  onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                >
-                  {link.name}
-                </motion.a>
+                link.children ? (
+                  <motion.div key={link.name} variants={itemVariants} className="flex flex-col items-center gap-4">
+                    <button
+                      type="button"
+                      onClick={() => setExpandedMobile(expandedMobile === link.name ? null : link.name)}
+                      aria-expanded={expandedMobile === link.name}
+                      className="flex items-center gap-2 text-2xl font-bold text-text hover:text-cyan-400 transition-colors"
+                    >
+                      {link.name}
+                      <ChevronDown className={`w-5 h-5 transition-transform ${expandedMobile === link.name ? 'rotate-180' : ''}`} />
+                    </button>
+                    <AnimatePresence>
+                      {expandedMobile === link.name && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="flex flex-col items-center gap-3 overflow-hidden"
+                        >
+                          {link.children.map(child => (
+                            <a
+                              key={child.href}
+                              href={child.href}
+                              className={`font-semibold text-text/80 hover:text-cyan-400 transition-colors ${'isSub' in child && child.isSub ? 'text-base' : 'text-lg'}`}
+                              onClick={(e) => { e.preventDefault(); handleNavClick(child.href); }}
+                            >
+                              {child.name}
+                            </a>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                ) : (
+                  <motion.a
+                    key={link.name}
+                    href={link.href}
+                    variants={itemVariants}
+                    className="text-2xl font-bold text-text hover:text-cyan-400 transition-colors"
+                    onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
+                  >
+                    {link.name}
+                  </motion.a>
+                )
               ))}
 
               <motion.a

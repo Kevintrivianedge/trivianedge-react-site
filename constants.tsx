@@ -14,7 +14,20 @@ import {
 import { ServiceCardProps, RoleCategory, Step, BlogPost, TalentHub } from './types';
 
 export const NAV_LINKS = [
-  { name: 'Services', href: '/services' },
+  {
+    name: 'Services',
+    href: '/services',
+    children: [
+      { name: 'All Services', href: '/services' },
+      { name: 'Business Process Outsourcing', href: '/services/bpo' },
+      { name: 'Recruitment Process Outsourcing', href: '/services/rpo' },
+      { name: 'Full-Cycle RPO', href: '/services/rpo/full-cycle-rpo', isSub: true },
+      { name: 'Project-Based RPO', href: '/services/rpo/project-based-rpo', isSub: true },
+      { name: 'AI-Powered Recruitment', href: '/services/rpo/ai-powered-recruitment', isSub: true },
+      { name: 'AI Development', href: '/services/ai-development' },
+      { name: 'IT Outsourcing', href: '/services/it-outsourcing' },
+    ],
+  },
   { name: 'Venture Studio', href: '/venture-studio' },
   { name: 'Proof', href: '/proof' },
   { name: 'Trust', href: '/trust' },
@@ -266,7 +279,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaDescription: "Case study: Cargo Login used TrivianEdge cross-timezone operations in the Philippines and Canada to keep logistics workflows moving and grow revenue.",
     metaKeywords: ["cargo login", "cross-timezone operations", "logistics staffing", "Philippines talent", "TrivianEdge case study"],
     datePublished: "2025-01-15",
-    dateModified: "2026-04-23",
+    dateModified: "2025-01-15",
     imageUrl: "https://www.trivianedge.com/og-image.jpg",
   },
   {
@@ -283,7 +296,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaDescription: "Case study: Keynotive scaled outbound sales with two offshore teams across time zones, improving pipeline consistency and execution visibility.",
     metaKeywords: ["keynotive", "offshore sales teams", "cold calling outsourcing", "multi-timezone sales", "TrivianEdge case study"],
     datePublished: "2025-02-03",
-    dateModified: "2026-04-23",
+    dateModified: "2025-02-03",
     imageUrl: "https://www.trivianedge.com/og-image.jpg",
   },
   {
@@ -300,7 +313,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaDescription: "Case study: Hub-Flx expanded Medtech, ERP, and data migration solutions into UAE and GCC markets with TrivianEdge operating support.",
     metaKeywords: ["hub-flx", "UAE expansion", "GCC software market", "medtech deployment", "TrivianEdge case study"],
     datePublished: "2025-03-10",
-    dateModified: "2026-04-23",
+    dateModified: "2025-03-10",
     imageUrl: "https://www.trivianedge.com/og-image.jpg",
   },
   {
