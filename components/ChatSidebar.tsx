@@ -406,7 +406,9 @@ ${userContext}
         });
 
         if (!response.ok || !response.body) {
-            throw new Error(`API error: ${response.status}`);
+            const apiError = new Error(`API error: ${response.status}`) as Error & { status?: number };
+            apiError.status = response.status;
+            throw apiError;
         }
 
         let fullResponse = '';
@@ -452,14 +454,22 @@ ${userContext}
             setMessages(prev =>
                 prev.map((msg, i) =>
                     i === prev.length - 1 && msg.role === 'model' && !msg.text
-                        ? { ...msg, text: 'Security protocol triggered. Connection interrupted. Please try again.' }
+                        ? { ...msg, text: 'Connection interrupted. Please try again.' }
                         : msg,
                 ),
             );
         }
     } catch (error) {
         console.error("Chat error", error);
-        setMessages(prev => [...prev, { role: 'model', text: "Security protocol triggered. Connection interrupted. Please try again." }]);
+        // A 400/401/403 from our own worker means the Gemini API key is missing or
+        // invalid server-side (a config problem), not a transient network failure —
+        // surface that distinctly so it's diagnosable from the UI instead of reading
+        // as a generic "try again" that will never actually succeed.
+        const status = (error as { status?: number })?.status;
+        const text = status === 400 || status === 401 || status === 403
+            ? "Aria is temporarily unavailable while we finish setting her up. Please use the contact form below, or email kevin.v@trivianedge.com directly."
+            : "Connection interrupted. Please try again.";
+        setMessages(prev => [...prev, { role: 'model', text }]);
     } finally {
         setIsTyping(false);
     }
@@ -476,7 +486,7 @@ ${userContext}
       {/* Trigger Button - Bottom Right */}
       <button 
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-4 sm:bottom-8 sm:right-8 z-[150] p-4 rounded-full bg-gradient-to-tr from-cyan-600 to-violet-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.5)] hover:scale-110 transition-all duration-300 group ${isOpen ? 'hidden' : 'flex'} items-center justify-center`}
+        className={`fixed bottom-6 right-4 sm:bottom-10 sm:right-10 z-[150] p-4 rounded-full bg-gradient-to-tr from-cyan-600 to-violet-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.5)] hover:scale-110 transition-all duration-300 group ${isOpen ? 'hidden' : 'flex'} items-center justify-center`}
         aria-label="Open AI Assistant"
       >
         <MessageSquare className="w-6 h-6 animate-pulse" />

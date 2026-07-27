@@ -118,34 +118,6 @@ const TECH_BADGES = [
   'PyTorch',
 ];
 
-const COMPARISON_ROWS = [
-  {
-    factor: 'Time to hire',
-    inHouse: '3–6 months',
-    trivian: '30 days',
-  },
-  {
-    factor: 'Annual cost',
-    inHouse: '$180k+ per engineer',
-    trivian: 'Up to 40% savings',
-  },
-  {
-    factor: 'Availability',
-    inHouse: 'Local talent pool',
-    trivian: '6 global time zones',
-  },
-  {
-    factor: 'Tech stack',
-    inHouse: 'Limited by local market',
-    trivian: 'Full-stack AI expertise',
-  },
-  {
-    factor: 'Scalability',
-    inHouse: 'Slow & costly',
-    trivian: 'Rapid team scaling',
-  },
-];
-
 const AIDevelopmentPage: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
 
@@ -243,7 +215,7 @@ const AIDevelopmentPage: React.FC = () => {
         </section>
 
         {/* AI Services Grid */}
-        <section className="py-20 px-4 md:px-6">
+        <section className="py-20 px-4 md:px-6 bg-surface/30">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-text mb-12 text-center">
               Our AI Development Services
@@ -263,52 +235,6 @@ const AIDevelopmentPage: React.FC = () => {
                   </h3>
                 </Link>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Comparison table */}
-        <section className="py-20 px-4 md:px-6 bg-surface/30">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-text mb-12 text-center">
-              In-House AI Team vs. TrivianEdge Offshore
-            </h2>
-            <div className="overflow-x-auto rounded-2xl border border-border">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left px-6 py-4 text-muted font-semibold uppercase tracking-widest text-xs">
-                      Factor
-                    </th>
-                    <th className="text-left px-6 py-4 text-muted font-semibold uppercase tracking-widest text-xs">
-                      In-House
-                    </th>
-                    <th className="text-left px-6 py-4 text-cyan-400 font-semibold uppercase tracking-widest text-xs bg-cyan-500/5">
-                      TrivianEdge
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {COMPARISON_ROWS.map((row, i) => (
-                    <tr
-                      key={row.factor}
-                      className={
-                        i < COMPARISON_ROWS.length - 1
-                          ? 'border-b border-border'
-                          : ''
-                      }
-                    >
-                      <td className="px-6 py-4 font-medium text-text">
-                        {row.factor}
-                      </td>
-                      <td className="px-6 py-4 text-muted">{row.inHouse}</td>
-                      <td className="px-6 py-4 text-cyan-400 font-semibold bg-cyan-500/5">
-                        {row.trivian}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
             </div>
           </div>
         </section>

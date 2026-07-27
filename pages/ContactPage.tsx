@@ -76,7 +76,7 @@ const ContactPage: React.FC = () => {
               </div>
             </div>
 
-            <div>
+            <div className="pb-16 sm:pb-0">
               <InquiryForm />
             </div>
           </div>
