@@ -564,13 +564,13 @@ const CSP_HEADER =
   "form-action 'self';";
 
 /** Attach CSP and security headers to a static-asset response. */
-function addSecurityHeaders(response: Response): Response {
+function addSecurityHeaders(response: Response, statusOverride?: number): Response {
   const headers = new Headers(response.headers);
   headers.set('Content-Security-Policy', CSP_HEADER);
   headers.set('X-Content-Type-Options', 'nosniff');
   headers.set('X-Frame-Options', 'DENY');
   headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  return new Response(response.body, { status: response.status, headers });
+  return new Response(response.body, { status: statusOverride ?? response.status, headers });
 }
 
 export default {
@@ -659,8 +659,16 @@ export default {
           return addSecurityHeaders(snapshotResponse);
         }
 
+        // Neither a real asset nor a prerendered snapshot exists for this path, so
+        // it isn't a real route — including stale/legacy URLs left over from past
+        // site content that no longer exists. Still serve the SPA shell (so real
+        // users get the client-rendered NotFoundPage instead of a blank error),
+        // but with an honest 404 status: the previous behavior always returned 200
+        // here (whatever index.html itself returns), a "soft 404" that tells
+        // Google's indexer this is a valid page and blocks it from ever dropping
+        // dead URLs from the index.
         const indexRequest = new Request(new URL('/index.html', request.url).toString());
-        return addSecurityHeaders(await env.ASSETS.fetch(indexRequest));
+        return addSecurityHeaders(await env.ASSETS.fetch(indexRequest), 404);
       }
       return addSecurityHeaders(assetResponse);
     }

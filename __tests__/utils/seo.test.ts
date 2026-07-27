@@ -102,12 +102,11 @@ describe('organizationSchema', () => {
     expect(areaServed).toContain('Australia');
   });
 
-  it('includes sameAs array with LinkedIn and Clutch URLs', () => {
+  it('includes sameAs array with LinkedIn URL', () => {
     const schema = organizationSchema();
     const sameAs = schema['sameAs'] as string[];
     expect(Array.isArray(sameAs)).toBe(true);
     expect(sameAs.some(url => url.startsWith('https://www.linkedin.com/'))).toBe(true);
-    expect(sameAs.some(url => url.startsWith('https://clutch.co/'))).toBe(true);
   });
 
   it('includes knowsAbout array with all five service categories', () => {

@@ -425,7 +425,6 @@ export function organizationSchema(): SchemaObject {
     ],
     sameAs: [
       'https://www.linkedin.com/company/trivianedge',
-      'https://clutch.co/profile/trivianedge',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
