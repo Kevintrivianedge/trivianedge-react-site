@@ -9,6 +9,9 @@ TrivianEdge is headquartered in Toronto, Ontario, Canada and sources talent from
 - [Services overview](https://www.trivianedge.com/services): All four TrivianEdge service lines in one place.
 - [BPO](https://www.trivianedge.com/services/bpo): Business Process Outsourcing — offshore back-office, customer support, finance, and HR admin teams.
 - [RPO](https://www.trivianedge.com/services/rpo): Recruitment Process Outsourcing — embedded hiring, sourcing, screening, and onboarding.
+  - [Full-Cycle RPO](https://www.trivianedge.com/services/rpo/full-cycle-rpo): Ongoing, embedded recruitment function for continuous hiring needs.
+  - [Project-Based RPO](https://www.trivianedge.com/services/rpo/project-based-rpo): Defined, time-boxed hiring sprints for launches, funding rounds, and seasonal peaks.
+  - [AI-Powered Recruitment](https://www.trivianedge.com/services/rpo/ai-powered-recruitment): AI-assisted sourcing and screening, with every shortlist reviewed by a human recruiter.
 - [AI Development](https://www.trivianedge.com/services/ai-development): Offshore AI engineering — generative AI, LLM integration, machine learning, and MLOps.
 - [IT Outsourcing](https://www.trivianedge.com/services/it-outsourcing): Offshore software development, cloud/DevOps, QA, and systems integration.
 

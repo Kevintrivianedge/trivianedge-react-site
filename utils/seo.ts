@@ -13,9 +13,9 @@
 export const SEO_CONFIG = {
   siteName: 'TrivianEdge',
   siteUrl: 'https://www.trivianedge.com',
-  defaultTitle: 'TrivianEdge | #1 BPO & Offshore Software Development Company | Canada',
+  defaultTitle: 'TrivianEdge | BPO & Offshore Software Development Company | Canada',
   defaultDescription:
-    'TrivianEdge is Canada\'s leading BPO and offshore outsourcing company. We deliver custom software development, IT outsourcing, global talent deployment, and managed remote teams across 6 time zones. 30-day deployment. Real results.',
+    'TrivianEdge is a Canada-based BPO and offshore outsourcing company. We deliver custom software development, IT outsourcing, global talent deployment, and managed remote teams across 6 time zones. 30-day deployment. Real results.',
   defaultKeywords:
     'BPO Canada, business process outsourcing, offshore software development, IT outsourcing, talent outsourcing, offshore development team, remote teams Canada, global staffing, managed IT services, AI staffing, custom software development, software development outsourcing, offshore BPO, outsourcing company Canada, TrivianEdge, global talent pipeline, remote workforce solutions, offshore team Philippines, software development company Canada',
   twitterHandle: '@TrivianEdge',
@@ -413,7 +413,7 @@ export function organizationSchema(): SchemaObject {
     url: 'https://www.trivianedge.com',
     logo: 'https://www.trivianedge.com/logo.png',
     description:
-      "Canada's leading BPO, RPO and AI Development company. 30-day deployment. Up to 40% cost savings across 6 time zones.",
+      "A Canada-based BPO, RPO and AI Development company. 30-day deployment. Up to 40% cost savings across 6 time zones.",
     areaServed: ['Canada', 'United States', 'United Kingdom', 'Australia'],
     foundingLocation: 'Canada',
     knowsAbout: [
@@ -443,7 +443,7 @@ export function websiteSchema(): SchemaObject {
     '@id': 'https://www.trivianedge.com/#website',
     url: 'https://www.trivianedge.com',
     name: 'TrivianEdge',
-    description: "Canada's leading BPO, RPO and AI Development company",
+    description: "A Canada-based BPO, RPO and AI Development company",
     potentialAction: {
       '@type': 'SearchAction',
       target: 'https://www.trivianedge.com/?s={search_term_string}',

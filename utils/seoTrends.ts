@@ -50,7 +50,7 @@ const SOFTWARE_POOL = [
 
 const TITLE_VARIANTS: Record<PageContext, string[]> = {
   home: [
-    'TrivianEdge | #1 BPO & Offshore Software Development | Canada',
+    'TrivianEdge | BPO & Offshore Software Development | Canada',
     'TrivianEdge | Offshore Outsourcing & Software Development | Toronto Canada',
     'TrivianEdge | BPO Company Canada — Global Talent & IT Outsourcing',
     'TrivianEdge | Business Process Outsourcing & Offshore Teams | Canada',

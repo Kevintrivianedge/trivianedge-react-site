@@ -555,8 +555,7 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 const CSP_HEADER =
   "default-src 'self'; " +
   "script-src 'self' https://cdn.amplitude.com; " +
-  "connect-src 'self' https://api.amplitude.com https://api2.amplitude.com " +
-    "https://sessionreplay.amplitude.com https://ipapi.co https://api.open-meteo.com; " +
+  "connect-src 'self' https://*.amplitude.com https://ipapi.co https://api.open-meteo.com; " +
   "img-src 'self' data: https:; " +
   "font-src 'self' https://fonts.gstatic.com; " +
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +

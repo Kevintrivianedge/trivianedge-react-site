@@ -57,6 +57,23 @@ async function main() {
       // client-side data derivation) settle before snapshotting.
       await page.waitForTimeout(500);
 
+      // Most sections use scroll-triggered reveal animations (IntersectionObserver
+      // adds an "active"/visible class, or a Framer Motion whileInView prop flips
+      // opacity 0 -> 1) that only fire once an element crosses the viewport. A
+      // snapshot taken without scrolling captures those sections mid-animation —
+      // e.g. opacity: 0 baked into the static HTML — which is exactly what Google's
+      // renderer does too (it doesn't scroll), and exactly what non-JS crawlers
+      // (GPTBot, ClaudeBot, PerplexityBot) would receive verbatim since they never
+      // execute the JS that would otherwise reveal it. Scrolling the full height
+      // before snapshotting ensures every reveal has fired first.
+      const scrollHeight = await page.evaluate(() => document.body.scrollHeight);
+      for (let y = 0; y < scrollHeight; y += 400) {
+        await page.evaluate((yy) => window.scrollTo(0, yy), y);
+        await page.waitForTimeout(120);
+      }
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.waitForTimeout(300);
+
       const html = await page.content();
       const outDir = routePath === '/' ? distDir : join(distDir, routePath.replace(/^\//, ''));
       mkdirSync(outDir, { recursive: true });

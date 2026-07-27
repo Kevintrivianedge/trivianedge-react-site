@@ -67,6 +67,9 @@ const PrivacyPage             = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage               = lazy(() => import('./pages/TermsPage'));
 const BPOPage                 = lazy(() => import('./pages/services/BPOPage'));
 const RPOPage                 = lazy(() => import('./pages/services/RPOPage'));
+const FullCycleRPOPage        = lazy(() => import('./pages/services/rpo/FullCycleRPOPage'));
+const ProjectBasedRPOPage     = lazy(() => import('./pages/services/rpo/ProjectBasedRPOPage'));
+const AIPoweredRecruitmentPage = lazy(() => import('./pages/services/rpo/AIPoweredRecruitmentPage'));
 const AIDevelopmentPage       = lazy(() => import('./pages/services/AIDevelopmentPage'));
 const ITOutsourcingPage       = lazy(() => import('./pages/services/ITOutsourcingPage'));
 const VentureStudioPage       = lazy(() => import('./pages/VentureStudioPage'));
@@ -265,7 +268,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <a
                 href="#how-it-works"
                 onClick={e => { e.preventDefault(); scrollTo('how-it-works'); }}
-                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 btn-magnetic premium-button-secondary micro-press-button text-white border-white/20 hover:border-white/40 hover:bg-white/5"
+                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 btn-magnetic premium-button-secondary micro-press-button !text-white border-white/20 hover:border-white/40 hover:bg-white/5"
               >
                 How it works
                 <ChevronRight className="w-5 h-5" />
@@ -801,6 +804,9 @@ export default function App() {
                       <Route path="/services" element={<ServicesPage />} />
                       <Route path="/services/bpo" element={<BPOPage />} />
                       <Route path="/services/rpo" element={<RPOPage />} />
+                      <Route path="/services/rpo/full-cycle-rpo" element={<FullCycleRPOPage />} />
+                      <Route path="/services/rpo/project-based-rpo" element={<ProjectBasedRPOPage />} />
+                      <Route path="/services/rpo/ai-powered-recruitment" element={<AIPoweredRecruitmentPage />} />
                       <Route path="/services/ai-development" element={<AIDevelopmentPage />} />
                       <Route path="/services/it-outsourcing" element={<ITOutsourcingPage />} />
                       <Route path="/venture-studio" element={<VentureStudioPage />} />
