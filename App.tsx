@@ -338,7 +338,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 2: TRUST STRIP ===== */}
       <section aria-label="Trust signals" className="py-8 md:py-10 border-y border-border bg-[#fafafa]">
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-text/35 whitespace-nowrap">Trusted by operators across North America</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted whitespace-nowrap">Trusted by operators across North America</p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             {TRUST_CLIENTS.map(name => (
               <span
@@ -379,9 +379,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.25 }}
                   transition={{ duration: shouldReduceMotion ? 0.01 : 0.55, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className="card-glow bg-white rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300"
+                  className="card-glow bg-white rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
                   style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
+                  role="link"
+                  tabIndex={0}
                   onClick={() => navigate(feature.link)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      navigate(feature.link);
+                    }
+                  }}
                 >
                   <div className={`absolute -top-8 -right-8 w-32 h-32 ${feature.glow} blur-3xl pointer-events-none rounded-full`} />
                   <div className="flex items-start gap-4">
@@ -493,15 +501,15 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
-                className="reveal card-glow micro-lift-card rounded-[2rem] border border-border bg-white overflow-hidden"
+                className="reveal card-glow micro-lift-card rounded-[2rem] border border-border bg-white overflow-hidden flex flex-col"
                 style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,196,154,0.08)' }}
               >
                 <div className="h-1 w-full bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600/50" />
-                <div className="p-6 md:p-7">
+                <div className="p-6 md:p-7 flex flex-col flex-1">
                   <span className="metric-pill">{study.sector}</span>
                   <h3 className="text-xl font-bold mb-2 text-text">{study.client}</h3>
                   <p className="text-muted text-xs mb-4 leading-relaxed">{study.challenge}</p>
-                  <div className="rounded-xl bg-[#f2fbf8] border border-cyan-400/15 p-4">
+                  <div className="rounded-xl bg-[#f2fbf8] border border-cyan-400/15 p-4 mt-auto">
                     <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 mb-1">Outcome</p>
                     <p className="text-text/85 text-sm leading-relaxed font-medium">{study.outcome}</p>
                   </div>

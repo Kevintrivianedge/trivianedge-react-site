@@ -168,7 +168,7 @@ const getQualificationTier = (score: number) => {
   return {
     title: 'Needs More Validation',
     note: 'The concept may need tighter scope and market validation before entering the free MVP lane.',
-    tone: 'text-amber-400',
+    tone: 'text-amber-700 dark:text-amber-400',
   };
 };
 
@@ -507,14 +507,14 @@ const VentureStudioPage: React.FC = () => {
                     <div key={step.id} className={`h-1.5 rounded-full ${idx <= currentStep ? 'bg-cyan-400' : 'bg-border'}`} />
                   ))}
                 </div>
-                <p ref={stepHeadingRef} tabIndex={-1} className="text-xs text-muted">{STEPS[currentStep].label}</p>
+                <p ref={stepHeadingRef} tabIndex={-1} className="text-xs text-muted rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50">{STEPS[currentStep].label}</p>
                 <div className="rounded-xl border border-border/70 bg-surface/60 px-4 py-3">
                   <p className="text-[11px] uppercase tracking-widest font-bold text-cyan-400 mb-1">{STEP_GUIDANCE[currentStep].title}</p>
                   <p className="text-xs text-muted">{STEP_GUIDANCE[currentStep].hint}</p>
                 </div>
                 {stepError && (
                   <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3" role="alert">
-                    <p className="text-xs font-semibold text-amber-300">{stepError}</p>
+                    <p className="text-xs font-semibold text-amber-700 dark:text-amber-300">{stepError}</p>
                   </div>
                 )}
               </div>
@@ -693,7 +693,7 @@ const VentureStudioPage: React.FC = () => {
             )}
 
             {submitError && (
-              <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-300 px-4 py-3 text-sm" role="alert">
+              <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-300 px-4 py-3 text-sm" role="alert">
                 {submitError}
               </div>
             )}

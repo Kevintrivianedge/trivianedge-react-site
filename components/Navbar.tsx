@@ -166,6 +166,7 @@ const Navbar: React.FC = () => {
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
+      aria-label="Main navigation"
       className={`fixed top-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'bg-background/85 backdrop-blur-md border-b border-border py-4 shadow-[0_10px_30px_rgba(15,23,42,0.06)]' : 'bg-transparent py-8'}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex justify-between items-center relative z-[101] gap-4">

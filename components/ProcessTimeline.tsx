@@ -15,10 +15,18 @@ const ProcessTimeline: React.FC = () => {
           const isActive = activeStep === idx;
           
           return (
-            <div 
+            <div
               key={idx}
-              className={`relative flex gap-8 group cursor-pointer`}
+              role="button"
+              tabIndex={0}
+              className={`relative flex gap-8 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 rounded-3xl`}
               onClick={() => setActiveStep(idx)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setActiveStep(idx);
+                }
+              }}
             >
               {/* Node/Marker */}
               <div className="relative flex-shrink-0">

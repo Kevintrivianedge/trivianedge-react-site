@@ -146,7 +146,7 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
         <button 
           ref={closeButtonRef}
           onClick={onClose}
-          className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2.5 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-white/80 hover:text-white hover:bg-black/70 transition-colors z-20 min-w-[40px] min-h-[40px] flex items-center justify-center"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2.5 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-white/80 hover:text-white hover:bg-black/70 transition-colors z-20 min-w-[44px] min-h-[44px] flex items-center justify-center"
           aria-label="Close modal"
         >
           <X className="w-5 h-5" />

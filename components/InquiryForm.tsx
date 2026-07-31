@@ -154,7 +154,7 @@ const InquiryForm: React.FC = () => {
         </div>
       </div>
 
-      {error && <p className="text-sm text-rose-500 font-medium" role="alert">{error}</p>}
+      {error && <p className="text-sm text-rose-700 dark:text-rose-400 font-medium" role="alert">{error}</p>}
 
       <button
         type="submit"
