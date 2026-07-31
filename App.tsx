@@ -832,7 +832,7 @@ export default function App() {
                 <div className="mb-6">
                   <Logo light onClick={() => { navigate('/'); window.scrollTo({top: 0, behavior: 'smooth'}); }} />
                 </div>
-                <p className="text-white/45 text-sm max-w-xs mb-8 leading-relaxed">Build offshore teams that run at full capacity. Hiring, payroll, compliance, and delivery — handled end to end.</p>
+                <p className="text-white/60 text-sm max-w-xs mb-8 leading-relaxed">Build offshore teams that run at full capacity. Hiring, payroll, compliance, and delivery — handled end to end.</p>
                 <div className="flex gap-3">
                   <a href="https://www.linkedin.com/company/trivianedge/" target="_blank" rel="noopener noreferrer" aria-label="TrivianEdge on LinkedIn"
                     className="w-9 h-9 rounded-xl bg-white/6 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200">
@@ -849,7 +849,7 @@ export default function App() {
                 </div>
               </div>
               <div>
-                <h4 className="font-bold text-white/30 mb-6 tracking-widest uppercase text-[10px]">Services</h4>
+                <h3 className="font-bold text-white/55 mb-6 tracking-widest uppercase text-[10px]">Services</h3>
                 <ul className="space-y-3">
                   <li><Link to="/services" className="text-white/55 hover:text-white text-sm transition-colors">All Services</Link></li>
                   <li><Link to="/services/bpo" className="text-white/55 hover:text-white text-sm transition-colors">BPO</Link></li>
@@ -859,7 +859,7 @@ export default function App() {
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold text-white/30 mb-6 tracking-widest uppercase text-[10px]">Platform</h4>
+                <h3 className="font-bold text-white/55 mb-6 tracking-widest uppercase text-[10px]">Platform</h3>
                 <ul className="space-y-3">
                   <li><Link to="/proof" className="text-white/55 hover:text-white text-sm transition-colors">Proof</Link></li>
                   <li><Link to="/trust" className="text-white/55 hover:text-white text-sm transition-colors">Trust</Link></li>
@@ -868,7 +868,7 @@ export default function App() {
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold text-white/30 mb-6 tracking-widest uppercase text-[10px]">Resources</h4>
+                <h3 className="font-bold text-white/55 mb-6 tracking-widest uppercase text-[10px]">Resources</h3>
                 <ul className="space-y-3">
                   <li><Link to="/contact" className="text-white/55 hover:text-white text-sm transition-colors">Contact</Link></li>
                   <li><Link to="/proof" className="text-white/55 hover:text-white text-sm transition-colors">Case Studies</Link></li>
@@ -878,11 +878,11 @@ export default function App() {
                 </ul>
               </div>
             </div>
-            <div className="max-w-7xl mx-auto pt-8 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest uppercase text-white/25">
+            <div className="max-w-7xl mx-auto pt-8 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest uppercase text-white/55">
               <p>© {new Date().getFullYear()} TrivianEdge Global — Canada's Offshore Operations Partner</p>
               <div className="flex gap-8">
-                <Link to="/privacy" className="hover:text-white/60 transition-colors">Privacy</Link>
-                <Link to="/terms" className="hover:text-white/60 transition-colors">Terms</Link>
+                <Link to="/privacy" className="hover:text-white/80 transition-colors">Privacy</Link>
+                <Link to="/terms" className="hover:text-white/80 transition-colors">Terms</Link>
               </div>
             </div>
           </footer>

@@ -359,6 +359,15 @@ ${userContext}
     systemContextRef.current = '';
   }, [geoData]);
 
+  // Real DOM `inert` (not just aria-hidden) so the panel's buttons/input are
+  // neither focusable nor tab-reachable while translated off-screen — axe's
+  // aria-hidden-focus rule correctly flags aria-hidden alone as invalid when
+  // the element still contains focusable descendants.
+  useEffect(() => {
+    const node = sidebarRef.current as (HTMLDivElement & { inert: boolean }) | null;
+    if (node) node.inert = !isOpen;
+  }, [isOpen]);
+
   useEffect(() => {
     if (isOpen) {
         initChat();
