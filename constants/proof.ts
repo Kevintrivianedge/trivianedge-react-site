@@ -43,6 +43,14 @@ export const CASE_STUDIES: CaseStudy[] = [
     outcome: 'The partnership gave the team a clearer path into the Middle East market with less operational drag.',
     highlights: ['GCC expansion', 'Software rollout', 'Founder-led execution'],
   },
+  {
+    client: 'Capricorn College',
+    sector: 'Education operations',
+    challenge: 'The school\'s existing website was outdated, and leadership had no reliable way to verify whether teachers were on campus and on time.',
+    approach: 'Delivered a complete site revamp — program information, staff directory, photo gallery, and a secure faculty portal — paired with a GPS-based attendance system for real-time teacher check-in verification.',
+    outcome: 'The school launched a modern public site and replaced manual attendance tracking with a live, verifiable record of teacher attendance.',
+    highlights: ['Full site revamp', 'GPS attendance verification', 'Faculty portal'],
+  },
 ];
 
 export const TESTIMONIALS: Testimonial[] = [

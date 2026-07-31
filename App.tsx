@@ -485,7 +485,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
             {CASE_STUDIES.map((study, idx) => (
               <motion.article
                 key={study.client}
