@@ -783,7 +783,12 @@ export default function App() {
             )}
           </AnimatePresence>
 
-          <main id="main-content">
+          {/* min-h-dvh reserves viewport-height space for the duration of the route
+              Suspense fallback (which renders nothing) so <footer> doesn't collapse
+              into the gap and then violently reflow once the lazy chunk finishes
+              evaluating — this was producing CLS above 1.0 on every lazy-loaded
+              route under throttled mobile CPU, confirmed via a live Lighthouse run. */}
+          <main id="main-content" className="min-h-dvh">
             <ErrorBoundary fallback={null}>
               <Suspense fallback={null}>
                 <AnimatePresence mode="wait">
