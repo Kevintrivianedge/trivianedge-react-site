@@ -56,7 +56,7 @@ const InquiryForm: React.FC = () => {
 
   if (submitted) {
     return (
-      <div className="glass p-10 rounded-[2rem] border-border text-center">
+      <div className="glass p-10 rounded-[2rem] border-border text-center" role="status">
         <div className="inline-flex items-center justify-center p-4 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-5">
           <CheckCircle2 className="w-8 h-8 text-cyan-400" />
         </div>
@@ -154,7 +154,7 @@ const InquiryForm: React.FC = () => {
         </div>
       </div>
 
-      {error && <p className="text-sm text-rose-500 font-medium">{error}</p>}
+      {error && <p className="text-sm text-rose-500 font-medium" role="alert">{error}</p>}
 
       <button
         type="submit"

@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
-  Users,
-  Search,
-  MessageSquare,
-  ClipboardCheck,
-  Repeat,
+  Database,
+  Cpu,
+  LineChart,
+  Radar,
+  Workflow,
   Clock,
   TrendingDown,
   Globe2,
@@ -18,84 +18,79 @@ import { serviceSchema, faqSchema, breadcrumbSchema } from '../../../utils/seo';
 
 const FAQS = [
   {
-    question: 'What is Full-Cycle RPO?',
+    question: 'What is machine learning development, and how is it different from generative AI?',
     answer:
-      'Full-Cycle RPO is an ongoing, embedded partnership where TrivianEdge runs your entire recruitment function indefinitely — not just individual searches. We own sourcing, screening, interview coordination, offers, and onboarding for every role you hire, acting as your extended talent acquisition team for as long as the engagement runs.',
+      'Machine learning covers models that predict, classify, or score from structured or historical data — churn prediction, fraud detection, demand forecasting, recommendation engines. Generative AI creates new content like text or images. Many products need both: an ML model predicting risk, and a generative layer explaining the result in plain language. We scope which one your problem actually needs.',
   },
   {
-    question: 'How is Full-Cycle RPO different from Project-Based RPO?',
+    question: 'What kinds of problems can a machine learning model solve for my business?',
     answer:
-      'Full-Cycle RPO is an open-ended engagement built for companies with continuous hiring needs — think 20+ roles a year, ongoing headcount growth, or no in-house recruiting team at all. Project-Based RPO is a defined, time-boxed hiring sprint for a specific need, like hiring 15 engineers before a product launch. Companies that start with a project often move to full-cycle once they see the volume of hiring is steady rather than one-off.',
+      'Classification (will this customer churn, is this transaction fraudulent), regression and forecasting (demand, revenue, pricing), recommendation and ranking (what to show this user next), and anomaly detection (unusual patterns in operations or transactions). If you have historical data and a repeatable decision, it is usually a candidate for ML.',
   },
   {
-    question: 'What does TrivianEdge actually own in a Full-Cycle engagement?',
+    question: 'What data do I need to get started?',
     answer:
-      'Everything in the hiring funnel: job description refinement, sourcing across our talent hubs, structured screening, interview scheduling and coordination with your hiring managers, offer negotiation support, and onboarding logistics. We also maintain a warm pipeline for roles you will likely need in 3–6 months, so you are never starting from zero.',
+      "Enough historical examples of the outcome you're trying to predict — the more consistent and complete, the better the model. We run a data audit early in the engagement to assess what you have, identify gaps, and recommend what to collect if the current data isn't sufficient yet. Not having a mature data warehouse doesn't disqualify you; it changes where we start.",
   },
   {
-    question: 'Do we still control who gets hired?',
+    question: 'How accurate will the model be?',
     answer:
-      'Yes, always. TrivianEdge runs the process, but hiring managers make every final decision. We present shortlisted, pre-screened candidates; your team interviews and decides. We never make an offer without your sign-off.',
+      "It depends entirely on the problem and the data — we won't promise a number before seeing your data. What we do commit to is a clear evaluation methodology (train/test/validation splits, the right metric for your problem, not just accuracy), and being transparent about model performance and its limitations before it goes into production.",
   },
   {
-    question: 'How is Full-Cycle RPO priced?',
+    question: 'Do you build the data pipeline too, or just the model?',
     answer:
-      'Most Full-Cycle engagements run on a monthly retainer sized to your expected hiring volume, which is typically up to 40% cheaper than maintaining an equivalent in-house talent acquisition team once you account for salaries, tools, and job board spend. Contact us for a quote based on your role mix and volume.',
+      'Both, when needed. Most ML projects fail on the data engineering side, not the modeling side — getting clean, reliable, up-to-date features into the model is usually the harder problem. We handle pipeline design, feature engineering, and the model itself as one engagement, not two separate handoffs.',
   },
   {
-    question: 'How long is the minimum commitment?',
+    question: 'What happens after the model is deployed?',
     answer:
-      'There is no fixed multi-year lock-in. Most Full-Cycle engagements run in renewable quarterly terms, so the arrangement can scale up, scale down, or wind down as your hiring needs change.',
+      "Models degrade as real-world data drifts from what they were trained on. We offer ongoing monitoring and retraining through our MLOps &amp; AI Infrastructure work, so accuracy doesn't quietly decay six months after launch.",
   },
   {
-    question: 'Does Full-Cycle RPO work with our existing HR team and ATS?',
+    question: 'How much does a machine learning engagement cost?',
     answer:
-      'Yes. We embed into your existing workflow rather than replacing it — using your ATS if you have one, following your employer brand and voice with candidates, and reporting into your HR or People leadership. From a candidate\'s perspective, they are dealing with your company throughout.',
-  },
-  {
-    question: 'What happens to the roles we hire if we ever end the engagement?',
-    answer:
-      'Everything transfers to you: candidate pipelines, sourcing notes, interview scorecards, and any employer-branding assets we built. There is no lock-in on your own hiring data or relationships.',
+      'It scales with data complexity and the number of models needed. TrivianEdge offshore data science teams typically save clients up to 40% versus hiring equivalent talent locally in Canada, the US, or the UK. Contact us for a quote scoped to your specific problem and data.',
   },
 ];
 
 const INCLUDED = [
-  { icon: Search, label: 'Sourcing & Talent Mapping' },
-  { icon: ClipboardCheck, label: 'Structured Screening' },
-  { icon: MessageSquare, label: 'Interview Coordination' },
-  { icon: Users, label: 'Offer & Onboarding Support' },
-  { icon: Repeat, label: 'Ongoing Pipeline Building' },
+  { icon: Database, label: 'Data Pipeline & Feature Engineering' },
+  { icon: Cpu, label: 'Model Development & Training' },
+  { icon: LineChart, label: 'Evaluation & Validation' },
+  { icon: Workflow, label: 'Production Deployment' },
+  { icon: Radar, label: 'Monitoring & Retraining' },
 ];
 
 const STATS = [
-  { value: 'Ongoing', label: 'Engagement Model' },
+  { value: '30 Days', label: 'To Deployed Team' },
   { value: 'Up to 40%', label: 'Cost Reduction' },
   { value: '6', label: 'Sourcing Countries' },
-  { value: '100%', label: 'Embedded in Your Team' },
+  { value: '100%', label: 'IP Ownership' },
 ];
 
-const FullCycleRPOPage: React.FC = () => {
+const MachineLearningPage: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <>
       <SEOHead
-        title="Full-Cycle RPO Services | Embedded Recruitment Outsourcing | TrivianEdge"
-        description="TrivianEdge's full-cycle RPO embeds a complete hiring function into your HR team — sourcing, screening, interviews, and onboarding, managed end-to-end, indefinitely."
+        title="Machine Learning & Data Science Services | TrivianEdge"
+        description="TrivianEdge builds predictive models, forecasting, and recommendation engines with an offshore machine learning and data science team."
         schema={[
           serviceSchema(
-            'Full-Cycle RPO',
-            'Recruitment Process Outsourcing',
-            'https://www.trivianedge.com/services/rpo/full-cycle-rpo',
+            'Machine Learning & Data Science',
+            'Artificial Intelligence Development',
+            'https://www.trivianedge.com/services/ai-development/machine-learning',
           ),
           faqSchema(FAQS),
           breadcrumbSchema([
             { name: 'Home', url: 'https://www.trivianedge.com' },
             { name: 'Services', url: 'https://www.trivianedge.com/services' },
-            { name: 'RPO Services', url: 'https://www.trivianedge.com/services/rpo' },
+            { name: 'AI Development', url: 'https://www.trivianedge.com/services/ai-development' },
             {
-              name: 'Full-Cycle RPO',
-              url: 'https://www.trivianedge.com/services/rpo/full-cycle-rpo',
+              name: 'Machine Learning & Data Science',
+              url: 'https://www.trivianedge.com/services/ai-development/machine-learning',
             },
           ]),
         ]}
@@ -109,9 +104,9 @@ const FullCycleRPOPage: React.FC = () => {
             <li className="text-border">/</li>
             <li><Link to="/services" className="hover:text-cyan-400 transition-colors">Services</Link></li>
             <li className="text-border">/</li>
-            <li><Link to="/services/rpo" className="hover:text-cyan-400 transition-colors">RPO</Link></li>
+            <li><Link to="/services/ai-development" className="hover:text-cyan-400 transition-colors">AI Development</Link></li>
             <li className="text-border">/</li>
-            <li className="text-text font-medium">Full-Cycle RPO</li>
+            <li className="text-text font-medium">Machine Learning</li>
           </ol>
         </nav>
 
@@ -124,24 +119,23 @@ const FullCycleRPOPage: React.FC = () => {
         >
           <div className="max-w-4xl mx-auto">
             <p className="text-xs font-mono tracking-widest uppercase text-cyan-400 mb-4">
-              Recruitment Process Outsourcing
+              Machine Learning &amp; Data Science
             </p>
             <h1 className="text-4xl md:text-6xl font-bold text-text mb-6 leading-tight">
-              Full-Cycle RPO:{' '}
-              <span className="text-cyan-400">Your Entire Hiring Function, Embedded</span>
+              Machine Learning:{' '}
+              <span className="text-cyan-400">Predictions Your Business Can Act On</span>
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
-              TrivianEdge becomes your ongoing talent acquisition team — sourcing, screening,
-              interviewing, and onboarding every hire, indefinitely, without you building an
-              in-house recruiting function from scratch.
+              Churn prediction, forecasting, fraud detection, and recommendation engines —
+              built on your data, from pipeline to production, by an offshore team in 30 days.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">
               {[
-                { icon: Clock, label: 'Ongoing Engagement' },
+                { icon: Clock, label: '30-Day Deployment' },
                 { icon: TrendingDown, label: 'Up to 40% Cost Reduction' },
                 { icon: Globe2, label: '6 Sourcing Countries' },
-                { icon: CheckCircle2, label: 'Fully Embedded' },
+                { icon: CheckCircle2, label: '100% IP Ownership' },
               ].map(({ icon: Icon, label }) => (
                 <span
                   key={label}
@@ -155,25 +149,26 @@ const FullCycleRPOPage: React.FC = () => {
           </div>
         </motion.section>
 
-        {/* What is Full-Cycle RPO */}
+        {/* What is ML development */}
         <section className="py-20 px-4 md:px-6">
           <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-6">
-              What Makes RPO "Full-Cycle"?
+              Prediction, Not Generation
             </h2>
             <p className="text-muted text-lg leading-relaxed mb-4">
-              A staffing agency fills one job order at a time. Full-Cycle RPO is different:
-              TrivianEdge takes ownership of your entire recruitment function, on an ongoing basis,
-              as an embedded extension of your HR team. We don't just fill open roles — we build
-              and maintain the hiring engine behind them.
+              Machine learning models predict, classify, and score from your structured and
+              historical data — will this customer churn, is this transaction fraudulent, what
+              will demand look like next quarter. Most ML projects fail on the data engineering
+              side, not the modeling side, so we treat the pipeline and the model as one
+              engagement rather than a separate handoff.
             </p>
             <p className="text-muted text-lg leading-relaxed">
-              If your hiring need is a defined, time-boxed burst rather than a continuous function,{' '}
-              <Link to="/services/rpo/project-based-rpo" className="text-cyan-400 hover:underline">
-                Project-Based RPO
+              Need the model explaining its own output in plain language, or generating content
+              from it?{' '}
+              <Link to="/services/ai-development/generative-ai" className="text-cyan-400 hover:underline">
+                Generative AI Development
               </Link>{' '}
-              is usually the better fit. Full-Cycle is built for companies hiring continuously
-              across the year.
+              is the layer that sits on top of prediction work like this.
             </p>
           </div>
         </section>
@@ -182,7 +177,7 @@ const FullCycleRPOPage: React.FC = () => {
         <section className="py-20 px-4 md:px-6 bg-surface/30">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-text mb-12 text-center reveal">
-              What's Included in Full-Cycle RPO
+              What's Included
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {INCLUDED.map(({ icon: Icon, label }, idx) => (
@@ -201,11 +196,11 @@ const FullCycleRPOPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Why choose stats */}
+        {/* Stats */}
         <section className="py-20 px-4 md:px-6">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-text mb-12 text-center reveal">
-              Why Companies Move to Full-Cycle RPO
+              Why Teams Build ML With TrivianEdge
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {STATS.map(({ value, label }, idx) => (
@@ -226,14 +221,14 @@ const FullCycleRPOPage: React.FC = () => {
         <section className="py-20 px-4 md:px-6 bg-surface/30">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-text mb-6 reveal">
-              Is Full-Cycle RPO Right for You?
+              Is a Machine Learning Engagement Right for You?
             </h2>
             <div className="space-y-4">
               {[
-                { title: 'You hire continuously, not in bursts', desc: 'Companies with steady, year-round hiring — 20+ roles annually — get the most value from an embedded, ongoing team rather than repeated one-off searches.' },
-                { title: 'You don\'t have an in-house TA function', desc: 'Full-Cycle RPO replaces the need to hire, train, and manage your own recruiting team, at a fraction of the fully-loaded cost.' },
-                { title: 'You need pipeline, not just placements', desc: 'We build a warm talent pipeline for roles you\'ll need in 3–6 months, so hiring stops being reactive.' },
-                { title: 'You want one point of accountability', desc: 'Instead of juggling agencies, job boards, and internal recruiters, one embedded TrivianEdge team owns the whole funnel.' },
+                { title: 'You have a repeatable decision backed by historical data', desc: 'Churn, fraud, pricing, demand — if you\'ve made this call by gut feel or spreadsheet, there\'s usually a model that can do it more consistently.' },
+                { title: 'You want a data science function without hiring one', desc: 'A full in-house data science team is expensive to build and hard to hire well. We give you the same capability without the headcount.' },
+                { title: 'You need a recommendation or ranking engine', desc: 'Product, content, or e-commerce teams that need to surface the right item to the right user, not just a static list.' },
+                { title: 'Your data lives in more than one place', desc: 'If usable features are scattered across systems, we design the pipeline that consolidates them before modeling even starts.' },
               ].map((item, idx) => (
                 <div key={item.title} style={{ transitionDelay: `${idx * 60}ms` }} className="glass rounded-2xl border-border p-6 reveal">
                   <h3 className="font-bold text-text mb-2">{item.title}</h3>
@@ -251,7 +246,7 @@ const FullCycleRPOPage: React.FC = () => {
               Frequently Asked Questions
             </h2>
             <p className="text-muted text-center mb-10">
-              Everything you need to know about Full-Cycle RPO with TrivianEdge.
+              Everything you need to know about machine learning and data science with TrivianEdge.
             </p>
             <Accordion items={FAQS} />
           </div>
@@ -261,16 +256,16 @@ const FullCycleRPOPage: React.FC = () => {
         <section className="py-24 px-4 md:px-6">
           <div className="max-w-2xl mx-auto text-center reveal">
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
-              Build Your Embedded Hiring Team
+              Turn Your Data Into Predictions
             </h2>
             <p className="text-muted mb-8">
-              Stop starting hiring from zero every time. Let's talk about your volume and roles.
+              Let's look at what you're already collecting and what it could be predicting.
             </p>
             <Link
               to="/contact"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold premium-button"
             >
-              Get a free consultation
+              Start your AI project
             </Link>
           </div>
         </section>
@@ -279,4 +274,4 @@ const FullCycleRPOPage: React.FC = () => {
   );
 };
 
-export default FullCycleRPOPage;
+export default MachineLearningPage;

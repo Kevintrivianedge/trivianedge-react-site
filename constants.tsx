@@ -225,7 +225,7 @@ export const ROLES: RoleCategory[] = [
   },
   {
     title: "Operations & Delivery",
-    gradient: "from-cyan-500/20 to-violet-500/20",
+    gradient: "from-cyan-500/20 to-emerald-500/20",
     roles: [
       "Operational Lead / Managers",
       "Financial Analysts",
@@ -280,7 +280,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaKeywords: ["cargo login", "cross-timezone operations", "logistics staffing", "Philippines talent", "TrivianEdge case study"],
     datePublished: "2025-01-15",
     dateModified: "2025-01-15",
-    imageUrl: "https://www.trivianedge.com/og-image.jpg",
+    imageUrl: "https://www.trivianedge.com/og-image.png",
   },
   {
     id: "keynotive-case-study",
@@ -297,7 +297,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaKeywords: ["keynotive", "offshore sales teams", "cold calling outsourcing", "multi-timezone sales", "TrivianEdge case study"],
     datePublished: "2025-02-03",
     dateModified: "2025-02-03",
-    imageUrl: "https://www.trivianedge.com/og-image.jpg",
+    imageUrl: "https://www.trivianedge.com/og-image.png",
   },
   {
     id: "hub-flx-case-study",
@@ -314,7 +314,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaKeywords: ["hub-flx", "UAE expansion", "GCC software market", "medtech deployment", "TrivianEdge case study"],
     datePublished: "2025-03-10",
     dateModified: "2025-03-10",
-    imageUrl: "https://www.trivianedge.com/og-image.jpg",
+    imageUrl: "https://www.trivianedge.com/og-image.png",
   },
   {
     id: "1",
@@ -331,7 +331,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaKeywords: ["HR operations alignment", "hiring strategy", "operational staffing", "remote team management", "TrivianEdge"],
     datePublished: "2024-10-12",
     dateModified: "2024-10-12",
-    imageUrl: "https://www.trivianedge.com/og-image.jpg",
+    imageUrl: "https://www.trivianedge.com/og-image.png",
   },
   {
     id: "2",
@@ -348,7 +348,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaKeywords: ["global talent outsourcing", "AI staffing", "remote teams", "offshore development", "TrivianEdge"],
     datePublished: "2024-09-28",
     dateModified: "2024-09-28",
-    imageUrl: "https://www.trivianedge.com/og-image.jpg",
+    imageUrl: "https://www.trivianedge.com/og-image.png",
   },
   {
     id: "3",
@@ -365,7 +365,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaKeywords: ["global tech talent", "Vietnam developers", "emerging tech hubs", "offshore engineering", "TrivianEdge global strategy"],
     datePublished: "2024-09-15",
     dateModified: "2024-09-15",
-    imageUrl: "https://www.trivianedge.com/og-image.jpg",
+    imageUrl: "https://www.trivianedge.com/og-image.png",
   },
   {
     id: "4",
@@ -382,7 +382,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaKeywords: ["bad hire cost", "hiring mistakes", "talent acquisition", "team morale", "operational alignment"],
     datePublished: "2024-11-05",
     dateModified: "2024-11-05",
-    imageUrl: "https://www.trivianedge.com/og-image.jpg",
+    imageUrl: "https://www.trivianedge.com/og-image.png",
   },
   {
     id: "5",
@@ -399,7 +399,7 @@ export const BLOG_POSTS: BlogPost[] = [
     metaKeywords: ["culture fit vs culture add", "diversity hiring", "global team culture", "remote work culture", "team building"],
     datePublished: "2024-11-18",
     dateModified: "2024-11-18",
-    imageUrl: "https://www.trivianedge.com/og-image.jpg",
+    imageUrl: "https://www.trivianedge.com/og-image.png",
   },
   {
     id: "6",
@@ -416,6 +416,6 @@ export const BLOG_POSTS: BlogPost[] = [
     metaKeywords: ["async remote work", "remote team communication", "distributed teams", "work from home productivity", "TrivianEdge remote work"],
     datePublished: "2024-12-02",
     dateModified: "2024-12-02",
-    imageUrl: "https://www.trivianedge.com/og-image.jpg",
+    imageUrl: "https://www.trivianedge.com/og-image.png",
   }
 ];

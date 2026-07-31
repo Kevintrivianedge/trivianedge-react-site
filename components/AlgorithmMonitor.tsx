@@ -60,7 +60,7 @@ const AlgorithmMonitor: React.FC<AlgorithmMonitorProps> = ({ signals, recommenda
           {/* Network */}
           <div className="flex justify-between">
             <span className="text-white/50">Network</span>
-            <span className="text-violet-300 uppercase">{signals.networkQuality}</span>
+            <span className="text-cyan-300 uppercase">{signals.networkQuality}</span>
           </div>
 
           {/* Core Web Vitals */}

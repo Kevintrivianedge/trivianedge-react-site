@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
-  Users,
-  Search,
-  MessageSquare,
-  ClipboardCheck,
-  Repeat,
+  Rocket,
+  Radar,
+  Gauge,
+  GitBranch,
+  LifeBuoy,
   Clock,
   TrendingDown,
   Globe2,
@@ -18,84 +18,79 @@ import { serviceSchema, faqSchema, breadcrumbSchema } from '../../../utils/seo';
 
 const FAQS = [
   {
-    question: 'What is Full-Cycle RPO?',
+    question: 'What is MLOps, exactly?',
     answer:
-      'Full-Cycle RPO is an ongoing, embedded partnership where TrivianEdge runs your entire recruitment function indefinitely — not just individual searches. We own sourcing, screening, interview coordination, offers, and onboarding for every role you hire, acting as your extended talent acquisition team for as long as the engagement runs.',
+      'MLOps is the infrastructure and process work that keeps a machine learning or AI model reliable in production — deployment pipelines, monitoring, drift detection, versioning, and retraining. A model that works well in a notebook is not the same as a model that stays accurate and fast under real production load for months. MLOps is the difference between the two.',
   },
   {
-    question: 'How is Full-Cycle RPO different from Project-Based RPO?',
+    question: 'We already have a model — can you take over deploying and maintaining it?',
     answer:
-      'Full-Cycle RPO is an open-ended engagement built for companies with continuous hiring needs — think 20+ roles a year, ongoing headcount growth, or no in-house recruiting team at all. Project-Based RPO is a defined, time-boxed hiring sprint for a specific need, like hiring 15 engineers before a product launch. Companies that start with a project often move to full-cycle once they see the volume of hiring is steady rather than one-off.',
+      "Yes, this is one of our most common engagements. We audit the existing model and pipeline, identify what's fragile or manual, and build proper deployment, monitoring, and retraining infrastructure around it — without requiring you to rebuild the model itself from scratch.",
   },
   {
-    question: 'What does TrivianEdge actually own in a Full-Cycle engagement?',
+    question: 'What is model drift, and how do you monitor for it?',
     answer:
-      'Everything in the hiring funnel: job description refinement, sourcing across our talent hubs, structured screening, interview scheduling and coordination with your hiring managers, offer negotiation support, and onboarding logistics. We also maintain a warm pipeline for roles you will likely need in 3–6 months, so you are never starting from zero.',
+      "Drift is when real-world data gradually diverges from what a model was trained on, causing accuracy to degrade silently — the model keeps producing confident answers, just wrong ones. We set up monitoring that tracks input distribution and prediction confidence over time, alerting before accuracy visibly drops rather than after a business problem surfaces.",
   },
   {
-    question: 'Do we still control who gets hired?',
+    question: 'Our AI costs are growing faster than usage — can you fix that?',
     answer:
-      'Yes, always. TrivianEdge runs the process, but hiring managers make every final decision. We present shortlisted, pre-screened candidates; your team interviews and decides. We never make an offer without your sign-off.',
+      'Usually, yes. Common levers are right-sizing model choice to task complexity, caching repeated inference calls, batching requests, and optimizing how context is passed to the model. We audit current spend against actual usage patterns and identify where the biggest, lowest-risk savings are before touching anything in production.',
   },
   {
-    question: 'How is Full-Cycle RPO priced?',
+    question: 'Does this require migrating to a specific cloud provider?',
     answer:
-      'Most Full-Cycle engagements run on a monthly retainer sized to your expected hiring volume, which is typically up to 40% cheaper than maintaining an equivalent in-house talent acquisition team once you account for salaries, tools, and job board spend. Contact us for a quote based on your role mix and volume.',
+      "No. We work across AWS SageMaker, Azure ML, and Kubernetes-based self-hosted infrastructure, and we design around whatever you're already running rather than forcing a migration as a prerequisite.",
   },
   {
-    question: 'How long is the minimum commitment?',
+    question: 'What happens if a new model version performs worse after deployment?',
     answer:
-      'There is no fixed multi-year lock-in. Most Full-Cycle engagements run in renewable quarterly terms, so the arrangement can scale up, scale down, or wind down as your hiring needs change.',
+      'Every deployment we build includes versioning and rollback — if a new model or prompt version underperforms against the previous one on your evaluation metrics, we roll back immediately rather than leaving a regression live while it gets diagnosed.',
   },
   {
-    question: 'Does Full-Cycle RPO work with our existing HR team and ATS?',
+    question: 'How much does ongoing MLOps support cost?',
     answer:
-      'Yes. We embed into your existing workflow rather than replacing it — using your ATS if you have one, following your employer brand and voice with candidates, and reporting into your HR or People leadership. From a candidate\'s perspective, they are dealing with your company throughout.',
-  },
-  {
-    question: 'What happens to the roles we hire if we ever end the engagement?',
-    answer:
-      'Everything transfers to you: candidate pipelines, sourcing notes, interview scorecards, and any employer-branding assets we built. There is no lock-in on your own hiring data or relationships.',
+      'It scales with how many models are in production and how much monitoring and retraining they need. TrivianEdge offshore infrastructure teams typically save clients up to 40% versus hiring equivalent talent locally. Contact us for a quote scoped to your current AI footprint.',
   },
 ];
 
 const INCLUDED = [
-  { icon: Search, label: 'Sourcing & Talent Mapping' },
-  { icon: ClipboardCheck, label: 'Structured Screening' },
-  { icon: MessageSquare, label: 'Interview Coordination' },
-  { icon: Users, label: 'Offer & Onboarding Support' },
-  { icon: Repeat, label: 'Ongoing Pipeline Building' },
+  { icon: Rocket, label: 'Model Deployment & Serving' },
+  { icon: Radar, label: 'Drift Detection & Monitoring' },
+  { icon: Gauge, label: 'Cost & Latency Optimization' },
+  { icon: GitBranch, label: 'CI/CD & Versioning' },
+  { icon: LifeBuoy, label: 'Ongoing Infrastructure Support' },
 ];
 
 const STATS = [
-  { value: 'Ongoing', label: 'Engagement Model' },
+  { value: '30 Days', label: 'To Deployed Team' },
   { value: 'Up to 40%', label: 'Cost Reduction' },
   { value: '6', label: 'Sourcing Countries' },
-  { value: '100%', label: 'Embedded in Your Team' },
+  { value: '100%', label: 'IP Ownership' },
 ];
 
-const FullCycleRPOPage: React.FC = () => {
+const MLOpsPage: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <>
       <SEOHead
-        title="Full-Cycle RPO Services | Embedded Recruitment Outsourcing | TrivianEdge"
-        description="TrivianEdge's full-cycle RPO embeds a complete hiring function into your HR team — sourcing, screening, interviews, and onboarding, managed end-to-end, indefinitely."
+        title="MLOps & AI Infrastructure Services | TrivianEdge"
+        description="TrivianEdge builds MLOps infrastructure — deployment, drift monitoring, and cost optimization — to keep production AI and ML models reliable."
         schema={[
           serviceSchema(
-            'Full-Cycle RPO',
-            'Recruitment Process Outsourcing',
-            'https://www.trivianedge.com/services/rpo/full-cycle-rpo',
+            'MLOps & AI Infrastructure',
+            'Artificial Intelligence Development',
+            'https://www.trivianedge.com/services/ai-development/mlops',
           ),
           faqSchema(FAQS),
           breadcrumbSchema([
             { name: 'Home', url: 'https://www.trivianedge.com' },
             { name: 'Services', url: 'https://www.trivianedge.com/services' },
-            { name: 'RPO Services', url: 'https://www.trivianedge.com/services/rpo' },
+            { name: 'AI Development', url: 'https://www.trivianedge.com/services/ai-development' },
             {
-              name: 'Full-Cycle RPO',
-              url: 'https://www.trivianedge.com/services/rpo/full-cycle-rpo',
+              name: 'MLOps & AI Infrastructure',
+              url: 'https://www.trivianedge.com/services/ai-development/mlops',
             },
           ]),
         ]}
@@ -109,9 +104,9 @@ const FullCycleRPOPage: React.FC = () => {
             <li className="text-border">/</li>
             <li><Link to="/services" className="hover:text-cyan-400 transition-colors">Services</Link></li>
             <li className="text-border">/</li>
-            <li><Link to="/services/rpo" className="hover:text-cyan-400 transition-colors">RPO</Link></li>
+            <li><Link to="/services/ai-development" className="hover:text-cyan-400 transition-colors">AI Development</Link></li>
             <li className="text-border">/</li>
-            <li className="text-text font-medium">Full-Cycle RPO</li>
+            <li className="text-text font-medium">MLOps &amp; AI Infrastructure</li>
           </ol>
         </nav>
 
@@ -124,24 +119,23 @@ const FullCycleRPOPage: React.FC = () => {
         >
           <div className="max-w-4xl mx-auto">
             <p className="text-xs font-mono tracking-widest uppercase text-cyan-400 mb-4">
-              Recruitment Process Outsourcing
+              MLOps &amp; AI Infrastructure
             </p>
             <h1 className="text-4xl md:text-6xl font-bold text-text mb-6 leading-tight">
-              Full-Cycle RPO:{' '}
-              <span className="text-cyan-400">Your Entire Hiring Function, Embedded</span>
+              MLOps:{' '}
+              <span className="text-cyan-400">Keep Your AI Reliable After Launch</span>
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
-              TrivianEdge becomes your ongoing talent acquisition team — sourcing, screening,
-              interviewing, and onboarding every hire, indefinitely, without you building an
-              in-house recruiting function from scratch.
+              Deployment pipelines, drift detection, and cost optimization for models already
+              in production — or ones stuck in a notebook, waiting to get there.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">
               {[
-                { icon: Clock, label: 'Ongoing Engagement' },
+                { icon: Clock, label: '30-Day Deployment' },
                 { icon: TrendingDown, label: 'Up to 40% Cost Reduction' },
                 { icon: Globe2, label: '6 Sourcing Countries' },
-                { icon: CheckCircle2, label: 'Fully Embedded' },
+                { icon: CheckCircle2, label: '100% IP Ownership' },
               ].map(({ icon: Icon, label }) => (
                 <span
                   key={label}
@@ -155,25 +149,25 @@ const FullCycleRPOPage: React.FC = () => {
           </div>
         </motion.section>
 
-        {/* What is Full-Cycle RPO */}
+        {/* What is MLOps */}
         <section className="py-20 px-4 md:px-6">
           <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-6">
-              What Makes RPO "Full-Cycle"?
+              A Model in a Notebook Isn't a Model in Production
             </h2>
             <p className="text-muted text-lg leading-relaxed mb-4">
-              A staffing agency fills one job order at a time. Full-Cycle RPO is different:
-              TrivianEdge takes ownership of your entire recruitment function, on an ongoing basis,
-              as an embedded extension of your HR team. We don't just fill open roles — we build
-              and maintain the hiring engine behind them.
+              MLOps is the infrastructure and process work that keeps an AI or ML model reliable
+              once real users and real data hit it — deployment pipelines, drift monitoring,
+              versioning with rollback, and cost control as usage scales. It's the difference
+              between a model that worked well in testing and one that stays accurate months
+              later.
             </p>
             <p className="text-muted text-lg leading-relaxed">
-              If your hiring need is a defined, time-boxed burst rather than a continuous function,{' '}
-              <Link to="/services/rpo/project-based-rpo" className="text-cyan-400 hover:underline">
-                Project-Based RPO
+              Need the model built first, not just deployed?{' '}
+              <Link to="/services/ai-development/machine-learning" className="text-cyan-400 hover:underline">
+                Machine Learning &amp; Data Science
               </Link>{' '}
-              is usually the better fit. Full-Cycle is built for companies hiring continuously
-              across the year.
+              covers the development work this infrastructure supports.
             </p>
           </div>
         </section>
@@ -182,7 +176,7 @@ const FullCycleRPOPage: React.FC = () => {
         <section className="py-20 px-4 md:px-6 bg-surface/30">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-text mb-12 text-center reveal">
-              What's Included in Full-Cycle RPO
+              What's Included
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {INCLUDED.map(({ icon: Icon, label }, idx) => (
@@ -201,11 +195,11 @@ const FullCycleRPOPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Why choose stats */}
+        {/* Stats */}
         <section className="py-20 px-4 md:px-6">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-text mb-12 text-center reveal">
-              Why Companies Move to Full-Cycle RPO
+              Why Teams Trust TrivianEdge With Production AI
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {STATS.map(({ value, label }, idx) => (
@@ -226,14 +220,14 @@ const FullCycleRPOPage: React.FC = () => {
         <section className="py-20 px-4 md:px-6 bg-surface/30">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-text mb-6 reveal">
-              Is Full-Cycle RPO Right for You?
+              Is MLOps &amp; AI Infrastructure Right for You?
             </h2>
             <div className="space-y-4">
               {[
-                { title: 'You hire continuously, not in bursts', desc: 'Companies with steady, year-round hiring — 20+ roles annually — get the most value from an embedded, ongoing team rather than repeated one-off searches.' },
-                { title: 'You don\'t have an in-house TA function', desc: 'Full-Cycle RPO replaces the need to hire, train, and manage your own recruiting team, at a fraction of the fully-loaded cost.' },
-                { title: 'You need pipeline, not just placements', desc: 'We build a warm talent pipeline for roles you\'ll need in 3–6 months, so hiring stops being reactive.' },
-                { title: 'You want one point of accountability', desc: 'Instead of juggling agencies, job boards, and internal recruiters, one embedded TrivianEdge team owns the whole funnel.' },
+                { title: 'You have a model stuck in a notebook', desc: 'It works in testing but no one has built the pipeline to get it into production reliably — this is the most common starting point.' },
+                { title: 'Your AI costs are spiraling relative to usage', desc: 'If the model bill keeps climbing faster than your user base, there is usually real optimization headroom left unexamined.' },
+                { title: 'You\'ve been burned by silent accuracy decay', desc: 'A model that quietly gets worse over months without anyone noticing until a business problem surfaces needs drift monitoring, not another rebuild.' },
+                { title: 'You need reliability, not just a working prototype', desc: 'Teams shipping AI to real customers need versioning, rollback, and monitoring — the same production discipline as any other critical system.' },
               ].map((item, idx) => (
                 <div key={item.title} style={{ transitionDelay: `${idx * 60}ms` }} className="glass rounded-2xl border-border p-6 reveal">
                   <h3 className="font-bold text-text mb-2">{item.title}</h3>
@@ -251,7 +245,7 @@ const FullCycleRPOPage: React.FC = () => {
               Frequently Asked Questions
             </h2>
             <p className="text-muted text-center mb-10">
-              Everything you need to know about Full-Cycle RPO with TrivianEdge.
+              Everything you need to know about MLOps and AI infrastructure with TrivianEdge.
             </p>
             <Accordion items={FAQS} />
           </div>
@@ -261,16 +255,16 @@ const FullCycleRPOPage: React.FC = () => {
         <section className="py-24 px-4 md:px-6">
           <div className="max-w-2xl mx-auto text-center reveal">
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
-              Build Your Embedded Hiring Team
+              Get Your AI Production-Ready
             </h2>
             <p className="text-muted mb-8">
-              Stop starting hiring from zero every time. Let's talk about your volume and roles.
+              Let's audit what you have and build the infrastructure to keep it reliable.
             </p>
             <Link
               to="/contact"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold premium-button"
             >
-              Get a free consultation
+              Start your AI project
             </Link>
           </div>
         </section>
@@ -279,4 +273,4 @@ const FullCycleRPOPage: React.FC = () => {
   );
 };
 
-export default FullCycleRPOPage;
+export default MLOpsPage;

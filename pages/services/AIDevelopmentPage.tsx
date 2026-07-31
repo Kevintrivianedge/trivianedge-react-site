@@ -22,7 +22,7 @@ const FAQS = [
   {
     question: 'How much does AI development cost with TrivianEdge?',
     answer:
-      'TrivianEdge offshore AI development typically saves 40–60% compared to onshore North American or UK teams. A senior AI engineer in Canada or the US costs $150,000–$200,000 per year. Through our offshore model, you access the same skill level at significantly lower cost. We scope each project individually — contact us for an estimate based on your specific requirements.',
+      'TrivianEdge offshore AI development typically saves up to 40% compared to onshore North American or UK teams. A senior AI engineer in Canada or the US costs $150,000–$200,000 per year. Through our offshore model, you access the same skill level at significantly lower cost. We scope each project individually — contact us for an estimate based on your specific requirements.',
   },
   {
     question: 'How quickly can an AI development project start?',

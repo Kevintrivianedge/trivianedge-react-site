@@ -76,7 +76,7 @@ export const Preloader: React.FC = () => {
           }}
         >
           {/* Ambient Background Glow */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-cyan-900/10 via-transparent to-violet-900/10 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-cyan-900/10 via-transparent to-cyan-700/10 pointer-events-none" />
           
           {/* Subtle Grid Pattern */}
           <div className="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:100px_100px]" />
@@ -102,7 +102,7 @@ export const Preloader: React.FC = () => {
 
             {/* Core Tagline */}
             <motion.p 
-              className="text-lg md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-500 mb-6"
+              className="text-lg md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-cyan-600 mb-6"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.8 }}
@@ -118,7 +118,7 @@ export const Preloader: React.FC = () => {
               transition={{ duration: 0.5, delay: 1.2 }}
             >
               <p className="text-[10px] md:text-xs text-muted font-mono uppercase tracking-widest leading-relaxed">
-                Optimizing <span className="text-cyan-400/80">Global Talent Solutions</span> and <span className="text-violet-400/80">AI Automation</span> alongside <span className="text-cyan-400/80">Cybersecurity</span> & <span className="text-text/60">Cloud DevOps</span> to build the next generation of <span className="text-violet-400/80">Software & Mobile Development</span>.
+                Optimizing <span className="text-cyan-400/80">Global Talent Solutions</span> and <span className="text-cyan-500/80">AI Automation</span> alongside <span className="text-cyan-400/80">Cybersecurity</span> & <span className="text-text/60">Cloud DevOps</span> to build the next generation of <span className="text-cyan-500/80">Software & Mobile Development</span>.
               </p>
             </motion.div>
 
@@ -130,7 +130,7 @@ export const Preloader: React.FC = () => {
               transition={{ delay: 0.5 }}
             >
               <motion.div 
-                className="h-full bg-gradient-to-r from-cyan-400 to-violet-500"
+                className="h-full bg-gradient-to-r from-cyan-400 to-cyan-600"
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 2.0, ease: "easeInOut" }}

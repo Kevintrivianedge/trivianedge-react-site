@@ -152,8 +152,8 @@
                 border-color: rgba(0, 196, 154, 0.4);
             }
             50% {
-                box-shadow: 0 0 50px -5px rgba(139, 92, 246, 0.6), 0 0 25px -2px rgba(139, 92, 246, 0.4);
-                border-color: rgba(139, 92, 246, 0.5);
+                box-shadow: 0 0 50px -5px rgba(0, 140, 107, 0.6), 0 0 25px -2px rgba(0, 140, 107, 0.4);
+                border-color: rgba(0, 140, 107, 0.5);
             }
         }
 
@@ -184,7 +184,7 @@
             inset: -1px;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(135deg, var(--cyan), var(--violet), var(--cyan));
+            background: linear-gradient(135deg, var(--cyan), #008C6B, var(--cyan));
             background-size: 300% 300%;
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask-composite: exclude;
@@ -194,7 +194,7 @@
             pointer-events: none;
             z-index: -1;
         }
-        
+
         .hover-neon-glow:hover {
             transform: scale(1.03) translateY(-8px);
             animation: neon-glow-shift 4s ease-in-out infinite;
@@ -618,7 +618,7 @@
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--violet);
+            background: var(--cyan);
         }
         .dashed-border {
             background-image: linear-gradient(to right, rgba(255,255,255,0.2) 50%, transparent 50%);
@@ -735,7 +735,7 @@
             inset: -2px;
             border-radius: inherit;
             padding: 2px;
-            background: linear-gradient(135deg, var(--cyan), var(--violet), var(--cyan));
+            background: linear-gradient(135deg, var(--cyan), #008C6B, var(--cyan));
             background-size: 300% 300%;
             animation: holo-shift 4s linear infinite;
             -webkit-mask: linear-gradient(#fff 0 0) content-box,

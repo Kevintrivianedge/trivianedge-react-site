@@ -111,7 +111,7 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
       
       {/* Modal Content — full screen on mobile, max-w-5xl on larger screens */}
       <motion.div 
-        className="relative w-full h-[100dvh] sm:h-auto sm:max-h-[90vh] sm:max-w-5xl overflow-y-auto bg-[#020203] border-0 sm:border sm:border-border rounded-none sm:rounded-[2.5rem] shadow-2xl shadow-cyan-900/20 scrollbar-hide"
+        className="relative w-full h-[100dvh] sm:h-auto sm:max-h-[90vh] sm:max-w-5xl overflow-y-auto bg-background border-0 sm:border sm:border-border rounded-none sm:rounded-[2.5rem] shadow-2xl shadow-cyan-900/20 scrollbar-hide"
         initial={{ scale: 0.9, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -169,8 +169,8 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
             
             {/* Column 1: Core Infrastructure */}
             <motion.div variants={itemVariants} className="space-y-8">
-              <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                <Building2 className="w-5 h-5 text-violet-400" />
+              <h3 className="text-lg font-bold text-text flex items-center gap-2">
+                <Building2 className="w-5 h-5 text-cyan-400" />
                 Operational Landscape
               </h3>
               
@@ -195,8 +195,8 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
 
             {/* Column 2: Talent & Education */}
             <motion.div variants={itemVariants} className="space-y-8">
-              <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                <GraduationCap className="w-5 h-5 text-violet-400" />
+              <h3 className="text-lg font-bold text-text flex items-center gap-2">
+                <GraduationCap className="w-5 h-5 text-cyan-400" />
                 Talent Composition
               </h3>
 

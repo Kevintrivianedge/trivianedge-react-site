@@ -26,7 +26,7 @@ const FAQS = [
   {
     question: 'How much does BPO cost in Canada?',
     answer:
-      'Most TrivianEdge clients reduce operational costs by 40–60% compared to hiring locally in Canada, the US, or the UK. The exact savings depend on the role type, team size, and country. Our offshore talent hubs in the Philippines, Vietnam, Sri Lanka, and Eastern Europe offer senior-level staff at significantly lower rates than North American markets. Contact us for a custom quote.',
+      'Most TrivianEdge clients reduce operational costs by up to 40% compared to hiring locally in Canada, the US, or the UK. The exact savings depend on the role type, team size, and country. Our offshore talent hubs in the Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica offer senior-level staff at significantly lower rates than North American markets. Contact us for a custom quote.',
   },
   {
     question: 'How quickly can TrivianEdge deploy a BPO team?',

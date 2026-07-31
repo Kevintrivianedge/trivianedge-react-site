@@ -2,7 +2,7 @@
 
 > Canada-based BPO and offshore software development company. TrivianEdge deploys offshore teams in 30 days, delivering up to 40% cost savings across 6 global time zones. Services span Business Process Outsourcing (BPO), Recruitment Process Outsourcing (RPO), AI Development, and IT Outsourcing.
 
-TrivianEdge is headquartered in Toronto, Ontario, Canada and sources talent from global hubs including the Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe. TrivianEdge acts as employer of record in each country, so clients never need to set up a foreign entity.
+TrivianEdge is headquartered in Toronto, Ontario, Canada and sources talent from global hubs including the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica. TrivianEdge acts as employer of record in each country, so clients never need to set up a foreign entity.
 
 ## Services
 
@@ -13,6 +13,12 @@ TrivianEdge is headquartered in Toronto, Ontario, Canada and sources talent from
   - [Project-Based RPO](https://www.trivianedge.com/services/rpo/project-based-rpo): Defined, time-boxed hiring sprints for launches, funding rounds, and seasonal peaks.
   - [AI-Powered Recruitment](https://www.trivianedge.com/services/rpo/ai-powered-recruitment): AI-assisted sourcing and screening, with every shortlist reviewed by a human recruiter.
 - [AI Development](https://www.trivianedge.com/services/ai-development): Offshore AI engineering — generative AI, LLM integration, machine learning, and MLOps.
+  - [Generative AI Development](https://www.trivianedge.com/services/ai-development/generative-ai): RAG systems, AI copilots, and content generation tools grounded in your own data.
+  - [LLM Integration & Fine-Tuning](https://www.trivianedge.com/services/ai-development/llm-integration): Integrating and fine-tuning OpenAI, Anthropic Claude, and open-source models.
+  - [Machine Learning & Data Science](https://www.trivianedge.com/services/ai-development/machine-learning): Predictive models, forecasting, and recommendation engines from your own data.
+  - [AI Automation Pipelines](https://www.trivianedge.com/services/ai-development/ai-automation): Document intelligence and agentic workflows integrated with your existing systems.
+  - [AI Chatbot Development](https://www.trivianedge.com/services/ai-development/ai-chatbot-development): Custom support, sales, and internal assistants grounded in your own knowledge base.
+  - [MLOps & AI Infrastructure](https://www.trivianedge.com/services/ai-development/mlops): Deployment, drift monitoring, and cost optimization for production AI/ML.
 - [IT Outsourcing](https://www.trivianedge.com/services/it-outsourcing): Offshore software development, cloud/DevOps, QA, and systems integration.
 
 ## Company

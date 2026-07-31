@@ -125,7 +125,7 @@ const ServicesPage: React.FC = () => {
                 >
                   <Link
                     to={service.href}
-                    className="block bg-white rounded-[1.75rem] p-8 md:p-10 border border-border relative overflow-hidden group hover:border-cyan-400/30 transition-all duration-300"
+                    className="block bg-background rounded-[1.75rem] p-8 md:p-10 border border-border relative overflow-hidden group hover:border-cyan-400/30 transition-all duration-300"
                     style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
                   >
                     <div className={`absolute -top-8 -right-8 w-32 h-32 ${service.glow} blur-3xl pointer-events-none rounded-full`} />

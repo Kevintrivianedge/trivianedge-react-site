@@ -42,7 +42,7 @@ const FAQS = [
   {
     question: 'How quickly can TrivianEdge deploy an IT outsourcing team?',
     answer:
-      'TrivianEdge deploys offshore IT teams in 30 days or less. After an initial discovery call, we search our network across the Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe and present matched candidates within days. Once approved, your team is onboarded and embedded into your existing workflow within the 30-day window.',
+      'TrivianEdge deploys offshore IT teams in 30 days or less. After an initial discovery call, we search our network across the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica and present matched candidates within days. Once approved, your team is onboarded and embedded into your existing workflow within the 30-day window.',
   },
   {
     question: 'What IT outsourcing services does TrivianEdge provide?',
@@ -52,7 +52,7 @@ const FAQS = [
   {
     question: 'How much can I save with IT outsourcing through TrivianEdge?',
     answer:
-      'Most clients save between 40% and 60% on engineering costs compared to local hiring. Our offshore talent hubs in the Philippines, Sri Lanka, and Eastern Europe provide senior-level developers and engineers at significantly lower rates than North American or Western European markets, with no compromise on quality or communication.',
+      'Most clients save up to 40% on engineering costs compared to local hiring. Our offshore talent hubs in the Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica provide senior-level developers and engineers at significantly lower rates than North American or Western European markets, with no compromise on quality or communication.',
   },
   {
     question: 'Is TrivianEdge a Canadian IT outsourcing company?',

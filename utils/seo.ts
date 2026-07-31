@@ -248,72 +248,6 @@ export function buildArticleSchema(post: {
   };
 }
 
-/** BPO-focused FAQ schema helps rank in Google featured snippets */
-export function buildBPOFAQSchema(): object {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'What is BPO (Business Process Outsourcing)?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Business Process Outsourcing means hiring a company to handle specific parts of your business on your behalf. Instead of building an in-house team for accounting, IT support, customer service, or software development, you partner with a specialist like TrivianEdge who manages those functions for you, usually at a much lower cost and faster pace.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Why choose TrivianEdge for offshore software development?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'TrivianEdge is a Canada-based BPO and offshore development company with a proven 30-day deployment model. We source skilled software developers, DevOps engineers, and AI specialists from our global talent hubs, delivering up to 40% cost savings compared to local hiring, with no compromise on quality.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'How does TrivianEdge\'s outsourcing process work?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Our process has four steps: (1) You tell us what you need, and we spend time understanding your business and goals. (2) We find the right person from our network across 6 countries. (3) They start in 30 days, onboarded into your existing workflow. (4) We keep making it better by tracking performance and scaling your team as you grow.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'What is the difference between BPO and offshore outsourcing?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'BPO refers to delegating entire business functions like HR, accounting, or customer service to an external company. Offshore outsourcing specifically means those teams are located in another country. TrivianEdge offers both, from offshore software development teams in the Philippines to full BPO operations managed from Canada.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'How much can I save with TrivianEdge?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Most companies save between 40 and 60% on talent costs by partnering with TrivianEdge. Our global talent hubs across the Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe provide highly skilled professionals at a fraction of North American rates.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'What software development services does TrivianEdge provide?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'We provide offshore software development for full-stack development, AI and ML engineering, cloud and DevOps, mobile app development, UI/UX design, cybersecurity, and data engineering. All delivered as dedicated offshore teams built to match your tech stack.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Is TrivianEdge a Canadian BPO company?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Yes. TrivianEdge is headquartered in Toronto, Canada and operates as a Canada-based global BPO and outsourcing company. We manage offshore talent deployment, IT outsourcing, and managed services for clients across North America, the UK, Australia, and the Middle East.',
-        },
-      },
-    ],
-  };
-}
-
 /** Schema.org SoftwareApplication for Trivian Aria */
 export function buildSoftwareApplicationSchema(): object {
   return {
@@ -411,7 +345,7 @@ export function organizationSchema(): SchemaObject {
     name: 'TrivianEdge',
     alternateName: 'Trivian Edge',
     url: 'https://www.trivianedge.com',
-    logo: 'https://www.trivianedge.com/logo.png',
+    logo: 'https://www.trivianedge.com/apple-touch-icon.png',
     description:
       "A Canada-based BPO, RPO and AI Development company. 30-day deployment. Up to 40% cost savings across 6 time zones.",
     areaServed: ['Canada', 'United States', 'United Kingdom', 'Australia'],
@@ -572,7 +506,7 @@ export function articleSchema(params: {
       name: 'TrivianEdge',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.trivianedge.com/logo.png',
+        url: 'https://www.trivianedge.com/apple-touch-icon.png',
       },
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': params.url },
@@ -581,96 +515,6 @@ export function articleSchema(params: {
     schema['image'] = params.image;
   }
   return schema;
-}
-
-// ---------------------------------------------------------------------------
-// HowTo schema — surfaces TrivianEdge process steps in rich results & AI answers
-// ---------------------------------------------------------------------------
-
-export interface HowToStep {
-  name: string;
-  text: string;
-  url?: string;
-  image?: string;
-}
-
-export interface HowToSupply {
-  name: string;
-}
-
-export interface HowToTool {
-  name: string;
-}
-
-/**
- * Returns a Schema.org HowTo for any tutorial or step-by-step guide.
- * Add to SEOHead `schema` prop on process-oriented pages.
- */
-export function howToSchema(params: {
-  name: string;
-  description: string;
-  totalTime?: string;
-  image?: string;
-  supply?: HowToSupply[];
-  tool?: HowToTool[];
-  steps: HowToStep[];
-}): SchemaObject {
-  const schema: SchemaObject = {
-    '@context': 'https://schema.org',
-    '@type': 'HowTo',
-    name: params.name,
-    description: params.description,
-    step: params.steps.map((step, i) => {
-      const s: SchemaObject = {
-        '@type': 'HowToStep',
-        position: i + 1,
-        name: step.name,
-        text: step.text,
-      };
-      if (step.url) s['url'] = step.url;
-      if (step.image) s['image'] = step.image;
-      return s;
-    }),
-  };
-  if (params.totalTime) schema['totalTime'] = params.totalTime;
-  if (params.image) schema['image'] = params.image;
-  if (params.supply?.length)
-    schema['supply'] = params.supply.map((s) => ({ '@type': 'HowToSupply', name: s.name }));
-  if (params.tool?.length)
-    schema['tool'] = params.tool.map((t) => ({ '@type': 'HowToTool', name: t.name }));
-  return schema;
-}
-
-/** Pre-built HowTo for TrivianEdge's 4-step BPO/outsourcing onboarding process */
-export function buildBPOHowToSchema(): SchemaObject {
-  return howToSchema({
-    name: 'How to Outsource a Business Function with TrivianEdge',
-    description:
-      'A step-by-step guide to deploying an offshore team or outsourcing a business process through TrivianEdge in 30 days.',
-    totalTime: 'P30D',
-    steps: [
-      {
-        name: 'Tell Us What You Need',
-        text: 'Submit an inquiry describing the role, function, or process you want to outsource. TrivianEdge schedules a discovery call to understand your business, team structure, tech stack, and goals.',
-        url: 'https://www.trivianedge.com/contact',
-      },
-      {
-        name: 'We Find the Right Match',
-        text: 'TrivianEdge searches its global talent network across the Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe to identify candidates who match your requirements in skills, time zone, and culture.',
-        url: 'https://www.trivianedge.com/services/bpo',
-      },
-      {
-        name: 'Your Team Starts in 30 Days',
-        text: 'Your hire is onboarded and integrated into your existing workflow within 30 days. TrivianEdge handles contracts, compliance, payroll, and equipment so you can focus on results.',
-        url: 'https://www.trivianedge.com/services/bpo',
-      },
-      {
-        name: 'We Keep Making It Better',
-        text: 'TrivianEdge monitors performance, provides ongoing management support, and scales your team as your business grows. You get a dedicated point of contact and regular check-ins.',
-        url: 'https://www.trivianedge.com/trust',
-      },
-    ],
-  });
 }
 
 /** Schema.org ItemList service catalogue for rich results */
@@ -683,7 +527,7 @@ export function buildServiceItemListSchema(): object {
     },
     {
       name: 'Offshore Software Development',
-      description: 'Dedicated offshore development teams sourced from elite global talent hubs Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe.',
+      description: 'Dedicated offshore development teams sourced from elite global talent hubs Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica.',
       url: `${SEO_CONFIG.siteUrl}/#services`,
     },
     {

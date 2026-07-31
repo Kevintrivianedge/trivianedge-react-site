@@ -32,11 +32,9 @@ import {
   buildArticleSchema,
   buildSoftwareApplicationSchema,
   buildLocalBusinessSchema,
-  buildBPOFAQSchema,
   breadcrumbSchema,
   buildWebPageSchema,
   buildServiceItemListSchema,
-  buildBPOHowToSchema,
   faqSchema,
   SEO_CONFIG,
   ALL_KEYWORDS,
@@ -71,6 +69,12 @@ const FullCycleRPOPage        = lazy(() => import('./pages/services/rpo/FullCycl
 const ProjectBasedRPOPage     = lazy(() => import('./pages/services/rpo/ProjectBasedRPOPage'));
 const AIPoweredRecruitmentPage = lazy(() => import('./pages/services/rpo/AIPoweredRecruitmentPage'));
 const AIDevelopmentPage       = lazy(() => import('./pages/services/AIDevelopmentPage'));
+const GenerativeAIPage        = lazy(() => import('./pages/services/ai-development/GenerativeAIPage'));
+const LLMIntegrationPage      = lazy(() => import('./pages/services/ai-development/LLMIntegrationPage'));
+const MachineLearningPage     = lazy(() => import('./pages/services/ai-development/MachineLearningPage'));
+const AIAutomationPage        = lazy(() => import('./pages/services/ai-development/AIAutomationPage'));
+const AIChatbotDevelopmentPage = lazy(() => import('./pages/services/ai-development/AIChatbotDevelopmentPage'));
+const MLOpsPage               = lazy(() => import('./pages/services/ai-development/MLOpsPage'));
 const ITOutsourcingPage       = lazy(() => import('./pages/services/ITOutsourcingPage'));
 const VentureStudioPage       = lazy(() => import('./pages/VentureStudioPage'));
 const ServicesPage            = lazy(() => import('./pages/ServicesPage'));
@@ -162,7 +166,7 @@ const HOME_FAQS = [
   },
   {
     question: 'How much does it cost to work with TrivianEdge?',
-    answer: 'Most clients save 40–60% compared to hiring locally in Canada, the US, or the UK. Exact pricing depends on the role, country, and team size. We offer a free consultation where we scope the engagement and give you a clear cost estimate.',
+    answer: 'Most clients save up to 40% compared to hiring locally in Canada, the US, or the UK. Exact pricing depends on the role, country, and team size. We offer a free consultation where we scope the engagement and give you a clear cost estimate.',
   },
   {
     question: 'What types of roles can TrivianEdge hire for?',
@@ -492,7 +496,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 className="reveal card-glow micro-lift-card rounded-[2rem] border border-border bg-white overflow-hidden"
                 style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,196,154,0.08)' }}
               >
-                <div className="h-1 w-full bg-gradient-to-r from-cyan-400 via-violet-400 to-cyan-600/50" />
+                <div className="h-1 w-full bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600/50" />
                 <div className="p-6 md:p-7">
                   <span className="metric-pill">{study.sector}</span>
                   <h3 className="text-xl font-bold mb-2 text-text">{study.client}</h3>
@@ -511,7 +515,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <blockquote key={item.author + item.role} className="reveal quote-card micro-lift-card">
                 <p className="relative z-10 text-lg leading-relaxed text-text/90 mb-8 pt-8">{item.quote}</p>
                 <footer className="flex items-center gap-3 border-t border-border/50 pt-5">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
                     {item.author[0]}
                   </div>
                   <div>
@@ -635,13 +639,13 @@ function getSEOProps(pathname: string) {
     const privacyUrl = `${SEO_CONFIG.siteUrl}/privacy`;
     return {
       title: 'Privacy Protocol TrivianEdge BPO & Outsourcing Company',
-      description: 'TrivianEdge Global privacy policy for BPO, outsourcing, and offshore services. PIPEDA and GDPR compliant.',
+      description: 'TrivianEdge Global privacy policy for BPO, outsourcing, and offshore services. Aligned with PIPEDA and GDPR principles where relevant.',
       canonical: privacyUrl,
       noIndex: false,
       structuredData: [
         buildWebPageSchema({
           name: 'Privacy Policy TrivianEdge Global',
-          description: 'TrivianEdge Global privacy policy for BPO, outsourcing, and offshore services. PIPEDA and GDPR compliant.',
+          description: 'TrivianEdge Global privacy policy for BPO, outsourcing, and offshore services. Aligned with PIPEDA and GDPR principles where relevant.',
           url: privacyUrl,
           datePublished: LEGAL_PAGES_PUBLISHED,
           dateModified: LEGAL_PAGES_MODIFIED,
@@ -695,7 +699,7 @@ function getSEOProps(pathname: string) {
         }),
         buildServiceSchema({
           name: 'Offshore Software Development',
-          description: 'Dedicated offshore software development teams sourced from elite global talent hubs Philippines, Sri Lanka, Vietnam, Turkey, and Eastern Europe.',
+          description: 'Dedicated offshore software development teams sourced from elite global talent hubs Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica.',
           keywords: [...KEYWORD_CLUSTERS.offshore, ...KEYWORD_CLUSTERS.softwareDev],
         }),
         buildServiceSchema({
@@ -704,8 +708,6 @@ function getSEOProps(pathname: string) {
           keywords: [...KEYWORD_CLUSTERS.talent, ...KEYWORD_CLUSTERS.outsourcing],
         }),
         buildSoftwareApplicationSchema(),
-        buildBPOFAQSchema(),
-        buildBPOHowToSchema(),
         faqSchema(HOME_FAQS),
       ],
     };
@@ -808,6 +810,12 @@ export default function App() {
                       <Route path="/services/rpo/project-based-rpo" element={<ProjectBasedRPOPage />} />
                       <Route path="/services/rpo/ai-powered-recruitment" element={<AIPoweredRecruitmentPage />} />
                       <Route path="/services/ai-development" element={<AIDevelopmentPage />} />
+                      <Route path="/services/ai-development/generative-ai" element={<GenerativeAIPage />} />
+                      <Route path="/services/ai-development/llm-integration" element={<LLMIntegrationPage />} />
+                      <Route path="/services/ai-development/machine-learning" element={<MachineLearningPage />} />
+                      <Route path="/services/ai-development/ai-automation" element={<AIAutomationPage />} />
+                      <Route path="/services/ai-development/ai-chatbot-development" element={<AIChatbotDevelopmentPage />} />
+                      <Route path="/services/ai-development/mlops" element={<MLOpsPage />} />
                       <Route path="/services/it-outsourcing" element={<ITOutsourcingPage />} />
                       <Route path="/venture-studio" element={<VentureStudioPage />} />
                       <Route path="*" element={<NotFoundPage />} />
