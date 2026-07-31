@@ -15,6 +15,8 @@ interface Message {
   isInitial?: boolean;
 }
 
+const CHAT_TITLE_ID = 'chat-sidebar-title';
+
 // ---------------------------------------------------------------------------
 // Pure text-rendering helpers — defined at module level so they are never
 // recreated on component re-renders (important during streaming where
@@ -247,6 +249,9 @@ export const ChatSidebar: React.FC = () => {
   const systemContextRef = useRef<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const launcherRef = useRef<HTMLButtonElement>(null);
+  const wasOpenRef = useRef(false);
   const { geoData } = useGeo();
 
   const scrollToBottom = () => {
@@ -377,6 +382,41 @@ ${userContext}
     };
   }, [isOpen]);
 
+  // Close on Escape, trap Tab focus inside the panel while open.
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') { setIsOpen(false); return; }
+        if (e.key === 'Tab' && sidebarRef.current) {
+            const focusable = Array.from(
+                sidebarRef.current.querySelectorAll<HTMLElement>(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                )
+            ).filter(el => !el.hasAttribute('disabled') && el.tabIndex >= 0);
+            if (focusable.length === 0) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey) {
+                if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+            } else {
+                if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+            }
+        }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
+  // Return focus to the launcher button when the sidebar closes.
+  useEffect(() => {
+    if (isOpen) {
+        wasOpenRef.current = true;
+    } else if (wasOpenRef.current) {
+        wasOpenRef.current = false;
+        launcherRef.current?.focus();
+    }
+  }, [isOpen]);
+
   const handleSend = async () => {
     if (!input.trim() || isTyping) return;
     
@@ -487,7 +527,8 @@ ${userContext}
   return (
     <>
       {/* Trigger Button - Bottom Right */}
-      <button 
+      <button
+        ref={launcherRef}
         onClick={() => setIsOpen(true)}
         className={`fixed bottom-6 right-4 sm:bottom-10 sm:right-10 z-[150] p-4 rounded-full bg-gradient-to-tr from-cyan-600 to-violet-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.5)] hover:scale-110 transition-all duration-300 group ${isOpen ? 'hidden' : 'flex'} items-center justify-center`}
         aria-label="Open AI Assistant"
@@ -505,7 +546,13 @@ ${userContext}
       />
 
       {/* Sidebar — full-width on mobile, 600px on larger screens */}
-      <div className={`fixed inset-y-0 right-0 w-full sm:w-[600px] bg-[#050508] border-l border-white/10 z-[200] transform transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-2xl flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div
+        ref={sidebarRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={CHAT_TITLE_ID}
+        aria-hidden={!isOpen}
+        className={`fixed inset-y-0 right-0 w-full sm:w-[600px] bg-[#050508] border-l border-white/10 z-[200] transform transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-2xl flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-[80px] pointer-events-none" />
@@ -517,7 +564,7 @@ ${userContext}
                 {/* Animated Aria Avatar */}
                 <AriaAvatar isTyping={isTyping} size="lg" />
                 <div>
-                    <h3 className="font-bold text-white text-xl tracking-tight font-['Space_Grotesk']">Aria</h3>
+                    <h3 id={CHAT_TITLE_ID} className="font-bold text-white text-xl tracking-tight font-['Space_Grotesk']">Aria</h3>
                     <div className="flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_#10b981]" />
                         <span className="text-[10px] uppercase tracking-widest text-emerald-500/80 font-mono">

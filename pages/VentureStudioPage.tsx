@@ -254,6 +254,8 @@ const VentureStudioPage: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
   const submittedRef = useRef(false);
   const stepRef = useRef(0);
+  const stepHeadingRef = useRef<HTMLParagraphElement>(null);
+  const isInitialStepRenderRef = useRef(true);
 
   const readinessScore = useMemo(() => {
     const weighted =
@@ -393,6 +395,14 @@ const VentureStudioPage: React.FC = () => {
         step_index: currentStep + 1,
       });
       stepRef.current = currentStep;
+      if (isInitialStepRenderRef.current) {
+        isInitialStepRenderRef.current = false;
+      } else {
+        // Move focus to the step label on step change so screen-reader users
+        // get a clear signal the step advanced, instead of silently staying
+        // put on the "Continue"/"Back" button that just moved out of view.
+        stepHeadingRef.current?.focus();
+      }
     }
   }, [currentStep]);
 
@@ -497,13 +507,13 @@ const VentureStudioPage: React.FC = () => {
                     <div key={step.id} className={`h-1.5 rounded-full ${idx <= currentStep ? 'bg-cyan-400' : 'bg-border'}`} />
                   ))}
                 </div>
-                <p className="text-xs text-muted">{STEPS[currentStep].label}</p>
+                <p ref={stepHeadingRef} tabIndex={-1} className="text-xs text-muted">{STEPS[currentStep].label}</p>
                 <div className="rounded-xl border border-border/70 bg-surface/60 px-4 py-3">
                   <p className="text-[11px] uppercase tracking-widest font-bold text-cyan-400 mb-1">{STEP_GUIDANCE[currentStep].title}</p>
                   <p className="text-xs text-muted">{STEP_GUIDANCE[currentStep].hint}</p>
                 </div>
                 {stepError && (
-                  <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3">
+                  <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3" role="alert">
                     <p className="text-xs font-semibold text-amber-300">{stepError}</p>
                   </div>
                 )}
@@ -683,7 +693,7 @@ const VentureStudioPage: React.FC = () => {
             )}
 
             {submitError && (
-              <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-300 px-4 py-3 text-sm">
+              <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-300 px-4 py-3 text-sm" role="alert">
                 {submitError}
               </div>
             )}
