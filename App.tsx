@@ -269,9 +269,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </motion.div>
           </div>
 
-          {/* Right-side floating metric cards — desktop only */}
+          {/* Right-side floating metric cards — desktop only.
+              lg:mb-24 keeps the last card clear of the fixed chat bubble
+              (bottom-10 right-10, ~96px footprint) on shorter viewports. */}
           <motion.div
-            className="hidden lg:flex flex-col gap-4 flex-shrink-0"
+            className="hidden lg:flex flex-col gap-4 flex-shrink-0 lg:mb-24"
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.0, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
