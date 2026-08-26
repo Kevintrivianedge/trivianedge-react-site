@@ -27,6 +27,9 @@ jobs:
       - name: Type-check (frontend)
         run: npx tsc --noEmit
 
+      - name: Type-check (worker)
+        run: npx tsc --noEmit -p tsconfig.worker.json
+
       - name: Run tests
         run: npm run test
 
