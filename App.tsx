@@ -201,7 +201,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 1: HERO ===== */}
       <section
         aria-label="Hero"
-        className="hero-dark hero-fade-out relative min-h-screen flex flex-col px-4 sm:px-6 overflow-hidden"
+        className="hero-dark hero-fade-out relative min-h-screen sm:min-h-0 lg:min-h-screen flex flex-col px-4 sm:px-6 overflow-hidden"
       >
 
         {/* Hero content — flex-1 so it expands and pushes stats to the bottom */}
