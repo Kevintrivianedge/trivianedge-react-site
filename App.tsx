@@ -332,7 +332,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       </section>
 
       {/* ===== ACT 2: TRUST STRIP ===== */}
-      <section aria-label="Trust signals" className="py-8 md:py-10 border-y border-border bg-[#fafafa] overflow-hidden">
+      <section aria-label="Trust signals" className="py-8 md:py-10 border-y border-border bg-[#fafafa] dark:bg-white/[0.03] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-4 md:gap-10">
           <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted whitespace-nowrap shrink-0">Trusted by operators worldwide</p>
           <div className="marquee-viewport w-full">
@@ -391,7 +391,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.25 }}
                   transition={{ duration: shouldReduceMotion ? 0.01 : 0.55, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className="card-glow bg-white rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
+                  className="card-glow bg-white dark:bg-white/5 rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
                   style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
                   role="link"
                   tabIndex={0}
@@ -537,7 +537,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
-                className="reveal card-glow micro-lift-card rounded-[2rem] border border-border bg-white overflow-hidden flex flex-col"
+                className="reveal card-glow micro-lift-card rounded-[2rem] border border-border bg-white dark:bg-white/5 overflow-hidden flex flex-col"
                 style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,196,154,0.08)' }}
               >
                 <div className="h-1 w-full bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600/50" />
@@ -545,8 +545,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   <span className="metric-pill">{study.sector}</span>
                   <h3 className="text-xl font-bold mb-2 text-text">{study.client}</h3>
                   <p className="text-muted text-xs mb-4 leading-relaxed">{study.challenge}</p>
-                  <div className="rounded-xl bg-[#f2fbf8] border border-cyan-400/15 p-4 mt-auto">
-                    <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 mb-1">Outcome</p>
+                  <div className="rounded-xl bg-[#f2fbf8] dark:bg-cyan-400/10 border border-cyan-400/15 p-4 mt-auto">
+                    <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 dark:text-cyan-400 mb-1">Outcome</p>
                     <p className="text-text/85 text-sm leading-relaxed font-medium">{study.outcome}</p>
                   </div>
                 </div>
@@ -589,7 +589,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </div>
 
           {/* Interactive world map — neural-bg reinforces "network" both literally (talent graph) and visually (tech-forward texture) */}
-          <div className="reveal neural-bg rounded-[3rem] border border-cyan-400/15 bg-[#f4fcf9] p-4 md:p-8 mb-12 overflow-hidden relative" style={{ boxShadow: '0 0 60px rgba(0,196,154,0.08), inset 0 1px 0 rgba(255,255,255,0.8)' }}>
+          <div className="reveal neural-bg rounded-[3rem] border border-cyan-400/15 bg-[#f4fcf9] dark:bg-white/[0.03] p-4 md:p-8 mb-12 overflow-hidden relative" style={{ boxShadow: '0 0 60px rgba(0,196,154,0.08), inset 0 1px 0 rgba(255,255,255,0.8)' }}>
             <WorldMapSVG hubs={TALENT_HUBS} onHubClick={setSelectedHub} />
           </div>
 
@@ -645,7 +645,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <ArrowRight className="w-4 h-4" />
             </a>
 
-            <div className="max-w-4xl mx-auto text-left mb-6 rounded-3xl bg-white p-6 md:p-10 shadow-[0_0_60px_rgba(0,196,154,0.15)]">
+            <div className="max-w-4xl mx-auto text-left mb-6 rounded-3xl bg-white dark:bg-white/5 p-6 md:p-10 shadow-[0_0_60px_rgba(0,196,154,0.15)]">
               <InquiryForm />
             </div>
 
