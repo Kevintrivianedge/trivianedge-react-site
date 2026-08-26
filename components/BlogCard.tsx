@@ -1,15 +1,33 @@
 import React from 'react';
-import { ArrowRight, User } from 'lucide-react';
+import { ArrowRight, User, FileText, Settings, Cpu, Globe, UserPlus, Users, Wifi, Newspaper } from 'lucide-react';
 import { BlogPost } from '../types';
 
-const BlogCard: React.FC<{ post: BlogPost; onClick: (id: string) => void; index: number }> = ({ post, onClick, index }) => (
+const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  'Case Study': FileText,
+  Operations: Settings,
+  'AI & Tech': Cpu,
+  'Global Strategy': Globe,
+  Hiring: UserPlus,
+  Culture: Users,
+  'Remote Work': Wifi,
+};
+
+const BlogCard: React.FC<{ post: BlogPost; onClick: (id: string) => void; index: number }> = ({ post, onClick, index }) => {
+  const CategoryIcon = CATEGORY_ICONS[post.category] ?? Newspaper;
+
+  return (
   <button
     type="button"
     onClick={() => onClick(post.id)}
     className="reveal glass tilt-card group w-full text-left p-8 rounded-[2.5rem] border-border hover-neon-glow overflow-hidden relative"
     style={{ transitionDelay: `${index * 200}ms` }}
   >
-    <div className={`absolute top-0 left-0 w-full h-32 bg-gradient-to-br ${post.imageGradient} opacity-20 group-hover:opacity-40 transition-opacity`} />
+    <div
+      className={`absolute top-0 left-0 w-full h-32 bg-gradient-to-br ${post.imageGradient} group-hover:opacity-80 transition-opacity`}
+      style={{ maskImage: 'linear-gradient(to bottom, black 0%, black 55%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 55%, transparent 100%)' }}
+    >
+      <CategoryIcon className="absolute -right-3 -top-3 w-24 h-24 text-cyan-950/50 dark:text-white/10" strokeWidth={1.25} />
+    </div>
     <div className="relative z-10 pt-20">
       <div className="flex items-center gap-3 mb-4">
         <span className="px-3 py-1 rounded-full bg-surface border border-border text-[10px] font-bold uppercase tracking-widest text-text/70">
@@ -30,6 +48,7 @@ const BlogCard: React.FC<{ post: BlogPost; onClick: (id: string) => void; index:
       </div>
     </div>
   </button>
-);
+  );
+};
 
 export default BlogCard;

@@ -238,6 +238,7 @@ const getGoogleCalendarHook = (name: string, ideaSummary: string) => {
 };
 const VentureStudioPage: React.FC = () => {
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [stepError, setStepError] = useState<string | null>(null);
@@ -282,6 +283,7 @@ const VentureStudioPage: React.FC = () => {
 
   const onChange = (key: keyof FormState, value: string) => {
     if (stepError) setStepError(null);
+    setHasInteracted(true);
     setForm(prev => ({ ...prev, [key]: value }));
   };
 
@@ -714,9 +716,19 @@ const VentureStudioPage: React.FC = () => {
 
           <aside className="glass rounded-[2rem] p-7 md:p-9 border border-border h-fit">
             <p className="text-xs uppercase tracking-widest font-bold text-muted mb-2">Weighted Qualification Signal</p>
-            <p className="text-5xl font-bold text-text mb-4">{readinessScore}<span className="text-xl text-muted">/100</span></p>
-            <h3 className={`text-2xl font-bold mb-3 ${tier.tone}`}>{tier.title}</h3>
-            <p className="text-sm text-muted leading-relaxed mb-6">{tier.note}</p>
+            {hasInteracted ? (
+              <>
+                <p className="text-5xl font-bold text-text mb-4">{readinessScore}<span className="text-xl text-muted">/100</span></p>
+                <h3 className={`text-2xl font-bold mb-3 ${tier.tone}`}>{tier.title}</h3>
+                <p className="text-sm text-muted leading-relaxed mb-6">{tier.note}</p>
+              </>
+            ) : (
+              <>
+                <p className="text-5xl font-bold text-text/30 mb-4">—<span className="text-xl text-muted">/100</span></p>
+                <h3 className="text-2xl font-bold mb-3 text-text">Fill in the form to see your fit</h3>
+                <p className="text-sm text-muted leading-relaxed mb-6">Your score updates as you go — readiness, traction, and scope all factor in.</p>
+              </>
+            )}
 
             <div className="rounded-xl border border-border p-4 mb-6 space-y-2">
               <p className="text-xs uppercase tracking-widest font-bold text-muted">How We Score Fit</p>
