@@ -84,7 +84,12 @@ const ChatSidebar             = lazy(() => import('./components/ChatSidebar'));
 
 // Trust strip — real named clients only, kept separate from the hero's numeric stats
 // so the strip isn't mixing unlike content types (numbers, names, flags) in one place.
-const TRUST_CLIENTS = ['Cargo Login', 'Keynotive', 'Hub-Flx'];
+const TRUST_CLIENTS = [
+  { name: 'Capricorn College', logo: '/logos/capricorn-college.png', href: 'https://www.capricorncollegeholbrook.lk/' },
+  { name: 'Cargo Login',       logo: '/logos/cargo-login.png',       href: 'https://www.cargo-login.com/' },
+  { name: 'Keynotive',         logo: '/logos/keynotive.png',         href: 'https://www.keynotive.io/' },
+  { name: 'Hub-Flx',           logo: '/logos/hub-flx.png',           href: 'https://www.hub-flx.com/' },
+];
 
 const PREMIUM_FEATURES = [
   {
@@ -328,16 +333,25 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
       {/* ===== ACT 2: TRUST STRIP ===== */}
       <section aria-label="Trust signals" className="py-8 md:py-10 border-y border-border bg-[#fafafa]">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted whitespace-nowrap">Trusted by operators across North America</p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {TRUST_CLIENTS.map(name => (
-              <span
-                key={name}
-                className="inline-flex items-center px-5 py-2.5 rounded-full border border-border bg-white text-sm font-bold text-text/70 whitespace-nowrap"
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10">
+          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted whitespace-nowrap">Trusted by operators worldwide</p>
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-10">
+            {TRUST_CLIENTS.map(client => (
+              <a
+                key={client.name}
+                href={client.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={client.name}
+                className="opacity-70 hover:opacity-100 transition-opacity duration-300"
               >
-                {name}
-              </span>
+                <img
+                  src={client.logo}
+                  alt={client.name}
+                  className="h-6 md:h-7 w-auto object-contain"
+                  loading="lazy"
+                />
+              </a>
             ))}
           </div>
         </div>
