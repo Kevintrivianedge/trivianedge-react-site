@@ -119,6 +119,7 @@ const InquiryForm: React.FC = () => {
             className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none focus:border-cyan-500/40 transition-colors appearance-none cursor-pointer"
           >
             <option>Build a team</option>
+            <option>Build bespoke software</option>
             <option>Outsource IT</option>
             <option>Hire RPO support</option>
             <option>Explore AI services</option>

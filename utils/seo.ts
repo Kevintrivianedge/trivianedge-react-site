@@ -46,6 +46,12 @@ export const KEYWORD_CLUSTERS = {
     'software development company', 'offshore software company', 'software development team',
     'dedicated development team', 'remote software developers', 'nearshore development',
   ],
+  bespokeSoftware: [
+    'bespoke software development', 'bespoke software development company',
+    'bespoke software development Canada', 'custom software development partner',
+    'dedicated software development team', 'product engineering outsourcing',
+    'custom software company Toronto', 'bespoke application development',
+  ],
   talent: [
     'global talent solutions', 'AI staffing', 'remote teams', 'global staffing company',
     'talent pipeline Canada', 'remote workforce', 'global talent acquisition',
@@ -107,7 +113,7 @@ export function buildOrganizationSchema(): object {
       'https://x.com/trivianedge',
     ],
     knowsAbout: [
-      'Business Process Outsourcing', 'Offshore Software Development', 'IT Outsourcing',
+      'Business Process Outsourcing', 'Bespoke Software Development', 'Offshore Software Development', 'IT Outsourcing',
       'Global Talent Acquisition', 'Remote Team Management', 'AI Staffing',
       'Managed IT Services', 'Cloud Operations',
     ],
@@ -150,6 +156,7 @@ export function buildLocalBusinessSchema(): object {
       name: 'BPO & Outsourcing Services',
       itemListElement: [
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'BPO Services' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Bespoke Software Development' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Offshore Software Development' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'IT Outsourcing' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Global Talent Staffing' } },
@@ -347,12 +354,13 @@ export function organizationSchema(): SchemaObject {
     url: 'https://www.trivianedge.com',
     logo: 'https://www.trivianedge.com/apple-touch-icon.png',
     description:
-      "A Canada-based BPO, RPO and AI Development company. 30-day deployment. Up to 40% cost savings across 6 time zones.",
+      "A Canada-based BPO, RPO and bespoke software development company. 30-day deployment. Up to 40% cost savings across 6 time zones.",
     areaServed: ['Canada', 'United States', 'United Kingdom', 'Australia'],
     foundingLocation: 'Canada',
     knowsAbout: [
       'Business Process Outsourcing',
       'Recruitment Process Outsourcing',
+      'Bespoke Software Development',
       'AI Development Services',
       'Offshore Software Development',
       'IT Outsourcing',
@@ -531,8 +539,8 @@ export function buildServiceItemListSchema(): object {
       url: `${SEO_CONFIG.siteUrl}/#services`,
     },
     {
-      name: 'Global Talent & IT Outsourcing',
-      description: 'AI-powered global talent acquisition and IT outsourcing for startups and enterprises. 30-day deployment, up to 40% cost savings.',
+      name: 'Bespoke Software Development & IT Outsourcing',
+      description: 'Bespoke software development and managed IT outsourcing for startups and enterprises, built by dedicated offshore engineering teams. 30-day deployment, up to 40% cost savings.',
       url: `${SEO_CONFIG.siteUrl}/#services`,
     },
     {

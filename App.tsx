@@ -7,14 +7,13 @@ import {
   Mail,
   Linkedin,
   Twitter,
-  Layers,
   CheckCircle2,
-  TrendingUp,
+  Code2,
   Users2,
   ShieldCheck,
 } from 'lucide-react';
 import { Routes, Route, useLocation, useNavigate, Link } from 'react-router-dom';
-import { TALENT_HUBS, STEPS } from './constants';
+import { TALENT_HUBS, STEPS, BOOKING_URL } from './constants';
 import { CASE_STUDIES, TESTIMONIALS } from './constants/proof';
 import { TalentHub } from './types';
 import { LanguageProvider } from './contexts/LanguageContext';
@@ -78,6 +77,7 @@ const MLOpsPage               = lazy(() => import('./pages/services/ai-developme
 const ITOutsourcingPage       = lazy(() => import('./pages/services/ITOutsourcingPage'));
 const VentureStudioPage       = lazy(() => import('./pages/VentureStudioPage'));
 const ServicesPage            = lazy(() => import('./pages/ServicesPage'));
+const SavingsCalculatorPage   = lazy(() => import('./pages/SavingsCalculatorPage'));
 const NotFoundPage            = lazy(() => import('./pages/NotFoundPage'));
 const ChatSidebar             = lazy(() => import('./components/ChatSidebar'));
 
@@ -100,7 +100,7 @@ const PREMIUM_FEATURES = [
   },
   {
     title: 'We Handle the Paperwork',
-    description: 'Contracts, payroll, taxes, and local employment laws in every country, all taken care of. You never deal with foreign government offices or compliance filings.',
+    description: 'Contracts, payroll, taxes, and local employment laws in every country, all taken care of. Developers, support, finance, HR, or ops — one partner covers your full team, not just the technical side.',
     icon: ShieldCheck,
     accent: 'text-cyan-500',
     iconBg: 'from-cyan-400/20 to-cyan-400/5',
@@ -110,26 +110,15 @@ const PREMIUM_FEATURES = [
     link: '/services/bpo',
   },
   {
-    title: 'We Keep the Work Moving',
-    description: 'With teams across multiple time zones, your work never sits idle overnight. Handoffs are managed, progress is tracked, and issues get flagged before they become problems.',
-    icon: TrendingUp,
+    title: 'We Build Bespoke Software',
+    description: 'Custom applications, internal tools, and platforms, built by dedicated offshore engineers who work in your stack and your time zone. You own the code. Work never sits idle overnight.',
+    icon: Code2,
     accent: 'text-cyan-500',
     iconBg: 'from-cyan-400/20 to-cyan-400/5',
     iconBorder: 'border-cyan-400/25',
     glow: 'bg-cyan-400/8',
     metric: '24/7 coverage',
     link: '/services/it-outsourcing',
-  },
-  {
-    title: 'Tech and Non-Tech, Both',
-    description: 'We hire developers, but also customer support, finance, HR, operations, and sales. One partner covers your full team, not just the technical side.',
-    icon: Layers,
-    accent: 'text-cyan-500',
-    iconBg: 'from-cyan-400/20 to-cyan-400/5',
-    iconBorder: 'border-cyan-400/25',
-    glow: 'bg-cyan-400/8',
-    metric: '40% avg. savings',
-    link: '/services',
   },
 ];
 
@@ -224,7 +213,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="text-xs font-bold tracking-[0.25em] uppercase text-cyan-400 mb-8"
             >
-              Canada's Global Operations Partner
+              Canada's BPO, RPO & Bespoke Software Partner
             </motion.p>
 
             <h1 className="display-hero font-bold tracking-tight mb-8 leading-[1.02] text-white">
@@ -252,7 +241,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light"
             >
-              Offshore teams deployed in 30 days. Hiring, payroll, compliance, and delivery, handled entirely by us.
+              Offshore teams and bespoke software, deployed in 30 days. Hiring, payroll, compliance, and delivery, handled entirely by us.
             </motion.p>
 
             <motion.div
@@ -365,11 +354,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <span className="text-holo">In any country. In 30 days.</span>
             </h2>
             <p className="text-muted text-lg max-w-3xl mx-auto">
-              Most companies juggle three or four vendors for hiring, payroll, and software. We bring people and software delivery under one roof, so nothing falls through the cracks.
+              TrivianEdge is a Toronto-based BPO, RPO, and bespoke software development company that deploys offshore teams in 30 days. We hire people for your back office, run your recruiting pipeline, and build the custom software your product needs, sourced from six global talent hubs and matched to your time zone. Most companies juggle three or four vendors for hiring, payroll, and software. We bring people and software delivery under one roof, so nothing falls through the cracks.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 reveal">
+          <div className="grid md:grid-cols-3 gap-6 reveal">
             {PREMIUM_FEATURES.map((feature, idx) => {
               const Icon = feature.icon;
               return (
@@ -397,10 +386,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                       <Icon className={`w-6 h-6 ${feature.accent}`} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-center justify-between gap-2 mb-2">
-                        <h3 className="text-xl font-bold text-text">{feature.title}</h3>
-                        <span className={`hidden md:inline text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border ${feature.iconBorder} ${feature.accent} opacity-70 whitespace-nowrap`}>{feature.metric}</span>
-                      </div>
+                      <h3 className="text-xl font-bold text-text mb-2">{feature.title}</h3>
+                      <span className={`inline-block text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border ${feature.iconBorder} ${feature.accent} opacity-70 whitespace-nowrap mb-3`}>{feature.metric}</span>
                       <p className="text-text/60 text-sm leading-relaxed mb-3">{feature.description}</p>
                       <span className={`inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider ${feature.accent} group-hover:gap-2 transition-all duration-200`}>
                         Learn more <ChevronRight className="w-3 h-3" />
@@ -419,6 +406,16 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <p className="text-xl md:text-2xl font-bold text-holo max-w-2xl">
               Outsourcing the task is easy. Building the system takes experience.
             </p>
+            <div className="grid sm:grid-cols-2 gap-4 max-w-2xl w-full text-left">
+              <div className="glass rounded-2xl p-5 border-border">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-muted mb-2">The usual way</p>
+                <p className="text-sm text-text/70 leading-relaxed">A BPO firm, a recruiter, and a dev shop. Three contracts, three handoffs, three invoices, and nobody owns the whole picture.</p>
+              </div>
+              <div className="glass rounded-2xl p-5 border-cyan-400/20" style={{ boxShadow: '0 0 0 1px rgba(0,196,154,0.08)' }}>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-500 mb-2">With TrivianEdge</p>
+                <p className="text-sm text-text/80 leading-relaxed font-medium">One partner for BPO, RPO, and bespoke software. One contract, one team, one point of accountability.</p>
+              </div>
+            </div>
             <Link
               to="/services"
               className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-cyan-600 hover:text-cyan-700 transition-colors"
@@ -428,6 +425,22 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </Link>
           </div>
         </div>
+      </section>
+
+      {/* ===== ACT 3: SAVINGS CALCULATOR PROMO ===== */}
+      <section aria-label="Savings calculator promo" className="border-t border-border px-4 md:px-6 py-6">
+        <Link
+          to="/savings-calculator"
+          className="reveal max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-center group py-2"
+        >
+          <span className="text-sm md:text-base text-text/80">
+            Curious what an offshore team would save <em className="not-italic font-bold text-text">you</em>?
+          </span>
+          <span className="inline-flex items-center gap-1.5 text-sm md:text-base font-bold text-cyan-600 group-hover:gap-2.5 transition-all duration-200 whitespace-nowrap">
+            Try the free savings calculator
+            <ChevronRight className="w-4 h-4" />
+          </span>
+        </Link>
       </section>
 
       {/* ===== ACT 4: HOW IT WORKS ===== */}
@@ -595,9 +608,19 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <h2 className="display-section text-3xl sm:text-5xl md:text-7xl font-bold mb-5 text-white">
               Tell us what you need.
             </h2>
-            <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-6 leading-relaxed">
               Tech hiring, non-tech hiring, delivery support, market expansion.
             </p>
+
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm mb-10 btn-magnetic premium-button-secondary micro-press-button !text-white border-white/20 hover:border-white/40 hover:bg-white/5"
+            >
+              Or book a 15-minute call
+              <ArrowRight className="w-4 h-4" />
+            </a>
 
             <div className="max-w-4xl mx-auto text-left mb-6 rounded-3xl bg-white p-6 md:p-10 shadow-[0_0_60px_rgba(0,196,154,0.15)]">
               <InquiryForm />
@@ -711,9 +734,9 @@ function getSEOProps(pathname: string) {
           keywords: [...KEYWORD_CLUSTERS.offshore, ...KEYWORD_CLUSTERS.softwareDev],
         }),
         buildServiceSchema({
-          name: 'Global Talent & IT Outsourcing',
-          description: 'AI-powered global talent acquisition and IT outsourcing for startups and enterprises. 30-day deployment, up to 40% cost savings.',
-          keywords: [...KEYWORD_CLUSTERS.talent, ...KEYWORD_CLUSTERS.outsourcing],
+          name: 'Bespoke Software Development & IT Outsourcing',
+          description: 'Bespoke software development and managed IT outsourcing for startups and enterprises, built by dedicated offshore engineering teams. 30-day deployment, up to 40% cost savings.',
+          keywords: [...KEYWORD_CLUSTERS.bespokeSoftware, ...KEYWORD_CLUSTERS.outsourcing],
         }),
         buildSoftwareApplicationSchema(),
         faqSchema(HOME_FAQS),
@@ -830,6 +853,7 @@ export default function App() {
                       <Route path="/services/ai-development/ai-chatbot-development" element={<AIChatbotDevelopmentPage />} />
                       <Route path="/services/ai-development/mlops" element={<MLOpsPage />} />
                       <Route path="/services/it-outsourcing" element={<ITOutsourcingPage />} />
+                      <Route path="/savings-calculator" element={<SavingsCalculatorPage />} />
                       <Route path="/venture-studio" element={<VentureStudioPage />} />
                       <Route path="*" element={<NotFoundPage />} />
                     </Routes>
@@ -868,7 +892,7 @@ export default function App() {
                   <li><Link to="/services/bpo" className="text-white/55 hover:text-white text-sm transition-colors">BPO</Link></li>
                   <li><Link to="/services/rpo" className="text-white/55 hover:text-white text-sm transition-colors">RPO</Link></li>
                   <li><Link to="/services/ai-development" className="text-white/55 hover:text-white text-sm transition-colors">AI Development</Link></li>
-                  <li><Link to="/services/it-outsourcing" className="text-white/55 hover:text-white text-sm transition-colors">IT Outsourcing</Link></li>
+                  <li><Link to="/services/it-outsourcing" className="text-white/55 hover:text-white text-sm transition-colors">Bespoke Software Development</Link></li>
                 </ul>
               </div>
               <div>
@@ -884,6 +908,7 @@ export default function App() {
                 <h3 className="font-bold text-white/55 mb-6 tracking-widest uppercase text-[10px]">Resources</h3>
                 <ul className="space-y-3">
                   <li><Link to="/contact" className="text-white/55 hover:text-white text-sm transition-colors">Contact</Link></li>
+                  <li><Link to="/savings-calculator" className="text-white/55 hover:text-white text-sm transition-colors">Savings Calculator</Link></li>
                   <li><Link to="/proof" className="text-white/55 hover:text-white text-sm transition-colors">Case Studies</Link></li>
                   <li><Link to="/venture-studio" className="text-white/55 hover:text-white text-sm transition-colors">MVP Qualification</Link></li>
                   <li><Link to="/privacy" className="text-white/55 hover:text-white text-sm transition-colors">Privacy Policy</Link></li>

@@ -31,28 +31,29 @@ const SERVICES_HUB = [
     tags: ['Full-Cycle Hiring', 'AI-Powered Screening', 'Executive Search', 'Volume Recruitment'],
   },
   {
-    title: 'AI Development',
-    shortName: 'AI Dev',
-    href: '/services/ai-development',
-    icon: Cpu,
-    accent: 'text-cyan-400',
-    iconBg: 'from-cyan-400/20 to-cyan-400/5',
-    iconBorder: 'border-cyan-400/25',
-    glow: 'bg-cyan-400/8',
-    description: 'Custom AI products, LLM integrations, and machine learning pipelines built by offshore engineers. You own 100% of the code.',
-    tags: ['LLM Integration', 'Generative AI', 'ML Pipelines', 'AI Automation'],
-  },
-  {
-    title: 'IT Outsourcing',
-    shortName: 'IT',
+    title: 'Bespoke Software Development',
+    shortName: 'Bespoke',
     href: '/services/it-outsourcing',
     icon: Server,
     accent: 'text-cyan-400',
     iconBg: 'from-cyan-400/20 to-cyan-400/5',
     iconBorder: 'border-cyan-400/25',
     glow: 'bg-cyan-400/8',
-    description: 'Dedicated offshore software engineers, DevOps, QA, and full-stack teams. Round-the-clock delivery across 6 time zones.',
-    tags: ['Full-Stack Dev', 'DevOps & Cloud', 'QA & Testing', 'Cybersecurity'],
+    description: 'Custom software, built by dedicated offshore engineering teams you own end to end, plus the DevOps, QA, and IT outsourcing to keep it running.',
+    tags: ['Custom Development', 'Full-Stack Engineering', 'DevOps & Cloud', 'QA & Testing'],
+  },
+  {
+    title: 'AI Development',
+    shortName: 'AI Dev',
+    badge: 'A Bespoke Software Specialty',
+    href: '/services/ai-development',
+    icon: Cpu,
+    accent: 'text-cyan-400',
+    iconBg: 'from-cyan-400/20 to-cyan-400/5',
+    iconBorder: 'border-cyan-400/25',
+    glow: 'bg-cyan-400/8',
+    description: 'Custom AI products, LLM integrations, and machine learning pipelines, our deepest specialty within bespoke software. You own 100% of the code.',
+    tags: ['LLM Integration', 'Generative AI', 'ML Pipelines', 'AI Automation'],
   },
 ];
 
@@ -62,8 +63,8 @@ const ServicesPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="Services | TrivianEdge — BPO, RPO, AI Development & IT Outsourcing"
-        description="Explore TrivianEdge's full service offering: BPO, RPO, AI Development, and IT Outsourcing. Offshore teams deployed in 30 days across 6 countries."
+        title="Services | TrivianEdge — BPO, RPO & Bespoke Software Development"
+        description="Explore TrivianEdge's full service offering: BPO, RPO, bespoke software development, AI development, and IT outsourcing. Offshore teams deployed in 30 days across 6 countries."
         canonical="https://www.trivianedge.com/services"
         structuredData={[
           breadcrumbSchema([
@@ -99,7 +100,7 @@ const ServicesPage: React.FC = () => {
               <span className="text-cyan-400">in one place.</span>
             </h1>
             <p className="text-muted text-lg leading-relaxed max-w-2xl mx-auto mb-8">
-              TrivianEdge deploys offshore teams across four service lines — business process outsourcing, recruitment, AI development, and IT. One partner, full coverage, 30-day deployment.
+              TrivianEdge is a BPO, RPO, and bespoke software development company, AI development included as part of that software practice. One partner, three core lines, 30-day deployment.
             </p>
             <Link
               to="/contact"
@@ -137,6 +138,11 @@ const ServicesPage: React.FC = () => {
                         <span className={`text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border ${service.iconBorder} ${service.accent} opacity-70`}>
                           {service.shortName}
                         </span>
+                        {'badge' in service && service.badge && (
+                          <span className="ml-2 text-[9px] font-bold uppercase tracking-widest text-muted">
+                            {service.badge}
+                          </span>
+                        )}
                         <h2 className="text-xl font-bold text-text mt-2">{service.title}</h2>
                       </div>
                     </div>

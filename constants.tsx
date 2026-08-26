@@ -13,6 +13,10 @@ import {
 } from 'lucide-react';
 import { ServiceCardProps, RoleCategory, Step, BlogPost, TalentHub } from './types';
 
+/** Microsoft Bookings link used for the "Book a call" secondary CTA next to the inquiry form. */
+export const BOOKING_URL =
+  'https://outlook.office.com/bookwithme/user/48ce5d8759714368849f15db51a85e3d@Trivianedge.com/meetingtype/s7PQVr0JckW_iJXa78wY3g2?anonymous&ismsaljsauthenabled&ep=mlink';
+
 export const NAV_LINKS = [
   {
     name: 'Services',
@@ -24,8 +28,8 @@ export const NAV_LINKS = [
       { name: 'Full-Cycle RPO', href: '/services/rpo/full-cycle-rpo', isSub: true },
       { name: 'Project-Based RPO', href: '/services/rpo/project-based-rpo', isSub: true },
       { name: 'AI-Powered Recruitment', href: '/services/rpo/ai-powered-recruitment', isSub: true },
-      { name: 'AI Development', href: '/services/ai-development' },
-      { name: 'IT Outsourcing', href: '/services/it-outsourcing' },
+      { name: 'Bespoke Software Development', href: '/services/it-outsourcing' },
+      { name: 'AI Development', href: '/services/ai-development', isSub: true },
     ],
   },
   { name: 'Venture Studio', href: '/venture-studio' },

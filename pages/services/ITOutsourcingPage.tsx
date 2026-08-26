@@ -35,39 +35,39 @@ const STATS = [
 
 const FAQS = [
   {
-    question: 'What is IT outsourcing and how does it work?',
+    question: 'What is bespoke software development?',
     answer:
-      'IT outsourcing means partnering with an external company to manage or deliver technology functions on your behalf. Instead of building an in-house engineering team, you work with TrivianEdge to access skilled developers, cloud engineers, and IT specialists from global talent hubs. We handle sourcing, contracts, payroll, and day-to-day management, so your team can focus on core product work.',
+      'Bespoke software development means building custom applications, platforms, and internal tools designed specifically around your business, rather than adapting an off-the-shelf product to fit. TrivianEdge builds and maintains bespoke software as a Canada-based engineering partner, with offshore development teams sourced from six global talent hubs and matched to your exact tech stack. We also deliver the IT outsourcing layer around it, cloud infrastructure, DevOps, cybersecurity, and systems integration, so bespoke software can scale into a fully managed technology function instead of a one-off project.',
   },
   {
-    question: 'How quickly can TrivianEdge deploy an IT outsourcing team?',
+    question: 'How quickly can TrivianEdge deploy a bespoke software development team?',
     answer:
-      'TrivianEdge deploys offshore IT teams in 30 days or less. After an initial discovery call, we search our network across the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica and present matched candidates within days. Once approved, your team is onboarded and embedded into your existing workflow within the 30-day window.',
+      'TrivianEdge deploys offshore software development teams in 30 days or less. After an initial discovery call, we search our network across the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica and present matched candidates within days. Once approved, your team is onboarded and embedded into your existing workflow within the 30-day window.',
   },
   {
-    question: 'What IT outsourcing services does TrivianEdge provide?',
+    question: 'What bespoke software development services does TrivianEdge provide?',
     answer:
-      'TrivianEdge delivers custom software development, web and mobile application development, cybersecurity and compliance support, cloud infrastructure and DevOps, CI/CD and engineering operations, and systems integration. All delivered as dedicated offshore teams built to match your tech stack and time zone.',
+      'TrivianEdge delivers custom software development, web and mobile application development, cybersecurity and compliance support, cloud infrastructure and DevOps, CI/CD and engineering operations, and systems integration. All delivered as dedicated offshore teams built to match your tech stack and time zone, with the same team available for the broader IT outsourcing work around a build.',
   },
   {
-    question: 'How much can I save with IT outsourcing through TrivianEdge?',
+    question: 'How much can I save building bespoke software through TrivianEdge?',
     answer:
       'Most clients save up to 40% on engineering costs compared to local hiring. Our offshore talent hubs in the Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica provide senior-level developers and engineers at significantly lower rates than North American or Western European markets, with no compromise on quality or communication.',
   },
   {
-    question: 'Is TrivianEdge a Canadian IT outsourcing company?',
+    question: 'Is TrivianEdge a Canadian bespoke software development company?',
     answer:
-      'Yes. TrivianEdge is headquartered in Toronto, Ontario, Canada. We are a Canada-based IT outsourcing and offshore software development company serving clients across North America, the UK, Australia, and the Middle East. Our operations, contracts, and client management are run from Canada, giving you a local partner with global reach.',
+      'Yes. TrivianEdge is headquartered in Toronto, Ontario, Canada. We are a Canada-based bespoke software development and IT outsourcing company serving clients across North America, the UK, Australia, and the Middle East. Our operations, contracts, and client management are run from Canada, giving you a local partner with global engineering reach.',
   },
   {
-    question: 'What is the difference between IT outsourcing and offshore software development?',
+    question: 'What is the difference between bespoke software development and IT outsourcing?',
     answer:
-      'IT outsourcing is the broader practice of delegating technology functions to an external provider. Offshore software development specifically means that the development team is located in another country. TrivianEdge offers both: managed IT outsourcing from Canada and dedicated offshore development teams across multiple time zones.',
+      'Bespoke software development is the specific work of designing and building custom applications for one company. IT outsourcing is the broader practice of delegating technology functions, development, cloud, security, support, to an external provider. TrivianEdge offers both: dedicated offshore teams that build bespoke software, and the managed IT outsourcing layer that keeps it running once it ships.',
   },
   {
     question: 'Can I outsource just one part of my IT function?',
     answer:
-      'Absolutely. TrivianEdge scales to your needs. You can outsource a single function like DevOps, QA testing, or backend development, or engage us for a full offshore engineering team. We build the right model for your stage, whether you are a startup needing your first dedicated developer or an enterprise scaling a distributed team.',
+      'Absolutely. TrivianEdge scales to your needs. You can outsource a single function like DevOps, QA testing, or backend development, or engage us for a full offshore engineering team building bespoke software from scratch. We build the right model for your stage, whether you are a startup needing your first dedicated developer or an enterprise scaling a distributed team.',
   },
   {
     question: 'How does TrivianEdge ensure code quality and security for offshore teams?',
@@ -82,13 +82,13 @@ const ITOutsourcingPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="IT Outsourcing Canada | Offshore Software Development | TrivianEdge"
-        description="Access global tech talent with TrivianEdge. IT outsourcing and offshore software development teams. 30-day deployment. Up to 40% cost savings."
-        keywords="IT outsourcing Canada, offshore software development, IT outsourcing company, managed IT services, offshore development team, software development outsourcing, TrivianEdge IT outsourcing"
+        title="Bespoke Software Development Canada | Custom Engineering Teams | TrivianEdge"
+        description="TrivianEdge builds bespoke software with offshore engineering teams you own. Custom development, IT outsourcing, cloud & DevOps. 30-day deployment, up to 40% savings."
+        keywords="bespoke software development, bespoke software development Canada, custom software development company, IT outsourcing Canada, offshore software development, offshore development team, software development outsourcing, TrivianEdge bespoke software"
         schema={[
           serviceSchema(
-            'IT Outsourcing Services',
-            'Information Technology Outsourcing',
+            'Bespoke Software Development',
+            'Custom Software Development & IT Outsourcing',
             'https://www.trivianedge.com/services/it-outsourcing',
           ),
           faqSchema(FAQS.map((f) => ({ question: f.question, answer: f.answer }))),
@@ -96,7 +96,7 @@ const ITOutsourcingPage: React.FC = () => {
             { name: 'Home', url: 'https://www.trivianedge.com' },
             { name: 'Services', url: 'https://www.trivianedge.com/services' },
             {
-              name: 'IT Outsourcing',
+              name: 'Bespoke Software Development',
               url: 'https://www.trivianedge.com/services/it-outsourcing',
             },
           ]),
@@ -111,7 +111,7 @@ const ITOutsourcingPage: React.FC = () => {
             <li className="text-border">/</li>
             <li><Link to="/services" className="hover:text-cyan-400 transition-colors">Services</Link></li>
             <li className="text-border">/</li>
-            <li className="text-text font-medium">IT Outsourcing</li>
+            <li className="text-text font-medium">Bespoke Software Development</li>
           </ol>
         </nav>
 
@@ -124,12 +124,12 @@ const ITOutsourcingPage: React.FC = () => {
         >
           <div className="max-w-4xl mx-auto">
             <p className="text-xs font-mono tracking-widest uppercase text-cyan-400 mb-4">
-              IT Outsourcing & Offshore Development
+              Bespoke Software Development & IT Outsourcing
             </p>
             <h1 className="text-4xl md:text-6xl font-bold text-text mb-6 leading-tight">
-              IT Outsourcing Canada:{' '}
+              Bespoke Software Development:{' '}
               <span className="text-cyan-400">
-                Offshore Software Development Teams
+                Custom-Built Offshore Engineering Teams
               </span>
             </h1>
 
@@ -153,14 +153,14 @@ const ITOutsourcingPage: React.FC = () => {
           </div>
         </motion.section>
 
-        {/* What is IT Outsourcing */}
+        {/* What is Bespoke Software Development */}
         <section className="py-20 px-4 md:px-6">
           <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-6">
-              What is IT Outsourcing?
+              What is Bespoke Software Development?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              IT outsourcing is the practice of partnering with an external company to deliver technology functions — like software development, cloud infrastructure, or systems integration — instead of building and managing an in-house engineering team. TrivianEdge builds managed offshore software teams across custom development, cloud, security, and systems integration in about 30 days. Pair IT outsourcing with our{' '}
+              Bespoke software development means building custom applications, platforms, and internal tools designed specifically around your business, rather than adapting an off-the-shelf product to fit. TrivianEdge builds and maintains bespoke software as a Canada-based engineering partner, with offshore development teams sourced from six global talent hubs and matched to your exact tech stack. We deliver custom development, cloud infrastructure, DevOps, cybersecurity, and systems integration, so bespoke software can scale into a fully managed IT outsourcing function in about 30 days, and you keep full ownership of the code and IP throughout. Pair bespoke software development with our{' '}
               <Link
                 to="/services/ai-development"
                 className="text-cyan-400 hover:underline"
@@ -232,7 +232,7 @@ const ITOutsourcingPage: React.FC = () => {
               Frequently Asked Questions
             </h2>
             <p className="text-muted text-center mb-10">
-              Everything you need to know about IT outsourcing and offshore software development with TrivianEdge.
+              Everything you need to know about bespoke software development and IT outsourcing with TrivianEdge.
             </p>
             <Accordion items={FAQS} />
           </div>
@@ -242,7 +242,7 @@ const ITOutsourcingPage: React.FC = () => {
         <section className="py-24 px-4 md:px-6">
           <div className="max-w-2xl mx-auto text-center reveal">
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
-              Build Your Offshore Team in 30 Days
+              Build Bespoke Software in 30 Days
             </h2>
             <p className="text-muted mb-8">
               Cut costs, scale faster, and stay focused on your core product.
