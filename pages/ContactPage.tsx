@@ -60,14 +60,14 @@ const ContactPage: React.FC = () => {
                   <p className="text-xs uppercase tracking-widest font-bold text-muted mb-2">Response</p>
                   <p className="text-text font-semibold">Same business day when possible</p>
                 </div>
-                <div className="glass p-6 rounded-3xl border-border min-w-0 reveal" style={{ transitionDelay: '60ms' }}>
+                <a href="tel:+18882028513" className="glass p-6 rounded-3xl border-border min-w-0 reveal block hover:border-cyan-500/30 transition-colors" style={{ transitionDelay: '60ms' }}>
                   <p className="text-xs uppercase tracking-widest font-bold text-muted mb-2">Direct line</p>
-                  <a href="tel:+18882028513" className="text-text font-semibold hover:text-cyan-500 transition-colors break-words">+1 888 202 8513</a>
-                </div>
-                <div className="glass p-6 rounded-3xl border-border min-w-0 reveal" style={{ transitionDelay: '120ms' }}>
+                  <p className="text-text font-semibold break-words">+1 888 202 8513</p>
+                </a>
+                <a href="mailto:kevin.v@trivianedge.com" className="glass p-6 rounded-3xl border-border min-w-0 reveal block hover:border-cyan-500/30 transition-colors" style={{ transitionDelay: '120ms' }}>
                   <p className="text-xs uppercase tracking-widest font-bold text-muted mb-2">Email</p>
-                  <a href="mailto:kevin.v@trivianedge.com" className="text-text font-semibold hover:text-cyan-500 transition-colors break-words">kevin.v@trivianedge.com</a>
-                </div>
+                  <p className="text-text font-semibold break-words">kevin.v@trivianedge.com</p>
+                </a>
               </div>
 
               <div className="space-y-4 text-sm text-muted max-w-2xl">
