@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <!-- CookieYes consent banner. Placed as early in <head> as possible (CookieYes's
+         own recommendation, not deferred like the analytics scripts below) since its
+         job is to gate those trackers via gtag('consent','update',...) before/as they
+         load, not to run after the page is already interactive. -->
+    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/e7db7682b4d8ef7aafc06f6320d50a3c/script.js"></script>
+
     <title>TrivianEdge | Global Operations &amp; Offshore Talent Partner</title>
     <meta name="description" content="TrivianEdge helps companies build offshore teams, run global operations, and move faster with a cleaner operating model. 30-day deployment and direct inquiry flow.">
     <meta name="keywords" content="global operations, offshore talent, BPO Canada, business process outsourcing, offshore software development, IT outsourcing, talent deployment, managed remote teams, TrivianEdge">
@@ -76,7 +83,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.json">
     <!-- CSP: 'unsafe-inline' in script-src is required for JSON-LD structured-data injected by react-helmet-async -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.amplitude.com https://www.googletagmanager.com; connect-src 'self' https://ipapi.co https://api.open-meteo.com https://api.resend.com https://*.amplitude.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; worker-src 'self' blob:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.amplitude.com https://www.googletagmanager.com https://cdn-cookieyes.com; connect-src 'self' https://ipapi.co https://api.open-meteo.com https://api.resend.com https://*.amplitude.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://log.cookieyes.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; worker-src 'self' blob:;">
 
     <!-- DNS prefetch for performance -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">

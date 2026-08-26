@@ -550,14 +550,17 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 // Explicitly allowlists only the origins the app actually needs:
 //   - Amplitude Analytics + Session Replay CDN
 //   - Google Analytics (gtag.js)
+//   - CookieYes (consent banner; log.cookieyes.com is its consent-audit
+//     logging endpoint, hit via sendBeacon/XHR, confirmed by inspecting the
+//     actual script rather than guessing)
 //   - ipapi.co (geolocation)
 //   - Open-Meteo (weather)
 //   - Anthropic API (proxied through the worker, never called from browser)
 // ---------------------------------------------------------------------------
 const CSP_HEADER =
   "default-src 'self'; " +
-  "script-src 'self' https://cdn.amplitude.com https://www.googletagmanager.com; " +
-  "connect-src 'self' https://*.amplitude.com https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; " +
+  "script-src 'self' https://cdn.amplitude.com https://www.googletagmanager.com https://cdn-cookieyes.com; " +
+  "connect-src 'self' https://*.amplitude.com https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://log.cookieyes.com; " +
   "img-src 'self' data: https:; " +
   "font-src 'self' https://fonts.gstatic.com; " +
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
