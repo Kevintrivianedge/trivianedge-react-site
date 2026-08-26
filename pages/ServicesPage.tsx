@@ -64,7 +64,7 @@ const ServicesPage: React.FC = () => {
     <>
       <SEOHead
         title="Services | TrivianEdge — BPO, RPO & Bespoke Software Development"
-        description="Explore TrivianEdge's full service offering: BPO, RPO, bespoke software development, AI development, and IT outsourcing. Offshore teams deployed in 30 days across 6 countries."
+        description="Explore TrivianEdge's full service offering: BPO, RPO, bespoke software, and AI development. Offshore teams deployed in 30 days across 6 countries."
         canonical="https://www.trivianedge.com/services"
         structuredData={[
           breadcrumbSchema([

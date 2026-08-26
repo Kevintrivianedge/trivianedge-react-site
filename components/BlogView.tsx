@@ -53,7 +53,7 @@ const BlogView: React.FC = () => {
             <BookOpen className="w-4 h-4 text-text/70" />
             Intel & Insights
           </div>
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 text-text">Practical ideas for <br className="hidden md:block" /> <span className="text-gradient">building faster, cleaner operations.</span></h2>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 text-text">Practical ideas for <br className="hidden md:block" /> <span className="text-gradient">building faster, cleaner operations.</span></h1>
           <p className="text-muted text-lg max-w-2xl mb-8">Short, useful reads on hiring, outsourcing, AI delivery, and how to keep work moving without adding noise.</p>
 
           {/* Search bar */}

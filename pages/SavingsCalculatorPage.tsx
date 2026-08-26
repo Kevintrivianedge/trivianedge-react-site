@@ -124,7 +124,7 @@ const SavingsCalculatorPage: React.FC = () => {
     <>
       <SEOHead
         title="Offshore Hiring Savings Calculator | TrivianEdge"
-        description="See exactly how much you could save building an offshore team with TrivianEdge. Free calculator — enter your role, headcount, and current cost to get an instant estimate."
+        description="See exactly how much you could save building an offshore team with TrivianEdge. Enter your role, headcount, and cost for an instant free estimate."
         keywords="offshore hiring cost calculator, outsourcing savings calculator, offshore team cost savings, BPO savings calculator, RPO cost savings"
         canonical={PAGE_URL}
         structuredData={[

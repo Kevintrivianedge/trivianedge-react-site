@@ -83,7 +83,7 @@ const ITOutsourcingPage: React.FC = () => {
     <>
       <SEOHead
         title="Bespoke Software Development Canada | Custom Engineering Teams | TrivianEdge"
-        description="TrivianEdge builds bespoke software with offshore engineering teams you own. Custom development, IT outsourcing, cloud & DevOps. 30-day deployment, up to 40% savings."
+        description="TrivianEdge builds bespoke software with offshore engineering teams you own. Custom development, IT outsourcing, cloud & DevOps, 30-day deployment."
         keywords="bespoke software development, bespoke software development Canada, custom software development company, IT outsourcing Canada, offshore software development, offshore development team, software development outsourcing, TrivianEdge bespoke software"
         schema={[
           serviceSchema(

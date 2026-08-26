@@ -74,6 +74,25 @@ async function main() {
       await page.evaluate(() => window.scrollTo(0, 0));
       await page.waitForTimeout(300);
 
+      // The static index.html shell ships sane default <meta name/property> tags
+      // (description, keywords, robots, og:*, twitter:*) as a fallback for the
+      // brief window before React mounts. Once SEOHead (react-helmet-async) runs,
+      // it appends its own page-specific versions of those same tags rather than
+      // replacing the originals — Helmet only manages tags it created, and has no
+      // way to know the static ones exist. page.content() captures both, so every
+      // prerendered snapshot shipped two conflicting copies of ~20 meta tags (the
+      // generic homepage default plus the real per-page one), which risks search
+      // engines picking the wrong one. Keep only the last occurrence of each
+      // duplicated name/property — that's the one Helmet inserted.
+      await page.evaluate(() => {
+        const seen = new Map();
+        document.querySelectorAll('head meta[name], head meta[property]').forEach(el => {
+          const key = el.getAttribute('name') ?? el.getAttribute('property');
+          if (seen.has(key)) seen.get(key).remove();
+          seen.set(key, el);
+        });
+      });
+
       const html = await page.content();
       const outDir = routePath === '/' ? distDir : join(distDir, routePath.replace(/^\//, ''));
       mkdirSync(outDir, { recursive: true });
