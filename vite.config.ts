@@ -27,6 +27,18 @@ export default defineConfig({
     cssMinify: true,
     reportCompressedSize: false,
     assetsInlineLimit: 4096,
+    modulePreload: {
+      // index.tsx dynamically imports @amplitude/unified from inside a
+      // requestIdleCallback so its ~700KB bundle (analytics + session-replay/
+      // rrweb) never blocks first paint. Vite's default modulePreload behavior
+      // still emits <link rel="modulepreload"> for every dynamic-import target
+      // reachable from the entry point though, which makes the browser fetch
+      // it immediately anyway — defeating the deferral entirely. Exclude it
+      // (and its internal rrweb sub-chunks) from the auto-generated preload
+      // list so it's only ever requested when the idle-callback actually fires.
+      resolveDependencies: (_filename, deps) =>
+        deps.filter(dep => !dep.includes('amplitude') && !dep.includes('rrweb')),
+    },
     rollupOptions: {
       output: {
         manualChunks: {
