@@ -59,11 +59,40 @@ declare global {
   }
 }
 const GA_MEASUREMENT_ID = 'G-LXPSJ9C23D';
+
+// EEA (27 EU member states + Iceland, Liechtenstein, Norway) plus the UK and
+// Switzerland, whose privacy laws (UK GDPR, Swiss FADP) carry the same
+// consent requirement. Scoping the "default: denied" state to just this list
+// via Consent Mode's `region` param means visitors everywhere else keep
+// getting full measurement and ads personalization as before — only these
+// regions are held back pending explicit consent.
+const CONSENT_REQUIRED_REGIONS = [
+  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR',
+  'HU', 'IS', 'IE', 'IT', 'LV', 'LI', 'LT', 'LU', 'MT', 'NL', 'NO', 'PL',
+  'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'GB', 'CH',
+];
+
 const initGoogleAnalytics = () => {
   window.dataLayer = window.dataLayer || [];
   window.gtag = function gtag(...args: unknown[]) {
     window.dataLayer!.push(args);
   };
+
+  // Consent Mode v2: default to denied for EEA/UK/CH so no measurement or ads
+  // data is sent for those visitors until they've actually consented via a
+  // banner. TODO: no consent banner exists yet, so this list currently gets
+  // zero analytics — that's the correct, compliant state in the meantime,
+  // but it's incomplete without a UI that calls gtag('consent', 'update', ...)
+  // once a visitor makes a choice.
+  window.gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    region: CONSENT_REQUIRED_REGIONS,
+    wait_for_update: 500,
+  });
+
   window.gtag('js', new Date());
   window.gtag('config', GA_MEASUREMENT_ID);
 
