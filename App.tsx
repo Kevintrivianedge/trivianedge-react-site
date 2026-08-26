@@ -324,7 +324,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             ].map(s => (
               <div key={s.label} className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
                 <p className="text-xl font-bold text-white leading-none mb-1">{s.value}</p>
-                <p className="text-[10px] uppercase tracking-widest text-white/45 font-semibold">{s.label}</p>
+                <p className="text-[10px] uppercase tracking-widest text-white/60 font-semibold">{s.label}</p>
               </div>
             ))}
           </div>
@@ -581,7 +581,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
-            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-text/55 mb-4">Where your team comes from</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-text/70 mb-4">Where your team comes from</p>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">Great people. Everywhere.</h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
               We source from 6 countries selected for their talent quality, English proficiency, and timezone fit with your business. Hover any pin to explore.
@@ -610,7 +610,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       >
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12 reveal">
-            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-text/55 mb-4">Common questions</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-text/70 mb-4">Common questions</p>
             <h2 className="display-section text-4xl sm:text-5xl font-bold mb-4 text-text">
               Everything you wanted to know.
             </h2>
@@ -649,7 +649,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <InquiryForm />
             </div>
 
-            <p className="text-white/45 text-sm">
+            <p className="text-white/60 text-sm">
               Prefer to reach out directly?{' '}
               <a href="mailto:kevin.v@trivianedge.com" className="text-white/70 hover:text-cyan-400 underline underline-offset-4 transition-colors">Email us</a>
               {' '}or{' '}

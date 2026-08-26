@@ -84,7 +84,7 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
         })}
       </div>
 
-      <p className="mt-2 text-[10px] text-muted/70 text-right">Map data © MapSVG (CC BY 4.0)</p>
+      <p className="mt-2 text-[10px] text-muted text-right">Map data © MapSVG (CC BY 4.0)</p>
 
       {hoveredHub && (
         <div className="absolute top-4 right-4 bg-[#0a0a0f]/95 backdrop-blur-xl p-5 rounded-2xl border border-cyan-500/20 max-w-[min(220px,75vw)] pointer-events-none shadow-2xl shadow-cyan-900/30">

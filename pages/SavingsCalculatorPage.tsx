@@ -264,7 +264,7 @@ const SavingsCalculatorPage: React.FC = () => {
                 </button>
               </div>
 
-              <p className="text-white/35 text-xs mt-8 max-w-md mx-auto">
+              <p className="text-white/60 text-xs mt-8 max-w-md mx-auto">
                 Estimate based on TrivianEdge's average client savings of 40%. Actual savings vary by role, region, and scope — talk to us for a precise quote.
               </p>
             </div>
