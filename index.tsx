@@ -42,8 +42,41 @@ const initAmplitude = () => {
   });
 };
 
+// Google Analytics (gtag.js), deferred the same way and for the same reason as
+// Amplitude above. Injected as an external <script src> rather than Google's
+// documented inline <script> snippet: the worker's CSP (src/worker.ts) is
+// intentionally stricter than the meta-tag fallback in index.html and omits
+// 'unsafe-inline' from script-src, so a literal inline script body would be
+// silently blocked in production. An external src-loaded script needs no such
+// allowance — it just needs its origin added to script-src (see index.html
+// and src/worker.ts).
+// The GA4 measurement ID is a public client-side identifier, like the
+// Amplitude API key above — it does not grant write or admin access.
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+const GA_MEASUREMENT_ID = 'G-LXPSJ9C23D';
+const initGoogleAnalytics = () => {
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag(...args: unknown[]) {
+    window.dataLayer!.push(args);
+  };
+  window.gtag('js', new Date());
+  window.gtag('config', GA_MEASUREMENT_ID);
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  document.head.appendChild(script);
+};
+
 if (typeof requestIdleCallback !== 'undefined') {
   requestIdleCallback(initAmplitude, { timeout: 4000 });
+  requestIdleCallback(initGoogleAnalytics, { timeout: 4000 });
 } else {
   setTimeout(initAmplitude, 1000);
+  setTimeout(initGoogleAnalytics, 1000);
 }

@@ -549,14 +549,15 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 // Content-Security-Policy applied to all HTML responses (static assets).
 // Explicitly allowlists only the origins the app actually needs:
 //   - Amplitude Analytics + Session Replay CDN
+//   - Google Analytics (gtag.js)
 //   - ipapi.co (geolocation)
 //   - Open-Meteo (weather)
 //   - Anthropic API (proxied through the worker, never called from browser)
 // ---------------------------------------------------------------------------
 const CSP_HEADER =
   "default-src 'self'; " +
-  "script-src 'self' https://cdn.amplitude.com; " +
-  "connect-src 'self' https://*.amplitude.com https://ipapi.co https://api.open-meteo.com; " +
+  "script-src 'self' https://cdn.amplitude.com https://www.googletagmanager.com; " +
+  "connect-src 'self' https://*.amplitude.com https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; " +
   "img-src 'self' data: https:; " +
   "font-src 'self' https://fonts.gstatic.com; " +
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +

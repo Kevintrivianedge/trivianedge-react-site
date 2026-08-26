@@ -76,7 +76,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.json">
     <!-- CSP: 'unsafe-inline' in script-src is required for JSON-LD structured-data injected by react-helmet-async -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.amplitude.com; connect-src 'self' https://ipapi.co https://api.open-meteo.com https://api.resend.com https://*.amplitude.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; worker-src 'self' blob:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.amplitude.com https://www.googletagmanager.com; connect-src 'self' https://ipapi.co https://api.open-meteo.com https://api.resend.com https://*.amplitude.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; worker-src 'self' blob:;">
 
     <!-- DNS prefetch for performance -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -85,15 +85,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Google Fonts, non-blocking load via preload + onload swap pattern.
-         font-display=swap in the URL already prevents invisible text; the
-         onload trick prevents the stylesheet from being render-blocking. -->
-        <link rel="preload" as="style"
-            href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
-          onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-            <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    </noscript>
+    <!-- Google Fonts. font-display=swap in the URL prevents invisible text
+         regardless of load timing. This used to be a preload-then-swap-to-
+         stylesheet trick via an inline onload="" attribute, but the worker's
+         CSP script-src-attr has no 'unsafe-inline' (intentionally, unlike the
+         meta-tag fallback), so that handler was silently blocked on every
+         page load — harmless only because build-time prerendering already
+         bakes the post-swap rel="stylesheet" state into every real route's
+         served HTML, but a real broken-font bug on any non-prerendered
+         fallback (e.g. a genuine 404). A plain synchronous stylesheet link
+         has no such failure mode. -->
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <!-- Vite bundles all dependencies, no browser importmap needed -->
 
 </head>
