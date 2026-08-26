@@ -270,7 +270,7 @@ const SavingsCalculatorPage: React.FC = () => {
             </div>
 
             {/* Lead capture */}
-            <div className="glass rounded-[2rem] p-6 md:p-10 border-border">
+            <div className="glass border-gradient-animated relative rounded-[2rem] p-6 md:p-10 border-border">
               {leadSubmitted ? (
                 <div className="text-center py-4" role="status">
                   <div className="inline-flex items-center justify-center p-4 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-4">

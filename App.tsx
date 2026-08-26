@@ -411,7 +411,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 <p className="text-[10px] font-bold uppercase tracking-widest text-muted mb-2">The usual way</p>
                 <p className="text-sm text-text/70 leading-relaxed">A BPO firm, a recruiter, and a dev shop. Three contracts, three handoffs, three invoices, and nobody owns the whole picture.</p>
               </div>
-              <div className="glass rounded-2xl p-5 border-cyan-400/20" style={{ boxShadow: '0 0 0 1px rgba(0,196,154,0.08)' }}>
+              <div className="glass border-gradient-animated relative rounded-2xl p-5 border-cyan-400/20" style={{ boxShadow: '0 0 0 1px rgba(0,196,154,0.08)' }}>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-500 mb-2">With TrivianEdge</p>
                 <p className="text-sm text-text/80 leading-relaxed font-medium">One partner for BPO, RPO, and bespoke software. One contract, one team, one point of accountability.</p>
               </div>
@@ -565,8 +565,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </p>
           </div>
 
-          {/* Interactive world map */}
-          <div className="reveal rounded-[3rem] border border-cyan-400/15 bg-[#f4fcf9] p-4 md:p-8 mb-12 overflow-hidden relative" style={{ boxShadow: '0 0 60px rgba(0,196,154,0.08), inset 0 1px 0 rgba(255,255,255,0.8)' }}>
+          {/* Interactive world map — neural-bg reinforces "network" both literally (talent graph) and visually (tech-forward texture) */}
+          <div className="reveal neural-bg rounded-[3rem] border border-cyan-400/15 bg-[#f4fcf9] p-4 md:p-8 mb-12 overflow-hidden relative" style={{ boxShadow: '0 0 60px rgba(0,196,154,0.08), inset 0 1px 0 rgba(255,255,255,0.8)' }}>
             <WorldMapSVG hubs={TALENT_HUBS} onHubClick={setSelectedHub} />
           </div>
 
