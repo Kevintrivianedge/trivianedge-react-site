@@ -28,6 +28,7 @@ function makeCorsHeaders(requestOrigin: string | null): Record<string, string> {
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Admin-Token',
     'Vary': 'Origin',
+    ...BASE_SECURITY_HEADERS,
   };
 }
 
@@ -563,13 +564,23 @@ const CSP_HEADER =
   "base-uri 'self'; " +
   "form-action 'self';";
 
+// Headers that belong on every response, page or API, HTML or JSON: they
+// harden transport and MIME handling regardless of content type.
+const BASE_SECURITY_HEADERS: Record<string, string> = {
+  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+  'X-Content-Type-Options': 'nosniff',
+};
+
 /** Attach CSP and security headers to a static-asset response. */
 function addSecurityHeaders(response: Response, statusOverride?: number): Response {
   const headers = new Headers(response.headers);
   headers.set('Content-Security-Policy', CSP_HEADER);
-  headers.set('X-Content-Type-Options', 'nosniff');
+  for (const [key, value] of Object.entries(BASE_SECURITY_HEADERS)) {
+    headers.set(key, value);
+  }
   headers.set('X-Frame-Options', 'DENY');
   headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()');
   return new Response(response.body, { status: statusOverride ?? response.status, headers });
 }
 
@@ -677,6 +688,33 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 
+// Caps on user-controlled input forwarded to the (paid, per-token) Anthropic API.
+// Without these, the per-IP rate limit alone doesn't bound cost — a single
+// request can still carry an arbitrarily large payload.
+const MAX_MESSAGE_LENGTH = 4000;
+const MAX_HISTORY_MESSAGES = 20;
+const MAX_HISTORY_MESSAGE_LENGTH = 4000;
+const MAX_SYSTEM_INSTRUCTION_LENGTH = 2000;
+const MAX_GENERATE_PROMPT_LENGTH = 4000;
+
+function badRequest(error: string, corsHeaders: Record<string, string>): Response {
+  return new Response(JSON.stringify({ error }), {
+    status: 400,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
+// Lead-form fields go to email (Resend) and/or the CRM webhook, not a paid
+// per-token API, so we truncate rather than reject — an overlong paste
+// shouldn't cost a real prospect their submission — but still bound the
+// size of what gets stored/emailed per request.
+const MAX_FIELD_LENGTH = 300;
+const MAX_FREEFORM_LENGTH = 5000;
+
+function capLength(value: string, max: number): string {
+  return value.length > max ? value.slice(0, max) : value;
+}
+
 async function handleChat(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
   const parsed = await parseJsonBody<{
     message: string;
@@ -701,6 +739,19 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
 
   const systemText =
     typeof body.systemInstruction === 'string' ? body.systemInstruction.trim() : '';
+
+  if (message.length > MAX_MESSAGE_LENGTH) {
+    return badRequest(`Message too long (max ${MAX_MESSAGE_LENGTH} characters).`, corsHeaders);
+  }
+  if (history.length > MAX_HISTORY_MESSAGES) {
+    return badRequest(`Too much conversation history (max ${MAX_HISTORY_MESSAGES} messages).`, corsHeaders);
+  }
+  if (history.some((h) => typeof h?.content === 'string' && h.content.length > MAX_HISTORY_MESSAGE_LENGTH)) {
+    return badRequest('One or more history messages exceed the length limit.', corsHeaders);
+  }
+  if (systemText.length > MAX_SYSTEM_INSTRUCTION_LENGTH) {
+    return badRequest(`System instruction too long (max ${MAX_SYSTEM_INSTRUCTION_LENGTH} characters).`, corsHeaders);
+  }
 
   const messages: AnthropicMessage[] = [...history,
     { role: 'user', content: message },
@@ -759,6 +810,10 @@ async function handleGenerate(request: Request, env: Env, corsHeaders: Record<st
   const model =
     typeof body.model === 'string' && body.model ? body.model : ANTHROPIC_DEFAULT_MODEL;
 
+  if (prompt.length > MAX_GENERATE_PROMPT_LENGTH) {
+    return badRequest(`Prompt too long (max ${MAX_GENERATE_PROMPT_LENGTH} characters).`, corsHeaders);
+  }
+
   const anthropicRes = await fetch(ANTHROPIC_API_BASE, {
     method: 'POST',
     headers: {
@@ -802,9 +857,9 @@ async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record
 
   const body = parsed.data;
 
-  const company = typeof body.company === 'string' ? body.company.trim() : '';
-  const email = typeof body.email === 'string' ? body.email.trim() : '';
-  const size = typeof body.size === 'string' ? body.size.trim() : '';
+  const company = capLength(typeof body.company === 'string' ? body.company.trim() : '', MAX_FIELD_LENGTH);
+  const email = capLength(typeof body.email === 'string' ? body.email.trim() : '', MAX_FIELD_LENGTH);
+  const size = capLength(typeof body.size === 'string' ? body.size.trim() : '', MAX_FIELD_LENGTH);
 
   if (!company || !email) {
     return new Response(JSON.stringify({ success: false, error: 'Company name and email are required.' }), {
@@ -883,12 +938,12 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
 
   const body = parsed.data;
 
-  const name = typeof body.name === 'string' ? body.name.trim() : '';
-  const company = typeof body.company === 'string' ? body.company.trim() : '';
-  const email = typeof body.email === 'string' ? body.email.trim() : '';
-  const need = typeof body.need === 'string' ? body.need.trim() : '';
-  const timeline = typeof body.timeline === 'string' ? body.timeline.trim() : '';
-  const message = typeof body.message === 'string' ? body.message.trim() : '';
+  const name = capLength(typeof body.name === 'string' ? body.name.trim() : '', MAX_FIELD_LENGTH);
+  const company = capLength(typeof body.company === 'string' ? body.company.trim() : '', MAX_FIELD_LENGTH);
+  const email = capLength(typeof body.email === 'string' ? body.email.trim() : '', MAX_FIELD_LENGTH);
+  const need = capLength(typeof body.need === 'string' ? body.need.trim() : '', MAX_FIELD_LENGTH);
+  const timeline = capLength(typeof body.timeline === 'string' ? body.timeline.trim() : '', MAX_FIELD_LENGTH);
+  const message = capLength(typeof body.message === 'string' ? body.message.trim() : '', MAX_FREEFORM_LENGTH);
 
   if (!name || !company || !email) {
     return new Response(JSON.stringify({ success: false, error: 'Name, company, and email are required.' }), {
@@ -1007,9 +1062,9 @@ async function handleVentureSubmit(request: Request, env: Env, corsHeaders: Reco
   const locale = typeof body.locale === 'string' ? body.locale : 'en-CA';
   const timezone = typeof body.timezone === 'string' ? body.timezone : 'UTC';
 
-  const name = typeof form.fullName === 'string' ? form.fullName.trim() : '';
-  const email = typeof form.email === 'string' ? form.email.trim() : '';
-  const company = typeof form.company === 'string' ? form.company.trim() : '';
+  const name = capLength(typeof form.fullName === 'string' ? form.fullName.trim() : '', MAX_FIELD_LENGTH);
+  const email = capLength(typeof form.email === 'string' ? form.email.trim() : '', MAX_FIELD_LENGTH);
+  const company = capLength(typeof form.company === 'string' ? form.company.trim() : '', MAX_FIELD_LENGTH);
 
   if (!name || !email || !company) {
     return new Response(JSON.stringify({ success: false, error: 'fullName, email, and company are required' }), {
