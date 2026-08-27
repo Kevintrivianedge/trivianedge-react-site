@@ -63,6 +63,7 @@ const TrustPage               = lazy(() => import('./pages/TrustPage'));
 const AboutPage               = lazy(() => import('./pages/AboutPage'));
 const PrivacyPage             = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage               = lazy(() => import('./pages/TermsPage'));
+const CookiePolicyPage        = lazy(() => import('./pages/CookiePolicyPage'));
 const BPOPage                 = lazy(() => import('./pages/services/BPOPage'));
 const RPOPage                 = lazy(() => import('./pages/services/RPOPage'));
 const FullCycleRPOPage        = lazy(() => import('./pages/services/rpo/FullCycleRPOPage'));
@@ -734,6 +735,28 @@ function getSEOProps(pathname: string) {
       ],
     };
   }
+  if (pathname === '/cookie-policy') {
+    const cookiePolicyUrl = `${SEO_CONFIG.siteUrl}/cookie-policy`;
+    return {
+      title: 'Cookie Policy TrivianEdge BPO & Outsourcing Services',
+      description: 'The cookies, local storage, and third-party analytics tools TrivianEdge uses on trivianedge.com, and the choices you have over them.',
+      canonical: cookiePolicyUrl,
+      noIndex: false,
+      structuredData: [
+        buildWebPageSchema({
+          name: 'Cookie Policy TrivianEdge Global',
+          description: 'The cookies, local storage, and third-party analytics tools TrivianEdge uses on trivianedge.com, and the choices you have over them.',
+          url: cookiePolicyUrl,
+          datePublished: LEGAL_PAGES_PUBLISHED,
+          dateModified: '2026-08-27',
+          breadcrumb: [
+            { name: 'Home', url: SEO_CONFIG.siteUrl },
+            { name: 'Cookie Policy', url: cookiePolicyUrl },
+          ],
+        }),
+      ],
+    };
+  }
   if (pathname === '/') {
     // Home maximum schema richness for BPO/outsourcing dominance
     const signal = getSEOTrendSignal('home');
@@ -864,6 +887,7 @@ export default function App() {
                       <Route path="/blog/:slug" element={<BlogPostDetail />} />
                       <Route path="/privacy" element={<PrivacyPage />} />
                       <Route path="/terms" element={<TermsPage />} />
+                      <Route path="/cookie-policy" element={<CookiePolicyPage />} />
                       <Route path="/services" element={<ServicesPage />} />
                       <Route path="/services/bpo" element={<BPOPage />} />
                       <Route path="/services/rpo" element={<RPOPage />} />
@@ -947,6 +971,7 @@ export default function App() {
               <div className="flex gap-8">
                 <Link to="/privacy" className="hover:text-white/80 transition-colors">Privacy</Link>
                 <Link to="/terms" className="hover:text-white/80 transition-colors">Terms</Link>
+                <Link to="/cookie-policy" className="hover:text-white/80 transition-colors">Cookies</Link>
               </div>
             </div>
           </footer>

@@ -250,4 +250,11 @@
     <priority>0.3</priority>
   </url>
 
+  <url>
+    <loc>https://www.trivianedge.com/cookie-policy</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
 </urlset>
