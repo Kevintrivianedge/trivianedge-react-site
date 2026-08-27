@@ -150,7 +150,13 @@ const AboutPage: React.FC = () => {
               {TALENT_HUBS.map((hub) => (
                 <div key={hub.id} className="glass p-5 rounded-2xl border-border reveal">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xl" aria-hidden="true">{hub.flag}</span>
+                    <img
+                      src={`https://flagcdn.com/w40/${hub.flagCode}.png`}
+                      width={20}
+                      height={15}
+                      alt=""
+                      className="rounded-sm object-cover flex-shrink-0"
+                    />
                     <span className="font-bold">{hub.country}</span>
                   </div>
                   <p className="text-muted text-sm leading-relaxed">{hub.specialty}</p>
