@@ -31,3 +31,4 @@ prompt_*.json
 # Python bytecode cache (skill scripts)
 __pycache__/
 *.pyc
+.secrets/

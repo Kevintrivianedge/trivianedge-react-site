@@ -35,6 +35,7 @@ export const NAV_LINKS = [
   { name: 'Venture Studio', href: '/venture-studio' },
   { name: 'Proof', href: '/proof' },
   { name: 'Trust', href: '/trust' },
+  { name: 'About', href: '/about' },
   { name: 'Blog', href: '/blog' },
 ];
 
