@@ -58,7 +58,7 @@ declare global {
     gtag?: (...args: unknown[]) => void;
   }
 }
-const GA_MEASUREMENT_ID = 'G-LXPSJ9C23D';
+const GA_MEASUREMENT_ID = 'G-KMWT547BH8';
 
 // EEA (27 EU member states + Iceland, Liechtenstein, Norway) plus the UK and
 // Switzerland, whose privacy laws (UK GDPR, Swiss FADP) carry the same
