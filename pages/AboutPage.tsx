@@ -107,11 +107,11 @@ const AboutPage: React.FC = () => {
                 </div>
               </div>
               <div className="text-muted leading-relaxed space-y-4">
-                <p>After 20+ years in outsourcing, I've seen nearly every version of it — and gotten frustrated with most.</p>
-                <p>I started on the operations side, running prescription workflows for long-term care facilities, then moved into scaling resource teams for fast-growing software companies. Along the way I rebuilt hiring pipelines that weren't working, cleaned up broken processes, and helped founders move from chaos to clarity — inside banking, insurance, healthcare, IT, and tech, usually when something was already on fire.</p>
-                <p>Two decades in, I kept landing on the same conclusion: outsourcing isn't broken, it's outdated. Most models were built for a world before AI, before distributed work was normal, before founders expected their partners to move as fast as they do. The companies I watched struggle weren't failing because offshore talent doesn't work — they were failing because the old playbook doesn't.</p>
+                <p>After 20+ years in outsourcing, I've seen nearly every version of it, and gotten frustrated with most.</p>
+                <p>I started on the operations side, running prescription workflows for long-term care facilities, then moved into scaling resource teams for fast-growing software companies. Along the way I rebuilt hiring pipelines that weren't working, cleaned up broken processes, and helped founders move from chaos to clarity, inside banking, insurance, healthcare, IT, and tech, usually when something was already on fire.</p>
+                <p>Two decades in, I kept landing on the same conclusion: outsourcing isn't broken, it's outdated. Most models were built for a world before AI, before distributed work was normal, before founders expected their partners to move as fast as they do. The companies I watched struggle weren't failing because offshore talent doesn't work. They were failing because the old playbook doesn't.</p>
                 <p>That's why I founded TrivianEdge: to help founders build global teams, automate the operational drag, and put systems in place that run without constant babysitting. Human-first, AI-smart, built for outcomes rather than hours billed.</p>
-                <p>I care about founders building something ambitious who are tired of getting stuck on the operational stuff. If that's you — whether you want to talk shop, explore working together, or just trade notes on where this industry is going — I'm easy to reach.</p>
+                <p>I care about founders building something ambitious who are tired of getting stuck on the operational stuff. If that's you, whether you want to talk shop, explore working together, or just trade notes on where this industry is going, I'm easy to reach.</p>
               </div>
             </div>
           </div>
