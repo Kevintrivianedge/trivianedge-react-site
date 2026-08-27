@@ -1,10 +1,35 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShieldCheck } from 'lucide-react';
 import Logo from '../components/Logo';
 
+const COOKIEYES_PRIVACY_SCRIPT_ID = 'cky-privacy-policy';
+const COOKIEYES_PRIVACY_SCRIPT_SRC = 'https://cdn-cookieyes.com/client_data/e7db7682b4d8ef7aafc06f6320d50a3c/privacy-policy/script.js';
+
+// Same mechanism as pages/CookiePolicyPage.tsx (confirmed by reading this
+// script's source directly): it finds itself via
+// getElementById('cky-privacy-policy') and inserts the generated policy as
+// the next sibling via insertAdjacentHTML('afterend', ...), so the script
+// tag must live inside this container (not document.body) for the content
+// to land in the styled card below. It also fetches
+// cdn-cookieyes.com/.../privacy-policy/<lang>.json, already allowed under
+// connect-src in src/worker.ts and index.html's CSP.
 const PrivacyPage: React.FC = () => {
   const navigate = useNavigate();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const script = document.createElement('script');
+    script.id = COOKIEYES_PRIVACY_SCRIPT_ID;
+    script.type = 'text/javascript';
+    script.src = COOKIEYES_PRIVACY_SCRIPT_SRC;
+    container.appendChild(script);
+    return () => {
+      container.replaceChildren();
+    };
+  }, []);
 
   return (
     <div className="bg-background min-h-screen text-text px-4 md:px-6 py-16 md:py-32">
@@ -27,61 +52,7 @@ const PrivacyPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="glass p-10 md:p-16 rounded-[3rem] border-border space-y-8 reveal" style={{ transitionDelay: '80ms' }}>
-          <div>
-            <p className="text-xs font-mono tracking-widest uppercase text-cyan-400 mb-2">Last Updated</p>
-            <p className="text-muted">March 2026</p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-text mb-4">Overview</h2>
-            <p className="text-muted leading-relaxed">
-              This policy explains what information TrivianEdge collects, how we use it, and the controls we apply to protect it. We keep this policy practical and easy to read. Our handling approach is aligned with applicable privacy obligations, including PIPEDA (Canada) and GDPR principles where relevant.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-text mb-4">Information We Collect</h2>
-            <p className="text-muted leading-relaxed">
-              We collect information you provide directly, such as your name, company name, email address, and request details when you submit forms. We also collect basic analytics signals such as page views, device/browser context, and general region to help us improve website performance and user experience.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-text mb-4">How We Use Your Information</h2>
-            <p className="text-muted leading-relaxed">
-              We use submitted information to respond to inquiries, handle service requests, and share relevant follow-up communication. We do not sell your personal information. We only share data with service providers that support core operations such as website infrastructure, communications delivery, and analytics processing.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-text mb-4">Retention and Access</h2>
-            <p className="text-muted leading-relaxed">
-              We retain personal data only as long as needed for the purpose it was collected, or as required by law. You may request access, correction, or deletion of your information by contacting us. We will review and respond to requests within a reasonable period.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-text mb-4">Data Security</h2>
-            <p className="text-muted leading-relaxed">
-              We apply practical technical and organizational safeguards, including encrypted transport, restricted API exposure, and monitored cloud infrastructure controls. No online system is risk-free, but we continuously improve controls to reduce operational and security risk.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-text mb-4">Contact</h2>
-            <p className="text-muted leading-relaxed">
-              For privacy requests or questions, contact us at{' '}
-              <a href="mailto:kevin.v@trivianedge.com" className="underline hover:text-cyan-400 transition-colors break-words">kevin.v@trivianedge.com</a>.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-cyan-500/5 border border-cyan-500/20">
-            <p className="text-cyan-400 text-sm font-mono">
-              This page is reviewed periodically to reflect service, legal, and operational updates.
-            </p>
-          </div>
-        </div>
+        <div ref={containerRef} className="glass p-10 md:p-16 rounded-[3rem] border-border reveal cookieyes-generated-content" style={{ transitionDelay: '80ms' }} />
 
         <div className="mt-16 text-center">
           <Logo onClick={() => navigate('/')} />

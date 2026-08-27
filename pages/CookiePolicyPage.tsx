@@ -53,7 +53,7 @@ const CookiePolicyPage: React.FC = () => {
           </div>
         </div>
 
-        <div ref={containerRef} className="glass p-10 md:p-16 rounded-[3rem] border-border reveal cookie-policy-content" style={{ transitionDelay: '80ms' }} />
+        <div ref={containerRef} className="glass p-10 md:p-16 rounded-[3rem] border-border reveal cookieyes-generated-content" style={{ transitionDelay: '80ms' }} />
 
         <div className="mt-16 text-center">
           <Logo onClick={() => navigate('/')} />

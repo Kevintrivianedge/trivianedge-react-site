@@ -898,49 +898,49 @@
 /* CookieYes injects raw, unstyled HTML into #cky-auto-cookie-policy (see
    pages/CookiePolicyPage.tsx) — without this it renders with browser
    defaults (black text) regardless of theme, unreadable in dark mode. */
-.cookie-policy-content {
+.cookieyes-generated-content {
     color: var(--text-muted);
     line-height: 1.7;
 }
-.cookie-policy-content h1,
-.cookie-policy-content h2,
-.cookie-policy-content h3,
-.cookie-policy-content h4 {
+.cookieyes-generated-content h1,
+.cookieyes-generated-content h2,
+.cookieyes-generated-content h3,
+.cookieyes-generated-content h4 {
     color: var(--text);
     font-weight: 700;
     margin: 1.5em 0 0.6em;
 }
-.cookie-policy-content h1:first-child,
-.cookie-policy-content h2:first-child,
-.cookie-policy-content h3:first-child {
+.cookieyes-generated-content h1:first-child,
+.cookieyes-generated-content h2:first-child,
+.cookieyes-generated-content h3:first-child {
     margin-top: 0;
 }
-.cookie-policy-content p,
-.cookie-policy-content ul,
-.cookie-policy-content ol {
+.cookieyes-generated-content p,
+.cookieyes-generated-content ul,
+.cookieyes-generated-content ol {
     margin-bottom: 1em;
 }
-.cookie-policy-content ul,
-.cookie-policy-content ol {
+.cookieyes-generated-content ul,
+.cookieyes-generated-content ol {
     padding-left: 1.4em;
 }
-.cookie-policy-content a {
+.cookieyes-generated-content a {
     color: var(--cyan);
     text-decoration: underline;
 }
-.cookie-policy-content table {
+.cookieyes-generated-content table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 1.5em;
     font-size: 0.9em;
 }
-.cookie-policy-content th,
-.cookie-policy-content td {
+.cookieyes-generated-content th,
+.cookieyes-generated-content td {
     border: 1px solid var(--border);
     padding: 0.6em 0.8em;
     text-align: left;
     vertical-align: top;
 }
-.cookie-policy-content th {
+.cookieyes-generated-content th {
     color: var(--text);
 }
