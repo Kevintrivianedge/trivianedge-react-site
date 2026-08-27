@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Cookie } from 'lucide-react';
 import Logo from '../components/Logo';
@@ -6,26 +6,29 @@ import Logo from '../components/Logo';
 const COOKIEYES_POLICY_SCRIPT_ID = 'cky-cookie-policy';
 const COOKIEYES_POLICY_SCRIPT_SRC = 'https://cdn-cookieyes.com/client_data/e7db7682b4d8ef7aafc06f6320d50a3c/cookie-policy/script.js';
 
-// Content inside #cky-auto-cookie-policy is populated by this script once it
-// runs — kept in sync with what CookieYes actually scans on the site instead
-// of hand-written prose that can drift. Injected via useEffect rather than a
-// static <script> tag: this is a client-only side effect (populates a DOM
-// node, not markup crawlers need), and a plain tag wouldn't re-execute if the
-// user navigates away from and back to this route within the same SPA session
-// — appending a fresh <script> element on every mount forces it to run again.
-// See CookieYes dashboard: Cookie Policy > Code snippet, page URL set to
-// https://www.trivianedge.com/cookie-policy.
+// This script doesn't look for a pre-existing target div (an earlier version
+// of this page assumed a #cky-auto-cookie-policy container, which the script
+// never actually references — confirmed by reading the script's source
+// directly). Instead it does:
+//   document.getElementById('cky-cookie-policy').insertAdjacentHTML('afterend', ...)
+// i.e. it finds itself by id and inserts the generated policy as the next
+// sibling. So the script tag must live inside this container (not
+// document.body) for the generated content to land in the styled card below
+// rather than at the very end of the page.
 const CookiePolicyPage: React.FC = () => {
   const navigate = useNavigate();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
     const script = document.createElement('script');
     script.id = COOKIEYES_POLICY_SCRIPT_ID;
     script.type = 'text/javascript';
     script.src = COOKIEYES_POLICY_SCRIPT_SRC;
-    document.body.appendChild(script);
+    container.appendChild(script);
     return () => {
-      script.remove();
+      container.replaceChildren();
     };
   }, []);
 
@@ -50,9 +53,7 @@ const CookiePolicyPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="glass p-10 md:p-16 rounded-[3rem] border-border reveal cookie-policy-content" style={{ transitionDelay: '80ms' }}>
-          <div id="cky-auto-cookie-policy" />
-        </div>
+        <div ref={containerRef} className="glass p-10 md:p-16 rounded-[3rem] border-border reveal cookie-policy-content" style={{ transitionDelay: '80ms' }} />
 
         <div className="mt-16 text-center">
           <Logo onClick={() => navigate('/')} />

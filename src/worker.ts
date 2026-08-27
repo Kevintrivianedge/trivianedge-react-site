@@ -560,7 +560,7 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 const CSP_HEADER =
   "default-src 'self'; " +
   "script-src 'self' https://cdn.amplitude.com https://www.googletagmanager.com https://cdn-cookieyes.com; " +
-  "connect-src 'self' https://*.amplitude.com https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://log.cookieyes.com; " +
+  "connect-src 'self' https://*.amplitude.com https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://log.cookieyes.com https://cdn-cookieyes.com; " +
   "img-src 'self' data: https:; " +
   "font-src 'self' https://fonts.gstatic.com; " +
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
