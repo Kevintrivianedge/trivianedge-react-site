@@ -29,7 +29,6 @@ import {
   buildWebSiteSchema,
   buildServiceSchema,
   buildArticleSchema,
-  buildSoftwareApplicationSchema,
   buildLocalBusinessSchema,
   breadcrumbSchema,
   buildWebPageSchema,
@@ -785,7 +784,6 @@ function getSEOProps(pathname: string) {
           description: 'Bespoke software development and managed IT outsourcing for startups and enterprises, built by dedicated offshore engineering teams. 30-day deployment, up to 40% cost savings.',
           keywords: [...KEYWORD_CLUSTERS.bespokeSoftware, ...KEYWORD_CLUSTERS.outsourcing],
         }),
-        buildSoftwareApplicationSchema(),
         faqSchema(HOME_FAQS),
       ],
     };
