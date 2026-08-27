@@ -966,7 +966,7 @@ export default function App() {
                 </ul>
               </div>
             </div>
-            <div className="max-w-7xl mx-auto pt-8 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest uppercase text-white/55">
+            <div className="max-w-7xl mx-auto pt-8 pr-20 sm:pr-28 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest uppercase text-white/55">
               <p>© {new Date().getFullYear()} TrivianEdge Global — Canada's Offshore Operations Partner</p>
               <div className="flex gap-8">
                 <Link to="/privacy" className="hover:text-white/80 transition-colors">Privacy</Link>
