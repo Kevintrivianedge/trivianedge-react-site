@@ -117,6 +117,31 @@ const AboutPage: React.FC = () => {
           </div>
 
           <div className="mb-16 reveal">
+            <h2 className="display-section text-3xl md:text-4xl font-bold mb-6">Meet our Director of Marketing &amp; Sales</h2>
+            <div className="glass p-8 md:p-10 rounded-[2rem] border-border grid md:grid-cols-[auto_1fr] gap-8 items-start">
+              <div className="flex md:flex-col items-center md:items-start gap-4 md:w-40">
+                <img
+                  src="/team/velautham-prabaharan.jpg"
+                  alt="Velautham Prabaharan, Director of Marketing & Sales at TrivianEdge"
+                  width={128}
+                  height={128}
+                  className="w-24 h-24 md:w-32 md:h-32 rounded-2xl object-cover border border-border"
+                  loading="lazy"
+                />
+                <div>
+                  <div className="font-bold">Velautham Prabaharan</div>
+                  <div className="text-muted text-sm mb-2">Director, Marketing &amp; Sales</div>
+                </div>
+              </div>
+              <div className="text-muted leading-relaxed space-y-4">
+                <p>Velautham Prabaharan leads Marketing &amp; Sales at TrivianEdge, where he's responsible for driving business growth, building strategic partnerships, and strengthening our market presence.</p>
+                <p>He brings a results-driven track record in business development, client relationship management, and revenue growth, built over years in the financial services sector across Dubai and Sri Lanka. That background gives him sharp instincts for sales strategy, customer acquisition, and market expansion.</p>
+                <p>What stands out most is his commitment to delivering real value to clients — paired with the leadership and communication skills to back it up. It's a combination that fits right into TrivianEdge's mission: helping organizations worldwide access innovative technology, outsourcing, and business solutions.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-16 reveal">
             <h2 className="display-section text-3xl md:text-4xl font-bold mb-4">Where our talent comes from</h2>
             <p className="text-muted text-lg leading-relaxed mb-8 max-w-3xl">
               We source and manage talent across six global hubs, each chosen for a specific strength — engineering depth, operational scale, or time zone coverage.
