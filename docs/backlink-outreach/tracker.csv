@@ -1,0 +1,11 @@
+type,prospect,url,angle_or_category,status,date_submitted,live_url,notes
+directory,Clutch,https://clutch.co,BPO Services,not started,,,Requires client verification calls - slowest, do first
+directory,GoodFirms,https://www.goodfirms.co,BPO Services,not started,,,Note .co TLD not .com
+directory,Sortlist,https://www.sortlist.com,Business Process Outsourcing,not started,,,Also enrolls you in buyer-match inbound
+directory,Outsource Accelerator,https://www.outsourceaccelerator.com,BPO directory,not started,,,Most on-topic audience
+directory,Outsourcing Digest,https://www.outsourcingdigest.com,BPO directory,not started,,,
+directory,DesignRush,https://www.designrush.com,BPO / Call Centers,not started,,,
+journalist-platform,Featured,https://www.featured.com,monitor for angles 1-6,ongoing,,,Acquired HARO brand 2025 - highest volume
+journalist-platform,Qwoted,https://www.qwoted.com,monitor for angles 1-6,ongoing,,,Higher-authority outlets
+journalist-platform,SourceBottle,https://www.sourcebottle.com,monitor for angles 1-6,ongoing,,,Free tier
+journalist-platform,MentionMatch (Superpath),,monitor for angles 1-6,ongoing,,,Formerly Help a B2B Writer; Slack community-based
