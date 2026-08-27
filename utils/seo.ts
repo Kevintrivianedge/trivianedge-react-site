@@ -117,6 +117,22 @@ export function buildOrganizationSchema(): object {
       'Global Talent Acquisition', 'Remote Team Management', 'AI Staffing',
       'Managed IT Services', 'Cloud Operations',
     ],
+    founder: { '@id': `${SEO_CONFIG.siteUrl}/about#founder` },
+  };
+}
+
+/** Schema.org Person for the founder, referenced by @id from buildOrganizationSchema's `founder` field */
+export function buildFounderPersonSchema(): object {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${SEO_CONFIG.siteUrl}/about#founder`,
+    name: 'Kevin Vaz',
+    jobTitle: 'Founder',
+    worksFor: { '@type': 'Organization', '@id': `${SEO_CONFIG.siteUrl}/#organization` },
+    url: `${SEO_CONFIG.siteUrl}/about`,
+    image: `${SEO_CONFIG.siteUrl}/founder/kevin-vaz.webp`,
+    sameAs: ['https://www.linkedin.com/in/kevin-v-0b714b30/'],
   };
 }
 

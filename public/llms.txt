@@ -23,6 +23,7 @@ TrivianEdge is headquartered in Toronto, Ontario, Canada and sources talent from
 
 ## Company
 
+- [About](https://www.trivianedge.com/about): Company overview, founding year, global talent hubs, and how to reach the team.
 - [Savings Calculator](https://www.trivianedge.com/savings-calculator): Free tool estimating annual and 3-year savings from building an offshore team with TrivianEdge.
 - [Proof](https://www.trivianedge.com/proof): Case studies and client testimonials.
 - [Trust](https://www.trivianedge.com/trust): Security, compliance, and data-handling posture (PIPEDA, GDPR).

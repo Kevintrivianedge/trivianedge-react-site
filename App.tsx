@@ -60,6 +60,7 @@ const BlogPostDetail          = lazy(() => import('./components/BlogPostDetail')
 const ContactPage             = lazy(() => import('./pages/ContactPage'));
 const ProofPage               = lazy(() => import('./pages/ProofPage'));
 const TrustPage               = lazy(() => import('./pages/TrustPage'));
+const AboutPage               = lazy(() => import('./pages/AboutPage'));
 const PrivacyPage             = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage               = lazy(() => import('./pages/TermsPage'));
 const BPOPage                 = lazy(() => import('./pages/services/BPOPage'));
@@ -85,10 +86,10 @@ const ChatSidebar             = lazy(() => import('./components/ChatSidebar'));
 // Trust strip — real named clients only, kept separate from the hero's numeric stats
 // so the strip isn't mixing unlike content types (numbers, names, flags) in one place.
 const TRUST_CLIENTS = [
-  { name: 'Capricorn College', logo: '/logos/capricorn-college.png', href: 'https://www.capricorncollegeholbrook.lk/' },
-  { name: 'Cargo Login',       logo: '/logos/cargo-login.png',       href: 'https://www.cargo-login.com/' },
-  { name: 'Keynotive',         logo: '/logos/keynotive.png',         href: 'https://www.keynotive.io/' },
-  { name: 'Hub-Flx',           logo: '/logos/hub-flx.png',           href: 'https://www.hub-flx.com/' },
+  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', href: 'https://www.capricorncollegeholbrook.lk/' },
+  { name: 'Cargo Login',       logo: '/logos/cargo-login.webp',       href: 'https://www.cargo-login.com/' },
+  { name: 'Keynotive',         logo: '/logos/keynotive.webp',         href: 'https://www.keynotive.io/' },
+  { name: 'Hub-Flx',           logo: '/logos/hub-flx.webp',           href: 'https://www.hub-flx.com/' },
 ];
 
 const PREMIUM_FEATURES = [
@@ -684,7 +685,7 @@ function getSEOProps(pathname: string) {
       ]),
     };
   }
-  // /contact, /proof, /trust, /venture-studio, /services, /services/* each render
+  // /contact, /proof, /trust, /about, /venture-studio, /services, /services/* each render
   // their own complete page-level <SEOHead> (title, description, canonical, schema).
   // Building competing metadata for them here would duplicate structured data and
   // let the two titles drift out of sync, so they fall through to the generic
@@ -858,6 +859,7 @@ export default function App() {
                       <Route path="/contact" element={<ContactPage />} />
                       <Route path="/proof" element={<ProofPage />} />
                       <Route path="/trust" element={<TrustPage />} />
+                      <Route path="/about" element={<AboutPage />} />
                       <Route path="/blog" element={<BlogView />} />
                       <Route path="/blog/:slug" element={<BlogPostDetail />} />
                       <Route path="/privacy" element={<PrivacyPage />} />
@@ -921,6 +923,7 @@ export default function App() {
               <div>
                 <h3 className="font-bold text-white/55 mb-6 tracking-widest uppercase text-[10px]">Platform</h3>
                 <ul className="space-y-3">
+                  <li><Link to="/about" className="text-white/55 hover:text-white text-sm transition-colors">About</Link></li>
                   <li><Link to="/proof" className="text-white/55 hover:text-white text-sm transition-colors">Proof</Link></li>
                   <li><Link to="/trust" className="text-white/55 hover:text-white text-sm transition-colors">Trust</Link></li>
                   <li><Link to="/venture-studio" className="text-white/55 hover:text-white text-sm transition-colors">Venture Studio</Link></li>
