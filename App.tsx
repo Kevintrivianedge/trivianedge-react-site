@@ -654,7 +654,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               Prefer to reach out directly?{' '}
               <a href="mailto:kevin.v@trivianedge.com" className="text-white/70 hover:text-cyan-400 underline underline-offset-4 transition-colors">Email us</a>
               {' '}or{' '}
-              <a href="tel:+18882028513" className="text-white/70 hover:text-cyan-400 underline underline-offset-4 transition-colors">call +1 888-202-8513</a>.
+              <a href="tel:+18883472489" className="text-white/70 hover:text-cyan-400 underline underline-offset-4 transition-colors">call +1 888-347-2489</a>.
             </p>
           </div>
       </section>

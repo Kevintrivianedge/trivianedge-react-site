@@ -168,7 +168,7 @@ const AboutPage: React.FC = () => {
           <div className="glass p-8 md:p-10 rounded-[2rem] border-border flex flex-col md:flex-row md:items-center md:justify-between gap-6 reveal">
             <div>
               <h2 className="text-2xl font-bold mb-2">Want to talk to the team?</h2>
-              <p className="text-muted">Reach us directly at <a href="mailto:kevin.v@trivianedge.com" className="text-cyan-600 hover:underline">kevin.v@trivianedge.com</a> or <a href="tel:+18882028513" className="text-cyan-600 hover:underline">+1 888-202-8513</a>.</p>
+              <p className="text-muted">Reach us directly at <a href="mailto:kevin.v@trivianedge.com" className="text-cyan-600 hover:underline">kevin.v@trivianedge.com</a> or <a href="tel:+18883472489" className="text-cyan-600 hover:underline">+1 888-347-2489</a>.</p>
             </div>
             <Link to="/contact" className="inline-flex items-center justify-center px-6 py-3 rounded-2xl font-bold premium-button">
               Contact us

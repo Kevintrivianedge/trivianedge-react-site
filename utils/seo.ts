@@ -95,7 +95,7 @@ export function buildOrganizationSchema(): object {
     contactPoint: [
       {
         '@type': 'ContactPoint',
-        telephone: '+1-888-202-8513',
+        telephone: '+1-888-347-2489',
         contactType: 'customer service',
         email: 'kevin.v@trivianedge.com',
         areaServed: 'Worldwide',
@@ -145,7 +145,7 @@ export function buildLocalBusinessSchema(): object {
     name: 'TrivianEdge Global',
     description: 'Canada-based BPO and offshore software development company providing global talent, IT outsourcing, and managed services.',
     url: SEO_CONFIG.siteUrl,
-    telephone: '+1-888-202-8513',
+    telephone: '+1-888-347-2489',
     email: 'kevin.v@trivianedge.com',
     address: {
       '@type': 'PostalAddress',
