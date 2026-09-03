@@ -575,8 +575,22 @@ const BASE_SECURITY_HEADERS: Record<string, string> = {
   'X-Content-Type-Options': 'nosniff',
 };
 
-/** Attach CSP and security headers to a static-asset response. */
-function addSecurityHeaders(response: Response, statusOverride?: number): Response {
+// Cloudflare Workers Static Assets concatenates Cache-Control from every
+// matching public/_headers pattern instead of letting the more specific one
+// win (confirmed live: hashed JS/CSS bundles were shipping
+// "no-cache, ... max-age=31536000, immutable" as one contradictory value).
+// Recomputing it here, keyed on the request pathname, sidesteps that entirely
+// since Headers.set() replaces rather than appends.
+function cacheControlFor(pathname: string): string {
+  if (pathname.startsWith('/assets/')) return 'public, max-age=31536000, immutable';
+  if (/\.(svg|png)$/.test(pathname)) return 'public, max-age=86400, stale-while-revalidate=86400';
+  if (pathname.endsWith('.ico')) return 'public, max-age=86400';
+  if (pathname === '/manifest.json') return 'public, max-age=3600';
+  return 'public, no-cache';
+}
+
+/** Attach CSP, security headers, and a corrected Cache-Control to a static-asset response. */
+function addSecurityHeaders(response: Response, pathname: string, statusOverride?: number): Response {
   const headers = new Headers(response.headers);
   headers.set('Content-Security-Policy', CSP_HEADER);
   for (const [key, value] of Object.entries(BASE_SECURITY_HEADERS)) {
@@ -585,6 +599,7 @@ function addSecurityHeaders(response: Response, statusOverride?: number): Respon
   headers.set('X-Frame-Options', 'DENY');
   headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()');
+  headers.set('Cache-Control', cacheControlFor(pathname));
   return new Response(response.body, { status: statusOverride ?? response.status, headers });
 }
 
@@ -671,7 +686,7 @@ export default {
           new Request(new URL(snapshotPath, request.url).toString()),
         );
         if (snapshotResponse.status !== 404) {
-          return addSecurityHeaders(snapshotResponse);
+          return addSecurityHeaders(snapshotResponse, url.pathname);
         }
 
         // Neither a real asset nor a prerendered snapshot exists for this path, so
@@ -683,9 +698,9 @@ export default {
         // Google's indexer this is a valid page and blocks it from ever dropping
         // dead URLs from the index.
         const indexRequest = new Request(new URL('/index.html', request.url).toString());
-        return addSecurityHeaders(await env.ASSETS.fetch(indexRequest), 404);
+        return addSecurityHeaders(await env.ASSETS.fetch(indexRequest), url.pathname, 404);
       }
-      return addSecurityHeaders(assetResponse);
+      return addSecurityHeaders(assetResponse, url.pathname);
     }
 
     return new Response('Not found', { status: 404 });

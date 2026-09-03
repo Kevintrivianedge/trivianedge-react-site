@@ -208,7 +208,7 @@ export function buildWebSiteSchema(): object {
 }
 
 /** Schema.org Service for individual service offerings */
-export function buildServiceSchema(service: { name: string; description: string; keywords?: string[] }): object {
+export function buildServiceSchema(service: { name: string; description: string; keywords?: string[]; serviceType?: string }): object {
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -222,7 +222,7 @@ export function buildServiceSchema(service: { name: string; description: string;
       name: 'TrivianEdge',
     },
     areaServed: 'Worldwide',
-    serviceType: 'Business Process Outsourcing',
+    serviceType: service.serviceType ?? 'Business Process Outsourcing',
     offers: {
       '@type': 'Offer',
       description: `TrivianEdge ${service.name} contact us for a custom quote with up to 40% cost savings.`,

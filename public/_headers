@@ -1,8 +1,23 @@
-# ── Hashed JS/CSS bundles (Vite appends content hash) — cache 1 year ──
+# Cache-Control lives ONLY here, one directive per pattern, deliberately not
+# repeated on the /* catch-all below. Cloudflare Workers Static Assets
+# concatenates a header's value across every matching pattern instead of
+# letting the more specific one win (confirmed live: /assets/* was shipping
+# "no-cache, ... max-age=31536000, immutable" as one contradictory value
+# because both this block and a Cache-Control on /* matched it). As long as
+# no other block here sets Cache-Control, each path gets exactly one rule.
+#
+# Note src/worker.ts's addSecurityHeaders() also sets Cache-Control, but that
+# only runs for requests that fall through to the Worker (SPA routes with no
+# literal file match, e.g. /about) — Cloudflare serves a literal asset match
+# like /assets/*.js directly without invoking the Worker at all
+# (run_worker_first is not set), so this file is the one actually in effect
+# for hashed bundles and static media.
+
+# Hashed JS/CSS bundles (Vite appends content hash) — cache 1 year.
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-# ── Static media in /public (no hash, so shorter TTL) ──
+# Static media in /public (no hash, so shorter TTL).
 /*.svg
   Cache-Control: public, max-age=86400, stale-while-revalidate=86400
 /*.png
@@ -10,13 +25,14 @@
 /*.ico
   Cache-Control: public, max-age=86400
 
-# ── Service Worker / manifest ──
+# Manifest.
 /manifest.json
   Cache-Control: public, max-age=3600
 
-# ── HTML pages: no-store so browsers always re-validate ──
+# Security headers on everything else (HTML pages get their Cache-Control
+# from the Worker instead — see addSecurityHeaders() — so it is deliberately
+# absent here).
 /*
-  Cache-Control: public, no-cache
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin

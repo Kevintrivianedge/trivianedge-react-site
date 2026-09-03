@@ -778,11 +778,13 @@ function getSEOProps(pathname: string) {
           name: 'Offshore Software Development',
           description: 'Dedicated offshore software development teams sourced from elite global talent hubs Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica.',
           keywords: [...KEYWORD_CLUSTERS.offshore, ...KEYWORD_CLUSTERS.softwareDev],
+          serviceType: 'Software Development',
         }),
         buildServiceSchema({
           name: 'Bespoke Software Development & IT Outsourcing',
           description: 'Bespoke software development and managed IT outsourcing for startups and enterprises, built by dedicated offshore engineering teams. 30-day deployment, up to 40% cost savings.',
           keywords: [...KEYWORD_CLUSTERS.bespokeSoftware, ...KEYWORD_CLUSTERS.outsourcing],
+          serviceType: 'IT Outsourcing',
         }),
         faqSchema(HOME_FAQS),
       ],

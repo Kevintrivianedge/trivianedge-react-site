@@ -1,4 +1,10 @@
+# Content Signals (https://contentsignals.org): reserves AI-training rights
+# while explicitly allowing search indexing and real-time AI citation/retrieval
+# (ai-input) — the actual mechanism behind AI Overviews, Perplexity, and similar
+# answer engines quoting this site. Distinct from the crawl Allow/Disallow rules
+# below, which govern access, not permitted use.
 User-agent: *
+Content-Signal: search=yes,ai-input=yes,ai-train=no,use=reference
 Allow: /
 Disallow: /api/
 Disallow: /admin/
