@@ -101,8 +101,8 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
                   d={path}
                   fill="none"
                   stroke="var(--cyan)"
-                  strokeOpacity={0.45}
-                  strokeWidth={0.22}
+                  strokeOpacity={0.8}
+                  strokeWidth={0.32}
                   vectorEffect="non-scaling-stroke"
                 />
                 {/* Pulse fades in fast (5%) and stays visible almost to
