@@ -468,6 +468,17 @@
             pointer-events: none;
         }
 
+        /* ── Numbered process step ── */
+        .step-number {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1;
+            color: rgba(0,196,154,0.35);
+            letter-spacing: -0.04em;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
         /* ── Service card dark treatments ── */
         .service-dark {
             background: linear-gradient(145deg, #030d0a 0%, #050f0b 100%);
@@ -743,6 +754,17 @@
             mask-composite: exclude;
             -webkit-mask-composite: xor;
             pointer-events: none;
+        }
+
+        /* Neural network dot background — reserved for the world-map section
+           only (App.tsx ACT 7), where it reinforces the talent network both
+           literally (a real map) and visually. Not a decorative default. */
+        .neural-bg {
+            background-image:
+                radial-gradient(circle, rgba(0,196,154,0.15) 1px, transparent 1px),
+                radial-gradient(circle, rgba(0,196,154,0.07) 1px, transparent 1px);
+            background-size: 50px 50px, 80px 80px;
+            background-position: 0 0, 25px 25px;
         }
 
         /* --- Floating badge pulse --- */
