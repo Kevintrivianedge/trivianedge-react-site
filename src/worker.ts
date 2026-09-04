@@ -691,14 +691,16 @@ export default {
 
         // Neither a real asset nor a prerendered snapshot exists for this path, so
         // it isn't a real route — including stale/legacy URLs left over from past
-        // site content that no longer exists. Still serve the SPA shell (so real
-        // users get the client-rendered NotFoundPage instead of a blank error),
-        // but with an honest 404 status: the previous behavior always returned 200
-        // here (whatever index.html itself returns), a "soft 404" that tells
-        // Google's indexer this is a valid page and blocks it from ever dropping
-        // dead URLs from the index.
-        const indexRequest = new Request(new URL('/index.html', request.url).toString());
-        return addSecurityHeaders(await env.ASSETS.fetch(indexRequest), url.pathname, 404);
+        // site content that no longer exists. Serve the dedicated 404 snapshot
+        // (scripts/prerender.mjs prerenders NotFoundPage separately, at
+        // /__404-snapshot, specifically for this) rather than the homepage's own
+        // snapshot: reusing /index.html here previously meant a non-JS crawler
+        // hitting a dead URL saw full homepage content and an "index, follow"
+        // robots meta baked into the static HTML, with only the HTTP status
+        // (correctly 404) signaling otherwise. Real users still get the
+        // client-rendered NotFoundPage either way once JS hydrates.
+        const notFoundSnapshotRequest = new Request(new URL('/__404-snapshot/index.html', request.url).toString());
+        return addSecurityHeaders(await env.ASSETS.fetch(notFoundSnapshotRequest), url.pathname, 404);
       }
       return addSecurityHeaders(assetResponse, url.pathname);
     }

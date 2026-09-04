@@ -22,10 +22,17 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
 const distDir = join(rootDir, 'dist');
 
+// Not a real, indexable page — deliberately excluded from sitemap.xml (a
+// noindex URL listed in a sitemap is its own SEO anti-pattern). Prerendered
+// separately so src/worker.ts has a dedicated 404 snapshot (NotFoundPage,
+// which already sets noIndex) to serve for unmatched paths, instead of
+// reusing the homepage's snapshot — see the fallback comment in worker.ts.
+const NOT_FOUND_ROUTE = '/__404-snapshot';
+
 function getRoutePaths() {
   const sitemap = readFileSync(join(rootDir, 'public/sitemap.xml'), 'utf-8');
   const matches = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)];
-  return matches.map(([, url]) => new URL(url).pathname);
+  return [...matches.map(([, url]) => new URL(url).pathname), NOT_FOUND_ROUTE];
 }
 
 async function main() {

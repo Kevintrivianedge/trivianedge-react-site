@@ -52,6 +52,8 @@ export interface WhyUsItem {
 export interface BlogPost {
   id: string;
   title: string;
+  /** Shorter <title> tag for search results when the on-page `title` headline runs long — falls back to `${title} | TrivianEdge` if omitted. */
+  metaTitle?: string;
   excerpt: string;
   content: string;
   author: string;
@@ -126,6 +128,8 @@ export interface ComparisonPageData {
 export interface IndustryPageData {
   slug: string;
   name: string;
+  /** Longer, keyword-rich <title> tag — falls back to `${name} | TrivianEdge` if omitted. */
+  metaTitle?: string;
   tagline: string;
   description: string;
   challenges: string[];
@@ -138,6 +142,8 @@ export interface IndustryPageData {
 export interface ServiceCountryCombo {
   service: 'bpo' | 'rpo' | 'ai-development' | 'it-outsourcing';
   serviceName: string;
+  /** Longer, keyword-rich <title> tag — falls back to `${serviceName} in {country} | TrivianEdge` if omitted. */
+  metaTitle?: string;
   serviceHref: string;
   countrySlug: string;
   hubId: string;

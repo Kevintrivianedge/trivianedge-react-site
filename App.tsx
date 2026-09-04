@@ -714,11 +714,11 @@ function getSEOProps(pathname: string) {
           url: privacyUrl,
           datePublished: LEGAL_PAGES_PUBLISHED,
           dateModified: LEGAL_PAGES_MODIFIED,
-          breadcrumb: [
-            { name: 'Home', url: SEO_CONFIG.siteUrl },
-            { name: 'Privacy Policy', url: privacyUrl },
-          ],
         }),
+        breadcrumbSchema([
+          { name: 'Home', url: SEO_CONFIG.siteUrl },
+          { name: 'Privacy Policy', url: privacyUrl },
+        ]),
       ],
     };
   }
@@ -736,11 +736,11 @@ function getSEOProps(pathname: string) {
           url: termsUrl,
           datePublished: LEGAL_PAGES_PUBLISHED,
           dateModified: LEGAL_PAGES_MODIFIED,
-          breadcrumb: [
-            { name: 'Home', url: SEO_CONFIG.siteUrl },
-            { name: 'Terms of Engagement', url: termsUrl },
-          ],
         }),
+        breadcrumbSchema([
+          { name: 'Home', url: SEO_CONFIG.siteUrl },
+          { name: 'Terms of Engagement', url: termsUrl },
+        ]),
       ],
     };
   }
@@ -758,11 +758,11 @@ function getSEOProps(pathname: string) {
           url: cookiePolicyUrl,
           datePublished: LEGAL_PAGES_PUBLISHED,
           dateModified: '2026-08-27',
-          breadcrumb: [
-            { name: 'Home', url: SEO_CONFIG.siteUrl },
-            { name: 'Cookie Policy', url: cookiePolicyUrl },
-          ],
         }),
+        breadcrumbSchema([
+          { name: 'Home', url: SEO_CONFIG.siteUrl },
+          { name: 'Cookie Policy', url: cookiePolicyUrl },
+        ]),
       ],
     };
   }

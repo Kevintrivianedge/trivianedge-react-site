@@ -4,6 +4,7 @@ export const SERVICE_COUNTRY_COMBOS: ServiceCountryCombo[] = [
   {
     service: 'bpo',
     serviceName: 'BPO',
+    metaTitle: 'BPO Outsourcing in the Philippines | TrivianEdge',
     serviceHref: '/services/bpo',
     countrySlug: 'philippines',
     hubId: 'phl',
@@ -18,6 +19,7 @@ export const SERVICE_COUNTRY_COMBOS: ServiceCountryCombo[] = [
   {
     service: 'rpo',
     serviceName: 'RPO',
+    metaTitle: 'RPO & Software Engineer Hiring in Sri Lanka | TrivianEdge',
     serviceHref: '/services/rpo',
     countrySlug: 'sri-lanka',
     hubId: 'lka',

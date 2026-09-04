@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Building2, Globe2, Users, Clock, Linkedin } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import { TALENT_HUBS } from '../constants';
-import { buildWebPageSchema, buildFounderPersonSchema, SEO_CONFIG } from '../utils/seo';
+import { buildWebPageSchema, buildFounderPersonSchema, breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
 
 const STATS = [
   { icon: Clock, label: 'Team deployed', value: '30 days' },
@@ -19,7 +19,7 @@ const AboutPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="About | TrivianEdge"
+        title="About TrivianEdge | Toronto BPO, RPO & Software Company"
         description="TrivianEdge is a Toronto-based BPO, RPO, and offshore software development company deploying offshore teams across six global talent hubs in 30 days."
         canonical={aboutUrl}
         structuredData={[
@@ -27,11 +27,11 @@ const AboutPage: React.FC = () => {
             name: 'About TrivianEdge',
             description: 'TrivianEdge is a Toronto-based BPO, RPO, and offshore software development company deploying offshore teams across six global talent hubs in 30 days.',
             url: aboutUrl,
-            breadcrumb: [
-              { name: 'Home', url: SEO_CONFIG.siteUrl },
-              { name: 'About', url: aboutUrl },
-            ],
           }),
+          breadcrumbSchema([
+            { name: 'Home', url: SEO_CONFIG.siteUrl },
+            { name: 'About', url: aboutUrl },
+          ]),
           buildFounderPersonSchema(),
         ]}
       />

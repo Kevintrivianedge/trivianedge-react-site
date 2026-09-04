@@ -4,6 +4,7 @@ export const INDUSTRIES: IndustryPageData[] = [
   {
     slug: 'logistics',
     name: 'Logistics & Supply Chain',
+    metaTitle: 'Logistics & Supply Chain Outsourcing | TrivianEdge',
     tagline: 'Coverage that follows the freight, not the office hours.',
     description: 'Logistics does not stop when your local team logs off. Documentation, dispatch, and exception handling keep moving overnight, and the businesses that handle that well are the ones that built cross-timezone coverage on purpose instead of hiring more people in the same timezone and hoping for the best.',
     challenges: [
@@ -28,6 +29,7 @@ export const INDUSTRIES: IndustryPageData[] = [
   {
     slug: 'saas-growth',
     name: 'SaaS & Growth-Stage Companies',
+    metaTitle: 'SaaS & Growth-Stage Outsourcing Teams | TrivianEdge',
     tagline: 'Outbound throughput without building a management layer first.',
     description: 'Growth-stage companies need more pipeline activity than their current team can generate, but hiring and managing a full outbound function in-house is slow and expensive before you know which motions actually work. Offshore growth teams let you scale outbound activity without committing to that overhead upfront.',
     challenges: [
@@ -52,6 +54,7 @@ export const INDUSTRIES: IndustryPageData[] = [
   {
     slug: 'healthcare-medtech',
     name: 'Healthcare & Medtech',
+    metaTitle: 'Healthcare & Medtech Software Outsourcing | TrivianEdge',
     tagline: 'Software and market-entry support for medtech products — built carefully, not casually.',
     description: 'Healthcare and medtech products carry real compliance stakes, and we treat that seriously: we do not claim formal healthcare certifications we do not hold, and we work with your legal and compliance team to confirm what a specific engagement requires. What we bring is engineering and market-entry execution for medtech, health-adjacent, and regulated-adjacent software products.',
     challenges: [
@@ -76,6 +79,7 @@ export const INDUSTRIES: IndustryPageData[] = [
   {
     slug: 'education',
     name: 'Education',
+    metaTitle: 'Education Software & Outsourcing Solutions | TrivianEdge',
     tagline: 'Modern public-facing systems and real operational verification, not spreadsheets.',
     description: 'Schools and education providers are often running on public websites and administrative processes that haven\'t kept pace with what\'s actually possible — manual attendance tracking, outdated public sites, and no real-time visibility into day-to-day operations. TrivianEdge builds the software layer that fixes that.',
     challenges: [

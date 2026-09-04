@@ -71,7 +71,7 @@ const BlogPostDetail: React.FC = () => {
   return (
     <>
       <SEOHead
-        title={post.title}
+        title={post.metaTitle ?? post.title}
         description={(post as any).metaDescription ?? post.excerpt}
         keywords={(post as any).metaKeywords?.join(', ')}
         ogType="article"

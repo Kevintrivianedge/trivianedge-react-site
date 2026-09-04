@@ -15,6 +15,7 @@ Disallow: /account/
 Disallow: /login/
 Disallow: /register/
 Disallow: /checkout/
+Disallow: /__404-snapshot
 
 # Google — no crawl delay, allow all public content
 User-agent: Googlebot
