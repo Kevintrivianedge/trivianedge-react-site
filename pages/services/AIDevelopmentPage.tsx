@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
+import RelatedLinks from '../../components/RelatedLinks';
 import {
   Sparkles,
   MessageSquare,
@@ -32,12 +33,12 @@ const FAQS = [
   {
     question: 'Can TrivianEdge integrate OpenAI and Anthropic APIs into my existing software?',
     answer:
-      'Yes. Our engineers are experienced with OpenAI GPT-4o, Anthropic Claude 3, HuggingFace models, LangChain, LlamaIndex, and all major AI APIs. We can add AI capabilities to your existing product — whether that is a web app, mobile app, internal tool, or enterprise system — without rebuilding what already works.',
+      'Yes. Our engineers work across the current OpenAI and Anthropic APIs, HuggingFace-hosted and open-weight models, and orchestration frameworks like LangChain and LlamaIndex — and we stay current as new model generations ship. We can add AI capabilities to your existing product — whether that is a web app, mobile app, internal tool, or enterprise system — without rebuilding what already works.',
   },
   {
     question: 'Do you build custom LLMs or fine-tune existing models?',
     answer:
-      'Yes. TrivianEdge builds custom LLM applications and fine-tunes open-source models like LLaMA, Mistral, and Falcon for specific business use cases. If you need a model that understands your industry terminology, your product data, or your customer patterns, fine-tuning is often the right approach and we handle the entire process.',
+      'Yes. TrivianEdge builds custom LLM applications and fine-tunes current open-weight models (Llama, Mistral, and similar families) for specific business use cases. If you need a model that understands your industry terminology, your product data, or your customer patterns, fine-tuning is often the right approach and we handle the entire process.',
   },
   {
     question: 'What is the difference between AI development and traditional software development?',
@@ -62,7 +63,7 @@ const FAQS = [
   {
     question: 'How do you handle data privacy when building AI?',
     answer:
-      'We follow a security-first development approach from day one. Your data never flows to third-party training pipelines without your explicit consent. We design AI systems that comply with GDPR, PIPEDA, HIPAA (where applicable), and other relevant regulations. All data handling is documented and auditable.',
+      'We follow a security-first development approach from day one. Your data never flows to third-party training pipelines without your explicit consent. We design systems to support GDPR, PIPEDA, and HIPAA-aligned requirements where applicable — through controls like data minimization, access restrictions, and audit logging — and work with your legal and compliance team to confirm what your specific engagement requires. All data handling is documented and auditable.',
   },
   {
     question: 'Can TrivianEdge maintain and improve the AI after launch?',
@@ -264,6 +265,15 @@ const AIDevelopmentPage: React.FC = () => {
             </Link>
           </div>
         </section>
+
+        <RelatedLinks
+          links={[
+            { label: 'Software & IT outsourcing', desc: 'Bespoke software development beyond AI features — full product builds.', to: '/services/it-outsourcing' },
+            { label: 'RPO', desc: 'Hire AI and ML engineers directly onto your team instead of an embedded delivery team.', to: '/services/rpo' },
+            { label: 'Trust & security', desc: 'How we handle model data, API keys, and AI assistant conversations.', to: '/trust' },
+            { label: 'Case studies', desc: 'See TrivianEdge engagement outcomes across BPO, RPO, and software delivery.', to: '/proof' },
+          ]}
+        />
 
         {/* CTA */}
         <section className="py-24 px-4 md:px-6">

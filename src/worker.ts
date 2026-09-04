@@ -946,6 +946,10 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
     email?: string;
     need?: string;
     timeline?: string;
+    companySize?: string;
+    headcount?: string;
+    market?: string;
+    budget?: string;
     message?: string;
   }>(request);
   if (!parsed.ok) {
@@ -962,6 +966,10 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
   const email = capLength(typeof body.email === 'string' ? body.email.trim() : '', MAX_FIELD_LENGTH);
   const need = capLength(typeof body.need === 'string' ? body.need.trim() : '', MAX_FIELD_LENGTH);
   const timeline = capLength(typeof body.timeline === 'string' ? body.timeline.trim() : '', MAX_FIELD_LENGTH);
+  const companySize = capLength(typeof body.companySize === 'string' ? body.companySize.trim() : '', MAX_FIELD_LENGTH);
+  const headcount = capLength(typeof body.headcount === 'string' ? body.headcount.trim() : '', MAX_FIELD_LENGTH);
+  const market = capLength(typeof body.market === 'string' ? body.market.trim() : '', MAX_FIELD_LENGTH);
+  const budget = capLength(typeof body.budget === 'string' ? body.budget.trim() : '', MAX_FIELD_LENGTH);
   const message = capLength(typeof body.message === 'string' ? body.message.trim() : '', MAX_FREEFORM_LENGTH);
 
   if (!name || !company || !email) {
@@ -984,6 +992,10 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
     const safeEmail = escapeHtml(email);
     const safeNeed = escapeHtml(need);
     const safeTimeline = escapeHtml(timeline);
+    const safeCompanySize = escapeHtml(companySize);
+    const safeHeadcount = escapeHtml(headcount);
+    const safeMarket = escapeHtml(market);
+    const safeBudget = escapeHtml(budget);
     const safeMessage = escapeHtml(message);
 
     const resendRes = await fetch('https://api.resend.com/emails', {
@@ -1004,6 +1016,10 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
             <tr><td><strong>Email</strong></td><td>${safeEmail}</td></tr>
             <tr><td><strong>Need</strong></td><td>${safeNeed || 'Not specified'}</td></tr>
             <tr><td><strong>Timeline</strong></td><td>${safeTimeline || 'Not specified'}</td></tr>
+            <tr><td><strong>Company size</strong></td><td>${safeCompanySize || 'Not specified'}</td></tr>
+            <tr><td><strong>Headcount needed</strong></td><td>${safeHeadcount || 'Not specified'}</td></tr>
+            <tr><td><strong>Country / market</strong></td><td>${safeMarket || 'Not specified'}</td></tr>
+            <tr><td><strong>Estimated monthly budget</strong></td><td>${safeBudget || 'Not specified'}</td></tr>
             <tr><td><strong>Message</strong></td><td>${safeMessage || 'No message provided'}</td></tr>
           </table>
         `,

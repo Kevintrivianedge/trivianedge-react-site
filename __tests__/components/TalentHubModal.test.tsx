@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
 import { TalentHubModal } from '../../components/TalentHubModal';
 import { TALENT_HUBS } from '../../constants';
@@ -7,7 +8,11 @@ import { TALENT_HUBS } from '../../constants';
 const hub = TALENT_HUBS[0];
 
 const renderModal = (onClose = vi.fn()) =>
-  render(<TalentHubModal hub={hub} onClose={onClose} />);
+  render(
+    <MemoryRouter>
+      <TalentHubModal hub={hub} onClose={onClose} />
+    </MemoryRouter>,
+  );
 
 describe('TalentHubModal', () => {
   beforeEach(() => {

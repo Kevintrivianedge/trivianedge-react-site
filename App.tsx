@@ -58,7 +58,8 @@ const BlogView                = lazy(() => import('./components/BlogView'));
 const BlogPostDetail          = lazy(() => import('./components/BlogPostDetail'));
 const ContactPage             = lazy(() => import('./pages/ContactPage'));
 const ProofPage               = lazy(() => import('./pages/ProofPage'));
-const TrustPage               = lazy(() => import('./pages/TrustPage'));
+const TrustPage                = lazy(() => import('./pages/TrustPage'));
+const TalentHubPage            = lazy(() => import('./pages/TalentHubPage'));
 const AboutPage               = lazy(() => import('./pages/AboutPage'));
 const PrivacyPage             = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage               = lazy(() => import('./pages/TermsPage'));
@@ -169,7 +170,7 @@ const HOME_FAQS = [
   },
   {
     question: 'Do I need to set up a company in another country to work with TrivianEdge?',
-    answer: 'No. TrivianEdge acts as the employer of record in each country, which means you hire globally without setting up any foreign entities, payroll accounts, or legal structures. We take care of all of that.',
+    answer: 'No. TrivianEdge coordinates employment through in-country employer-of-record and payroll partners, which means you hire globally without setting up any foreign entities, payroll accounts, or legal structures yourself. We manage that relationship end to end so it is a single point of contact for you.',
   },
   {
     question: 'What is the difference between BPO and RPO?',
@@ -319,7 +320,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           <div className="max-w-7xl mx-auto grid grid-cols-2 gap-3">
             {[
               { value: '30 days', label: 'Avg. time to hire' },
-              { value: '40%',     label: 'Cost savings' },
+              { value: 'Up to 40%', label: 'Cost savings' },
               { value: '6',       label: 'Countries sourced' },
               { value: '24/7',    label: 'Ops coverage' },
             ].map(s => (
@@ -374,11 +375,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               What we do
             </div>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
-              We hire people for your business.<br />
-              <span className="text-holo">In any country. In 30 days.</span>
+              Hire globally.<br />
+              <span className="text-holo">Start with six proven talent hubs.</span>
             </h2>
             <p className="text-muted text-lg max-w-3xl mx-auto">
-              TrivianEdge is a Toronto-based BPO, RPO, and bespoke software development company that deploys offshore teams in 30 days. We hire people for your back office, run your recruiting pipeline, and build the custom software your product needs, sourced from six global talent hubs and matched to your time zone. Most companies juggle three or four vendors for hiring, payroll, and software. We bring people and software delivery under one roof, so nothing falls through the cracks.
+              TrivianEdge is a Toronto-based BPO, RPO, and bespoke software development company that deploys offshore teams in 30 days. We hire people for your back office, run your recruiting pipeline, and build the custom software your product needs, sourced from six global talent hubs — Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica — and matched to your time zone. Most companies juggle three or four vendors for hiring, payroll, and software. We bring people and software delivery under one roof, so nothing falls through the cracks.
             </p>
           </div>
 
@@ -882,6 +883,7 @@ export default function App() {
                       <Route path="/contact" element={<ContactPage />} />
                       <Route path="/proof" element={<ProofPage />} />
                       <Route path="/trust" element={<TrustPage />} />
+                      <Route path="/talent/:slug" element={<TalentHubPage />} />
                       <Route path="/about" element={<AboutPage />} />
                       <Route path="/blog" element={<BlogView />} />
                       <Route path="/blog/:slug" element={<BlogPostDetail />} />

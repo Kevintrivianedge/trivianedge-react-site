@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
+import RelatedLinks from '../../components/RelatedLinks';
 import {
   Code2,
   Globe,
@@ -28,7 +29,7 @@ const IT_SERVICES = [
 
 const STATS = [
   { value: '30 Days', label: 'Deployment' },
-  { value: '40%', label: 'Cost Savings' },
+  { value: 'Up to 40%', label: 'Cost Savings' },
   { value: '6', label: 'Time Zones' },
   { value: '100%', label: 'Embedded' },
 ];
@@ -137,7 +138,7 @@ const ITOutsourcingPage: React.FC = () => {
             <div className="flex flex-wrap justify-center gap-3 mt-8">
               {[
                 { icon: Clock, label: '30-Day Deployment' },
-                { icon: TrendingDown, label: '40% Cost Savings' },
+                { icon: TrendingDown, label: 'Up to 40% Cost Savings' },
                 { icon: Globe2, label: '6 Time Zones' },
                 { icon: CheckCircle2, label: 'Canada-Based' },
               ].map(({ icon: Icon, label }) => (
@@ -237,6 +238,15 @@ const ITOutsourcingPage: React.FC = () => {
             <Accordion items={FAQS} />
           </div>
         </section>
+
+        <RelatedLinks
+          links={[
+            { label: 'AI development', desc: 'Add AI features, RAG, or agentic workflows to the product we build for you.', to: '/services/ai-development' },
+            { label: 'BPO', desc: 'Pair your engineering team with an outsourced operations or support team.', to: '/services/bpo' },
+            { label: 'RPO', desc: 'Hire software engineers directly onto your own team instead of an embedded team.', to: '/services/rpo' },
+            { label: 'Case studies', desc: 'See how Hub-Flx and Capricorn College shipped software with TrivianEdge.', to: '/proof' },
+          ]}
+        />
 
         {/* CTA */}
         <section className="py-24 px-4 md:px-6">

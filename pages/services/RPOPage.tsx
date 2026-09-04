@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
+import RelatedLinks from '../../components/RelatedLinks';
 import {
   Users,
   Target,
@@ -101,7 +102,7 @@ const RPO_MODELS = [
 
 const STATS = [
   { value: '30 Days', label: 'Deployment' },
-  { value: '40%', label: 'Cost Reduction' },
+  { value: 'Up to 40%', label: 'Cost Reduction' },
   { value: '6', label: 'Time Zones' },
   { value: '100%', label: 'Embedded' },
 ];
@@ -173,7 +174,7 @@ const RPOPage: React.FC = () => {
             <div className="flex flex-wrap justify-center gap-3 mt-8">
               {[
                 { icon: Clock, label: '30-Day Deployment' },
-                { icon: TrendingDown, label: '40% Cost Reduction' },
+                { icon: TrendingDown, label: 'Up to 40% Cost Reduction' },
                 { icon: Globe2, label: '6 Time Zones' },
                 { icon: CheckCircle2, label: 'AI-Powered Hiring' },
               ].map(({ icon: Icon, label }) => (
@@ -318,6 +319,16 @@ const RPOPage: React.FC = () => {
             <Accordion items={FAQS} />
           </div>
         </section>
+
+        <RelatedLinks
+          links={[
+            { label: 'BPO', desc: 'Need an outsourced team running day to day, not just direct hires? See our BPO services.', to: '/services/bpo' },
+            { label: 'AI-powered recruitment', desc: 'How TrivianEdge uses AI sourcing and screening inside the RPO process.', to: '/services/rpo/ai-powered-recruitment' },
+            { label: 'Hire in Sri Lanka', desc: 'Boutique software engineering talent — one of our six sourcing hubs.', to: '/talent/sri-lanka' },
+            { label: 'Case studies', desc: 'See how TrivianEdge clients built teams across six talent hubs.', to: '/proof' },
+            { label: 'Savings calculator', desc: 'Model the real cost-per-hire difference for your roles.', to: '/savings-calculator' },
+          ]}
+        />
 
         <section className="py-24 px-4 md:px-6">
           <div className="max-w-2xl mx-auto text-center reveal">

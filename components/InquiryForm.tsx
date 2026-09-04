@@ -8,6 +8,10 @@ type InquiryFormState = {
   email: string;
   need: string;
   timeline: string;
+  companySize: string;
+  headcount: string;
+  market: string;
+  budget: string;
   message: string;
 };
 
@@ -17,6 +21,10 @@ const initialState: InquiryFormState = {
   email: '',
   need: 'Build a team',
   timeline: '2-4 weeks',
+  companySize: '',
+  headcount: '',
+  market: '',
+  budget: '',
   message: '',
 };
 
@@ -144,15 +152,77 @@ const InquiryForm: React.FC = () => {
           </select>
         </div>
         <div>
-          <label htmlFor="inquiry-message" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Message</label>
-          <textarea
-            id="inquiry-message"
-            value={form.message}
-            onChange={(e) => setForm({ ...form, message: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:text-muted/70 focus:outline-none focus:border-cyan-500/40 transition-colors min-h-[120px]"
-            placeholder="What are you trying to build or fix?"
+          <label htmlFor="inquiry-company-size" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Company size</label>
+          <select
+            id="inquiry-company-size"
+            value={form.companySize}
+            onChange={(e) => setForm({ ...form, companySize: e.target.value })}
+            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none focus:border-cyan-500/40 transition-colors appearance-none cursor-pointer"
+          >
+            <option value="">Prefer not to say</option>
+            <option>1-10 employees</option>
+            <option>11-50 employees</option>
+            <option>51-200 employees</option>
+            <option>201-1000 employees</option>
+            <option>1000+ employees</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-4">
+        <div>
+          <label htmlFor="inquiry-headcount" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">People needed</label>
+          <select
+            id="inquiry-headcount"
+            value={form.headcount}
+            onChange={(e) => setForm({ ...form, headcount: e.target.value })}
+            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none focus:border-cyan-500/40 transition-colors appearance-none cursor-pointer"
+          >
+            <option value="">Not sure yet</option>
+            <option>1 person</option>
+            <option>2-5 people</option>
+            <option>6-15 people</option>
+            <option>16-50 people</option>
+            <option>50+ people</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="inquiry-market" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Country / market</label>
+          <input
+            id="inquiry-market"
+            type="text"
+            value={form.market}
+            onChange={(e) => setForm({ ...form, market: e.target.value })}
+            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:text-muted/70 focus:outline-none focus:border-cyan-500/40 transition-colors"
+            placeholder="e.g. Philippines, GCC"
           />
         </div>
+        <div>
+          <label htmlFor="inquiry-budget" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Est. monthly budget</label>
+          <select
+            id="inquiry-budget"
+            value={form.budget}
+            onChange={(e) => setForm({ ...form, budget: e.target.value })}
+            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none focus:border-cyan-500/40 transition-colors appearance-none cursor-pointer"
+          >
+            <option value="">Prefer not to say</option>
+            <option>Under $5,000</option>
+            <option>$5,000-$15,000</option>
+            <option>$15,000-$50,000</option>
+            <option>$50,000+</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="inquiry-message" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Message</label>
+        <textarea
+          id="inquiry-message"
+          value={form.message}
+          onChange={(e) => setForm({ ...form, message: e.target.value })}
+          className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:text-muted/70 focus:outline-none focus:border-cyan-500/40 transition-colors min-h-[120px]"
+          placeholder="What are you trying to build or fix?"
+        />
       </div>
 
       {error && <p className="text-sm text-rose-700 dark:text-rose-400 font-medium" role="alert">{error}</p>}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, ShieldCheck, Lock, Server, FileCheck } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Lock, Server, Bot, Scale } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import { TRUST_PILLARS } from '../constants/proof';
 import { breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
@@ -45,7 +45,7 @@ const TrustPage: React.FC = () => {
 
           <div className="grid md:grid-cols-2 gap-6 mb-16">
             {TRUST_PILLARS.map((pillar, index) => {
-              const icons = [Lock, Server, FileCheck, ShieldCheck];
+              const icons = [Lock, Server, Bot, Scale, ShieldCheck];
               const Icon = icons[index] ?? ShieldCheck;
               return (
                 <section key={pillar.title} style={{ transitionDelay: `${index * 80}ms` }} className="glass p-8 rounded-[2rem] border-border reveal">

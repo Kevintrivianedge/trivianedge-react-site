@@ -20,7 +20,7 @@ const FAQS = [
   {
     question: 'What is generative AI development?',
     answer:
-      'Generative AI development means building products or features that create new content — text, images, code, summaries, or conversations — rather than just classifying or predicting from existing data. TrivianEdge builds these on top of models like GPT-4o, Claude, and open-source alternatives, wired into your product with the retrieval, guardrails, and UX needed to make the output reliable.',
+      'Generative AI development means building products or features that create new content — text, images, code, summaries, or conversations — rather than just classifying or predicting from existing data. TrivianEdge builds these on top of current OpenAI and Anthropic models and open-weight alternatives, wired into your product with the retrieval, guardrails, and UX needed to make the output reliable.',
   },
   {
     question: 'What kinds of generative AI products do you build?',
@@ -126,8 +126,8 @@ const GenerativeAIPage: React.FC = () => {
               <span className="text-cyan-400">Products That Create, Not Just Predict</span>
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
-              RAG systems, AI copilots, and content generation tools built on GPT-4o, Claude, and
-              open-source models — grounded in your data, deployed by an offshore team in 30 days.
+              RAG systems, AI copilots, and content generation tools built on current OpenAI, Anthropic,
+              and open-weight models — grounded in your data, deployed by an offshore team in 30 days.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">

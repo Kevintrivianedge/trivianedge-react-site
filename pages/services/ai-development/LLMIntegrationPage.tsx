@@ -20,7 +20,7 @@ const FAQS = [
   {
     question: 'What is LLM integration?',
     answer:
-      'LLM integration means wiring an existing large language model — OpenAI GPT-4o, Anthropic Claude, or an open-source model — into your product, so it handles a real task inside your existing software rather than living as a standalone chat window. That includes API orchestration, prompt design, output parsing, error handling, and cost and latency control at production scale.',
+      'LLM integration means wiring an existing large language model — a current OpenAI or Anthropic model, or an open-weight model — into your product, so it handles a real task inside your existing software rather than living as a standalone chat window. That includes API orchestration, prompt design, output parsing, error handling, and cost and latency control at production scale.',
   },
   {
     question: 'When should I integrate an existing model versus fine-tune one?',
@@ -30,7 +30,7 @@ const FAQS = [
   {
     question: 'Which models and open-source options do you fine-tune?',
     answer:
-      'For fine-tuning, we work with open-source models like LLaMA, Mistral, and Falcon, using parameter-efficient techniques like LoRA to adapt them without the cost of a full retrain. For integration, we work across OpenAI, Anthropic Claude, HuggingFace-hosted models, and orchestration frameworks like LangChain and LlamaIndex.',
+      'For fine-tuning, we work with current open-weight model families like Llama and Mistral, using parameter-efficient techniques like LoRA to adapt them without the cost of a full retrain. For integration, we work across OpenAI, Anthropic, HuggingFace-hosted models, and orchestration frameworks like LangChain and LlamaIndex.',
   },
   {
     question: 'How much training data do I need to fine-tune a model?',
@@ -157,7 +157,7 @@ const LLMIntegrationPage: React.FC = () => {
             </h2>
             <p className="text-muted text-lg leading-relaxed mb-4">
               Most products should start with integration — prompting and retrieved context
-              guiding an existing model like GPT-4o or Claude. Fine-tuning earns its cost when
+              guiding a current OpenAI or Anthropic model. Fine-tuning earns its cost when
               prompting alone can't hit the consistency, format, or domain vocabulary you need, or
               when a smaller fine-tuned model can match a larger general model at a fraction of
               the inference cost at your volume.

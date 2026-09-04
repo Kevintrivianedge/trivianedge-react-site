@@ -1,8 +1,10 @@
 
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { X, MapPin, Clock, GraduationCap, Wifi, MessageSquare, Building2, CheckCircle2, Code2, ArrowRight } from 'lucide-react';
 import { TalentHub } from '../types';
+import { slugifyCountry } from '../utils/talent';
 
 interface TalentHubModalProps {
   hub: TalentHub;
@@ -241,16 +243,26 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-xs text-muted font-mono uppercase tracking-widest">Pipeline Active • Ready for Deployment</span>
             </div>
-            <button
-              onClick={() => {
-                onClose();
-                setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 300);
-              }}
-              className="group flex items-center gap-3 px-8 py-4 bg-white text-black rounded-xl font-bold uppercase tracking-widest hover:bg-cyan-400 hover:text-white transition-all shadow-lg hover:shadow-cyan-400/20"
-            >
-                <span>Initiate Hiring Protocol</span>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                to={`/talent/${slugifyCountry(hub.country)}`}
+                onClick={onClose}
+                className="group flex items-center gap-2 px-6 py-4 border border-border rounded-xl font-bold text-text text-sm uppercase tracking-widest hover:border-cyan-500/40 hover:text-cyan-500 transition-colors"
+              >
+                <span>View full profile</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
+              </Link>
+              <button
+                onClick={() => {
+                  onClose();
+                  setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 300);
+                }}
+                className="group flex items-center gap-3 px-8 py-4 bg-white text-black rounded-xl font-bold uppercase tracking-widest hover:bg-cyan-400 hover:text-white transition-all shadow-lg hover:shadow-cyan-400/20"
+              >
+                  <span>Initiate Hiring Protocol</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
          </motion.div>
         </motion.div>
       </motion.div>

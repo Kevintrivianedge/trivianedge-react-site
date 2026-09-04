@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
+import RelatedLinks from '../../components/RelatedLinks';
 import {
   Server,
   Layers,
@@ -51,7 +52,7 @@ const FAQS = [
   {
     question: 'Do I need to set up a foreign entity to use TrivianEdge BPO?',
     answer:
-      'No. That is the entire point. TrivianEdge acts as your employer of record in each country. You never need to register a local company, open a foreign payroll account, or navigate local employment law. We handle all of that so you can hire globally without any entity setup.',
+      'No. That is the entire point. TrivianEdge coordinates your employment relationship through in-country employer-of-record and payroll partners. You never need to register a local company, open a foreign payroll account, or navigate local employment law yourself. We manage that relationship so you can hire globally without any entity setup.',
   },
   {
     question: 'Can I manage the BPO team directly?',
@@ -91,7 +92,7 @@ const SERVICES = [
 
 const STATS = [
   { value: '30 Days', label: 'Deployment' },
-  { value: '40%', label: 'Cost Savings' },
+  { value: 'Up to 40%', label: 'Cost Savings' },
   { value: '6', label: 'Time Zones' },
   { value: '100%', label: 'Embedded' },
 ];
@@ -103,7 +104,7 @@ const BPOPage: React.FC = () => {
     <>
       <SEOHead
         title="BPO Services Canada | Business Process Outsourcing | TrivianEdge"
-        description="Reduce costs by 40% with TrivianEdge's BPO services. Expert offshore teams deployed in 30 days across 6 time zones. Free consultation."
+        description="Reduce costs by up to 40% with TrivianEdge's BPO services. Expert offshore teams deployed in 30 days across 6 time zones. Free consultation."
         schema={[
           serviceSchema(
             'BPO Services',
@@ -156,7 +157,7 @@ const BPOPage: React.FC = () => {
             <div className="flex flex-wrap justify-center gap-3 mt-8">
               {[
                 { icon: Clock, label: '30-Day Deployment' },
-                { icon: TrendingDown, label: '40% Cost Savings' },
+                { icon: TrendingDown, label: 'Up to 40% Cost Savings' },
                 { icon: Globe2, label: '6 Time Zones' },
                 { icon: CheckCircle2, label: 'Canada-Based' },
               ].map(({ icon: Icon, label }) => (
@@ -289,7 +290,7 @@ const BPOPage: React.FC = () => {
             </h2>
             <div className="space-y-4">
               {[
-                { title: 'We act as your employer of record', desc: 'No foreign entity setup needed. We are the legal employer in each country, which means you hire globally without any of the legal complexity.' },
+                { title: 'We handle employer-of-record setup for you', desc: 'No foreign entity setup needed. We coordinate in-country employer-of-record and payroll partners on your behalf, which means you hire globally without any of the legal complexity.' },
                 { title: 'Payroll and compliance are our problem, not yours', desc: 'Taxes, statutory deductions, local employment law, data privacy compliance — all handled correctly in every jurisdiction, every month.' },
                 { title: 'You control the work, we control the operations', desc: 'Your BPO team follows your processes and reports to your managers. TrivianEdge manages HR, performance, and admin in the background.' },
                 { title: 'We scale with you', desc: 'Start with one person, grow to 50. There is no long-term contract forcing you to maintain a fixed headcount. Scale up or down as your business requires.' },
@@ -315,6 +316,16 @@ const BPOPage: React.FC = () => {
             <Accordion items={FAQS} />
           </div>
         </section>
+
+        <RelatedLinks
+          links={[
+            { label: 'RPO', desc: 'Need to hire direct employees instead of an outsourced team? See our recruitment process outsourcing.', to: '/services/rpo' },
+            { label: 'Hire in the Philippines', desc: 'Our largest operational and BPO talent hub — roles, timezone fit, and how deployment works.', to: '/talent/philippines' },
+            { label: 'Case studies', desc: 'See how Cargo Login, Keynotive, and other clients used TrivianEdge BPO teams.', to: '/proof' },
+            { label: 'Savings calculator', desc: 'Run your own roles and headcount against real offshore cost data.', to: '/savings-calculator' },
+            { label: 'Trust & security', desc: 'How we handle data, employment compliance, and operational governance.', to: '/trust' },
+          ]}
+        />
 
         {/* CTA */}
         <section className="py-24 px-4 md:px-6">

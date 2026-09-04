@@ -9,7 +9,7 @@ const STATS = [
   { icon: Clock, label: 'Team deployed', value: '30 days' },
   { icon: Building2, label: 'Cost savings vs. local hiring', value: 'Up to 40%' },
   { icon: Globe2, label: 'Time zones covered', value: '6' },
-  { icon: Users, label: 'Founded', value: '2023' },
+  { icon: Users, label: 'Founded', value: '2025' },
 ];
 
 const AboutPage: React.FC = () => {
@@ -53,7 +53,10 @@ const AboutPage: React.FC = () => {
             </span>
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">Build the team. Run the system.</h1>
             <p className="text-muted text-lg md:text-xl leading-relaxed">
-              TrivianEdge is a Toronto, Ontario-based BPO, RPO, and bespoke software development company. We deploy offshore teams in as little as 30 days, acting as employer of record so clients never need to set up a foreign entity themselves.
+              TrivianEdge is a Toronto, Ontario-based BPO, RPO, and bespoke software development company. We deploy offshore teams in as little as 30 days, coordinating employment through in-country employer-of-record and payroll partners so clients never need to set up a foreign entity themselves.
+            </p>
+            <p className="text-muted/70 text-sm leading-relaxed mt-4">
+              TrivianEdge Inc. was federally incorporated in Canada under the Canada Business Corporations Act in June 2025, registered at 37 Wiggens Ct, Toronto, ON.
             </p>
           </div>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Star, ExternalLink, ArrowRight } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import RelatedLinks from '../components/RelatedLinks';
 import { CASE_STUDIES, TESTIMONIALS } from '../constants/proof';
 import { breadcrumbSchema, reviewSchema, SEO_CONFIG } from '../utils/seo';
 
@@ -42,6 +43,9 @@ const ProofPage: React.FC = () => {
             <p className="text-muted text-lg md:text-xl leading-relaxed">
               These are the kinds of engagements TrivianEdge is built for: cross-border operations, faster hiring, lower overhead, and clearer execution.
             </p>
+            <p className="text-muted/70 text-sm leading-relaxed mt-4">
+              Team sizes and timelines below reflect TrivianEdge's standard engagement model for that kind of work. Percentage figures elsewhere on this site (e.g., "up to 40% cost savings") describe typical ranges across our engagements, not a single formal audited study — ask us for a custom estimate against your own roles.
+            </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-6 mb-16">
@@ -52,7 +56,11 @@ const ProofPage: React.FC = () => {
                 <div className="space-y-4 text-muted leading-relaxed text-sm md:text-base">
                   <p><strong className="text-text">Challenge:</strong> {study.challenge}</p>
                   <p><strong className="text-text">Approach:</strong> {study.approach}</p>
-                  <p><strong className="text-text">Outcome:</strong> {study.outcome}</p>
+                  <div className="grid sm:grid-cols-2 gap-3 py-1">
+                    <p className="text-xs"><strong className="text-text block uppercase tracking-widest mb-1">Team</strong>{study.team}</p>
+                    <p className="text-xs"><strong className="text-text block uppercase tracking-widest mb-1">Timeline</strong>{study.timeline}</p>
+                  </div>
+                  <p><strong className="text-text">Result:</strong> {study.outcome}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-auto pt-6">
                   {study.highlights.map((item) => (
@@ -78,6 +86,16 @@ const ProofPage: React.FC = () => {
               ))}
             </div>
           </div>
+
+          <RelatedLinks
+            title="Explore the services behind these results"
+            links={[
+              { label: 'BPO', desc: 'Outsourced operations teams like the one that unblocked Cargo Login.', to: '/services/bpo' },
+              { label: 'RPO', desc: 'Embedded recruiting for direct hires across six talent hubs.', to: '/services/rpo' },
+              { label: 'AI development', desc: 'Custom AI and LLM integration work built by offshore engineering teams.', to: '/services/ai-development' },
+              { label: 'IT outsourcing', desc: 'Bespoke software development, like the Capricorn College platform rebuild.', to: '/services/it-outsourcing' },
+            ]}
+          />
 
           <div className="glass p-8 md:p-10 rounded-[2rem] border-border flex flex-col md:flex-row md:items-center md:justify-between gap-6 reveal">
             <div>

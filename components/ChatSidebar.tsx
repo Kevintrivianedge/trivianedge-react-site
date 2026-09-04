@@ -23,6 +23,32 @@ const CHAT_TITLE_ID = 'chat-sidebar-title';
 // setMessages fires many times per second).
 // ---------------------------------------------------------------------------
 
+interface AriaLead {
+  name?: string;
+  email?: string;
+  company?: string;
+  need?: string;
+  timeline?: string;
+  notes?: string;
+}
+
+// Matches the hidden <!--LEAD:{...}--> marker Aria appends to the end of a
+// response once it has captured an email + intent (see system prompt below).
+// It is stripped from the displayed text and used to silently notify a human
+// via the same /api/inquiry pipeline the contact form uses.
+const LEAD_MARKER_RE = /<!--LEAD:(\{[\s\S]*?\})-->\s*$/;
+
+function extractLeadMarker(text: string): { lead: AriaLead | null; cleanText: string } {
+  const match = text.match(LEAD_MARKER_RE);
+  if (!match) return { lead: null, cleanText: text };
+  try {
+    const lead = JSON.parse(match[1]) as AriaLead;
+    return { lead, cleanText: text.slice(0, match.index).trimEnd() };
+  } catch {
+    return { lead: null, cleanText: text };
+  }
+}
+
 /** Parse **bold** markdown syntax into <strong> elements */
 function parseBold(text: string): React.ReactNode[] {
   const parts = text.split(/(\*\*.*?\*\*)/g);
@@ -247,6 +273,7 @@ export const ChatSidebar: React.FC = () => {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const systemContextRef = useRef<string>('');
+  const leadSentRef = useRef(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -301,10 +328,20 @@ Step 4 (Addressing Emotions & Offering Solutions): Once they reveal their pain p
 
 Step 5 (Scheduling): After offering solutions, ask if they would like to set up a quick discussion to explore this further. If they say yes, ask for their email address and a preferred date and time. WAIT FOR THEIR REPLY.
 
-Step 6 (Generating Invite): Once they provide a date and time, generate an Outlook Calendar link for them to click. 
+Step 6 (Generating Invite): Once they provide a date and time, generate an Outlook Calendar link for them to click.
 Format the link EXACTLY like this:
 [Click here to add our discussion to your Outlook Calendar](https://outlook.office.com/calendar/0/deeplink/compose?subject=TrivianEdge%20Discussion&body=Discussion%20regarding%20TrivianEdge%20solutions&startdt=YYYY-MM-DDT10:00:00&enddt=YYYY-MM-DDT11:00:00)
 (Replace the YYYY-MM-DD and time with their requested date and time).
+
+LEAD CAPTURE (CRITICAL — do this or the conversation is lost): The moment you have the user's email address AND a clear signal of interest (they want a call, a quote, to move forward, or gave you a hiring/project request), append a hidden lead marker as the VERY LAST LINE of that same response, after your normal reply. Format EXACTLY like this, with no text after it:
+<!--LEAD:{"name":"their name or empty string","email":"their email","company":"their company or empty string","need":"one short phrase describing what they want, e.g. '5 developers in Sri Lanka' or 'AI agent for support tickets'","timeline":"their stated timeline or empty string","notes":"a 1-2 sentence summary of the conversation and pain point for the sales team"}-->
+This marker is stripped before the user sees it — it silently notifies a human. Emit it only once per conversation, the first time you have both an email and clear intent. Do not mention this marker to the user.
+
+SPECIFIC REQUEST HANDLING:
+- If a user gives a concrete request like "I need 5 developers in Sri Lanka" or "I need a BPO team in the Philippines," treat that as a strong buying signal — acknowledge it specifically, ask one clarifying question (e.g. seniority, start timing), and move toward Step 5.
+- If a user asks "how much could I save" or similar, mention the "up to 40% cost reduction" range, and point them to the interactive savings calculator: [Run your own numbers on our savings calculator](/savings-calculator).
+- If a user asks for a country we do not source from (our six talent hubs are the Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica — e.g. they ask about Saudi Arabia or another GCC country), be honest that it is not one of our standard sourcing hubs rather than claiming we do. Say we have done market-entry and delivery work in the GCC region before and offer to connect them with the team to discuss what is possible.
+- If a user asks "can you build an AI agent" or similar, confirm yes, briefly name the kind of work (RAG, agentic workflows, integrations with their existing product), and move toward uncovering their specific use case (Step 3/4).
 
 GENERAL RULE: Keep all responses extremely short (1-3 sentences max). NEVER ask more than one question in a single message. Never give unprompted lists of services.
 `;
@@ -488,10 +525,14 @@ ${userContext}
                             : '';
                     if (text) {
                         fullResponse += text;
+                        // Strip the (possibly still-streaming, unterminated) lead marker so
+                        // its raw JSON never flashes on screen before extractLeadMarker runs
+                        // on the completed response below.
+                        const displayText = fullResponse.replace(/<!--LEAD:[\s\S]*$/, '');
                         setMessages(prev =>
                             prev.map((msg, i) =>
                                 i === prev.length - 1 && msg.role === 'model'
-                                    ? { ...msg, text: fullResponse }
+                                    ? { ...msg, text: displayText }
                                     : msg,
                             ),
                         );
@@ -510,6 +551,32 @@ ${userContext}
                         : msg,
                 ),
             );
+        } else {
+            const { lead, cleanText } = extractLeadMarker(fullResponse);
+            if (cleanText !== fullResponse) {
+                setMessages(prev =>
+                    prev.map((msg, i) =>
+                        i === prev.length - 1 && msg.role === 'model'
+                            ? { ...msg, text: cleanText }
+                            : msg,
+                    ),
+                );
+            }
+            if (lead?.email && !leadSentRef.current) {
+                leadSentRef.current = true;
+                fetch(API_ENDPOINTS.INQUIRY, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: lead.name || 'Aria chat visitor',
+                        company: lead.company || 'Not provided',
+                        email: lead.email,
+                        need: lead.need || 'Aria chat inquiry',
+                        timeline: lead.timeline || 'Not specified',
+                        message: lead.notes || 'Captured via the Aria chat assistant.',
+                    }),
+                }).catch(err => console.error('[Aria] lead capture failed', err));
+            }
         }
     } catch (error) {
         console.error("Chat error", error);
@@ -530,6 +597,7 @@ ${userContext}
   const handleClearChat = () => {
     setMessages([{ role: 'model', text: "Hi! I'm Aria, your AI guide from TrivianEdge.\n\nHow may I help you today?", isInitial: true }]);
     systemContextRef.current = '';
+    leadSentRef.current = false;
     initChat();
   };
 

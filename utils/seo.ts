@@ -72,6 +72,7 @@ export function buildOrganizationSchema(): object {
     '@type': 'Organization',
     '@id': `${SEO_CONFIG.siteUrl}/#organization`,
     name: 'TrivianEdge',
+    legalName: 'TrivianEdge Inc.',
     alternateName: ['TrivianEdge Global', 'TrivianEdge BPO'],
     url: SEO_CONFIG.siteUrl,
     logo: {
@@ -82,7 +83,7 @@ export function buildOrganizationSchema(): object {
     },
     image: `${SEO_CONFIG.siteUrl}/og-image.png`,
     description: SEO_CONFIG.defaultDescription,
-    foundingDate: '2023',
+    foundingDate: '2025-06-20',
     numberOfEmployees: { '@type': 'QuantitativeValue', minValue: 10, maxValue: 50 },
     address: {
       '@type': 'PostalAddress',
