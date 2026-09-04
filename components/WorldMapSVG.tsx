@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TalentHub } from '../types';
 
 // This SVG uses Mercator projection, not equirectangular.
@@ -20,6 +20,28 @@ const HUB_COORDS: Record<string, [number, number]> = {
   cri: [-84.1, 9.9],
 };
 
+// TrivianEdge Inc. is headquartered in Toronto, Ontario (a federally
+// incorporated Canadian corporation — see the Trust page). Every connection
+// line on this map originates from that real point, not a decorative center.
+const HOME_COORDS: [number, number] = [-79.38, 43.65];
+
+// Map aspect ratio from the container's pb-[65.94%] trick, so the overlay
+// SVG's viewBox exactly matches the percentage space `project()` returns.
+const MAP_ASPECT_HEIGHT = 65.94;
+
+const buildArcPath = (from: [number, number], to: [number, number]): string => {
+  const [x1, y1] = from;
+  const [x2, y2] = to;
+  const midX = (x1 + x2) / 2;
+  const midY = (y1 + y2) / 2;
+  const dist = Math.hypot(x2 - x1, y2 - y1);
+  // Bulge the arc "up" (toward lower y) so it reads as a flight path, not a
+  // straight line — scaled by distance so short/long hops both look natural.
+  const controlX = midX;
+  const controlY = midY - Math.min(dist * 0.28, 18);
+  return `M ${x1},${y1} Q ${controlX},${controlY} ${x2},${y2}`;
+};
+
 interface WorldMapSVGProps {
   hubs: TalentHub[];
   onHubClick?: (hub: TalentHub) => void;
@@ -27,7 +49,18 @@ interface WorldMapSVGProps {
 
 const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const hoveredHub = hubs.find(h => h.id === hoveredId) ?? null;
+
+  useEffect(() => {
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(query.matches);
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    query.addEventListener('change', handler);
+    return () => query.removeEventListener('change', handler);
+  }, []);
+
+  const [homeX, homeY] = project(HOME_COORDS[0], HOME_COORDS[1]);
 
   return (
     <div className="relative w-full select-none">
@@ -40,6 +73,62 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
           decoding="async"
           draggable={false}
         />
+
+        {/* Live-ops connection lines: Toronto HQ to each of the 6 real
+            sourcing countries. Structure encodes real information (actual
+            operating footprint), not decoration. */}
+        <svg
+          className="absolute inset-0 h-full w-full pointer-events-none"
+          viewBox={`0 0 100 ${MAP_ASPECT_HEIGHT}`}
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          {hubs.map((hub) => {
+            const coords = HUB_COORDS[hub.id];
+            if (!coords) return null;
+            const [x, y] = project(coords[0], coords[1]);
+            const path = buildArcPath([homeX, homeY], [x, y]);
+            const isActive = hoveredId === null || hoveredId === hub.id;
+            return (
+              <g key={`arc-${hub.id}`} opacity={isActive ? 1 : 0.15} style={{ transition: 'opacity 0.3s ease' }}>
+                <path
+                  d={path}
+                  fill="none"
+                  stroke="var(--cyan)"
+                  strokeOpacity={0.35}
+                  strokeWidth={0.18}
+                  vectorEffect="non-scaling-stroke"
+                />
+                <circle r={0.5} fill="var(--cyan)" vectorEffect="non-scaling-stroke">
+                  <animateMotion
+                    dur={`${5 + Math.random() * 2}s`}
+                    repeatCount={reducedMotion ? 1 : 'indefinite'}
+                    path={path}
+                  />
+                  <animate
+                    attributeName="opacity"
+                    values="0;1;1;0"
+                    keyTimes="0;0.1;0.9;1"
+                    dur={`${5 + Math.random() * 2}s`}
+                    repeatCount={reducedMotion ? 1 : 'indefinite'}
+                  />
+                </circle>
+              </g>
+            );
+          })}
+          {/* Home marker — Toronto HQ, the real origin of every connection above */}
+          <circle cx={homeX} cy={homeY} r={0.9} fill="var(--background)" stroke="var(--cyan)" strokeWidth={0.3} vectorEffect="non-scaling-stroke" />
+          <circle cx={homeX} cy={homeY} r={0.35} fill="var(--cyan)" />
+          <text
+            x={homeX}
+            y={homeY - 2.2}
+            textAnchor="middle"
+            fill="var(--cyan)"
+            style={{ font: '700 2.1px Manrope, sans-serif', letterSpacing: '0.05em', textTransform: 'uppercase' }}
+          >
+            HQ · Toronto
+          </text>
+        </svg>
 
         {hubs.map((hub) => {
           const coords = HUB_COORDS[hub.id];
