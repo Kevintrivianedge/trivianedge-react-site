@@ -83,12 +83,18 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
           preserveAspectRatio="none"
           aria-hidden="true"
         >
-          {hubs.map((hub) => {
+          {hubs.map((hub, hubIndex) => {
             const coords = HUB_COORDS[hub.id];
             if (!coords) return null;
             const [x, y] = project(coords[0], coords[1]);
             const path = buildArcPath([homeX, homeY], [x, y]);
             const isActive = hoveredId === null || hoveredId === hub.id;
+            // Deterministic per-hub variation (not Math.random()) — this
+            // page is prerendered at build time, and a value that differs
+            // between renders is a correctness smell even where it doesn't
+            // break hydration. Both animations on a dot share one duration
+            // so its fade stays in sync with its position along the path.
+            const dur = `${5 + (hubIndex % 3) * 0.75}s`;
             return (
               <g key={`arc-${hub.id}`} opacity={isActive ? 1 : 0.15} style={{ transition: 'opacity 0.3s ease' }}>
                 <path
@@ -101,7 +107,7 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
                 />
                 <circle r={0.5} fill="var(--cyan)" vectorEffect="non-scaling-stroke">
                   <animateMotion
-                    dur={`${5 + Math.random() * 2}s`}
+                    dur={dur}
                     repeatCount={reducedMotion ? 1 : 'indefinite'}
                     path={path}
                   />
@@ -109,19 +115,38 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
                     attributeName="opacity"
                     values="0;1;1;0"
                     keyTimes="0;0.1;0.9;1"
-                    dur={`${5 + Math.random() * 2}s`}
+                    dur={dur}
                     repeatCount={reducedMotion ? 1 : 'indefinite'}
                   />
                 </circle>
               </g>
             );
           })}
-          {/* Home marker — Toronto HQ, the real origin of every connection above */}
-          <circle cx={homeX} cy={homeY} r={0.9} fill="var(--background)" stroke="var(--cyan)" strokeWidth={0.3} vectorEffect="non-scaling-stroke" />
-          <circle cx={homeX} cy={homeY} r={0.35} fill="var(--cyan)" />
+          {/* Home marker — Toronto HQ. Diamond, not a circle, so it never
+              reads as "just another hub pin" even where a hub (e.g. Costa
+              Rica) sits close by on this projection. */}
+          <rect
+            x={homeX - 1.1}
+            y={homeY - 1.1}
+            width={2.2}
+            height={2.2}
+            transform={`rotate(45 ${homeX} ${homeY})`}
+            fill="var(--background)"
+            stroke="var(--cyan)"
+            strokeWidth={0.35}
+            vectorEffect="non-scaling-stroke"
+          />
+          <rect
+            x={homeX - 0.4}
+            y={homeY - 0.4}
+            width={0.8}
+            height={0.8}
+            transform={`rotate(45 ${homeX} ${homeY})`}
+            fill="var(--cyan)"
+          />
           <text
             x={homeX}
-            y={homeY - 2.2}
+            y={homeY + 3.6}
             textAnchor="middle"
             fill="var(--cyan)"
             style={{ font: '700 2.1px Manrope, sans-serif', letterSpacing: '0.05em', textTransform: 'uppercase' }}
