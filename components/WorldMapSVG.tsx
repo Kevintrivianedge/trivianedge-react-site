@@ -25,10 +25,6 @@ const HUB_COORDS: Record<string, [number, number]> = {
 // line on this map originates from that real point, not a decorative center.
 const HOME_COORDS: [number, number] = [-79.38, 43.65];
 
-// Map aspect ratio from the container's pb-[65.94%] trick, so the overlay
-// SVG's viewBox exactly matches the percentage space `project()` returns.
-const MAP_ASPECT_HEIGHT = 65.94;
-
 const buildArcPath = (from: [number, number], to: [number, number]): string => {
   const [x1, y1] = from;
   const [x2, y2] = to;
@@ -76,10 +72,19 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
 
         {/* Live-ops connection lines: Toronto HQ to each of the 6 real
             sourcing countries. Structure encodes real information (actual
-            operating footprint), not decoration. */}
+            operating footprint), not decoration.
+
+            project()'s x and y are both already plain 0-100 percentages of
+            the container's own width/height (exactly what the hub pins
+            below use via style={{ left: x%, top: y% }}). The viewBox below
+            must match that 100x100 space, not the container's own 65.94%
+            aspect ratio — using that here was the bug: it squeezed the
+            y-axis by a wrong factor, so arcs to hubs with a large y (e.g.
+            South Africa at y=82.8) went outside the declared coordinate
+            space entirely and got clipped by the container's overflow. */}
         <svg
           className="absolute inset-0 h-full w-full pointer-events-none"
-          viewBox={`0 0 100 ${MAP_ASPECT_HEIGHT}`}
+          viewBox="0 0 100 100"
           preserveAspectRatio="none"
           aria-hidden="true"
         >
