@@ -12,7 +12,11 @@
 
             /* Luxury typography and spacing scale */
             --font-body: 'Manrope', sans-serif;
-            --font-display: 'Manrope', sans-serif;
+            /* Display serif, headings only (h1-h4, .display-hero,
+               .display-section) — Manrope stays the body/nav/UI face
+               everywhere else. Deliberate signature, not a stunt: applied
+               consistently across every heading level, not just the hero. */
+            --font-display: 'Fraunces', 'Manrope', sans-serif;
             /* Tracking scales with size — bigger display type reads tighter,
                smaller headings stay close to neutral. Flat tracking across
                every size read as less deliberate than graduated tracking. */
