@@ -101,10 +101,14 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
                   d={path}
                   fill="none"
                   stroke="var(--cyan)"
-                  strokeOpacity={0.35}
-                  strokeWidth={0.18}
+                  strokeOpacity={0.45}
+                  strokeWidth={0.22}
                   vectorEffect="non-scaling-stroke"
                 />
+                {/* Pulse fades in fast (5%) and stays visible almost to
+                    arrival (96%) — a wide fade window made the dot vanish
+                    well before reaching the pin, which read as the
+                    connection "falling off" short of its destination. */}
                 <circle r={0.5} fill="var(--cyan)" vectorEffect="non-scaling-stroke">
                   <animateMotion
                     dur={dur}
@@ -114,7 +118,7 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
                   <animate
                     attributeName="opacity"
                     values="0;1;1;0"
-                    keyTimes="0;0.1;0.9;1"
+                    keyTimes="0;0.05;0.96;1"
                     dur={dur}
                     repeatCount={reducedMotion ? 1 : 'indefinite'}
                   />
