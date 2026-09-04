@@ -43,7 +43,7 @@ const FAQS = [
   {
     question: 'How quickly can TrivianEdge deploy a bespoke software development team?',
     answer:
-      'TrivianEdge deploys offshore software development teams in 30 days or less. After an initial discovery call, we search our network across the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica and present matched candidates within days. Once approved, your team is onboarded and embedded into your existing workflow within the 30-day window.',
+      'TrivianEdge deploys offshore software development teams within 30 days. After an initial discovery call, we search our network across the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica and present matched candidates within days. Once approved, your team is onboarded and embedded into your existing workflow within the 30-day window.',
   },
   {
     question: 'What bespoke software development services does TrivianEdge provide?',
@@ -161,7 +161,7 @@ const ITOutsourcingPage: React.FC = () => {
               What is Bespoke Software Development?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              Bespoke software development means building custom applications, platforms, and internal tools designed specifically around your business, rather than adapting an off-the-shelf product to fit. TrivianEdge builds and maintains bespoke software as a Canada-based engineering partner, with offshore development teams sourced from six global talent hubs and matched to your exact tech stack. We deliver custom development, cloud infrastructure, DevOps, cybersecurity, and systems integration, so bespoke software can scale into a fully managed IT outsourcing function in about 30 days, and you keep full ownership of the code and IP throughout. Pair bespoke software development with our{' '}
+              Bespoke software development means building custom applications, platforms, and internal tools designed specifically around your business, rather than adapting an off-the-shelf product to fit. TrivianEdge builds and maintains bespoke software as a Canada-based engineering partner, with offshore development teams sourced from six global talent hubs and matched to your exact tech stack. We deliver custom development, cloud infrastructure, DevOps, cybersecurity, and systems integration, so bespoke software can scale into a fully managed IT outsourcing function within 30 days, and you keep full ownership of the code and IP throughout. Pair bespoke software development with our{' '}
               <Link
                 to="/services/ai-development"
                 className="text-cyan-400 hover:underline"

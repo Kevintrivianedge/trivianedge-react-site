@@ -356,60 +356,6 @@ export interface BreadcrumbItem {
   url: string;
 }
 
-// ---------------------------------------------------------------------------
-// Slim schema helpers (new API — complement the build* functions above)
-// ---------------------------------------------------------------------------
-
-/** Returns a minimal Schema.org Organization for TrivianEdge */
-export function organizationSchema(): SchemaObject {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    '@id': 'https://www.trivianedge.com/#organization',
-    name: 'TrivianEdge',
-    alternateName: 'Trivian Edge',
-    url: 'https://www.trivianedge.com',
-    logo: 'https://www.trivianedge.com/apple-touch-icon.png',
-    description:
-      "A Canada-based BPO, RPO and bespoke software development company. 30-day deployment. Up to 40% cost savings across 6 time zones.",
-    areaServed: ['Canada', 'United States', 'United Kingdom', 'Australia'],
-    foundingLocation: 'Canada',
-    knowsAbout: [
-      'Business Process Outsourcing',
-      'Recruitment Process Outsourcing',
-      'Bespoke Software Development',
-      'AI Development Services',
-      'Offshore Software Development',
-      'IT Outsourcing',
-    ],
-    sameAs: [
-      'https://www.linkedin.com/company/trivianedge',
-    ],
-    contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'customer service',
-      availableLanguage: 'English',
-    },
-  };
-}
-
-/** Returns a minimal Schema.org WebSite for TrivianEdge */
-export function websiteSchema(): SchemaObject {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    '@id': 'https://www.trivianedge.com/#website',
-    url: 'https://www.trivianedge.com',
-    name: 'TrivianEdge',
-    description: "A Canada-based BPO, RPO and AI Development company",
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: 'https://www.trivianedge.com/?s={search_term_string}',
-      'query-input': 'required name=search_term_string',
-    },
-  };
-}
-
 /** Returns a Schema.org Service for a specific TrivianEdge offering */
 export function serviceSchema(
   name: string,

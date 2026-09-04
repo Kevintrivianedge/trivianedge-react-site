@@ -44,9 +44,12 @@ const ProofPage: React.FC = () => {
             <p className="text-muted text-lg md:text-xl leading-relaxed">
               These are the kinds of engagements TrivianEdge is built for: cross-border operations, faster hiring, lower overhead, and clearer execution.
             </p>
-            <p className="text-muted/70 text-sm leading-relaxed mt-4">
-              Team sizes and timelines below reflect TrivianEdge's standard engagement model for that kind of work. Percentage figures elsewhere on this site (e.g., "up to 40% cost savings") describe typical ranges across our engagements, not a single formal audited study — ask us for a custom estimate against your own roles.
-            </p>
+            <div id="methodology" className="mt-6 p-5 rounded-2xl border border-border bg-surface/60 scroll-mt-24">
+              <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 mb-2">Methodology note</p>
+              <p className="text-muted/80 text-sm leading-relaxed">
+                Team sizes and timelines above reflect TrivianEdge's standard engagement model for that kind of work. Percentage figures elsewhere on this site (e.g., "up to 40% cost savings") describe the typical range across our engagements — comparing fully loaded offshore cost, including compliance, payroll administration, and management overhead, against the equivalent fully loaded cost of a direct North American hire — not a single formal audited study. <Link to="/savings-calculator" className="text-cyan-600 hover:underline font-medium">Run your own roles through the savings calculator</Link> for a number specific to your situation.
+              </p>
+            </div>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-6 mb-16">

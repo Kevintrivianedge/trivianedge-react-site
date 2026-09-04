@@ -153,7 +153,7 @@ const AI_VENTURES = [
 const HOME_FAQS = [
   {
     question: 'What does TrivianEdge do?',
-    answer: 'TrivianEdge helps businesses hire people in other countries and build software. We handle all the hard parts: finding candidates, running payroll, managing local employment law, and keeping your team running. You tell us what you need and we deliver it in about 30 days.',
+    answer: 'TrivianEdge helps businesses hire people in other countries and build software. We handle all the hard parts: finding candidates, running payroll, managing local employment law, and keeping your team running. You tell us what you need and we deliver it within 30 days.',
   },
   {
     question: 'Where is TrivianEdge based?',
@@ -290,7 +290,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           >
             {[
               { value: '30', unit: ' days', label: 'Average time to hire', live: true },
-              { value: '40', unit: '%',     label: 'Average cost savings', live: false },
+              { value: 'Up to 40', unit: '%', label: 'Cost savings', live: false },
               { value: '6',  unit: '',      label: 'Countries we source from', live: false },
               { value: '24/7', unit: '',    label: 'Operations coverage', live: true },
             ].map((card, i) => (
@@ -574,6 +574,12 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 </footer>
               </blockquote>
             ))}
+          </div>
+
+          <div className="text-center mt-10 reveal">
+            <Link to="/proof#methodology" className="text-sm font-semibold text-cyan-600 hover:underline">
+              See full case studies and how we calculate savings figures →
+            </Link>
           </div>
         </div>
       </section>

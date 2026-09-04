@@ -288,7 +288,7 @@ const RPOPage: React.FC = () => {
           <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-4">How Our RPO Process Works</h2>
             <p className="text-muted text-lg mb-12 leading-relaxed">
-              From your first conversation to your first hire, the whole process runs in about 30 days.
+              From your first conversation to your first hire, the whole process runs within 30 days.
             </p>
             <div className="space-y-8">
               {[

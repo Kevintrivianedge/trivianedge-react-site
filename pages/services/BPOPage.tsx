@@ -180,7 +180,7 @@ const BPOPage: React.FC = () => {
               What is Business Process Outsourcing?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              Business Process Outsourcing (BPO) is the practice of hiring an external partner to run specific business operations — like customer support, back-office admin, or finance processing — on your behalf. TrivianEdge builds offshore BPO teams that plug into your business in about 30 days, handling the work cleanly so your team can focus on what matters most. Whether you need back-office support or full-cycle{' '}
+              Business Process Outsourcing (BPO) is the practice of hiring an external partner to run specific business operations — like customer support, back-office admin, or finance processing — on your behalf. TrivianEdge builds offshore BPO teams that plug into your business within 30 days, handling the work cleanly so your team can focus on what matters most. Whether you need back-office support or full-cycle{' '}
               <Link
                 to="/services/rpo"
                 className="text-cyan-400 hover:underline"

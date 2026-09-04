@@ -5,8 +5,6 @@ import {
   ALL_KEYWORDS,
   buildOrganizationSchema,
   buildWebSiteSchema,
-  organizationSchema,
-  websiteSchema,
   serviceSchema,
   faqSchema,
   breadcrumbSchema,
@@ -82,62 +80,6 @@ describe('buildWebSiteSchema', () => {
   });
 });
 
-describe('organizationSchema', () => {
-  it('returns object with @type === "Organization"', () => {
-    const schema = organizationSchema();
-    expect(schema['@type']).toBe('Organization');
-  });
-
-  it('includes name "TrivianEdge"', () => {
-    const schema = organizationSchema();
-    expect(schema['name']).toBe('TrivianEdge');
-  });
-
-  it('includes all four areaServed values', () => {
-    const schema = organizationSchema();
-    const areaServed = schema['areaServed'] as string[];
-    expect(areaServed).toContain('Canada');
-    expect(areaServed).toContain('United States');
-    expect(areaServed).toContain('United Kingdom');
-    expect(areaServed).toContain('Australia');
-  });
-
-  it('includes sameAs array with LinkedIn URL', () => {
-    const schema = organizationSchema();
-    const sameAs = schema['sameAs'] as string[];
-    expect(Array.isArray(sameAs)).toBe(true);
-    expect(sameAs.some(url => url.startsWith('https://www.linkedin.com/'))).toBe(true);
-  });
-
-  it('includes knowsAbout array with all five service categories', () => {
-    const schema = organizationSchema();
-    const knowsAbout = schema['knowsAbout'] as string[];
-    expect(Array.isArray(knowsAbout)).toBe(true);
-    expect(knowsAbout).toContain('Business Process Outsourcing');
-    expect(knowsAbout).toContain('Recruitment Process Outsourcing');
-    expect(knowsAbout).toContain('AI Development Services');
-    expect(knowsAbout).toContain('Offshore Software Development');
-    expect(knowsAbout).toContain('IT Outsourcing');
-  });
-});
-
-describe('websiteSchema', () => {
-  it('returns object with @type === "WebSite"', () => {
-    const schema = websiteSchema();
-    expect(schema['@type']).toBe('WebSite');
-  });
-
-  it('includes potentialAction with @type SearchAction', () => {
-    const schema = websiteSchema();
-    const action = schema['potentialAction'] as Record<string, unknown>;
-    expect(action['@type']).toBe('SearchAction');
-  });
-
-  it('url equals "https://www.trivianedge.com"', () => {
-    const schema = websiteSchema();
-    expect(schema['url']).toBe('https://www.trivianedge.com');
-  });
-});
 
 describe('serviceSchema', () => {
   const name = 'BPO Services';
