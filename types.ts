@@ -92,3 +92,56 @@ export interface GreetingState {
 export type SupportedCountry = 'FR' | 'ES' | 'MX' | 'AE' | 'SA' | 'LK' | 'US' | 'GB' | 'DEFAULT';
 
 export type SupportedLanguage = 'fr' | 'es' | 'ar' | 'si' | 'en';
+
+// ---------------------------------------------------------------------------
+// P2 growth content: comparison pages, industry pages, service+country combos
+// ---------------------------------------------------------------------------
+
+export interface ComparisonOption {
+  name: string;
+  summary: string;
+  goodFor: string[];
+  tradeoffs: string[];
+}
+
+export interface ComparisonRow {
+  factor: string;
+  a: string;
+  b: string;
+}
+
+export interface ComparisonPageData {
+  slug: string;
+  title: string;
+  subtitle: string;
+  optionA: ComparisonOption;
+  optionB: ComparisonOption;
+  rows: ComparisonRow[];
+  verdict: string;
+  faqs: { question: string; answer: string }[];
+  relatedServiceHref: string;
+  relatedServiceName: string;
+}
+
+export interface IndustryPageData {
+  slug: string;
+  name: string;
+  tagline: string;
+  description: string;
+  challenges: string[];
+  howWeHelp: { service: string; description: string; href: string }[];
+  relatedCaseStudyClient?: string;
+  commonRoles: string[];
+  faqs: { question: string; answer: string }[];
+}
+
+export interface ServiceCountryCombo {
+  service: 'bpo' | 'rpo' | 'ai-development' | 'it-outsourcing';
+  serviceName: string;
+  serviceHref: string;
+  countrySlug: string;
+  hubId: string;
+  angle: string;
+  typicalRoles: string[];
+  faqs: { question: string; answer: string }[];
+}

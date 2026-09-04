@@ -322,9 +322,10 @@ const RPOPage: React.FC = () => {
 
         <RelatedLinks
           links={[
+            { label: 'RPO vs. recruitment agency', desc: 'How embedded RPO actually differs from a transactional agency search.', to: '/compare/rpo-vs-recruitment-agency' },
             { label: 'BPO', desc: 'Need an outsourced team running day to day, not just direct hires? See our BPO services.', to: '/services/bpo' },
             { label: 'AI-powered recruitment', desc: 'How TrivianEdge uses AI sourcing and screening inside the RPO process.', to: '/services/rpo/ai-powered-recruitment' },
-            { label: 'Hire in Sri Lanka', desc: 'Boutique software engineering talent — one of our six sourcing hubs.', to: '/talent/sri-lanka' },
+            { label: 'RPO in Sri Lanka', desc: 'Boutique software engineering talent — one of our six sourcing hubs.', to: '/services/rpo/sri-lanka' },
             { label: 'Case studies', desc: 'See how TrivianEdge clients built teams across six talent hubs.', to: '/proof' },
             { label: 'Savings calculator', desc: 'Model the real cost-per-hire difference for your roles.', to: '/savings-calculator' },
           ]}

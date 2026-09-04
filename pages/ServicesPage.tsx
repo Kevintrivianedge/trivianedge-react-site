@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Users2, ShieldCheck, Cpu, Server } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import RelatedLinks from '../components/RelatedLinks';
 import { breadcrumbSchema } from '../utils/seo';
+import { COMPARISONS } from '../constants/comparisons';
+import { INDUSTRIES } from '../constants/industries';
 
 const SERVICES_HUB = [
   {
@@ -163,6 +166,16 @@ const ServicesPage: React.FC = () => {
             })}
           </div>
         </section>
+
+        <RelatedLinks
+          title="Compare your options"
+          links={COMPARISONS.map(c => ({ label: c.title, desc: c.subtitle, to: `/compare/${c.slug}` }))}
+        />
+
+        <RelatedLinks
+          title="Industries we serve"
+          links={INDUSTRIES.map(i => ({ label: i.name, desc: i.tagline, to: `/industries/${i.slug}` }))}
+        />
 
         {/* Bottom CTA */}
         <section className="py-20 px-4 md:px-6 text-center border-t border-border">

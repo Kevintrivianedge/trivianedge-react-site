@@ -319,11 +319,12 @@ const BPOPage: React.FC = () => {
 
         <RelatedLinks
           links={[
+            { label: 'BPO vs. internal team', desc: 'A straight comparison of outsourcing this function versus building it in-house.', to: '/compare/bpo-vs-internal-team' },
             { label: 'RPO', desc: 'Need to hire direct employees instead of an outsourced team? See our recruitment process outsourcing.', to: '/services/rpo' },
-            { label: 'Hire in the Philippines', desc: 'Our largest operational and BPO talent hub — roles, timezone fit, and how deployment works.', to: '/talent/philippines' },
+            { label: 'BPO in the Philippines', desc: 'Our largest operational and BPO talent hub — roles, timezone fit, and how deployment works.', to: '/services/bpo/philippines' },
+            { label: 'Logistics & supply chain', desc: 'How TrivianEdge BPO teams support 24/7 logistics operations.', to: '/industries/logistics' },
             { label: 'Case studies', desc: 'See how Cargo Login, Keynotive, and other clients used TrivianEdge BPO teams.', to: '/proof' },
             { label: 'Savings calculator', desc: 'Run your own roles and headcount against real offshore cost data.', to: '/savings-calculator' },
-            { label: 'Trust & security', desc: 'How we handle data, employment compliance, and operational governance.', to: '/trust' },
           ]}
         />
 

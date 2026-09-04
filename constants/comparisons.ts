@@ -1,0 +1,100 @@
+import { ComparisonPageData } from '../types';
+
+export const COMPARISONS: ComparisonPageData[] = [
+  {
+    slug: 'bpo-vs-internal-team',
+    title: 'BPO vs. Building an Internal Operations Team',
+    subtitle: 'Outsourcing a function and hiring an in-house team both work. The right call depends on speed, management bandwidth, and how core the function is to your product.',
+    optionA: {
+      name: 'TrivianEdge BPO',
+      summary: 'A managed offshore team runs the function for you — TrivianEdge handles sourcing, employment, and day-to-day HR, while you keep control of the work itself.',
+      goodFor: ['Support functions you need running well but don\'t want to manage', 'Getting a function live in 30 days instead of a multi-month hiring cycle', 'Scaling headcount up or down without renegotiating contracts each time'],
+      tradeoffs: ['You are not building in-house institutional ownership of the function', 'Works best when the function has clear processes to hand off, not deep tacit knowledge held by one person'],
+    },
+    optionB: {
+      name: 'Internal operations team',
+      summary: 'You hire, manage, and grow the function directly — full control, but you also carry the full cost and time of building the management layer around it.',
+      goodFor: ['Functions that are core to your competitive advantage and need deep, permanent ownership', 'Teams where daily real-time collaboration with almost no timezone overlap is required'],
+      tradeoffs: ['Hiring, onboarding, and building management infrastructure typically takes months, not weeks', 'You absorb the full employer overhead — benefits, payroll admin, HR, compliance — on top of salary'],
+    },
+    rows: [
+      { factor: 'Time to a working team', a: 'TrivianEdge\'s standard 30-day deployment model', b: 'Typically several months once sourcing, interviewing, and onboarding are accounted for' },
+      { factor: 'Who manages HR and compliance', a: 'TrivianEdge, via in-country EOR and payroll partners', b: 'You, directly — payroll, benefits, and local employment law become your responsibility' },
+      { factor: 'Cost structure', a: 'One line item covering the team and its management overhead', b: 'Salary plus benefits, payroll taxes, office/equipment, and HR/legal time — usually adds 20-40% on top of salary alone' },
+      { factor: 'Flexibility to scale', a: 'Scale up or down without renegotiating employment contracts', b: 'Headcount changes mean hiring or layoffs, each with its own cost and time' },
+      { factor: 'Best fit', a: 'Support functions: back-office, customer support, finance ops, admin', b: 'Functions that are core to your product or competitive moat' },
+    ],
+    verdict: 'If the function needs to exist and run well, but isn\'t the reason customers choose you, a managed BPO team is usually faster and cheaper than building the management layer from scratch. If the function is core to your product or requires constant real-time collaboration, an internal team earns its cost. Many TrivianEdge clients run both — a lean internal team on the strategic work, a BPO team on the operational load.',
+    faqs: [
+      { question: 'Can I start with BPO and bring the function in-house later?', answer: 'Yes. Some clients use TrivianEdge BPO to prove out a function\'s process and volume, then transition it to a direct hire or internal team once it\'s core enough to justify the investment. We build with clean handoffs in mind, not lock-in.' },
+      { question: 'Does BPO mean I lose visibility into the work?', answer: 'No. You control the work — your BPO team follows your processes and reports to your managers. TrivianEdge manages HR, performance, and admin in the background, not the work itself.' },
+      { question: 'How is cost actually compared between the two?', answer: 'Run your own roles and headcount through our savings calculator rather than relying on a flat industry percentage — the real gap depends on role, location, and how much management overhead you\'d otherwise be building.' },
+    ],
+    relatedServiceHref: '/services/bpo',
+    relatedServiceName: 'BPO',
+  },
+  {
+    slug: 'rpo-vs-recruitment-agency',
+    title: 'RPO vs. Recruitment Agency',
+    subtitle: 'Both help you hire. They are built for different volumes, timelines, and levels of process ownership.',
+    optionA: {
+      name: 'RPO (Recruitment Process Outsourcing)',
+      summary: 'An embedded, ongoing extension of your hiring function. TrivianEdge runs sourcing, screening, interview coordination, and onboarding as a continuous process, not a one-off search.',
+      goodFor: ['Recurring or volume hiring across multiple roles', 'Companies that want a consistent, repeatable hiring process rather than a new agency search each time', 'Hiring across multiple countries without building local recruiting infrastructure'],
+      tradeoffs: ['Best suited to ongoing hiring need, not a single urgent one-off role'],
+    },
+    optionB: {
+      name: 'Traditional recruitment agency',
+      summary: 'A transactional, per-search engagement — the agency finds and presents candidates for a specific open role, usually for a contingency or retained fee.',
+      goodFor: ['A single urgent role with no ongoing hiring pipeline behind it', 'Highly specialized executive searches where a boutique agency has a specific network'],
+      tradeoffs: ['Each new role typically restarts the search and fee cycle', 'Little continuity in process, employer branding, or candidate experience between searches', 'Agencies are usually not built to run interview logistics, offer management, or onboarding for you'],
+    },
+    rows: [
+      { factor: 'Engagement model', a: 'Embedded, ongoing — runs as part of your team', b: 'Transactional — a new engagement per role or search' },
+      { factor: 'Process ownership', a: 'TrivianEdge runs sourcing, screening, interview coordination, and onboarding logistics', b: 'Agency sources candidates; you still run your own interview and offer process' },
+      { factor: 'Built for volume', a: 'Yes — active sourcing across six countries, four-stage screening at scale', b: 'Typically optimized for one role at a time' },
+      { factor: 'Consistency across roles', a: 'One process, one point of contact, consistent candidate experience', b: 'Varies by agency and by search' },
+      { factor: 'Best fit', a: 'Recurring or multi-role hiring, or hiring across new countries', b: 'A single hard-to-fill or executive role' },
+    ],
+    verdict: 'If you\'re hiring one role and need it filled fast, a good agency can work well. If you\'re hiring repeatedly — building out a team, entering a new market, or replacing agency spend that\'s scaling with headcount — RPO is built for that volume and gives you one consistent process instead of restarting with a new agency every time.',
+    faqs: [
+      { question: 'Is RPO more expensive than an agency?', answer: 'It depends on volume. Agencies typically charge per placement, which can add up fast at volume; RPO is scoped for ongoing hiring, so the per-hire cost usually comes down the more you hire. Contact us for a custom quote based on your volume and role mix.' },
+      { question: 'Can RPO handle a single urgent role too?', answer: 'Yes — TrivianEdge offers both full-cycle embedded RPO and project-based engagements for a specific hiring push, so a single urgent need doesn\'t require committing to an ongoing retainer.' },
+      { question: 'Does RPO include a replacement guarantee like some agencies offer?', answer: 'Yes. TrivianEdge offers a replacement guarantee for every placement — if a hire leaves or underperforms within the agreed warranty period, we re-run the search at no additional cost. Exact terms are agreed upon upfront.' },
+    ],
+    relatedServiceHref: '/services/rpo',
+    relatedServiceName: 'RPO',
+  },
+  {
+    slug: 'eor-vs-foreign-entity',
+    title: 'Employer-of-Record Partners vs. Setting Up a Foreign Entity',
+    subtitle: 'Both let you legally employ people in another country. They differ enormously in setup time, cost, and how much ongoing legal overhead you carry.',
+    optionA: {
+      name: 'EOR / payroll partner model',
+      summary: 'TrivianEdge coordinates your employment relationship through in-country employer-of-record and payroll partners, so you never register a local company yourself.',
+      goodFor: ['Testing a new market or hiring a small team before committing to a full local presence', 'Getting hires legally employed in days or weeks, not months', 'Avoiding the ongoing legal, tax, and compliance overhead of owning a foreign subsidiary'],
+      tradeoffs: ['Not the right structure if you plan a large, permanent local operation with its own legal identity in that country'],
+    },
+    optionB: {
+      name: 'Setting up your own foreign entity',
+      summary: 'You register a local subsidiary or branch, becoming the direct legal employer with full control over local structure, banking, and benefits design.',
+      goodFor: ['Large, long-term operations where the local entity itself is strategically valuable', 'Companies that need full control over local benefits, equity plans, or banking relationships'],
+      tradeoffs: ['Registration alone can take months and requires local legal and accounting counsel', 'You carry ongoing statutory filings, local tax compliance, and employment law risk directly'],
+    },
+    rows: [
+      { factor: 'Setup time', a: 'Days to weeks', b: 'Often months, depending on jurisdiction' },
+      { factor: 'Upfront cost', a: 'No entity registration or local legal setup cost', b: 'Legal, accounting, and registration fees before you hire anyone' },
+      { factor: 'Who carries compliance risk', a: 'The EOR/payroll partner administers local law; TrivianEdge manages that relationship', b: 'You, directly, as the registered legal employer' },
+      { factor: 'Ongoing overhead', a: 'Bundled into one relationship with TrivianEdge', b: 'Local accounting, statutory filings, and legal counsel on retainer' },
+      { factor: 'Best fit', a: 'Testing a market, or teams from a handful of people up to mid-size', b: 'Large, permanent operations where the local entity has its own strategic value' },
+    ],
+    verdict: 'For most companies hiring their first offshore team members, an EOR/partner model gets you legally compliant and hiring in weeks instead of months, without the fixed cost of a foreign subsidiary. It becomes worth setting up your own entity once the local team is large and permanent enough that owning the legal structure outright pays for itself.',
+    faqs: [
+      { question: 'Do I need a foreign entity to work with TrivianEdge?', answer: 'No. TrivianEdge coordinates employment through in-country employer-of-record and payroll partners specifically so you don\'t need to set up a foreign entity, payroll account, or legal structure yourself.' },
+      { question: 'What happens if I outgrow the EOR model?', answer: 'Some clients do eventually set up their own entity once a local team is large enough to justify it. We can advise on that transition based on what we\'ve seen work, though the legal setup itself is handled by your own counsel in that jurisdiction.' },
+      { question: 'Is this the same as what a PEO does domestically?', answer: 'Conceptually similar — a domestic PEO co-employs staff in your home country; an EOR/payroll partner does the equivalent for employment in a foreign jurisdiction.' },
+    ],
+    relatedServiceHref: '/services/bpo',
+    relatedServiceName: 'BPO',
+  },
+];

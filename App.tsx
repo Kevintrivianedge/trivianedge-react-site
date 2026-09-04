@@ -60,6 +60,9 @@ const ContactPage             = lazy(() => import('./pages/ContactPage'));
 const ProofPage               = lazy(() => import('./pages/ProofPage'));
 const TrustPage                = lazy(() => import('./pages/TrustPage'));
 const TalentHubPage            = lazy(() => import('./pages/TalentHubPage'));
+const ComparisonPage           = lazy(() => import('./pages/ComparisonPage'));
+const IndustryPage             = lazy(() => import('./pages/IndustryPage'));
+const ServiceCountryPage       = lazy(() => import('./pages/ServiceCountryPage'));
 const AboutPage               = lazy(() => import('./pages/AboutPage'));
 const PrivacyPage             = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage               = lazy(() => import('./pages/TermsPage'));
@@ -904,6 +907,9 @@ export default function App() {
                       <Route path="/services/ai-development/ai-chatbot-development" element={<AIChatbotDevelopmentPage />} />
                       <Route path="/services/ai-development/mlops" element={<MLOpsPage />} />
                       <Route path="/services/it-outsourcing" element={<ITOutsourcingPage />} />
+                      <Route path="/compare/:slug" element={<ComparisonPage />} />
+                      <Route path="/industries/:slug" element={<IndustryPage />} />
+                      <Route path="/services/:service/:country" element={<ServiceCountryPage />} />
                       <Route path="/savings-calculator" element={<SavingsCalculatorPage />} />
                       <Route path="/venture-studio" element={<VentureStudioPage />} />
                       <Route path="*" element={<NotFoundPage />} />

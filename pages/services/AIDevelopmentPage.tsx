@@ -269,7 +269,8 @@ const AIDevelopmentPage: React.FC = () => {
         <RelatedLinks
           links={[
             { label: 'Software & IT outsourcing', desc: 'Bespoke software development beyond AI features — full product builds.', to: '/services/it-outsourcing' },
-            { label: 'RPO', desc: 'Hire AI and ML engineers directly onto your team instead of an embedded delivery team.', to: '/services/rpo' },
+            { label: 'AI development in Vietnam', desc: 'Our fastest-growing AI/ML engineering hub — roles, timezone fit, and typical work.', to: '/services/ai-development/vietnam' },
+            { label: 'Healthcare & medtech', desc: 'How we approach AI and data handling for regulated-adjacent products.', to: '/industries/healthcare-medtech' },
             { label: 'Trust & security', desc: 'How we handle model data, API keys, and AI assistant conversations.', to: '/trust' },
             { label: 'Case studies', desc: 'See TrivianEdge engagement outcomes across BPO, RPO, and software delivery.', to: '/proof' },
           ]}

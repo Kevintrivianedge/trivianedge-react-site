@@ -242,7 +242,8 @@ const ITOutsourcingPage: React.FC = () => {
         <RelatedLinks
           links={[
             { label: 'AI development', desc: 'Add AI features, RAG, or agentic workflows to the product we build for you.', to: '/services/ai-development' },
-            { label: 'BPO', desc: 'Pair your engineering team with an outsourced operations or support team.', to: '/services/bpo' },
+            { label: 'IT outsourcing in Costa Rica', desc: 'Nearshore, US-timezone-aligned engineering — roles and typical work.', to: '/services/it-outsourcing/costa-rica' },
+            { label: 'Education', desc: 'How we build public sites, portals, and verification systems for schools.', to: '/industries/education' },
             { label: 'RPO', desc: 'Hire software engineers directly onto your own team instead of an embedded team.', to: '/services/rpo' },
             { label: 'Case studies', desc: 'See how Hub-Flx and Capricorn College shipped software with TrivianEdge.', to: '/proof' },
           ]}

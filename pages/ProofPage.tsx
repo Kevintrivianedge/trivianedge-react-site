@@ -4,6 +4,7 @@ import { ArrowLeft, Star, ExternalLink, ArrowRight } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import RelatedLinks from '../components/RelatedLinks';
 import { CASE_STUDIES, TESTIMONIALS } from '../constants/proof';
+import { INDUSTRIES } from '../constants/industries';
 import { breadcrumbSchema, reviewSchema, SEO_CONFIG } from '../utils/seo';
 
 const ProofPage: React.FC = () => {
@@ -69,6 +70,14 @@ const ProofPage: React.FC = () => {
                     </span>
                   ))}
                 </div>
+                {(() => {
+                  const industry = INDUSTRIES.find(i => i.relatedCaseStudyClient === study.client);
+                  return industry ? (
+                    <Link to={`/industries/${industry.slug}`} className="text-cyan-600 text-xs font-bold hover:underline mt-4 inline-flex items-center gap-1">
+                      More on {industry.name} <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  ) : null;
+                })()}
               </article>
             ))}
           </div>
