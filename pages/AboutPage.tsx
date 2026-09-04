@@ -158,6 +158,7 @@ const AboutPage: React.FC = () => {
                       width={20}
                       height={15}
                       alt=""
+                      loading="lazy"
                       className="rounded-sm object-cover flex-shrink-0"
                     />
                     <span className="font-bold">{hub.country}</span>

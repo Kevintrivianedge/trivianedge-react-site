@@ -70,6 +70,7 @@ const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: Ta
             width={48}
             height={36}
             alt={hub.country}
+            loading="lazy"
             className="rounded-md object-cover shadow-md transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3"
           />
           <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">

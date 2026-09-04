@@ -79,6 +79,7 @@ const ServiceCountryPage: React.FC = () => {
                 width={56}
                 height={42}
                 alt={hub.country}
+                loading="lazy"
                 className="rounded-md object-cover shadow-md"
               />
               <span className="text-xs font-bold uppercase tracking-widest text-cyan-600">{hub.country} · {hub.specialty}</span>

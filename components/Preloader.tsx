@@ -102,7 +102,7 @@ export const Preloader: React.FC = () => {
 
             {/* Core Tagline */}
             <motion.p 
-              className="text-lg md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-cyan-600 mb-6"
+              className="text-lg md:text-2xl font-bold text-cyan-400 mb-6"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.8 }}

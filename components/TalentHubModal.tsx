@@ -129,6 +129,7 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
                 width={88}
                 height={66}
                 alt={hub.country}
+                loading="lazy"
                 className="rounded-lg object-cover shadow-2xl drop-shadow-2xl"
               />
               <div className="pb-1">

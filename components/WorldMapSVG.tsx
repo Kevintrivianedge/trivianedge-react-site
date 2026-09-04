@@ -89,7 +89,7 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
       {hoveredHub && (
         <div className="absolute top-4 right-4 bg-[#0a0a0f]/95 backdrop-blur-xl p-5 rounded-2xl border border-cyan-500/20 max-w-[min(220px,75vw)] pointer-events-none shadow-2xl shadow-cyan-900/30">
           <div className="flex items-center gap-3 mb-3">
-            <img src={`https://flagcdn.com/w40/${hoveredHub.flagCode}.png`} width={28} height={21} alt={hoveredHub.country} className="rounded flex-shrink-0 object-cover" />
+            <img src={`https://flagcdn.com/w40/${hoveredHub.flagCode}.png`} width={28} height={21} alt={hoveredHub.country} loading="lazy" className="rounded flex-shrink-0 object-cover" />
             <div>
               <p className="font-bold text-white text-sm leading-tight">{hoveredHub.country}</p>
               <p className="text-cyan-400 text-[9px] font-mono uppercase tracking-widest mt-0.5">{hoveredHub.specialty}</p>
