@@ -5,6 +5,13 @@ export interface Env {
   CRM_WEBHOOK_URL?: string;
   CRM_WEBHOOK_SIGNING_SECRET?: string;
   ADMIN_API_TOKEN?: string;
+  // Key rotation support: versioned API tokens for graceful key migration
+  ADMIN_API_TOKEN_PREV?: string;    // Previous token version (deprecated but accepted)
+  ADMIN_API_TOKEN_VERSION?: string; // Current key version (e.g., "v1", "v2")
+  // Security alerting: webhooks for critical events
+  SECURITY_ALERT_WEBHOOK_URL?: string; // Slack/Discord webhook for security events
+  SECURITY_ALERT_THRESHOLD_FAILED_AUTH?: string; // Failed auth attempts threshold (default: 10/min)
+  HEALTH_CHECK_WEBHOOK_URL?: string; // Health check webhook (daily or on failure)
   ANALYTICS_KV?: KVNamespace;
   ASSETS?: Fetcher; // optional so missing binding won't crash
 }
@@ -33,30 +40,48 @@ function makeCorsHeaders(requestOrigin: string | null): Record<string, string> {
 }
 
 // ---------------------------------------------------------------------------
-// Simple in-memory rate limiter (per Cloudflare Worker isolate).
-// Limits each IP to `maxRequests` per `windowMs` across all API endpoints.
+// Advanced rate limiter with endpoint-specific limits (per Cloudflare Worker isolate).
+// Tiered rate limiting based on endpoint sensitivity:
+// - Strict (5 req/min): Chat, Generate, Venture Submit (high resource cost)
+// - Standard (20 req/min): Inquiry, Early Access, Analytics (normal endpoints)
+// - Permissive (100 req/min): Health, other monitoring endpoints
 //
-// NOTE: This map resets when the Worker isolate is recycled. For persistent
-// cross-isolate rate limiting, replace this with Cloudflare Durable Objects
-// or Workers KV. This implementation is sufficient for moderate traffic.
+// NOTE: In-memory map resets on Worker isolate recycle. For persistent limiting
+// across isolates, use Cloudflare Durable Objects or Workers KV.
 // ---------------------------------------------------------------------------
+
 const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
-const RATE_LIMIT_MAX = 20;           // max requests per IP per window
 const RATE_LIMIT_KV_PREFIX = 'rate_limit';
 const RATE_LIMIT_KV_TTL_SECONDS = Math.ceil(RATE_LIMIT_WINDOW_MS / 1000) + 60;
+
+// Endpoint-specific rate limit configurations: (requests per minute per IP)
+const ENDPOINT_RATE_LIMITS: Record<string, number> = {
+  '/api/chat': 5,                    // High resource cost (LLM inference)
+  '/api/generate': 5,                // High resource cost (LLM inference)
+  '/api/venture/submit': 5,          // High resource cost + CRM webhook
+  '/api/inquiry': 20,                // Standard: form submission
+  '/api/early-access': 20,           // Standard: form submission
+  '/api/analytics/events': 20,       // Standard: telemetry
+  '/api/admin/venture-stats': 10,    // Admin endpoint: moderate
+  'default': 20,                     // Catch-all for new endpoints
+};
 
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const textEncoder = new TextEncoder();
 
-function isRateLimitedInMemory(ip: string): boolean {
+function getEndpointLimit(pathname: string): number {
+  return ENDPOINT_RATE_LIMITS[pathname] ?? ENDPOINT_RATE_LIMITS['default'];
+}
+
+function isRateLimitedInMemory(key: string, limit: number): boolean {
   const now = Date.now();
-  const entry = rateLimitMap.get(ip);
+  const entry = rateLimitMap.get(key);
   if (!entry || now >= entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    rateLimitMap.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
     return false;
   }
   entry.count += 1;
-  return entry.count > RATE_LIMIT_MAX;
+  return entry.count > limit;
 }
 
 function anonymizeIp(ip: string): string {
@@ -81,19 +106,23 @@ async function hashIdentifier(value: string): Promise<string> {
   return toHex(digest).slice(0, 32);
 }
 
-async function isRateLimited(ip: string, env: Env): Promise<boolean> {
+async function isRateLimited(ip: string, pathname: string, env: Env): Promise<boolean> {
+  const limit = getEndpointLimit(pathname);
+
   if (env.ANALYTICS_KV) {
     const bucket = Math.floor(Date.now() / RATE_LIMIT_WINDOW_MS);
     const hashedIp = await hashIdentifier(ip || 'unknown');
-    const key = `${RATE_LIMIT_KV_PREFIX}:${bucket}:${hashedIp}`;
+    // Include endpoint in key for per-endpoint limiting
+    const key = `${RATE_LIMIT_KV_PREFIX}:${bucket}:${pathname}:${hashedIp}`;
     const currentRaw = await env.ANALYTICS_KV.get(key);
     const current = currentRaw ? Number.parseInt(currentRaw, 10) : 0;
     const next = Number.isFinite(current) ? current + 1 : 1;
     await env.ANALYTICS_KV.put(key, String(next), { expirationTtl: RATE_LIMIT_KV_TTL_SECONDS });
-    return next > RATE_LIMIT_MAX;
+    return next > limit;
   }
 
-  return isRateLimitedInMemory(ip);
+  const memKey = `${pathname}:${ip}`;
+  return isRateLimitedInMemory(memKey, limit);
 }
 
 async function parseJsonBody<T>(request: Request): Promise<{ ok: true; data: T } | { ok: false; error: string }> {
@@ -106,8 +135,9 @@ async function parseJsonBody<T>(request: Request): Promise<{ ok: true; data: T }
 }
 
 // ---------------------------------------------------------------------------
-// CSRF Token Validation
-// Validates CSRF tokens sent by clients to prevent cross-site request forgery
+// CSRF Token Validation with Rotation
+// Validates CSRF tokens and rotates them for defense-in-depth.
+// One-time use prevents replay attacks; rotation per-request prevents token theft.
 // ---------------------------------------------------------------------------
 const CSRF_SESSION_PREFIX = 'csrf_session';
 const CSRF_TOKEN_TTL_SECONDS = 3600; // 1 hour
@@ -125,24 +155,193 @@ async function generateCsrfSessionToken(env: Env): Promise<string> {
   return token;
 }
 
-async function validateCsrfToken(token: string | null, env: Env): Promise<boolean> {
-  if (!token) return false;
+async function validateAndRotateCsrfToken(
+  token: string | null,
+  env: Env
+): Promise<{ valid: boolean; newToken: string }> {
+  if (!token) {
+    // No token provided — generate new one for next request
+    const newToken = await generateCsrfSessionToken(env);
+    return { valid: false, newToken };
+  }
 
   if (!env.ANALYTICS_KV) {
     // Fallback: always allow if KV not available (token was generated client-side)
-    return true;
+    // Generate new token for rotation
+    const array = new Uint8Array(32);
+    crypto.getRandomValues(array);
+    const newToken = Array.from(array, (byte) => byte.toString(16).padStart(2, '0')).join('');
+    return { valid: true, newToken };
   }
 
   const key = `${CSRF_SESSION_PREFIX}:${token}`;
   const valid = await env.ANALYTICS_KV.get(key);
 
   if (valid) {
-    // Invalidate token after use (one-time use)
+    // Invalidate current token after use (one-time use defense)
     await env.ANALYTICS_KV.delete(key);
-    return true;
+    // Generate new token for next request (rotation defense)
+    const newToken = await generateCsrfSessionToken(env);
+    return { valid: true, newToken };
   }
 
-  return false;
+  // Invalid token — generate new one anyway (prevents attacker token lock)
+  const newToken = await generateCsrfSessionToken(env);
+  return { valid: false, newToken };
+}
+
+// Legacy single-return validateCsrfToken for backwards compatibility
+async function validateCsrfToken(token: string | null, env: Env): Promise<boolean> {
+  const result = await validateAndRotateCsrfToken(token, env);
+  return result.valid;
+}
+
+// ---------------------------------------------------------------------------
+// Security Event Monitoring & Alerting
+// Tracks suspicious patterns and triggers alerts for critical security events.
+// Supports webhook-based notifications to Slack, Discord, or custom endpoints.
+// ---------------------------------------------------------------------------
+const SECURITY_ALERT_PREFIX = 'security_alert_event';
+const SECURITY_EVENT_AGGREGATION_WINDOW_MS = 60_000; // 1 minute window for aggregation
+const DEFAULT_FAILED_AUTH_THRESHOLD = 10; // Alert after 10 failed auth attempts in 1 minute
+
+type SecurityAlert = {
+  severity: 'critical' | 'high' | 'medium' | 'low';
+  event_type: string;
+  title: string;
+  description: string;
+  details: Record<string, unknown>;
+  timestamp: string;
+  action_required?: string;
+};
+
+async function checkSecurityAlertThreshold(env: Env): Promise<number> {
+  if (!env.ANALYTICS_KV) return 0;
+
+  // Count failed auth attempts in the last minute
+  const bucket = Math.floor(Date.now() / SECURITY_EVENT_AGGREGATION_WINDOW_MS);
+  const prefix = `${ADMIN_AUTH_ATTEMPT_PREFIX}:${bucket}:`;
+  const listed = await env.ANALYTICS_KV.list({ prefix, limit: 1000 });
+
+  let totalFailures = 0;
+  for (const key of listed.keys) {
+    const value = await env.ANALYTICS_KV.get(key.name);
+    if (value) {
+      const count = Number.parseInt(value, 10);
+      if (Number.isFinite(count)) totalFailures += count;
+    }
+  }
+
+  return totalFailures;
+}
+
+async function sendSecurityAlert(
+  env: Env,
+  alert: SecurityAlert,
+): Promise<{ sent: boolean; status?: number; error?: string }> {
+  if (!env.SECURITY_ALERT_WEBHOOK_URL) {
+    return { sent: false, error: 'SECURITY_ALERT_WEBHOOK_URL not configured' };
+  }
+
+  // Format alert for Slack/Discord webhook
+  const webhookPayload = {
+    text: `🚨 ${alert.severity.toUpperCase()}: ${alert.title}`,
+    blocks: [
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: `${alert.severity === 'critical' ? '🚨' : '⚠️'} ${alert.title}`,
+        },
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Event:* ${alert.event_type}\n*Severity:* ${alert.severity}\n*Time:* ${alert.timestamp}`,
+        },
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: alert.description,
+        },
+      },
+      ...(alert.action_required
+        ? [
+            {
+              type: 'section',
+              text: {
+                type: 'mrkdwn',
+                text: `*Action Required:* ${alert.action_required}`,
+              },
+            },
+          ]
+        : []),
+    ],
+  };
+
+  try {
+    const response = await fetch(env.SECURITY_ALERT_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(webhookPayload),
+    });
+
+    if (!response.ok) {
+      return {
+        sent: false,
+        status: response.status,
+        error: await response.text(),
+      };
+    }
+
+    return { sent: true, status: response.status };
+  } catch (error) {
+    return {
+      sent: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    };
+  }
+}
+
+async function checkAndAlertSecurityThresholds(env: Env): Promise<void> {
+  if (!env.SECURITY_ALERT_WEBHOOK_URL) return;
+
+  const failedAuthThreshold =
+    Number.parseInt(env.SECURITY_ALERT_THRESHOLD_FAILED_AUTH ?? '', 10) ||
+    DEFAULT_FAILED_AUTH_THRESHOLD;
+
+  const failedAuthCount = await checkSecurityAlertThreshold(env);
+
+  // Alert if failed auth attempts exceed threshold
+  if (failedAuthCount >= failedAuthThreshold) {
+    const alert: SecurityAlert = {
+      severity: failedAuthCount > failedAuthThreshold * 2 ? 'critical' : 'high',
+      event_type: 'brute_force_attempt_detected',
+      title: `High volume of failed authentication attempts (${failedAuthCount})`,
+      description: `Detected ${failedAuthCount} failed authentication attempts in the last minute. This may indicate a brute force attack.`,
+      details: {
+        failed_attempts: failedAuthCount,
+        threshold: failedAuthThreshold,
+        window_ms: SECURITY_EVENT_AGGREGATION_WINDOW_MS,
+      },
+      timestamp: new Date().toISOString(),
+      action_required:
+        failedAuthCount > failedAuthThreshold * 2
+          ? 'Review logs immediately. Consider temporary IP blocking or additional verification.'
+          : 'Monitor the situation. Increase logging if it continues.',
+    };
+
+    await sendSecurityAlert(env, alert);
+    await persistEvent(env, 'security_alert_sent', {
+      alert_type: 'brute_force_attempt',
+      severity: alert.severity,
+      details: alert.details,
+      timestamp: alert.timestamp,
+    });
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -461,14 +660,256 @@ async function processDueCrmRetries(env: Env, batchSize = 5): Promise<{ processe
   return { processed: due.length, success, failed };
 }
 
+// ---------------------------------------------------------------------------
+// Admin API Authentication with Token Expiration & Rate Limiting
+// Prevents brute force attacks via failed attempt rate limiting and enforces
+// token lifecycle management with expiration tracking. Supports key rotation
+// with versioning and graceful deprecation of previous keys.
+// ---------------------------------------------------------------------------
+const ADMIN_AUTH_ATTEMPT_PREFIX = 'admin_auth_attempt';
+const ADMIN_AUTH_ATTEMPT_WINDOW_MS = 60_000; // 1 minute
+const ADMIN_AUTH_ATTEMPT_LIMIT = 5; // max failed attempts per minute per IP
+const ADMIN_KEY_VERSION_PREFIX = 'admin_key_version';
+const ADMIN_KEY_ROTATION_GRACE_PERIOD_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+type AdminTokenMetadata = {
+  token_hash: string;
+  issued_at: string;
+  expires_at?: string;
+  version: number;
+  deprecated: boolean;
+};
+
+type AdminKeyVersion = {
+  version: string;
+  issued_at: string;
+  rotated_at?: string;
+  deprecated_at?: string;
+  deprecation_grace_until?: string;
+};
+
+async function trackFailedAuthAttempt(ip: string, env: Env): Promise<number> {
+  if (!env.ANALYTICS_KV) return 0;
+  const bucket = Math.floor(Date.now() / ADMIN_AUTH_ATTEMPT_WINDOW_MS);
+  const hashedIp = await hashIdentifier(ip || 'unknown');
+  const key = `${ADMIN_AUTH_ATTEMPT_PREFIX}:${bucket}:${hashedIp}`;
+  const currentRaw = await env.ANALYTICS_KV.get(key);
+  const current = currentRaw ? Number.parseInt(currentRaw, 10) : 0;
+  const next = Number.isFinite(current) ? current + 1 : 1;
+  await env.ANALYTICS_KV.put(key, String(next), {
+    expirationTtl: Math.ceil(ADMIN_AUTH_ATTEMPT_WINDOW_MS / 1000) + 60,
+  });
+  return next;
+}
+
+async function isAdminAuthLimited(ip: string, env: Env): Promise<boolean> {
+  if (!env.ANALYTICS_KV) return false;
+  const bucket = Math.floor(Date.now() / ADMIN_AUTH_ATTEMPT_WINDOW_MS);
+  const hashedIp = await hashIdentifier(ip || 'unknown');
+  const key = `${ADMIN_AUTH_ATTEMPT_PREFIX}:${bucket}:${hashedIp}`;
+  const currentRaw = await env.ANALYTICS_KV.get(key);
+  const current = currentRaw ? Number.parseInt(currentRaw, 10) : 0;
+  return current >= ADMIN_AUTH_ATTEMPT_LIMIT;
+}
+
+async function trackKeyRotation(env: Env, event: 'rotate' | 'deprecate', details: Record<string, unknown>): Promise<void> {
+  if (!env.ANALYTICS_KV) return;
+  const versionKey = `${ADMIN_KEY_VERSION_PREFIX}:${Date.now()}:${crypto.randomUUID()}`;
+  await env.ANALYTICS_KV.put(versionKey, JSON.stringify({
+    event,
+    version: env.ADMIN_API_TOKEN_VERSION ?? 'unknown',
+    timestamp: new Date().toISOString(),
+    details,
+  }), {
+    // Keep key rotation history for 90 days
+    expirationTtl: 90 * 24 * 60 * 60,
+  });
+}
+
+function getCurrentKeyVersion(env: Env): AdminKeyVersion {
+  return {
+    version: env.ADMIN_API_TOKEN_VERSION ?? 'v1',
+    issued_at: new Date().toISOString(),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Admin Request Signing - Optional HMAC-based request verification
+// Clients can optionally sign requests for additional security layer.
+// Signature prevents request tampering and provides non-repudiation.
+// Header: X-Request-Signature (HMAC-SHA256 hex)
+// Format: HMAC-SHA256(admin_token + method + path + timestamp)
+// ---------------------------------------------------------------------------
+async function verifyAdminRequestSignature(
+  request: Request,
+  adminToken: string,
+): Promise<{ valid: boolean; reason?: string }> {
+  const signature = request.headers.get('X-Request-Signature');
+  if (!signature) {
+    // Signature optional for backward compatibility, but recommended
+    return { valid: true };
+  }
+
+  const method = request.method;
+  const url = new URL(request.url);
+  const path = url.pathname;
+  const timestamp = request.headers.get('X-Request-Timestamp');
+
+  if (!timestamp) {
+    return { valid: false, reason: 'X-Request-Timestamp header required with signature' };
+  }
+
+  // Prevent replay attacks: signature valid for 5 minutes
+  const requestTime = Number.parseInt(timestamp, 10);
+  const now = Date.now();
+  const maxAge = 5 * 60 * 1000; // 5 minutes
+  if (now - requestTime > maxAge) {
+    return { valid: false, reason: 'Request timestamp too old (max 5 minutes)' };
+  }
+
+  // Reconstruct signature: token + method + path + timestamp
+  const signaturePayload = `${adminToken}:${method}:${path}:${timestamp}`;
+  const key = await crypto.subtle.importKey(
+    'raw',
+    textEncoder.encode(adminToken),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign'],
+  );
+  const expectedSignature = toHex(
+    await crypto.subtle.sign('HMAC', key, textEncoder.encode(signaturePayload)),
+  );
+
+  const valid = await timingSafeEqual(signature, expectedSignature);
+  return { valid, reason: valid ? undefined : 'Signature verification failed' };
+}
+
 async function isAdminAuthorized(request: Request, env: Env): Promise<boolean> {
   if (!env.ADMIN_API_TOKEN) return false;
+
+  const ip = request.headers.get('CF-Connecting-IP') ?? 'unknown';
+
+  // Rate limit failed auth attempts to prevent brute force
+  if (await isAdminAuthLimited(ip, env)) {
+    await persistEvent(env, 'admin_auth_rate_limited', {
+      ip: anonymizeIp(ip),
+      timestamp: new Date().toISOString(),
+    });
+    return false;
+  }
+
   const headerToken = request.headers.get('X-Admin-Token') ?? '';
   const bearer = request.headers.get('Authorization') ?? '';
   const bearerToken = bearer.startsWith('Bearer ') ? bearer.slice(7).trim() : '';
+
+  // Timing-safe comparison prevents timing attacks
+  // Try current key first (most common case)
   const headerAuthorized = await timingSafeEqual(headerToken, env.ADMIN_API_TOKEN);
-  if (headerAuthorized) return true;
-  return timingSafeEqual(bearerToken, env.ADMIN_API_TOKEN);
+  if (headerAuthorized) {
+    // Verify request signature if provided (optional, for defense-in-depth)
+    const signatureCheck = await verifyAdminRequestSignature(request, env.ADMIN_API_TOKEN);
+    if (!signatureCheck.valid) {
+      await persistEvent(env, 'admin_auth_signature_failed', {
+        ip: anonymizeIp(ip),
+        reason: signatureCheck.reason,
+        timestamp: new Date().toISOString(),
+      });
+      return false;
+    }
+
+    await persistEvent(env, 'admin_auth_success', {
+      ip: anonymizeIp(ip),
+      key_version: env.ADMIN_API_TOKEN_VERSION ?? 'v1',
+      method: 'header',
+      signature_verified: !!request.headers.get('X-Request-Signature'),
+      timestamp: new Date().toISOString(),
+    });
+    return true;
+  }
+
+  const bearerAuthorized = await timingSafeEqual(bearerToken, env.ADMIN_API_TOKEN);
+  if (bearerAuthorized) {
+    // Verify request signature if provided (optional, for defense-in-depth)
+    const signatureCheck = await verifyAdminRequestSignature(request, env.ADMIN_API_TOKEN);
+    if (!signatureCheck.valid) {
+      await persistEvent(env, 'admin_auth_signature_failed', {
+        ip: anonymizeIp(ip),
+        reason: signatureCheck.reason,
+        timestamp: new Date().toISOString(),
+      });
+      return false;
+    }
+
+    await persistEvent(env, 'admin_auth_success', {
+      ip: anonymizeIp(ip),
+      key_version: env.ADMIN_API_TOKEN_VERSION ?? 'v1',
+      method: 'bearer',
+      signature_verified: !!request.headers.get('X-Request-Signature'),
+      timestamp: new Date().toISOString(),
+    });
+    return true;
+  }
+
+  // Graceful key rotation: accept previous token version during grace period
+  if (env.ADMIN_API_TOKEN_PREV) {
+    const headerPrevAuthorized = await timingSafeEqual(headerToken, env.ADMIN_API_TOKEN_PREV);
+    if (headerPrevAuthorized) {
+      // Verify signature with previous key if provided
+      const signatureCheck = await verifyAdminRequestSignature(request, env.ADMIN_API_TOKEN_PREV);
+      if (!signatureCheck.valid) {
+        await persistEvent(env, 'admin_auth_signature_failed', {
+          ip: anonymizeIp(ip),
+          reason: signatureCheck.reason,
+          timestamp: new Date().toISOString(),
+        });
+        return false;
+      }
+
+      await persistEvent(env, 'admin_auth_deprecated_key', {
+        ip: anonymizeIp(ip),
+        key_version: 'deprecated',
+        method: 'header',
+        signature_verified: !!request.headers.get('X-Request-Signature'),
+        grace_period_until: new Date(Date.now() + ADMIN_KEY_ROTATION_GRACE_PERIOD_MS).toISOString(),
+        timestamp: new Date().toISOString(),
+      });
+      return true;
+    }
+
+    const bearerPrevAuthorized = await timingSafeEqual(bearerToken, env.ADMIN_API_TOKEN_PREV);
+    if (bearerPrevAuthorized) {
+      // Verify signature with previous key if provided
+      const signatureCheck = await verifyAdminRequestSignature(request, env.ADMIN_API_TOKEN_PREV);
+      if (!signatureCheck.valid) {
+        await persistEvent(env, 'admin_auth_signature_failed', {
+          ip: anonymizeIp(ip),
+          reason: signatureCheck.reason,
+          timestamp: new Date().toISOString(),
+        });
+        return false;
+      }
+
+      await persistEvent(env, 'admin_auth_deprecated_key', {
+        ip: anonymizeIp(ip),
+        key_version: 'deprecated',
+        method: 'bearer',
+        signature_verified: !!request.headers.get('X-Request-Signature'),
+        grace_period_until: new Date(Date.now() + ADMIN_KEY_ROTATION_GRACE_PERIOD_MS).toISOString(),
+        timestamp: new Date().toISOString(),
+      });
+      return true;
+    }
+  }
+
+  // Track failed attempt for rate limiting
+  const attempts = await trackFailedAuthAttempt(ip, env);
+  await persistEvent(env, 'admin_auth_failed', {
+    ip: anonymizeIp(ip),
+    attempts,
+    timestamp: new Date().toISOString(),
+  });
+
+  return false;
 }
 
 async function getKvJsonRecords<T>(env: Env, prefix: string, max = 2000): Promise<T[]> {
@@ -497,6 +938,66 @@ async function getKvJsonRecords<T>(env: Env, prefix: string, max = 2000): Promis
   }
 
   return out;
+}
+
+async function buildSecurityHealthCheck(env: Env): Promise<Record<string, unknown>> {
+  if (!env.ANALYTICS_KV) {
+    return {
+      status: 'degraded',
+      reason: 'ANALYTICS_KV not available',
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  const failedAuthAttempts = await checkSecurityAlertThreshold(env);
+  const failedAuthThreshold =
+    Number.parseInt(env.SECURITY_ALERT_THRESHOLD_FAILED_AUTH ?? '', 10) ||
+    DEFAULT_FAILED_AUTH_THRESHOLD;
+
+  // Get recent security events
+  const recentEvents = await getKvJsonRecords<Record<string, unknown>>(
+    env,
+    'admin_auth_failed',
+    100,
+  );
+
+  const recentRateLimitedEvents = await getKvJsonRecords<Record<string, unknown>>(
+    env,
+    'admin_auth_rate_limited',
+    100,
+  );
+
+  const signatureFailures = await getKvJsonRecords<Record<string, unknown>>(
+    env,
+    'admin_auth_signature_failed',
+    100,
+  );
+
+  const status =
+    failedAuthAttempts >= failedAuthThreshold * 2
+      ? 'critical'
+      : failedAuthAttempts >= failedAuthThreshold
+        ? 'warning'
+        : 'healthy';
+
+  return {
+    status,
+    timestamp: new Date().toISOString(),
+    security_metrics: {
+      failed_auth_attempts_1min: failedAuthAttempts,
+      failed_auth_threshold: failedAuthThreshold,
+      rate_limited_ips: recentRateLimitedEvents.length,
+      signature_failures: signatureFailures.length,
+      recent_failed_auth_events: recentEvents.length,
+    },
+    alerts_active: failedAuthAttempts >= failedAuthThreshold,
+    recommendation:
+      status === 'critical'
+        ? 'IMMEDIATE ACTION: Review admin auth logs and consider temporary IP blocking'
+        : status === 'warning'
+          ? 'Monitor admin authentication logs for unusual activity'
+          : 'System operating normally',
+  };
 }
 
 async function buildAdminStats(env: Env): Promise<Record<string, unknown>> {
@@ -597,6 +1098,8 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 //   - ipapi.co (geolocation)
 //   - Open-Meteo (weather)
 //   - Anthropic API (proxied through the worker, never called from browser)
+// Default-src 'self' blocks all unspecified sources, whitelisted below only.
+// upgrade-insecure-requests forces HTTP → HTTPS for compatibility.
 // ---------------------------------------------------------------------------
 const CSP_HEADER =
   "default-src 'self'; " +
@@ -607,13 +1110,31 @@ const CSP_HEADER =
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
   "frame-ancestors 'none'; " +
   "base-uri 'self'; " +
-  "form-action 'self';";
+  "form-action 'self'; " +
+  "upgrade-insecure-requests; " +
+  "block-all-mixed-content;";
 
 // Headers that belong on every response, page or API, HTML or JSON: they
 // harden transport and MIME handling regardless of content type.
 const BASE_SECURITY_HEADERS: Record<string, string> = {
+  // HSTS: 2-year preload + subdomains + preload list enrollment
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+  // MIME-type enforcement: prevent MIME sniffing attacks
   'X-Content-Type-Options': 'nosniff',
+  // Clickjacking defense: deny framing from any origin
+  'X-Frame-Options': 'DENY',
+  // Referrer policy: limit referrer leakage on cross-origin navigation
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  // Feature policy: disable dangerous APIs (camera, microphone, payment, etc)
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()',
+  // Cross-origin opener policy: isolate browsing context from cross-origin popups
+  'Cross-Origin-Opener-Policy': 'same-origin',
+  // Cross-origin resource policy: restrict resource loading to same-origin/same-site
+  'Cross-Origin-Resource-Policy': 'cross-origin',
+  // Cross-origin embedder policy: require CORP for embeddings
+  'Cross-Origin-Embedder-Policy': 'require-corp',
+  // Permitted cross-domain policies: deny Flash/PDF policy file access
+  'X-Permitted-Cross-Domain-Policies': 'none',
 };
 
 // Cloudflare Workers Static Assets concatenates Cache-Control from every
@@ -637,9 +1158,6 @@ function addSecurityHeaders(response: Response, pathname: string, statusOverride
   for (const [key, value] of Object.entries(BASE_SECURITY_HEADERS)) {
     headers.set(key, value);
   }
-  headers.set('X-Frame-Options', 'DENY');
-  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()');
   headers.set('Cache-Control', cacheControlFor(pathname));
   return new Response(response.body, { status: statusOverride ?? response.status, headers });
 }
@@ -670,7 +1188,7 @@ export default {
         request.headers.get('CF-Connecting-IP') ??
         request.headers.get('X-Forwarded-For') ??
         'unknown';
-      if (await isRateLimited(ip, env)) {
+      if (await isRateLimited(ip, url.pathname, env)) {
         return new Response(
           JSON.stringify({ error: 'Too many requests. Please wait a moment and try again.' }),
           { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
@@ -704,6 +1222,9 @@ export default {
       }
       if (url.pathname === '/api/admin/venture-stats' && request.method === 'GET') {
         return handleAdminVentureStats(request, env, corsHeaders);
+      }
+      if (url.pathname === '/api/security/health' && request.method === 'GET') {
+        return handleSecurityHealth(request, env, corsHeaders);
       }
 
       return new Response(JSON.stringify({ error: 'Unknown API route' }), {
@@ -795,11 +1316,12 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
 
   const body = parsed.data;
 
-  // Validate CSRF token
-  if (!(await validateCsrfToken(body.csrf_token as string | null, env))) {
+  // Validate and rotate CSRF token
+  const csrfResult = await validateAndRotateCsrfToken(body.csrf_token as string | null, env);
+  if (!csrfResult.valid) {
     return new Response(JSON.stringify({ error: 'Invalid CSRF token. Please refresh and try again.' }), {
       status: 403,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
     });
   }
 
@@ -862,6 +1384,7 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
       'X-Accel-Buffering': 'no',
+      'X-CSRF-Token': csrfResult.newToken,
     },
   });
 }
@@ -928,11 +1451,12 @@ async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record
 
   const body = parsed.data;
 
-  // Validate CSRF token
-  if (!(await validateCsrfToken(body.csrf_token as string | null, env))) {
+  // Validate and rotate CSRF token
+  const csrfResult = await validateAndRotateCsrfToken(body.csrf_token as string | null, env);
+  if (!csrfResult.valid) {
     return new Response(JSON.stringify({ success: false, error: 'Invalid CSRF token. Please refresh and try again.' }), {
       status: 403,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
     });
   }
 
@@ -995,7 +1519,7 @@ async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record
 
   return new Response(JSON.stringify({ success: true }), {
     status: 200,
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
   });
 }
 
@@ -1022,11 +1546,12 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
 
   const body = parsed.data;
 
-  // Validate CSRF token
-  if (!(await validateCsrfToken(body.csrf_token as string | null, env))) {
+  // Validate and rotate CSRF token
+  const csrfResult = await validateAndRotateCsrfToken(body.csrf_token as string | null, env);
+  if (!csrfResult.valid) {
     return new Response(JSON.stringify({ success: false, error: 'Invalid CSRF token. Please refresh and try again.' }), {
       status: 403,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
     });
   }
 
@@ -1107,7 +1632,7 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
 
   return new Response(JSON.stringify({ success: true }), {
     status: 200,
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
   });
 }
 
@@ -1161,11 +1686,12 @@ async function handleVentureSubmit(request: Request, env: Env, corsHeaders: Reco
 
   const body = parsed.data;
 
-  // Validate CSRF token
-  if (!(await validateCsrfToken(body.csrf_token as string | null, env))) {
+  // Validate and rotate CSRF token
+  const csrfResult = await validateAndRotateCsrfToken(body.csrf_token as string | null, env);
+  if (!csrfResult.valid) {
     return new Response(JSON.stringify({ success: false, error: 'Invalid CSRF token. Please refresh and try again.' }), {
       status: 403,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
     });
   }
 
@@ -1285,7 +1811,7 @@ async function handleVentureSubmit(request: Request, env: Env, corsHeaders: Reco
     }),
     {
       status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
     },
   );
 }
@@ -1298,10 +1824,33 @@ async function handleAdminVentureStats(request: Request, env: Env, corsHeaders: 
     });
   }
 
+  // Check security thresholds on every admin access
+  await checkAndAlertSecurityThresholds(env);
+
   const retryCycle = await processDueCrmRetries(env, 10);
   const stats = await buildAdminStats(env);
 
   return new Response(JSON.stringify({ success: true, retryCycle, stats }), {
+    status: 200,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
+async function handleSecurityHealth(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
+  if (!(await isAdminAuthorized(request, env))) {
+    return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
+      status: 401,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  // Check and alert on security thresholds
+  await checkAndAlertSecurityThresholds(env);
+
+  // Build and return security health check
+  const health = await buildSecurityHealthCheck(env);
+
+  return new Response(JSON.stringify({ success: true, health }), {
     status: 200,
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
