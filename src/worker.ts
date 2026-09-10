@@ -33,30 +33,48 @@ function makeCorsHeaders(requestOrigin: string | null): Record<string, string> {
 }
 
 // ---------------------------------------------------------------------------
-// Simple in-memory rate limiter (per Cloudflare Worker isolate).
-// Limits each IP to `maxRequests` per `windowMs` across all API endpoints.
+// Advanced rate limiter with endpoint-specific limits (per Cloudflare Worker isolate).
+// Tiered rate limiting based on endpoint sensitivity:
+// - Strict (5 req/min): Chat, Generate, Venture Submit (high resource cost)
+// - Standard (20 req/min): Inquiry, Early Access, Analytics (normal endpoints)
+// - Permissive (100 req/min): Health, other monitoring endpoints
 //
-// NOTE: This map resets when the Worker isolate is recycled. For persistent
-// cross-isolate rate limiting, replace this with Cloudflare Durable Objects
-// or Workers KV. This implementation is sufficient for moderate traffic.
+// NOTE: In-memory map resets on Worker isolate recycle. For persistent limiting
+// across isolates, use Cloudflare Durable Objects or Workers KV.
 // ---------------------------------------------------------------------------
+
 const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
-const RATE_LIMIT_MAX = 20;           // max requests per IP per window
 const RATE_LIMIT_KV_PREFIX = 'rate_limit';
 const RATE_LIMIT_KV_TTL_SECONDS = Math.ceil(RATE_LIMIT_WINDOW_MS / 1000) + 60;
+
+// Endpoint-specific rate limit configurations: (requests per minute per IP)
+const ENDPOINT_RATE_LIMITS: Record<string, number> = {
+  '/api/chat': 5,                    // High resource cost (LLM inference)
+  '/api/generate': 5,                // High resource cost (LLM inference)
+  '/api/venture/submit': 5,          // High resource cost + CRM webhook
+  '/api/inquiry': 20,                // Standard: form submission
+  '/api/early-access': 20,           // Standard: form submission
+  '/api/analytics/events': 20,       // Standard: telemetry
+  '/api/admin/venture-stats': 10,    // Admin endpoint: moderate
+  'default': 20,                     // Catch-all for new endpoints
+};
 
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const textEncoder = new TextEncoder();
 
-function isRateLimitedInMemory(ip: string): boolean {
+function getEndpointLimit(pathname: string): number {
+  return ENDPOINT_RATE_LIMITS[pathname] ?? ENDPOINT_RATE_LIMITS['default'];
+}
+
+function isRateLimitedInMemory(key: string, limit: number): boolean {
   const now = Date.now();
-  const entry = rateLimitMap.get(ip);
+  const entry = rateLimitMap.get(key);
   if (!entry || now >= entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    rateLimitMap.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
     return false;
   }
   entry.count += 1;
-  return entry.count > RATE_LIMIT_MAX;
+  return entry.count > limit;
 }
 
 function anonymizeIp(ip: string): string {
@@ -81,19 +99,23 @@ async function hashIdentifier(value: string): Promise<string> {
   return toHex(digest).slice(0, 32);
 }
 
-async function isRateLimited(ip: string, env: Env): Promise<boolean> {
+async function isRateLimited(ip: string, pathname: string, env: Env): Promise<boolean> {
+  const limit = getEndpointLimit(pathname);
+
   if (env.ANALYTICS_KV) {
     const bucket = Math.floor(Date.now() / RATE_LIMIT_WINDOW_MS);
     const hashedIp = await hashIdentifier(ip || 'unknown');
-    const key = `${RATE_LIMIT_KV_PREFIX}:${bucket}:${hashedIp}`;
+    // Include endpoint in key for per-endpoint limiting
+    const key = `${RATE_LIMIT_KV_PREFIX}:${bucket}:${pathname}:${hashedIp}`;
     const currentRaw = await env.ANALYTICS_KV.get(key);
     const current = currentRaw ? Number.parseInt(currentRaw, 10) : 0;
     const next = Number.isFinite(current) ? current + 1 : 1;
     await env.ANALYTICS_KV.put(key, String(next), { expirationTtl: RATE_LIMIT_KV_TTL_SECONDS });
-    return next > RATE_LIMIT_MAX;
+    return next > limit;
   }
 
-  return isRateLimitedInMemory(ip);
+  const memKey = `${pathname}:${ip}`;
+  return isRateLimitedInMemory(memKey, limit);
 }
 
 async function parseJsonBody<T>(request: Request): Promise<{ ok: true; data: T } | { ok: false; error: string }> {
@@ -670,7 +692,7 @@ export default {
         request.headers.get('CF-Connecting-IP') ??
         request.headers.get('X-Forwarded-For') ??
         'unknown';
-      if (await isRateLimited(ip, env)) {
+      if (await isRateLimited(ip, url.pathname, env)) {
         return new Response(
           JSON.stringify({ error: 'Too many requests. Please wait a moment and try again.' }),
           { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
