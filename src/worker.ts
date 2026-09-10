@@ -714,6 +714,8 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 //   - ipapi.co (geolocation)
 //   - Open-Meteo (weather)
 //   - Anthropic API (proxied through the worker, never called from browser)
+// Default-src 'self' blocks all unspecified sources, whitelisted below only.
+// upgrade-insecure-requests forces HTTP → HTTPS for compatibility.
 // ---------------------------------------------------------------------------
 const CSP_HEADER =
   "default-src 'self'; " +
@@ -724,13 +726,31 @@ const CSP_HEADER =
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
   "frame-ancestors 'none'; " +
   "base-uri 'self'; " +
-  "form-action 'self';";
+  "form-action 'self'; " +
+  "upgrade-insecure-requests; " +
+  "block-all-mixed-content;";
 
 // Headers that belong on every response, page or API, HTML or JSON: they
 // harden transport and MIME handling regardless of content type.
 const BASE_SECURITY_HEADERS: Record<string, string> = {
+  // HSTS: 2-year preload + subdomains + preload list enrollment
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+  // MIME-type enforcement: prevent MIME sniffing attacks
   'X-Content-Type-Options': 'nosniff',
+  // Clickjacking defense: deny framing from any origin
+  'X-Frame-Options': 'DENY',
+  // Referrer policy: limit referrer leakage on cross-origin navigation
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  // Feature policy: disable dangerous APIs (camera, microphone, payment, etc)
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()',
+  // Cross-origin opener policy: isolate browsing context from cross-origin popups
+  'Cross-Origin-Opener-Policy': 'same-origin',
+  // Cross-origin resource policy: restrict resource loading to same-origin/same-site
+  'Cross-Origin-Resource-Policy': 'cross-origin',
+  // Cross-origin embedder policy: require CORP for embeddings
+  'Cross-Origin-Embedder-Policy': 'require-corp',
+  // Permitted cross-domain policies: deny Flash/PDF policy file access
+  'X-Permitted-Cross-Domain-Policies': 'none',
 };
 
 // Cloudflare Workers Static Assets concatenates Cache-Control from every
@@ -754,9 +774,6 @@ function addSecurityHeaders(response: Response, pathname: string, statusOverride
   for (const [key, value] of Object.entries(BASE_SECURITY_HEADERS)) {
     headers.set(key, value);
   }
-  headers.set('X-Frame-Options', 'DENY');
-  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()');
   headers.set('Cache-Control', cacheControlFor(pathname));
   return new Response(response.body, { status: statusOverride ?? response.status, headers });
 }
