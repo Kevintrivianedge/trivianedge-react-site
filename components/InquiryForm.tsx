@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
 import { API_ENDPOINTS } from '../constants/api';
 import { getCsrfToken, addCsrfTokenToFormData } from '../utils/csrf';
+import { storeFailedSubmission } from '../utils/serviceWorkerRegistry';
 
 type InquiryFormState = {
   name: string;
@@ -58,7 +59,16 @@ const InquiryForm: React.FC = () => {
       }
     } catch (err) {
       console.error('[InquiryForm] submission error:', err);
-      setError('Unable to submit right now. Please try again or email kevin.v@trivianedge.com.');
+      const formDataWithCsrf = addCsrfTokenToFormData(form);
+      try {
+        await storeFailedSubmission(API_ENDPOINTS.INQUIRY, formDataWithCsrf);
+        setError('You appear to be offline. Your submission will be sent automatically when you reconnect.');
+        setSubmitted(true);
+        setForm(initialState);
+      } catch (storageError) {
+        console.error('[InquiryForm] failed to store offline submission:', storageError);
+        setError('Unable to submit right now. Please try again or email kevin.v@trivianedge.com.');
+      }
     } finally {
       setSubmitting(false);
     }

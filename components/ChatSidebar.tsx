@@ -9,6 +9,7 @@ import { getTimeOfDay } from '../utils/getTimeOfDay';
 import { useGeo } from '../contexts/GeoContext';
 import { API_ENDPOINTS } from '../constants/api';
 import { getCsrfToken, addCsrfTokenToFormData } from '../utils/csrf';
+import { storeFailedSubmission } from '../utils/serviceWorkerRegistry';
 
 interface Message {
   role: 'user' | 'model';
@@ -566,19 +567,28 @@ ${userContext}
             }
             if (lead?.email && !leadSentRef.current) {
                 leadSentRef.current = true;
+                const leadData = {
+                    name: lead.name || 'Aria chat visitor',
+                    company: lead.company || 'Not provided',
+                    email: lead.email,
+                    need: lead.need || 'Aria chat inquiry',
+                    timeline: lead.timeline || 'Not specified',
+                    message: lead.notes || 'Captured via the Aria chat assistant.',
+                    csrf_token: getCsrfToken(),
+                };
                 fetch(API_ENDPOINTS.INQUIRY, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        name: lead.name || 'Aria chat visitor',
-                        company: lead.company || 'Not provided',
-                        email: lead.email,
-                        need: lead.need || 'Aria chat inquiry',
-                        timeline: lead.timeline || 'Not specified',
-                        message: lead.notes || 'Captured via the Aria chat assistant.',
-                        csrf_token: getCsrfToken(),
-                    }),
-                }).catch(err => console.error('[Aria] lead capture failed', err));
+                    body: JSON.stringify(leadData),
+                }).catch(async (err) => {
+                    console.error('[Aria] lead capture failed', err);
+                    try {
+                        await storeFailedSubmission(API_ENDPOINTS.INQUIRY, leadData);
+                        console.log('[Aria] lead stored for offline sync');
+                    } catch (storageErr) {
+                        console.error('[Aria] failed to store lead', storageErr);
+                    }
+                });
             }
         }
     } catch (error) {
