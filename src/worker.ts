@@ -106,6 +106,46 @@ async function parseJsonBody<T>(request: Request): Promise<{ ok: true; data: T }
 }
 
 // ---------------------------------------------------------------------------
+// CSRF Token Validation
+// Validates CSRF tokens sent by clients to prevent cross-site request forgery
+// ---------------------------------------------------------------------------
+const CSRF_SESSION_PREFIX = 'csrf_session';
+const CSRF_TOKEN_TTL_SECONDS = 3600; // 1 hour
+
+async function generateCsrfSessionToken(env: Env): Promise<string> {
+  if (!env.ANALYTICS_KV) {
+    const array = new Uint8Array(32);
+    crypto.getRandomValues(array);
+    return Array.from(array, (byte) => byte.toString(16).padStart(2, '0')).join('');
+  }
+
+  const token = crypto.randomUUID();
+  const key = `${CSRF_SESSION_PREFIX}:${token}`;
+  await env.ANALYTICS_KV.put(key, 'valid', { expirationTtl: CSRF_TOKEN_TTL_SECONDS });
+  return token;
+}
+
+async function validateCsrfToken(token: string | null, env: Env): Promise<boolean> {
+  if (!token) return false;
+
+  if (!env.ANALYTICS_KV) {
+    // Fallback: always allow if KV not available (token was generated client-side)
+    return true;
+  }
+
+  const key = `${CSRF_SESSION_PREFIX}:${token}`;
+  const valid = await env.ANALYTICS_KV.get(key);
+
+  if (valid) {
+    // Invalidate token after use (one-time use)
+    await env.ANALYTICS_KV.delete(key);
+    return true;
+  }
+
+  return false;
+}
+
+// ---------------------------------------------------------------------------
 // HTML-escape helper, prevents XSS in outgoing Resend email bodies.
 // ---------------------------------------------------------------------------
 function escapeHtml(str: string): string {
@@ -142,6 +182,7 @@ type VentureSubmissionBody = {
   tier?: string;
   locale?: string;
   timezone?: string;
+  csrf_token?: string;
 };
 
 type CrmWebhookPayload = {
@@ -742,6 +783,7 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
     history?: AnthropicMessage[];
     systemInstruction?: string;
     model?: string;
+    csrf_token?: string;
   }>(request);
 
   if (!parsed.ok) {
@@ -752,6 +794,14 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
   }
 
   const body = parsed.data;
+
+  // Validate CSRF token
+  if (!(await validateCsrfToken(body.csrf_token as string | null, env))) {
+    return new Response(JSON.stringify({ error: 'Invalid CSRF token. Please refresh and try again.' }), {
+      status: 403,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
 
   const message = typeof body.message === 'string' ? body.message : '';
   const history = Array.isArray(body.history) ? body.history : [];
@@ -868,7 +918,7 @@ async function handleGenerate(request: Request, env: Env, corsHeaders: Record<st
   });
 }
 async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
-  const parsed = await parseJsonBody<{ company?: string; email?: string; size?: string }>(request);
+  const parsed = await parseJsonBody<{ company?: string; email?: string; size?: string; csrf_token?: string }>(request);
   if (!parsed.ok) {
     return new Response(JSON.stringify({ success: false, error: parsed.error }), {
       status: 400,
@@ -877,6 +927,14 @@ async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record
   }
 
   const body = parsed.data;
+
+  // Validate CSRF token
+  if (!(await validateCsrfToken(body.csrf_token as string | null, env))) {
+    return new Response(JSON.stringify({ success: false, error: 'Invalid CSRF token. Please refresh and try again.' }), {
+      status: 403,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
 
   const company = capLength(typeof body.company === 'string' ? body.company.trim() : '', MAX_FIELD_LENGTH);
   const email = capLength(typeof body.email === 'string' ? body.email.trim() : '', MAX_FIELD_LENGTH);
@@ -953,6 +1011,7 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
     market?: string;
     budget?: string;
     message?: string;
+    csrf_token?: string;
   }>(request);
   if (!parsed.ok) {
     return new Response(JSON.stringify({ success: false, error: parsed.error }), {
@@ -962,6 +1021,14 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
   }
 
   const body = parsed.data;
+
+  // Validate CSRF token
+  if (!(await validateCsrfToken(body.csrf_token as string | null, env))) {
+    return new Response(JSON.stringify({ success: false, error: 'Invalid CSRF token. Please refresh and try again.' }), {
+      status: 403,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
 
   const name = capLength(typeof body.name === 'string' ? body.name.trim() : '', MAX_FIELD_LENGTH);
   const company = capLength(typeof body.company === 'string' ? body.company.trim() : '', MAX_FIELD_LENGTH);
@@ -1093,6 +1160,15 @@ async function handleVentureSubmit(request: Request, env: Env, corsHeaders: Reco
   }
 
   const body = parsed.data;
+
+  // Validate CSRF token
+  if (!(await validateCsrfToken(body.csrf_token as string | null, env))) {
+    return new Response(JSON.stringify({ success: false, error: 'Invalid CSRF token. Please refresh and try again.' }), {
+      status: 403,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
   const form = body.form && typeof body.form === 'object' ? body.form : {};
   const score = typeof body.score === 'number' ? body.score : 0;
   const tier = typeof body.tier === 'string' ? body.tier : 'Unknown';

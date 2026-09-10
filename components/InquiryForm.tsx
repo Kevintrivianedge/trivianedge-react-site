@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
 import { API_ENDPOINTS } from '../constants/api';
+import { getCsrfToken, addCsrfTokenToFormData } from '../utils/csrf';
 
 type InquiryFormState = {
   name: string;
@@ -40,10 +41,11 @@ const InquiryForm: React.FC = () => {
     setError(null);
 
     try {
+      const formDataWithCsrf = addCsrfTokenToFormData(form);
       const response = await fetch(API_ENDPOINTS.INQUIRY, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(formDataWithCsrf),
       });
 
       const data = await response.json() as { success: boolean; error?: string };
@@ -231,9 +233,19 @@ const InquiryForm: React.FC = () => {
         type="submit"
         disabled={submitting}
         className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold transition-all disabled:opacity-70 premium-button"
+        aria-busy={submitting}
       >
-        {submitting ? 'Sending...' : 'Request a call back'}
-        <ArrowRight className="w-4 h-4" />
+        {submitting ? (
+          <>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            Sending...
+          </>
+        ) : (
+          <>
+            Request a call back
+            <ArrowRight className="w-4 h-4" />
+          </>
+        )}
       </button>
     </form>
   );
