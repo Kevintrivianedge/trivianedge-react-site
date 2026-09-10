@@ -5,6 +5,9 @@ export interface Env {
   CRM_WEBHOOK_URL?: string;
   CRM_WEBHOOK_SIGNING_SECRET?: string;
   ADMIN_API_TOKEN?: string;
+  // Key rotation support: versioned API tokens for graceful key migration
+  ADMIN_API_TOKEN_PREV?: string;    // Previous token version (deprecated but accepted)
+  ADMIN_API_TOKEN_VERSION?: string; // Current key version (e.g., "v1", "v2")
   ANALYTICS_KV?: KVNamespace;
   ASSETS?: Fetcher; // optional so missing binding won't crash
 }
@@ -508,11 +511,14 @@ async function processDueCrmRetries(env: Env, batchSize = 5): Promise<{ processe
 // ---------------------------------------------------------------------------
 // Admin API Authentication with Token Expiration & Rate Limiting
 // Prevents brute force attacks via failed attempt rate limiting and enforces
-// token lifecycle management with expiration tracking.
+// token lifecycle management with expiration tracking. Supports key rotation
+// with versioning and graceful deprecation of previous keys.
 // ---------------------------------------------------------------------------
 const ADMIN_AUTH_ATTEMPT_PREFIX = 'admin_auth_attempt';
 const ADMIN_AUTH_ATTEMPT_WINDOW_MS = 60_000; // 1 minute
 const ADMIN_AUTH_ATTEMPT_LIMIT = 5; // max failed attempts per minute per IP
+const ADMIN_KEY_VERSION_PREFIX = 'admin_key_version';
+const ADMIN_KEY_ROTATION_GRACE_PERIOD_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 type AdminTokenMetadata = {
   token_hash: string;
@@ -520,6 +526,14 @@ type AdminTokenMetadata = {
   expires_at?: string;
   version: number;
   deprecated: boolean;
+};
+
+type AdminKeyVersion = {
+  version: string;
+  issued_at: string;
+  rotated_at?: string;
+  deprecated_at?: string;
+  deprecation_grace_until?: string;
 };
 
 async function trackFailedAuthAttempt(ip: string, env: Env): Promise<number> {
@@ -546,6 +560,27 @@ async function isAdminAuthLimited(ip: string, env: Env): Promise<boolean> {
   return current >= ADMIN_AUTH_ATTEMPT_LIMIT;
 }
 
+async function trackKeyRotation(env: Env, event: 'rotate' | 'deprecate', details: Record<string, unknown>): Promise<void> {
+  if (!env.ANALYTICS_KV) return;
+  const versionKey = `${ADMIN_KEY_VERSION_PREFIX}:${Date.now()}:${crypto.randomUUID()}`;
+  await env.ANALYTICS_KV.put(versionKey, JSON.stringify({
+    event,
+    version: env.ADMIN_API_TOKEN_VERSION ?? 'unknown',
+    timestamp: new Date().toISOString(),
+    details,
+  }), {
+    // Keep key rotation history for 90 days
+    expirationTtl: 90 * 24 * 60 * 60,
+  });
+}
+
+function getCurrentKeyVersion(env: Env): AdminKeyVersion {
+  return {
+    version: env.ADMIN_API_TOKEN_VERSION ?? 'v1',
+    issued_at: new Date().toISOString(),
+  };
+}
+
 async function isAdminAuthorized(request: Request, env: Env): Promise<boolean> {
   if (!env.ADMIN_API_TOKEN) return false;
 
@@ -565,16 +600,54 @@ async function isAdminAuthorized(request: Request, env: Env): Promise<boolean> {
   const bearerToken = bearer.startsWith('Bearer ') ? bearer.slice(7).trim() : '';
 
   // Timing-safe comparison prevents timing attacks
+  // Try current key first (most common case)
   const headerAuthorized = await timingSafeEqual(headerToken, env.ADMIN_API_TOKEN);
   if (headerAuthorized) {
-    // Successful auth: reset failed attempt counter implicitly
-    // (new bucket on next minute, or explicit reset could be added)
+    await persistEvent(env, 'admin_auth_success', {
+      ip: anonymizeIp(ip),
+      key_version: env.ADMIN_API_TOKEN_VERSION ?? 'v1',
+      method: 'header',
+      timestamp: new Date().toISOString(),
+    });
     return true;
   }
 
   const bearerAuthorized = await timingSafeEqual(bearerToken, env.ADMIN_API_TOKEN);
   if (bearerAuthorized) {
+    await persistEvent(env, 'admin_auth_success', {
+      ip: anonymizeIp(ip),
+      key_version: env.ADMIN_API_TOKEN_VERSION ?? 'v1',
+      method: 'bearer',
+      timestamp: new Date().toISOString(),
+    });
     return true;
+  }
+
+  // Graceful key rotation: accept previous token version during grace period
+  if (env.ADMIN_API_TOKEN_PREV) {
+    const headerPrevAuthorized = await timingSafeEqual(headerToken, env.ADMIN_API_TOKEN_PREV);
+    if (headerPrevAuthorized) {
+      await persistEvent(env, 'admin_auth_deprecated_key', {
+        ip: anonymizeIp(ip),
+        key_version: 'deprecated',
+        method: 'header',
+        grace_period_until: new Date(Date.now() + ADMIN_KEY_ROTATION_GRACE_PERIOD_MS).toISOString(),
+        timestamp: new Date().toISOString(),
+      });
+      return true;
+    }
+
+    const bearerPrevAuthorized = await timingSafeEqual(bearerToken, env.ADMIN_API_TOKEN_PREV);
+    if (bearerPrevAuthorized) {
+      await persistEvent(env, 'admin_auth_deprecated_key', {
+        ip: anonymizeIp(ip),
+        key_version: 'deprecated',
+        method: 'bearer',
+        grace_period_until: new Date(Date.now() + ADMIN_KEY_ROTATION_GRACE_PERIOD_MS).toISOString(),
+        timestamp: new Date().toISOString(),
+      });
+      return true;
+    }
   }
 
   // Track failed attempt for rate limiting
