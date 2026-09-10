@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
 import { API_ENDPOINTS } from '../constants/api';
 import { getCsrfToken, addCsrfTokenToFormData } from '../utils/csrf';
 
@@ -233,9 +233,19 @@ const InquiryForm: React.FC = () => {
         type="submit"
         disabled={submitting}
         className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold transition-all disabled:opacity-70 premium-button"
+        aria-busy={submitting}
       >
-        {submitting ? 'Sending...' : 'Request a call back'}
-        <ArrowRight className="w-4 h-4" />
+        {submitting ? (
+          <>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            Sending...
+          </>
+        ) : (
+          <>
+            Request a call back
+            <ArrowRight className="w-4 h-4" />
+          </>
+        )}
       </button>
     </form>
   );

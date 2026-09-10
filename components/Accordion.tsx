@@ -14,8 +14,19 @@ interface AccordionProps {
 const Accordion: React.FC<AccordionProps> = ({ items }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
+  const handleToggle = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleToggle(index);
+    }
+  };
+
   return (
-    <div className="space-y-3">
+    <div className="space-y-3" role="region" aria-label="Frequently asked questions">
       {items.map((item, i) => {
         const isOpen = openIndex === i;
         return (
@@ -25,8 +36,9 @@ const Accordion: React.FC<AccordionProps> = ({ items }) => {
           >
             <button
               id={`faq-trigger-${i}`}
-              onClick={() => setOpenIndex(isOpen ? null : i)}
-              className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left text-text font-semibold hover:text-cyan-400 transition-colors"
+              onClick={() => handleToggle(i)}
+              onKeyDown={(e) => handleKeyDown(e, i)}
+              className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left text-text font-semibold hover:text-cyan-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 transition-colors"
               aria-expanded={isOpen}
               aria-controls={`faq-panel-${i}`}
             >
