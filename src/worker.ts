@@ -128,8 +128,9 @@ async function parseJsonBody<T>(request: Request): Promise<{ ok: true; data: T }
 }
 
 // ---------------------------------------------------------------------------
-// CSRF Token Validation
-// Validates CSRF tokens sent by clients to prevent cross-site request forgery
+// CSRF Token Validation with Rotation
+// Validates CSRF tokens and rotates them for defense-in-depth.
+// One-time use prevents replay attacks; rotation per-request prevents token theft.
 // ---------------------------------------------------------------------------
 const CSRF_SESSION_PREFIX = 'csrf_session';
 const CSRF_TOKEN_TTL_SECONDS = 3600; // 1 hour
@@ -147,24 +148,45 @@ async function generateCsrfSessionToken(env: Env): Promise<string> {
   return token;
 }
 
-async function validateCsrfToken(token: string | null, env: Env): Promise<boolean> {
-  if (!token) return false;
+async function validateAndRotateCsrfToken(
+  token: string | null,
+  env: Env
+): Promise<{ valid: boolean; newToken: string }> {
+  if (!token) {
+    // No token provided — generate new one for next request
+    const newToken = await generateCsrfSessionToken(env);
+    return { valid: false, newToken };
+  }
 
   if (!env.ANALYTICS_KV) {
     // Fallback: always allow if KV not available (token was generated client-side)
-    return true;
+    // Generate new token for rotation
+    const array = new Uint8Array(32);
+    crypto.getRandomValues(array);
+    const newToken = Array.from(array, (byte) => byte.toString(16).padStart(2, '0')).join('');
+    return { valid: true, newToken };
   }
 
   const key = `${CSRF_SESSION_PREFIX}:${token}`;
   const valid = await env.ANALYTICS_KV.get(key);
 
   if (valid) {
-    // Invalidate token after use (one-time use)
+    // Invalidate current token after use (one-time use defense)
     await env.ANALYTICS_KV.delete(key);
-    return true;
+    // Generate new token for next request (rotation defense)
+    const newToken = await generateCsrfSessionToken(env);
+    return { valid: true, newToken };
   }
 
-  return false;
+  // Invalid token — generate new one anyway (prevents attacker token lock)
+  const newToken = await generateCsrfSessionToken(env);
+  return { valid: false, newToken };
+}
+
+// Legacy single-return validateCsrfToken for backwards compatibility
+async function validateCsrfToken(token: string | null, env: Env): Promise<boolean> {
+  const result = await validateAndRotateCsrfToken(token, env);
+  return result.valid;
 }
 
 // ---------------------------------------------------------------------------
@@ -817,11 +839,12 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
 
   const body = parsed.data;
 
-  // Validate CSRF token
-  if (!(await validateCsrfToken(body.csrf_token as string | null, env))) {
+  // Validate and rotate CSRF token
+  const csrfResult = await validateAndRotateCsrfToken(body.csrf_token as string | null, env);
+  if (!csrfResult.valid) {
     return new Response(JSON.stringify({ error: 'Invalid CSRF token. Please refresh and try again.' }), {
       status: 403,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
     });
   }
 
@@ -884,6 +907,7 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
       'X-Accel-Buffering': 'no',
+      'X-CSRF-Token': csrfResult.newToken,
     },
   });
 }
@@ -950,11 +974,12 @@ async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record
 
   const body = parsed.data;
 
-  // Validate CSRF token
-  if (!(await validateCsrfToken(body.csrf_token as string | null, env))) {
+  // Validate and rotate CSRF token
+  const csrfResult = await validateAndRotateCsrfToken(body.csrf_token as string | null, env);
+  if (!csrfResult.valid) {
     return new Response(JSON.stringify({ success: false, error: 'Invalid CSRF token. Please refresh and try again.' }), {
       status: 403,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
     });
   }
 
@@ -1017,7 +1042,7 @@ async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record
 
   return new Response(JSON.stringify({ success: true }), {
     status: 200,
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
   });
 }
 
@@ -1044,11 +1069,12 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
 
   const body = parsed.data;
 
-  // Validate CSRF token
-  if (!(await validateCsrfToken(body.csrf_token as string | null, env))) {
+  // Validate and rotate CSRF token
+  const csrfResult = await validateAndRotateCsrfToken(body.csrf_token as string | null, env);
+  if (!csrfResult.valid) {
     return new Response(JSON.stringify({ success: false, error: 'Invalid CSRF token. Please refresh and try again.' }), {
       status: 403,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
     });
   }
 
@@ -1129,7 +1155,7 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
 
   return new Response(JSON.stringify({ success: true }), {
     status: 200,
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
   });
 }
 
@@ -1183,11 +1209,12 @@ async function handleVentureSubmit(request: Request, env: Env, corsHeaders: Reco
 
   const body = parsed.data;
 
-  // Validate CSRF token
-  if (!(await validateCsrfToken(body.csrf_token as string | null, env))) {
+  // Validate and rotate CSRF token
+  const csrfResult = await validateAndRotateCsrfToken(body.csrf_token as string | null, env);
+  if (!csrfResult.valid) {
     return new Response(JSON.stringify({ success: false, error: 'Invalid CSRF token. Please refresh and try again.' }), {
       status: 403,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
     });
   }
 
@@ -1307,7 +1334,7 @@ async function handleVentureSubmit(request: Request, env: Env, corsHeaders: Reco
     }),
     {
       status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
     },
   );
 }
