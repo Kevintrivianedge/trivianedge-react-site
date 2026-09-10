@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { API_ENDPOINTS } from '../constants/api';
+import { getCsrfToken, addCsrfTokenToFormData } from '../utils/csrf';
 
 type InquiryFormState = {
   name: string;
@@ -40,10 +41,11 @@ const InquiryForm: React.FC = () => {
     setError(null);
 
     try {
+      const formDataWithCsrf = addCsrfTokenToFormData(form);
       const response = await fetch(API_ENDPOINTS.INQUIRY, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(formDataWithCsrf),
       });
 
       const data = await response.json() as { success: boolean; error?: string };

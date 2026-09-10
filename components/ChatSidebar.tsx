@@ -8,6 +8,7 @@ import { getCountryGreeting, getCountryAffectionateName } from '../utils/greetin
 import { getTimeOfDay } from '../utils/getTimeOfDay';
 import { useGeo } from '../contexts/GeoContext';
 import { API_ENDPOINTS } from '../constants/api';
+import { getCsrfToken, addCsrfTokenToFormData } from '../utils/csrf';
 
 interface Message {
   role: 'user' | 'model';
@@ -488,6 +489,7 @@ ${userContext}
                 message: userMsg,
                 history,
                 systemInstruction: systemContextRef.current,
+                csrf_token: getCsrfToken(),
             }),
         });
 
@@ -574,6 +576,7 @@ ${userContext}
                         need: lead.need || 'Aria chat inquiry',
                         timeline: lead.timeline || 'Not specified',
                         message: lead.notes || 'Captured via the Aria chat assistant.',
+                        csrf_token: getCsrfToken(),
                     }),
                 }).catch(err => console.error('[Aria] lead capture failed', err));
             }

@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, CalendarDays, CheckCircle2, Sparkles } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '../utils/seo';
+import { getCsrfToken, addCsrfTokenToFormData } from '../utils/csrf';
 
 const VENTURE_FAQS = [
   {
@@ -307,6 +308,7 @@ const VentureStudioPage: React.FC = () => {
           tier: tier.title,
           locale,
           timezone,
+          csrf_token: getCsrfToken(),
         }),
       });
 
