@@ -8,6 +8,10 @@ export interface Env {
   // Key rotation support: versioned API tokens for graceful key migration
   ADMIN_API_TOKEN_PREV?: string;    // Previous token version (deprecated but accepted)
   ADMIN_API_TOKEN_VERSION?: string; // Current key version (e.g., "v1", "v2")
+  // Security alerting: webhooks for critical events
+  SECURITY_ALERT_WEBHOOK_URL?: string; // Slack/Discord webhook for security events
+  SECURITY_ALERT_THRESHOLD_FAILED_AUTH?: string; // Failed auth attempts threshold (default: 10/min)
+  HEALTH_CHECK_WEBHOOK_URL?: string; // Health check webhook (daily or on failure)
   ANALYTICS_KV?: KVNamespace;
   ASSETS?: Fetcher; // optional so missing binding won't crash
 }
@@ -190,6 +194,154 @@ async function validateAndRotateCsrfToken(
 async function validateCsrfToken(token: string | null, env: Env): Promise<boolean> {
   const result = await validateAndRotateCsrfToken(token, env);
   return result.valid;
+}
+
+// ---------------------------------------------------------------------------
+// Security Event Monitoring & Alerting
+// Tracks suspicious patterns and triggers alerts for critical security events.
+// Supports webhook-based notifications to Slack, Discord, or custom endpoints.
+// ---------------------------------------------------------------------------
+const SECURITY_ALERT_PREFIX = 'security_alert_event';
+const SECURITY_EVENT_AGGREGATION_WINDOW_MS = 60_000; // 1 minute window for aggregation
+const DEFAULT_FAILED_AUTH_THRESHOLD = 10; // Alert after 10 failed auth attempts in 1 minute
+
+type SecurityAlert = {
+  severity: 'critical' | 'high' | 'medium' | 'low';
+  event_type: string;
+  title: string;
+  description: string;
+  details: Record<string, unknown>;
+  timestamp: string;
+  action_required?: string;
+};
+
+async function checkSecurityAlertThreshold(env: Env): Promise<number> {
+  if (!env.ANALYTICS_KV) return 0;
+
+  // Count failed auth attempts in the last minute
+  const bucket = Math.floor(Date.now() / SECURITY_EVENT_AGGREGATION_WINDOW_MS);
+  const prefix = `${ADMIN_AUTH_ATTEMPT_PREFIX}:${bucket}:`;
+  const listed = await env.ANALYTICS_KV.list({ prefix, limit: 1000 });
+
+  let totalFailures = 0;
+  for (const key of listed.keys) {
+    const value = await env.ANALYTICS_KV.get(key.name);
+    if (value) {
+      const count = Number.parseInt(value, 10);
+      if (Number.isFinite(count)) totalFailures += count;
+    }
+  }
+
+  return totalFailures;
+}
+
+async function sendSecurityAlert(
+  env: Env,
+  alert: SecurityAlert,
+): Promise<{ sent: boolean; status?: number; error?: string }> {
+  if (!env.SECURITY_ALERT_WEBHOOK_URL) {
+    return { sent: false, error: 'SECURITY_ALERT_WEBHOOK_URL not configured' };
+  }
+
+  // Format alert for Slack/Discord webhook
+  const webhookPayload = {
+    text: `🚨 ${alert.severity.toUpperCase()}: ${alert.title}`,
+    blocks: [
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: `${alert.severity === 'critical' ? '🚨' : '⚠️'} ${alert.title}`,
+        },
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Event:* ${alert.event_type}\n*Severity:* ${alert.severity}\n*Time:* ${alert.timestamp}`,
+        },
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: alert.description,
+        },
+      },
+      ...(alert.action_required
+        ? [
+            {
+              type: 'section',
+              text: {
+                type: 'mrkdwn',
+                text: `*Action Required:* ${alert.action_required}`,
+              },
+            },
+          ]
+        : []),
+    ],
+  };
+
+  try {
+    const response = await fetch(env.SECURITY_ALERT_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(webhookPayload),
+    });
+
+    if (!response.ok) {
+      return {
+        sent: false,
+        status: response.status,
+        error: await response.text(),
+      };
+    }
+
+    return { sent: true, status: response.status };
+  } catch (error) {
+    return {
+      sent: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    };
+  }
+}
+
+async function checkAndAlertSecurityThresholds(env: Env): Promise<void> {
+  if (!env.SECURITY_ALERT_WEBHOOK_URL) return;
+
+  const failedAuthThreshold =
+    Number.parseInt(env.SECURITY_ALERT_THRESHOLD_FAILED_AUTH ?? '', 10) ||
+    DEFAULT_FAILED_AUTH_THRESHOLD;
+
+  const failedAuthCount = await checkSecurityAlertThreshold(env);
+
+  // Alert if failed auth attempts exceed threshold
+  if (failedAuthCount >= failedAuthThreshold) {
+    const alert: SecurityAlert = {
+      severity: failedAuthCount > failedAuthThreshold * 2 ? 'critical' : 'high',
+      event_type: 'brute_force_attempt_detected',
+      title: `High volume of failed authentication attempts (${failedAuthCount})`,
+      description: `Detected ${failedAuthCount} failed authentication attempts in the last minute. This may indicate a brute force attack.`,
+      details: {
+        failed_attempts: failedAuthCount,
+        threshold: failedAuthThreshold,
+        window_ms: SECURITY_EVENT_AGGREGATION_WINDOW_MS,
+      },
+      timestamp: new Date().toISOString(),
+      action_required:
+        failedAuthCount > failedAuthThreshold * 2
+          ? 'Review logs immediately. Consider temporary IP blocking or additional verification.'
+          : 'Monitor the situation. Increase logging if it continues.',
+    };
+
+    await sendSecurityAlert(env, alert);
+    await persistEvent(env, 'security_alert_sent', {
+      alert_type: 'brute_force_attempt',
+      severity: alert.severity,
+      details: alert.details,
+      timestamp: alert.timestamp,
+    });
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -788,6 +940,66 @@ async function getKvJsonRecords<T>(env: Env, prefix: string, max = 2000): Promis
   return out;
 }
 
+async function buildSecurityHealthCheck(env: Env): Promise<Record<string, unknown>> {
+  if (!env.ANALYTICS_KV) {
+    return {
+      status: 'degraded',
+      reason: 'ANALYTICS_KV not available',
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  const failedAuthAttempts = await checkSecurityAlertThreshold(env);
+  const failedAuthThreshold =
+    Number.parseInt(env.SECURITY_ALERT_THRESHOLD_FAILED_AUTH ?? '', 10) ||
+    DEFAULT_FAILED_AUTH_THRESHOLD;
+
+  // Get recent security events
+  const recentEvents = await getKvJsonRecords<Record<string, unknown>>(
+    env,
+    'admin_auth_failed',
+    100,
+  );
+
+  const recentRateLimitedEvents = await getKvJsonRecords<Record<string, unknown>>(
+    env,
+    'admin_auth_rate_limited',
+    100,
+  );
+
+  const signatureFailures = await getKvJsonRecords<Record<string, unknown>>(
+    env,
+    'admin_auth_signature_failed',
+    100,
+  );
+
+  const status =
+    failedAuthAttempts >= failedAuthThreshold * 2
+      ? 'critical'
+      : failedAuthAttempts >= failedAuthThreshold
+        ? 'warning'
+        : 'healthy';
+
+  return {
+    status,
+    timestamp: new Date().toISOString(),
+    security_metrics: {
+      failed_auth_attempts_1min: failedAuthAttempts,
+      failed_auth_threshold: failedAuthThreshold,
+      rate_limited_ips: recentRateLimitedEvents.length,
+      signature_failures: signatureFailures.length,
+      recent_failed_auth_events: recentEvents.length,
+    },
+    alerts_active: failedAuthAttempts >= failedAuthThreshold,
+    recommendation:
+      status === 'critical'
+        ? 'IMMEDIATE ACTION: Review admin auth logs and consider temporary IP blocking'
+        : status === 'warning'
+          ? 'Monitor admin authentication logs for unusual activity'
+          : 'System operating normally',
+  };
+}
+
 async function buildAdminStats(env: Env): Promise<Record<string, unknown>> {
   const analytics = await getKvJsonRecords<{ event?: string; payload?: Record<string, unknown> }>(env, 'analytics:', 5000);
   const submissions = await getKvJsonRecords<{ qualified?: boolean; tier?: string; score?: number }>(env, 'venture_submission:', 2000);
@@ -1010,6 +1222,9 @@ export default {
       }
       if (url.pathname === '/api/admin/venture-stats' && request.method === 'GET') {
         return handleAdminVentureStats(request, env, corsHeaders);
+      }
+      if (url.pathname === '/api/security/health' && request.method === 'GET') {
+        return handleSecurityHealth(request, env, corsHeaders);
       }
 
       return new Response(JSON.stringify({ error: 'Unknown API route' }), {
@@ -1609,10 +1824,33 @@ async function handleAdminVentureStats(request: Request, env: Env, corsHeaders: 
     });
   }
 
+  // Check security thresholds on every admin access
+  await checkAndAlertSecurityThresholds(env);
+
   const retryCycle = await processDueCrmRetries(env, 10);
   const stats = await buildAdminStats(env);
 
   return new Response(JSON.stringify({ success: true, retryCycle, stats }), {
+    status: 200,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
+async function handleSecurityHealth(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
+  if (!(await isAdminAuthorized(request, env))) {
+    return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
+      status: 401,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  // Check and alert on security thresholds
+  await checkAndAlertSecurityThresholds(env);
+
+  // Build and return security health check
+  const health = await buildSecurityHealthCheck(env);
+
+  return new Response(JSON.stringify({ success: true, health }), {
     status: 200,
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
