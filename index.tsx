@@ -102,10 +102,26 @@ const initGoogleAnalytics = () => {
   document.head.appendChild(script);
 };
 
+const initServiceWorker = () => {
+  import('./utils/serviceWorkerRegistry').then(({ registerServiceWorker }) => {
+    registerServiceWorker({
+      updateCheckInterval: 60 * 60 * 1000, // Check for updates hourly
+      onUpdate: () => {
+        console.log('Service Worker update available');
+      },
+      onError: (error) => {
+        console.error('Service Worker registration error:', error);
+      },
+    });
+  });
+};
+
 if (typeof requestIdleCallback !== 'undefined') {
   requestIdleCallback(initAmplitude, { timeout: 4000 });
   requestIdleCallback(initGoogleAnalytics, { timeout: 4000 });
+  requestIdleCallback(initServiceWorker, { timeout: 5000 });
 } else {
   setTimeout(initAmplitude, 1000);
   setTimeout(initGoogleAnalytics, 1000);
+  setTimeout(initServiceWorker, 2000);
 }

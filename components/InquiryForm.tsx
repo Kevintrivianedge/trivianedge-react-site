@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
 import { API_ENDPOINTS } from '../constants/api';
 import { getCsrfToken, addCsrfTokenToFormData } from '../utils/csrf';
+import { storeFailedSubmission } from '../utils/serviceWorkerRegistry';
 
 type InquiryFormState = {
   name: string;
@@ -58,7 +59,16 @@ const InquiryForm: React.FC = () => {
       }
     } catch (err) {
       console.error('[InquiryForm] submission error:', err);
-      setError('Unable to submit right now. Please try again or email kevin.v@trivianedge.com.');
+      const formDataWithCsrf = addCsrfTokenToFormData(form);
+      try {
+        await storeFailedSubmission(API_ENDPOINTS.INQUIRY, formDataWithCsrf);
+        setError('You appear to be offline. Your submission will be sent automatically when you reconnect.');
+        setSubmitted(true);
+        setForm(initialState);
+      } catch (storageError) {
+        console.error('[InquiryForm] failed to store offline submission:', storageError);
+        setError('Unable to submit right now. Please try again or email kevin.v@trivianedge.com.');
+      }
     } finally {
       setSubmitting(false);
     }
@@ -89,7 +99,7 @@ const InquiryForm: React.FC = () => {
             required
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:text-muted/70 focus:outline-none focus:border-cyan-500/40 transition-colors"
+            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:opacity-100 focus:outline-none transition-colors"
             placeholder="Your name"
           />
         </div>
@@ -101,7 +111,7 @@ const InquiryForm: React.FC = () => {
             required
             value={form.company}
             onChange={(e) => setForm({ ...form, company: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:text-muted/70 focus:outline-none focus:border-cyan-500/40 transition-colors"
+            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:opacity-100 focus:outline-none transition-colors"
             placeholder="Company name"
           />
         </div>
@@ -116,7 +126,7 @@ const InquiryForm: React.FC = () => {
             required
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:text-muted/70 focus:outline-none focus:border-cyan-500/40 transition-colors"
+            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:opacity-100 focus:outline-none transition-colors"
             placeholder="you@company.com"
           />
         </div>
@@ -126,7 +136,7 @@ const InquiryForm: React.FC = () => {
             id="inquiry-need"
             value={form.need}
             onChange={(e) => setForm({ ...form, need: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none focus:border-cyan-500/40 transition-colors appearance-none cursor-pointer"
+            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
           >
             <option>Build a team</option>
             <option>Build bespoke software</option>
@@ -145,7 +155,7 @@ const InquiryForm: React.FC = () => {
             id="inquiry-timeline"
             value={form.timeline}
             onChange={(e) => setForm({ ...form, timeline: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none focus:border-cyan-500/40 transition-colors appearance-none cursor-pointer"
+            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
           >
             <option>Immediately</option>
             <option>1-2 weeks</option>
@@ -159,7 +169,7 @@ const InquiryForm: React.FC = () => {
             id="inquiry-company-size"
             value={form.companySize}
             onChange={(e) => setForm({ ...form, companySize: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none focus:border-cyan-500/40 transition-colors appearance-none cursor-pointer"
+            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
           >
             <option value="">Prefer not to say</option>
             <option>1-10 employees</option>
@@ -178,7 +188,7 @@ const InquiryForm: React.FC = () => {
             id="inquiry-headcount"
             value={form.headcount}
             onChange={(e) => setForm({ ...form, headcount: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none focus:border-cyan-500/40 transition-colors appearance-none cursor-pointer"
+            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
           >
             <option value="">Not sure yet</option>
             <option>1 person</option>
@@ -195,7 +205,7 @@ const InquiryForm: React.FC = () => {
             type="text"
             value={form.market}
             onChange={(e) => setForm({ ...form, market: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:text-muted/70 focus:outline-none focus:border-cyan-500/40 transition-colors"
+            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:opacity-100 focus:outline-none transition-colors"
             placeholder="e.g. Philippines, GCC"
           />
         </div>
@@ -205,7 +215,7 @@ const InquiryForm: React.FC = () => {
             id="inquiry-budget"
             value={form.budget}
             onChange={(e) => setForm({ ...form, budget: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none focus:border-cyan-500/40 transition-colors appearance-none cursor-pointer"
+            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
           >
             <option value="">Prefer not to say</option>
             <option>Under $5,000</option>
@@ -222,7 +232,7 @@ const InquiryForm: React.FC = () => {
           id="inquiry-message"
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
-          className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:text-muted/70 focus:outline-none focus:border-cyan-500/40 transition-colors min-h-[120px]"
+          className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:opacity-100 focus:outline-none transition-colors min-h-[120px]"
           placeholder="What are you trying to build or fix?"
         />
       </div>

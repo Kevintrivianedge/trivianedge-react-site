@@ -48,7 +48,7 @@ import ProcessTimeline from './components/ProcessTimeline';
 import TalentHubCard from './components/TalentHubCard';
 import ScrollToTop from './components/ScrollToTop';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import WorldMapSVG from './components/WorldMapSVG';
+import WorldMapLazy from './components/WorldMapLazy';
 
 // Lazy-load route-level pages and heavy below-fold interactive modules.
 // This splits each into its own chunk so the main bundle only contains
@@ -87,6 +87,7 @@ const ServicesPage            = lazy(() => import('./pages/ServicesPage'));
 const SavingsCalculatorPage   = lazy(() => import('./pages/SavingsCalculatorPage'));
 const NotFoundPage            = lazy(() => import('./pages/NotFoundPage'));
 const ChatSidebar             = lazy(() => import('./components/ChatSidebar'));
+const CityLandingPage         = lazy(() => import('./components/CityLandingPage'));
 
 
 // Trust strip — real named clients only, kept separate from the hero's numeric stats
@@ -608,7 +609,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           {/* Interactive world map — neural-bg reinforces "network" both literally (talent graph) and visually (tech-forward texture) */}
           <div className="reveal neural-bg rounded-[3rem] border border-cyan-400/15 bg-[#f4fcf9] dark:bg-white/[0.03] p-4 md:p-8 mb-12 overflow-hidden relative" style={{ boxShadow: '0 0 60px rgba(0,196,154,0.08), inset 0 1px 0 rgba(255,255,255,0.8)' }}>
-            <WorldMapSVG hubs={TALENT_HUBS} onHubClick={setSelectedHub} />
+            <WorldMapLazy hubs={TALENT_HUBS} onHubClick={setSelectedHub} />
           </div>
 
           {/* Hub detail cards */}
@@ -936,6 +937,7 @@ export default function App() {
                       <Route path="/venture-studio" element={<VentureStudioPage />} />
                       <Route path="/ai-ventures/aria" element={<AriaOSPage />} />
                       <Route path="/ai-ventures/aether-logistics" element={<AetherLogisticsPage />} />
+                      <Route path="/locations/:slug" element={<CityLandingPage />} />
                       <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                   </motion.div>
