@@ -16,6 +16,8 @@ export interface SEOHeadProps {
   structuredData?: object | object[];
   /** Schema.org JSON-LD objects supplied via SEOConfig.schema */
   schema?: SchemaObject | SchemaObject[];
+  /** Language variants for hreflang tags (language code -> URL) */
+  hreflangs?: Record<string, string>;
 }
 
 // SEOHeadProps is a superset of SEOConfig, so a SEOConfig object can be spread directly.
@@ -30,6 +32,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   noIndex = false,
   structuredData,
   schema,
+  hreflangs,
 }) => {
   const location = useLocation();
   // Several callers (service pages, seoTrends title variants, privacy/terms)
@@ -78,6 +81,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta property="og:image" content={ogImage} />
       <meta property="og:image:width" content={String(SEO_CONFIG.ogImageWidth)} />
       <meta property="og:image:height" content={String(SEO_CONFIG.ogImageHeight)} />
+      <meta property="og:image:alt" content={pageTitle} />
       <meta property="og:site_name" content={SEO_CONFIG.siteName} />
       <meta property="og:locale" content={SEO_CONFIG.locale} />
 
@@ -88,6 +92,11 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta name="twitter:title" content={pageTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
+
+      {/* Hreflang Tags for Multi-Language Support */}
+      {hreflangs && Object.entries(hreflangs).map(([lang, url]) => (
+        <link key={`hreflang-${lang}`} rel="alternate" hrefLang={lang} href={url} />
+      ))}
 
       {/* JSON-LD Structured Data */}
       {schemaScripts.map((item, i) => (
