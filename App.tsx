@@ -81,6 +81,8 @@ const AIChatbotDevelopmentPage = lazy(() => import('./pages/services/ai-developm
 const MLOpsPage               = lazy(() => import('./pages/services/ai-development/MLOpsPage'));
 const ITOutsourcingPage       = lazy(() => import('./pages/services/ITOutsourcingPage'));
 const VentureStudioPage       = lazy(() => import('./pages/VentureStudioPage'));
+const AriaOSPage               = lazy(() => import('./pages/AriaOSPage'));
+const AetherLogisticsPage       = lazy(() => import('./pages/AetherLogisticsPage'));
 const ServicesPage            = lazy(() => import('./pages/ServicesPage'));
 const SavingsCalculatorPage   = lazy(() => import('./pages/SavingsCalculatorPage'));
 const NotFoundPage            = lazy(() => import('./pages/NotFoundPage'));
@@ -134,9 +136,14 @@ const PREMIUM_FEATURES = [
 
 const AI_VENTURES = [
   {
-    name: 'Trivian ARIA',
-    url: 'https://trivian-aria.com/',
-    summary: 'AI-first product layer focused on practical automation and decision support systems.',
+    name: 'Aria OS',
+    url: '/ai-ventures/aria',
+    summary: 'The autonomous workforce operating system — hiring, payroll, compliance, and performance run by one AI core. Free for 10 employees.',
+  },
+  {
+    name: 'Aether Logistics OS',
+    url: '/ai-ventures/aether-logistics',
+    summary: 'AI-native freight operating system — compliance, routing, carrier booking, and customs clearance across 195 countries from one control tower.',
   },
   {
     name: 'Ancura Trivian',
@@ -918,6 +925,8 @@ export default function App() {
                       <Route path="/services/:service/:country" element={<ServiceCountryPage />} />
                       <Route path="/savings-calculator" element={<SavingsCalculatorPage />} />
                       <Route path="/venture-studio" element={<VentureStudioPage />} />
+                      <Route path="/ai-ventures/aria" element={<AriaOSPage />} />
+                      <Route path="/ai-ventures/aether-logistics" element={<AetherLogisticsPage />} />
                       <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                   </motion.div>

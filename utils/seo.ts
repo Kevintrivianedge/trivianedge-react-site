@@ -272,21 +272,20 @@ export function buildArticleSchema(post: {
   };
 }
 
-/** Schema.org SoftwareApplication for Trivian Aria */
+/** Schema.org SoftwareApplication for Aria OS */
 export function buildSoftwareApplicationSchema(): object {
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'Trivian Aria',
+    name: 'Aria OS',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
-    description: "TrivianEdge's AI-powered HRIS platform automating HR, payroll, leave management, recruitment pipeline, and workforce analytics in one unified platform.",
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-      description: 'Free for up to 10 employees during early access',
-    },
+    description: 'The autonomous workforce operating system by TrivianEdge — hiring, payroll, compliance and performance, run by a single AI core.',
+    url: 'https://trivian-aria.com',
+    offers: [
+      { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'USD', description: 'Free forever for the first 10 employees' },
+      { '@type': 'Offer', name: 'Aria', price: '2.50', priceCurrency: 'USD', description: 'Per active employee, per month, beyond 10 employees (Sri Lanka pricing; CAD $5.99 in Canada, USD $5.99 in the US)' },
+    ],
     provider: {
       '@type': 'Organization',
       '@id': `${SEO_CONFIG.siteUrl}/#organization`,
@@ -294,8 +293,8 @@ export function buildSoftwareApplicationSchema(): object {
     },
     featureList: [
       'AI-powered HR management', 'Automated payroll processing',
-      'Leave management', 'Kanban recruitment pipeline',
-      'Real-time analytics dashboard', 'Built-in AI assistant',
+      'Leave management', 'Recruitment and onboarding',
+      'Compliance tracking', 'Autonomous AI core with human approval',
     ],
   };
 }
@@ -507,9 +506,9 @@ export function buildServiceItemListSchema(): object {
       url: `${SEO_CONFIG.siteUrl}/#services`,
     },
     {
-      name: 'Trivian Aria AI-Powered HRIS',
-      description: "TrivianEdge's AI-powered HRIS platform automating HR, payroll, leave management, and workforce analytics.",
-      url: `${SEO_CONFIG.siteUrl}/#aria`,
+      name: 'Aria OS',
+      description: 'The autonomous workforce operating system by TrivianEdge — hiring, payroll, compliance, and performance run by one AI core. Free for the first 10 employees.',
+      url: `${SEO_CONFIG.siteUrl}/ai-ventures/aria`,
     },
     {
       name: 'Managed IT Services',
