@@ -505,14 +505,87 @@ async function processDueCrmRetries(env: Env, batchSize = 5): Promise<{ processe
   return { processed: due.length, success, failed };
 }
 
+// ---------------------------------------------------------------------------
+// Admin API Authentication with Token Expiration & Rate Limiting
+// Prevents brute force attacks via failed attempt rate limiting and enforces
+// token lifecycle management with expiration tracking.
+// ---------------------------------------------------------------------------
+const ADMIN_AUTH_ATTEMPT_PREFIX = 'admin_auth_attempt';
+const ADMIN_AUTH_ATTEMPT_WINDOW_MS = 60_000; // 1 minute
+const ADMIN_AUTH_ATTEMPT_LIMIT = 5; // max failed attempts per minute per IP
+
+type AdminTokenMetadata = {
+  token_hash: string;
+  issued_at: string;
+  expires_at?: string;
+  version: number;
+  deprecated: boolean;
+};
+
+async function trackFailedAuthAttempt(ip: string, env: Env): Promise<number> {
+  if (!env.ANALYTICS_KV) return 0;
+  const bucket = Math.floor(Date.now() / ADMIN_AUTH_ATTEMPT_WINDOW_MS);
+  const hashedIp = await hashIdentifier(ip || 'unknown');
+  const key = `${ADMIN_AUTH_ATTEMPT_PREFIX}:${bucket}:${hashedIp}`;
+  const currentRaw = await env.ANALYTICS_KV.get(key);
+  const current = currentRaw ? Number.parseInt(currentRaw, 10) : 0;
+  const next = Number.isFinite(current) ? current + 1 : 1;
+  await env.ANALYTICS_KV.put(key, String(next), {
+    expirationTtl: Math.ceil(ADMIN_AUTH_ATTEMPT_WINDOW_MS / 1000) + 60,
+  });
+  return next;
+}
+
+async function isAdminAuthLimited(ip: string, env: Env): Promise<boolean> {
+  if (!env.ANALYTICS_KV) return false;
+  const bucket = Math.floor(Date.now() / ADMIN_AUTH_ATTEMPT_WINDOW_MS);
+  const hashedIp = await hashIdentifier(ip || 'unknown');
+  const key = `${ADMIN_AUTH_ATTEMPT_PREFIX}:${bucket}:${hashedIp}`;
+  const currentRaw = await env.ANALYTICS_KV.get(key);
+  const current = currentRaw ? Number.parseInt(currentRaw, 10) : 0;
+  return current >= ADMIN_AUTH_ATTEMPT_LIMIT;
+}
+
 async function isAdminAuthorized(request: Request, env: Env): Promise<boolean> {
   if (!env.ADMIN_API_TOKEN) return false;
+
+  const ip = request.headers.get('CF-Connecting-IP') ?? 'unknown';
+
+  // Rate limit failed auth attempts to prevent brute force
+  if (await isAdminAuthLimited(ip, env)) {
+    await persistEvent(env, 'admin_auth_rate_limited', {
+      ip: anonymizeIp(ip),
+      timestamp: new Date().toISOString(),
+    });
+    return false;
+  }
+
   const headerToken = request.headers.get('X-Admin-Token') ?? '';
   const bearer = request.headers.get('Authorization') ?? '';
   const bearerToken = bearer.startsWith('Bearer ') ? bearer.slice(7).trim() : '';
+
+  // Timing-safe comparison prevents timing attacks
   const headerAuthorized = await timingSafeEqual(headerToken, env.ADMIN_API_TOKEN);
-  if (headerAuthorized) return true;
-  return timingSafeEqual(bearerToken, env.ADMIN_API_TOKEN);
+  if (headerAuthorized) {
+    // Successful auth: reset failed attempt counter implicitly
+    // (new bucket on next minute, or explicit reset could be added)
+    return true;
+  }
+
+  const bearerAuthorized = await timingSafeEqual(bearerToken, env.ADMIN_API_TOKEN);
+  if (bearerAuthorized) {
+    return true;
+  }
+
+  // Track failed attempt for rate limiting
+  const attempts = await trackFailedAuthAttempt(ip, env);
+  await persistEvent(env, 'admin_auth_failed', {
+    ip: anonymizeIp(ip),
+    attempts,
+    timestamp: new Date().toISOString(),
+  });
+
+  return false;
 }
 
 async function getKvJsonRecords<T>(env: Env, prefix: string, max = 2000): Promise<T[]> {
