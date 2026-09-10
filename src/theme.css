@@ -835,6 +835,20 @@
             border-radius: 4px;
         }
 
+        /* Native <option> lists render outside the page's translucent
+           bg-surface/backdrop-filter context, so options fall back to
+           OS/browser defaults and can render near-invisible (e.g. light
+           gray text on a light dropdown in dark mode). Force a solid,
+           theme-matched background + full-contrast text on every option
+           so dropdown menus stay readable in both themes. */
+        select {
+            color-scheme: light dark;
+        }
+        select option {
+            background-color: var(--background);
+            color: var(--text);
+        }
+
         /* ── Premium Design System Additions ─────────────────────────────── */
 
         /* Unified section label chip — inline-flex, cyan brand color, no variants */
