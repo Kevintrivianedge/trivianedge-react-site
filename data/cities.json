@@ -1,0 +1,144 @@
+{
+  "cities": [
+    {
+      "id": "manila",
+      "name": "Manila",
+      "country": "Philippines",
+      "countryCode": "PH",
+      "coordinate": {
+        "latitude": 14.5995,
+        "longitude": 120.9842
+      },
+      "timezone": "PHT (UTC+8)",
+      "timezoneName": "Philippine Standard Time",
+      "address": "Manila, Metro Manila, Philippines",
+      "postalCode": "1000-1899",
+      "phone": "+63 2",
+      "email": "manila@trivianedge.com",
+      "description": "Our largest hub serving Southeast Asia with expertise in operations, documentation, and customer support.",
+      "teamSize": "45+ specialists",
+      "expertise": [
+        "Operations & Logistics",
+        "Customer Support",
+        "Data Entry & Processing",
+        "BPO Services",
+        "Administrative Support"
+      ],
+      "keywordFocus": ["hire in manila", "manila talent", "philippines remote workers", "manila bpo", "outsource to philippines"],
+      "slug": "manila",
+      "imageUrl": "https://images.unsplash.com/photo-1518684079-3c830dccc432?w=1200&h=630&fit=crop"
+    },
+    {
+      "id": "dubai",
+      "name": "Dubai",
+      "country": "United Arab Emirates",
+      "countryCode": "AE",
+      "coordinate": {
+        "latitude": 25.2048,
+        "longitude": 55.2708
+      },
+      "timezone": "GST (UTC+4)",
+      "timezoneName": "Gulf Standard Time",
+      "address": "Dubai, United Arab Emirates",
+      "postalCode": "00000",
+      "phone": "+971 4",
+      "email": "dubai@trivianedge.com",
+      "description": "Our MENA gateway providing sales, customer success, and business development expertise with Arabic language capabilities.",
+      "teamSize": "30+ specialists",
+      "expertise": [
+        "Sales & Business Development",
+        "Customer Success",
+        "Account Management",
+        "Arabic Language Services",
+        "Middle East Market Expertise"
+      ],
+      "keywordFocus": ["hire in dubai", "dubai talent", "uae remote workers", "mena staffing", "arabic speaking team"],
+      "slug": "dubai",
+      "imageUrl": "https://images.unsplash.com/photo-1512453531585-c0707d3fcb71?w=1200&h=630&fit=crop"
+    },
+    {
+      "id": "bangalore",
+      "name": "Bangalore",
+      "country": "India",
+      "countryCode": "IN",
+      "coordinate": {
+        "latitude": 12.9716,
+        "longitude": 77.5946
+      },
+      "timezone": "IST (UTC+5:30)",
+      "timezoneName": "Indian Standard Time",
+      "address": "Bangalore, Karnataka, India",
+      "postalCode": "560001-560103",
+      "phone": "+91 80",
+      "email": "bangalore@trivianedge.com",
+      "description": "India's tech hub providing AI, machine learning, and software development expertise for complex projects.",
+      "teamSize": "35+ specialists",
+      "expertise": [
+        "AI & Machine Learning",
+        "Software Development",
+        "QA & Testing",
+        "Data Science",
+        "Tech Architecture"
+      ],
+      "keywordFocus": ["hire in bangalore", "bangalore developers", "india ai talent", "machine learning engineers", "tech outsourcing india"],
+      "slug": "bangalore",
+      "imageUrl": "https://images.unsplash.com/photo-1596521322268-5fbf8b2bc7df?w=1200&h=630&fit=crop"
+    },
+    {
+      "id": "lagos",
+      "name": "Lagos",
+      "country": "Nigeria",
+      "countryCode": "NG",
+      "coordinate": {
+        "latitude": 6.5244,
+        "longitude": 3.3792
+      },
+      "timezone": "WAT (UTC+1)",
+      "timezoneName": "West Africa Time",
+      "address": "Lagos, Lagos State, Nigeria",
+      "postalCode": "100001-102102",
+      "phone": "+234 1",
+      "email": "lagos@trivianedge.com",
+      "description": "West Africa's fastest-growing tech talent pool specializing in product, growth, and creative services.",
+      "teamSize": "25+ specialists",
+      "expertise": [
+        "Product Management",
+        "Growth & Marketing",
+        "Creative Design",
+        "Content Creation",
+        "Community Management"
+      ],
+      "keywordFocus": ["hire in lagos", "nigeria talent", "west africa remote workers", "african tech talent", "lagos developers"],
+      "slug": "lagos",
+      "imageUrl": "https://images.unsplash.com/photo-1552410260-7ad12a688c1b?w=1200&h=630&fit=crop"
+    },
+    {
+      "id": "sao-paulo",
+      "name": "São Paulo",
+      "country": "Brazil",
+      "countryCode": "BR",
+      "coordinate": {
+        "latitude": -23.5505,
+        "longitude": -46.6333
+      },
+      "timezone": "BRT (UTC-3)",
+      "timezoneName": "Brasília Time",
+      "address": "São Paulo, São Paulo State, Brazil",
+      "postalCode": "01000-000-05000-000",
+      "phone": "+55 11",
+      "email": "saopaulo@trivianedge.com",
+      "description": "Latin America's business hub with expertise in sales, financial operations, and market expansion.",
+      "teamSize": "28+ specialists",
+      "expertise": [
+        "Financial Operations",
+        "Sales & Business Development",
+        "Market Expansion Strategy",
+        "Portuguese Language Services",
+        "Latin America Expertise"
+      ],
+      "keywordFocus": ["hire in sao paulo", "brazil talent", "latin america staffing", "portuguese speaking team", "south america developers"],
+      "slug": "sao-paulo",
+      "imageUrl": "https://images.unsplash.com/photo-1499856871957-5b8620a32237?w=1200&h=630&fit=crop"
+    }
+  ]
+}

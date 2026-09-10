@@ -87,6 +87,7 @@ const ServicesPage            = lazy(() => import('./pages/ServicesPage'));
 const SavingsCalculatorPage   = lazy(() => import('./pages/SavingsCalculatorPage'));
 const NotFoundPage            = lazy(() => import('./pages/NotFoundPage'));
 const ChatSidebar             = lazy(() => import('./components/ChatSidebar'));
+const CityLandingPage         = lazy(() => import('./components/CityLandingPage'));
 
 
 // Trust strip — real named clients only, kept separate from the hero's numeric stats
@@ -936,6 +937,7 @@ export default function App() {
                       <Route path="/venture-studio" element={<VentureStudioPage />} />
                       <Route path="/ai-ventures/aria" element={<AriaOSPage />} />
                       <Route path="/ai-ventures/aether-logistics" element={<AetherLogisticsPage />} />
+                      <Route path="/locations/:slug" element={<CityLandingPage />} />
                       <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                   </motion.div>
