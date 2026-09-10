@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { NAV_LINKS } from '../constants';
 import ThemeToggle from './ThemeToggle';
 import Logo from './Logo';
+import AnimatedHamburger from './AnimatedHamburger';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -237,14 +238,11 @@ const Navbar: React.FC = () => {
 
         <div className="lg:hidden flex items-center gap-4">
             <ThemeToggle />
-            <button
-              className={`p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center ${onDarkHero ? 'text-white' : 'text-text'}`}
+            <AnimatedHamburger
+              isOpen={isOpen}
               onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle navigation"
-              aria-expanded={isOpen}
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+              color={onDarkHero ? 'white' : 'currentColor'}
+            />
         </div>
       </div>
 
