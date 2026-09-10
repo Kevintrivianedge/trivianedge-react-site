@@ -1,9 +1,11 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { BLOG_POSTS } from '../constants';
 import SEOHead from './SEOHead';
+import BlogMeta from './BlogMeta';
 import { articleSchema, breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
+import { calculateReadingTime } from '../utils/readingTime';
 
 // Lightweight inline markdown renderer — handles **bold**, *italic*, [links](url),
 // # headings, and ## sub-headings so blog content formats correctly (#19).
@@ -104,34 +106,16 @@ const BlogPostDetail: React.FC = () => {
           <span className="text-xs font-bold uppercase tracking-widest">Back to Intelligence Feed</span>
         </button>
 
-        <div className="reveal">
-          <div className="flex items-center gap-6 mb-8">
-            <div className="flex items-center gap-2 text-[10px] text-muted font-mono tracking-widest uppercase">
-              <Calendar className="w-4 h-4" />
-              {post.date}
-            </div>
-            <div className="flex items-center gap-2 text-[10px] text-muted font-mono tracking-widest uppercase">
-              <Clock className="w-4 h-4" />
-              {post.readTime}
-            </div>
-            <span className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[10px] font-bold uppercase tracking-widest text-cyan-400">
-              {post.category}
-            </span>
-          </div>
+        <BlogMeta
+          date={post.date}
+          readTime={post.readTime}
+          author={post.author}
+          category={post.category}
+          datePublished={post.datePublished}
+        />
 
-          <h1 className="text-4xl md:text-6xl font-bold mb-12 leading-tight text-text">{post.title}</h1>
-          
-          <div className="flex items-center gap-4 mb-16 p-6 glass border-border rounded-3xl w-fit">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-cyan-700 flex items-center justify-center p-0.5">
-              <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-                <User className="w-6 h-6 text-cyan-400" />
-              </div>
-            </div>
-            <div>
-              <p className="text-[10px] text-muted font-mono uppercase tracking-widest">Authored By</p>
-              <p className="text-text font-bold">{post.author}</p>
-            </div>
-          </div>
+        <div className="reveal">
+          <h1 className="text-4xl md:text-6xl font-bold mb-12 mt-12 leading-tight text-text">{post.title}</h1>
 
           <div className="prose prose-invert prose-lg max-w-none">
             <div className="text-muted leading-relaxed space-y-6 text-xl">
