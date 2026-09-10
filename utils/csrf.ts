@@ -83,3 +83,31 @@ export function addCsrfTokenToFormData(data: Record<string, unknown>): Record<st
     [CSRF_TOKEN_KEY]: getCsrfToken(),
   };
 }
+
+/**
+ * Extract rotated CSRF token from response headers
+ * Server rotates token on each request for defense-in-depth
+ * Returns the new token if present, otherwise returns the current token
+ */
+export function extractRotatedCsrfToken(response: Response): string {
+  try {
+    const newToken = response.headers.get('X-CSRF-Token');
+    if (newToken) {
+      // Update stored token with new one from server
+      const newExpiry = Date.now() + TOKEN_EXPIRY_MS;
+      try {
+        if (typeof sessionStorage !== 'undefined') {
+          sessionStorage.setItem(CSRF_TOKEN_STORAGE_KEY, newToken);
+          sessionStorage.setItem(TOKEN_EXPIRY_KEY, newExpiry.toString());
+        }
+      } catch {
+        // Silently ignore sessionStorage errors
+      }
+      return newToken;
+    }
+  } catch {
+    // Silently ignore errors
+  }
+  // Fallback to current token
+  return getCsrfToken();
+}
