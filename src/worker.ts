@@ -581,6 +581,57 @@ function getCurrentKeyVersion(env: Env): AdminKeyVersion {
   };
 }
 
+// ---------------------------------------------------------------------------
+// Admin Request Signing - Optional HMAC-based request verification
+// Clients can optionally sign requests for additional security layer.
+// Signature prevents request tampering and provides non-repudiation.
+// Header: X-Request-Signature (HMAC-SHA256 hex)
+// Format: HMAC-SHA256(admin_token + method + path + timestamp)
+// ---------------------------------------------------------------------------
+async function verifyAdminRequestSignature(
+  request: Request,
+  adminToken: string,
+): Promise<{ valid: boolean; reason?: string }> {
+  const signature = request.headers.get('X-Request-Signature');
+  if (!signature) {
+    // Signature optional for backward compatibility, but recommended
+    return { valid: true };
+  }
+
+  const method = request.method;
+  const url = new URL(request.url);
+  const path = url.pathname;
+  const timestamp = request.headers.get('X-Request-Timestamp');
+
+  if (!timestamp) {
+    return { valid: false, reason: 'X-Request-Timestamp header required with signature' };
+  }
+
+  // Prevent replay attacks: signature valid for 5 minutes
+  const requestTime = Number.parseInt(timestamp, 10);
+  const now = Date.now();
+  const maxAge = 5 * 60 * 1000; // 5 minutes
+  if (now - requestTime > maxAge) {
+    return { valid: false, reason: 'Request timestamp too old (max 5 minutes)' };
+  }
+
+  // Reconstruct signature: token + method + path + timestamp
+  const signaturePayload = `${adminToken}:${method}:${path}:${timestamp}`;
+  const key = await crypto.subtle.importKey(
+    'raw',
+    textEncoder.encode(adminToken),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign'],
+  );
+  const expectedSignature = toHex(
+    await crypto.subtle.sign('HMAC', key, textEncoder.encode(signaturePayload)),
+  );
+
+  const valid = await timingSafeEqual(signature, expectedSignature);
+  return { valid, reason: valid ? undefined : 'Signature verification failed' };
+}
+
 async function isAdminAuthorized(request: Request, env: Env): Promise<boolean> {
   if (!env.ADMIN_API_TOKEN) return false;
 
@@ -603,10 +654,22 @@ async function isAdminAuthorized(request: Request, env: Env): Promise<boolean> {
   // Try current key first (most common case)
   const headerAuthorized = await timingSafeEqual(headerToken, env.ADMIN_API_TOKEN);
   if (headerAuthorized) {
+    // Verify request signature if provided (optional, for defense-in-depth)
+    const signatureCheck = await verifyAdminRequestSignature(request, env.ADMIN_API_TOKEN);
+    if (!signatureCheck.valid) {
+      await persistEvent(env, 'admin_auth_signature_failed', {
+        ip: anonymizeIp(ip),
+        reason: signatureCheck.reason,
+        timestamp: new Date().toISOString(),
+      });
+      return false;
+    }
+
     await persistEvent(env, 'admin_auth_success', {
       ip: anonymizeIp(ip),
       key_version: env.ADMIN_API_TOKEN_VERSION ?? 'v1',
       method: 'header',
+      signature_verified: !!request.headers.get('X-Request-Signature'),
       timestamp: new Date().toISOString(),
     });
     return true;
@@ -614,10 +677,22 @@ async function isAdminAuthorized(request: Request, env: Env): Promise<boolean> {
 
   const bearerAuthorized = await timingSafeEqual(bearerToken, env.ADMIN_API_TOKEN);
   if (bearerAuthorized) {
+    // Verify request signature if provided (optional, for defense-in-depth)
+    const signatureCheck = await verifyAdminRequestSignature(request, env.ADMIN_API_TOKEN);
+    if (!signatureCheck.valid) {
+      await persistEvent(env, 'admin_auth_signature_failed', {
+        ip: anonymizeIp(ip),
+        reason: signatureCheck.reason,
+        timestamp: new Date().toISOString(),
+      });
+      return false;
+    }
+
     await persistEvent(env, 'admin_auth_success', {
       ip: anonymizeIp(ip),
       key_version: env.ADMIN_API_TOKEN_VERSION ?? 'v1',
       method: 'bearer',
+      signature_verified: !!request.headers.get('X-Request-Signature'),
       timestamp: new Date().toISOString(),
     });
     return true;
@@ -627,10 +702,22 @@ async function isAdminAuthorized(request: Request, env: Env): Promise<boolean> {
   if (env.ADMIN_API_TOKEN_PREV) {
     const headerPrevAuthorized = await timingSafeEqual(headerToken, env.ADMIN_API_TOKEN_PREV);
     if (headerPrevAuthorized) {
+      // Verify signature with previous key if provided
+      const signatureCheck = await verifyAdminRequestSignature(request, env.ADMIN_API_TOKEN_PREV);
+      if (!signatureCheck.valid) {
+        await persistEvent(env, 'admin_auth_signature_failed', {
+          ip: anonymizeIp(ip),
+          reason: signatureCheck.reason,
+          timestamp: new Date().toISOString(),
+        });
+        return false;
+      }
+
       await persistEvent(env, 'admin_auth_deprecated_key', {
         ip: anonymizeIp(ip),
         key_version: 'deprecated',
         method: 'header',
+        signature_verified: !!request.headers.get('X-Request-Signature'),
         grace_period_until: new Date(Date.now() + ADMIN_KEY_ROTATION_GRACE_PERIOD_MS).toISOString(),
         timestamp: new Date().toISOString(),
       });
@@ -639,10 +726,22 @@ async function isAdminAuthorized(request: Request, env: Env): Promise<boolean> {
 
     const bearerPrevAuthorized = await timingSafeEqual(bearerToken, env.ADMIN_API_TOKEN_PREV);
     if (bearerPrevAuthorized) {
+      // Verify signature with previous key if provided
+      const signatureCheck = await verifyAdminRequestSignature(request, env.ADMIN_API_TOKEN_PREV);
+      if (!signatureCheck.valid) {
+        await persistEvent(env, 'admin_auth_signature_failed', {
+          ip: anonymizeIp(ip),
+          reason: signatureCheck.reason,
+          timestamp: new Date().toISOString(),
+        });
+        return false;
+      }
+
       await persistEvent(env, 'admin_auth_deprecated_key', {
         ip: anonymizeIp(ip),
         key_version: 'deprecated',
         method: 'bearer',
+        signature_verified: !!request.headers.get('X-Request-Signature'),
         grace_period_until: new Date(Date.now() + ADMIN_KEY_ROTATION_GRACE_PERIOD_MS).toISOString(),
         timestamp: new Date().toISOString(),
       });
