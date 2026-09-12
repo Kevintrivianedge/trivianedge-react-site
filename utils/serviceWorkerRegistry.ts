@@ -39,7 +39,7 @@ export async function registerServiceWorker(config: ServiceWorkerConfig = {}): P
     });
 
     // Periodically check for updates
-    if (config.updateCheckInterval !== false) {
+    if (config.updateCheckInterval !== 0) {
       const interval = config.updateCheckInterval || 60 * 60 * 1000; // 1 hour default
       updateCheckInterval = setInterval(() => {
         registration?.update().catch((error) => {
@@ -132,7 +132,10 @@ export async function storeFailedSubmission(
         console.log('Submission stored for offline retry');
         // Trigger background sync if available
         if ('serviceWorker' in navigator && 'SyncManager' in window) {
-          registration?.sync?.register('sync-submissions').catch((error) => {
+          const syncRegistration = registration as (ServiceWorkerRegistration & {
+            sync?: { register(tag: string): Promise<void> };
+          }) | null;
+          syncRegistration?.sync?.register('sync-submissions').catch((error: unknown) => {
             console.error('Background sync registration failed:', error);
           });
         }
