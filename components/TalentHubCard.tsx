@@ -67,6 +67,7 @@ const TalentHubCard: React.FC<{ hub: TalentHub; index: number; onClick: (hub: Ta
         <div className="flex items-start justify-between mb-5">
           <img
             src={`https://flagcdn.com/w80/${hub.flagCode}.png`}
+            crossOrigin="anonymous"
             width={48}
             height={36}
             alt={hub.country}

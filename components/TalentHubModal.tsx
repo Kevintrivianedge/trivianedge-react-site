@@ -126,6 +126,7 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
             <div className="flex items-end gap-5">
               <img
                 src={`https://flagcdn.com/w160/${hub.flagCode}.png`}
+                crossOrigin="anonymous"
                 width={88}
                 height={66}
                 alt={hub.country}

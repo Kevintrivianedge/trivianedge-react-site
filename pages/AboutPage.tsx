@@ -155,6 +155,7 @@ const AboutPage: React.FC = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <img
                       src={`https://flagcdn.com/w40/${hub.flagCode}.png`}
+                      crossOrigin="anonymous"
                       width={20}
                       height={15}
                       alt=""

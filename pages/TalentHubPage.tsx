@@ -109,6 +109,7 @@ const TalentHubPage: React.FC = () => {
             <div className="flex items-center gap-4 mb-6">
               <img
                 src={`https://flagcdn.com/w80/${hub.flagCode}.png`}
+                crossOrigin="anonymous"
                 width={56}
                 height={42}
                 alt={hub.country}
