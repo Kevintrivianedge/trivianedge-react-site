@@ -105,19 +105,11 @@
         <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300..800&display=swap" rel="stylesheet">
 <!-- Vite bundles all dependencies, no browser importmap needed -->
 
-    <!-- Meta Pixel Code -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1763614258308992');
-    fbq('track', 'PageView');
-    </script>
+    <!-- Meta Pixel Code. Loaded from a same-origin static file (public/meta-pixel.js)
+         rather than an inline <script> so the worker's CSP script-src never needs
+         'unsafe-inline' -- see src/worker.ts CSP_HEADER for the corresponding
+         allowlist entries (connect.facebook.net, www.facebook.com). -->
+    <script src="/meta-pixel.js" defer></script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1763614258308992&ev=PageView&noscript=1"
     /></noscript>
