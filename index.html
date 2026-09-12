@@ -108,15 +108,18 @@
     <!-- Meta Pixel Code. Loaded from a same-origin static file (public/meta-pixel.js)
          rather than an inline <script> so the worker's CSP script-src never needs
          'unsafe-inline' -- see src/worker.ts CSP_HEADER for the corresponding
-         allowlist entries (connect.facebook.net, www.facebook.com). -->
+         allowlist entries (connect.facebook.net, www.facebook.com). The <noscript>
+         fallback lives in <body> below: HTML's content model only permits
+         link/meta/style inside a <noscript> that's in <head>, so an <img> there
+         fails parse5's stricter parser during the Vite build. -->
     <script src="/meta-pixel.js" defer></script>
+
+</head>
+<body>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1763614258308992&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
-
-</head>
-<body>
     <!-- Skip to main content, visible on keyboard focus for screen reader / keyboard users (WCAG 2.1 AA) -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="root"></div>
