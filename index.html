@@ -83,7 +83,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.json">
     <!-- CSP: 'unsafe-inline' in script-src is required for JSON-LD structured-data injected by react-helmet-async -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.amplitude.com https://www.googletagmanager.com https://cdn-cookieyes.com; connect-src 'self' https://ipapi.co https://api.open-meteo.com https://api.resend.com https://*.amplitude.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://log.cookieyes.com https://cdn-cookieyes.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; worker-src 'self' blob:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.amplitude.com https://www.googletagmanager.com https://cdn-cookieyes.com https://connect.facebook.net; connect-src 'self' https://ipapi.co https://api.open-meteo.com https://api.resend.com https://*.amplitude.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://log.cookieyes.com https://cdn-cookieyes.com https://connect.facebook.net https://www.facebook.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; worker-src 'self' blob:;">
 
     <!-- DNS prefetch for performance -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -104,6 +104,24 @@
          has no such failure mode. -->
         <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300..800&display=swap" rel="stylesheet">
 <!-- Vite bundles all dependencies, no browser importmap needed -->
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1763614258308992');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1763614258308992&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
 
 </head>
 <body>
