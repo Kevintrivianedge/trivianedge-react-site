@@ -97,6 +97,8 @@ const TRUST_CLIENTS = [
   { name: 'Cargo Login',       logo: '/logos/cargo-login.webp',       href: 'https://www.cargo-login.com/' },
   { name: 'Keynotive',         logo: '/logos/keynotive.webp',         href: 'https://www.keynotive.io/' },
   { name: 'Hub-Flx',           logo: '/logos/hub-flx.webp',           href: 'https://www.hub-flx.com/' },
+  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', href: 'https://keynesiasrilanka.com' },
+  { name: 'MellieBugs',        logo: '/logos/melliebugs.webp',        href: 'https://melliebugs.com' },
 ];
 
 const PREMIUM_FEATURES = [
