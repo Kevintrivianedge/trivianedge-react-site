@@ -30,14 +30,11 @@
     <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large">
 
-    <!-- Canonical is intentionally omitted here: SEOHead (react-helmet-async) injects
-         the correct per-route canonical on every page once React mounts. A static tag
-         here would always point at "/" and conflict with it on every other route. -->
-
-    <!-- Hreflang, international targeting -->
-    <link rel="alternate" hreflang="en" href="https://www.trivianedge.com/">
-    <link rel="alternate" hreflang="en-CA" href="https://www.trivianedge.com/">
-    <link rel="alternate" hreflang="x-default" href="https://www.trivianedge.com/">
+    <!-- Canonical and hreflang are intentionally omitted here: SEOHead
+         (react-helmet-async) injects the correct per-route canonical, and the
+         home route injects its own hreflang set, once React mounts. Static
+         tags here would always point at "/" and duplicate/conflict with those
+         on every route (including "/" itself, since SEOHead adds them too). -->
 
     <!-- Geo tags, important for "BPO Canada" and "outsourcing Canada" queries -->
     <meta name="geo.region" content="CA-ON">
