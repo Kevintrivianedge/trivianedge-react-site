@@ -32,7 +32,7 @@ const FAQS = [
   {
     question: 'How quickly can TrivianEdge deploy a BPO team?',
     answer:
-      'We deploy fully operational offshore BPO teams within 30 days. After an initial discovery call, we identify the right talent, run screening, handle contracts and payroll setup, and integrate the team into your workflow — all within the 30-day window.',
+      'We deploy fully operational offshore BPO teams in as little as 30 days. After an initial discovery call, we identify the right talent, run screening, handle contracts and payroll setup, and integrate the team into your workflow — typically within a 30-day window.',
   },
   {
     question: 'What types of work does TrivianEdge BPO cover?',
@@ -104,7 +104,7 @@ const BPOPage: React.FC = () => {
     <>
       <SEOHead
         title="BPO Services Canada | Business Process Outsourcing | TrivianEdge"
-        description="Reduce costs by up to 40% with TrivianEdge's BPO services. Expert offshore teams deployed in 30 days across 6 time zones. Free consultation."
+        description="Reduce costs by up to 40% with TrivianEdge's BPO services. Expert offshore teams deployed in as little as 30 days across 6 time zones. Free consultation."
         schema={[
           serviceSchema(
             'BPO Services',
@@ -180,7 +180,7 @@ const BPOPage: React.FC = () => {
               What is Business Process Outsourcing?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              Business Process Outsourcing (BPO) is the practice of hiring an external partner to run specific business operations — like customer support, back-office admin, or finance processing — on your behalf. TrivianEdge builds offshore BPO teams that plug into your business within 30 days, handling the work cleanly so your team can focus on what matters most. Whether you need back-office support or full-cycle{' '}
+              Business Process Outsourcing (BPO) is the practice of hiring an external partner to run specific business operations — like customer support, back-office admin, or finance processing — on your behalf. TrivianEdge builds offshore BPO teams that plug into your business in as little as 30 days, handling the work cleanly so your team can focus on what matters most. Whether you need back-office support or full-cycle{' '}
               <Link
                 to="/services/rpo"
                 className="text-cyan-400 hover:underline"

@@ -71,7 +71,7 @@ const TalentHubPage: React.FC = () => {
     <>
       <SEOHead
         title={`Hire in ${hub.country} | Offshore Talent via TrivianEdge`}
-        description={`Hire ${hub.specialty.toLowerCase()} talent in ${hub.country} in 30 days. Time zone fit, English proficiency, employment structure, and typical roles — no foreign entity required.`}
+        description={`Hire ${hub.specialty.toLowerCase()} talent in ${hub.country} in as little as 30 days. Time zone fit, English proficiency, employment structure, and typical roles — no foreign entity required.`}
         canonical={pageUrl}
         schema={[
           breadcrumbSchema([
@@ -118,7 +118,7 @@ const TalentHubPage: React.FC = () => {
               />
               <span className="text-xs font-bold uppercase tracking-widest text-cyan-600">{hub.specialty}</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">Hire in {hub.country} in 30 days.</h1>
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">Hire in {hub.country} in as little as 30 days.</h1>
             <p className="text-muted text-lg md:text-xl leading-relaxed max-w-3xl">{hub.description}</p>
           </div>
         </div>

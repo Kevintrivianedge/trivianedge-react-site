@@ -112,7 +112,7 @@ const PREMIUM_FEATURES = [
     iconBg: 'from-cyan-400/20 to-cyan-400/5',
     iconBorder: 'border-cyan-400/25',
     glow: 'bg-cyan-400/8',
-    metric: '30 days to hire',
+    metric: '~30 days to hire',
     link: '/services/rpo',
   },
   {
@@ -165,7 +165,7 @@ const AI_VENTURES = [
 const HOME_FAQS = [
   {
     question: 'What does TrivianEdge do?',
-    answer: 'TrivianEdge helps businesses hire people in other countries and build software. We handle all the hard parts: finding candidates, running payroll, managing local employment law, and keeping your team running. You tell us what you need and we deliver it within 30 days.',
+    answer: 'TrivianEdge helps businesses hire people in other countries and build software. We handle all the hard parts: finding candidates, running payroll, managing local employment law, and keeping your team running. You tell us what you need and we typically have your team live within 30 days.',
   },
   {
     question: 'Where is TrivianEdge based?',
@@ -173,7 +173,7 @@ const HOME_FAQS = [
   },
   {
     question: 'How quickly can TrivianEdge deploy a team?',
-    answer: 'Our standard deployment timeline is 30 days. That covers candidate sourcing, screening, legal setup, payroll, and onboarding. For urgent needs, we can move faster depending on the role type and location.',
+    answer: 'Our standard deployment timeline runs around 30 days. That covers candidate sourcing, screening, legal setup, payroll, and onboarding. Actual timing varies by role and location — some move faster, more specialized roles can take longer.',
   },
   {
     question: 'How much does it cost to work with TrivianEdge?',
@@ -263,7 +263,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light"
             >
-              Offshore teams and bespoke software, deployed in 30 days. Hiring, payroll, compliance, and delivery, handled entirely by us.
+              Offshore teams and bespoke software, deployed in as little as 30 days. Hiring, payroll, compliance, and delivery, handled entirely by us.
             </motion.p>
 
             <motion.div
@@ -392,11 +392,12 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               What we do
             </div>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
+              <span className="sr-only">What does TrivianEdge do? </span>
               Hire globally.<br />
               <span className="text-holo">Start with six proven talent hubs.</span>
             </h2>
             <p className="text-muted text-lg max-w-3xl mx-auto">
-              TrivianEdge is a Toronto-based BPO, RPO, and bespoke software development company that deploys offshore teams in 30 days. We hire people for your back office, run your recruiting pipeline, and build the custom software your product needs, sourced from six global talent hubs — Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica — and matched to your time zone. Most companies juggle three or four vendors for hiring, payroll, and software. We bring people and software delivery under one roof, so nothing falls through the cracks.
+              TrivianEdge is a Toronto-based BPO, RPO, and bespoke software development company that deploys offshore teams in as little as 30 days. We hire people for your back office, run your recruiting pipeline, and build the custom software your product needs, sourced from six global talent hubs — Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica — and matched to your time zone. Most companies juggle three or four vendors for hiring, payroll, and software. We bring people and software delivery under one roof, so nothing falls through the cracks.
             </p>
           </div>
 
@@ -497,7 +498,10 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <Zap className="w-3 h-3" />
               Simple 4-Step Process
             </div>
-            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">How We Get You Set Up</h2>
+            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
+              <span className="sr-only">How do I get started with TrivianEdge? </span>
+              How We Get You Set Up
+            </h2>
             <p className="text-muted text-lg max-w-xl mx-auto">
               From first conversation to your new team member's first day, the whole process takes about 30 days.
             </p>
@@ -541,6 +545,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               Proof, not promises.
             </div>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
+              <span className="sr-only">What results has TrivianEdge delivered for clients? </span>
               Real work. <span className="text-holo">Real outcomes.</span>
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
@@ -607,7 +612,10 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
             <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-text/70 mb-4">Where your team comes from</p>
-            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">Great people. Everywhere.</h2>
+            <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
+              <span className="sr-only">Where does TrivianEdge source talent from? </span>
+              Great people. Everywhere.
+            </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
               We source from 6 countries selected for their talent quality, English proficiency, and timezone fit with your business. Hover any pin to explore.
             </p>

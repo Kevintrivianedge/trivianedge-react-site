@@ -48,7 +48,7 @@ export const INDUSTRIES: IndustryPageData[] = [
     faqs: [
       { question: 'Can TrivianEdge run multiple outbound motions at once?', answer: 'Yes — our Keynotive engagement ran two offshore teams in parallel across cold calling, email marketing, and sign-up generation under one operating model, rather than as separate, disconnected hires.' },
       { question: 'Do we need to build a management layer for an offshore growth team?', answer: 'No. TrivianEdge manages HR, performance, and day-to-day operations for the team; you keep control of strategy, messaging, and targets.' },
-      { question: 'How fast can an outbound team be live?', answer: 'TrivianEdge\'s standard deployment window is 30 days — sourcing, screening, legal setup, payroll, and onboarding included.' },
+      { question: 'How fast can an outbound team be live?', answer: 'TrivianEdge\'s standard deployment window is around 30 days — sourcing, screening, legal setup, payroll, and onboarding included.' },
     ],
   },
   {

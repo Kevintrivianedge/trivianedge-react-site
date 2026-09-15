@@ -76,7 +76,7 @@ const GenerativeAIPage: React.FC = () => {
     <>
       <SEOHead
         title="Generative AI Development Services | TrivianEdge"
-        description="TrivianEdge builds generative AI products — RAG systems, AI copilots, and content generation tools — with an offshore team deployed in 30 days."
+        description="TrivianEdge builds generative AI products — RAG systems, AI copilots, and content generation tools — with an offshore team deployed in as little as 30 days."
         schema={[
           serviceSchema(
             'Generative AI Development',
@@ -127,7 +127,7 @@ const GenerativeAIPage: React.FC = () => {
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
               RAG systems, AI copilots, and content generation tools built on current OpenAI, Anthropic,
-              and open-weight models — grounded in your data, deployed by an offshore team in 30 days.
+              and open-weight models — grounded in your data, deployed by an offshore team in as little as 30 days.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">
@@ -259,7 +259,7 @@ const GenerativeAIPage: React.FC = () => {
               Build Your Generative AI Product
             </h2>
             <p className="text-muted mb-8">
-              Let's scope the retrieval, the guardrails, and the team to ship it in 30 days.
+              Let's scope the retrieval, the guardrails, and the team to ship it in as little as 30 days.
             </p>
             <Link
               to="/contact"

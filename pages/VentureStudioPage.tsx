@@ -459,7 +459,7 @@ const VentureStudioPage: React.FC = () => {
     <>
       <SEOHead
         title="Venture Studio | Build Your MVP with TrivianEdge"
-        description="TrivianEdge Venture Studio pairs early-stage founders with offshore engineering talent and AI development to ship your MVP in 30 days. Apply now."
+        description="TrivianEdge Venture Studio pairs early-stage founders with offshore engineering talent and AI development to ship your MVP in as little as 30 days. Apply now."
         keywords="venture studio Canada, MVP development, startup build partner, offshore MVP development, AI startup, SaaS MVP, TrivianEdge venture studio"
         schema={[
           serviceSchema(

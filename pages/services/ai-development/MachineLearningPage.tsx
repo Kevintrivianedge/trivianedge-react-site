@@ -127,7 +127,7 @@ const MachineLearningPage: React.FC = () => {
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
               Churn prediction, forecasting, fraud detection, and recommendation engines —
-              built on your data, from pipeline to production, by an offshore team in 30 days.
+              built on your data, from pipeline to production, by an offshore team in as little as 30 days.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">

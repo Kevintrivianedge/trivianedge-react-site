@@ -69,7 +69,7 @@ const TITLE_VARIANTS: Record<PageContext, string[]> = {
 
 const DESC_VARIANTS: Record<PageContext, string[]> = {
   home: [
-    'Canada\'s BPO and offshore software development company. Elite global talent deployed in 30 days. Up to 40% cost savings across 6 time zones.',
+    'Canada\'s BPO and offshore software development company. Elite global talent deployed in as little as 30 days. Up to 40% cost savings across 6 time zones.',
     'TrivianEdge: offshore BPO, software teams, and IT outsourcing from Canada. 30-day deployment, 6 time zones, 40% cost reduction.',
     'TrivianEdge deploys dedicated software teams, managed BPO, and AI-driven staffing for startups worldwide. Canada\'s offshore partner.',
     'Stop recruiting. Start deploying. Canada\'s BPO and offshore development company. Philippines, Sri Lanka, Vietnam & more. 30 days.',

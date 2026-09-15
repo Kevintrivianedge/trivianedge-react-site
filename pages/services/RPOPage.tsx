@@ -29,7 +29,7 @@ const FAQS = [
   {
     question: 'How quickly can TrivianEdge RPO start delivering?',
     answer:
-      'We embed our RPO team and begin delivering shortlisted candidates within 30 days. The first week covers discovery and role briefing, weeks two and three cover active sourcing and screening, and by week four you are reviewing qualified candidates.',
+      'We embed our RPO team and typically begin delivering shortlisted candidates within 30 days. The first week covers discovery and role briefing, weeks two and three cover active sourcing and screening, and by week four you are reviewing qualified candidates.',
   },
   {
     question: 'What types of roles can TrivianEdge RPO fill?',
@@ -125,7 +125,7 @@ const RPOPage: React.FC = () => {
     <>
       <SEOHead
         title="RPO Services Canada | Recruitment Process Outsourcing | TrivianEdge"
-        description="Scale your hiring with TrivianEdge RPO. We embed into your HR team, source top talent globally, and deliver shortlisted candidates in 30 days."
+        description="Scale your hiring with TrivianEdge RPO. We embed into your HR team, source top talent globally, and deliver shortlisted candidates in as little as 30 days."
         schema={[
           serviceSchema(
             'RPO Services',
@@ -288,7 +288,7 @@ const RPOPage: React.FC = () => {
           <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-4">How Our RPO Process Works</h2>
             <p className="text-muted text-lg mb-12 leading-relaxed">
-              From your first conversation to your first hire, the whole process runs within 30 days.
+              From your first conversation to your first hire, the whole process typically runs within 30 days.
             </p>
             <div className="space-y-8">
               {[

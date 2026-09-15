@@ -67,7 +67,7 @@ const ServicesPage: React.FC = () => {
     <>
       <SEOHead
         title="Services | TrivianEdge — BPO, RPO & Bespoke Software Development"
-        description="Explore TrivianEdge's full service offering: BPO, RPO, bespoke software, and AI development. Offshore teams deployed in 30 days across 6 countries."
+        description="Explore TrivianEdge's full service offering: BPO, RPO, bespoke software, and AI development. Offshore teams deployed in as little as 30 days across 6 countries."
         canonical="https://www.trivianedge.com/services"
         structuredData={[
           breadcrumbSchema([
@@ -103,7 +103,7 @@ const ServicesPage: React.FC = () => {
               <span className="text-cyan-400">in one place.</span>
             </h1>
             <p className="text-muted text-lg leading-relaxed max-w-2xl mx-auto mb-8">
-              TrivianEdge is a BPO, RPO, and bespoke software development company, AI development included as part of that software practice. One partner, three core lines, 30-day deployment.
+              TrivianEdge is a BPO, RPO, and bespoke software development company, AI development included as part of that software practice. One partner, three core lines, deployed in as little as 30 days.
             </p>
             <Link
               to="/contact"

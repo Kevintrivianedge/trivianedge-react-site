@@ -42,7 +42,7 @@ export const NAV_LINKS = [
 export const SERVICES: ServiceCardProps[] = [
   {
     title: "We Build Your Team",
-    description: "Think of us as your global hiring department, except we already know everyone. Whether you need a software engineer in Vietnam, a customer support team in the Philippines, or an ops lead in Toronto, we find the right person and get them working for you within 30 days.",
+    description: "Think of us as your global hiring department, except we already know everyone. Whether you need a software engineer in Vietnam, a customer support team in the Philippines, or an ops lead in Toronto, we find the right person and typically get them working for you within 30 days.",
     icon: <Users className="w-8 h-8 text-cyan-400" />,
     tags: ["Global Hiring", "24/7 Coverage", "30-Day Start"],
     features: [

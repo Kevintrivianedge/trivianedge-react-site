@@ -8,7 +8,7 @@ export const COMPARISONS: ComparisonPageData[] = [
     optionA: {
       name: 'TrivianEdge BPO',
       summary: 'A managed offshore team runs the function for you — TrivianEdge handles sourcing, employment, and day-to-day HR, while you keep control of the work itself.',
-      goodFor: ['Support functions you need running well but don\'t want to manage', 'Getting a function live in 30 days instead of a multi-month hiring cycle', 'Scaling headcount up or down without renegotiating contracts each time'],
+      goodFor: ['Support functions you need running well but don\'t want to manage', 'Getting a function live in as little as 30 days instead of a multi-month hiring cycle', 'Scaling headcount up or down without renegotiating contracts each time'],
       tradeoffs: ['You are not building in-house institutional ownership of the function', 'Works best when the function has clear processes to hand off, not deep tacit knowledge held by one person'],
     },
     optionB: {

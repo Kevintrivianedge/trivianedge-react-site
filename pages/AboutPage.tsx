@@ -6,7 +6,7 @@ import { TALENT_HUBS } from '../constants';
 import { buildWebPageSchema, buildFounderPersonSchema, breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
 
 const STATS = [
-  { icon: Clock, label: 'Team deployed', value: '30 days' },
+  { icon: Clock, label: 'Team deployed', value: 'In as little as 30 days' },
   { icon: Building2, label: 'Cost savings vs. local hiring', value: 'Up to 40%' },
   { icon: Globe2, label: 'Time zones covered', value: '6' },
   { icon: Users, label: 'Founded', value: '2025' },
@@ -20,12 +20,12 @@ const AboutPage: React.FC = () => {
     <>
       <SEOHead
         title="About TrivianEdge | Toronto BPO, RPO & Software Company"
-        description="TrivianEdge is a Toronto-based BPO, RPO, and offshore software development company deploying offshore teams across six global talent hubs in 30 days."
+        description="TrivianEdge is a Toronto-based BPO, RPO, and offshore software development company deploying offshore teams across six global talent hubs in as little as 30 days."
         canonical={aboutUrl}
         structuredData={[
           buildWebPageSchema({
             name: 'About TrivianEdge',
-            description: 'TrivianEdge is a Toronto-based BPO, RPO, and offshore software development company deploying offshore teams across six global talent hubs in 30 days.',
+            description: 'TrivianEdge is a Toronto-based BPO, RPO, and offshore software development company deploying offshore teams across six global talent hubs in as little as 30 days.',
             url: aboutUrl,
           }),
           breadcrumbSchema([
