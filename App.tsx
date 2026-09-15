@@ -92,13 +92,15 @@ const CityLandingPage         = lazy(() => import('./components/CityLandingPage'
 
 // Trust strip — real named clients only, kept separate from the hero's numeric stats
 // so the strip isn't mixing unlike content types (numbers, names, flags) in one place.
+// width/height are each logo's intrinsic pixel size (not display size) so the
+// browser can reserve the right aspect ratio before the image loads and avoid CLS.
 const TRUST_CLIENTS = [
-  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', href: 'https://www.capricorncollegeholbrook.lk/' },
-  { name: 'Cargo Login',       logo: '/logos/cargo-login.webp',       href: 'https://www.cargo-login.com/' },
-  { name: 'Keynotive',         logo: '/logos/keynotive.webp',         href: 'https://www.keynotive.io/' },
-  { name: 'Hub-Flx',           logo: '/logos/hub-flx.webp',           href: 'https://www.hub-flx.com/' },
-  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', href: 'https://keynesiasrilanka.com' },
-  { name: 'MellieBugs',        logo: '/logos/melliebugs.webp',        href: 'https://melliebugs.com' },
+  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', href: 'https://www.capricorncollegeholbrook.lk/', width: 216, height: 160 },
+  { name: 'Cargo Login',       logo: '/logos/cargo-login.webp',       href: 'https://www.cargo-login.com/',            width: 156, height: 160 },
+  { name: 'Keynotive',         logo: '/logos/keynotive.webp',         href: 'https://www.keynotive.io/',               width: 201, height: 160 },
+  { name: 'Hub-Flx',           logo: '/logos/hub-flx.webp',           href: 'https://www.hub-flx.com/',                width: 313, height: 80  },
+  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', href: 'https://keynesiasrilanka.com', width: 172, height: 160 },
+  { name: 'MellieBugs',        logo: '/logos/melliebugs.webp',        href: 'https://melliebugs.com',                  width: 160, height: 160 },
 ];
 
 const PREMIUM_FEATURES = [
@@ -367,6 +369,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                       <img
                         src={client.logo}
                         alt={client.name}
+                        width={client.width}
+                        height={client.height}
                         className="h-7 md:h-8 w-auto object-contain"
                         loading="lazy"
                       />
@@ -787,10 +791,7 @@ function getSEOProps(pathname: string) {
       canonical: baseUrl,
       hreflangs: {
         'en': baseUrl,
-        'fr': `${baseUrl}fr/`,
-        'es': `${baseUrl}es/`,
-        'ar': `${baseUrl}ar/`,
-        'si': `${baseUrl}si/`,
+        'en-CA': baseUrl,
         'x-default': baseUrl,
       },
       structuredData: [

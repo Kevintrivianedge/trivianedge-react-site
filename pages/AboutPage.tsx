@@ -124,7 +124,7 @@ const AboutPage: React.FC = () => {
             <div className="glass p-8 md:p-10 rounded-[2rem] border-border grid md:grid-cols-[auto_1fr] gap-8 items-start">
               <div className="flex md:flex-col items-center md:items-start gap-4 md:w-40">
                 <img
-                  src="/team/velautham-prabaharan.jpg"
+                  src="/team/velautham-prabaharan.webp"
                   alt="Velautham Prabaharan, Director of Marketing & Sales at TrivianEdge"
                   width={128}
                   height={128}
