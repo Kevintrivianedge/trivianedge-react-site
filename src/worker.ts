@@ -1226,6 +1226,9 @@ export default {
       if (url.pathname === '/api/security/health' && request.method === 'GET') {
         return handleSecurityHealth(request, env, corsHeaders);
       }
+      if (url.pathname === '/api/admin/indexnow-submit' && request.method === 'POST') {
+        return handleIndexNowSubmit(request, env, corsHeaders);
+      }
 
       return new Response(JSON.stringify({ error: 'Unknown API route' }), {
         status: 404,
@@ -1834,6 +1837,72 @@ async function handleAdminVentureStats(request: Request, env: Env, corsHeaders: 
     status: 200,
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
+}
+
+// Shared submission endpoint: propagates to all participating engines
+// (Bing, Yandex, Naver, Seznam, Yep) from a single POST.
+const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/indexnow';
+const INDEXNOW_KEY = 'f9a873ff767e711b2229a4735e0354c5';
+const INDEXNOW_KEY_LOCATION = `https://www.trivianedge.com/${INDEXNOW_KEY}.txt`;
+
+// Body may optionally include { urlList: string[] } to submit specific pages;
+// with no body (or an empty list) it resubmits every URL in the live sitemap.
+async function handleIndexNowSubmit(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
+  if (!(await isAdminAuthorized(request, env))) {
+    return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
+      status: 401,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  let urlList: string[] = [];
+  try {
+    const body = (await request.json()) as { urlList?: unknown };
+    if (Array.isArray(body?.urlList)) {
+      urlList = body.urlList.filter((u): u is string => typeof u === 'string');
+    }
+  } catch {
+    // No/invalid JSON body — fall back to the sitemap below.
+  }
+
+  if (urlList.length === 0) {
+    if (!env.ASSETS) {
+      return new Response(JSON.stringify({ success: false, error: 'No urlList given and sitemap unavailable' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    const sitemapResponse = await env.ASSETS.fetch(new Request(new URL('/sitemap.xml', request.url).toString()));
+    const sitemapXml = await sitemapResponse.text();
+    urlList = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+  }
+
+  if (urlList.length === 0) {
+    return new Response(JSON.stringify({ success: false, error: 'No URLs to submit' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const indexNowResponse = await fetch(INDEXNOW_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    body: JSON.stringify({
+      host: 'www.trivianedge.com',
+      key: INDEXNOW_KEY,
+      keyLocation: INDEXNOW_KEY_LOCATION,
+      urlList,
+    }),
+  });
+
+  return new Response(
+    JSON.stringify({
+      success: indexNowResponse.ok,
+      status: indexNowResponse.status,
+      submittedCount: urlList.length,
+    }),
+    { status: indexNowResponse.ok ? 200 : 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+  );
 }
 
 async function handleSecurityHealth(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {

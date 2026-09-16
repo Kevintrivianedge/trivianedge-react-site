@@ -12,7 +12,8 @@
     "test:watch": "vitest",
     "worker:dev": "wrangler dev",
     "generate-og": "node scripts/generate-og-image.mjs",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler deploy",
+    "postdeploy": "node scripts/indexnow-submit.mjs"
   },
   "dependencies": {
     "@amplitude/unified": "^1.0.15",
