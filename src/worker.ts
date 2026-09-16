@@ -1165,6 +1165,17 @@ function addSecurityHeaders(response: Response, pathname: string, statusOverride
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
+
+    // Canonical host is www — collapse bare-apex requests (http or https,
+    // both bound to this same Worker via separate Custom Domains) straight
+    // to https://www in one hop, instead of relying on the zone's "Always
+    // Use HTTPS" edge redirect + a second host redirect after it.
+    if (url.hostname === 'trivianedge.com') {
+      url.hostname = 'www.trivianedge.com';
+      url.protocol = 'https:';
+      return Response.redirect(url.toString(), 301);
+    }
+
     const origin = request.headers.get('Origin');
     const corsHeaders = makeCorsHeaders(origin);
 
