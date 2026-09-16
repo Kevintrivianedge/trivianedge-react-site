@@ -75,8 +75,9 @@ const MLOpsPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="MLOps & AI Infrastructure Services | TrivianEdge"
+        title="MLOps & AI Infrastructure Services Canada | TrivianEdge"
         description="TrivianEdge builds MLOps infrastructure — deployment, drift monitoring, and cost optimization — to keep production AI and ML models reliable."
+        keywords="MLOps services Canada, MLOps outsourcing, AI infrastructure development, model deployment services, ML model monitoring, offshore MLOps team, TrivianEdge MLOps"
         schema={[
           serviceSchema(
             'MLOps & AI Infrastructure',

@@ -72,6 +72,7 @@ const TalentHubPage: React.FC = () => {
       <SEOHead
         title={`Hire in ${hub.country} | Offshore Talent via TrivianEdge`}
         description={`Hire ${hub.specialty.toLowerCase()} talent in ${hub.country} in as little as 30 days. Time zone fit, English proficiency, employment structure, and typical roles — no foreign entity required.`}
+        keywords={`hire talent in ${hub.country}, offshore staffing ${hub.country}, ${hub.specialty.toLowerCase()} ${hub.country}, employer of record ${hub.country}, hire offshore team ${hub.country}, TrivianEdge ${hub.country}`}
         canonical={pageUrl}
         schema={[
           breadcrumbSchema([

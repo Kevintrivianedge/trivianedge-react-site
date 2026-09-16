@@ -75,8 +75,9 @@ const GenerativeAIPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="Generative AI Development Services | TrivianEdge"
+        title="Generative AI Development Services Canada | TrivianEdge"
         description="TrivianEdge builds generative AI products — RAG systems, AI copilots, and content generation tools — with an offshore team deployed in as little as 30 days."
+        keywords="generative AI development Canada, generative AI development agency, RAG development services, AI copilot development, custom generative AI solutions, hire generative AI developers, TrivianEdge generative AI"
         schema={[
           serviceSchema(
             'Generative AI Development',

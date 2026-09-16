@@ -105,6 +105,7 @@ const BPOPage: React.FC = () => {
       <SEOHead
         title="BPO Services Canada | Business Process Outsourcing | TrivianEdge"
         description="Reduce costs by up to 40% with TrivianEdge's BPO services. Expert offshore teams deployed in as little as 30 days across 6 time zones. Free consultation."
+        keywords="BPO services Canada, business process outsourcing Canada, offshore back-office team, outsourced customer support, offshore finance and accounting support, BPO company Toronto, offshore BPO provider, TrivianEdge BPO"
         schema={[
           serviceSchema(
             'BPO Services',

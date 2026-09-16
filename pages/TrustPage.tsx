@@ -13,6 +13,7 @@ const TrustPage: React.FC = () => {
       <SEOHead
         title="Trust | Security and Compliance at TrivianEdge"
         description="Security, data handling, compliance posture, and operational controls for TrivianEdge's lead capture and service delivery model."
+        keywords="TrivianEdge security and compliance, PIPEDA compliance, GDPR compliance outsourcing, data security outsourcing partner, offshore team compliance posture"
         canonical={`${SEO_CONFIG.siteUrl}/trust`}
         schema={[
           breadcrumbSchema([

@@ -123,6 +123,8 @@ export interface ComparisonPageData {
   faqs: { question: string; answer: string }[];
   relatedServiceHref: string;
   relatedServiceName: string;
+  /** Meta keywords tag for this comparison page. */
+  keywords?: string;
 }
 
 export interface IndustryPageData {
@@ -137,6 +139,8 @@ export interface IndustryPageData {
   relatedCaseStudyClient?: string;
   commonRoles: string[];
   faqs: { question: string; answer: string }[];
+  /** Meta keywords tag for this industry page. */
+  keywords?: string;
 }
 
 export interface ServiceCountryCombo {
@@ -150,4 +154,6 @@ export interface ServiceCountryCombo {
   angle: string;
   typicalRoles: string[];
   faqs: { question: string; answer: string }[];
+  /** Meta keywords tag for this service-country page. */
+  keywords?: string;
 }

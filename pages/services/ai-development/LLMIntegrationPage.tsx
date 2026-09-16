@@ -75,8 +75,9 @@ const LLMIntegrationPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="LLM Integration & Fine-Tuning Services | TrivianEdge"
+        title="LLM Integration & Fine-Tuning Services Canada | TrivianEdge"
         description="TrivianEdge integrates and fine-tunes LLMs — OpenAI, Anthropic Claude, and open-source models — into your product with an offshore AI team."
+        keywords="LLM integration services Canada, LLM fine-tuning services, hire LLM integration team, OpenAI integration company, Anthropic Claude integration, open-source LLM development, TrivianEdge LLM integration"
         schema={[
           serviceSchema(
             'LLM Integration & Fine-Tuning',

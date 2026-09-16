@@ -75,8 +75,9 @@ const AIAutomationPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="AI Automation & Agentic Workflow Services | TrivianEdge"
+        title="AI Automation & Agentic Workflow Services Canada | TrivianEdge"
         description="TrivianEdge builds AI automation pipelines — document intelligence, agentic workflows, and system integrations — with an offshore engineering team."
+        keywords="AI automation agency Canada, agentic workflow development, document intelligence automation, AI process automation company, offshore AI automation team, TrivianEdge AI automation"
         schema={[
           serviceSchema(
             'AI Automation Pipelines',

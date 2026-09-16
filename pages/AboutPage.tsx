@@ -21,6 +21,7 @@ const AboutPage: React.FC = () => {
       <SEOHead
         title="About TrivianEdge | Toronto BPO, RPO & Software Company"
         description="TrivianEdge is a Toronto-based BPO, RPO, and offshore software development company deploying offshore teams across six global talent hubs in as little as 30 days."
+        keywords="about TrivianEdge, Toronto outsourcing company, Canadian BPO company, offshore staffing company Canada, global talent hubs, TrivianEdge company overview"
         canonical={aboutUrl}
         structuredData={[
           buildWebPageSchema({

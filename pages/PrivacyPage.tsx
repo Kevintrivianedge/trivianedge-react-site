@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShieldCheck } from 'lucide-react';
 import Logo from '../components/Logo';
+import SEOHead from '../components/SEOHead';
+import { SEO_CONFIG } from '../utils/seo';
 
 const COOKIEYES_PRIVACY_SCRIPT_ID = 'cky-privacy-policy';
 const COOKIEYES_PRIVACY_SCRIPT_SRC = 'https://cdn-cookieyes.com/client_data/e7db7682b4d8ef7aafc06f6320d50a3c/privacy-policy/script.js';
@@ -32,6 +34,12 @@ const PrivacyPage: React.FC = () => {
   }, []);
 
   return (
+    <>
+      <SEOHead
+        title="Privacy Policy | TrivianEdge"
+        description="How TrivianEdge collects, uses, and protects personal data across its lead capture and service delivery model."
+        canonical={`${SEO_CONFIG.siteUrl}/privacy`}
+      />
     <div className="bg-background min-h-screen text-text px-4 md:px-6 py-16 md:py-32">
       <div className="max-w-3xl mx-auto">
         <button
@@ -59,6 +67,7 @@ const PrivacyPage: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

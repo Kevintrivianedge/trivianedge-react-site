@@ -32,6 +32,7 @@ export const COMPARISONS: ComparisonPageData[] = [
     ],
     relatedServiceHref: '/services/bpo',
     relatedServiceName: 'BPO',
+    keywords: 'BPO vs internal team, outsourcing vs in-house team, business process outsourcing comparison, when to outsource vs hire in-house',
   },
   {
     slug: 'rpo-vs-recruitment-agency',
@@ -64,6 +65,7 @@ export const COMPARISONS: ComparisonPageData[] = [
     ],
     relatedServiceHref: '/services/rpo',
     relatedServiceName: 'RPO',
+    keywords: 'RPO vs recruitment agency, recruitment process outsourcing comparison, RPO vs staffing agency, embedded recruiting vs agency hiring',
   },
   {
     slug: 'eor-vs-foreign-entity',
@@ -96,5 +98,98 @@ export const COMPARISONS: ComparisonPageData[] = [
     ],
     relatedServiceHref: '/services/bpo',
     relatedServiceName: 'BPO',
+    keywords: 'EOR vs foreign entity, employer of record vs local entity, EOR vs subsidiary setup, international employment comparison',
+  },
+  {
+    slug: 'ai-development-agency-vs-in-house-team',
+    title: 'AI Development Agency vs. Building an In-House AI Team',
+    subtitle: 'Both can ship AI features. The right call depends on how urgent the timeline is, how specialized the work is, and whether AI is a core, ongoing capability or a defined project.',
+    optionA: {
+      name: 'TrivianEdge AI Development',
+      summary: 'An offshore AI engineering team — generative AI, LLM integration, ML, and MLOps specialists — deployed to your project without a multi-month hiring cycle.',
+      goodFor: [
+        'Shipping a defined AI feature or product without spending months hiring specialized ML/AI talent',
+        'Accessing skills that are scarce or expensive locally — LLM integration, MLOps, applied ML',
+        'Testing whether an AI initiative is worth a permanent in-house investment before committing to one',
+      ],
+      tradeoffs: [
+        'Deep, long-term institutional AI capability still benefits from a core in-house team eventually',
+        'Works best with a defined scope or roadmap, not fully open-ended exploratory research',
+      ],
+    },
+    optionB: {
+      name: 'In-house AI team',
+      summary: 'You hire ML engineers, AI researchers, and MLOps specialists directly — full control and long-term institutional knowledge, but a slow, expensive, and competitive hiring process.',
+      goodFor: [
+        'Companies where AI is the core product and needs permanent, deeply embedded ownership',
+        'Organizations with the budget and pipeline to compete for scarce senior AI talent',
+      ],
+      tradeoffs: [
+        'AI/ML specialists are some of the most competitive and expensive roles to hire for',
+        'Building a team from zero typically takes months before the first feature ships',
+      ],
+    },
+    rows: [
+      { factor: 'Time to first shipped feature', a: 'Team deployed in as little as 30 days', b: 'Often 3-6+ months once sourcing, interviewing, and onboarding senior AI talent is accounted for' },
+      { factor: 'Access to specialized skills', a: 'LLM integration, RAG, MLOps, and applied ML specialists available immediately', b: 'Limited by local talent pool and your ability to compete for scarce, high-demand roles' },
+      { factor: 'Cost structure', a: 'One scoped engagement covering the team and delivery', b: 'Senior AI/ML salaries plus full employer overhead and recruiting cost' },
+      { factor: 'Flexibility', a: 'Scale the team up or down as the roadmap changes', b: 'Headcount changes mean hiring or layoffs' },
+      { factor: 'Best fit', a: 'Defined AI features, products, or a specific technical gap (e.g. LLM integration, MLOps)', b: 'AI as a permanent, core, and continuously evolving product capability' },
+    ],
+    verdict: 'If you need to ship a specific AI capability — a chatbot, a RAG system, a fine-tuned model integration — without spending a quarter hiring for it, an AI development agency gets you there faster and without the hiring risk. If AI is your core, ongoing product differentiator, an in-house team eventually earns its cost. Many TrivianEdge clients start with an offshore AI team to validate the initiative, then decide whether to bring it in-house.',
+    faqs: [
+      { question: 'Can TrivianEdge work alongside our existing engineering team?', answer: 'Yes. Our AI development team commonly integrates with an existing product/engineering team, handling the AI-specific workstream — LLM integration, RAG, ML models, or MLOps — while your team owns the core product.' },
+      { question: 'What if we want to eventually bring AI development in-house?', answer: 'That is a common path. We build with clean handoffs and documentation in mind, so a client can transition ownership to an in-house team once it is proven out and the roadmap justifies the permanent hire.' },
+      { question: 'What AI development work is a good first engagement?', answer: 'A defined, scoped feature — an AI chatbot, a RAG-based knowledge assistant, or an LLM integration into an existing product — is typically the fastest way to prove value before expanding scope.' },
+    ],
+    relatedServiceHref: '/services/ai-development',
+    relatedServiceName: 'AI Development',
+    keywords: 'AI development agency vs in-house team, outsource AI development, hire AI development agency, in-house AI team cost, AI development outsourcing comparison',
+  },
+  {
+    slug: 'bespoke-software-vs-freelance-platforms',
+    title: 'Bespoke Software Development vs. Freelance Platforms',
+    subtitle: 'Both can get code written. They differ sharply in continuity, accountability, and how well the result holds up as your product grows.',
+    optionA: {
+      name: 'TrivianEdge Bespoke Software Development',
+      summary: 'A dedicated offshore engineering team, managed and consistent, building your product with full code ownership on your side from day one.',
+      goodFor: [
+        'Products that need a consistent team across sprints, not a new contractor each time',
+        'Work that requires ongoing maintenance, iteration, and institutional context, not a one-off deliverable',
+        'Teams that want a single accountable partner for delivery, not a marketplace of independent contractors',
+      ],
+      tradeoffs: [
+        'Requires a defined engagement rather than a single small task posted for bids',
+      ],
+    },
+    optionB: {
+      name: 'Freelance platforms',
+      summary: 'You post a task or project and hire independent freelancers per job, typically without continuity between engagements.',
+      goodFor: [
+        'Small, well-defined, one-off tasks with no ongoing maintenance need',
+        'Quick, low-stakes work where switching freelancers between tasks is not a problem',
+      ],
+      tradeoffs: [
+        'Little continuity — a new freelancer often means relearning your codebase from scratch',
+        'Quality and reliability vary significantly and are hard to vet in advance',
+        'No single accountable point of contact if something goes wrong post-delivery',
+      ],
+    },
+    rows: [
+      { factor: 'Continuity', a: 'Same dedicated team across the project lifecycle', b: 'Often a different freelancer per task, with re-onboarding each time' },
+      { factor: 'Accountability', a: 'One partner accountable for delivery, quality, and code ownership', b: 'Individual freelancer accountability, with no larger organization backing the work' },
+      { factor: 'Code ownership', a: 'Full code ownership transfers to you as standard practice', b: 'Varies by platform and contract; often requires explicit negotiation' },
+      { factor: 'Ongoing maintenance fit', a: 'Built for products that need continued iteration post-launch', b: 'Typically better suited to discrete, bounded tasks' },
+      { factor: 'Best fit', a: 'A product or platform you plan to build on over time', b: 'A small, well-scoped, one-off task' },
+    ],
+    verdict: 'For a single small task with no future iteration, a freelance platform can be the faster, cheaper choice. For a product you intend to build on — where continuity, code quality, and a single accountable partner matter as the codebase grows — a dedicated bespoke software team avoids the re-onboarding cost and quality variance of hiring a new freelancer for every task.',
+    faqs: [
+      { question: 'Do we own the code TrivianEdge writes for us?', answer: 'Yes. Full code ownership is standard practice on TrivianEdge bespoke software engagements.' },
+      { question: 'Can TrivianEdge take over a project that was started on a freelance platform?', answer: 'Yes — this is a common engagement. Our team can review, document, and take ownership of an existing codebase before continuing development.' },
+      { question: 'Is bespoke software development more expensive than freelance platforms?', answer: 'Per-hour rates can look similar, but freelance engagements often carry hidden re-onboarding and quality-variance costs across multiple hires. A dedicated team avoids that by staying consistent across the project.' },
+    ],
+    relatedServiceHref: '/services/it-outsourcing',
+    relatedServiceName: 'Bespoke Software Development',
+    keywords: 'bespoke software development vs freelance, custom software development vs freelancers, dedicated development team vs freelance platform, offshore development team vs Upwork',
   },
 ];

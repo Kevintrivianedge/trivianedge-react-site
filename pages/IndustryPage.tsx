@@ -39,6 +39,7 @@ const IndustryPage: React.FC = () => {
       <SEOHead
         title={industry.metaTitle ?? `${industry.name} | TrivianEdge`}
         description={`${industry.tagline} BPO, RPO, AI, and software delivery for ${industry.name.toLowerCase()} companies.`}
+        keywords={industry.keywords}
         canonical={pageUrl}
         schema={[
           breadcrumbSchema([

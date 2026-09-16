@@ -127,6 +127,7 @@ const AIDevelopmentPage: React.FC = () => {
       <SEOHead
         title="AI Development Services Canada | Machine Learning & LLM | TrivianEdge"
         description="Build custom AI solutions with TrivianEdge's offshore AI team. Generative AI, LLM integration, ML models, AI automation, deployed in as little as 30 days."
+        keywords="AI development company Canada, AI development services Canada, offshore AI development team, generative AI development, LLM integration services, machine learning development company, AI automation agency, hire AI developers, TrivianEdge AI development"
         schema={[
           serviceSchema(
             'AI Development Services',

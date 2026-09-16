@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Cookie } from 'lucide-react';
 import Logo from '../components/Logo';
+import SEOHead from '../components/SEOHead';
+import { SEO_CONFIG } from '../utils/seo';
 
 const COOKIEYES_POLICY_SCRIPT_ID = 'cky-cookie-policy';
 const COOKIEYES_POLICY_SCRIPT_SRC = 'https://cdn-cookieyes.com/client_data/e7db7682b4d8ef7aafc06f6320d50a3c/cookie-policy/script.js';
@@ -33,6 +35,12 @@ const CookiePolicyPage: React.FC = () => {
   }, []);
 
   return (
+    <>
+      <SEOHead
+        title="Cookie Policy | TrivianEdge"
+        description="How TrivianEdge uses cookies and similar tracking technologies across trivianedge.com."
+        canonical={`${SEO_CONFIG.siteUrl}/cookie-policy`}
+      />
     <div className="bg-background min-h-screen text-text px-4 md:px-6 py-16 md:py-32">
       <div className="max-w-3xl mx-auto">
         <button
@@ -60,6 +68,7 @@ const CookiePolicyPage: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

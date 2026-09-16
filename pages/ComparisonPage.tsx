@@ -37,6 +37,7 @@ const ComparisonPage: React.FC = () => {
       <SEOHead
         title={`${comparison.title} | TrivianEdge`}
         description={comparison.subtitle}
+        keywords={comparison.keywords}
         canonical={pageUrl}
         schema={[
           breadcrumbSchema([

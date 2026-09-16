@@ -21,6 +21,33 @@ TrivianEdge is headquartered in Toronto, Ontario, Canada and sources talent from
   - [AI Chatbot Development](https://www.trivianedge.com/services/ai-development/ai-chatbot-development): Custom support, sales, and internal assistants grounded in your own knowledge base.
   - [MLOps & AI Infrastructure](https://www.trivianedge.com/services/ai-development/mlops): Deployment, drift monitoring, and cost optimization for production AI/ML.
 
+## Compare
+
+- [BPO vs. Internal Team](https://www.trivianedge.com/compare/bpo-vs-internal-team): When outsourcing a function beats building an in-house operations team.
+- [RPO vs. Recruitment Agency](https://www.trivianedge.com/compare/rpo-vs-recruitment-agency): Embedded, ongoing recruitment outsourcing versus transactional per-search agency hiring.
+- [EOR vs. Foreign Entity](https://www.trivianedge.com/compare/eor-vs-foreign-entity): Employer-of-record partnerships versus registering your own foreign legal entity.
+- [AI Development Agency vs. In-House AI Team](https://www.trivianedge.com/compare/ai-development-agency-vs-in-house-team): Outsourced AI engineering versus hiring a permanent in-house AI/ML team.
+- [Bespoke Software vs. Freelance Platforms](https://www.trivianedge.com/compare/bespoke-software-vs-freelance-platforms): A dedicated offshore development team versus per-task freelance hiring.
+
+## Industries
+
+- [Logistics & Supply Chain](https://www.trivianedge.com/industries/logistics): Cross-timezone operations, dispatch, and documentation coverage.
+- [SaaS & Growth-Stage Companies](https://www.trivianedge.com/industries/saas-growth): Offshore outbound, growth, and engineering teams for scaling SaaS companies.
+- [Healthcare & Medtech](https://www.trivianedge.com/industries/healthcare-medtech): Compliance-aware software delivery and market-entry support for medtech products.
+- [Education](https://www.trivianedge.com/industries/education): Public-facing software, faculty portals, and operational systems for schools.
+- [Fintech & Financial Services](https://www.trivianedge.com/industries/fintech): Back-office finance operations and compliance-aware platform engineering.
+- [E-Commerce & Retail](https://www.trivianedge.com/industries/ecommerce): Scalable offshore support, order processing, and platform engineering for online retail.
+- [Legal Services](https://www.trivianedge.com/industries/legal): Document processing, administrative support, and secure legal-tech software.
+
+## Talent Hubs
+
+- [Philippines](https://www.trivianedge.com/talent/philippines): Operational and service excellence — customer support, back-office, and finance ops talent.
+- [Sri Lanka](https://www.trivianedge.com/talent/sri-lanka): High-end software engineering — full-stack, data, and cloud engineers.
+- [Vietnam](https://www.trivianedge.com/talent/vietnam): Next-gen tech and development — AI/ML engineers and modern backend talent.
+- [Turkey](https://www.trivianedge.com/talent/turkey): Strategic bridge operations and tech, aligned to EU/UK working hours.
+- [South Africa](https://www.trivianedge.com/talent/south-africa): Financial and specialized operations talent, aligned to UK/EU working hours.
+- [Costa Rica](https://www.trivianedge.com/talent/costa-rica): Premium nearshore tech talent, aligned to US Central/Eastern time zones.
+
 ## Company
 
 - [About](https://www.trivianedge.com/about): Company overview, founding year, global talent hubs, and how to reach the team.
@@ -33,6 +60,11 @@ TrivianEdge is headquartered in Toronto, Ontario, Canada and sources talent from
 ## Optional
 
 - [Blog](https://www.trivianedge.com/blog): Insights on BPO, outsourcing, and offshore software development.
+  - [What an Offshore Team Actually Costs in 2026](https://www.trivianedge.com/blog/offshore-team-cost-2026): Real cost breakdown of salary, employer overhead, and management drag.
+  - [BPO vs. RPO: What's the Difference](https://www.trivianedge.com/blog/bpo-vs-rpo-difference): Definitional explainer distinguishing the two service models.
+  - [What LLM Integration Actually Costs in 2026](https://www.trivianedge.com/blog/llm-integration-cost-2026): Cost breakdown of API usage, engineering time, and maintenance for LLM features.
+  - [In-House AI Team vs. Outsourced AI Development](https://www.trivianedge.com/blog/in-house-vs-outsourced-ai-team): How to decide between building AI capability in-house or outsourcing it.
+  - [What Is Agentic AI Automation vs. RPA](https://www.trivianedge.com/blog/what-is-agentic-ai-automation): Definitional explainer distinguishing agentic AI automation from traditional RPA.
 - [Privacy Policy](https://www.trivianedge.com/privacy)
 - [Terms of Engagement](https://www.trivianedge.com/terms)
 - [Cookie Policy](https://www.trivianedge.com/cookie-policy)

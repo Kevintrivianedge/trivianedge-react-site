@@ -82,6 +82,7 @@ const FullCycleRPOPage: React.FC = () => {
       <SEOHead
         title="Full-Cycle RPO Services | Embedded Recruitment Outsourcing | TrivianEdge"
         description="TrivianEdge's full-cycle RPO embeds a complete hiring function into your team — sourcing, screening, interviews, and onboarding, managed end-to-end."
+        keywords="full-cycle RPO services, embedded recruitment outsourcing, ongoing recruitment process outsourcing, full-cycle hiring partner Canada, embedded talent acquisition team, TrivianEdge full-cycle RPO"
         schema={[
           serviceSchema(
             'Full-Cycle RPO',

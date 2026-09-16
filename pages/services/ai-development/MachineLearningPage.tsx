@@ -75,8 +75,9 @@ const MachineLearningPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="Machine Learning & Data Science Services | TrivianEdge"
+        title="Machine Learning & Data Science Services Canada | TrivianEdge"
         description="TrivianEdge builds predictive models, forecasting, and recommendation engines with an offshore machine learning and data science team."
+        keywords="machine learning development company Canada, data science outsourcing, predictive modeling services, offshore machine learning team, recommendation engine development, hire machine learning engineers, TrivianEdge machine learning"
         schema={[
           serviceSchema(
             'Machine Learning & Data Science',

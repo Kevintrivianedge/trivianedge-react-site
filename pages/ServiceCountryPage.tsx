@@ -40,6 +40,7 @@ const ServiceCountryPage: React.FC = () => {
       <SEOHead
         title={combo.metaTitle ?? `${combo.serviceName} in ${hub.country} | TrivianEdge`}
         description={`${combo.serviceName} teams sourced from ${hub.country} — ${hub.specialty.toLowerCase()}, ${hub.timeZoneAlignment}. Deployed in as little as 30 days, no foreign entity required.`}
+        keywords={combo.keywords}
         canonical={pageUrl}
         schema={[
           breadcrumbSchema([

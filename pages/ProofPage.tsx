@@ -15,6 +15,7 @@ const ProofPage: React.FC = () => {
       <SEOHead
         title="Proof | TrivianEdge Case Studies and Client Feedback"
         description="Case studies, testimonials, and proof of delivery from TrivianEdge's global outsourcing and talent operations work."
+        keywords="TrivianEdge case studies, outsourcing client testimonials, BPO case study, RPO case study, offshore software development case study"
         canonical={`${SEO_CONFIG.siteUrl}/proof`}
         schema={[
           breadcrumbSchema([

@@ -75,6 +75,7 @@ const AIPoweredRecruitmentPage: React.FC = () => {
       <SEOHead
         title="AI-Powered Recruitment Services | AI Sourcing & Screening | TrivianEdge"
         description="TrivianEdge combines AI-driven sourcing, matching, and screening with human recruiters to cut time-to-shortlist without handing hiring decisions to a black box."
+        keywords="AI-powered recruitment services, AI recruitment outsourcing, AI candidate sourcing and screening, AI-assisted hiring platform, human-in-the-loop AI recruiting, TrivianEdge AI recruitment"
         schema={[
           serviceSchema(
             'AI-Powered Recruitment',

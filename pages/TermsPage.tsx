@@ -2,11 +2,19 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, FileText } from 'lucide-react';
 import Logo from '../components/Logo';
+import SEOHead from '../components/SEOHead';
+import { SEO_CONFIG } from '../utils/seo';
 
 const TermsPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
+    <>
+      <SEOHead
+        title="Terms of Engagement | TrivianEdge"
+        description="TrivianEdge's global terms of service governing BPO, RPO, and software development engagements."
+        canonical={`${SEO_CONFIG.siteUrl}/terms`}
+      />
     <div className="bg-background min-h-screen text-text px-4 md:px-6 py-16 md:py-32">
       <div className="max-w-3xl mx-auto">
         <button
@@ -98,6 +106,7 @@ const TermsPage: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

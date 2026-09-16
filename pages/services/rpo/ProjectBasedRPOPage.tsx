@@ -80,6 +80,7 @@ const ProjectBasedRPOPage: React.FC = () => {
       <SEOHead
         title="Project-Based RPO | Hiring Bursts & Recruitment Sprints | TrivianEdge"
         description="Need to hire fast for a launch, funding round, or seasonal peak? Project-based RPO delivers time-boxed hiring sprints with no long-term commitment."
+        keywords="project-based RPO, recruitment sprint services, hiring burst outsourcing, short-term recruitment outsourcing, seasonal hiring partner Canada, TrivianEdge project-based RPO"
         schema={[
           serviceSchema(
             'Project-Based RPO',
