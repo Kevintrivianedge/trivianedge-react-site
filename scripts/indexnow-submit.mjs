@@ -2,7 +2,7 @@
 // in the live sitemap after each deploy, so new/changed pages get crawled
 // within minutes instead of waiting on organic re-crawl discovery.
 const HOST = 'www.trivianedge.com';
-const KEY = 'f9a873ff767e711b2229a4735e0354c5';
+const KEY = 'b60b3c2124cf4a91828dc2e07ce295aa';
 const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
 const SITEMAP_URL = `https://${HOST}/sitemap.xml`;
 const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/indexnow';

@@ -1842,7 +1842,7 @@ async function handleAdminVentureStats(request: Request, env: Env, corsHeaders: 
 // Shared submission endpoint: propagates to all participating engines
 // (Bing, Yandex, Naver, Seznam, Yep) from a single POST.
 const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/indexnow';
-const INDEXNOW_KEY = 'f9a873ff767e711b2229a4735e0354c5';
+const INDEXNOW_KEY = 'b60b3c2124cf4a91828dc2e07ce295aa';
 const INDEXNOW_KEY_LOCATION = `https://www.trivianedge.com/${INDEXNOW_KEY}.txt`;
 
 // Body may optionally include { urlList: string[] } to submit specific pages;
