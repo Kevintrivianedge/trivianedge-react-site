@@ -48,6 +48,13 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       : `${title} | ${SEO_CONFIG.siteName}`;
   const canonicalUrl =
     canonical ?? `${SEO_CONFIG.siteUrl}${location.pathname}`;
+  // Site is single-language (en-CA); self-reference so every page carries a
+  // consistent hreflang signal instead of only the homepage having one.
+  const resolvedHreflangs = hreflangs ?? {
+    en: canonicalUrl,
+    'en-CA': canonicalUrl,
+    'x-default': canonicalUrl,
+  };
   const robotsContent = noIndex
     ? 'noindex, nofollow'
     : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
@@ -94,7 +101,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta name="twitter:image" content={ogImage} />
 
       {/* Hreflang Tags for Multi-Language Support */}
-      {hreflangs && Object.entries(hreflangs).map(([lang, url]) => (
+      {Object.entries(resolvedHreflangs).map(([lang, url]) => (
         <link key={`hreflang-${lang}`} rel="alternate" hrefLang={lang} href={url} />
       ))}
 

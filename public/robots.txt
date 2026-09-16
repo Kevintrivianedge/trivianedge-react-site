@@ -87,12 +87,24 @@ Disallow: /payments/
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /payments/
 
 User-agent: Applebot
 Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /payments/
 
 User-agent: Applebot-Extended
 Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /payments/
 
 # Common Crawl — feeds training data for many third-party LLMs
 User-agent: CCBot
