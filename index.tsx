@@ -23,23 +23,16 @@ root.render(
   </React.StrictMode>
 );
 
-// Load + initialize Amplitude after the first paint so its ~700KB bundle
-// (analytics + session-replay/rrweb) never blocks ReactDOM.createRoot. A static
-// top-level import would still force the browser to fetch and evaluate that
-// whole module graph before this file's own code runs — ES module imports
-// resolve before the importing module executes, regardless of when initAll()
-// is actually called — so the import itself has to be dynamic too, not just
-// the init call.
-// The Amplitude project API key is intentionally public — it is a client-side
-// identifier (like a GA measurement ID) and does not grant write or admin access.
-// See: https://amplitude.com/docs/sdks/analytics/browser/browser-sdk-2#initialize-the-sdk
-const initAmplitude = () => {
-  import('@amplitude/unified').then((amplitude) => {
-    amplitude.initAll('a74020325f807eb4bddead7b94dcbf22', {
-      analytics: { autocapture: true },
-      sessionReplay: { sampleRate: 0.1 },
-    });
-  });
+// Amplitude and the Meta Pixel no longer start unconditionally here — they
+// wait on the visitor actually granting consent via the self-hosted banner
+// in src/cookieConsent.ts (which also forwards the choice to Google's
+// Consent Mode API below). A static top-level import would still force the
+// browser to fetch and evaluate the consent-banner's module graph before
+// this file's own code runs — ES module imports resolve before the
+// importing module executes, regardless of when run() is actually called —
+// so the import itself has to be dynamic too, not just the init call.
+const initCookieConsent = () => {
+  import('./src/cookieConsent').then(({ initCookieConsent: run }) => run());
 };
 
 // Google Analytics (gtag.js), deferred the same way and for the same reason as
@@ -79,10 +72,8 @@ const initGoogleAnalytics = () => {
   };
 
   // Consent Mode v2: default to denied for EEA/UK/CH so no measurement or ads
-  // data is sent for those visitors until they've actually consented via a
-  // banner. TODO: no consent banner exists yet, so this list currently gets
-  // zero analytics — that's the correct, compliant state in the meantime,
-  // but it's incomplete without a UI that calls gtag('consent', 'update', ...)
+  // data is sent for those visitors until they've actually consented via the
+  // banner in src/cookieConsent.ts, which calls gtag('consent', 'update', ...)
   // once a visitor makes a choice.
   window.gtag('consent', 'default', {
     ad_storage: 'denied',
@@ -117,11 +108,11 @@ const initServiceWorker = () => {
 };
 
 if (typeof requestIdleCallback !== 'undefined') {
-  requestIdleCallback(initAmplitude, { timeout: 4000 });
+  requestIdleCallback(initCookieConsent, { timeout: 4000 });
   requestIdleCallback(initGoogleAnalytics, { timeout: 4000 });
   requestIdleCallback(initServiceWorker, { timeout: 5000 });
 } else {
-  setTimeout(initAmplitude, 1000);
+  setTimeout(initCookieConsent, 1000);
   setTimeout(initGoogleAnalytics, 1000);
   setTimeout(initServiceWorker, 2000);
 }

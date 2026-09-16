@@ -1,0 +1,41 @@
+/* Brand override for vanilla-cookieconsent (see trivianedge-brand skill).
+   Teal #00C49A is the single accent color; theme tokens mirror the
+   background/surface/border/text vars defined in src/theme.css. */
+:root {
+  --cc-bg: #ffffff;
+  --cc-primary-color: #0f172a;
+  --cc-secondary-color: #334155;
+  --cc-btn-primary-bg: #00c49a;
+  --cc-btn-primary-color: #ffffff;
+  --cc-btn-primary-hover-bg: #00a882;
+  --cc-btn-secondary-bg: rgba(15, 23, 42, 0.06);
+  --cc-btn-secondary-color: #0f172a;
+  --cc-btn-secondary-hover-bg: rgba(15, 23, 42, 0.12);
+  --cc-toggle-on-bg: #00c49a;
+  --cc-toggle-off-bg: rgba(15, 23, 42, 0.2);
+  --cc-toggle-readonly-bg: rgba(0, 196, 154, 0.35);
+  --cc-separator-border-color: rgba(15, 23, 42, 0.08);
+  --cc-cookie-category-block-bg: rgba(15, 23, 42, 0.03);
+  --cc-cookie-category-block-border: rgba(15, 23, 42, 0.08);
+  --cc-overlay-bg: rgba(2, 2, 3, 0.55);
+  --cc-btn-border-radius: 0.75rem;
+  --cc-modal-border-radius: 1.25rem;
+  --cc-font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+}
+
+:root[data-theme='dark'] {
+  --cc-bg: #0a0a0c;
+  --cc-primary-color: #ffffff;
+  --cc-secondary-color: #9ca3af;
+  --cc-btn-secondary-bg: rgba(255, 255, 255, 0.08);
+  --cc-btn-secondary-color: #ffffff;
+  --cc-btn-secondary-hover-bg: rgba(255, 255, 255, 0.16);
+  --cc-toggle-off-bg: rgba(255, 255, 255, 0.2);
+  --cc-separator-border-color: rgba(255, 255, 255, 0.1);
+  --cc-cookie-category-block-bg: rgba(255, 255, 255, 0.05);
+  --cc-cookie-category-block-border: rgba(255, 255, 255, 0.1);
+}
+
+#cc-main a {
+  color: #00c49a;
+}

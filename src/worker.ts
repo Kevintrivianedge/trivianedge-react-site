@@ -1092,19 +1092,20 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 // Explicitly allowlists only the origins the app actually needs:
 //   - Amplitude Analytics + Session Replay CDN
 //   - Google Analytics (gtag.js)
-//   - CookieYes (consent banner; log.cookieyes.com is its consent-audit
-//     logging endpoint, hit via sendBeacon/XHR, confirmed by inspecting the
-//     actual script rather than guessing)
 //   - ipapi.co (geolocation)
 //   - Open-Meteo (weather)
 //   - Anthropic API (proxied through the worker, never called from browser)
+// CookieYes was removed (see src/cookieConsent.ts) in favour of a self-hosted,
+// open-source consent banner (vanilla-cookieconsent) that ships as part of
+// this app's own bundle, so it needs no third-party script-src/connect-src
+// entries at all.
 // Default-src 'self' blocks all unspecified sources, whitelisted below only.
 // upgrade-insecure-requests forces HTTP → HTTPS for compatibility.
 // ---------------------------------------------------------------------------
 const CSP_HEADER =
   "default-src 'self'; " +
-  "script-src 'self' https://cdn.amplitude.com https://www.googletagmanager.com https://cdn-cookieyes.com https://connect.facebook.net https://static.cloudflareinsights.com; " +
-  "connect-src 'self' https://*.amplitude.com https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://log.cookieyes.com https://cdn-cookieyes.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com; " +
+  "script-src 'self' https://cdn.amplitude.com https://www.googletagmanager.com https://connect.facebook.net https://static.cloudflareinsights.com; " +
+  "connect-src 'self' https://*.amplitude.com https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com; " +
   "img-src 'self' data: https:; " +
   "font-src 'self' https://fonts.gstatic.com; " +
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
