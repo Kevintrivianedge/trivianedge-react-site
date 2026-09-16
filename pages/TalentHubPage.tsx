@@ -35,7 +35,7 @@ function buildHubFaqs(hub: TalentHub) {
     },
     {
       question: `How long does it take to deploy a team in ${hub.country}?`,
-      answer: `${hub.country} follows TrivianEdge's standard 30-day deployment model — sourcing, screening, legal setup, payroll, and onboarding included.`,
+      answer: `${hub.country} follows TrivianEdge's standard 30-day deployment model: sourcing, screening, legal setup, payroll, and onboarding included.`,
     },
   ];
 }
@@ -71,7 +71,7 @@ const TalentHubPage: React.FC = () => {
     <>
       <SEOHead
         title={`Hire in ${hub.country} | Offshore Talent via TrivianEdge`}
-        description={`Hire ${hub.specialty.toLowerCase()} talent in ${hub.country} in as little as 30 days. Time zone fit, English proficiency, employment structure, and typical roles — no foreign entity required.`}
+        description={`Hire ${hub.specialty.toLowerCase()} talent in ${hub.country} in as little as 30 days. Time zone fit, English proficiency, employment structure, and typical roles. No foreign entity required.`}
         keywords={`hire talent in ${hub.country}, offshore staffing ${hub.country}, ${hub.specialty.toLowerCase()} ${hub.country}, employer of record ${hub.country}, hire offshore team ${hub.country}, TrivianEdge ${hub.country}`}
         canonical={pageUrl}
         schema={[
@@ -85,7 +85,7 @@ const TalentHubPage: React.FC = () => {
             '@context': 'https://schema.org',
             '@type': 'Service',
             '@id': `${pageUrl}#service`,
-            name: `Offshore talent sourcing — ${hub.country}`,
+            name: `Offshore talent sourcing in ${hub.country}`,
             description: hub.description,
             areaServed: { '@type': 'Country', name: hub.country },
             provider: { '@type': 'Organization', '@id': `${SEO_CONFIG.siteUrl}/#organization`, name: 'TrivianEdge' },
@@ -181,8 +181,8 @@ const TalentHubPage: React.FC = () => {
           <div className="glass p-8 md:p-10 rounded-[2rem] border-border mb-16 reveal">
             <h2 className="text-2xl font-bold mb-4">How hiring in {hub.country} actually works</h2>
             <div className="space-y-3 text-muted leading-relaxed">
-              <p>You never register a local company or open a foreign payroll account. TrivianEdge coordinates employment in {hub.country} through in-country employer-of-record and payroll partners, and manages that relationship end to end — one point of contact for you.</p>
-              <p>Standard deployment runs on TrivianEdge's 30-day model: sourcing, screening, legal setup, payroll, and onboarding. Cost is scoped per role and typically lands well below the equivalent fully loaded cost of a direct North American hire — <Link to="/savings-calculator" className="text-cyan-600 hover:underline font-medium">model it against your own roles on the savings calculator</Link> rather than a flat headline percentage.</p>
+              <p>You never register a local company or open a foreign payroll account. TrivianEdge coordinates employment in {hub.country} through in-country employer-of-record and payroll partners, and manages that relationship end to end: one point of contact for you.</p>
+              <p>Standard deployment runs on TrivianEdge's 30-day model: sourcing, screening, legal setup, payroll, and onboarding. Cost is scoped per role and typically lands well below the equivalent fully loaded cost of a direct North American hire; <Link to="/savings-calculator" className="text-cyan-600 hover:underline font-medium">model it against your own roles on the savings calculator</Link> rather than a flat headline percentage.</p>
             </div>
           </div>
 

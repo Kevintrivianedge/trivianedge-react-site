@@ -24,7 +24,7 @@ const FAQS = [
   {
     question: 'How is RPO different from a staffing agency?',
     answer:
-      'A staffing agency fills individual job orders one at a time, usually from a generic candidate pool. RPO is a strategic partnership where TrivianEdge owns your entire recruitment process end-to-end. We work within your brand, use your ATS if you have one, develop your employer value proposition, and build talent pipelines for roles you will need in 3 to 6 months. The outcome is not just filled positions — it is a better-functioning hiring function.',
+      'A staffing agency fills individual job orders one at a time, usually from a generic candidate pool. RPO is a strategic partnership where TrivianEdge owns your entire recruitment process end-to-end. We work within your brand, use your ATS if you have one, develop your employer value proposition, and build talent pipelines for roles you will need in 3 to 6 months. The outcome is not just filled positions; it is a better-functioning hiring function.',
   },
   {
     question: 'How quickly can TrivianEdge RPO start delivering?',
@@ -49,12 +49,12 @@ const FAQS = [
   {
     question: 'Can TrivianEdge RPO hire in any country?',
     answer:
-      'Yes. We source and place talent across 6 countries — the Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica — and can manage hiring in many more markets. We handle local employment law, contracts, and payroll in each jurisdiction so you do not need a local entity.',
+      'Yes. We source and place talent across 6 countries: the Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica, and can manage hiring in many more markets. We handle local employment law, contracts, and payroll in each jurisdiction so you do not need a local entity.',
   },
   {
     question: "What's the difference between Full-Cycle RPO and Project RPO?",
     answer:
-      'Full-Cycle RPO is an ongoing engagement where TrivianEdge runs your entire recruitment function indefinitely. Project RPO is a defined hiring burst — for example, hiring 20 engineers over 90 days for a product launch. Both models are available and can be combined based on your business needs.',
+      'Full-Cycle RPO is an ongoing engagement where TrivianEdge runs your entire recruitment function indefinitely. Project RPO is a defined hiring burst, for example, hiring 20 engineers over 90 days for a product launch. Both models are available and can be combined based on your business needs.',
   },
   {
     question: 'Do you handle visa and work permit requirements?',
@@ -197,7 +197,7 @@ const RPOPage: React.FC = () => {
               What is Recruitment Process Outsourcing?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              Recruitment Process Outsourcing (RPO) is when an external partner manages some or all of your hiring process — sourcing, screening, interviewing, and onboarding — as an extension of your team. TrivianEdge's RPO service sits inside your hiring process and does the heavy lifting, so you can hire at speed with less friction. Combine our RPO with{' '}
+              Recruitment Process Outsourcing (RPO) is when an external partner manages some or all of your hiring process: sourcing, screening, interviewing, and onboarding, as an extension of your team. TrivianEdge's RPO service sits inside your hiring process and does the heavy lifting, so you can hire at speed with less friction. Combine our RPO with{' '}
               <Link
                 to="/services/bpo"
                 className="text-cyan-400 hover:underline"
@@ -293,8 +293,8 @@ const RPOPage: React.FC = () => {
             </p>
             <div className="space-y-8">
               {[
-                { step: '01', title: 'Role and culture briefing', desc: 'We spend time understanding what each role actually requires, what your team culture looks like, and what good looks like to you. Generic job descriptions produce generic hires — we go deeper.' },
-                { step: '02', title: 'Active sourcing across 6 countries', desc: 'Our team proactively searches LinkedIn, talent networks, and our existing candidate database. We do not wait for applications — we go find the right people.' },
+                { step: '01', title: 'Role and culture briefing', desc: 'We spend time understanding what each role actually requires, what your team culture looks like, and what good looks like to you. Generic job descriptions produce generic hires. We go deeper.' },
+                { step: '02', title: 'Active sourcing across 6 countries', desc: 'Our team proactively searches LinkedIn, talent networks, and our existing candidate database. We do not wait for applications. We go find the right people.' },
                 { step: '03', title: 'Four-stage screening', desc: 'Profile review, skills assessment, competency interview, and communication evaluation. Every shortlisted candidate clears all four stages before you see them.' },
                 { step: '04', title: 'You interview, we manage logistics', desc: 'We coordinate interviews, manage candidate communication, handle offers, and run background checks. You focus on making the decision.' },
                 { step: '05', title: 'Onboarding and handover', desc: 'We handle contracts, payroll setup, and compliance documentation. Once the hire is in place, we transition ongoing HR management so your new team member feels fully set up from day one.' },
@@ -326,7 +326,7 @@ const RPOPage: React.FC = () => {
             { label: 'RPO vs. recruitment agency', desc: 'How embedded RPO actually differs from a transactional agency search.', to: '/compare/rpo-vs-recruitment-agency' },
             { label: 'BPO', desc: 'Need an outsourced team running day to day, not just direct hires? See our BPO services.', to: '/services/bpo' },
             { label: 'AI-powered recruitment', desc: 'How TrivianEdge uses AI sourcing and screening inside the RPO process.', to: '/services/rpo/ai-powered-recruitment' },
-            { label: 'RPO in Sri Lanka', desc: 'Boutique software engineering talent — one of our six sourcing hubs.', to: '/services/rpo/sri-lanka' },
+            { label: 'RPO in Sri Lanka', desc: 'Boutique software engineering talent, one of our six sourcing hubs.', to: '/services/rpo/sri-lanka' },
             { label: 'RPO in the Philippines', desc: 'Direct operational and finance hires from our deepest BPO hub.', to: '/services/rpo/philippines' },
             { label: 'RPO in Vietnam', desc: 'Direct engineering and AI hires from our fastest-growing tech hub.', to: '/services/rpo/vietnam' },
             { label: 'RPO in Costa Rica', desc: 'Nearshore, US-timezone-aligned direct hires for real-time collaboration.', to: '/services/rpo/costa-rica' },

@@ -28,7 +28,7 @@ const FAQS = [
   {
     question: 'How does Aether turn a shipment request into a booking?',
     answer:
-      'Aether\'s Intent Engine parses an unstructured shipment request — email, chat, or voice — into a structured freight order in under 500ms. From there its Route Optimizer balances cost, transit time, and carbon footprint across sea, air, and land corridors before Smart Booking confirms the carrier via an immutable smart contract.',
+      'Aether\'s Intent Engine parses an unstructured shipment request, email, chat, or voice, into a structured freight order in under 500ms. From there its Route Optimizer balances cost, transit time, and carbon footprint across sea, air, and land corridors before Smart Booking confirms the carrier via an immutable smart contract.',
   },
   {
     question: 'What compliance coverage does Aether provide?',
@@ -56,7 +56,7 @@ const GOLDEN_PATH = [
   { step: '01', title: 'Intent Engine', desc: 'Natural language to freight order. AI parses any unstructured shipment request into a precise, structured order in under 500ms.' },
   { step: '02', title: 'Compliance Firewall', desc: 'A 195-country compliance mesh validates sanctions lists, trade embargoes, and customs requirements before a dollar is committed.' },
   { step: '03', title: 'Route Optimizer', desc: 'Balances cost, transit time, and carbon footprint across sea, air, and land corridors in a single optimization pass.' },
-  { step: '04', title: 'Smart Booking', desc: 'Automated selection from 200+ global carriers with immutable smart-contract confirmation — no disputed invoices.' },
+  { step: '04', title: 'Smart Booking', desc: 'Automated selection from 200+ global carriers with immutable smart-contract confirmation: no disputed invoices.' },
   { step: '05', title: 'Gated-Sync', desc: 'Direct API integration with port Terminal Operating Systems for automated gate-in/gate-out and verified gross mass confirmation.' },
   { step: '06', title: 'Deep-Ocean Telemetry', desc: 'LEO satellite and IoT cold-chain monitoring deliver sub-minute position, temperature, humidity, and shock data.' },
   { step: '07', title: 'Customs Clearance', desc: 'Automated HS-code classification with direct customs authority API integration. Duties settled before the vessel docks.' },
@@ -65,7 +65,7 @@ const GOLDEN_PATH = [
 
 const CAPABILITIES = [
   { icon: Route, title: 'Golden Path Algorithm', desc: 'Proprietary multi-objective optimization finds the best route across cost, time, and carbon in a single run.' },
-  { icon: ShieldCheck, title: 'Universal Compliance Mesh', desc: '195-country regulatory database, updated continuously — sanctions, embargoes, and trade restrictions checked automatically.' },
+  { icon: ShieldCheck, title: 'Universal Compliance Mesh', desc: '195-country regulatory database, updated continuously: sanctions, embargoes, and trade restrictions checked automatically.' },
   { icon: Satellite, title: 'Live Telemetry Grid', desc: 'LEO satellite and IoT sensor mesh deliver second-by-second cargo visibility across every ocean and trade lane.' },
   { icon: FileCheck2, title: 'Smart-Contract Booking', desc: 'Immutable, auditable carrier agreements. Reconciliation is fully automated and disputes are architecturally impossible.' },
 ];
@@ -77,7 +77,7 @@ const AetherLogisticsPage: React.FC = () => {
     <>
       <SEOHead
         title="Aether Logistics OS | AI-Native Freight Operating System by TrivianEdge"
-        description="Aether Logistics OS by TrivianEdge automates end-to-end freight orchestration across 195 countries — compliance, routing, carrier booking, terminal sync, customs clearance, and final delivery from one AI control tower."
+        description="Aether Logistics OS by TrivianEdge automates end-to-end freight orchestration across 195 countries: compliance, routing, carrier booking, terminal sync, customs clearance, and final delivery from one AI control tower."
         keywords="Aether Logistics OS, TrivianEdge logistics, AI freight operating system, freight orchestration software, AI supply chain software, automated customs clearance, smart contract freight booking"
         schema={[
           {
@@ -87,7 +87,7 @@ const AetherLogisticsPage: React.FC = () => {
             applicationCategory: 'BusinessApplication',
             operatingSystem: 'Web',
             description:
-              'Aether Logistics OS automates end-to-end freight orchestration across 195 countries — compliance, routing, carrier booking, terminal sync, customs clearance and final delivery, all from one AI-powered control tower.',
+              'Aether Logistics OS automates end-to-end freight orchestration across 195 countries: compliance, routing, carrier booking, terminal sync, customs clearance and final delivery, all from one AI-powered control tower.',
             url: AETHER_URL,
             creator: {
               '@type': 'Organization',
@@ -138,7 +138,7 @@ const AetherLogisticsPage: React.FC = () => {
               <span className="text-holo">AI-native freight operating system</span>
             </h1>
             <p className="text-muted text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-              Global trade still runs on fax machines and spreadsheets. Aether collapses the $14 trillion freight industry into a single automated 8-step Golden Path — compliance, routing, booking, telemetry, customs, and delivery, run by one AI control tower. Built by TrivianEdge.
+              Global trade still runs on fax machines and spreadsheets. Aether collapses the $14 trillion freight industry into a single automated 8-step Golden Path: compliance, routing, booking, telemetry, customs, and delivery, run by one AI control tower. Built by TrivianEdge.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">
@@ -219,7 +219,7 @@ const AetherLogisticsPage: React.FC = () => {
           <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-6">Pricing</h2>
             <p className="text-muted text-lg leading-relaxed mb-6">
-              Aether Logistics OS publishes live pricing inside the product, synced directly from its billing system rather than a static marketing page — so what you see at signup is always current.
+              Aether Logistics OS publishes live pricing inside the product, synced directly from its billing system rather than a static marketing page, so what you see at signup is always current.
             </p>
             <a href={AETHER_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-cyan-400 font-semibold hover:underline">
               See current plans on Aether Logistics OS <ExternalLink className="w-4 h-4" />
@@ -231,11 +231,11 @@ const AetherLogisticsPage: React.FC = () => {
           <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-6">How Aether relates to TrivianEdge</h2>
             <p className="text-muted text-lg leading-relaxed">
-              Aether Logistics OS is built and operated by TrivianEdge — the same team behind{' '}
+              Aether Logistics OS is built and operated by TrivianEdge, the same team behind{' '}
               <Link to="/services/bpo" className="text-cyan-400 hover:underline">BPO</Link>,{' '}
               <Link to="/services/it-outsourcing" className="text-cyan-400 hover:underline">IT outsourcing</Link>,{' '}
               <Link to="/services/ai-development" className="text-cyan-400 hover:underline">AI development services</Link>, and{' '}
-              <Link to="/ai-ventures/aria" className="text-cyan-400 hover:underline">Aria OS</Link>. Where TrivianEdge staffs and manages offshore teams, Aether is the AI control tower for global freight operations — a standalone production application at{' '}
+              <Link to="/ai-ventures/aria" className="text-cyan-400 hover:underline">Aria OS</Link>. Where TrivianEdge staffs and manages offshore teams, Aether is the AI control tower for global freight operations, a standalone production application at{' '}
               <a href={AETHER_URL} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">trivianedgeglobal.com</a>.
             </p>
           </div>
@@ -264,7 +264,7 @@ const AetherLogisticsPage: React.FC = () => {
               <PackageCheck className="w-6 h-6" />
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">The future of freight is already running</h2>
-            <p className="text-muted mb-8">Explore every module — from Intent Engine to Final Mile Delivery.</p>
+            <p className="text-muted mb-8">Explore every module, from Intent Engine to Final Mile Delivery.</p>
             <a
               href={AETHER_URL}
               target="_blank"

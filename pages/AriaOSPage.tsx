@@ -53,9 +53,9 @@ const FAQS = [
 
 const CAPABILITIES = [
   { icon: Users2, title: 'Hiring & onboarding', desc: 'Aria screens candidates, drafts job descriptions, and prepares new-hire onboarding from a single conversation.' },
-  { icon: Wallet, title: 'Payroll, run correctly', desc: 'Statutory payroll for Sri Lanka, Canada, and the United States — EPF/ETF/PAYE, CPP/EI, FICA and withholding, all prepared for your approval.' },
+  { icon: Wallet, title: 'Payroll, run correctly', desc: 'Statutory payroll for Sri Lanka, Canada, and the United States: EPF/ETF/PAYE, CPP/EI, FICA and withholding, all prepared for your approval.' },
   { icon: ClipboardCheck, title: 'Leave & compliance', desc: 'Leave requests, approvals, and compliance tracking live in the same record as payroll, so the numbers always agree.' },
-  { icon: ShieldCheck, title: 'Human approval, always', desc: 'Aria prepares the work. Consequential actions — payroll release, access changes — require a human to approve, and every action is logged for audit.' },
+  { icon: ShieldCheck, title: 'Human approval, always', desc: 'Aria prepares the work. Consequential actions (payroll release, access changes) require a human to approve, and every action is logged for audit.' },
 ];
 
 const AriaOSPage: React.FC = () => {
@@ -75,7 +75,7 @@ const AriaOSPage: React.FC = () => {
             applicationCategory: 'BusinessApplication',
             operatingSystem: 'Web',
             description:
-              'The autonomous workforce operating system by TrivianEdge — hiring, payroll, compliance and performance, run by a single AI core.',
+              'The autonomous workforce operating system by TrivianEdge: hiring, payroll, compliance and performance, run by a single AI core.',
             url: ARIA_URL,
             creator: {
               '@type': 'Organization',
@@ -120,7 +120,7 @@ const AriaOSPage: React.FC = () => {
               <span className="text-holo">autonomous workforce operating system</span>
             </h1>
             <p className="text-muted text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-              Hiring, payroll, leave, compliance, and performance — run by one AI core, Aria, instead of a stack of disconnected HR tools. Built by TrivianEdge, live today for teams in Sri Lanka, Canada, and the United States.
+              Hiring, payroll, leave, compliance, and performance, run by one AI core, Aria, instead of a stack of disconnected HR tools. Built by TrivianEdge, live today for teams in Sri Lanka, Canada, and the United States.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">
@@ -184,7 +184,7 @@ const AriaOSPage: React.FC = () => {
           <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-6">Pricing</h2>
             <p className="text-muted text-lg leading-relaxed mb-6">
-              Aria OS is free forever for the first 10 employees, full product included. Beyond 10 employees, pricing is per active employee per month: <strong className="text-text">USD $2.50</strong> in Sri Lanka, <strong className="text-text">CAD $5.99</strong> in Canada, and <strong className="text-text">USD $5.99</strong> in the United States. Annual billing runs roughly 17% cheaper than monthly. Enterprise plans — SAML SSO, SCIM, a signed DPA, and data residency — are quoted on request.
+              Aria OS is free forever for the first 10 employees, full product included. Beyond 10 employees, pricing is per active employee per month: <strong className="text-text">USD $2.50</strong> in Sri Lanka, <strong className="text-text">CAD $5.99</strong> in Canada, and <strong className="text-text">USD $5.99</strong> in the United States. Annual billing runs roughly 17% cheaper than monthly. Enterprise plans (SAML SSO, SCIM, a signed DPA, and data residency) are quoted on request.
             </p>
             <a href={`${ARIA_URL}/pricing`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-cyan-400 font-semibold hover:underline">
               See full pricing on Aria OS <ExternalLink className="w-4 h-4" />
@@ -196,10 +196,10 @@ const AriaOSPage: React.FC = () => {
           <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-6">How Aria OS relates to TrivianEdge</h2>
             <p className="text-muted text-lg leading-relaxed">
-              Aria OS is built and operated by TrivianEdge — the same team behind{' '}
+              Aria OS is built and operated by TrivianEdge, the same team behind{' '}
               <Link to="/services/bpo" className="text-cyan-400 hover:underline">BPO</Link>,{' '}
               <Link to="/services/rpo" className="text-cyan-400 hover:underline">recruitment process outsourcing</Link>, and{' '}
-              <Link to="/services/ai-development" className="text-cyan-400 hover:underline">AI development services</Link>. Where TrivianEdge staffs and manages your offshore team, Aria OS is the software that runs the HR, payroll, and compliance work behind any workforce — TrivianEdge-sourced or not. It ships as a standalone production application at{' '}
+              <Link to="/services/ai-development" className="text-cyan-400 hover:underline">AI development services</Link>. Where TrivianEdge staffs and manages your offshore team, Aria OS is the software that runs the HR, payroll, and compliance work behind any workforce, TrivianEdge-sourced or not. It ships as a standalone production application at{' '}
               <a href={ARIA_URL} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">trivian-aria.com</a>.
             </p>
           </div>

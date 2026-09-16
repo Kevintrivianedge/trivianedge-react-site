@@ -23,8 +23,8 @@ export const INDUSTRIES: IndustryPageData[] = [
     relatedCaseStudyClient: 'Cargo Login',
     commonRoles: ['Documentation & compliance specialists', 'Dispatch coordinators', 'Trucking operations leads', 'Customer support for shipment tracking', 'Data entry & EDI processing'],
     faqs: [
-      { question: 'Can TrivianEdge cover overnight logistics operations?', answer: 'Yes — this is one of our most common logistics engagements. We build blended coverage models, typically pairing an offshore specialist for overnight continuity with a home-market operator for handoffs, so work keeps moving instead of queuing up until the next shift.' },
-      { question: 'Do you have experience with logistics-specific workflows?', answer: 'Yes. Our Cargo Login engagement involved documentation continuity and trucking-side workflow ownership across a cross-timezone team — see the full case study for what that looked like in practice.' },
+      { question: 'Can TrivianEdge cover overnight logistics operations?', answer: 'Yes: this is one of our most common logistics engagements. We build blended coverage models, typically pairing an offshore specialist for overnight continuity with a home-market operator for handoffs, so work keeps moving instead of queuing up until the next shift.' },
+      { question: 'Do you have experience with logistics-specific workflows?', answer: 'Yes. Our Cargo Login engagement involved documentation continuity and trucking-side workflow ownership across a cross-timezone team: see the full case study for what that looked like in practice.' },
       { question: 'Can you build custom logistics software, not just staff a team?', answer: 'Yes. Our IT outsourcing and bespoke software team builds dispatch, tracking, and integration tooling alongside the operations team, so the process and the software supporting it are built by people who understand both.' },
     ],
   },
@@ -43,23 +43,23 @@ export const INDUSTRIES: IndustryPageData[] = [
     ],
     howWeHelp: [
       { service: 'BPO', description: 'Parallel offshore teams running cold outbound, email marketing, and sign-up generation as one coordinated operating model.', href: '/services/bpo' },
-      { service: 'RPO', description: 'Scale your core team — engineers, ops, and revenue roles — as you move past the outsourced-motion stage.', href: '/services/rpo' },
+      { service: 'RPO', description: 'Scale your core team (engineers, ops, and revenue roles) as you move past the outsourced-motion stage.', href: '/services/rpo' },
       { service: 'AI Development', description: 'AI-assisted outbound tooling, lead scoring, and internal automations built by an offshore engineering team.', href: '/services/ai-development' },
     ],
     keywords: 'SaaS outsourcing, offshore SDR team, outbound sales outsourcing, growth-stage company outsourcing, SaaS offshore engineering team, outsourced growth team',
     relatedCaseStudyClient: 'Keynotive',
     commonRoles: ['SDRs / outbound callers', 'Email marketing specialists', 'Sign-up / lead generation specialists', 'Growth engineers', 'Customer success & onboarding'],
     faqs: [
-      { question: 'Can TrivianEdge run multiple outbound motions at once?', answer: 'Yes — our Keynotive engagement ran two offshore teams in parallel across cold calling, email marketing, and sign-up generation under one operating model, rather than as separate, disconnected hires.' },
+      { question: 'Can TrivianEdge run multiple outbound motions at once?', answer: 'Yes: our Keynotive engagement ran two offshore teams in parallel across cold calling, email marketing, and sign-up generation under one operating model, rather than as separate, disconnected hires.' },
       { question: 'Do we need to build a management layer for an offshore growth team?', answer: 'No. TrivianEdge manages HR, performance, and day-to-day operations for the team; you keep control of strategy, messaging, and targets.' },
-      { question: 'How fast can an outbound team be live?', answer: 'TrivianEdge\'s standard deployment window is around 30 days — sourcing, screening, legal setup, payroll, and onboarding included.' },
+      { question: 'How fast can an outbound team be live?', answer: 'TrivianEdge\'s standard deployment window is around 30 days: sourcing, screening, legal setup, payroll, and onboarding included.' },
     ],
   },
   {
     slug: 'healthcare-medtech',
     name: 'Healthcare & Medtech',
     metaTitle: 'Healthcare & Medtech Software Outsourcing | TrivianEdge',
-    tagline: 'Software and market-entry support for medtech products — built carefully, not casually.',
+    tagline: 'Software and market-entry support for medtech products: built carefully, not casually.',
     metaDescription: 'Compliance-aware bespoke software and market-entry support for healthcare and medtech products. BPO, RPO, and AI development built around real regulatory stakes.',
     description: 'Healthcare and medtech products carry real compliance stakes, and we treat that seriously: we do not claim formal healthcare certifications we do not hold, and we work with your legal and compliance team to confirm what a specific engagement requires. What we bring is engineering and market-entry execution for medtech, health-adjacent, and regulated-adjacent software products.',
     challenges: [
@@ -70,7 +70,7 @@ export const INDUSTRIES: IndustryPageData[] = [
     ],
     howWeHelp: [
       { service: 'IT Outsourcing', description: 'Bespoke software delivery for medtech and health-adjacent products, with data handling documented and auditable.', href: '/services/it-outsourcing' },
-      { service: 'AI Development', description: 'AI features built with data minimization, access controls, and audit logging — see our Trust page for what that means in practice.', href: '/services/ai-development' },
+      { service: 'AI Development', description: 'AI features built with data minimization, access controls, and audit logging: see our Trust page for what that means in practice.', href: '/services/ai-development' },
       { service: 'BPO', description: 'Operational and market-entry support so your team can focus on the regulated core of the product.', href: '/services/bpo' },
     ],
     keywords: 'healthcare software outsourcing, medtech software development, compliance-aware software team, offshore healthcare IT, HIPAA-aligned software development, medtech market entry support',
@@ -78,8 +78,8 @@ export const INDUSTRIES: IndustryPageData[] = [
     commonRoles: ['Full-stack engineers', 'Data engineers', 'QA & compliance-aware testers', 'Market-entry / regional expansion support', 'Data migration specialists'],
     faqs: [
       { question: 'Does TrivianEdge hold healthcare compliance certifications?', answer: 'We do not claim certifications we do not hold. We design systems to support GDPR, PIPEDA, and HIPAA-aligned requirements where applicable, through controls like data minimization, access restrictions, and audit logging, and we work with your legal and compliance team to confirm what your specific engagement requires.' },
-      { question: 'Have you supported medtech companies before?', answer: 'Yes — our Hub-Flx engagement supported regional expansion planning and delivery for medtech, ERP, and data-migration products entering the UAE and GCC market.' },
-      { question: 'Can you handle patient or health data?', answer: 'Any engagement involving sensitive health data starts with a scoping conversation about your specific regulatory obligations — we\'d rather define that upfront than make a blanket claim that doesn\'t hold up to your compliance team\'s review.' },
+      { question: 'Have you supported medtech companies before?', answer: 'Yes: our Hub-Flx engagement supported regional expansion planning and delivery for medtech, ERP, and data-migration products entering the UAE and GCC market.' },
+      { question: 'Can you handle patient or health data?', answer: 'Any engagement involving sensitive health data starts with a scoping conversation about your specific regulatory obligations: we\'d rather define that upfront than make a blanket claim that doesn\'t hold up to your compliance team\'s review.' },
     ],
   },
   {
@@ -87,8 +87,8 @@ export const INDUSTRIES: IndustryPageData[] = [
     name: 'Education',
     metaTitle: 'Education Software & Outsourcing Solutions | TrivianEdge',
     tagline: 'Modern public-facing systems and real operational verification, not spreadsheets.',
-    metaDescription: 'Bespoke software and operational support for schools and education institutions — public site rebuilds, faculty portals, and attendance verification systems.',
-    description: 'Schools and education providers are often running on public websites and administrative processes that haven\'t kept pace with what\'s actually possible — manual attendance tracking, outdated public sites, and no real-time visibility into day-to-day operations. TrivianEdge builds the software layer that fixes that.',
+    metaDescription: 'Bespoke software and operational support for schools and education institutions: public site rebuilds, faculty portals, and attendance verification systems.',
+    description: 'Schools and education providers are often running on public websites and administrative processes that haven\'t kept pace with what\'s actually possible: manual attendance tracking, outdated public sites, and no real-time visibility into day-to-day operations. TrivianEdge builds the software layer that fixes that.',
     challenges: [
       'Public-facing websites are outdated and don\'t reflect the institution well',
       'Attendance and staff verification are tracked manually, with no real-time record',
@@ -103,8 +103,8 @@ export const INDUSTRIES: IndustryPageData[] = [
     relatedCaseStudyClient: 'Capricorn College',
     commonRoles: ['Full-stack engineers', 'UI/UX designers', 'QA engineers', 'Systems administrators', 'Administrative operations support'],
     faqs: [
-      { question: 'Have you built systems for schools before?', answer: 'Yes — our Capricorn College engagement delivered a complete public site rebuild, a secure faculty portal, and a GPS-based attendance verification system, replacing a manual, honor-system process with a live, verifiable record.' },
-      { question: 'Can you build a custom attendance or verification system?', answer: 'Yes. This is exactly the kind of purpose-built system TrivianEdge\'s bespoke software team delivers — scoped to how your institution actually operates, not a generic off-the-shelf tool.' },
+      { question: 'Have you built systems for schools before?', answer: 'Yes: our Capricorn College engagement delivered a complete public site rebuild, a secure faculty portal, and a GPS-based attendance verification system, replacing a manual, honor-system process with a live, verifiable record.' },
+      { question: 'Can you build a custom attendance or verification system?', answer: 'Yes. This is exactly the kind of purpose-built system TrivianEdge\'s bespoke software team delivers: scoped to how your institution actually operates, not a generic off-the-shelf tool.' },
       { question: 'Do you handle ongoing maintenance after launch?', answer: 'Yes. We can maintain and improve what we build post-launch, and pair it with ongoing administrative support through our BPO services if needed.' },
     ],
   },
@@ -116,7 +116,7 @@ export const INDUSTRIES: IndustryPageData[] = [
     metaDescription: 'Offshore finance operations and bespoke platform engineering for fintech and financial services companies. BPO, RPO, and IT outsourcing built around audit-ready precision.',
     description: 'Fintech products run on trust: accurate reconciliation, secure data handling, and software that behaves the same way every time. TrivianEdge builds and staffs the operational and engineering layers around fintech products, from back-office finance operations to the custom software that runs on top of them, without ever claiming compliance certifications we do not hold.',
     challenges: [
-      'Back-office finance operations — reconciliation, reporting, transaction support — need precision at volume',
+      'Back-office finance operations (reconciliation, reporting, transaction support) need precision at volume',
       'Engineering teams need to move carefully around security and audit requirements, not just fast',
       'Scaling operational headcount during growth or funding events without a multi-month hiring cycle',
       'Building and maintaining custom platforms (ledgers, dashboards, client portals) alongside day-to-day operations',
@@ -155,7 +155,7 @@ export const INDUSTRIES: IndustryPageData[] = [
     commonRoles: ['Customer support specialists', 'Order processing & fulfillment support', 'Catalog & inventory management staff', 'Full-stack engineers for e-commerce platforms', 'QA engineers'],
     keywords: 'e-commerce outsourcing, retail BPO, offshore customer support e-commerce, e-commerce software development, seasonal support staffing, offshore order processing team',
     faqs: [
-      { question: 'Can TrivianEdge scale support up and down with seasonal demand?', answer: 'Yes. This flexibility is one of the core advantages of an offshore BPO model over a fixed in-house team — headcount can flex around sales events and seasonal peaks without renegotiating employment contracts each time.' },
+      { question: 'Can TrivianEdge scale support up and down with seasonal demand?', answer: 'Yes. This flexibility is one of the core advantages of an offshore BPO model over a fixed in-house team: headcount can flex around sales events and seasonal peaks without renegotiating employment contracts each time.' },
       { question: 'Do you build custom e-commerce platform features, not just staff support?', answer: 'Yes. Our bespoke software team builds and maintains storefront, checkout, and inventory integrations alongside the support operations, so both are built by people who understand the platform.' },
       { question: 'Can you build an AI chatbot for customer support or product recommendations?', answer: 'Yes. Our AI development team builds chatbots and recommendation systems grounded in your own catalog and order data, working alongside your existing support and engineering functions.' },
     ],
@@ -166,7 +166,7 @@ export const INDUSTRIES: IndustryPageData[] = [
     metaTitle: 'Legal Services Outsourcing & Software | TrivianEdge',
     tagline: 'Document-heavy operational support and secure software for firms that cannot afford errors.',
     metaDescription: 'Offshore document processing, administrative support, and secure legal-tech software for law firms and legal services businesses.',
-    description: 'Legal work generates a high volume of document-heavy, detail-sensitive administrative and support work alongside the practice of law itself. TrivianEdge staffs the operational layer around legal practices — document processing, administrative support, and client intake — and builds the secure, purpose-built software that supports it, without ever performing or advising on the practice of law itself.',
+    description: 'Legal work generates a high volume of document-heavy, detail-sensitive administrative and support work alongside the practice of law itself. TrivianEdge staffs the operational layer around legal practices (document processing, administrative support, and client intake) and builds the secure, purpose-built software that supports it, without ever performing or advising on the practice of law itself.',
     challenges: [
       'Document review, processing, and administrative support consume time that should go to billable legal work',
       'Client intake and case management need consistent, detail-accurate handling at volume',
@@ -181,7 +181,7 @@ export const INDUSTRIES: IndustryPageData[] = [
     commonRoles: ['Document processing specialists', 'Administrative & intake coordinators', 'Case management support staff', 'Full-stack engineers for legal-tech platforms', 'QA & security-aware testers'],
     keywords: 'legal process outsourcing, law firm BPO, offshore legal support staff, legal document processing outsourcing, legal-tech software development, law firm IT outsourcing',
     faqs: [
-      { question: 'Does TrivianEdge provide legal advice or practice law?', answer: 'No. TrivianEdge staffs administrative, document-processing, and technical support functions around a legal practice — we do not perform or advise on the practice of law itself, and any engagement stays within that boundary.' },
+      { question: 'Does TrivianEdge provide legal advice or practice law?', answer: 'No. TrivianEdge staffs administrative, document-processing, and technical support functions around a legal practice: we do not perform or advise on the practice of law itself, and any engagement stays within that boundary.' },
       { question: 'Can you handle sensitive client or case documents?', answer: 'Any engagement involving sensitive legal documents starts with a scoping conversation about your specific security and confidentiality requirements, and we design access controls and data handling around what your firm and its obligations require.' },
       { question: 'Can you build custom case management or client portal software?', answer: 'Yes. Our bespoke software team builds secure, purpose-built platforms scoped to how your firm actually operates, rather than a generic off-the-shelf case management tool.' },
     ],

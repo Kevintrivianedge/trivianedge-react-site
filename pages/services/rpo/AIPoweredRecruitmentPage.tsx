@@ -19,7 +19,7 @@ const FAQS = [
   {
     question: 'What does "AI-powered recruitment" mean at TrivianEdge?',
     answer:
-      'We use AI tools to speed up the parts of recruiting that are repetitive and time-consuming — sourcing candidates across large talent pools, matching resumes against role requirements, and running initial skills screening. Every candidate who reaches your team has been reviewed and approved by a human recruiter first. AI narrows the pool faster; it does not make hiring decisions.',
+      'We use AI tools to speed up the parts of recruiting that are repetitive and time-consuming: sourcing candidates across large talent pools, matching resumes against role requirements, and running initial skills screening. Every candidate who reaches your team has been reviewed and approved by a human recruiter first. AI narrows the pool faster; it does not make hiring decisions.',
   },
   {
     question: 'Where exactly is AI used in the hiring process?',
@@ -39,17 +39,17 @@ const FAQS = [
   {
     question: 'Is AI-powered recruitment more expensive than standard RPO?',
     answer:
-      'No — it\'s included as part of how TrivianEdge delivers both Full-Cycle and Project-Based RPO, not a separate paid add-on. It\'s a tool our recruiters use, not a different service tier.',
+      'No: it\'s included as part of how TrivianEdge delivers both Full-Cycle and Project-Based RPO, not a separate paid add-on. It\'s a tool our recruiters use, not a different service tier.',
   },
   {
     question: 'What roles benefit most from AI-assisted sourcing?',
     answer:
-      'High-volume and technical roles benefit the most, since AI matching is strongest when there\'s a large, well-defined candidate pool to search — software engineers, data roles, customer support, and operations positions are common examples. For highly specialized executive searches, our recruiters lean more heavily on direct outreach and referral networks.',
+      'High-volume and technical roles benefit the most, since AI matching is strongest when there\'s a large, well-defined candidate pool to search: software engineers, data roles, customer support, and operations positions are common examples. For highly specialized executive searches, our recruiters lean more heavily on direct outreach and referral networks.',
   },
   {
     question: 'How do you handle candidate data and privacy with AI tools?',
     answer:
-      'Candidate data is only used for matching and screening against the roles you\'ve engaged us to fill, and is handled under the same compliance posture — PIPEDA and GDPR-aligned — that covers the rest of our operations. See our Trust page for details on our data-handling practices.',
+      'Candidate data is only used for matching and screening against the roles you\'ve engaged us to fill, and is handled under the same compliance posture (PIPEDA and GDPR-aligned) that covers the rest of our operations. See our Trust page for details on our data-handling practices.',
   },
 ];
 
@@ -126,7 +126,7 @@ const AIPoweredRecruitmentPage: React.FC = () => {
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
               AI narrows the candidate pool faster than manual search alone. Our recruiters still
-              make every judgment call — nobody is filtered out or hired by an algorithm.
+              make every judgment call: nobody is filtered out or hired by an algorithm.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">
@@ -156,7 +156,7 @@ const AIPoweredRecruitmentPage: React.FC = () => {
             </h2>
             <p className="text-muted text-lg leading-relaxed mb-4">
               Sourcing and initial screening are the most time-consuming, repetitive parts of
-              recruiting — and the parts AI is genuinely good at. TrivianEdge uses AI tools to
+              recruiting: and the parts AI is genuinely good at. TrivianEdge uses AI tools to
               search our talent network, rank candidates against your specific role requirements,
               and run structured skills assessments at a speed manual search can't match.
             </p>
@@ -229,7 +229,7 @@ const AIPoweredRecruitmentPage: React.FC = () => {
               {[
                 { title: 'Fairness and accuracy', desc: 'Fully automated candidate rejection carries real bias and accuracy risks. Every filtered-out candidate has still been reviewed by a recruiter, not just a model.' },
                 { title: 'Context AI can\'t see', desc: 'Culture fit, communication style, and career trajectory require judgment. AI surfaces the right candidates faster; people evaluate whether they\'re actually the right fit.' },
-                { title: 'Accountability', desc: 'When a hire doesn\'t work out, there\'s a recruiter who made the call and can explain why — not an opaque scoring system.' },
+                { title: 'Accountability', desc: 'When a hire doesn\'t work out, there\'s a recruiter who made the call and can explain why: not an opaque scoring system.' },
               ].map((item, idx) => (
                 <div key={item.title} style={{ transitionDelay: `${idx * 60}ms` }} className="glass rounded-2xl border-border p-6 reveal">
                   <h3 className="font-bold text-text mb-2">{item.title}</h3>

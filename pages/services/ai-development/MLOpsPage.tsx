@@ -20,20 +20,20 @@ const FAQS = [
   {
     question: 'What is MLOps, exactly?',
     answer:
-      'MLOps is the infrastructure and process work that keeps a machine learning or AI model reliable in production — deployment pipelines, monitoring, drift detection, versioning, and retraining. A model that works well in a notebook is not the same as a model that stays accurate and fast under real production load for months. MLOps is the difference between the two.',
+      'MLOps is the infrastructure and process work that keeps a machine learning or AI model reliable in production: deployment pipelines, monitoring, drift detection, versioning, and retraining. A model that works well in a notebook is not the same as a model that stays accurate and fast under real production load for months. MLOps is the difference between the two.',
   },
   {
-    question: 'We already have a model — can you take over deploying and maintaining it?',
+    question: 'We already have a model: can you take over deploying and maintaining it?',
     answer:
-      "Yes, this is one of our most common engagements. We audit the existing model and pipeline, identify what's fragile or manual, and build proper deployment, monitoring, and retraining infrastructure around it — without requiring you to rebuild the model itself from scratch.",
+      "Yes, this is one of our most common engagements. We audit the existing model and pipeline, identify what's fragile or manual, and build proper deployment, monitoring, and retraining infrastructure around it: without requiring you to rebuild the model itself from scratch.",
   },
   {
     question: 'What is model drift, and how do you monitor for it?',
     answer:
-      "Drift is when real-world data gradually diverges from what a model was trained on, causing accuracy to degrade silently — the model keeps producing confident answers, just wrong ones. We set up monitoring that tracks input distribution and prediction confidence over time, alerting before accuracy visibly drops rather than after a business problem surfaces.",
+      "Drift is when real-world data gradually diverges from what a model was trained on, causing accuracy to degrade silently: the model keeps producing confident answers, just wrong ones. We set up monitoring that tracks input distribution and prediction confidence over time, alerting before accuracy visibly drops rather than after a business problem surfaces.",
   },
   {
-    question: 'Our AI costs are growing faster than usage — can you fix that?',
+    question: 'Our AI costs are growing faster than usage: can you fix that?',
     answer:
       'Usually, yes. Common levers are right-sizing model choice to task complexity, caching repeated inference calls, batching requests, and optimizing how context is passed to the model. We audit current spend against actual usage patterns and identify where the biggest, lowest-risk savings are before touching anything in production.',
   },
@@ -45,7 +45,7 @@ const FAQS = [
   {
     question: 'What happens if a new model version performs worse after deployment?',
     answer:
-      'Every deployment we build includes versioning and rollback — if a new model or prompt version underperforms against the previous one on your evaluation metrics, we roll back immediately rather than leaving a regression live while it gets diagnosed.',
+      'Every deployment we build includes versioning and rollback: if a new model or prompt version underperforms against the previous one on your evaluation metrics, we roll back immediately rather than leaving a regression live while it gets diagnosed.',
   },
   {
     question: 'How much does ongoing MLOps support cost?',
@@ -76,7 +76,7 @@ const MLOpsPage: React.FC = () => {
     <>
       <SEOHead
         title="MLOps & AI Infrastructure Services Canada | TrivianEdge"
-        description="TrivianEdge builds MLOps infrastructure — deployment, drift monitoring, and cost optimization — to keep production AI and ML models reliable."
+        description="TrivianEdge builds MLOps infrastructure (deployment, drift monitoring, and cost optimization) to keep production AI and ML models reliable."
         keywords="MLOps services Canada, MLOps outsourcing, AI infrastructure development, model deployment services, ML model monitoring, offshore MLOps team, TrivianEdge MLOps"
         schema={[
           serviceSchema(
@@ -128,7 +128,7 @@ const MLOpsPage: React.FC = () => {
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
               Deployment pipelines, drift detection, and cost optimization for models already
-              in production — or ones stuck in a notebook, waiting to get there.
+              in production: or ones stuck in a notebook, waiting to get there.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">
@@ -158,7 +158,7 @@ const MLOpsPage: React.FC = () => {
             </h2>
             <p className="text-muted text-lg leading-relaxed mb-4">
               MLOps is the infrastructure and process work that keeps an AI or ML model reliable
-              once real users and real data hit it — deployment pipelines, drift monitoring,
+              once real users and real data hit it: deployment pipelines, drift monitoring,
               versioning with rollback, and cost control as usage scales. It's the difference
               between a model that worked well in testing and one that stays accurate months
               later.
@@ -225,10 +225,10 @@ const MLOpsPage: React.FC = () => {
             </h2>
             <div className="space-y-4">
               {[
-                { title: 'You have a model stuck in a notebook', desc: 'It works in testing but no one has built the pipeline to get it into production reliably — this is the most common starting point.' },
+                { title: 'You have a model stuck in a notebook', desc: 'It works in testing but no one has built the pipeline to get it into production reliably: this is the most common starting point.' },
                 { title: 'Your AI costs are spiraling relative to usage', desc: 'If the model bill keeps climbing faster than your user base, there is usually real optimization headroom left unexamined.' },
                 { title: 'You\'ve been burned by silent accuracy decay', desc: 'A model that quietly gets worse over months without anyone noticing until a business problem surfaces needs drift monitoring, not another rebuild.' },
-                { title: 'You need reliability, not just a working prototype', desc: 'Teams shipping AI to real customers need versioning, rollback, and monitoring — the same production discipline as any other critical system.' },
+                { title: 'You need reliability, not just a working prototype', desc: 'Teams shipping AI to real customers need versioning, rollback, and monitoring: the same production discipline as any other critical system.' },
               ].map((item, idx) => (
                 <div key={item.title} style={{ transitionDelay: `${idx * 60}ms` }} className="glass rounded-2xl border-border p-6 reveal">
                   <h3 className="font-bold text-text mb-2">{item.title}</h3>

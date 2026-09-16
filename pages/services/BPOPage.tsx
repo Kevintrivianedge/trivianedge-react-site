@@ -22,7 +22,7 @@ const FAQS = [
   {
     question: 'What is BPO and how does it work?',
     answer:
-      'Business Process Outsourcing (BPO) means hiring an outside company to run specific parts of your business operations — like customer support, data entry, back-office admin, or finance processing. Instead of building and managing those teams yourself, TrivianEdge recruits, hires, onboards, and manages them for you. You get the output without the overhead.',
+      'Business Process Outsourcing (BPO) means hiring an outside company to run specific parts of your business operations, like customer support, data entry, back-office admin, or finance processing. Instead of building and managing those teams yourself, TrivianEdge recruits, hires, onboards, and manages them for you. You get the output without the overhead.',
   },
   {
     question: 'How much does BPO cost in Canada?',
@@ -32,7 +32,7 @@ const FAQS = [
   {
     question: 'How quickly can TrivianEdge deploy a BPO team?',
     answer:
-      'We deploy fully operational offshore BPO teams in as little as 30 days. After an initial discovery call, we identify the right talent, run screening, handle contracts and payroll setup, and integrate the team into your workflow — typically within a 30-day window.',
+      'We deploy fully operational offshore BPO teams in as little as 30 days. After an initial discovery call, we identify the right talent, run screening, handle contracts and payroll setup, and integrate the team into your workflow, typically within a 30-day window.',
   },
   {
     question: 'What types of work does TrivianEdge BPO cover?',
@@ -47,7 +47,7 @@ const FAQS = [
   {
     question: 'How is TrivianEdge BPO different from a traditional call center?',
     answer:
-      'A call center is a specific type of BPO focused on inbound and outbound phone support. TrivianEdge BPO covers a much broader range — back-office admin, finance, data, IT support, and operations. We also go beyond just placing staff: we manage compliance, payroll, performance, and daily operations so you never deal with the admin side.',
+      'A call center is a specific type of BPO focused on inbound and outbound phone support. TrivianEdge BPO covers a much broader range: back-office admin, finance, data, IT support, and operations. We also go beyond just placing staff: we manage compliance, payroll, performance, and daily operations so you never deal with the admin side.',
   },
   {
     question: 'Do I need to set up a foreign entity to use TrivianEdge BPO?',
@@ -57,7 +57,7 @@ const FAQS = [
   {
     question: 'Can I manage the BPO team directly?',
     answer:
-      'Yes. Your offshore BPO team is fully embedded into your workflow. They use your tools, follow your processes, and report to your managers. TrivianEdge handles all the HR, compliance, and payroll administration in the background — you run the day-to-day work.',
+      'Yes. Your offshore BPO team is fully embedded into your workflow. They use your tools, follow your processes, and report to your managers. TrivianEdge handles all the HR, compliance, and payroll administration in the background. You run the day-to-day work.',
   },
   {
     question: 'What industries benefit most from BPO services?',
@@ -181,7 +181,7 @@ const BPOPage: React.FC = () => {
               What is Business Process Outsourcing?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              Business Process Outsourcing (BPO) is the practice of hiring an external partner to run specific business operations — like customer support, back-office admin, or finance processing — on your behalf. TrivianEdge builds offshore BPO teams that plug into your business in as little as 30 days, handling the work cleanly so your team can focus on what matters most. Whether you need back-office support or full-cycle{' '}
+              Business Process Outsourcing (BPO) is the practice of hiring an external partner to run specific business operations, like customer support, back-office admin, or finance processing, on your behalf. TrivianEdge builds offshore BPO teams that plug into your business in as little as 30 days, handling the work cleanly so your team can focus on what matters most. Whether you need back-office support or full-cycle{' '}
               <Link
                 to="/services/rpo"
                 className="text-cyan-400 hover:underline"
@@ -292,7 +292,7 @@ const BPOPage: React.FC = () => {
             <div className="space-y-4">
               {[
                 { title: 'We handle employer-of-record setup for you', desc: 'No foreign entity setup needed. We coordinate in-country employer-of-record and payroll partners on your behalf, which means you hire globally without any of the legal complexity.' },
-                { title: 'Payroll and compliance are our problem, not yours', desc: 'Taxes, statutory deductions, local employment law, data privacy compliance — all handled correctly in every jurisdiction, every month.' },
+                { title: 'Payroll and compliance are our problem, not yours', desc: 'Taxes, statutory deductions, local employment law, data privacy compliance, all handled correctly in every jurisdiction, every month.' },
                 { title: 'You control the work, we control the operations', desc: 'Your BPO team follows your processes and reports to your managers. TrivianEdge manages HR, performance, and admin in the background.' },
                 { title: 'We scale with you', desc: 'Start with one person, grow to 50. There is no long-term contract forcing you to maintain a fixed headcount. Scale up or down as your business requires.' },
               ].map((item, idx) => (
@@ -322,7 +322,7 @@ const BPOPage: React.FC = () => {
           links={[
             { label: 'BPO vs. internal team', desc: 'A straight comparison of outsourcing this function versus building it in-house.', to: '/compare/bpo-vs-internal-team' },
             { label: 'RPO', desc: 'Need to hire direct employees instead of an outsourced team? See our recruitment process outsourcing.', to: '/services/rpo' },
-            { label: 'BPO in the Philippines', desc: 'Our largest operational and BPO talent hub — roles, timezone fit, and how deployment works.', to: '/services/bpo/philippines' },
+            { label: 'BPO in the Philippines', desc: 'Our largest operational and BPO talent hub: roles, timezone fit, and how deployment works.', to: '/services/bpo/philippines' },
             { label: 'BPO in Turkey', desc: 'EU/UK-aligned BPO operations from our Turkey talent hub.', to: '/services/bpo/turkey' },
             { label: 'BPO in South Africa', desc: 'Financial and specialized operations BPO from our South Africa talent hub.', to: '/services/bpo/south-africa' },
             { label: 'Logistics & supply chain', desc: 'How TrivianEdge BPO teams support 24/7 logistics operations.', to: '/industries/logistics' },

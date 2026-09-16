@@ -23,7 +23,7 @@ const FAQS = [
   {
     question: 'How much does AI development cost with TrivianEdge?',
     answer:
-      'TrivianEdge offshore AI development typically saves up to 40% compared to onshore North American or UK teams. A senior AI engineer in Canada or the US costs $150,000–$200,000 per year. Through our offshore model, you access the same skill level at significantly lower cost. We scope each project individually — contact us for an estimate based on your specific requirements.',
+      'TrivianEdge offshore AI development typically saves up to 40% compared to onshore North American or UK teams. A senior AI engineer in Canada or the US costs $150,000-$200,000 per year. Through our offshore model, you access the same skill level at significantly lower cost. We scope each project individually. Contact us for an estimate based on your specific requirements.',
   },
   {
     question: 'How quickly can an AI development project start?',
@@ -33,7 +33,7 @@ const FAQS = [
   {
     question: 'Can TrivianEdge integrate OpenAI and Anthropic APIs into my existing software?',
     answer:
-      'Yes. Our engineers work across the current OpenAI and Anthropic APIs, HuggingFace-hosted and open-weight models, and orchestration frameworks like LangChain and LlamaIndex — and we stay current as new model generations ship. We can add AI capabilities to your existing product — whether that is a web app, mobile app, internal tool, or enterprise system — without rebuilding what already works.',
+      'Yes. Our engineers work across the current OpenAI and Anthropic APIs, HuggingFace-hosted and open-weight models, and orchestration frameworks like LangChain and LlamaIndex, and we stay current as new model generations ship. We can add AI capabilities to your existing product (whether that is a web app, mobile app, internal tool, or enterprise system) without rebuilding what already works.',
   },
   {
     question: 'Do you build custom LLMs or fine-tune existing models?',
@@ -43,7 +43,7 @@ const FAQS = [
   {
     question: 'What is the difference between AI development and traditional software development?',
     answer:
-      'Traditional software follows exact rules you program in advance. AI software learns from data and makes predictions, decisions, or generates content in ways you cannot fully script. AI development requires expertise in model training, data pipelines, vector databases, prompt engineering, and inference optimization — skills that go beyond standard software engineering.',
+      'Traditional software follows exact rules you program in advance. AI software learns from data and makes predictions, decisions, or generates content in ways you cannot fully script. AI development requires expertise in model training, data pipelines, vector databases, prompt engineering, and inference optimization: skills that go beyond standard software engineering.',
   },
   {
     question: 'Can you add AI to software I have already built?',
@@ -63,17 +63,17 @@ const FAQS = [
   {
     question: 'How do you handle data privacy when building AI?',
     answer:
-      'We follow a security-first development approach from day one. Your data never flows to third-party training pipelines without your explicit consent. We design systems to support GDPR, PIPEDA, and HIPAA-aligned requirements where applicable — through controls like data minimization, access restrictions, and audit logging — and work with your legal and compliance team to confirm what your specific engagement requires. All data handling is documented and auditable.',
+      'We follow a security-first development approach from day one. Your data never flows to third-party training pipelines without your explicit consent. We design systems to support GDPR, PIPEDA, and HIPAA-aligned requirements where applicable (through controls like data minimization, access restrictions, and audit logging), and work with your legal and compliance team to confirm what your specific engagement requires. All data handling is documented and auditable.',
   },
   {
     question: 'Can TrivianEdge maintain and improve the AI after launch?',
     answer:
-      'Yes. AI systems need ongoing monitoring, retraining, and improvement as your data grows and your requirements change. We offer ongoing support and MLOps services to keep your AI performing well after the initial launch — including performance monitoring, model drift detection, and feature updates.',
+      'Yes. AI systems need ongoing monitoring, retraining, and improvement as your data grows and your requirements change. We offer ongoing support and MLOps services to keep your AI performing well after the initial launch, including performance monitoring, model drift detection, and feature updates.',
   },
   {
     question: 'Do I need to provide training data for my AI project?',
     answer:
-      'It depends on the type of AI. For fine-tuned models, some existing data is helpful but not always required — we can help you structure and label data as part of the engagement. For applications built on top of existing LLMs like GPT-4 or Claude, minimal custom data is needed. We assess your data situation during the initial scoping call and recommend the right approach.',
+      'It depends on the type of AI. For fine-tuned models, some existing data is helpful but not always required. We can help you structure and label data as part of the engagement. For applications built on top of existing LLMs like GPT-4 or Claude, minimal custom data is needed. We assess your data situation during the initial scoping call and recommend the right approach.',
   },
 ];
 
@@ -197,7 +197,7 @@ const AIDevelopmentPage: React.FC = () => {
               What is AI Development Outsourcing?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              AI development outsourcing means partnering with an external team to design, build, and deploy AI products — generative AI features, LLM integrations, or custom machine learning models — instead of hiring an in-house AI team from scratch. TrivianEdge assembles a dedicated offshore AI engineering team in as little as 30 days, giving you senior AI talent at up to 40% lower cost than local hiring. Pair AI development with our{' '}
+              AI development outsourcing means partnering with an external team to design, build, and deploy AI products: generative AI features, LLM integrations, or custom machine learning models, instead of hiring an in-house AI team from scratch. TrivianEdge assembles a dedicated offshore AI engineering team in as little as 30 days, giving you senior AI talent at up to 40% lower cost than local hiring. Pair AI development with our{' '}
               <Link
                 to="/services/it-outsourcing"
                 className="text-cyan-400 hover:underline"
@@ -269,8 +269,8 @@ const AIDevelopmentPage: React.FC = () => {
 
         <RelatedLinks
           links={[
-            { label: 'Software & IT outsourcing', desc: 'Bespoke software development beyond AI features — full product builds.', to: '/services/it-outsourcing' },
-            { label: 'AI development in Vietnam', desc: 'Our fastest-growing AI/ML engineering hub — roles, timezone fit, and typical work.', to: '/services/ai-development/vietnam' },
+            { label: 'Software & IT outsourcing', desc: 'Bespoke software development beyond AI features: full product builds.', to: '/services/it-outsourcing' },
+            { label: 'AI development in Vietnam', desc: 'Our fastest-growing AI/ML engineering hub: roles, timezone fit, and typical work.', to: '/services/ai-development/vietnam' },
             { label: 'AI development in Sri Lanka', desc: 'Applied ML and LLM integration work from our software engineering hub.', to: '/services/ai-development/sri-lanka' },
             { label: 'AI development in Costa Rica', desc: 'Nearshore AI development with real-time North American overlap.', to: '/services/ai-development/costa-rica' },
             { label: 'Healthcare & medtech', desc: 'How we approach AI and data handling for regulated-adjacent products.', to: '/industries/healthcare-medtech' },

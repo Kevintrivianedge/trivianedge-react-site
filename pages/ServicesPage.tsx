@@ -30,7 +30,7 @@ const SERVICES_HUB = [
     iconBg: 'from-cyan-400/20 to-cyan-400/5',
     iconBorder: 'border-cyan-400/25',
     glow: 'bg-cyan-400/8',
-    description: 'We run your entire hiring process as an embedded part of your team — sourcing, screening, interviewing, and onboarding at scale.',
+    description: 'We run your entire hiring process as an embedded part of your team: sourcing, screening, interviewing, and onboarding at scale.',
     tags: ['Full-Cycle Hiring', 'AI-Powered Screening', 'Executive Search', 'Volume Recruitment'],
   },
   {
@@ -66,7 +66,7 @@ const ServicesPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="Services | TrivianEdge — BPO, RPO & Bespoke Software Development"
+        title="Services | TrivianEdge: BPO, RPO & Bespoke Software Development"
         description="Explore TrivianEdge's full service offering: BPO, RPO, bespoke software, and AI development. Offshore teams deployed in as little as 30 days across 6 countries."
         keywords="TrivianEdge services, BPO RPO software development, outsourcing services Canada, offshore team services, AI development services, bespoke software development services"
         canonical="https://www.trivianedge.com/services"

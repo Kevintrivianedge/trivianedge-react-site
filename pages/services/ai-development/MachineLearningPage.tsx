@@ -20,7 +20,7 @@ const FAQS = [
   {
     question: 'What is machine learning development, and how is it different from generative AI?',
     answer:
-      'Machine learning covers models that predict, classify, or score from structured or historical data — churn prediction, fraud detection, demand forecasting, recommendation engines. Generative AI creates new content like text or images. Many products need both: an ML model predicting risk, and a generative layer explaining the result in plain language. We scope which one your problem actually needs.',
+      'Machine learning covers models that predict, classify, or score from structured or historical data (churn prediction, fraud detection, demand forecasting, recommendation engines). Generative AI creates new content like text or images. Many products need both: an ML model predicting risk, and a generative layer explaining the result in plain language. We scope which one your problem actually needs.',
   },
   {
     question: 'What kinds of problems can a machine learning model solve for my business?',
@@ -30,17 +30,17 @@ const FAQS = [
   {
     question: 'What data do I need to get started?',
     answer:
-      "Enough historical examples of the outcome you're trying to predict — the more consistent and complete, the better the model. We run a data audit early in the engagement to assess what you have, identify gaps, and recommend what to collect if the current data isn't sufficient yet. Not having a mature data warehouse doesn't disqualify you; it changes where we start.",
+      "Enough historical examples of the outcome you're trying to predict: the more consistent and complete, the better the model. We run a data audit early in the engagement to assess what you have, identify gaps, and recommend what to collect if the current data isn't sufficient yet. Not having a mature data warehouse doesn't disqualify you; it changes where we start.",
   },
   {
     question: 'How accurate will the model be?',
     answer:
-      "It depends entirely on the problem and the data — we won't promise a number before seeing your data. What we do commit to is a clear evaluation methodology (train/test/validation splits, the right metric for your problem, not just accuracy), and being transparent about model performance and its limitations before it goes into production.",
+      "It depends entirely on the problem and the data: we won't promise a number before seeing your data. What we do commit to is a clear evaluation methodology (train/test/validation splits, the right metric for your problem, not just accuracy), and being transparent about model performance and its limitations before it goes into production.",
   },
   {
     question: 'Do you build the data pipeline too, or just the model?',
     answer:
-      'Both, when needed. Most ML projects fail on the data engineering side, not the modeling side — getting clean, reliable, up-to-date features into the model is usually the harder problem. We handle pipeline design, feature engineering, and the model itself as one engagement, not two separate handoffs.',
+      'Both, when needed. Most ML projects fail on the data engineering side, not the modeling side: getting clean, reliable, up-to-date features into the model is usually the harder problem. We handle pipeline design, feature engineering, and the model itself as one engagement, not two separate handoffs.',
   },
   {
     question: 'What happens after the model is deployed?',
@@ -127,7 +127,7 @@ const MachineLearningPage: React.FC = () => {
               <span className="text-cyan-400">Predictions Your Business Can Act On</span>
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
-              Churn prediction, forecasting, fraud detection, and recommendation engines —
+              Churn prediction, forecasting, fraud detection, and recommendation engines,
               built on your data, from pipeline to production, by an offshore team in as little as 30 days.
             </p>
 
@@ -158,7 +158,7 @@ const MachineLearningPage: React.FC = () => {
             </h2>
             <p className="text-muted text-lg leading-relaxed mb-4">
               Machine learning models predict, classify, and score from your structured and
-              historical data — will this customer churn, is this transaction fraudulent, what
+              historical data: will this customer churn, is this transaction fraudulent, what
               will demand look like next quarter. Most ML projects fail on the data engineering
               side, not the modeling side, so we treat the pipeline and the model as one
               engagement rather than a separate handoff.
@@ -226,7 +226,7 @@ const MachineLearningPage: React.FC = () => {
             </h2>
             <div className="space-y-4">
               {[
-                { title: 'You have a repeatable decision backed by historical data', desc: 'Churn, fraud, pricing, demand — if you\'ve made this call by gut feel or spreadsheet, there\'s usually a model that can do it more consistently.' },
+                { title: 'You have a repeatable decision backed by historical data', desc: 'Churn, fraud, pricing, demand: if you\'ve made this call by gut feel or spreadsheet, there\'s usually a model that can do it more consistently.' },
                 { title: 'You want a data science function without hiring one', desc: 'A full in-house data science team is expensive to build and hard to hire well. We give you the same capability without the headcount.' },
                 { title: 'You need a recommendation or ranking engine', desc: 'Product, content, or e-commerce teams that need to surface the right item to the right user, not just a static list.' },
                 { title: 'Your data lives in more than one place', desc: 'If usable features are scattered across systems, we design the pipeline that consolidates them before modeling even starts.' },

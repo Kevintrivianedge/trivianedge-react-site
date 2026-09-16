@@ -242,7 +242,7 @@ const ITOutsourcingPage: React.FC = () => {
         <RelatedLinks
           links={[
             { label: 'AI development', desc: 'Add AI features, RAG, or agentic workflows to the product we build for you.', to: '/services/ai-development' },
-            { label: 'IT outsourcing in Costa Rica', desc: 'Nearshore, US-timezone-aligned engineering — roles and typical work.', to: '/services/it-outsourcing/costa-rica' },
+            { label: 'IT outsourcing in Costa Rica', desc: 'Nearshore, US-timezone-aligned engineering: roles and typical work.', to: '/services/it-outsourcing/costa-rica' },
             { label: 'IT outsourcing in Sri Lanka', desc: 'Our core software engineering hub for custom application development.', to: '/services/it-outsourcing/sri-lanka' },
             { label: 'IT outsourcing in Vietnam', desc: 'Fast-moving custom development from our fastest-growing tech hub.', to: '/services/it-outsourcing/vietnam' },
             { label: 'IT outsourcing in Turkey', desc: 'EU/UK-aligned custom software delivery from our Turkey hub.', to: '/services/it-outsourcing/turkey' },

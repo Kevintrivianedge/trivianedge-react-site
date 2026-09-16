@@ -68,7 +68,7 @@ const SavingsCalculatorPage: React.FC = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      // Clipboard permission denied or unavailable — no-op, button stays as-is.
+      // Clipboard permission denied or unavailable, no-op, button stays as-is.
     }
   };
 
@@ -77,7 +77,7 @@ const SavingsCalculatorPage: React.FC = () => {
       try {
         await navigator.share({ title: 'TrivianEdge Savings Calculator', text: shareText, url: PAGE_URL });
       } catch {
-        // User cancelled the native share sheet — no-op.
+        // User cancelled the native share sheet, no-op.
       }
     } else {
       handleCopy();
@@ -101,7 +101,7 @@ const SavingsCalculatorPage: React.FC = () => {
           email: leadForm.email,
           need: 'Savings calculator estimate',
           timeline: '2-4 weeks',
-          message: `Savings calculator result — role: ${roleType}, hires: ${hireCount}, current annual cost per hire: ${formatCurrency(costPerHire)}. Estimated offshore cost: ${formatCurrency(offshoreCost)}/yr. Estimated savings: ${formatCurrency(annualSavings)}/yr (${formatCurrency(threeYearSavings)} over 3 years).`,
+          message: `Savings calculator result, role: ${roleType}, hires: ${hireCount}, current annual cost per hire: ${formatCurrency(costPerHire)}. Estimated offshore cost: ${formatCurrency(offshoreCost)}/yr. Estimated savings: ${formatCurrency(annualSavings)}/yr (${formatCurrency(threeYearSavings)} over 3 years).`,
         }),
       });
 
@@ -169,7 +169,7 @@ const SavingsCalculatorPage: React.FC = () => {
               What Could You <span className="text-cyan-400">Save?</span>
             </h1>
             <p className="text-muted text-lg leading-relaxed max-w-2xl mx-auto">
-              Enter your role, headcount, and current cost. We'll estimate what an offshore team through TrivianEdge could save you a year — based on our clients' average 40% savings.
+              Enter your role, headcount, and current cost. We'll estimate what an offshore team through TrivianEdge could save you a year, based on our clients' average 40% savings.
             </p>
           </div>
         </motion.section>
@@ -265,7 +265,7 @@ const SavingsCalculatorPage: React.FC = () => {
               </div>
 
               <p className="text-white/60 text-xs mt-8 max-w-md mx-auto">
-                Estimate based on TrivianEdge's average client savings of 40%. Actual savings vary by role, region, and scope — talk to us for a precise quote.
+                Estimate based on TrivianEdge's average client savings of 40%. Actual savings vary by role, region, and scope. Talk to us for a precise quote.
               </p>
             </div>
 

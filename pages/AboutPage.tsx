@@ -140,7 +140,7 @@ const AboutPage: React.FC = () => {
               <div className="text-muted leading-relaxed space-y-4">
                 <p>Velautham Prabaharan leads Marketing &amp; Sales at TrivianEdge, where he's responsible for driving business growth, building strategic partnerships, and strengthening our market presence.</p>
                 <p>He brings a results-driven track record in business development, client relationship management, and revenue growth, built over years in the financial services sector across Dubai and Sri Lanka. That background gives him sharp instincts for sales strategy, customer acquisition, and market expansion.</p>
-                <p>What stands out most is his commitment to delivering real value to clients — paired with the leadership and communication skills to back it up. It's a combination that fits right into TrivianEdge's mission: helping organizations worldwide access innovative technology, outsourcing, and business solutions.</p>
+                <p>What stands out most is his commitment to delivering real value to clients, paired with the leadership and communication skills to back it up. It's a combination that fits right into TrivianEdge's mission: helping organizations worldwide access innovative technology, outsourcing, and business solutions.</p>
               </div>
             </div>
           </div>
@@ -148,7 +148,7 @@ const AboutPage: React.FC = () => {
           <div className="mb-16 reveal">
             <h2 className="display-section text-3xl md:text-4xl font-bold mb-4">Where our talent comes from</h2>
             <p className="text-muted text-lg leading-relaxed mb-8 max-w-3xl">
-              We source and manage talent across six global hubs, each chosen for a specific strength — engineering depth, operational scale, or time zone coverage.
+              We source and manage talent across six global hubs, each chosen for a specific strength: engineering depth, operational scale, or time zone coverage.
             </p>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
               {TALENT_HUBS.map((hub) => (

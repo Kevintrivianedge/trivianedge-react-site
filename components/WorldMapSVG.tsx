@@ -21,7 +21,7 @@ const HUB_COORDS: Record<string, [number, number]> = {
 };
 
 // TrivianEdge Inc. is headquartered in Toronto, Ontario (a federally
-// incorporated Canadian corporation — see the Trust page). Every connection
+// incorporated Canadian corporation, see the Trust page). Every connection
 // line on this map originates from that real point, not a decorative center.
 const HOME_COORDS: [number, number] = [-79.38, 43.65];
 
@@ -32,7 +32,7 @@ const buildArcPath = (from: [number, number], to: [number, number]): string => {
   const midY = (y1 + y2) / 2;
   const dist = Math.hypot(x2 - x1, y2 - y1);
   // Bulge the arc "up" (toward lower y) so it reads as a flight path, not a
-  // straight line — scaled by distance so short/long hops both look natural.
+  // straight line, scaled by distance so short/long hops both look natural.
   const controlX = midX;
   const controlY = midY - Math.min(dist * 0.28, 18);
   return `M ${x1},${y1} Q ${controlX},${controlY} ${x2},${y2}`;
@@ -78,7 +78,7 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
             the container's own width/height (exactly what the hub pins
             below use via style={{ left: x%, top: y% }}). The viewBox below
             must match that 100x100 space, not the container's own 65.94%
-            aspect ratio — using that here was the bug: it squeezed the
+            aspect ratio, using that here was the bug: it squeezed the
             y-axis by a wrong factor, so arcs to hubs with a large y (e.g.
             South Africa at y=82.8) went outside the declared coordinate
             space entirely and got clipped by the container's overflow. */}
@@ -94,7 +94,7 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
             const [x, y] = project(coords[0], coords[1]);
             const path = buildArcPath([homeX, homeY], [x, y]);
             const isActive = hoveredId === null || hoveredId === hub.id;
-            // Deterministic per-hub variation (not Math.random()) — this
+            // Deterministic per-hub variation (not Math.random()), this
             // page is prerendered at build time, and a value that differs
             // between renders is a correctness smell even where it doesn't
             // break hydration. Both animations on a dot share one duration
@@ -111,7 +111,7 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
                   vectorEffect="non-scaling-stroke"
                 />
                 {/* Pulse fades in fast (5%) and stays visible almost to
-                    arrival (96%) — a wide fade window made the dot vanish
+                    arrival (96%), a wide fade window made the dot vanish
                     well before reaching the pin, which read as the
                     connection "falling off" short of its destination. */}
                 <circle r={0.5} fill="var(--cyan)" vectorEffect="non-scaling-stroke">
@@ -131,7 +131,7 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
               </g>
             );
           })}
-          {/* Home marker — Toronto HQ. Diamond, not a circle, so it never
+          {/* Home marker, Toronto HQ. Diamond, not a circle, so it never
               reads as "just another hub pin" even where a hub (e.g. Costa
               Rica) sits close by on this projection. */}
           <rect

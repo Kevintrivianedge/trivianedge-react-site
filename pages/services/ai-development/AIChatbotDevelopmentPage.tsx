@@ -20,32 +20,32 @@ const FAQS = [
   {
     question: 'Should I build a custom AI chatbot or use an off-the-shelf platform?',
     answer:
-      "Off-the-shelf platforms are fast to set up but limited to whatever the vendor supports — usually generic scripted flows or shallow AI on top of your help docs. A custom-built chatbot is worth it once you need deep integration with your own data and systems, a specific brand voice, or logic that a template can't express. TrivianEdge's own site assistant, Aria, is an example of what a custom-built AI chatbot looks like in production, not a demo.",
+      "Off-the-shelf platforms are fast to set up but limited to whatever the vendor supports: usually generic scripted flows or shallow AI on top of your help docs. A custom-built chatbot is worth it once you need deep integration with your own data and systems, a specific brand voice, or logic that a template can't express. TrivianEdge's own site assistant, Aria, is an example of what a custom-built AI chatbot looks like in production, not a demo.",
   },
   {
     question: 'How do you stop the chatbot from making up answers?',
     answer:
-      "By grounding every response in retrieval — the bot answers from your actual support docs, product data, or knowledge base rather than the model's general training. We add confidence thresholds so uncertain answers fall back to \"I don't know, let me connect you with someone\" instead of guessing, and we run structured evaluation before launch and after any change to the knowledge base or prompts.",
+      "By grounding every response in retrieval: the bot answers from your actual support docs, product data, or knowledge base rather than the model's general training. We add confidence thresholds so uncertain answers fall back to \"I don't know, let me connect you with someone\" instead of guessing, and we run structured evaluation before launch and after any change to the knowledge base or prompts.",
   },
   {
     question: 'Can the chatbot hand off to a human?',
     answer:
-      'Yes, and it should — a chatbot that traps a frustrated user with no way to reach a person is worse than no chatbot at all. We build escalation logic based on sentiment, repeated failed attempts, or explicit request, handing off to your existing support tools (Zendesk, Intercom, Slack, or a custom queue) with the full conversation history attached.',
+      'Yes, and it should: a chatbot that traps a frustrated user with no way to reach a person is worse than no chatbot at all. We build escalation logic based on sentiment, repeated failed attempts, or explicit request, handing off to your existing support tools (Zendesk, Intercom, Slack, or a custom queue) with the full conversation history attached.',
   },
   {
     question: 'What can an AI chatbot actually do beyond answering FAQs?',
     answer:
-      'Qualify and route sales leads before a human ever gets involved, walk a user through a multi-step process (onboarding, troubleshooting, order status), pull live data from your systems to answer account-specific questions, and act as an internal assistant over your team\'s own documentation and policies — not just a customer-facing FAQ widget.',
+      'Qualify and route sales leads before a human ever gets involved, walk a user through a multi-step process (onboarding, troubleshooting, order status), pull live data from your systems to answer account-specific questions, and act as an internal assistant over your team\'s own documentation and policies: not just a customer-facing FAQ widget.',
   },
   {
-    question: 'Where can the chatbot live — just our website?',
+    question: 'Where can the chatbot live: just our website?',
     answer:
       'We deploy to whatever channels make sense for your users: a website widget, Slack or Microsoft Teams for internal tools, WhatsApp or SMS for customer-facing use cases, or embedded directly inside your product as an in-app assistant.',
   },
   {
     question: 'How do you measure whether the chatbot is actually working?',
     answer:
-      'Ticket deflection rate, resolution without human handoff, user satisfaction on chatbot-only conversations, and lead qualification accuracy for sales use cases — agreed before launch, tracked after. If deflection or accuracy isn\'t where it should be, that\'s a knowledge-base and prompt problem we keep iterating on, not a one-time delivery.',
+      'Ticket deflection rate, resolution without human handoff, user satisfaction on chatbot-only conversations, and lead qualification accuracy for sales use cases: agreed before launch, tracked after. If deflection or accuracy isn\'t where it should be, that\'s a knowledge-base and prompt problem we keep iterating on, not a one-time delivery.',
   },
   {
     question: 'How much does AI chatbot development cost?',
@@ -76,7 +76,7 @@ const AIChatbotDevelopmentPage: React.FC = () => {
     <>
       <SEOHead
         title="AI Chatbot Development Services Canada | TrivianEdge"
-        description="TrivianEdge builds custom AI chatbots grounded in your own data — support, sales, and internal assistants — deployed in as little as 30 days."
+        description="TrivianEdge builds custom AI chatbots grounded in your own data (support, sales, and internal assistants) deployed in as little as 30 days."
         keywords="AI chatbot development Canada, custom AI chatbot agency, AI customer support chatbot development, AI sales assistant development, offshore AI chatbot team, TrivianEdge AI chatbot"
         schema={[
           serviceSchema(
@@ -128,7 +128,7 @@ const AIChatbotDevelopmentPage: React.FC = () => {
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
               Support, sales, and internal assistants that answer from your actual knowledge
-              base and know when to hand off to a human — built and deployed in as little as 30 days.
+              base and know when to hand off to a human: built and deployed in as little as 30 days.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">
@@ -160,7 +160,7 @@ const AIChatbotDevelopmentPage: React.FC = () => {
               Off-the-shelf chatbot platforms are fast to set up but limited to whatever the
               vendor supports. A custom-built chatbot earns its cost once you need deep
               integration with your own systems, a specific brand voice, or logic a template
-              can't express — grounded in retrieval so it answers from your actual data, with a
+              can't express: grounded in retrieval so it answers from your actual data, with a
               clear handoff to a human when it should.
             </p>
             <p className="text-muted text-lg leading-relaxed">

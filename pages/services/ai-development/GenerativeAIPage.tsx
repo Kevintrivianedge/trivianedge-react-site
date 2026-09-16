@@ -20,7 +20,7 @@ const FAQS = [
   {
     question: 'What is generative AI development?',
     answer:
-      'Generative AI development means building products or features that create new content — text, images, code, summaries, or conversations — rather than just classifying or predicting from existing data. TrivianEdge builds these on top of current OpenAI and Anthropic models and open-weight alternatives, wired into your product with the retrieval, guardrails, and UX needed to make the output reliable.',
+      'Generative AI development means building products or features that create new content (text, images, code, summaries, or conversations) rather than just classifying or predicting from existing data. TrivianEdge builds these on top of current OpenAI and Anthropic models and open-weight alternatives, wired into your product with the retrieval, guardrails, and UX needed to make the output reliable.',
   },
   {
     question: 'What kinds of generative AI products do you build?',
@@ -35,7 +35,7 @@ const FAQS = [
   {
     question: 'What is RAG and do I need it?',
     answer:
-      "Retrieval-augmented generation (RAG) means the model looks up relevant information from your own documents, database, or knowledge base before answering, instead of relying only on what it learned during training. You need it any time accuracy matters and the answer depends on your specific data — support docs, internal policies, product catalogs, case history. We design the retrieval pipeline (chunking, embeddings, vector search) alongside the generation layer.",
+      "Retrieval-augmented generation (RAG) means the model looks up relevant information from your own documents, database, or knowledge base before answering, instead of relying only on what it learned during training. You need it any time accuracy matters and the answer depends on your specific data: support docs, internal policies, product catalogs, case history. We design the retrieval pipeline (chunking, embeddings, vector search) alongside the generation layer.",
   },
   {
     question: 'How do you keep the AI from hallucinating or going off-brand?',
@@ -45,12 +45,12 @@ const FAQS = [
   {
     question: 'How much does generative AI development cost?',
     answer:
-      'It depends on scope — a single RAG-powered feature is a smaller build than a full multi-modal product. TrivianEdge offshore teams typically save clients up to 40% versus hiring the equivalent AI engineering talent locally in Canada, the US, or the UK. Contact us for a scoped estimate based on your specific product.',
+      'It depends on scope: a single RAG-powered feature is a smaller build than a full multi-modal product. TrivianEdge offshore teams typically save clients up to 40% versus hiring the equivalent AI engineering talent locally in Canada, the US, or the UK. Contact us for a scoped estimate based on your specific product.',
   },
   {
     question: 'Who owns the models, prompts, and code you build?',
     answer:
-      "You do — 100% of the code, prompt templates, evaluation sets, and any fine-tuned assets. TrivianEdge never retains rights to what we build for your business, and this is written into every engagement agreement.",
+      "You do: 100% of the code, prompt templates, evaluation sets, and any fine-tuned assets. TrivianEdge never retains rights to what we build for your business, and this is written into every engagement agreement.",
   },
 ];
 
@@ -76,7 +76,7 @@ const GenerativeAIPage: React.FC = () => {
     <>
       <SEOHead
         title="Generative AI Development Services Canada | TrivianEdge"
-        description="TrivianEdge builds generative AI products — RAG systems, AI copilots, and content generation tools — with an offshore team deployed in as little as 30 days."
+        description="TrivianEdge builds generative AI products (RAG systems, AI copilots, and content generation tools) with an offshore team deployed in as little as 30 days."
         keywords="generative AI development Canada, generative AI development agency, RAG development services, AI copilot development, custom generative AI solutions, hire generative AI developers, TrivianEdge generative AI"
         schema={[
           serviceSchema(
@@ -128,7 +128,7 @@ const GenerativeAIPage: React.FC = () => {
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
               RAG systems, AI copilots, and content generation tools built on current OpenAI, Anthropic,
-              and open-weight models — grounded in your data, deployed by an offshore team in as little as 30 days.
+              and open-weight models: grounded in your data, deployed by an offshore team in as little as 30 days.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">
@@ -157,9 +157,9 @@ const GenerativeAIPage: React.FC = () => {
               What Generative AI Development Actually Involves
             </h2>
             <p className="text-muted text-lg leading-relaxed mb-4">
-              Calling a model's API is the trivial part. The real work is retrieval — grounding
+              Calling a model's API is the trivial part. The real work is retrieval: grounding
               answers in your own documents, database, or knowledge base so the model isn't
-              guessing — plus prompt engineering, output structure, streaming UX, and guardrails
+              guessing: plus prompt engineering, output structure, streaming UX, and guardrails
               that catch hallucinated or off-brand output before a user ever sees it.
             </p>
             <p className="text-muted text-lg leading-relaxed">
@@ -227,9 +227,9 @@ const GenerativeAIPage: React.FC = () => {
             <div className="space-y-4">
               {[
                 { title: 'You want an AI copilot embedded in your product', desc: 'SaaS teams adding an in-app assistant that helps users get things done, not just answer questions in a sidebar.' },
-                { title: 'You need answers grounded in your own data', desc: 'Support docs, internal policies, product catalogs, or case history — RAG makes the model accurate to your specific business, not just generally knowledgeable.' },
+                { title: 'You need answers grounded in your own data', desc: 'Support docs, internal policies, product catalogs, or case history: RAG makes the model accurate to your specific business, not just generally knowledgeable.' },
                 { title: 'You produce content at volume', desc: 'Marketing, media, or e-commerce teams that need generation tools for copy, summaries, or product descriptions, tuned to a consistent brand voice.' },
-                { title: 'Accuracy and trust matter', desc: 'If a wrong or hallucinated answer has real cost, you need the retrieval, evaluation, and guardrail work — not just a raw API call.' },
+                { title: 'Accuracy and trust matter', desc: 'If a wrong or hallucinated answer has real cost, you need the retrieval, evaluation, and guardrail work: not just a raw API call.' },
               ].map((item, idx) => (
                 <div key={item.title} style={{ transitionDelay: `${idx * 60}ms` }} className="glass rounded-2xl border-border p-6 reveal">
                   <h3 className="font-bold text-text mb-2">{item.title}</h3>

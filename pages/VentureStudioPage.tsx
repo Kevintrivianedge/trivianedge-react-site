@@ -728,7 +728,7 @@ const VentureStudioPage: React.FC = () => {
               <>
                 <p className="text-5xl font-bold text-text/30 mb-4">—<span className="text-xl text-muted">/100</span></p>
                 <h3 className="text-2xl font-bold mb-3 text-text">Fill in the form to see your fit</h3>
-                <p className="text-sm text-muted leading-relaxed mb-6">Your score updates as you go — readiness, traction, and scope all factor in.</p>
+                <p className="text-sm text-muted leading-relaxed mb-6">Your score updates as you go: readiness, traction, and scope all factor in.</p>
               </>
             )}
 

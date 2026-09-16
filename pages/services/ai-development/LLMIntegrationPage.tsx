@@ -20,12 +20,12 @@ const FAQS = [
   {
     question: 'What is LLM integration?',
     answer:
-      'LLM integration means wiring an existing large language model — a current OpenAI or Anthropic model, or an open-weight model — into your product, so it handles a real task inside your existing software rather than living as a standalone chat window. That includes API orchestration, prompt design, output parsing, error handling, and cost and latency control at production scale.',
+      'LLM integration means wiring an existing large language model (a current OpenAI or Anthropic model, or an open-weight model) into your product, so it handles a real task inside your existing software rather than living as a standalone chat window. That includes API orchestration, prompt design, output parsing, error handling, and cost and latency control at production scale.',
   },
   {
     question: 'When should I integrate an existing model versus fine-tune one?',
     answer:
-      "Integration is faster and usually the right first step — you're using a model as-is, guided by prompts and retrieved context. Fine-tuning makes sense when prompting alone can't get the consistency, format, or domain vocabulary you need, or when you're running high volume and a smaller fine-tuned model can match a larger general model's quality at lower cost. We assess this during scoping rather than defaulting to either.",
+      "Integration is faster and usually the right first step: you're using a model as-is, guided by prompts and retrieved context. Fine-tuning makes sense when prompting alone can't get the consistency, format, or domain vocabulary you need, or when you're running high volume and a smaller fine-tuned model can match a larger general model's quality at lower cost. We assess this during scoping rather than defaulting to either.",
   },
   {
     question: 'Which models and open-source options do you fine-tune?',
@@ -40,7 +40,7 @@ const FAQS = [
   {
     question: 'Can you avoid locking us into a single AI vendor?',
     answer:
-      'Yes — this is one of the most common reasons companies come to us. We design an abstraction layer that routes between models (OpenAI, Anthropic, open-source) based on cost, latency, or capability, so a pricing change or outage at one provider doesn\'t take down your product. Multi-model routing and fallback logic is part of the standard integration architecture.',
+      'Yes: this is one of the most common reasons companies come to us. We design an abstraction layer that routes between models (OpenAI, Anthropic, open-source) based on cost, latency, or capability, so a pricing change or outage at one provider doesn\'t take down your product. Multi-model routing and fallback logic is part of the standard integration architecture.',
   },
   {
     question: 'How do you control cost and latency once this is live?',
@@ -50,7 +50,7 @@ const FAQS = [
   {
     question: 'How much does LLM integration or fine-tuning cost?',
     answer:
-      'It varies by scope — a single integrated feature is a smaller build than a fine-tuned model with an evaluation harness. TrivianEdge offshore teams typically save up to 40% versus hiring equivalent AI engineering talent locally. Contact us for a quote scoped to your use case.',
+      'It varies by scope: a single integrated feature is a smaller build than a fine-tuned model with an evaluation harness. TrivianEdge offshore teams typically save up to 40% versus hiring equivalent AI engineering talent locally. Contact us for a quote scoped to your use case.',
   },
 ];
 
@@ -76,7 +76,7 @@ const LLMIntegrationPage: React.FC = () => {
     <>
       <SEOHead
         title="LLM Integration & Fine-Tuning Services Canada | TrivianEdge"
-        description="TrivianEdge integrates and fine-tunes LLMs — OpenAI, Anthropic Claude, and open-source models — into your product with an offshore AI team."
+        description="TrivianEdge integrates and fine-tunes LLMs (OpenAI, Anthropic Claude, and open-source models) into your product with an offshore AI team."
         keywords="LLM integration services Canada, LLM fine-tuning services, hire LLM integration team, OpenAI integration company, Anthropic Claude integration, open-source LLM development, TrivianEdge LLM integration"
         schema={[
           serviceSchema(
@@ -127,8 +127,8 @@ const LLMIntegrationPage: React.FC = () => {
               <span className="text-cyan-400">Put a Model to Work Inside Your Product</span>
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
-              OpenAI, Anthropic Claude, and open-source models wired into your existing software —
-              or fine-tuned on your own data — without vendor lock-in.
+              OpenAI, Anthropic Claude, and open-source models wired into your existing software,
+              or fine-tuned on your own data, without vendor lock-in.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">
@@ -157,7 +157,7 @@ const LLMIntegrationPage: React.FC = () => {
               Integration vs. Fine-Tuning: Choosing the Right Path
             </h2>
             <p className="text-muted text-lg leading-relaxed mb-4">
-              Most products should start with integration — prompting and retrieved context
+              Most products should start with integration: prompting and retrieved context
               guiding a current OpenAI or Anthropic model. Fine-tuning earns its cost when
               prompting alone can't hit the consistency, format, or domain vocabulary you need, or
               when a smaller fine-tuned model can match a larger general model at a fraction of
@@ -228,8 +228,8 @@ const LLMIntegrationPage: React.FC = () => {
               {[
                 { title: 'You want AI features fast, without building from scratch', desc: 'Integration gets a model doing real work inside your product in weeks, using proven APIs rather than training something new.' },
                 { title: 'You have proprietary data worth fine-tuning on', desc: 'If your domain has specific terminology, formats, or edge cases a general model gets wrong, a fine-tuned model closes that gap.' },
-                { title: 'You\'re worried about single-vendor risk', desc: 'A pricing change or outage at one AI provider shouldn\'t take down your product — multi-model routing protects against that.' },
-                { title: 'Cost is scaling faster than usage', desc: 'If your model bill is growing disproportionately to your user base, optimization — smaller models, caching, smarter routing — usually has real headroom left.' },
+                { title: 'You\'re worried about single-vendor risk', desc: 'A pricing change or outage at one AI provider shouldn\'t take down your product: multi-model routing protects against that.' },
+                { title: 'Cost is scaling faster than usage', desc: 'If your model bill is growing disproportionately to your user base, optimization (smaller models, caching, smarter routing) usually has real headroom left.' },
               ].map((item, idx) => (
                 <div key={item.title} style={{ transitionDelay: `${idx * 60}ms` }} className="glass rounded-2xl border-border p-6 reveal">
                   <h3 className="font-bold text-text mb-2">{item.title}</h3>

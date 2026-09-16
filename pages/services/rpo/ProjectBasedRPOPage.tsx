@@ -19,7 +19,7 @@ const FAQS = [
   {
     question: 'What is Project-Based RPO?',
     answer:
-      'Project-Based RPO is a defined, time-boxed recruitment engagement built around a specific hiring goal — for example, hiring 20 engineers in 90 days ahead of a product launch, or staffing a new department after a funding round. It has a clear start, end, and scope, unlike an ongoing Full-Cycle RPO engagement.',
+      'Project-Based RPO is a defined, time-boxed recruitment engagement built around a specific hiring goal: for example, hiring 20 engineers in 90 days ahead of a product launch, or staffing a new department after a funding round. It has a clear start, end, and scope, unlike an ongoing Full-Cycle RPO engagement.',
   },
   {
     question: 'When does Project-Based RPO make sense instead of Full-Cycle RPO?',
@@ -34,27 +34,27 @@ const FAQS = [
   {
     question: 'What is the minimum size for a hiring project?',
     answer:
-      'There is no fixed minimum — we\'ve run projects as small as a handful of critical early hires for pre-seed startups, up to 50+ roles for enterprise expansions. Pricing and timeline scale with scope.',
+      'There is no fixed minimum: we\'ve run projects as small as a handful of critical early hires for pre-seed startups, up to 50+ roles for enterprise expansions. Pricing and timeline scale with scope.',
   },
   {
     question: 'What happens when the project ends?',
     answer:
-      'You keep everything: the candidates hired, any remaining pipeline, and documentation on our sourcing approach. If new hiring needs come up afterward, you can run another project or convert to a Full-Cycle RPO engagement — there\'s no obligation either way.',
+      'You keep everything: the candidates hired, any remaining pipeline, and documentation on our sourcing approach. If new hiring needs come up afterward, you can run another project or convert to a Full-Cycle RPO engagement: there\'s no obligation either way.',
   },
   {
     question: 'How is a hiring project priced?',
     answer:
-      'Project-Based RPO is typically priced per role or as a fixed project fee based on scope, role complexity, and timeline — rather than an open-ended monthly retainer. This makes budgeting straightforward for a one-time hiring push. Contact us for a scoped quote.',
+      'Project-Based RPO is typically priced per role or as a fixed project fee based on scope, role complexity, and timeline: rather than an open-ended monthly retainer. This makes budgeting straightforward for a one-time hiring push. Contact us for a scoped quote.',
   },
   {
     question: 'Can Project-Based RPO cover both technical and non-technical roles in the same project?',
     answer:
-      'Yes. A single project can span software engineers, AI/ML specialists, operations staff, and customer-facing roles at the same time — useful when a launch or expansion requires building out several functions at once.',
+      'Yes. A single project can span software engineers, AI/ML specialists, operations staff, and customer-facing roles at the same time: useful when a launch or expansion requires building out several functions at once.',
   },
   {
     question: 'Is Project-Based RPO a good fit for a startup\'s first hires?',
     answer:
-      'Yes — it\'s one of the most common use cases. Startups get a structured, professional hiring process for their first critical roles without the cost or delay of building an internal recruiting function first.',
+      'Yes: it\'s one of the most common use cases. Startups get a structured, professional hiring process for their first critical roles without the cost or delay of building an internal recruiting function first.',
   },
 ];
 
@@ -130,7 +130,7 @@ const ProjectBasedRPOPage: React.FC = () => {
               <span className="text-cyan-400">Hire Fast, Without the Long-Term Commitment</span>
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
-              A defined hiring sprint with a clear scope, timeline, and budget — built for launches,
+              A defined hiring sprint with a clear scope, timeline, and budget: built for launches,
               funding rounds, and seasonal peaks where you need a burst of great hires, not an
               ongoing recruiting function.
             </p>
@@ -162,7 +162,7 @@ const ProjectBasedRPOPage: React.FC = () => {
             </h2>
             <p className="text-muted text-lg leading-relaxed mb-4">
               Project-Based RPO exists for the moment when you need a specific number of people,
-              hired well, by a specific date — not a permanent recruiting function. TrivianEdge
+              hired well, by a specific date: not a permanent recruiting function. TrivianEdge
               scopes the roles, timeline, and budget upfront, then runs the entire hiring process
               inside that window.
             </p>

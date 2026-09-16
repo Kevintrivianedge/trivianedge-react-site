@@ -20,7 +20,7 @@ const FAQS = [
   {
     question: 'What is AI automation, and how is it different from traditional RPA?',
     answer:
-      "Traditional robotic process automation (RPA) follows fixed, rule-based steps — it breaks the moment a document or input looks different from what it was scripted for. AI automation uses LLMs and document intelligence to handle variation: reading an invoice in a format it hasn't seen before, triaging a support ticket by intent, or deciding the next step in a workflow based on context rather than a rigid script.",
+      "Traditional robotic process automation (RPA) follows fixed, rule-based steps: it breaks the moment a document or input looks different from what it was scripted for. AI automation uses LLMs and document intelligence to handle variation: reading an invoice in a format it hasn't seen before, triaging a support ticket by intent, or deciding the next step in a workflow based on context rather than a rigid script.",
   },
   {
     question: 'What kinds of processes are good candidates for AI automation?',
@@ -30,22 +30,22 @@ const FAQS = [
   {
     question: 'Do AI agents make mistakes, and how do you prevent them from causing damage?',
     answer:
-      "Yes, any AI system can make mistakes — which is why we design human-in-the-loop checkpoints for decisions above a risk or value threshold, confidence scoring that routes uncertain cases to a person instead of guessing, and full audit logs of every automated decision. The goal is removing repetitive work from people, not removing accountability.",
+      "Yes, any AI system can make mistakes: which is why we design human-in-the-loop checkpoints for decisions above a risk or value threshold, confidence scoring that routes uncertain cases to a person instead of guessing, and full audit logs of every automated decision. The goal is removing repetitive work from people, not removing accountability.",
   },
   {
     question: 'Will this integrate with our existing CRM, ERP, or internal tools?',
     answer:
-      'Yes — AI automation is only useful if it plugs into where the work already happens. We build integrations against your existing systems (Salesforce, HubSpot, NetSuite, custom internal tools, and most systems with an API) rather than asking you to change how your team works.',
+      'Yes: AI automation is only useful if it plugs into where the work already happens. We build integrations against your existing systems (Salesforce, HubSpot, NetSuite, custom internal tools, and most systems with an API) rather than asking you to change how your team works.',
   },
   {
     question: 'How do you measure whether the automation is actually working?',
     answer:
-      'Before launch we agree on the baseline — hours spent, error rate, turnaround time on the current manual process — and report against it after launch: time saved, accuracy versus the manual baseline, and volume handled without human intervention. If the numbers don\'t hold up, we treat that as a problem to fix, not a footnote.',
+      'Before launch we agree on the baseline (hours spent, error rate, turnaround time on the current manual process) and report against it after launch: time saved, accuracy versus the manual baseline, and volume handled without human intervention. If the numbers don\'t hold up, we treat that as a problem to fix, not a footnote.',
   },
   {
     question: 'What happens when the automation hits something it can\'t handle?',
     answer:
-      "It escalates to a human rather than guessing or failing silently. Every workflow we build has a defined fallback path — flag for review, route to a specific team member, or hold for manual approval — so edge cases get handled correctly instead of quietly breaking the process.",
+      "It escalates to a human rather than guessing or failing silently. Every workflow we build has a defined fallback path (flag for review, route to a specific team member, or hold for manual approval), so edge cases get handled correctly instead of quietly breaking the process.",
   },
   {
     question: 'How much does an AI automation project cost?',
@@ -76,7 +76,7 @@ const AIAutomationPage: React.FC = () => {
     <>
       <SEOHead
         title="AI Automation & Agentic Workflow Services Canada | TrivianEdge"
-        description="TrivianEdge builds AI automation pipelines — document intelligence, agentic workflows, and system integrations — with an offshore engineering team."
+        description="TrivianEdge builds AI automation pipelines (document intelligence, agentic workflows, and system integrations) with an offshore engineering team."
         keywords="AI automation agency Canada, agentic workflow development, document intelligence automation, AI process automation company, offshore AI automation team, TrivianEdge AI automation"
         schema={[
           serviceSchema(
@@ -128,7 +128,7 @@ const AIAutomationPage: React.FC = () => {
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
               Document processing, agentic workflows, and system integrations that adapt to real
-              inputs instead of breaking on the first exception — with a human always in the loop.
+              inputs instead of breaking on the first exception: with a human always in the loop.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">
@@ -159,8 +159,8 @@ const AIAutomationPage: React.FC = () => {
             <p className="text-muted text-lg leading-relaxed mb-4">
               Traditional automation breaks the moment an input doesn't match the script it was
               built for. AI automation uses LLMs and document intelligence to handle the
-              variation real business processes actually have — reading an invoice in a new
-              format, triaging a ticket by intent, deciding the next step from context — with
+              variation real business processes actually have: reading an invoice in a new
+              format, triaging a ticket by intent, deciding the next step from context: with
               human-in-the-loop checkpoints on anything above a risk threshold.
             </p>
             <p className="text-muted text-lg leading-relaxed">
@@ -227,7 +227,7 @@ const AIAutomationPage: React.FC = () => {
               {[
                 { title: 'Your team is drowning in repetitive document work', desc: 'Invoices, contracts, forms, and applications that someone reads and re-keys by hand are the clearest automation win.' },
                 { title: 'Your process breaks on exceptions', desc: 'If your current RPA or scripted automation fails whenever an input looks slightly different, AI automation is built for exactly that variation.' },
-                { title: 'You need multi-step decisions, not single actions', desc: 'Processes that route, escalate, or branch based on content — support triage, approval chains — benefit from agentic workflows, not a single automated step.' },
+                { title: 'You need multi-step decisions, not single actions', desc: 'Processes that route, escalate, or branch based on content (support triage, approval chains) benefit from agentic workflows, not a single automated step.' },
                 { title: 'You still want a human making the final call on judgment', desc: 'We design escalation paths for anything above a risk threshold, so automation speeds up the process without removing oversight.' },
               ].map((item, idx) => (
                 <div key={item.title} style={{ transitionDelay: `${idx * 60}ms` }} className="glass rounded-2xl border-border p-6 reveal">
@@ -259,7 +259,7 @@ const AIAutomationPage: React.FC = () => {
               Automate the Work Your Team Shouldn't Be Doing by Hand
             </h2>
             <p className="text-muted mb-8">
-              Tell us about the process — we'll tell you if AI automation is the right fix.
+              Tell us about the process: we'll tell you if AI automation is the right fix.
             </p>
             <Link
               to="/contact"

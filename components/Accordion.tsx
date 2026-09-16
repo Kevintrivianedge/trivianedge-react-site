@@ -53,7 +53,7 @@ const Accordion: React.FC<AccordionProps> = ({ items }) => {
             </button>
             {/* Answer stays in the DOM even when collapsed (height/opacity animated,
                 not conditionally mounted) so crawlers that don't execute JS or click
-                interactions — GPTBot, ClaudeBot, PerplexityBot — can still read it.
+                interactions (GPTBot, ClaudeBot, PerplexityBot) can still read it.
                 aria-hidden keeps screen readers from announcing it while collapsed
                 (CSS clipping alone doesn't remove content from the a11y tree) without
                 removing it from the raw HTML those crawlers read. */}

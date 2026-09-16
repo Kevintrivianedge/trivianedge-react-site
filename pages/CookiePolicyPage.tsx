@@ -10,7 +10,7 @@ const COOKIEYES_POLICY_SCRIPT_SRC = 'https://cdn-cookieyes.com/client_data/e7db7
 
 // This script doesn't look for a pre-existing target div (an earlier version
 // of this page assumed a #cky-auto-cookie-policy container, which the script
-// never actually references — confirmed by reading the script's source
+// never actually references: confirmed by reading the script's source
 // directly). Instead it does:
 //   document.getElementById('cky-cookie-policy').insertAdjacentHTML('afterend', ...)
 // i.e. it finds itself by id and inserts the generated policy as the next

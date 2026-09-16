@@ -16,7 +16,7 @@ const NotFoundPage: React.FC = () => {
         <div className="max-w-2xl mx-auto text-center reveal">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-700 text-xs font-bold uppercase tracking-widest mb-8">
             <Compass className="w-3 h-3" />
-            404 — Page not found
+            404: Page not found
           </span>
           <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
             This page doesn't exist.

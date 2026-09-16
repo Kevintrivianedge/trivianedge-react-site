@@ -20,12 +20,12 @@ const FAQS = [
   {
     question: 'What is Full-Cycle RPO?',
     answer:
-      'Full-Cycle RPO is an ongoing, embedded partnership where TrivianEdge runs your entire recruitment function indefinitely — not just individual searches. We own sourcing, screening, interview coordination, offers, and onboarding for every role you hire, acting as your extended talent acquisition team for as long as the engagement runs.',
+      'Full-Cycle RPO is an ongoing, embedded partnership where TrivianEdge runs your entire recruitment function indefinitely: not just individual searches. We own sourcing, screening, interview coordination, offers, and onboarding for every role you hire, acting as your extended talent acquisition team for as long as the engagement runs.',
   },
   {
     question: 'How is Full-Cycle RPO different from Project-Based RPO?',
     answer:
-      'Full-Cycle RPO is an open-ended engagement built for companies with continuous hiring needs — think 20+ roles a year, ongoing headcount growth, or no in-house recruiting team at all. Project-Based RPO is a defined, time-boxed hiring sprint for a specific need, like hiring 15 engineers before a product launch. Companies that start with a project often move to full-cycle once they see the volume of hiring is steady rather than one-off.',
+      'Full-Cycle RPO is an open-ended engagement built for companies with continuous hiring needs: think 20+ roles a year, ongoing headcount growth, or no in-house recruiting team at all. Project-Based RPO is a defined, time-boxed hiring sprint for a specific need, like hiring 15 engineers before a product launch. Companies that start with a project often move to full-cycle once they see the volume of hiring is steady rather than one-off.',
   },
   {
     question: 'What does TrivianEdge actually own in a Full-Cycle engagement?',
@@ -50,7 +50,7 @@ const FAQS = [
   {
     question: 'Does Full-Cycle RPO work with our existing HR team and ATS?',
     answer:
-      'Yes. We embed into your existing workflow rather than replacing it — using your ATS if you have one, following your employer brand and voice with candidates, and reporting into your HR or People leadership. From a candidate\'s perspective, they are dealing with your company throughout.',
+      'Yes. We embed into your existing workflow rather than replacing it: using your ATS if you have one, following your employer brand and voice with candidates, and reporting into your HR or People leadership. From a candidate\'s perspective, they are dealing with your company throughout.',
   },
   {
     question: 'What happens to the roles we hire if we ever end the engagement?',
@@ -81,7 +81,7 @@ const FullCycleRPOPage: React.FC = () => {
     <>
       <SEOHead
         title="Full-Cycle RPO Services | Embedded Recruitment Outsourcing | TrivianEdge"
-        description="TrivianEdge's full-cycle RPO embeds a complete hiring function into your team — sourcing, screening, interviews, and onboarding, managed end-to-end."
+        description="TrivianEdge's full-cycle RPO embeds a complete hiring function into your team: sourcing, screening, interviews, and onboarding, managed end-to-end."
         keywords="full-cycle RPO services, embedded recruitment outsourcing, ongoing recruitment process outsourcing, full-cycle hiring partner Canada, embedded talent acquisition team, TrivianEdge full-cycle RPO"
         schema={[
           serviceSchema(
@@ -132,7 +132,7 @@ const FullCycleRPOPage: React.FC = () => {
               <span className="text-cyan-400">Your Entire Hiring Function, Embedded</span>
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
-              TrivianEdge becomes your ongoing talent acquisition team — sourcing, screening,
+              TrivianEdge becomes your ongoing talent acquisition team: sourcing, screening,
               interviewing, and onboarding every hire, indefinitely, without you building an
               in-house recruiting function from scratch.
             </p>
@@ -165,7 +165,7 @@ const FullCycleRPOPage: React.FC = () => {
             <p className="text-muted text-lg leading-relaxed mb-4">
               A staffing agency fills one job order at a time. Full-Cycle RPO is different:
               TrivianEdge takes ownership of your entire recruitment function, on an ongoing basis,
-              as an embedded extension of your HR team. We don't just fill open roles — we build
+              as an embedded extension of your HR team. We don't just fill open roles: we build
               and maintain the hiring engine behind them.
             </p>
             <p className="text-muted text-lg leading-relaxed">
@@ -231,7 +231,7 @@ const FullCycleRPOPage: React.FC = () => {
             </h2>
             <div className="space-y-4">
               {[
-                { title: 'You hire continuously, not in bursts', desc: 'Companies with steady, year-round hiring — 20+ roles annually — get the most value from an embedded, ongoing team rather than repeated one-off searches.' },
+                { title: 'You hire continuously, not in bursts', desc: 'Companies with steady, year-round hiring (20+ roles annually) get the most value from an embedded, ongoing team rather than repeated one-off searches.' },
                 { title: 'You don\'t have an in-house TA function', desc: 'Full-Cycle RPO replaces the need to hire, train, and manage your own recruiting team, at a fraction of the fully-loaded cost.' },
                 { title: 'You need pipeline, not just placements', desc: 'We build a warm talent pipeline for roles you\'ll need in 3–6 months, so hiring stops being reactive.' },
                 { title: 'You want one point of accountability', desc: 'Instead of juggling agencies, job boards, and internal recruiters, one embedded TrivianEdge team owns the whole funnel.' },

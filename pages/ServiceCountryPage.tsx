@@ -39,7 +39,7 @@ const ServiceCountryPage: React.FC = () => {
     <>
       <SEOHead
         title={combo.metaTitle ?? `${combo.serviceName} in ${hub.country} | TrivianEdge`}
-        description={`${combo.serviceName} teams sourced from ${hub.country} — ${hub.specialty.toLowerCase()}, ${hub.timeZoneAlignment}. Deployed in as little as 30 days, no foreign entity required.`}
+        description={`${combo.serviceName} teams sourced from ${hub.country}, ${hub.specialty.toLowerCase()}, ${hub.timeZoneAlignment}. Deployed in as little as 30 days, no foreign entity required.`}
         keywords={combo.keywords}
         canonical={pageUrl}
         schema={[
@@ -53,7 +53,7 @@ const ServiceCountryPage: React.FC = () => {
             '@context': 'https://schema.org',
             '@type': 'Service',
             '@id': `${pageUrl}#service`,
-            name: `${combo.serviceName} — ${hub.country}`,
+            name: `${combo.serviceName} in ${hub.country}`,
             description: combo.angle,
             areaServed: { '@type': 'Country', name: hub.country },
             provider: { '@type': 'Organization', '@id': `${SEO_CONFIG.siteUrl}/#organization`, name: 'TrivianEdge' },
@@ -105,7 +105,7 @@ const ServiceCountryPage: React.FC = () => {
                 <Sparkles className="w-5 h-5 text-cyan-600" />
               </div>
               <h2 className="font-bold text-lg mb-2">Deployment timeline</h2>
-              <p className="text-muted text-sm leading-relaxed">TrivianEdge's standard 30-day deployment model — sourcing, screening, legal setup, payroll, and onboarding included.</p>
+              <p className="text-muted text-sm leading-relaxed">TrivianEdge's standard 30-day deployment model: sourcing, screening, legal setup, payroll, and onboarding included.</p>
             </div>
           </div>
 
@@ -120,7 +120,7 @@ const ServiceCountryPage: React.FC = () => {
 
           <div className="glass p-8 md:p-10 rounded-[2rem] border-border mb-16 reveal">
             <h2 className="text-2xl font-bold mb-4">How hiring works</h2>
-            <p className="text-muted leading-relaxed">You never register a local company or open a foreign payroll account. TrivianEdge coordinates employment in {hub.country} through in-country employer-of-record and payroll partners, and manages that relationship end to end — one point of contact for you. Cost is scoped per role; <Link to="/savings-calculator" className="text-cyan-600 hover:underline font-medium">model it against your own roles on the savings calculator</Link> rather than a flat headline percentage.</p>
+            <p className="text-muted leading-relaxed">You never register a local company or open a foreign payroll account. TrivianEdge coordinates employment in {hub.country} through in-country employer-of-record and payroll partners, and manages that relationship end to end: one point of contact for you. Cost is scoped per role; <Link to="/savings-calculator" className="text-cyan-600 hover:underline font-medium">model it against your own roles on the savings calculator</Link> rather than a flat headline percentage.</p>
           </div>
 
           <div className="mb-16">
