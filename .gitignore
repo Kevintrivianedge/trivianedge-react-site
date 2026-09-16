@@ -32,3 +32,4 @@ prompt_*.json
 __pycache__/
 *.pyc
 .secrets/
+OmniRoute/
