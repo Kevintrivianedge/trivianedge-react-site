@@ -38,13 +38,13 @@ const IndustryPage: React.FC = () => {
     <>
       <SEOHead
         title={industry.metaTitle ?? `${industry.name} | TrivianEdge`}
-        description={`${industry.tagline} BPO, RPO, AI, and software delivery for ${industry.name.toLowerCase()} companies.`}
+        description={industry.metaDescription ?? `${industry.tagline} BPO, RPO, AI, and software delivery for ${industry.name.toLowerCase()}.`}
         keywords={industry.keywords}
         canonical={pageUrl}
         schema={[
           breadcrumbSchema([
             { name: 'Home', url: SEO_CONFIG.siteUrl },
-            { name: 'Services', url: `${SEO_CONFIG.siteUrl}/services` },
+            { name: 'Industries', url: `${SEO_CONFIG.siteUrl}/industries` },
             { name: industry.name, url: pageUrl },
           ]),
           faqSchema(industry.faqs),

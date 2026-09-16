@@ -65,7 +65,7 @@ const TalentHubPage: React.FC = () => {
   const faqs = buildHubFaqs(hub);
   const pageUrl = `${SEO_CONFIG.siteUrl}/talent/${slugifyCountry(hub.country)}`;
   const relatedCaseStudy = CASE_STUDIES.find(c => c.approach.includes(hub.country) || c.challenge.includes(hub.country));
-  const otherHubs = TALENT_HUBS.filter(h => h.id !== hub.id).slice(0, 3);
+  const otherHubs = TALENT_HUBS.filter(h => h.id !== hub.id);
 
   return (
     <>

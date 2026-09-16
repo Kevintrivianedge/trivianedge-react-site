@@ -134,6 +134,8 @@ export interface IndustryPageData {
   metaTitle?: string;
   tagline: string;
   description: string;
+  /** Full <meta description> — falls back to a generated one from `tagline`/`name` if omitted. */
+  metaDescription?: string;
   challenges: string[];
   howWeHelp: { service: string; description: string; href: string }[];
   relatedCaseStudyClient?: string;

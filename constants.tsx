@@ -30,6 +30,7 @@ export const NAV_LINKS = [
       { name: 'AI-Powered Recruitment', href: '/services/rpo/ai-powered-recruitment', isSub: true },
       { name: 'Bespoke Software Development', href: '/services/it-outsourcing' },
       { name: 'AI Development', href: '/services/ai-development', isSub: true },
+      { name: 'Industries We Serve', href: '/industries' },
     ],
   },
   { name: 'Venture Studio', href: '/venture-studio' },

@@ -327,6 +327,10 @@ const RPOPage: React.FC = () => {
             { label: 'BPO', desc: 'Need an outsourced team running day to day, not just direct hires? See our BPO services.', to: '/services/bpo' },
             { label: 'AI-powered recruitment', desc: 'How TrivianEdge uses AI sourcing and screening inside the RPO process.', to: '/services/rpo/ai-powered-recruitment' },
             { label: 'RPO in Sri Lanka', desc: 'Boutique software engineering talent — one of our six sourcing hubs.', to: '/services/rpo/sri-lanka' },
+            { label: 'RPO in the Philippines', desc: 'Direct operational and finance hires from our deepest BPO hub.', to: '/services/rpo/philippines' },
+            { label: 'RPO in Vietnam', desc: 'Direct engineering and AI hires from our fastest-growing tech hub.', to: '/services/rpo/vietnam' },
+            { label: 'RPO in Costa Rica', desc: 'Nearshore, US-timezone-aligned direct hires for real-time collaboration.', to: '/services/rpo/costa-rica' },
+            { label: 'RPO in South Africa', desc: 'Direct finance and specialized operations hires from our South Africa hub.', to: '/services/rpo/south-africa' },
             { label: 'Case studies', desc: 'See how TrivianEdge clients built teams across six talent hubs.', to: '/proof' },
             { label: 'Savings calculator', desc: 'Model the real cost-per-hire difference for your roles.', to: '/savings-calculator' },
           ]}

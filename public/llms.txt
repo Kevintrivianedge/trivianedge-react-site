@@ -31,6 +31,7 @@ TrivianEdge is headquartered in Toronto, Ontario, Canada and sources talent from
 
 ## Industries
 
+- [Industries overview](https://www.trivianedge.com/industries): All industry pages in one place.
 - [Logistics & Supply Chain](https://www.trivianedge.com/industries/logistics): Cross-timezone operations, dispatch, and documentation coverage.
 - [SaaS & Growth-Stage Companies](https://www.trivianedge.com/industries/saas-growth): Offshore outbound, growth, and engineering teams for scaling SaaS companies.
 - [Healthcare & Medtech](https://www.trivianedge.com/industries/healthcare-medtech): Compliance-aware software delivery and market-entry support for medtech products.

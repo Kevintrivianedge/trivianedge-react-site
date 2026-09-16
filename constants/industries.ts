@@ -6,6 +6,7 @@ export const INDUSTRIES: IndustryPageData[] = [
     name: 'Logistics & Supply Chain',
     metaTitle: 'Logistics & Supply Chain Outsourcing | TrivianEdge',
     tagline: 'Coverage that follows the freight, not the office hours.',
+    metaDescription: 'Cross-timezone BPO, RPO, and bespoke software delivery for logistics and supply chain companies. Documentation, dispatch, and tracking coverage that keeps moving overnight.',
     description: 'Logistics does not stop when your local team logs off. Documentation, dispatch, and exception handling keep moving overnight, and the businesses that handle that well are the ones that built cross-timezone coverage on purpose instead of hiring more people in the same timezone and hoping for the best.',
     challenges: [
       'Work queues up overnight when the home-market team goes offline',
@@ -32,6 +33,7 @@ export const INDUSTRIES: IndustryPageData[] = [
     name: 'SaaS & Growth-Stage Companies',
     metaTitle: 'SaaS & Growth-Stage Outsourcing Teams | TrivianEdge',
     tagline: 'Outbound throughput without building a management layer first.',
+    metaDescription: 'Offshore outbound, growth, and engineering teams for SaaS and growth-stage companies. Scale pipeline activity without building a management layer first.',
     description: 'Growth-stage companies need more pipeline activity than their current team can generate, but hiring and managing a full outbound function in-house is slow and expensive before you know which motions actually work. Offshore growth teams let you scale outbound activity without committing to that overhead upfront.',
     challenges: [
       'Outbound volume needs to scale faster than local hiring allows',
@@ -58,6 +60,7 @@ export const INDUSTRIES: IndustryPageData[] = [
     name: 'Healthcare & Medtech',
     metaTitle: 'Healthcare & Medtech Software Outsourcing | TrivianEdge',
     tagline: 'Software and market-entry support for medtech products — built carefully, not casually.',
+    metaDescription: 'Compliance-aware bespoke software and market-entry support for healthcare and medtech products. BPO, RPO, and AI development built around real regulatory stakes.',
     description: 'Healthcare and medtech products carry real compliance stakes, and we treat that seriously: we do not claim formal healthcare certifications we do not hold, and we work with your legal and compliance team to confirm what a specific engagement requires. What we bring is engineering and market-entry execution for medtech, health-adjacent, and regulated-adjacent software products.',
     challenges: [
       'Medtech products need engineering teams who move carefully around compliance requirements, not just fast',
@@ -84,6 +87,7 @@ export const INDUSTRIES: IndustryPageData[] = [
     name: 'Education',
     metaTitle: 'Education Software & Outsourcing Solutions | TrivianEdge',
     tagline: 'Modern public-facing systems and real operational verification, not spreadsheets.',
+    metaDescription: 'Bespoke software and operational support for schools and education institutions — public site rebuilds, faculty portals, and attendance verification systems.',
     description: 'Schools and education providers are often running on public websites and administrative processes that haven\'t kept pace with what\'s actually possible — manual attendance tracking, outdated public sites, and no real-time visibility into day-to-day operations. TrivianEdge builds the software layer that fixes that.',
     challenges: [
       'Public-facing websites are outdated and don\'t reflect the institution well',
@@ -109,6 +113,7 @@ export const INDUSTRIES: IndustryPageData[] = [
     name: 'Fintech & Financial Services',
     metaTitle: 'Fintech & Financial Services Outsourcing | TrivianEdge',
     tagline: 'Back-office precision and engineering depth for products where errors carry a real cost.',
+    metaDescription: 'Offshore finance operations and bespoke platform engineering for fintech and financial services companies. BPO, RPO, and IT outsourcing built around audit-ready precision.',
     description: 'Fintech products run on trust: accurate reconciliation, secure data handling, and software that behaves the same way every time. TrivianEdge builds and staffs the operational and engineering layers around fintech products, from back-office finance operations to the custom software that runs on top of them, without ever claiming compliance certifications we do not hold.',
     challenges: [
       'Back-office finance operations — reconciliation, reporting, transaction support — need precision at volume',
@@ -134,6 +139,7 @@ export const INDUSTRIES: IndustryPageData[] = [
     name: 'E-Commerce & Retail',
     metaTitle: 'E-Commerce & Retail Outsourcing Solutions | TrivianEdge',
     tagline: 'Support, operations, and platform engineering that scale with order volume, not against it.',
+    metaDescription: 'Scalable offshore customer support, order processing, and platform engineering for e-commerce and retail businesses. Flex with seasonal volume instead of fighting it.',
     description: 'E-commerce businesses face a specific staffing problem: support and operations volume spikes around sales events and seasons, but a fixed in-house team is either understaffed during peaks or overstaffed the rest of the year. TrivianEdge builds flexible offshore support and operations teams, plus the custom platform engineering to run alongside them.',
     challenges: [
       'Customer support volume spikes sharply around sales events, holidays, and promotions',
@@ -159,6 +165,7 @@ export const INDUSTRIES: IndustryPageData[] = [
     name: 'Legal Services',
     metaTitle: 'Legal Services Outsourcing & Software | TrivianEdge',
     tagline: 'Document-heavy operational support and secure software for firms that cannot afford errors.',
+    metaDescription: 'Offshore document processing, administrative support, and secure legal-tech software for law firms and legal services businesses.',
     description: 'Legal work generates a high volume of document-heavy, detail-sensitive administrative and support work alongside the practice of law itself. TrivianEdge staffs the operational layer around legal practices — document processing, administrative support, and client intake — and builds the secure, purpose-built software that supports it, without ever performing or advising on the practice of law itself.',
     challenges: [
       'Document review, processing, and administrative support consume time that should go to billable legal work',

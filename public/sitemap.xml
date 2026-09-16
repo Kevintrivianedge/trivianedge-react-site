@@ -235,6 +235,13 @@
 
   <!-- Industry pages -->
   <url>
+    <loc>https://www.trivianedge.com/industries</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://www.trivianedge.com/industries/logistics</loc>
     <lastmod>2026-09-04</lastmod>
     <changefreq>monthly</changefreq>
