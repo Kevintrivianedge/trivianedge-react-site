@@ -48,6 +48,7 @@ import TalentHubCard from './components/TalentHubCard';
 import ScrollToTop from './components/ScrollToTop';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import WorldMapLazy from './components/WorldMapLazy';
+import HeroNetworkVisual from './components/HeroNetworkVisual';
 
 // Lazy-load route-level pages and heavy below-fold interactive modules.
 // This splits each into its own chunk so the main bundle only contains
@@ -220,6 +221,29 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         aria-label="Hero"
         className="hero-dark hero-fade-out relative min-h-screen sm:min-h-0 lg:min-h-screen flex flex-col px-4 sm:px-6 overflow-hidden"
       >
+        {/* Abstract network graphic, not a stock photo or literal map (the real
+            geographic map with pins lives further down at #talent-hubs). Renders
+            behind the hero content (same z-index as siblings, painted first so
+            it stacks behind per DOM order) at low opacity so it reads as texture
+            representing a live operations network, not competing with the copy.
+            Hidden on narrow viewports where there's no spare visual space and a
+            static hero already keeps LCP fast. */}
+        <div
+          className="hidden md:block !absolute inset-0"
+          style={{
+            // Fades the graphic out behind the readable content (nav strip,
+            // headline, subtext, buttons) and lets it show only in the
+            // otherwise-empty background around and beyond it, so it reads
+            // as ambient texture rather than clutter crossing over text
+            // and the CTA button.
+            maskImage: 'radial-gradient(ellipse 62% 68% at 30% 46%, transparent 0%, transparent 55%, black 100%), linear-gradient(to bottom, transparent 0%, transparent 12%, black 12%)',
+            maskComposite: 'intersect',
+            WebkitMaskImage: '-webkit-radial-gradient(ellipse 62% 68% at 30% 46%, transparent 0%, transparent 55%, black 100%), -webkit-linear-gradient(to bottom, transparent 0%, transparent 12%, black 12%)',
+            WebkitMaskComposite: 'source-in',
+          }}
+        >
+          <HeroNetworkVisual />
+        </div>
 
         {/* Hero content — flex-1 so it expands and pushes stats to the bottom */}
         <motion.div
