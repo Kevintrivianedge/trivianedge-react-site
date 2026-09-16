@@ -100,6 +100,22 @@ async function main() {
         });
       });
 
+      // CookieYes's dashboard has its own "Facebook Pixel" integration configured
+      // in addition to the hand-rolled one this app already loads via
+      // public/meta-pixel.js (deferred, same pixel ID). Once CookieYes's script
+      // runs during the headless page load above, it injects its own copy —
+      // a large inline config script plus a second connect.facebook.net/fbevents.js
+      // — directly into <head>, ahead of the title, fonts, and app bundle.
+      // page.content() captures that injected markup verbatim, so every
+      // prerendered snapshot (including dist/index.html, served as-is to real
+      // visitors on "/") shipped a duplicate, render-blocking pixel load in
+      // front of every other resource on the page. Strip it here rather than
+      // disabling the integration in the CookieYes dashboard, since the dashboard
+      // config can drift back at any time and this check is idempotent either way.
+      await page.evaluate(() => {
+        document.querySelectorAll('head script[src*="connect.facebook.net"]').forEach(el => el.remove());
+      });
+
       const html = await page.content();
       const outDir = routePath === '/' ? distDir : join(distDir, routePath.replace(/^\//, ''));
       mkdirSync(outDir, { recursive: true });
