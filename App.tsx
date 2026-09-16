@@ -258,14 +258,16 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               </motion.span>
             </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light"
-            >
+            {/* No entrance animation on this element: it's the page's LCP
+                candidate (confirmed via PageSpeed Insights' LCP breakdown).
+                Fading it in behind a Framer Motion opacity transition made
+                its paint wait on that animation frame firing, which itself
+                queued behind the page's third-party-script main-thread work
+                — measured at 4+ seconds of pure "element render delay" with
+                a 10ms TTFB, i.e. the content was ready but hidden. */}
+            <p className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light">
               Offshore teams and bespoke software, deployed in as little as 30 days. Hiring, payroll, compliance, and delivery, handled entirely by us.
-            </motion.p>
+            </p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
