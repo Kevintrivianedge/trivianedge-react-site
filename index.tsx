@@ -55,14 +55,21 @@ const GA_MEASUREMENT_ID = 'G-KMWT547BH8';
 
 // EEA (27 EU member states + Iceland, Liechtenstein, Norway) plus the UK and
 // Switzerland, whose privacy laws (UK GDPR, Swiss FADP) carry the same
-// consent requirement. Scoping the "default: denied" state to just this list
-// via Consent Mode's `region` param means visitors everywhere else keep
-// getting full measurement and ads personalization as before — only these
-// regions are held back pending explicit consent.
+// opt-in-before-collection requirement as GDPR. CA is included for Quebec's
+// Law 25 (in force since Sept 2023), which imposes the same GDPR-style
+// opt-in bar — scoping to the whole country rather than just Quebec is the
+// conservative, low-cost choice. AU is included because TrivianEdge actively
+// markets to Australian clients (see HOME_FAQS in App.tsx) and, while the
+// Privacy Act is a lighter opt-out/notice regime, there's no cost to holding
+// it to the stricter bar too. Scoping the "default: denied" state to just
+// this list via Consent Mode's `region` param means visitors everywhere else
+// (including US states, which are opt-out regimes — see the GPC handling in
+// src/cookieConsent.ts) keep getting full measurement by default, with the
+// banner still shown to every visitor regardless of region either way.
 const CONSENT_REQUIRED_REGIONS = [
   'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR',
   'HU', 'IS', 'IE', 'IT', 'LV', 'LI', 'LT', 'LU', 'MT', 'NL', 'NO', 'PL',
-  'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'GB', 'CH',
+  'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'GB', 'CH', 'CA', 'AU',
 ];
 
 const initGoogleAnalytics = () => {

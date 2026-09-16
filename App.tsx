@@ -1021,6 +1021,13 @@ export default function App() {
                 <Link to="/privacy" className="hover:text-white/80 transition-colors">Privacy</Link>
                 <Link to="/terms" className="hover:text-white/80 transition-colors">Terms</Link>
                 <Link to="/cookie-policy" className="hover:text-white/80 transition-colors">Cookies</Link>
+                <button
+                  type="button"
+                  onClick={() => { import('./src/cookieConsent').then(({ reopenPreferences }) => reopenPreferences()); }}
+                  className="hover:text-white/80 transition-colors"
+                >
+                  Cookie Preferences
+                </button>
               </div>
             </div>
           </footer>

@@ -24,6 +24,15 @@ declare global {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
   }
+  interface Navigator {
+    // Global Privacy Control — a browser/extension-level opt-out signal that
+    // CCPA/CPRA (California) and several other US state privacy laws
+    // (Colorado, Connecticut, and others) require businesses to honor as a
+    // valid, self-executing "do not sell/share my personal information"
+    // request, without waiting for the visitor to also click through a
+    // banner. Not yet in TypeScript's lib.dom.d.ts, hence this ambient decl.
+    globalPrivacyControl?: boolean;
+  }
 }
 
 let amplitudeStarted = false;
@@ -66,6 +75,10 @@ function applyConsent(): void {
     ad_user_data: marketingGranted ? 'granted' : 'denied',
     ad_personalization: marketingGranted ? 'granted' : 'denied',
   });
+}
+
+export function reopenPreferences(): void {
+  CookieConsent.showPreferences();
 }
 
 export function initCookieConsent(): void {
@@ -139,4 +152,14 @@ export function initCookieConsent(): void {
       },
     },
   });
+
+  // Honor Global Privacy Control as a self-executing opt-out (required by
+  // CCPA/CPRA and several other US state privacy laws) — a GPC visitor's
+  // signal counts as their answer even if they never interact with the
+  // banner. Only acts on a first-time visit: if CookieConsent.run() above
+  // already restored a prior real choice from this visitor's cookie, that
+  // explicit choice takes precedence over the ambient browser signal.
+  if (navigator.globalPrivacyControl && !CookieConsent.validConsent()) {
+    CookieConsent.acceptCategory([]);
+  }
 }
