@@ -34,9 +34,13 @@
 (function() {
   function check() {
     var vh = window.innerHeight;
+    // Read all geometry first, then apply class changes in a separate pass —
+    // interleaving reads/writes forces a synchronous layout recalc per element.
+    var toReveal = [];
     document.querySelectorAll('.reveal:not(.active)').forEach(function(el) {
-      if (el.getBoundingClientRect().top < vh * 0.9) el.classList.add('active');
+      if (el.getBoundingClientRect().top < vh * 0.9) toReveal.push(el);
     });
+    toReveal.forEach(function(el) { el.classList.add('active'); });
   }
   document.addEventListener('scroll', check, { passive: true });
   // Run immediately so above-fold elements are visible without requiring a scroll

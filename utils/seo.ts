@@ -143,7 +143,7 @@ export function buildLocalBusinessSchema(): object {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     '@id': `${SEO_CONFIG.siteUrl}/#localbusiness`,
-    name: 'TrivianEdge Global',
+    name: 'TrivianEdge',
     description: 'Canada-based BPO and offshore software development company providing global talent, IT outsourcing, and managed services.',
     url: SEO_CONFIG.siteUrl,
     telephone: '+1-888-347-2489',

@@ -96,12 +96,12 @@ const CityLandingPage         = lazy(() => import('./components/CityLandingPage'
 // width/height are each logo's intrinsic pixel size (not display size) so the
 // browser can reserve the right aspect ratio before the image loads and avoid CLS.
 const TRUST_CLIENTS = [
-  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', href: 'https://www.capricorncollegeholbrook.lk/', width: 216, height: 160 },
-  { name: 'Cargo Login',       logo: '/logos/cargo-login.webp',       href: 'https://www.cargo-login.com/',            width: 156, height: 160 },
+  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', href: 'https://www.capricorncollegeholbrook.lk/', width: 86, height: 64 },
+  { name: 'Cargo Login',       logo: '/logos/cargo-login.webp',       href: 'https://www.cargo-login.com/',            width: 62, height: 64 },
   { name: 'Keynotive',         logo: '/logos/keynotive.webp',         href: 'https://www.keynotive.io/',               width: 201, height: 160 },
-  { name: 'Hub-Flx',           logo: '/logos/hub-flx.webp',           href: 'https://www.hub-flx.com/',                width: 313, height: 80  },
-  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', href: 'https://keynesiasrilanka.com', width: 172, height: 160 },
-  { name: 'MellieBugs',        logo: '/logos/melliebugs.webp',        href: 'https://melliebugs.com',                  width: 160, height: 160 },
+  { name: 'Hub-Flx',           logo: '/logos/hub-flx.webp',           href: 'https://www.hub-flx.com/',                width: 250, height: 64  },
+  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', href: 'https://keynesiasrilanka.com', width: 69, height: 64 },
+  { name: 'MellieBugs',        logo: '/logos/melliebugs.webp',        href: 'https://melliebugs.com',                  width: 64, height: 64 },
 ];
 
 const PREMIUM_FEATURES = [
@@ -406,7 +406,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {PREMIUM_FEATURES.map((feature, idx) => {
               const Icon = feature.icon;
               return (
-                <motion.article
+                <motion.div
                   key={feature.title}
                   initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -438,7 +438,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                       </span>
                     </div>
                   </div>
-                </motion.article>
+                </motion.div>
               );
             })}
           </div>
