@@ -3,7 +3,6 @@ import { AnimatePresence, motion, useReducedMotion, useInView } from 'framer-mot
 import {
   ArrowRight,
   ChevronRight,
-  Zap,
   Mail,
   Linkedin,
   Twitter,
@@ -118,7 +117,7 @@ const PREMIUM_FEATURES = [
   },
   {
     title: 'We Handle the Paperwork',
-    description: 'Contracts, payroll, taxes, and local employment laws in every country, all taken care of. Developers, support, finance, HR, or ops — one partner covers your full team, not just the technical side.',
+    description: 'Contracts, payroll, taxes, and local employment laws in every country, all taken care of. Developers, support, finance, HR, or ops: one partner covers your full team, not just the technical side.',
     icon: ShieldCheck,
     accent: 'text-cyan-500',
     iconBg: 'from-cyan-400/20 to-cyan-400/5',
@@ -144,12 +143,12 @@ const AI_VENTURES = [
   {
     name: 'Aria OS',
     url: '/ai-ventures/aria',
-    summary: 'The autonomous workforce operating system — hiring, payroll, compliance, and performance run by one AI core. Free for 10 employees.',
+    summary: 'The autonomous workforce operating system: hiring, payroll, compliance, and performance run by one AI core. Free for 10 employees.',
   },
   {
     name: 'Aether Logistics OS',
     url: '/ai-ventures/aether-logistics',
-    summary: 'AI-native freight operating system — compliance, routing, carrier booking, and customs clearance across 195 countries from one control tower.',
+    summary: 'AI-native freight operating system: compliance, routing, carrier booking, and customs clearance across 195 countries from one control tower.',
   },
   {
     name: 'Ancura Trivian',
@@ -174,7 +173,7 @@ const HOME_FAQS = [
   },
   {
     question: 'How quickly can TrivianEdge deploy a team?',
-    answer: 'Our standard deployment timeline runs around 30 days. That covers candidate sourcing, screening, legal setup, payroll, and onboarding. Actual timing varies by role and location — some move faster, more specialized roles can take longer.',
+    answer: 'Our standard deployment timeline runs around 30 days. That covers candidate sourcing, screening, legal setup, payroll, and onboarding. Actual timing varies by role and location: some move faster, more specialized roles can take longer.',
   },
   {
     question: 'How much does it cost to work with TrivianEdge?',
@@ -190,7 +189,7 @@ const HOME_FAQS = [
   },
   {
     question: 'What is the difference between BPO and RPO?',
-    answer: 'BPO (Business Process Outsourcing) means we run an ongoing business function for you — like customer support, back-office admin, or data processing. RPO (Recruitment Process Outsourcing) means we run your hiring process as an embedded part of your HR team. Both can be combined, and TrivianEdge offers both under one roof.',
+    answer: 'BPO (Business Process Outsourcing) means we run an ongoing business function for you, like customer support, back-office admin, or data processing. RPO (Recruitment Process Outsourcing) means we run your hiring process as an embedded part of your HR team. Both can be combined, and TrivianEdge offers both under one roof.',
   },
   {
     question: 'Can TrivianEdge build software and AI for my business?',
@@ -202,7 +201,7 @@ const HOME_FAQS = [
   },
   {
     question: 'Is there a minimum team size or contract length?',
-    answer: 'No minimum headcount — we can start with one person. Contract terms depend on the engagement model. Many clients start with a project-based arrangement and move to an ongoing model once they see results.',
+    answer: 'No minimum headcount, we can start with one person. Contract terms depend on the engagement model. Many clients start with a project-based arrangement and move to an ongoing model once they see results.',
   },
 ];
 
@@ -400,13 +399,19 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <span className="text-holo">Start with six proven talent hubs.</span>
             </h2>
             <p className="text-muted text-lg max-w-3xl mx-auto">
-              TrivianEdge is a Toronto-based BPO, RPO, and bespoke software development company that deploys offshore teams in as little as 30 days. We hire people for your back office, run your recruiting pipeline, and build the custom software your product needs, sourced from six global talent hubs — Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica — and matched to your time zone. Most companies juggle three or four vendors for hiring, payroll, and software. We bring people and software delivery under one roof, so nothing falls through the cracks.
+              TrivianEdge is a Toronto-based BPO, RPO, and bespoke software development company that deploys offshore teams in as little as 30 days. We hire people for your back office, run your recruiting pipeline, and build the custom software your product needs, sourced from six global talent hubs (Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica) and matched to your time zone. Most companies juggle three or four vendors for hiring, payroll, and software. We bring people and software delivery under one roof, so nothing falls through the cracks.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 reveal">
+          {/* Asymmetric 1+2 bento rather than three identical cards in a row:
+              the first (highest-intent) feature gets a wide, horizontal
+              treatment; the other two share a row beneath it. Three equal
+              cards side by side is the single most recognizable templated
+              layout there is, so this trio deliberately isn't one. */}
+          <div className="grid md:grid-cols-2 gap-6 reveal">
             {PREMIUM_FEATURES.map((feature, idx) => {
               const Icon = feature.icon;
+              const wide = idx === 0;
               return (
                 <motion.div
                   key={feature.title}
@@ -414,7 +419,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.25 }}
                   transition={{ duration: shouldReduceMotion ? 0.01 : 0.55, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className="card-glow bg-white dark:bg-white/5 rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
+                  className={`card-glow bg-white dark:bg-white/5 rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 ${wide ? 'md:col-span-2' : ''}`}
                   style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
                   role="link"
                   tabIndex={0}
@@ -427,17 +432,19 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   }}
                 >
                   <div className={`absolute -top-8 -right-8 w-32 h-32 ${feature.glow} blur-3xl pointer-events-none rounded-full`} />
-                  <div className="flex items-start gap-4">
-                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${feature.iconBg} border ${feature.iconBorder} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className={`w-6 h-6 ${feature.accent}`} />
+                  <div className={wide ? 'flex flex-col md:flex-row md:items-center gap-4 md:gap-8' : 'flex items-start gap-4'}>
+                    <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br ${feature.iconBg} border ${feature.iconBorder} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                      <Icon className={`w-6 h-6 md:w-8 md:h-8 ${feature.accent}`} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-xl font-bold text-text mb-2">{feature.title}</h3>
-                      <span className={`inline-block text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border ${feature.iconBorder} ${feature.accent} opacity-70 whitespace-nowrap mb-3`}>{feature.metric}</span>
-                      <p className="text-text/60 text-sm leading-relaxed mb-3">{feature.description}</p>
-                      <span className={`inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider ${feature.accent} group-hover:gap-2 transition-all duration-200`}>
-                        Learn more <ChevronRight className="w-3 h-3" />
-                      </span>
+                      <div className={wide ? 'md:max-w-md' : ''}>
+                        <h3 className={`font-bold text-text mb-2 ${wide ? 'text-2xl' : 'text-xl'}`}>{feature.title}</h3>
+                        <span className={`inline-block text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border ${feature.iconBorder} ${feature.accent} opacity-70 whitespace-nowrap mb-3`}>{feature.metric}</span>
+                        <p className="text-text/60 text-sm leading-relaxed mb-3">{feature.description}</p>
+                        <span className={`inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider ${feature.accent} group-hover:gap-2 transition-all duration-200`}>
+                          Learn more <ChevronRight className="w-3 h-3" />
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -497,10 +504,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-surface text-text/70 text-[10px] font-bold uppercase tracking-widest mb-6">
-              <Zap className="w-3 h-3" />
-              Simple 4-Step Process
-            </div>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
               <span className="sr-only">How do I get started with TrivianEdge? </span>
               How We Get You Set Up
@@ -646,7 +649,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       >
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12 reveal">
-            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-text/70 mb-4">Common questions</p>
             <h2 className="display-section text-4xl sm:text-5xl font-bold mb-4 text-text">
               Everything you wanted to know.
             </h2>
@@ -663,7 +665,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 8: CTA + CONTACT ===== */}
       <section id="contact" aria-label="Contact Us" className="section-dark section-shell px-4 md:px-6">
           <div className="max-w-7xl mx-auto reveal text-center relative z-10">
-            <p className="text-xs font-bold tracking-[0.25em] uppercase text-cyan-400 mb-6">Get started</p>
             <h2 className="display-section text-3xl sm:text-5xl md:text-7xl font-bold mb-5 text-white">
               Tell us what you need.
             </h2>
@@ -967,7 +968,7 @@ export default function App() {
                 <div className="mb-6">
                   <Logo light onClick={() => { navigate('/'); window.scrollTo({top: 0, behavior: 'smooth'}); }} />
                 </div>
-                <p className="text-white/60 text-sm max-w-xs mb-8 leading-relaxed">Build offshore teams that run at full capacity. Hiring, payroll, compliance, and delivery — handled end to end.</p>
+                <p className="text-white/60 text-sm max-w-xs mb-8 leading-relaxed">Build offshore teams that run at full capacity. Hiring, payroll, compliance, and delivery, handled end to end.</p>
                 <div className="flex gap-3">
                   <a href="https://www.linkedin.com/company/trivianedge/" target="_blank" rel="noopener noreferrer" aria-label="TrivianEdge on LinkedIn"
                     className="w-9 h-9 rounded-xl bg-white/6 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200">
@@ -1016,7 +1017,7 @@ export default function App() {
               </div>
             </div>
             <div className="max-w-7xl mx-auto pt-8 pr-20 sm:pr-28 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest uppercase text-white/55">
-              <p>© {new Date().getFullYear()} TrivianEdge Global — Canada's Offshore Operations Partner</p>
+              <p>© {new Date().getFullYear()} TrivianEdge Global, Canada's Offshore Operations Partner</p>
               <div className="flex gap-8">
                 <Link to="/privacy" className="hover:text-white/80 transition-colors">Privacy</Link>
                 <Link to="/terms" className="hover:text-white/80 transition-colors">Terms</Link>
