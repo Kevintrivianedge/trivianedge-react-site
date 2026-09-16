@@ -224,24 +224,20 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         {/* Abstract network graphic, not a stock photo or literal map (the real
             geographic map with pins lives further down at #talent-hubs). Renders
             behind the hero content (same z-index as siblings, painted first so
-            it stacks behind per DOM order) at low opacity so it reads as texture
-            representing a live operations network, not competing with the copy.
-            Hidden on narrow viewports where there's no spare visual space and a
-            static hero already keeps LCP fast. */}
-        <div
-          className="hidden md:block !absolute inset-0"
-          style={{
-            // Fades the graphic out behind the readable content (nav strip,
-            // headline, subtext, buttons) and lets it show only in the
-            // otherwise-empty background around and beyond it, so it reads
-            // as ambient texture rather than clutter crossing over text
-            // and the CTA button.
-            maskImage: 'radial-gradient(ellipse 62% 68% at 30% 46%, transparent 0%, transparent 55%, black 100%), linear-gradient(to bottom, transparent 0%, transparent 12%, black 12%)',
-            maskComposite: 'intersect',
-            WebkitMaskImage: '-webkit-radial-gradient(ellipse 62% 68% at 30% 46%, transparent 0%, transparent 55%, black 100%), -webkit-linear-gradient(to bottom, transparent 0%, transparent 12%, black 12%)',
-            WebkitMaskComposite: 'source-in',
-          }}
-        >
+            it stacks behind per DOM order).
+            Positioned at a FIXED pixel left-offset, not a percentage: the text
+            column below is `max-w-[760px]`, a constant regardless of viewport
+            width, so the empty space to its right only grows as the viewport
+            widens — a percentage-based boundary drifts across that fixed
+            column at different widths (confirmed broken two different ways on
+            real screenshots: masked to near-invisibility on one width, then
+            cutting straight through the headline and CTA button on another).
+            A fixed left offset just past the text column's max width keeps
+            this correct at every width from `lg:` up. Shown at `lg:` to match
+            the breakpoint where the metric cards switch to their two-column
+            layout (`hidden lg:flex` below) — below that, the hero text runs
+            full width and there's no real right-hand space for this at all. */}
+        <div className="hidden lg:block !absolute inset-y-0 right-0" style={{ left: '820px' }}>
           <HeroNetworkVisual />
         </div>
 
