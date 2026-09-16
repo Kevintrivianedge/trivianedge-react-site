@@ -1131,8 +1131,15 @@ const BASE_SECURITY_HEADERS: Record<string, string> = {
   'Cross-Origin-Opener-Policy': 'same-origin',
   // Cross-origin resource policy: restrict resource loading to same-origin/same-site
   'Cross-Origin-Resource-Policy': 'cross-origin',
-  // Cross-origin embedder policy: require CORP for embeddings
-  'Cross-Origin-Embedder-Policy': 'require-corp',
+  // COEP: require-corp was removed — it only matters for pages that need
+  // cross-origin isolation (SharedArrayBuffer, WASM threading), which this
+  // site never uses, and it silently blocks every cross-origin subresource
+  // that doesn't send back its own Cross-Origin-Resource-Policy header. Most
+  // third-party scripts don't: with it set, CookieYes's consent script,
+  // GA4's event beacons, and Amplitude's session-replay config fetch were
+  // all failing with net::ERR_BLOCKED_BY_RESPONSE in the browser console —
+  // confirmed live via a headless run capturing requestfailed/console.error
+  // events, not just a PageSpeed nitpick.
   // Permitted cross-domain policies: deny Flash/PDF policy file access
   'X-Permitted-Cross-Domain-Policies': 'none',
 };
