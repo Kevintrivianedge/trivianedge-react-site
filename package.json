@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "postinstall": "playwright install chromium",
+    "postinstall": "[ -z \"$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD\" ] && playwright install chromium || true",
     "build": "vite build && node scripts/prerender.mjs",
     "preview": "vite preview",
     "test": "vitest run",
