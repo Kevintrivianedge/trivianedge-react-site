@@ -42,7 +42,8 @@ function startAmplitude(): void {
   if (amplitudeStarted) return;
   amplitudeStarted = true;
   import('@amplitude/unified').then((amplitude) => {
-    amplitude.initAll('a74020325f807eb4bddead7b94dcbf22', {
+    // Amplitude ingestion key — public by design; move to an env var when you set up environments.
+    amplitude.initAll('252150fdd59e45b002d64827910caa79', {
       analytics: { autocapture: true },
       sessionReplay: { sampleRate: 0.1 },
     });
