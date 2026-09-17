@@ -96,8 +96,9 @@
          bakes the post-swap rel="stylesheet" state into every real route's
          served HTML, but a real broken-font bug on any non-prerendered
          fallback (e.g. a genuine 404). A plain synchronous stylesheet link
-         has no such failure mode. -->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300..800&display=swap" rel="stylesheet">
+         has no such failure mode. Optimized weights: Manrope only loads
+         400/600/700 (actual usage); Fraunces loads 400-700 range for headings. -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap" rel="stylesheet">
 
     <!-- Defer non-critical CSS to improve FCP/LCP by removing render-blocking resources.
          This allows the page to render with critical styles already inlined by Vite's
