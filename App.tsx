@@ -358,7 +358,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { value: '~30', unit: 'days', label: 'Avg. time to hire', description: 'From intake to deployment', live: true },
+              { value: '30', unit: 'days', label: 'Avg. time to hire', description: 'From intake to deployment', live: true },
               { value: 'Up to 40', unit: '%', label: 'Cost savings', description: 'vs. equivalent North American hires', live: false },
               { value: '6', unit: 'hubs', label: 'Countries sourced', description: 'Across five continents', live: false },
               { value: '24/7', unit: '', label: 'Ops coverage', description: 'Global timezone alignment', live: true },
@@ -374,7 +374,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   delay: i * 0.1,
                   ease: [0.16, 1, 0.3, 1]
                 }}
-                className="rounded-2xl border border-cyan-400/20 bg-white/5 backdrop-blur-sm p-6 md:p-8 relative group hover:border-cyan-400/40 transition-colors duration-300"
+                className="rounded-2xl border border-cyan-400/20 bg-surface backdrop-blur-sm p-6 md:p-8 relative group hover:border-cyan-400/40 transition-colors duration-300"
                 style={{ boxShadow: '0 8px 32px rgba(0, 196, 154, 0.06)' }}
               >
                 <div className="absolute -top-8 -right-8 w-24 h-24 bg-cyan-400/8 rounded-full blur-2xl group-hover:bg-cyan-400/12 transition-colors duration-300" />
@@ -390,17 +390,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                       transition={{ duration: 2.5, repeat: Infinity }}
                     />
                   )}
-                  <span className="text-[10px] uppercase tracking-widest text-white/50 font-semibold flex-1">
+                  <span className="text-[10px] uppercase tracking-widest text-muted font-semibold flex-1">
                     {card.label}
                   </span>
                 </div>
 
                 <div className="mb-4">
-                  <div className="text-3xl md:text-4xl font-bold text-white mb-1">
-                    {card.value}
-                    <span className="text-lg md:text-xl opacity-60 ml-2">{card.unit}</span>
+                  <div className="text-3xl md:text-4xl font-bold mb-1">
+                    <span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">{card.value}</span>
+                    <span className="text-lg md:text-xl text-text opacity-70 ml-2">{card.unit}</span>
                   </div>
-                  <p className="text-xs text-white/40">{card.description}</p>
+                  <p className="text-xs text-muted">{card.description}</p>
                 </div>
               </motion.div>
             ))}

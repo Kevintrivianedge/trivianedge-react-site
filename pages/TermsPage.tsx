@@ -93,7 +93,7 @@ const TermsPage: React.FC = () => {
           <div className="p-6 rounded-2xl bg-cyan-500/5 border border-cyan-500/20">
             <p className="text-cyan-400 text-sm font-mono">
               For legal enquiries, contact{' '}
-              <a href="mailto:kevin.v@trivianedge.com" className="underline hover:text-white transition-colors break-words">
+              <a href="mailto:kevin.v@trivianedge.com" className="underline hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors break-words">
                 kevin.v@trivianedge.com
               </a>{' '}
               and reference "Terms of Engagement" in the subject line.
