@@ -12,7 +12,7 @@ export const useClarity = () => {
     if (typeof window === 'undefined') return;
 
     try {
-      // Clarity is initialized via script tag in index.html
+      // Clarity is initialized from index.tsx (deferred via requestIdleCallback).
       // This hook verifies it's loaded and provides utility functions
       const clarityWindow = window as ClarityWindow;
 
