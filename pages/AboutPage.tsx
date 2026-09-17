@@ -155,7 +155,7 @@ const AboutPage: React.FC = () => {
                 <div key={hub.id} className="glass p-5 rounded-2xl border-border reveal">
                   <div className="flex items-center gap-2 mb-2">
                     <img
-                      src={`https://flagcdn.com/w40/${hub.flagCode}.png`}
+                      src={`https://flagcdn.com/w40/${hub.flagCode}.webp`}
                       crossOrigin="anonymous"
                       width={20}
                       height={15}

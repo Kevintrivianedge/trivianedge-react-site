@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, CalendarDays, Phone, Mail } from 'lucide-react';
+import { ArrowLeft, CalendarDays, Phone, Mail, MapPin } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import InquiryForm from '../components/InquiryForm';
 import { buildLocalBusinessSchema, breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
@@ -68,6 +68,11 @@ const ContactPage: React.FC = () => {
                   <p className="text-xs uppercase tracking-widest font-bold text-muted mb-2">Email</p>
                   <p className="text-text font-semibold break-words">kevin.v@trivianedge.com</p>
                 </a>
+              </div>
+
+              <div className="flex items-start gap-3 text-sm text-muted max-w-2xl mb-6">
+                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-cyan-500" />
+                <span>37 Wiggens Ct, Toronto, ON M1B 1K3, Canada</span>
               </div>
 
               <div className="space-y-4 text-sm text-muted max-w-2xl">

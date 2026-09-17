@@ -47,7 +47,7 @@ const SERVICES_HUB = [
   },
   {
     title: 'AI Development',
-    shortName: 'AI Dev',
+    shortName: 'AI Development',
     badge: 'A Bespoke Software Specialty',
     href: '/services/ai-development',
     icon: Cpu,

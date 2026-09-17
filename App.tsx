@@ -957,7 +957,7 @@ function getSEOProps(pathname: string) {
   if (pathname === '/') {
     // Home maximum schema richness for BPO/outsourcing dominance
     const signal = getSEOTrendSignal('home');
-    const baseUrl = SEO_CONFIG.siteUrl;
+    const baseUrl = `${SEO_CONFIG.siteUrl}/`;
     return {
       title: signal.titleVariant,
       description: signal.descriptionVariant,
