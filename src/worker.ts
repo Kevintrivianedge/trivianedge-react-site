@@ -1202,6 +1202,24 @@ export default {
       return Response.redirect(canonical.toString(), 301);
     }
 
+    // Legacy URL redirects — old slugs still turning up in Search Console /
+    // inbound links that have a clear current equivalent. Anything without an
+    // obvious 1:1 replacement is deliberately left to 404 rather than guessed
+    // at (see src/worker.ts 404 handling below, which now serves a real 404
+    // status instead of a soft-404).
+    const LEGACY_REDIRECTS: Record<string, string> = {
+      '/terms-conditions': '/terms',
+      '/edgepoints': '/venture-studio',
+      '/devforge': '/services/it-outsourcing',
+      '/pods': '/services/bpo',
+      '/Strategy': '/services',
+    };
+    if (LEGACY_REDIRECTS[url.pathname]) {
+      const target = new URL(request.url);
+      target.pathname = LEGACY_REDIRECTS[url.pathname];
+      return Response.redirect(target.toString(), 301);
+    }
+
     // ALL /api/* routes, rate-limited and CORS-gated in one place
     if (url.pathname.startsWith('/api/')) {
       const ip =
