@@ -1090,8 +1090,8 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 // ---------------------------------------------------------------------------
 // Content-Security-Policy applied to all HTML responses (static assets).
 // Explicitly allowlists only the origins the app actually needs:
-//   - Amplitude Analytics + Session Replay CDN
 //   - Google Analytics (gtag.js)
+//   - Microsoft Clarity (analytics + session replay)
 //   - ipapi.co (geolocation)
 //   - Open-Meteo (weather)
 //   - Anthropic API (proxied through the worker, never called from browser)
@@ -1104,8 +1104,8 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 // ---------------------------------------------------------------------------
 const CSP_HEADER =
   "default-src 'self'; " +
-  "script-src 'self' https://cdn.amplitude.com https://www.googletagmanager.com https://connect.facebook.net https://static.cloudflareinsights.com https://www.clarity.ms https://scripts.clarity.ms; " +
-  "connect-src 'self' https://*.amplitude.com https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com https://www.clarity.ms; " +
+  "script-src 'self' https://www.googletagmanager.com https://connect.facebook.net https://static.cloudflareinsights.com https://www.clarity.ms https://scripts.clarity.ms; " +
+  "connect-src 'self' https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com https://www.clarity.ms; " +
   "img-src 'self' data: https:; " +
   "font-src 'self' https://fonts.gstatic.com; " +
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +

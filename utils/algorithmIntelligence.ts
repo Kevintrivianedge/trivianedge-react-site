@@ -259,26 +259,10 @@ export class AlgorithmIntelligenceEngine {
   }
 
   /**
-   * Report Core Web Vitals to Amplitude as a structured event.
-   * Falls back to a console log in development if Amplitude is not available.
+   * Log Core Web Vitals for local debugging/dev inspection.
    */
   reportVitals(vitals: object): void {
     log('Vitals report:', vitals);
-    // Send to Amplitude if the SDK has been loaded by index.tsx
-    const win = globalThis as typeof globalThis & {
-      amplitude?: { track: (event: string, props: object) => void };
-    };
-    if (win.amplitude?.track) {
-      win.amplitude.track('Core Web Vitals', {
-        ...vitals,
-        engine: this.signals.engine,
-        networkQuality: this.signals.networkQuality,
-        pageSpeedScore: this.signals.pageSpeedScore,
-        mobileScore: this.signals.mobileScore,
-        schemaValid: this.signals.schemaValid,
-        url: globalThis.location?.href,
-      });
-    }
   }
 
   /**

@@ -110,21 +110,6 @@ const initGoogleAnalytics = () => {
   document.head.appendChild(script);
 };
 
-// Microsoft Clarity, deferred the same way as GA4 above instead of running
-// eagerly at head-parse time in index.html. The tag's own loader script is
-// already async, so this only changes *when* that fetch kicks off, not
-// whether it blocks rendering.
-const initClarity = () => {
-  (function (c: any, l: Document, a: string, r: string, i: string, t?: HTMLScriptElement, y?: Element) {
-    c[a] = c[a] || function (...args: unknown[]) { (c[a].q = c[a].q || []).push(args); };
-    t = l.createElement(r) as HTMLScriptElement;
-    t.async = true;
-    t.src = `https://www.clarity.ms/tag/${i}?ref=bwt`;
-    y = l.getElementsByTagName(r)[0];
-    y.parentNode!.insertBefore(t, y);
-  })(window, document, 'clarity', 'script', 'yji0tnzvdy');
-};
-
 const initServiceWorker = () => {
   import('./utils/serviceWorkerRegistry').then(({ registerServiceWorker }) => {
     registerServiceWorker({
@@ -143,12 +128,10 @@ if (!isPrerendering) {
   if (typeof requestIdleCallback !== 'undefined') {
     requestIdleCallback(initCookieConsent, { timeout: 4000 });
     requestIdleCallback(initGoogleAnalytics, { timeout: 4000 });
-    requestIdleCallback(initClarity, { timeout: 4000 });
     requestIdleCallback(initServiceWorker, { timeout: 5000 });
   } else {
     setTimeout(initCookieConsent, 1000);
     setTimeout(initGoogleAnalytics, 1000);
-    setTimeout(initClarity, 1000);
     setTimeout(initServiceWorker, 2000);
   }
 }

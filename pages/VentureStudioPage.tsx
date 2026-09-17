@@ -185,7 +185,6 @@ const trackAnalytics = (event: string, payload: Record<string, unknown>) => {
   const w = window as Window & {
     dataLayer?: Array<Record<string, unknown>>;
     gtag?: (command: string, eventName: string, params?: Record<string, unknown>) => void;
-    amplitude?: { track?: (eventName: string, params?: Record<string, unknown>) => void };
   };
 
   if (Array.isArray(w.dataLayer)) {
@@ -193,9 +192,6 @@ const trackAnalytics = (event: string, payload: Record<string, unknown>) => {
   }
   if (typeof w.gtag === 'function') {
     w.gtag('event', event, eventPayload);
-  }
-  if (w.amplitude?.track) {
-    w.amplitude.track(event, eventPayload);
   }
 
   // Server-side event ingestion for persistent analytics storage.

@@ -9,10 +9,10 @@
  * third-party dashboard that can drift out of sync with what this codebase
  * actually loads.
  *
- * Amplitude and the Meta Pixel have no consent-aware SDK mode of their own,
- * so they're gated here: they simply don't start until the visitor grants
- * the relevant category. Google Analytics already has native Consent Mode
- * v2 support (see index.tsx's initGoogleAnalytics), so gtag.js keeps loading
+ * The Meta Pixel has no consent-aware SDK mode of its own, so it's gated
+ * here: it simply doesn't start until the visitor grants the marketing
+ * category. Google Analytics already has native Consent Mode v2 support
+ * (see index.tsx's initGoogleAnalytics), so gtag.js keeps loading
  * unconditionally and this module just forwards the visitor's choice to it.
  */
 import * as CookieConsent from 'vanilla-cookieconsent';
@@ -35,19 +35,24 @@ declare global {
   }
 }
 
-let amplitudeStarted = false;
+let clarityStarted = false;
 let pixelStarted = false;
 
-function startAmplitude(): void {
-  if (amplitudeStarted) return;
-  amplitudeStarted = true;
-  import('@amplitude/unified').then((amplitude) => {
-    // Amplitude ingestion key — public by design; move to an env var when you set up environments.
-    amplitude.initAll('252150fdd59e45b002d64827910caa79', {
-      analytics: { autocapture: true },
-      sessionReplay: { sampleRate: 0.1 },
-    });
-  });
+// Microsoft Clarity's tag script is otherwise async and non-blocking by
+// design, but session replay is personal-data processing, so it's gated
+// here the same way Meta Pixel is — it doesn't start until the visitor
+// grants the analytics category, not unconditionally at idle time.
+function startClarity(): void {
+  if (clarityStarted) return;
+  clarityStarted = true;
+  (function (c: any, l: Document, a: string, r: string, i: string, t?: HTMLScriptElement, y?: Element) {
+    c[a] = c[a] || function (...args: unknown[]) { (c[a].q = c[a].q || []).push(args); };
+    t = l.createElement(r) as HTMLScriptElement;
+    t.async = true;
+    t.src = `https://www.clarity.ms/tag/${i}?ref=bwt`;
+    y = l.getElementsByTagName(r)[0];
+    y.parentNode!.insertBefore(t, y);
+  })(window, document, 'clarity', 'script', 'yji0tnzvdy');
 }
 
 function startMetaPixel(): void {
@@ -63,7 +68,7 @@ function applyConsent(): void {
   const analyticsGranted = CookieConsent.acceptedCategory('analytics');
   const marketingGranted = CookieConsent.acceptedCategory('marketing');
 
-  if (analyticsGranted) startAmplitude();
+  if (analyticsGranted) startClarity();
   if (marketingGranted) startMetaPixel();
 
   // Forwards the visitor's actual choice to Google's Consent Mode v2 API.
@@ -139,7 +144,7 @@ export function initCookieConsent(): void {
               },
               {
                 title: 'Analytics',
-                description: 'Helps us understand how visitors use the site (Amplitude, Google Analytics).',
+                description: 'Helps us understand how visitors use the site (Google Analytics, Microsoft Clarity).',
                 linkedCategory: 'analytics',
               },
               {

@@ -8,15 +8,10 @@
 
 The bundle is well-optimized with clear separation of concerns through code splitting. Primary opportunities lie in:
 1. Already implemented: Framer Motion & Route-level code splitting
-2. Already implemented: Amplitude deferred loading
+2. Amplitude removed entirely (was: deferred loading) — replaced by Google Analytics + Microsoft Clarity, both consent-gated
 3. Further optimization limited without UX impact (all dependencies are actively used)
 
 ## Bundle Breakdown
-
-### Tier 1: Large Deferred/Specialized (OK)
-- **amplitude** (370 KB) - Analytics, loaded via requestIdleCallback ✓
-- **rrweb-record** (177 KB) - Session replay, 10% sample rate ✓
-- **rrweb-plugin-console** (123 KB) - Console recording, sampled ✓
 
 ### Tier 2: Core Vendor Chunks (Necessary)
 - **vendor-router** (168 KB) - React Router v7 (comprehensive routing)
