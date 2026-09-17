@@ -9,6 +9,13 @@ binding = "ASSETS"
 not_found_handling = "none"
 html_handling = "none"
 
+[observability]
+enabled = true
+
+[observability.logs]
+enabled = true
+invocation_logs = true
+
 # Optional persistent analytics storage.
 # 1) Create namespace: wrangler kv namespace create ANALYTICS_KV
 # 2) Add the generated id below.
