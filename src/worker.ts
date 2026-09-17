@@ -1104,8 +1104,8 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 // ---------------------------------------------------------------------------
 const CSP_HEADER =
   "default-src 'self'; " +
-  "script-src 'self' https://cdn.amplitude.com https://www.googletagmanager.com https://connect.facebook.net https://static.cloudflareinsights.com; " +
-  "connect-src 'self' https://*.amplitude.com https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com; " +
+  "script-src 'self' https://cdn.amplitude.com https://www.googletagmanager.com https://connect.facebook.net https://static.cloudflareinsights.com https://www.clarity.ms https://scripts.clarity.ms; " +
+  "connect-src 'self' https://*.amplitude.com https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com https://www.clarity.ms; " +
   "img-src 'self' data: https:; " +
   "font-src 'self' https://fonts.gstatic.com; " +
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
@@ -1134,19 +1134,15 @@ const BASE_SECURITY_HEADERS: Record<string, string> = {
   'Cross-Origin-Resource-Policy': 'cross-origin',
   // Permitted cross-domain policies: deny Flash/PDF policy file access
   'X-Permitted-Cross-Domain-Policies': 'none',
-  // Content Security Policy: prevent XSS, data injection, clickjacking
-  'Content-Security-Policy': [
-    "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net",
-    "img-src 'self' data: https: blob:",
-    "font-src 'self' https://fonts.gstatic.com data:",
-    "connect-src 'self' https://api.anthropic.com https://api.resend.com https://www.google-analytics.com https://region1.analytics.google.com",
-    "frame-src 'none'",
-    "object-src 'none'",
-    "base-uri 'self'",
-    "form-action 'self'",
-  ].join('; '),
+  // Content-Security-Policy is deliberately NOT set here. It used to carry a
+  // second, stale policy (jsdelivr/cdnjs/anthropic-api-direct — leftover from
+  // an earlier draft, never updated when Amplitude/Clarity were added) that
+  // addSecurityHeaders() below applied via Object.entries(...).forEach after
+  // already setting the correct, current CSP_HEADER — Headers.set() means
+  // last write wins, so this stale entry silently overwrote the real policy
+  // on every HTML response, blocking Amplitude and Clarity in production
+  // regardless of what src/cookieConsent.ts or index.tsx did. CSP_HEADER is
+  // the single source of truth now; see addSecurityHeaders().
 };
 
 // Cloudflare Workers Static Assets concatenates Cache-Control from every
