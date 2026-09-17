@@ -87,12 +87,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://flagcdn.com" crossorigin>
 
-    <!-- Google Fonts, loaded as a non-blocking preload + JS swap-to-stylesheet
-         instead of a synchronous <link rel="stylesheet">, so the font request
-         no longer sits in the render-blocking critical path (this was one of
-         the larger contributors to PageSpeed's "render-blocking requests"
-         flag). font-display=swap in the URL means fallback text still shows
-         immediately either way.
+    <!-- Google Fonts, loaded as a non-blocking media="print" -> "all" swap
+         (same pattern as the main app CSS bundle below) instead of a
+         synchronous <link rel="stylesheet">, so the font request no longer
+         sits in the render-blocking critical path. font-display=swap in the
+         URL means fallback text still shows immediately either way.
+         Originally used <link rel="preload" as="style"> instead, but that
+         relies on the preload link's own 'load' event, which measurably
+         doesn't fire reliably across engines (confirmed live: listener
+         attached, the resource returned 200, document.readyState reached
+         "complete", and the event still never fired) — media="print"/"all"
+         doesn't have that problem since the resource is genuinely loaded as
+         a (temporarily inactive) stylesheet, not merely preloaded.
          The swap itself runs from /critical-loader.js, an external,
          same-origin script (see that file for why: inline <script> bodies
          and inline onload="" attributes are the only things a CSP's
@@ -100,9 +106,17 @@
          this app's own control has been observed doing exactly that on some
          requests — an external same-origin file isn't subject to it either
          way. Optimized weights: Manrope only loads 400/600/700 (actual
-         usage); Fraunces loads 400-700 range for headings. -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap" id="font-preload">
-    <script src="/critical-loader.js"></script>
+         usage); Fraunces loads 400-700 range for headings.
+         The script tag below is deliberately deferred: Vite injects its
+         own CSS <link> further down in <head> than this tag, so running
+         critical-loader.js any earlier means querySelectorAll finds zero
+         matching elements for it — no listener ever gets attached, and the
+         whole site's stylesheet stays stuck at media="print" (invisible)
+         forever. defer guarantees the full document is parsed, so every
+         target <link> exists by the time this runs, regardless of where
+         Vite happens to place its own tag. -->
+    <link rel="stylesheet" media="print" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
+    <script src="/critical-loader.js" defer></script>
     <noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap" rel="stylesheet"></noscript>
 
 <!-- Vite bundles all dependencies, no browser importmap needed -->

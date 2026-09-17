@@ -126,29 +126,22 @@ async function main() {
       });
 
       // The main app CSS and the Google Fonts stylesheet are both loaded
-      // non-blocking for real visitors (media="print" -> "all" swap, and
-      // rel="preload" -> "stylesheet" swap, both via /critical-loader.js's
-      // load listeners) — but by the time this headless page has reached
-      // networkidle, both listeners have already fired, so page.content()
-      // captures the POST-swap, eager state and bakes it into the static
-      // snapshot every real visitor gets. That silently turns both deferred
-      // resources back into render-blocking ones for everyone, defeating the
-      // defer entirely — the same failure mode as the requestIdleCallback-
-      // deferred scripts guarded by __PRERENDER__ above, just for CSS
-      // instead of JS. Reset them to their pre-load form here so the shipped
-      // HTML preserves the actual deferred behavior; real visitors' own
-      // critical-loader.js resolves them exactly as before.
+      // non-blocking for real visitors (media="print" -> "all" swap via
+      // /critical-loader.js's load listeners) — but by the time this
+      // headless page has reached networkidle, those listeners have already
+      // fired, so page.content() captures the POST-swap, eager state and
+      // bakes it into the static snapshot every real visitor gets. That
+      // silently turns both deferred resources back into render-blocking
+      // ones for everyone, defeating the defer entirely — the same failure
+      // mode as the requestIdleCallback-deferred scripts guarded by
+      // __PRERENDER__ above, just for CSS instead of JS. Reset them to their
+      // pre-load form here so the shipped HTML preserves the actual deferred
+      // behavior; real visitors' own critical-loader.js resolves them
+      // exactly as before.
       await page.evaluate(() => {
         document.querySelectorAll('link[rel="stylesheet"][media="all"]').forEach((el) => {
-          const href = el.getAttribute('href') ?? '';
-          if (!href.includes('fonts.googleapis.com')) {
-            el.setAttribute('media', 'print');
-          }
+          el.setAttribute('media', 'print');
         });
-        const fontLink = document.getElementById('font-preload');
-        if (fontLink && fontLink.getAttribute('rel') === 'stylesheet') {
-          fontLink.setAttribute('rel', 'preload');
-        }
       });
 
       const html = await page.content();
