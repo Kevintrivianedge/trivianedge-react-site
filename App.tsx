@@ -221,22 +221,16 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         aria-label="Hero"
         className="hero-dark hero-fade-out relative min-h-screen sm:min-h-0 lg:min-h-screen flex flex-col px-4 sm:px-6 overflow-hidden"
       >
-        {/* Abstract network graphic, not a stock photo or literal map (the real
-            geographic map with pins lives further down at #talent-hubs). Renders
-            behind the hero content (same z-index as siblings, painted first so
-            it stacks behind per DOM order).
-            Positioned at a FIXED pixel left-offset, not a percentage: the text
-            column below is `max-w-[760px]`, a constant regardless of viewport
-            width, so the empty space to its right only grows as the viewport
-            widens — a percentage-based boundary drifts across that fixed
-            column at different widths (confirmed broken two different ways on
-            real screenshots: masked to near-invisibility on one width, then
-            cutting straight through the headline and CTA button on another).
-            A fixed left offset just past the text column's max width keeps
-            this correct at every width from `lg:` up. Shown at `lg:` to match
-            the breakpoint where the metric cards switch to their two-column
-            layout (`hidden lg:flex` below) — below that, the hero text runs
-            full width and there's no real right-hand space for this at all. */}
+        {/* PARALLAX BACKGROUND — Subtle animated grid that moves slower than scroll */}
+        <motion.div
+          className="hidden lg:block absolute inset-0 -z-10"
+          style={{
+            background: 'linear-gradient(135deg, rgba(0, 196, 154, 0.08) 0%, rgba(0, 255, 224, 0.04) 100%)',
+            opacity: 0.5,
+          }}
+        />
+
+        {/* Abstract network graphic */}
         <div className="hidden lg:block !absolute inset-y-0 right-0" style={{ left: '820px' }}>
           <HeroNetworkVisual />
         </div>
@@ -246,125 +240,183 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           className="flex-1 flex items-center max-w-7xl mx-auto w-full relative z-10 pt-20 pb-8 gap-8 xl:gap-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="flex-1 min-w-0 max-w-[760px]">
+            {/* EYEBROW — Operator positioning */}
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="text-xs font-bold tracking-[0.25em] uppercase text-cyan-400 mb-8"
             >
-              Canada's BPO, RPO & Bespoke Software Partner
+              Operator. Builder. Partner.
             </motion.p>
 
+            {/* HEADLINE — Line-by-line reveal with stagger */}
             <h1 className="display-hero font-bold tracking-tight mb-8 leading-[1.02] text-white">
               <motion.span
                 className="block"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.0, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               >
-                Build the team.
+                Built For
               </motion.span>
               <motion.span
-                className="block text-holo"
+                className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-300"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.0, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               >
-                Run the system.
+                What's Next
               </motion.span>
             </h1>
 
-            {/* No entrance animation on this element: it's the page's LCP
-                candidate (confirmed via PageSpeed Insights' LCP breakdown).
-                Fading it in behind a Framer Motion opacity transition made
-                its paint wait on that animation frame firing, which itself
-                queued behind the page's third-party-script main-thread work
-                — measured at 4+ seconds of pure "element render delay" with
-                a 10ms TTFB, i.e. the content was ready but hidden. */}
-            <p className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light">
-              Offshore teams and bespoke software, typically deployed within 30 days. Hiring, payroll, compliance, and delivery, handled entirely by us.
-            </p>
+            {/* SUBHEADING — Fade in after headline completes */}
+            <motion.p
+              className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.7, ease: 'easeOut' }}
+            >
+              Offshore teams, global compliance, bespoke software. One partner, one contract, one point of accountability.
+            </motion.p>
 
+            {/* CTAs — Premium hover states */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col sm:flex-row items-start gap-4"
             >
-              <a
+              {/* Primary CTA */}
+              <motion.a
                 href="#contact"
                 onClick={e => { e.preventDefault(); scrollTo('contact'); }}
-                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 group btn-magnetic premium-button micro-press-button"
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 group bg-cyan-400 text-black hover:text-black transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+                style={{
+                  boxShadow: '0 0 0px rgba(0, 196, 154, 0)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 0 40px rgba(0, 196, 154, 0.4), 0 0 80px rgba(0, 255, 224, 0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 0 0px rgba(0, 196, 154, 0)';
+                }}
               >
-                Start the conversation
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-              </a>
-              <a
+                Get Started
+                <motion.div
+                  animate={{ x: 0 }}
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ArrowRight className="w-5 h-5" />
+                </motion.div>
+              </motion.a>
+
+              {/* Secondary CTA */}
+              <motion.a
                 href="#how-it-works"
                 onClick={e => { e.preventDefault(); scrollTo('how-it-works'); }}
-                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 btn-magnetic premium-button-secondary micro-press-button !text-white border-white/20 hover:border-white/40 hover:bg-white/5"
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 text-white border border-white/20 hover:border-white/40 hover:bg-white/5 transition-colors"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
               >
-                How it works
-                <ChevronRight className="w-5 h-5" />
-              </a>
+                How It Works
+                <motion.div
+                  animate={{ x: 0 }}
+                  whileHover={{ x: 2 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </motion.div>
+              </motion.a>
             </motion.div>
           </div>
 
-          {/* Right-side floating metric cards — desktop only.
-              lg:mb-24 keeps the last card clear of the fixed chat bubble
-              (bottom-10 right-10, ~96px footprint) on shorter viewports. */}
+          {/* METRIC CARDS — Floating staggered reveals (desktop only) */}
           <motion.div
             className="hidden lg:flex flex-col gap-4 flex-shrink-0 lg:mb-24"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.0, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
           >
             {[
-              { value: '~30', unit: ' days', label: 'Average time to hire', live: true },
+              { value: '~30', unit: 'days', label: 'Avg. time to hire', live: true },
               { value: 'Up to 40', unit: '%', label: 'Cost savings', live: false },
-              { value: '6',  unit: '',      label: 'Countries we source from', live: false },
-              { value: '24/7', unit: '',    label: 'Operations coverage', live: true },
+              { value: '6', unit: '', label: 'Countries sourced', live: false },
+              { value: '24/7', unit: '', label: 'Ops coverage', live: true },
             ].map((card, i) => (
               <motion.div
                 key={card.label}
-                className="hero-metric-card"
-                initial={{ opacity: 0, x: 24 }}
+                className="rounded-2xl border border-cyan-400/20 bg-white/5 backdrop-blur-sm p-4 min-w-[180px]"
+                initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7, delay: 1.0 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: 0.6,
+                  delay: 1.0 + i * 0.1,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                whileHover={{
+                  boxShadow: '0 0 24px rgba(0, 196, 154, 0.3)',
+                  scale: 1.02,
+                }}
               >
-                <div className="flex items-center gap-2 mb-1">
-                  {card.live && <span className="hero-metric-dot" />}
-                  <span className="hero-metric-label">{card.label}</span>
+                <div className="flex items-center gap-2 mb-2">
+                  {card.live && (
+                    <motion.span
+                      className="w-2 h-2 rounded-full bg-cyan-400"
+                      animate={{ opacity: [1, 0.5, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                  )}
+                  <span className="text-[10px] uppercase tracking-widest text-white/60 font-semibold">
+                    {card.label}
+                  </span>
                 </div>
-                <span className="hero-metric-value">{card.value}<span className="hero-metric-unit">{card.unit}</span></span>
+                <span className="text-2xl font-bold text-white">
+                  {card.value}
+                  <span className="text-sm opacity-70 ml-1">{card.unit}</span>
+                </span>
               </motion.div>
             ))}
           </motion.div>
         </motion.div>
 
-        {/* Mobile-only 2×2 stat grid — shown below buttons on small screens.
-            This is the only stat rendering on mobile; desktop uses the floating
-            cards above instead, so the numbers never repeat within a breakpoint. */}
+        {/* MOBILE METRICS — 2×2 grid on small screens */}
         <motion.div
           className="lg:hidden w-full px-0 pb-10 relative z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.9, duration: 0.8 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
         >
           <div className="max-w-7xl mx-auto grid grid-cols-2 gap-3">
             {[
-              { value: '~30 days', label: 'Avg. time to hire' },
-              { value: 'Up to 40%', label: 'Cost savings' },
-              { value: '6',       label: 'Countries sourced' },
-              { value: '24/7',    label: 'Ops coverage' },
+              { value: '~30', unit: 'days', label: 'Avg. time to hire' },
+              { value: 'Up to 40', unit: '%', label: 'Cost savings' },
+              { value: '6', unit: '', label: 'Countries sourced' },
+              { value: '24/7', unit: '', label: 'Ops coverage' },
             ].map(s => (
-              <div key={s.label} className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
-                <p className="text-xl font-bold text-white leading-none mb-1">{s.value}</p>
-                <p className="text-[10px] uppercase tracking-widest text-white/60 font-semibold">{s.label}</p>
-              </div>
+              <motion.div
+                key={s.label}
+                className="rounded-2xl border border-cyan-400/20 bg-white/5 p-4 backdrop-blur-sm"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <p className="text-lg font-bold text-white leading-none mb-1">
+                  {s.value}
+                  <span className="text-xs opacity-70 ml-1">{s.unit}</span>
+                </p>
+                <p className="text-[10px] uppercase tracking-widest text-white/60 font-semibold">
+                  {s.label}
+                </p>
+              </motion.div>
             ))}
           </div>
         </motion.div>
