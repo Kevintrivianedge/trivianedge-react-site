@@ -116,20 +116,7 @@ async function main() {
         document.querySelectorAll('head script[src*="connect.facebook.net"]').forEach(el => el.remove());
       });
 
-      let html = await page.content();
-
-      // Defer non-critical CSS to avoid render-blocking requests. Vite injects
-      // CSS as synchronous <link rel="stylesheet"> tags; we transform those to
-      // use the media="print" + onload technique so they load asynchronously
-      // after the page can render. Keep Google Fonts synchronous since font-display:swap
-      // prevents invisible text anyway, and early font loading reduces layout shift.
-      html = html.replace(
-        /<link rel="stylesheet"([^>]*?)href="([^"]*)"([^>]*)>/g,
-        (match, before, href, after) => {
-          if (href.includes('fonts.googleapis.com')) return match; // Keep fonts sync
-          return `<link rel="stylesheet" media="print"${before}href="${href}"${after} onload="this.media='all'">`;
-        }
-      );
+      const html = await page.content();
       const outDir = routePath === '/' ? distDir : join(distDir, routePath.replace(/^\//, ''));
       mkdirSync(outDir, { recursive: true });
       writeFileSync(join(outDir, 'index.html'), html);
