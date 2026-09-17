@@ -28,7 +28,8 @@
     "react-dom": "^18.3.1",
     "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.18.2",
-    "vanilla-cookieconsent": "^3.1.0"
+    "vanilla-cookieconsent": "^3.1.0",
+    "zod": "^4.6.5"
   },
   "overrides": {
     "postcss": "^8.5.26",
