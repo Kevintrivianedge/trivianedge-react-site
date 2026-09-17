@@ -489,10 +489,18 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   key={feature.title}
                   initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={shouldReduceMotion ? {} : {
+                    scale: 1.02,
+                    boxShadow: '0 0 24px rgba(0, 196, 154, 0.3), 0 8px 32px rgba(0, 0, 0, 0.1)'
+                  }}
                   viewport={{ once: true, amount: 0.25 }}
-                  transition={{ duration: shouldReduceMotion ? 0.01 : 0.55, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className={`card-glow bg-white dark:bg-white/5 rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 ${wide ? 'md:col-span-2' : ''}`}
-                  style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
+                  transition={{
+                    duration: shouldReduceMotion ? 0.01 : (wide ? 0.65 : 0.55),
+                    delay: shouldReduceMotion ? 0 : idx * 0.08,
+                    ease: [0.16, 1, 0.3, 1]
+                  }}
+                  className={`bg-white dark:bg-white/5 rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 ${wide ? 'md:col-span-2' : ''}`}
+                  style={{ boxShadow: '0 8px 32px rgba(0, 196, 154, 0.06)' }}
                   role="link"
                   tabIndex={0}
                   onClick={() => navigate(feature.link)}
@@ -505,9 +513,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 >
                   <div className={`absolute -top-8 -right-8 w-32 h-32 ${feature.glow} blur-3xl pointer-events-none rounded-full`} />
                   <div className={wide ? 'flex flex-col md:flex-row md:items-center gap-4 md:gap-8' : 'flex items-start gap-4'}>
-                    <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br ${feature.iconBg} border ${feature.iconBorder} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                    <motion.div
+                      whileHover={shouldReduceMotion ? {} : { scale: 1.1 }}
+                      transition={{ duration: 0.2, ease: 'easeOut' }}
+                      className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br ${feature.iconBg} border ${feature.iconBorder} flex items-center justify-center flex-shrink-0`}
+                    >
                       <Icon className={`w-6 h-6 md:w-8 md:h-8 ${feature.accent}`} />
-                    </div>
+                    </motion.div>
                     <div className="min-w-0 flex-1">
                       <div className={wide ? 'md:max-w-md' : ''}>
                         <h3 className={`font-bold text-text mb-2 ${wide ? 'text-2xl' : 'text-xl'}`}>{feature.title}</h3>
