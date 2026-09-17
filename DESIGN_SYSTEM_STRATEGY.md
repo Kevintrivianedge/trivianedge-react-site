@@ -1,906 +1,666 @@
-# Premium Software Agency Website — Design & Animation Strategy
-**Built For What's Next** | Award-Winning Design Direction
+# TrivianEdge Website Redesign — Operator's Brand Evolution
+**Built the Team. Run the System.** | Design + Animation Strategy
 
 ---
 
 ## Executive Summary
 
-This document outlines a complete visual identity refresh for a high-end software company positioning itself as a cutting-edge technical partner. The strategy emphasizes:
-- **Authenticity through technical excellence**: animations that feel intelligent, not gratuitous
-- **Premium positioning**: luxurious, intentional design that justifies $50k+ project valuations
-- **Authority & competence**: immediate visual credibility
-- **Timeless elegance**: modern without being trendy
+This document outlines the visual + animation strategy for TrivianEdge's complete site redesign. TrivianEdge is **not** a software company—it's an **operations platform builder**: we hire people (BPO/RPO), run their systems (compliance, payroll, 6 countries), and build custom software to make it work seamlessly.
+
+The design must speak to three truths:
+1. **We are operators**: we understand complexity, scale, and systems thinking
+2. **We are technically excellent**: the site proves we can deliver (not just talk)
+3. **We are trustworthy**: visual credibility matters when clients deposit $50k–$500k+ budgets with us
+
+This redesign honors TrivianEdge's **existing brand** (teal #00C49A, Manrope/Fraunces, established component library) while elevating it to premium agency caliber through:
+- Sophisticated micro-interactions that feel earned, not trendy
+- Visual hierarchy that guides visitors through a 4-act story (People → Compliance → Software → Vision)
+- Responsive animation that respects reduced-motion preferences
+- Typography that commands attention without shouting
 
 ---
 
-## Part 1: Design Direction — Three Visual Concepts
+## Part 1: Design Direction — Refined for TrivianEdge
 
-### Concept A: "Dark Minimalism + Neon Accent" (Recommended)
-**Vibe**: Apple meets Stripe meets a cutting-edge design studio
+### Strategic Positioning: "Systems Operator, Premium Execution"
 
-**Color Palette:**
-```
-Primary Dark:      #0F1117 (off-black, slight blue tint)
-Secondary Dark:    #1A1F2E (card/container backgrounds)
-Accent Primary:    #00D9FF (cyan/electric blue — main action)
-Accent Secondary:  #FF006E (hot pink — for highlights/emergent design)
-Neutral Light:     #F5F5F5 (surfaces, text bg)
-Text Primary:      #FFFFFF
-Text Secondary:    #B0B6C7 (muted, supporting text)
-Success:           #00C853 (data/validation)
-```
+Your existing brand is **already strong**—teal is distinctive, Fraunces is uncommon and memorable, and the dark/light theme shows sophistication. The redesign is **not** a palette overhaul. It's an **elevation**: sharper hierarchy, more intentional whitespace, animation that communicates operational mastery.
 
-**Typography:**
-- **Headings**: Inter or SF Pro (geometric, tech-forward)
-  - H1: 72–96px, 600–700 weight, 1.1 line height
-  - H2: 48–56px, 600 weight, 1.2 line height
-  - H3: 28–32px, 600 weight, 1.3 line height
-- **Body**: Inter or System Font (neutral, readable)
-  - Base: 16–18px, 400 weight, 1.6 line height
-  - Small: 13–14px, 400 weight
+**What stays (locked):**
+- Primary accent: Teal `#00C49A` (proven, distinctive, trustworthy)
+- Typeface system: Manrope (body/UI) + Fraunces (display/headings) — both already loaded
+- Dark-first aesthetic (matches your home page, appeals to technical audiences)
+- Component library (`.premium-button`, `.glass`, `.card-lift`, etc.)
+- Accessibility baseline: `prefers-reduced-motion`, 44px mobile tap targets
 
-**Layout Philosophy:**
-- Asymmetrical grid layouts (rule-breaking but structured)
-- Generous whitespace—luxury is in the breathing room
-- Oversized typography paired with minimal content
-- Cards with subtle depth (shadow: 0 8px 32px rgba(0, 217, 255, 0.08))
-- Component-based modular design
+**What evolves:**
+- **Visual weight**: Fraunces gets more prominent, more confident sizing (hero headlines at 5.75rem+)
+- **Whitespace**: Sections feel less packed; breathing room between content blocks
+- **Animation restraint**: Fewer, more meaningful animations; timing feels deliberate, not frenetic
+- **Contrast hierarchy**: Text/background ratios pushed to WCAG AAA; muted text gets better definition
 
-**Mood**: Confident, forward-thinking, technically sophisticated. "We build the future."
+### Visual Direction: "High-Confidence Operator"
+
+**Core Aesthetic**: Think **Linear** (minimalist, micro-focused) meets **Stripe** (authoritative, technically sound) meets **your existing home page** (dark, sophisticated, honest).
+
+**Design Principles:**
+1. **Asymmetry with purpose** — Content grids break the mold (wide cards + narrow, staggered placement) to feel designed, not templated.
+2. **Generous margins** — Between sections, between text and edge. Luxury is the *space between* things.
+3. **Restrained animation** — Only animate what guides attention or confirms interaction. No perpetual motion.
+4. **Teal as a control**, not decoration — Use it for CTAs, active states, glows, and key metrics. Avoid cyan text on light backgrounds (contrast fail).
+5. **Fraunces for authority** — Headlines in display font; body stays Manrope. This keeps the two fonts from fighting.
+
+**Mood**: Confident, systems-literate, technically proven. Visitors should think: *"These people understand operational complexity. I can trust them with my hiring and payroll."*
 
 ---
 
-### Concept B: "Warm Metallics + Organic Curves"
-**Vibe**: Premium design studio meets nature-inspired tech
+## Part 2: The 4-Act Narrative (Content Structure)
 
-**Color Palette:**
-```
-Primary Dark:      #0D1B2A (deep navy)
-Secondary Dark:    #1A2F45 (slate)
-Accent Primary:    #D4AF37 (warm gold)
-Accent Secondary:  #8B7355 (bronze)
-Accent Tertiary:   #5A8C73 (muted sage green)
-Text Primary:      #FFFFFF
-Text Secondary:    #C5CED4
-```
+Your homepage is already structured as a narrative arc. Let's clarify it:
 
-**Typography:**
-- **Headings**: Syne or Spectral (organic, personality-driven)
-- **Body**: Inter (clean contrast)
+**Act 1 — Hero: "Build the Team. Run the System."**
+Visual: Motion graphic showing three inputs (People, Compliance, Software) flowing into one output (Integrated Team)
+Message: You solve the multi-vendor problem—hiring, payroll, and delivery are one contract.
 
-**Layout Philosophy:**
-- Curved dividers (SVG wave separators, organic borders)
-- Soft shadows and gradients
-- Generous margins with flowing layouts
-- Handcrafted SVG illustrations
-- Vintage-meets-modern aesthetic
+**Act 2 — What We Do: Three Pillars**
+1. **We Find the People** (RPO — 30 days to hire across 6 countries)
+2. **We Handle the Paperwork** (BPO — compliance, payroll, taxes across all hubs)
+3. **We Build Bespoke Software** (Custom delivery, 24/7 coverage, you own the code)
 
-**Mood**: Sophisticated, human-centered, premium craftsmanship.
+Message: Most vendors do one thing. We do three—under one roof.
+
+**Act 3 — Proof: Real Work, Real Outcomes**
+Case studies, testimonials, metrics.
+Message: We're not promising. We're delivering.
+
+**Act 4 — The Venture Thesis (Optional: Aria OS, Aether Logistics)**
+AI ventures built on the back of operational expertise.
+Message: We don't just hire developers. We build operating systems for the future.
 
 ---
 
-### Concept C: "Ultra-Minimalist Bauhaus"
-**Vibe**: Swiss design precision meets contemporary tech
-
-**Color Palette:**
-```
-Primary Dark:      #1C1C1C (true black)
-Secondary:         #FFFFFF (pure white)
-Accent Primary:    #E74C3C (bold red)
-Accent Secondary:  #34495E (charcoal)
-Neutral:           #95A5A6 (grays for structure)
-Text:              #000000 / #FFFFFF (perfect contrast)
-```
-
-**Typography:**
-- **Headings**: Helvetica Neue or Work Sans (geometric, timeless)
-- **Body**: Work Sans (clean, legible)
-
-**Layout Philosophy:**
-- Perfect grids with zero asymmetry
-- Strict typography hierarchy
-- Abundant whitespace as design element
-- Black borders and rules
-- Geometric shapes (circles, squares, clean angles)
-
-**Mood**: Timeless, intellectually sophisticated, authoritative.
-
----
-
-### **Recommendation**
-**Go with Concept A** (Dark Minimalism + Neon Accent):
-- ✅ Differentiates from competitors (most tech sites use neutrals only)
-- ✅ Evokes premium SaaS/design studios (Stripe, Linear, Vercel vibes)
-- ✅ Neon accent provides energy without being garish
-- ✅ Performs well on all devices
-- ✅ Timeless (neon-tech aesthetic will age gracefully)
-- ✅ Pairs beautifully with sophisticated animations
-
----
-
-## Part 2: Animation Strategy — Framer Motion Techniques
+## Part 3: Animation Strategy — Framer Motion Techniques
 
 ### Core Animation Philosophy
-**Principle**: Animations communicate, not distract. Each motion serves one of these purposes:
-1. **Guide attention** — where to look next
-2. **Establish hierarchy** — what matters most
-3. **Provide feedback** — the site responds to user actions
-4. **Transition context** — smooth semantic transitions between states
+**Principle**: Animations should feel like they're made by operators, not designers. Every motion has a **job**:
+1. **Guide through the narrative** — show the viewer what matters (People → Compliance → Software)
+2. **Establish trust** — responsive micro-interactions prove technical competence
+3. **Confirm interaction** — buttons, forms, and CTAs should "breathe" on engagement
+4. **Honor attention** — respect `prefers-reduced-motion` and never force animation on repeat viewers
 
-### Animation Techniques by Category
+**Timing**: Animations should feel **inevitable**, not inserted. If you notice it, it's probably too slow.
 
-#### A. **Scroll-Triggered Reveals** (Most Important)
+### Animation Techniques — TrivianEdge Edition
 
-**Technique 1: Staggered Text Reveal**
+#### 1. **Hero Headline Reveal** (Sequence, Not Character)
+**Use Case**: "Build the Team. Run the System." in hero section.
+
+Don't animate character-by-character (feels slow). Instead, animate line-by-line with stagger:
 ```typescript
-// Hero section title reveals character by character
-export const RevealText = ({ text }) => {
-  const container = useAnimation();
-  const ref = useRef(null);
-
-  useInView({
-    ref,
-    once: false,
-    threshold: 0.5,
-    triggerOnce: true,
-    onChange: (inView) => {
-      if (inView) {
-        container.start({
-          transition: { staggerChildren: 0.05, delayChildren: 0 },
-        });
-      }
-    },
-  });
-
+export const HeroHeadline = () => {
   return (
-    <motion.div ref={ref} variants={{ container: { ...container } }}>
-      {text.split('').map((char, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          viewport={{ once: true }}
-        >
-          {char}
-        </motion.span>
-      ))}
-    </motion.div>
+    <>
+      <motion.span
+        className="block text-white"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.2 }}
+      >
+        Build the team.
+      </motion.span>
+      <motion.span
+        className="block text-holo" // teal accent
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.35 }}
+      >
+        Run the system.
+      </motion.span>
+    </>
   );
 };
 ```
-**Rationale**: Draws eye to hero copy. Feels intelligent, not cheesy. Creates ~2–3s engagement window.
+**Rationale**: Line reveals feel paced and intentional. Two-line stagger (~150ms apart) guides eye naturally. No motion => still powerful.
 
-**Technique 2: Fade + Scale Reveal (Cards, Images)**
+#### 2. **Three-Pillar Card Stagger** (What We Do Section)
+**Use Case**: Three service cards (Find People, Handle Paperwork, Build Software) reveal with timing.
+
 ```typescript
-export const CardReveal = ({ children }) => {
+export const PillarCard = ({ title, index }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
-      viewport={{ once: true, margin: '-100px' }}
-    >
-      {children}
-    </motion.div>
-  );
-};
-```
-**Rationale**: Satisfying "pop-in" effect. Scale (95%→100%) adds dimensionality. Margin: "-100px" triggers 100px before element enters viewport.
-
-**Technique 3: Slide + Reveal (Text Blocks)**
-```typescript
-export const SlideReveal = ({ children, direction = 'left' }) => {
-  const directionOffset = direction === 'left' ? { x: -60 } : { x: 60 };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, ...directionOffset }}
-      whileInView={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.9, ease: 'easeOut' }}
-      viewport={{ once: true, margin: '-50px' }}
-    >
-      {children}
-    </motion.div>
-  );
-};
-```
-**Rationale**: Directional motion guides reading order. ±60px offset feels substantial without being dramatic.
-
----
-
-#### B. **Parallax & Depth Effects**
-
-**Technique 4: Subtle Parallax (Hero Section)**
-```typescript
-export const ParallaxHero = () => {
-  const scrollY = useScroll();
-  const y = useTransform(scrollY, [0, 300], [0, 100]);
-
-  return (
-    <motion.div style={{ y }}>
-      {/* Background element moves slower than scroll */}
-      <BackgroundImage />
-    </motion.div>
-  );
-};
-```
-**Rationale**: Creates depth perception. 100px offset over 300px scroll distance feels premium, not gimmicky. Reserve for above-the-fold hero only.
-
-**Technique 5: Floating Elements (Services, Features)**
-```typescript
-export const FloatingCard = () => {
-  return (
-    <motion.div
-      animate={{
-        y: [0, -15, 0], // Subtle float
-      }}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
       transition={{
-        duration: 4,
-        repeat: Infinity,
-        ease: 'easeInOut',
+        duration: 0.55,
+        delay: index * 0.08, // 80ms stagger
+        ease: [0.16, 1, 0.3, 1], // custom easing
       }}
+      className="card-glow rounded-2xl p-8 border border-border"
     >
-      <ServiceCard />
+      <h3 className="text-2xl font-bold text-text">{title}</h3>
+      {/* content */}
     </motion.div>
   );
 };
 ```
-**Rationale**: Very subtle (±15px). Infinite, slow loop feels organic, not robotic. Use on 2–3 service cards only for accent.
+**Rationale**: Cards pop in bottom-up with slight stagger. Creates visual momentum. 8% scale offset (0.95→1) adds "pop" without being cartoonish.
 
----
+#### 3. **Metric Counter Animation** (Stats Section)
+**Use Case**: "30 days", "Up to 40%", "6 countries", "24/7" floating cards in hero.
 
-#### C. **Micro-Interactions (Hover States)**
-
-**Technique 6: Button Hover — Glow + Scale**
 ```typescript
-export const PremiumButton = ({ children }) => {
-  const [isHover, setIsHover] = useState(false);
-
-  return (
-    <motion.button
-      onHoverStart={() => setIsHover(true)}
-      onHoverEnd={() => setIsHover(false)}
-      initial={false}
-      animate={isHover ? { scale: 1.05 } : { scale: 1 }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
-      style={{
-        boxShadow: isHover
-          ? '0 0 24px rgba(0, 217, 255, 0.3)'
-          : '0 0 0px rgba(0, 217, 255, 0)',
-      }}
-    >
-      {children}
-    </motion.button>
-  );
-};
-```
-**Rationale**: Glow (via shadow) + scale (1→1.05) signals interactivity. Feels premium; not over-done.
-
-**Technique 7: Link Underline Animation**
-```typescript
-export const AnimatedLink = ({ href, children }) => {
-  return (
-    <motion.a
-      href={href}
-      style={{
-        backgroundImage: `linear-gradient(#00D9FF 0%, #00D9FF 100%)`,
-        backgroundSize: '0% 2px',
-        backgroundPosition: '0 100%',
-        backgroundRepeat: 'no-repeat',
-        transition: 'background-size 0.4s ease',
-      }}
-      whileHover={{
-        backgroundSize: '100% 2px',
-      }}
-    >
-      {children}
-    </motion.a>
-  );
-};
-```
-**Rationale**: Underline grows left-to-right on hover. Sophisticated, minimal. Accent color (#00D9FF) provides visual interest.
-
-**Technique 8: Image Hover — Zoom + Grayscale Shift**
-```typescript
-export const HoverImage = ({ src }) => {
+export const MetricCard = ({ value, unit, label }) => {
   return (
     <motion.div
-      initial={{ filter: 'grayscale(0%)' }}
-      whileHover={{ filter: 'grayscale(0%)' }}
-      transition={{ duration: 0.4 }}
+      initial={{ opacity: 0, x: 24 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.7, delay: 1.0 + i * 0.1 }}
+      className="rounded-2xl border border-border bg-white/5 p-5"
     >
-      <motion.img
-        src={src}
-        initial={{ scale: 1 }}
-        whileHover={{ scale: 1.08 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
-      />
+      <p className="text-xs uppercase text-white/50 mb-1">{label}</p>
+      <p className="text-2xl font-bold text-white">
+        {value}<span className="text-sm opacity-60">{unit}</span>
+      </p>
     </motion.div>
   );
 };
 ```
-**Rationale**: Zoom + color shift on portfolio images feels premium. Reserve for case study visuals.
+**Rationale**: Cards slide in from right with staggered delays. Confirms the hero messaging (speed, scale, coverage) without being loud.
 
 ---
 
-#### D. **Page Transitions (Next.js)**
-
-**Technique 9: Fade + Slide Page Transitions**
+#### 4. **Process Timeline Reveals** (How It Works Section)
 ```typescript
-export const PageTransition = ({ children }) => {
+export const ProcessStep = ({ step, index }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="relative"
     >
-      {children}
+      <span className="step-number">{step.number}</span>
+      <h3 className="font-bold text-lg mb-3">{step.title}</h3>
+      <p className="text-muted text-sm">{step.description}</p>
     </motion.div>
   );
 };
 ```
-**Rationale**: Subtle fade + slide signals navigation without disorienting. Instant feel, not clunky.
+**Rationale**: Steps pop in sequentially (100ms stagger). Reader flows through the 30-day process visually before reading copy.
 
-**Technique 10: Shared Layout Animation (If Using Next.js + AnimatePresence)**
+#### 5. **Case Study Card Reveals** (Proof Section)
 ```typescript
-<AnimatePresence mode="wait">
-  <motion.div
-    key={currentPage}
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-  >
-    {currentPage}
-  </motion.div>
-</AnimatePresence>
-```
-**Rationale**: Prevents "flash" between pages. Creates sense of continuous, fluid navigation.
-
----
-
-#### E. **Data & List Animations**
-
-**Technique 11: Staggered List Entry (Team, Testimonials)**
-```typescript
-export const StaggeredList = ({ items }) => {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-    },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
-
+export const CaseStudyCard = ({ study, index }) => {
   return (
-    <motion.ul variants={container} initial="hidden" whileInView="show">
-      {items.map((i) => (
-        <motion.li key={i.id} variants={item}>
-          {i.content}
-        </motion.li>
-      ))}
-    </motion.ul>
+    <motion.article
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{
+        duration: 0.45,
+        delay: index * 0.08,
+      }}
+      className="card-glow rounded-2xl border border-border p-7"
+    >
+      <span className="metric-pill">{study.sector}</span>
+      <h3 className="text-xl font-bold mb-2">{study.client}</h3>
+      <p className="text-muted text-xs mb-4">{study.challenge}</p>
+      <div className="bg-cyan-400/10 rounded-lg p-4 mt-auto">
+        <p className="text-xs uppercase text-cyan-500 font-bold mb-1">Outcome</p>
+        <p className="text-sm">{study.outcome}</p>
+      </div>
+    </motion.article>
   );
 };
 ```
-**Rationale**: Staggered entry (100ms intervals) guides eye down list. Feels organized, not chaotic.
+**Rationale**: Case studies build proof visually. Each card's reveal confirms the previous one—by Act 5, audience is convinced.
 
----
+#### 6. **Button Hover + Focus States** (CTA Trust Signal)
+```typescript
+// Your existing `.premium-button` class handles this, but document the motion:
+// - On hover: scale 1.00 → 1.05, shadow intensifies (teal glow)
+// - On focus: visible outline (focus-ring-2 focus-ring-cyan-500/50)
+// - On active: scale 0.98 (press feedback)
+```
+**Rationale**: Responsive buttons = responsive company. Every interaction confirms technical competence.
 
 ### Animation Timing Guidelines
 ```
-Quick interactions (hover, button click):  200–300ms
-Entrance animations (scroll reveal):        600–900ms
-Page transitions:                           400–600ms
-Continuous loops (floating):                3–5 seconds
-Parallax scroll transforms:                 100% (tied to scroll)
+Hover/focus states:           200ms (fast, immediate)
+Card/block reveals:           600–700ms (measured, intentional)
+Process timeline stagger:     100ms between steps (flow without rush)
+Page transitions:             400ms (fast enough to feel instant)
+Scroll reveals margin:        -50px to -100px (start before viewport entry)
 ```
 
-**Golden Rule**: If you're noticing the animation, it's too slow. Anything > 1s should feel inevitable.
+**Core Principle**: If you notice the animation is happening, it's probably too slow or too obvious. Animations should feel *inevitable*, not inserted. Respect `prefers-reduced-motion`—reduce all durations to ~1-2ms (instant) for users who've set that preference.
 
 ---
 
-## Part 3: Section-by-Section Breakdown
+## Part 4: Section-by-Section Breakdown — TrivianEdge Specific
 
 ### Hero Section
-**Content Goal**: Establish premium positioning & tagline "Built For What's Next"
+**Content Goal**: Establish the three-part promise: hire globally, handle compliance, build software—all through one partner.
 
-**Layout**:
-```
-┌─────────────────────────────────────────────────────┐
-│                                      ANIMATED BG    │
-│          EYEBROW TEXT                               │
-│          (subtitle, smaller)                         │
-│                                                      │
-│          MAIN HEADLINE                              │
-│          "Built For What's Next"                    │
-│          (H1, 72–96px)                              │
-│                                                      │
-│          SUPPORTING COPY                            │
-│          (2–3 lines max, body text)                 │
-│                                                      │
-│          ┌─────────────────────────────────────┐   │
-│          │  PRIMARY CTA BUTTON                 │   │
-│          │  (Schedule Demo / Get Started)      │   │
-│          └─────────────────────────────────────┘   │
-│                                                      │
-│          Secondary CTA: "Watch 2-min explainer"     │
-│                                                      │
-│                  ANIMATED GRAPHIC                   │
-│                  (right side, 40% width)            │
-│                                                      │
-└─────────────────────────────────────────────────────┘
-```
+**Current State**: Good baseline. Improve:
+- **Eyebrow**: "Canada's BPO, RPO & Bespoke Software Partner" — stays, clear and credible
+- **Headline**: "Build the team. / Run the system." — line-by-line reveal (Technique 1)
+- **Copy**: Concise, direct. Current copy is strong; just add visual hierarchy via weight
+- **CTAs**: "Start the conversation" (primary, teal) + "How it works" (secondary, outlined)
+- **Metrics cards** (right side, desktop only): "30 days", "Up to 40%", "6 countries", "24/7"
+  - Animate in with stagger (Technique 3)
+  - Each metric tells a different story (speed, savings, scope, availability)
+- **Background**: Network visual (already implemented, keep it)
 
-**Animations**:
-- **Eyebrow**: Fade in, 200ms delay
-- **Headline**: Character-by-character reveal (Technique 1), 50ms stagger
-- **Copy**: Slide reveal from left (Technique 3), 600ms duration
-- **Buttons**: Scale on load (0.9→1), then glow on hover (Technique 6)
-- **Graphic**: Parallax offset (Technique 4), subtle floating animation
+**Animation Details**:
+- Eyebrow: fade in (0.7s, no delay)
+- Headline lines: slide up + fade (0.7s each, 150ms stagger)
+- Copy: fade in (0.6s, delay 0.6s)
+- Metric cards: slide right + fade (0.7s each, staggered 100ms)
+- Buttons: scale on load (0.95→1, 0.5s, delay 0.9s), glow on hover
 
 **Design Notes**:
-- Dark background with gradient overlay (0F1117 → 1A1F2E)
-- Graphic should be code/tech visual (circuit board, abstract grid, or custom SVG)
-- Use cyan accent (#00D9FF) sparingly for emphasis
-- 100% viewport height on desktop; adjust for mobile
+- Hero stays dark (your existing hero-dark class)
+- Fraunces headline at `clamp(2.75rem, 6.5vw, 5.75rem)` (your display-hero scale)
+- Teal accent only in "Run the system" line (text-holo class)
+- Metric cards inherit your existing card styling + glow
 
----
+### "What We Do" / Three Pillars Section
+**Content Goal**: Differentiate from multi-vendor competitors. Show that hiring + compliance + software all come from one partner.
 
-### About Section
-**Content Goal**: Build authority & showcase company values
-
-**Layout**:
-```
-HEADLINE: "Why Leading Companies Trust Us"
-(offset left)
-
-GRID: 2 COLUMNS (desktop) | 1 COLUMN (mobile)
-┌─────────────────┬─────────────────┐
-│  Value Prop 1   │  Value Prop 2   │
-│  Icon + Copy    │  Icon + Copy    │
-└─────────────────┴─────────────────┘
-┌─────────────────┬─────────────────┐
-│  Value Prop 3   │  Value Prop 4   │
-│  Icon + Copy    │  Icon + Copy    │
-└─────────────────┴─────────────────┘
-
-SUPPORTING PARAGRAPH (below, 70% width)
-"We combine technical depth with design excellence..."
-```
+**Structure** (your current bento layout is good—keep it):
+- Wide card (top): "We Find the People" — RPO, 30 days, 6 countries
+- Two narrow cards (below):
+  - "We Handle the Paperwork" — BPO, compliance, payroll, taxes
+  - "We Build Bespoke Software" — custom delivery, 24/7 coverage
 
 **Animations**:
-- **Headline**: Slide reveal (Technique 3, from left)
-- **Value Props**: Staggered card reveal (Technique 2), 100ms between each
-- **Icons**: Rotate + fade on load (icon spin 0deg→360deg over 0.8s)
-- **Copy**: Fade in after headline completes
+- **Headline**: Fade + slide left (0.7s)
+- **Wide card**: Fade + scale (0.95→1) with stagger (Technique 2)
+- **Two narrow cards**: Fade + scale, staggered 80ms apart
+- **Icons**: Scale on hover (1→1.1), teal glow appears
+- **Metric badges** ("~30 days", "6 countries", "24/7"): Fade in with card reveal
 
 **Design Notes**:
-- Light backgrounds (#F5F5F5) for cards on dark background
-- Icons: 48×48px, use accent colors (#00D9FF, #FF006E)
-- 60px margin between grid items
-- Hover state: card lifts slightly (shadow depth increases)
+- Cards inherit your `.card-glow` and `.glass` classes
+- Icon background: gradient (teal to transparent)
+- Icon container: border-cyan-400/25, bg-cyan-400/5 (your existing pattern)
+- On hover: entire card scales slightly (1.02x), border glows to cyan-400/30
+- Typography: Manrope body, Fraunces for card titles (h3)
 
----
+### "How It Works" / Process Timeline Section
+**Content Goal**: Show the 30-day deployment journey. Remove friction concerns ("How fast? How clear is the process?").
 
-### Services Section
-**Content Goal**: Clearly communicate offerings & capability areas
-
-**Layout**:
-```
-HEADLINE: "Services"
-
-GRID: 3 COLUMNS (desktop) | 1 COLUMN (mobile)
-┌──────────────────────┐
-│   Service Card 1     │
-│   • Icon (64px)      │
-│   • Title (H3)       │
-│   • Description      │
-│   • "Learn More" →   │
-│ (floating on hover)  │
-└──────────────────────┘
-
-[Repeat × 3]
-```
+**Current State**: Your 4-step timeline is clear. Improve:
+- Step icons: Use your icon library, teal accents
+- Step titles: h3 in Fraunces (display-section scale)
+- Description: Manrope, light weight, 1.6 line height
+- Connector lines: Gradient from border to transparent (your neural-bg pattern)
 
 **Animations**:
-- **Cards**: Reveal with fade + scale (Technique 2), staggered 150ms
-- **Icons**: Fade in with slight bounce (scale 0.8→1.1→1 over 0.6s)
-- **Hover State**:
-  - Card background shifts to secondary dark
-  - Icon glows with accent color
-  - "Learn More" arrow slides in from left
-  - Entire card scales to 1.02x
+- Each step pops in bottom-up (Technique 4): fade + slide (0.6s, staggered 100ms)
+- Hover: step box gains cyan-400/40 border, icon scales 1.1x
+- Numbers: rotate in slightly (0deg→-5deg feedback on hover)
 
 **Design Notes**:
-- Service cards: 100% dark background, text in light color
-- Icon gradient (cyan → pink)
-- No border; rely on shadow for depth
-- Padding: 40px on all sides
+- Grid: 4 columns desktop, 2 columns tablet, 1 mobile
+- Connector lines between steps (visible on desktop only)
+- No excessive animation—process clarity is the point
 
----
+### "Proof" / Case Studies + Testimonials Section
+**Content Goal**: Real outcomes. Real companies. Real trust.
 
-### Portfolio / Case Studies Section
-**Content Goal**: Demonstrate expertise through real work
+**Case Study Cards** (4-card grid):
+- Sector badge (e.g., "E-commerce")
+- Client name (h3, Fraunces)
+- Challenge (2 lines max)
+- Outcome box (teal bg, highlighted result)
+- Top accent stripe (cyan gradient, 4px)
 
-**Layout**:
-```
-HEADLINE: "Recent Work"
+**Animations** (Technique 5):
+- Cards stagger in (fade + scale 0.95→1), 80ms between
+- Hover: card scales to 1.02x, shadow intensifies
+- Top stripe glows on hover
 
-CARD GRID: Alternating layout (masonry effect)
-┌──────────────┐                  ┌──────────────┐
-│  Case Study  │    Copy Block    │  Case Study  │
-│   Image      │    • Challenge   │   Image      │
-│              │    • Solution    │              │
-└──────────────┘    • Result      └──────────────┘
+**Testimonials** (2-card grid below case studies):
+- Quote (Manrope, light, serif-like treatment via font-weight)
+- Author footer: avatar + name + title
+- Hover: card gains teal glow, quote text color shifts slightly to teal
 
-[Repeat pattern down page]
-```
+**Design Notes**:
+- Reuse your `.quote-card` and `.micro-lift-card` classes
+- Avatar: gradient teal (cyan-400 to cyan-600)
+- Bottom border on footer (thin, teal-tinted)
+
+### Contact / CTA Section
+**Content Goal**: Convert. No friction. Fast.
+
+**Current State**: Your dark section + form is solid. Improve:
+- Headline: Fraunces, large (display-section scale), white
+- Form background: White card on dark section, shadow glow
+- Button: Your `.premium-button` class
+- Email/phone fallback: Light text with hover teal underline
 
 **Animations**:
-- **Images**: Zoom + fade on scroll reveal (Technique 8)
-  - Initial: scale 0.9, opacity 0
-  - Animated: scale 1, opacity 1
-- **Copy**: Slide in from opposite side (alternating left/right)
-- **Hover**: Image zoom to 1.08x, copy text color shifts to accent
+- Headline: slide + fade (0.7s)
+- Form card: fade + scale (0.95→1) after headline
+- Button hover: scale 1.05x, glow intensifies
+- Form fields: subtle focus glow (border-cyan-400/30)
 
 **Design Notes**:
-- Images: 16:9 aspect ratio, high-quality photography
-- Copy block: max 200 characters
-- Use accent colors (#00D9FF, #FF006E) for stat callouts
-- Responsive: stack vertically on mobile
+- Form inherits section-dark styling
+- CTA button: Large, prominent (your premium-button-secondary for outline variant)
+- Email/phone links: Underline on hover (teal, 2px)
 
----
+### Talent Hubs / World Map Section
+**Content Goal**: Show geographic reach. Build confidence in sourcing quality.
 
-### Testimonials Section
-**Content Goal**: Build social proof & trust
-
-**Layout**:
-```
-HEADLINE: "Client Stories"
-
-CAROUSEL or GRID (choose based on # of testimonials)
-If 3–4 clients: Static grid (2 cols)
-If 5+: Carousel with left/right arrows
-
-CARD:
-┌────────────────────────────┐
-│  "Quote text here..."      │
-│                            │
-│  — Name                    │
-│    Title @ Company         │
-│    (optional company logo) │
-└────────────────────────────┘
-```
+**Current State**: Map + hub cards is good. Improve:
+- Map container: Round border (3rem), subtle cyan border/glow
+- Hover pins: Expand slightly, teal highlight
+- Hub cards (3-column grid): Icon + country + talent count + link
+- On card hover: Link text color to teal, card scales 1.02x
 
 **Animations**:
-- **Cards**: Staggered fade + scale reveal (Technique 2), 100ms between
-- **Quote marks**: Animate scale 0→1 before text appears
-- **Carousel transition** (if applicable):
-  - Outgoing card: fade + slide left
-  - Incoming card: fade + slide right
-  - Duration: 500ms
+- Map fades in (scroll reveal)
+- Hub cards stagger in (fade + scale), 100ms stagger
+- Pin hover: scale 1.1x, glow intensifies
+- Link hover: color shift to teal, underline slide (Technique 6 pattern)
 
 **Design Notes**:
-- Card styling: light text on dark, subtle border (1px accent color)
-- Avatar: 40×40px circular, top-left of card
-- Use actual client logos for authority
+- Cards inherit your `.glass` style
+- Icons: 48×48px, teal accent
+- Responsive: Map full-width on all sizes
 
 ---
 
-### Call-to-Action Section
-**Content Goal**: Convert visitors into leads
+## Part 5: Tech Stack — Your Existing Setup
 
-**Layout**:
-```
-┌─────────────────────────────────────────────────┐
-│                                                 │
-│          PRIMARY HEADLINE                       │
-│          "Ready to Build Something Great?"      │
-│                                                 │
-│          SUPPORTING TEXT                        │
-│          (2–3 sentences max)                    │
-│                                                 │
-│          ┌────────────────────────────────────┐ │
-│          │  LARGE PRIMARY CTA BUTTON          │ │
-│          │  (Schedule Demo / Get In Touch)    │ │
-│          └────────────────────────────────────┘ │
-│                                                 │
-│          Secondary CTA: Email link              │
-│                                                 │
-└─────────────────────────────────────────────────┘
-```
+### You Already Have the Right Stack
+- **React** + Vite (fast, lean, modern)
+- **Framer Motion** (already installed—use it!)
+- **Tailwind CSS** (existing design tokens, dark mode working)
+- **TypeScript** (strict mode enforced)
+- **React Router** (navigation handled)
 
-**Animations**:
-- **Headline**: Character reveal (Technique 1), 50ms stagger
-- **Text**: Fade in after headline
-- **Primary Button**:
-  - Initial: scale 0.95, opacity 0
-  - Animate: scale 1, opacity 1
-  - On hover: glow effect (Technique 6), scale 1.08x
-- **Pulse effect** on button (optional):
-  - Continuous subtle scale pulse (1→1.02→1) at 2s interval
+**Do not refactor to Next.js.** Your current stack is production-ready and performant. Focus on animation + visual refinement, not infrastructure changes.
 
-**Design Notes**:
-- Full-width section with dark gradient background
-- Centered content
-- Button: Large padding (20px × 50px), rounded corners (8px)
-- Accent color primary
+### Animation Best Practices (Framer Motion)
+```typescript
+// DO: Use transform & opacity (GPU-accelerated)
+<motion.div animate={{ scale: 1.05, opacity: 1 }} />
 
----
+// DON'T: Animate layout properties
+<motion.div animate={{ width: 200, padding: 10 }} /> // laggy
 
-### Footer
-**Content Goal**: Navigation & trust signals
+// DO: Respect prefers-reduced-motion
+const shouldReduce = useReducedMotion();
+transition={{ duration: shouldReduce ? 0.01 : 0.6 }}
 
-**Layout**:
-```
-LOGO + TAGLINE (left)
+// DO: Use viewport for scroll-triggered animations
+whileInView={{ opacity: 1, y: 0 }}
+viewport={{ once: true, amount: 0.25 }}
 
-LINKS GRID (center):
-Company | Work | Services | Blog | Contact
-
-SOCIAL ICONS (right):
-LinkedIn | Twitter | GitHub (or relevant platforms)
-
-BOTTOM:
-Copyright © 2026. All rights reserved.
-Privacy Policy | Terms
+// DO: Lazy-load heavy components
+const TalentHubModal = lazy(() => import('./components/TalentHubModal'));
 ```
 
-**Animations**:
-- **Links**: Underline animation on hover (Technique 7)
-- **Social icons**: Hover → scale 1.15x + accent color
-- **Section Load**: Fade in from bottom (initial: y: 40)
-
-**Design Notes**:
-- Background: Slightly lighter than hero (#1A1F2E)
-- Text: Secondary light color (#B0B6C7)
-- Padding: 60px top, 40px bottom
-- Responsive: Stack vertically on mobile
-
----
-
-## Part 4: Tech Stack Recommendation
-
-### Frontend Framework
-**Primary Recommendation: Next.js 15 (App Router)**
-- ✅ Server-side rendering (better SEO, performance)
-- ✅ Image optimization (Next/Image component)
-- ✅ Built-in CSS modules & Tailwind support
-- ✅ API routes for forms/contact
-- ✅ Excellent Vercel deployment (instant preview deployments)
-- ✅ Works seamlessly with Framer Motion
-
-**Alternative**: Vite + React (if you prefer lighter setup)
-
----
-
-### Animation Library
-**Primary: Framer Motion 11.x**
-- ✅ Most powerful React animation library
-- ✅ `useScroll` + `useTransform` for scroll-linked animations
-- ✅ `whileInView` for scroll-triggered reveals
-- ✅ Intuitive API for complex interactions
-- ✅ Excellent TypeScript support
-- ✅ Small bundle impact (~40kb gzipped)
-
-**Complementary**: GSAP (for complex timelines, if Framer Motion isn't sufficient)
-
----
-
-### Styling
-**Tailwind CSS 4.x** (highly recommended)
-- ✅ Rapid UI development
-- ✅ Consistent design system
-- ✅ Small bundle size
-- ✅ Dark mode support built-in
-- ✅ Responsive utilities
-
-**Alternative**: CSS Modules + PostCSS (if you prefer custom CSS)
-
----
-
-### Component Library (Optional)
-- **Radix UI**: Unstyled, accessible primitives (excellent for custom designs)
-- **Headless UI**: Similar to Radix, Vue/React compatible
-- **Custom components**: For premium sites, custom SVG & styled components often look better than pre-built libs
-
----
-
-### Performance Optimization
+### Performance Targets
 ```
-Image Optimization:
-  - Next/Image for all photos
-  - WebP format with fallbacks
-  - Lazy loading by default
-  - Responsive srcset
+Lighthouse Score: > 90 (all audits)
+LCP (Largest Contentful Paint): < 2.5s
+CLS (Cumulative Layout Shift): < 0.1
+FID (First Input Delay): < 100ms
+
+Bundle (gzipped):
+  - JS: < 100KB (you're likely already there)
+  - CSS: < 20KB (Tailwind is small)
+  - Images: Optimize/compress all assets
 
 Animation Performance:
-  - Use transform & opacity only (GPU-accelerated)
-  - Avoid animating width/height/margin
-  - Test with Lighthouse (target 60 FPS)
-  - Use will-change sparingly
-
-Bundle Size Targets:
-  - JavaScript (gzipped): < 80KB
-  - CSS (gzipped): < 20KB
-  - Largest images: < 200KB each
-  - LCP (Largest Contentful Paint): < 2.5s
+  - Target 60 FPS (DevTools > Performance tab)
+  - Disable animations on reduced-motion preference
+  - Test on mid-range devices (not just MacBook Pro)
 ```
+
+### Tooling (No Changes Needed)
+- ESLint + Prettier (already configured)
+- TypeScript strict mode (keep it)
+- Vitest/Jest for unit tests (existing)
+- Playwright for E2E tests (optional but recommended)
+
+### Monitoring
+- Vercel Analytics (if deployed to Vercel)
+- Sentry for error tracking (production only)
+- Web Vitals monitoring (vercel/analytics package)
 
 ---
 
-### Development Tools
-```
-Testing:
-  - Playwright or Cypress for E2E (animation testing)
-  - Jest for unit tests
+## Part 6: Reference Inspiration — Operators & SaaS Leaders
 
-Type Safety:
-  - TypeScript (strict mode)
-
-Linting/Formatting:
-  - ESLint + Prettier
-
-Performance Monitoring:
-  - Vercel Web Analytics
-  - Sentry for error tracking
-```
-
----
-
-### Deployment & Hosting
-**Recommended: Vercel**
-- ✅ Optimized for Next.js
-- ✅ Instant deployment on push
-- ✅ Automatic image optimization
-- ✅ Built-in analytics & monitoring
-- ✅ Edge functions for advanced features
-- ✅ Easy A/B testing
-
-**Alternative**: Netlify, AWS Amplify (both solid options)
-
----
-
-## Part 5: Reference Inspiration — Award-Winning Agency Sites
-
-These sites exemplify the "premium tech agency" aesthetic. Study their:
-- Animation approach (what's animated vs. static)
-- Color use (contrast, accent patterns)
-- Typography hierarchy
-- Whitespace strategy
-- Load strategy (what appears first)
+Study these sites for how they communicate **operational competence** and **technical authority**:
 
 ### 1. **Linear** (linear.app)
-**Why**: Minimalist, dark theme, sophisticated micro-interactions, excellent use of accent color (purple). Small animations add premium feel without distraction.
-- Study: Hover states, loading animations, sidebar micro-interactions
-- Palette inspiration: Dark theme with single accent color
+**Why**: Minimalist, dark, high-confidence. Everything is responsive, micro-interactions feel earned. Purple accent is distinctive but restrained.
+**Study**: Hover states (scale + color shift), loading states, sidebar interactions
+**For TrivianEdge**: How to feel premium without being flashy
 
 ### 2. **Stripe** (stripe.com)
-**Why**: Masterclass in restraint. Animations are subtle but impactful. Hero parallax. Excellent typography hierarchy. Conveys authority through simplicity.
-- Study: Hero parallax, card reveals on scroll, animation timing
-- Layout inspiration: Asymmetrical grids, oversized headlines
+**Why**: Restraint. Parallax hero, simple card reveals, world-class typography hierarchy. Conveys global scale through calm design.
+**Study**: Hero parallax, asymmetrical grids, animation timing (never > 700ms)
+**For TrivianEdge**: How to communicate "we handle complexity worldwide"
 
-### 3. **Vercel** (vercel.com)
-**Why**: Next.js showcase. Sophisticated scroll-triggered reveals. Gradient overlays. Neon accents (similar to our Concept A). Excellent responsive design.
-- Study: Scroll animations, gradient backgrounds, image hover effects
-- Animation inspiration: Fade + scale reveals, staggered list animations
+### 3. **Calendly** (calendly.com)
+**Why**: B2B SaaS with operational focus. Clear value prop upfront. Animations underscore, not distract. Case studies prove execution.
+**Study**: How scheduling/process is visualized, proof section layout
+**For TrivianEdge**: Process timelines (your "How It Works" section)
 
-### 4. **Mercury** (mercury.com)
-**Why**: Premium fintech design. Soft shadows, rounded corners, excellent use of color. Smooth page transitions. Case study layout is aspirational.
-- Study: Card depth, color psychology, CTA placement and hover states
-- Layout inspiration: Generous whitespace, aligned grids
+### 4. **Retool** (retool.com)
+**Why**: Developer-to-operator messaging. Dark theme, code examples, operational intelligence shown visually.
+**Study**: How technical credibility is visual, not just text
+**For TrivianEdge**: Make your software delivery capability visual
 
-### 5. **Framer** (framer.com)
-**Why**: Cutting-edge animations (Framer Motion showcase, obviously). Excellent use of floating elements and parallax. Responsive design perfection.
-- Study: Parallax depth, floating card animations, staggered reveals
-- Animation inspiration: Continuous floating loops, complex scroll triggers
-
-### 6. **Webflow** (webflow.com)
-**Why**: Designer-focused, beautiful case studies, excellent image showcase. Hover effects are sophisticated without being over-animated.
-- Study: Image zoom on hover, carousel animations, testimonial layouts
-- Design inspiration: Color blocking, asymmetrical layouts
+### 5. **Notion** (notion.com)
+**Why**: Systems thinker's tool. Whitespace, generous margins, hierarchy through size not color. Playful but professional.
+**Study**: Asymmetric layouts, generous whitespace, how complexity is explained simply
+**For TrivianEdge**: How to explain "hiring + compliance + software" simply
 
 ---
 
-## Part 6: Implementation Roadmap
+## Part 7: Implementation Roadmap
 
-### Phase 1: Foundation (Week 1–2)
-- [ ] Set up Next.js project with Tailwind & TypeScript
-- [ ] Install Framer Motion
-- [ ] Build reusable animation components (RevealText, CardReveal, etc.)
-- [ ] Design system tokens (colors, typography, spacing)
-- [ ] Create page layout structure
+You have a strong foundation. Focus on **polish + animation**, not rebuilds.
 
-### Phase 2: Hero & Core Sections (Week 2–3)
-- [ ] Hero section with parallax & text reveals
-- [ ] About section with value props
-- [ ] Services grid with hover effects
-- [ ] Set up navigation with animations
+### Phase 1: Animation Foundation (Week 1)
+- [ ] Audit current Framer Motion usage (check component code)
+- [ ] Create animation primitives:
+  - `<RevealBlock>` (fade + slide on scroll)
+  - `<StaggerList>` (card reveal with delay)
+  - `<HoverGlow>` (teal glow on hover, reusable)
+- [ ] Test `prefers-reduced-motion` across all animations
+- [ ] Measure baseline performance (Lighthouse, FCP, LCP)
 
-### Phase 3: Portfolio & Social Proof (Week 3–4)
-- [ ] Case studies section with image zoom
-- [ ] Testimonials carousel
-- [ ] CTA section with pulse effect
+### Phase 2: Hero → What We Do (Week 2)
+- [ ] Hero headline: line-by-line reveals (Technique 1)
+- [ ] Hero metric cards: staggered from right (Technique 3)
+- [ ] Three-pillar cards: fade + scale reveals with stagger (Technique 2)
+- [ ] All hover states: scale + teal glow
+- [ ] Mobile: collapse metric cards into 2×2 grid
 
-### Phase 4: Polish & Performance (Week 4–5)
-- [ ] Page transition animations
-- [ ] Mobile responsiveness pass
-- [ ] Accessibility audit (WCAG AA)
-- [ ] Performance optimization (Lighthouse > 90)
-- [ ] Cross-browser testing
+### Phase 3: Process → Proof (Week 3)
+- [ ] Process timeline: step-by-step reveals (Technique 4)
+- [ ] Case study cards: staggered reveals (Technique 5)
+- [ ] Testimonial cards: same reveal + hover glow
+- [ ] World map: fade in with hub card stagger
+- [ ] Test scroll performance on mobile
 
-### Phase 5: Launch & Monitoring (Week 5+)
+### Phase 4: Refinement & Accessibility (Week 4)
+- [ ] Button hover/focus states (your `.premium-button` class)
+- [ ] Form field focus states (subtle teal glow)
+- [ ] Link underline animations (Technique 6 pattern)
+- [ ] Accessibility pass: focus outlines, ARIA labels, contrast ratios
+- [ ] Lighthouse audit (target 90+ on all metrics)
+- [ ] Cross-browser testing (Chrome, Safari, Firefox, mobile)
+
+### Phase 5: Polish & Deployment (Week 5)
+- [ ] Image optimization (compress, WebP, lazy-load)
+- [ ] CSS cleanup (remove unused utility classes)
+- [ ] TypeScript strict mode check
+- [ ] Final animation review (timing, stagger, prefers-reduced-motion)
 - [ ] Deploy to Vercel
-- [ ] Set up analytics
-- [ ] A/B test CTA placement
-- [ ] Monitor performance & gather feedback
+- [ ] Set up Web Vitals monitoring
+- [ ] A/B test CTA button wording/placement (optional)
+
+### Post-Launch
+- [ ] Monitor Lighthouse scores weekly
+- [ ] Gather user feedback (clarity, CTAs, mobile experience)
+- [ ] Iterate on animation timing if users report distraction
 
 ---
 
 ## Performance Checklist
 
-Before launch, verify:
+Before launch, verify every item:
 
 ```
-☐ Lighthouse score (desktop & mobile): > 90
-☐ LCP (Largest Contentful Paint): < 2.5s
-☐ CLS (Cumulative Layout Shift): < 0.1
-☐ Animation frame rate: 60 FPS (test with DevTools)
-☐ Image formats: WebP with fallbacks
-☐ Bundle size (JS + CSS gzipped): < 100KB
-☐ Accessibility: WCAG AA (test with axe)
-☐ Mobile viewport: Tested on 375px–1440px
-☐ Dark mode: Fully functional
-☐ Form validation: Accessible & animated feedback
-☐ 404 page: Styled & accessible
-☐ Meta tags: Title, description, OG images
+Lighthouse Scores (both desktop & mobile):
+  ☐ Performance: > 90
+  ☐ Accessibility: > 95
+  ☐ Best Practices: > 90
+  ☐ SEO: > 95
+
+Core Web Vitals:
+  ☐ LCP (Largest Contentful Paint): < 2.5s
+  ☐ FID (First Input Delay): < 100ms
+  ☐ CLS (Cumulative Layout Shift): < 0.1
+
+Animation:
+  ☐ 60 FPS on mid-range device (DevTools > Performance)
+  ☐ prefers-reduced-motion respected (all animations off for users who set it)
+  ☐ No animation lasts > 1s on scroll reveals
+  ☐ All animations GPU-accelerated (transform + opacity only)
+
+Images & Assets:
+  ☐ All images optimized (< 200KB for hero, < 100KB for smaller)
+  ☐ WebP format with fallbacks
+  ☐ Lazy-loading enabled (`loading="lazy"`)
+  ☐ Responsive srcset for all hero/case study images
+
+Bundle Size (gzipped):
+  ☐ JavaScript: < 100KB
+  ☐ CSS: < 20KB
+  ☐ Total: < 150KB
+
+Accessibility (axe or similar):
+  ☐ WCAG AA minimum (AAA preferred for headings)
+  ☐ Color contrast: 4.5:1 (text), 3:1 (UI)
+  ☐ Focus outlines visible (not removed)
+  ☐ Tab order logical
+  ☐ ARIA labels on icons/buttons
+  ☐ Form error messages associated with inputs
+
+Mobile:
+  ☐ Tested on 375px–768px–1440px widths
+  ☐ Touch targets 44px minimum
+  ☐ No horizontal scroll
+  ☐ Forms readable (font > 16px to prevent zoom)
+
+SEO:
+  ☐ Meta title, description, OG image on all pages
+  ☐ H1 on each page (once)
+  ☐ Internal links to services, blog, proof sections
+  ☐ Schema markup (Organization, LocalBusiness already in place)
+
+Browsers:
+  ☐ Chrome (latest)
+  ☐ Safari (latest)
+  ☐ Firefox (latest)
+  ☐ Mobile Safari (iOS 16+)
+  ☐ Chrome Android
 ```
 
 ---
 
-## Accessibility Principles
+## Accessibility + Inclusivity
 
-Ensure premium feel doesn't sacrifice usability:
+You're an operator—treat accessibility like SLA compliance, not a nice-to-have.
 
 ```
 Color Contrast:
   - Text on background: 4.5:1 minimum (WCAG AA)
-  - UI components: 3:1 minimum
-  - Hover states: Clearly visible
+  - Your teal #00C49A on dark #020203: ~9:1 (passes AAA)
+  - On light backgrounds: test with contrast checker
 
-Animation:
-  - Respect prefers-reduced-motion (disable animations for users who prefer)
-  - No autoplaying videos (pause on focus)
-  - Animations should not last > 5s without user interaction
+Motion:
+  - Respect prefers-reduced-motion (set duration to 1-2ms for those users)
+  - Never autoplay video (users control playback)
+  - Never make animation the only way to convey info
 
-Focus States:
-  - Visible focus outlines on buttons/links
-  - Logical tab order
-  - Skip to main content link
+Focus & Navigation:
+  - Keyboard-only users should be able to reach all CTAs
+  - Tab order should match visual left-to-right, top-to-bottom
+  - Focus outline visible (never remove with outline: none)
+  - Skip to main content link on page load
 
 Forms:
-  - Clear labels
-  - Error messages associated with inputs
-  - Loading states communicated
+  - All inputs have associated <label>
+  - Error messages linked to input with aria-describedby
+  - Loading state communicated (spinner + text)
+  - Success state clear (message or visual feedback)
+
+Images:
+  - All img tags have descriptive alt text (not "image" or empty)
+  - Logos: alt="TrivianEdge"
+  - Case study images: alt="[Client name]: [brief result]"
+  - Decorative SVGs: aria-hidden="true"
+```
 
 ---
 
-## Conclusion
+## Launch Checklist (Final)
 
-This strategy balances **technical sophistication** with **visual elegance**. The result should feel:
-- ✨ Premium (not cheap)
-- 🚀 Forward-thinking (not dated)
-- 🎯 Clear (not confusing)
-- ⚡ Fast (not sluggish)
-- ♿ Accessible (for all users)
+Before deploying:
+- [ ] Commit strategy document to repo
+- [ ] All animations tested with DevTools throttling (slow 4G)
+- [ ] Prefers-reduced-motion tested in browser settings
+- [ ] Form submission works (email received in inbox)
+- [ ] Contact page redirects/thanks message appears
+- [ ] All links internal/external working (check for 404s)
+- [ ] Cookie banner appears (if applicable)
+- [ ] Analytics tracking installed (if used)
+- [ ] Error tracking (Sentry) configured
+- [ ] Deploy to Vercel or host of choice
+- [ ] DNS, SSL certificate active
+- [ ] Performance baseline captured for future comparison
 
-Your site should make visitors think: *"These people know what they're doing. We want to work with them."*
+---
 
-Execute thoughtfully. The details matter.
+## Your Competitive Edge
+
+TrivianEdge isn't a software company or a BPO firm or a recruiter. You're an **operational systems builder**. The design must communicate:
+
+1. **We understand complexity** — not through busy visuals, but through clear, intentional hierarchy
+2. **We execute with precision** — animations that respond immediately, forms that validate clearly, processes explained step-by-step
+3. **We're trustworthy** — authority through restraint, not flash; proof through case studies, not promises
+4. **We scale globally** — world map, 6 countries, 24/7 coverage visualized clearly
+
+Let the design *prove* your operational excellence. Every animation should feel like it's made by engineers who understand timing, every button press should feel responsive, every form field should confirm the user's action.
+
+**Excellence is not shouting. It's being heard the first time.**
+
+---
+
+## Next Steps (As Your CTO)
+
+1. **Approve this strategy** — or iterate (this is collaborative)
+2. **Create animation primitives** — reusable components (RevealBlock, StaggerList, HoverGlow)
+3. **Start with Hero → What We Do** — these two sections set the visual tone
+4. **Ship Phase 1 + 2** — then gather feedback before moving to Phases 3–5
+5. **Monitor performance** — weekly Lighthouse checks, user feedback on mobile
+
+You have the right stack, the right content, and the right brand. Execute this strategy with discipline, and your site will stand out.
+
+**Built for what's next.** Design that proves it.
