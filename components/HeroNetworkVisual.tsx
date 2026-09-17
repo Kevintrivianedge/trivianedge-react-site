@@ -79,9 +79,8 @@ function buildNetwork() {
 }
 
 const { nodes, edges } = buildNetwork();
-// A handful of edges carry an animated pulse, not all of them, so the motion
-// reads as intermittent activity rather than a busy, all-at-once loop.
-const PULSE_EDGE_INDICES = [1, 4, 7, 10, 13, 16, 19];
+// Multiple edges carry animated pulses for continuous activity feel
+const PULSE_EDGE_INDICES = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18];
 
 const HeroNetworkVisual: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -118,36 +117,89 @@ const HeroNetworkVisual: React.FC = () => {
           x2={b.x}
           y2={b.y}
           stroke="#ffffff"
-          strokeWidth="1"
-          strokeOpacity="0.18"
+          strokeWidth="1.2"
+          strokeOpacity="0.25"
         />
       ))}
 
-      {nodes.map((n) => (
+      {nodes.map((n, idx) => (
         <g key={`node-${n.id}`}>
-          <circle cx={n.x} cy={n.y} r={n.r * 5} fill="url(#hero-node-glow)" opacity="0.22" />
-          <circle cx={n.x} cy={n.y} r={n.r} fill="#ffffff" fillOpacity="0.55" />
+          {/* Pulsing outer glow */}
+          {!shouldReduceMotion && (
+            <circle
+              cx={n.x}
+              cy={n.y}
+              r={n.r * 5}
+              fill="url(#hero-node-glow)"
+              opacity="0.15"
+            >
+              <animate
+                attributeName="r"
+                values={`${n.r * 5};${n.r * 7};${n.r * 5}`}
+                dur="3s"
+                begin={`${idx * 0.2}s`}
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                values="0.3;0.1;0.3"
+                dur="3s"
+                begin={`${idx * 0.2}s`}
+                repeatCount="indefinite"
+              />
+            </circle>
+          )}
+
+          {/* Static glow */}
+          <circle cx={n.x} cy={n.y} r={n.r * 5} fill="url(#hero-node-glow)" opacity="0.18" />
+
+          {/* Core node */}
+          <circle cx={n.x} cy={n.y} r={n.r} fill="#ffffff" fillOpacity="0.65" />
+
+          {/* Subtle inner glow */}
+          <circle cx={n.x} cy={n.y} r={n.r * 0.6} fill="#ffffff" fillOpacity="0.35" />
         </g>
       ))}
 
       {!shouldReduceMotion &&
         pulseEdges.map(({ a, b }, i) => (
-          <circle key={`pulse-${i}`} r="3" fill="#ffffff">
-            <animateMotion
-              dur={`${4 + (i % 3)}s`}
-              begin={`${i * 0.9}s`}
-              repeatCount="indefinite"
-              path={`M${a.x},${a.y} L${b.x},${b.y}`}
-            />
-            <animate
-              attributeName="opacity"
-              values="0;0.7;0.7;0"
-              keyTimes="0;0.1;0.85;1"
-              dur={`${4 + (i % 3)}s`}
-              begin={`${i * 0.9}s`}
-              repeatCount="indefinite"
-            />
-          </circle>
+          <g key={`pulse-${i}`}>
+            {/* Glow halo */}
+            <circle r="6" fill="#00c49a" fillOpacity="0">
+              <animateMotion
+                dur={`${3.5 + (i % 3)}s`}
+                begin={`${i * 0.7}s`}
+                repeatCount="indefinite"
+                path={`M${a.x},${a.y} L${b.x},${b.y}`}
+              />
+              <animate
+                attributeName="fillOpacity"
+                values="0;0.3;0.3;0"
+                keyTimes="0;0.08;0.9;1"
+                dur={`${3.5 + (i % 3)}s`}
+                begin={`${i * 0.7}s`}
+                repeatCount="indefinite"
+              />
+            </circle>
+
+            {/* Core pulse */}
+            <circle r="3.5" fill="#ffffff">
+              <animateMotion
+                dur={`${3.5 + (i % 3)}s`}
+                begin={`${i * 0.7}s`}
+                repeatCount="indefinite"
+                path={`M${a.x},${a.y} L${b.x},${b.y}`}
+              />
+              <animate
+                attributeName="opacity"
+                values="0;0.8;0.8;0"
+                keyTimes="0;0.08;0.9;1"
+                dur={`${3.5 + (i % 3)}s`}
+                begin={`${i * 0.7}s`}
+                repeatCount="indefinite"
+              />
+            </circle>
+          </g>
         ))}
     </motion.svg>
   );
