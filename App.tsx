@@ -339,87 +339,75 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </motion.div>
           </div>
 
-          {/* METRIC CARDS — Floating staggered reveals (desktop only) */}
-          <motion.div
-            className="hidden lg:flex flex-col gap-4 flex-shrink-0 lg:mb-24"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-          >
+        </motion.div>
+      </section>
+
+      {/* ===== STATS SHOWCASE ===== */}
+      <section aria-label="Key metrics" className="relative px-4 sm:px-6 py-16 md:py-20 border-b border-border overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-400/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 reveal">
+            <h2 className="text-3xl md:text-4xl font-bold text-text mb-3">
+              How we deliver at scale
+            </h2>
+            <p className="text-muted text-lg max-w-2xl mx-auto">
+              Built for high-volume recruiting and operations across multiple geographies.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { value: '~30', unit: 'days', label: 'Avg. time to hire', live: true },
-              { value: 'Up to 40', unit: '%', label: 'Cost savings', live: false },
-              { value: '6', unit: '', label: 'Countries sourced', live: false },
-              { value: '24/7', unit: '', label: 'Ops coverage', live: true },
+              { value: '~30', unit: 'days', label: 'Avg. time to hire', description: 'From intake to deployment', live: true },
+              { value: 'Up to 40', unit: '%', label: 'Cost savings', description: 'vs. equivalent North American hires', live: false },
+              { value: '6', unit: 'hubs', label: 'Countries sourced', description: 'Across five continents', live: false },
+              { value: '24/7', unit: '', label: 'Ops coverage', description: 'Global timezone alignment', live: true },
             ].map((card, i) => (
               <motion.div
                 key={card.label}
-                className="rounded-2xl border border-cyan-400/20 bg-white/5 backdrop-blur-sm p-4 min-w-[180px]"
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.02 }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{
                   duration: 0.6,
-                  delay: 1.0 + i * 0.1,
+                  delay: i * 0.1,
                   ease: [0.16, 1, 0.3, 1]
                 }}
-                whileHover={{
-                  boxShadow: '0 0 24px rgba(0, 196, 154, 0.3)',
-                  scale: 1.02,
-                }}
+                className="rounded-2xl border border-cyan-400/20 bg-white/5 backdrop-blur-sm p-6 md:p-8 relative group hover:border-cyan-400/40 transition-colors duration-300"
+                style={{ boxShadow: '0 8px 32px rgba(0, 196, 154, 0.06)' }}
               >
-                <div className="flex items-center gap-2 mb-2">
+                <div className="absolute -top-8 -right-8 w-24 h-24 bg-cyan-400/8 rounded-full blur-2xl group-hover:bg-cyan-400/12 transition-colors duration-300" />
+
+                <div className="flex items-start gap-3 mb-4">
                   {card.live && (
                     <motion.span
-                      className="w-2 h-2 rounded-full bg-cyan-400"
-                      animate={{ opacity: [1, 0.5, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
+                      className="w-2 h-2 rounded-full bg-cyan-400 flex-shrink-0 mt-1"
+                      animate={{
+                        scale: [1, 1.2, 1],
+                        boxShadow: ['0 0 0 0 rgba(0, 196, 154, 0.4)', '0 0 0 6px rgba(0, 196, 154, 0)', '0 0 0 0 rgba(0, 196, 154, 0)']
+                      }}
+                      transition={{ duration: 2.5, repeat: Infinity }}
                     />
                   )}
-                  <span className="text-[10px] uppercase tracking-widest text-white/60 font-semibold">
+                  <span className="text-[10px] uppercase tracking-widest text-white/50 font-semibold flex-1">
                     {card.label}
                   </span>
                 </div>
-                <span className="text-2xl font-bold text-white">
-                  {card.value}
-                  <span className="text-sm opacity-70 ml-1">{card.unit}</span>
-                </span>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
 
-        {/* MOBILE METRICS — 2×2 grid on small screens */}
-        <motion.div
-          className="lg:hidden w-full px-0 pb-10 relative z-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.6 }}
-        >
-          <div className="max-w-7xl mx-auto grid grid-cols-2 gap-3">
-            {[
-              { value: '~30', unit: 'days', label: 'Avg. time to hire' },
-              { value: 'Up to 40', unit: '%', label: 'Cost savings' },
-              { value: '6', unit: '', label: 'Countries sourced' },
-              { value: '24/7', unit: '', label: 'Ops coverage' },
-            ].map(s => (
-              <motion.div
-                key={s.label}
-                className="rounded-2xl border border-cyan-400/20 bg-white/5 p-4 backdrop-blur-sm"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <p className="text-lg font-bold text-white leading-none mb-1">
-                  {s.value}
-                  <span className="text-xs opacity-70 ml-1">{s.unit}</span>
-                </p>
-                <p className="text-[10px] uppercase tracking-widest text-white/60 font-semibold">
-                  {s.label}
-                </p>
+                <div className="mb-4">
+                  <div className="text-3xl md:text-4xl font-bold text-white mb-1">
+                    {card.value}
+                    <span className="text-lg md:text-xl opacity-60 ml-2">{card.unit}</span>
+                  </div>
+                  <p className="text-xs text-white/40">{card.description}</p>
+                </div>
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* ===== ACT 2: TRUST STRIP ===== */}
