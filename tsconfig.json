@@ -28,6 +28,6 @@
     "noEmit": true,
     "noImplicitAny": true
   },
-  "exclude": ["src/worker.ts", "e2e", ".storybook", "node_modules"],
+  "exclude": ["src/worker.ts", "src/**/*.stories.tsx", "e2e", ".storybook", "node_modules"],
   "include": ["src/**/*", "hooks/**/*"]
 }

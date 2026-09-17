@@ -49,7 +49,7 @@ export const VentureSubmissionSchema = z.object({
     .min(20, 'Description must be at least 20 characters')
     .max(2000, 'Description must be less than 2000 characters'),
   stage: z.enum(['idea', 'mvp', 'beta', 'launched', 'scaling'], {
-    errorMap: () => ({ message: 'Please select a valid funding stage' })
+    message: 'Please select a valid funding stage'
   }),
   fundingAmount: z.number()
     .positive('Funding amount must be positive')
@@ -126,9 +126,9 @@ export const validateFormData = async <T>(
   } catch (error) {
     if (error instanceof z.ZodError) {
       const errors: Record<string, string> = {};
-      error.errors.forEach((err) => {
-        const path = err.path.join('.');
-        errors[path] = err.message;
+      error.issues.forEach((issue) => {
+        const path = issue.path.join('.');
+        errors[path] = issue.message;
       });
       return { success: false, errors };
     }
