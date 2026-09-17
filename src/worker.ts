@@ -1235,6 +1235,12 @@ export default {
       if (url.pathname === '/api/analytics/events' && request.method === 'POST') {
         return handleAnalyticsEvent(request, env, corsHeaders);
       }
+      if (url.pathname === '/api/analytics/metrics' && request.method === 'POST') {
+        return handleAnalyticsMetric(request, env, corsHeaders);
+      }
+      if (url.pathname === '/api/analytics/batch' && request.method === 'POST') {
+        return handleAnalyticsBatch(request, env, corsHeaders);
+      }
       if (url.pathname === '/api/venture/submit' && request.method === 'POST') {
         await processDueCrmRetries(env, 3);
         return handleVentureSubmit(request, env, corsHeaders);
@@ -1692,6 +1698,101 @@ async function handleAnalyticsEvent(request: Request, env: Env, corsHeaders: Rec
   await persistEvent(env, 'analytics', record);
 
   return new Response(JSON.stringify({ success: true }), {
+    status: 200,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
+async function handleAnalyticsMetric(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
+  interface MetricBody {
+    type?: string;
+    metric?: string;
+    value?: number;
+    rating?: string;
+    url?: string;
+    userAgent?: string;
+    timestamp?: number;
+  }
+
+  const parsed = await parseJsonBody<MetricBody>(request);
+  if (!parsed.ok) {
+    return new Response(JSON.stringify({ success: false, error: parsed.error }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const body = parsed.data;
+  const metric = typeof body.metric === 'string' ? body.metric.trim() : '';
+
+  if (!metric) {
+    return new Response(JSON.stringify({ success: false, error: 'metric is required' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const requestIp = request.headers.get('CF-Connecting-IP') ?? 'unknown';
+  const record = {
+    type: 'performance_metric',
+    metric,
+    value: typeof body.value === 'number' ? body.value : 0,
+    rating: typeof body.rating === 'string' ? body.rating : 'unknown',
+    url: typeof body.url === 'string' ? body.url : 'unknown',
+    ip: anonymizeIp(requestIp),
+    ua: request.headers.get('User-Agent') ?? 'unknown',
+    ts: new Date().toISOString(),
+  };
+
+  await persistEvent(env, 'metrics', record);
+
+  return new Response(JSON.stringify({ success: true }), {
+    status: 200,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
+async function handleAnalyticsBatch(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
+  interface BatchBody {
+    type?: string;
+    events?: Array<{ eventName?: string; properties?: Record<string, unknown> }>;
+    timestamp?: number;
+  }
+
+  const parsed = await parseJsonBody<BatchBody>(request);
+  if (!parsed.ok) {
+    return new Response(JSON.stringify({ success: false, error: parsed.error }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const body = parsed.data;
+  const events = Array.isArray(body.events) ? body.events : [];
+
+  if (events.length === 0) {
+    return new Response(JSON.stringify({ success: false, error: 'events array is required and must not be empty' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const requestIp = request.headers.get('CF-Connecting-IP') ?? 'unknown';
+  const timestamp = new Date().toISOString();
+
+  for (const event of events) {
+    const record = {
+      type: 'batch_event',
+      eventName: typeof event.eventName === 'string' ? event.eventName : 'unknown',
+      properties: event.properties && typeof event.properties === 'object' ? event.properties : {},
+      ip: anonymizeIp(requestIp),
+      ua: request.headers.get('User-Agent') ?? 'unknown',
+      ts: timestamp,
+    };
+    await persistEvent(env, 'analytics', record);
+  }
+
+  return new Response(JSON.stringify({ success: true, eventsProcessed: events.length }), {
     status: 200,
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });

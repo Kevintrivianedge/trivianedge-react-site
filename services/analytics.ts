@@ -170,14 +170,84 @@ export const trackChatInteraction = async (
 /**
  * Track error
  */
-export const trackError = async (errorName: string, errorMessage?: string) => {
+export const trackError = async (errorName: string, errorMessage?: string, errorStack?: string) => {
   await sendAnalyticsEvent({
     eventName: 'error',
     properties: {
       errorName,
       errorMessage: errorMessage || 'Unknown error',
+      errorStack: errorStack || '',
+      severity: categorizeErrorSeverity(errorName),
     },
   });
+};
+
+/**
+ * Categorize error severity for alerting
+ */
+function categorizeErrorSeverity(errorName: string): 'critical' | 'high' | 'medium' | 'low' {
+  const critical = ['OutOfMemory', 'SecurityError', 'TypeError', 'ReferenceError'];
+  const high = ['NetworkError', 'TimeoutError', 'FetchError'];
+  const medium = ['ValidationError', 'ParsingError'];
+
+  if (critical.some(e => errorName.includes(e))) return 'critical';
+  if (high.some(e => errorName.includes(e))) return 'high';
+  if (medium.some(e => errorName.includes(e))) return 'medium';
+  return 'low';
+}
+
+/**
+ * Global error handler for uncaught exceptions
+ */
+export const setupGlobalErrorHandler = () => {
+  if (typeof window === 'undefined') return;
+
+  window.addEventListener('error', (event: ErrorEvent) => {
+    trackError(
+      event.error?.name || 'UncaughtException',
+      event.message,
+      event.error?.stack
+    ).catch(() => {});
+  });
+
+  window.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {
+    const reason = event.reason;
+    const errorName = reason?.name || 'UnhandledPromiseRejection';
+    const errorMessage = reason?.message || String(reason);
+    trackError(errorName, errorMessage).catch(() => {});
+  });
+};
+
+/**
+ * Wrap function with error tracking
+ */
+export const withErrorTracking = <T extends (...args: any[]) => any>(
+  fn: T,
+  context?: string
+): T => {
+  return ((...args: any[]) => {
+    try {
+      const result = fn(...args);
+      if (result instanceof Promise) {
+        return result.catch((error: any) => {
+          trackError(
+            `${context || 'Function'}.Error`,
+            error?.message || String(error),
+            error?.stack
+          ).catch(() => {});
+          throw error;
+        });
+      }
+      return result;
+    } catch (error) {
+      trackError(
+        `${context || 'Function'}.Error`,
+        (error as any)?.message || String(error),
+        (error as any)?.stack
+      ).catch(() => {});
+      throw error;
+    }
+  }) as T;
 };
 
 /**
