@@ -47,7 +47,6 @@ import ProcessTimeline from './components/ProcessTimeline';
 import TalentHubCard from './components/TalentHubCard';
 import ScrollToTop from './components/ScrollToTop';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import WorldMapLazy from './components/WorldMapLazy';
 import HeroNetworkVisual from './components/HeroNetworkVisual';
 
 // Lazy-load route-level pages and heavy below-fold interactive modules.
@@ -88,6 +87,7 @@ const ServicesPage            = lazy(() => import('./pages/ServicesPage'));
 const SavingsCalculatorPage   = lazy(() => import('./pages/SavingsCalculatorPage'));
 const NotFoundPage            = lazy(() => import('./pages/NotFoundPage'));
 const ChatSidebar             = lazy(() => import('./components/ChatSidebar'));
+const WorldMapLazy            = lazy(() => import('./components/WorldMapLazy'));
 const CityLandingPage         = lazy(() => import('./components/CityLandingPage'));
 
 
@@ -747,7 +747,9 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             style={{ boxShadow: '0 0 60px rgba(0,196,154,0.08), inset 0 1px 0 rgba(255,255,255,0.8)' }}
           >
-            <WorldMapLazy hubs={TALENT_HUBS} onHubClick={setSelectedHub} />
+            <Suspense fallback={<div className="h-[400px] bg-gray-100 dark:bg-gray-900 rounded animate-pulse" />}>
+              <WorldMapLazy hubs={TALENT_HUBS} onHubClick={setSelectedHub} />
+            </Suspense>
           </motion.div>
 
           {/* Hub detail cards */}
