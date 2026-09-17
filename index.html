@@ -124,7 +124,10 @@
          The <noscript> fallback still lives in <body> below for no-JS visitors,
          who can't run the consent banner either way. -->
 
-    <!-- Clarity tracking code for https://www.trivianedge.com/ -->
+    <!-- Clarity tracking code for https://www.trivianedge.com/
+         Already deferred via async=1 in the script tag creation below, so it
+         won't block initial render. The inline code executes immediately but is
+         just setting up a promise; the actual tag load is asynchronous. -->
     <script>
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
