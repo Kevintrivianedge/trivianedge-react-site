@@ -1160,6 +1160,7 @@ function cacheControlFor(pathname: string): string {
   if (/\.(svg|png)$/.test(pathname)) return 'public, max-age=86400, stale-while-revalidate=86400';
   if (pathname.endsWith('.ico')) return 'public, max-age=86400';
   if (pathname === '/manifest.json') return 'public, max-age=3600';
+  if (pathname.startsWith('/zaraz/')) return 'public, max-age=86400, stale-while-revalidate=86400';
   return 'public, no-cache';
 }
 
