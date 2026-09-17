@@ -9,7 +9,13 @@ const indexPath = join(distDir, 'index.html');
 
 let html = readFileSync(indexPath, 'utf-8');
 
-// Defer non-critical CSS links to avoid render-blocking requests
+// Defer non-critical CSS links to avoid render-blocking requests. The actual
+// media="print" -> "all" swap runs from /critical-loader.js (an external,
+// same-origin script referenced in index.html's <head>) rather than an
+// inline onload="" attribute here — inline event-handler attributes are
+// exactly what a CSP's script-src can gate behind a nonce/hash, and an edge
+// layer outside this app's control has been observed doing that on some
+// requests. See critical-loader.js for the full reasoning.
 html = html.replace(
   /<link rel="stylesheet"([^>]*?)href="([^"]*)"([^>]*)>/g,
   (match, before, href, after) => {
@@ -17,7 +23,7 @@ html = html.replace(
     if (href.includes('fonts.googleapis.com')) return match;
 
     // Defer Vite-generated CSS
-    return `<link rel="stylesheet" media="print"${before}href="${href}"${after} onload="this.media='all'">`;
+    return `<link rel="stylesheet" media="print"${before}href="${href}"${after}>`;
   }
 );
 
