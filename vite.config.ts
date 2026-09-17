@@ -58,7 +58,6 @@ export default defineConfig({
           if (id.includes('node_modules/react-dom')) return 'vendor-react-dom';
           if (id.includes('node_modules/react')) return 'vendor-react';
           if (id.includes('node_modules/react-router-dom')) return 'vendor-router';
-          if (id.includes('node_modules/framer-motion')) return 'vendor-motion';
           if (id.includes('node_modules/react-helmet-async')) return 'vendor-helmet';
           if (id.includes('node_modules/lucide-react')) return 'vendor-icons';
           if (id.includes('node_modules/@amplitude')) return 'amplitude';
@@ -74,7 +73,6 @@ export default defineConfig({
       'react-dom',
       'react-router-dom',
       'react-helmet-async',
-      'framer-motion',
     ],
   },
 });
