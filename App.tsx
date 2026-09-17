@@ -221,22 +221,16 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         aria-label="Hero"
         className="hero-dark hero-fade-out relative min-h-screen sm:min-h-0 lg:min-h-screen flex flex-col px-4 sm:px-6 overflow-hidden"
       >
-        {/* Abstract network graphic, not a stock photo or literal map (the real
-            geographic map with pins lives further down at #talent-hubs). Renders
-            behind the hero content (same z-index as siblings, painted first so
-            it stacks behind per DOM order).
-            Positioned at a FIXED pixel left-offset, not a percentage: the text
-            column below is `max-w-[760px]`, a constant regardless of viewport
-            width, so the empty space to its right only grows as the viewport
-            widens — a percentage-based boundary drifts across that fixed
-            column at different widths (confirmed broken two different ways on
-            real screenshots: masked to near-invisibility on one width, then
-            cutting straight through the headline and CTA button on another).
-            A fixed left offset just past the text column's max width keeps
-            this correct at every width from `lg:` up. Shown at `lg:` to match
-            the breakpoint where the metric cards switch to their two-column
-            layout (`hidden lg:flex` below) — below that, the hero text runs
-            full width and there's no real right-hand space for this at all. */}
+        {/* PARALLAX BACKGROUND — Subtle animated grid that moves slower than scroll */}
+        <motion.div
+          className="hidden lg:block absolute inset-0 -z-10"
+          style={{
+            background: 'linear-gradient(135deg, rgba(0, 196, 154, 0.08) 0%, rgba(0, 255, 224, 0.04) 100%)',
+            opacity: 0.5,
+          }}
+        />
+
+        {/* Abstract network graphic */}
         <div className="hidden lg:block !absolute inset-y-0 right-0" style={{ left: '820px' }}>
           <HeroNetworkVisual />
         </div>
@@ -246,125 +240,183 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           className="flex-1 flex items-center max-w-7xl mx-auto w-full relative z-10 pt-20 pb-8 gap-8 xl:gap-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="flex-1 min-w-0 max-w-[760px]">
+            {/* EYEBROW — Operator positioning */}
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="text-xs font-bold tracking-[0.25em] uppercase text-cyan-400 mb-8"
             >
-              Canada's BPO, RPO & Bespoke Software Partner
+              Operator. Builder. Partner.
             </motion.p>
 
+            {/* HEADLINE — Line-by-line reveal with stagger */}
             <h1 className="display-hero font-bold tracking-tight mb-8 leading-[1.02] text-white">
               <motion.span
                 className="block"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.0, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               >
-                Build the team.
+                Built For
               </motion.span>
               <motion.span
-                className="block text-holo"
+                className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-300"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.0, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               >
-                Run the system.
+                What's Next
               </motion.span>
             </h1>
 
-            {/* No entrance animation on this element: it's the page's LCP
-                candidate (confirmed via PageSpeed Insights' LCP breakdown).
-                Fading it in behind a Framer Motion opacity transition made
-                its paint wait on that animation frame firing, which itself
-                queued behind the page's third-party-script main-thread work
-                — measured at 4+ seconds of pure "element render delay" with
-                a 10ms TTFB, i.e. the content was ready but hidden. */}
-            <p className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light">
-              Offshore teams and bespoke software, deployed in as little as 30 days. Hiring, payroll, compliance, and delivery, handled entirely by us.
-            </p>
+            {/* SUBHEADING — Fade in after headline completes */}
+            <motion.p
+              className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.7, ease: 'easeOut' }}
+            >
+              Offshore teams, global compliance, bespoke software. One partner, one contract, one point of accountability.
+            </motion.p>
 
+            {/* CTAs — Premium hover states */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col sm:flex-row items-start gap-4"
             >
-              <a
+              {/* Primary CTA */}
+              <motion.a
                 href="#contact"
                 onClick={e => { e.preventDefault(); scrollTo('contact'); }}
-                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 group btn-magnetic premium-button micro-press-button"
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 group bg-cyan-400 text-black hover:text-black transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+                style={{
+                  boxShadow: '0 0 0px rgba(0, 196, 154, 0)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 0 40px rgba(0, 196, 154, 0.4), 0 0 80px rgba(0, 255, 224, 0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 0 0px rgba(0, 196, 154, 0)';
+                }}
               >
-                Start the conversation
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-              </a>
-              <a
+                Get Started
+                <motion.div
+                  animate={{ x: 0 }}
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ArrowRight className="w-5 h-5" />
+                </motion.div>
+              </motion.a>
+
+              {/* Secondary CTA */}
+              <motion.a
                 href="#how-it-works"
                 onClick={e => { e.preventDefault(); scrollTo('how-it-works'); }}
-                className="w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 btn-magnetic premium-button-secondary micro-press-button !text-white border-white/20 hover:border-white/40 hover:bg-white/5"
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 text-white border border-white/20 hover:border-white/40 hover:bg-white/5 transition-colors"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
               >
-                How it works
-                <ChevronRight className="w-5 h-5" />
-              </a>
+                How It Works
+                <motion.div
+                  animate={{ x: 0 }}
+                  whileHover={{ x: 2 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </motion.div>
+              </motion.a>
             </motion.div>
           </div>
 
-          {/* Right-side floating metric cards — desktop only.
-              lg:mb-24 keeps the last card clear of the fixed chat bubble
-              (bottom-10 right-10, ~96px footprint) on shorter viewports. */}
+          {/* METRIC CARDS — Floating staggered reveals (desktop only) */}
           <motion.div
             className="hidden lg:flex flex-col gap-4 flex-shrink-0 lg:mb-24"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.0, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
           >
             {[
-              { value: '30', unit: ' days', label: 'Average time to hire', live: true },
+              { value: '~30', unit: 'days', label: 'Avg. time to hire', live: true },
               { value: 'Up to 40', unit: '%', label: 'Cost savings', live: false },
-              { value: '6',  unit: '',      label: 'Countries we source from', live: false },
-              { value: '24/7', unit: '',    label: 'Operations coverage', live: true },
+              { value: '6', unit: '', label: 'Countries sourced', live: false },
+              { value: '24/7', unit: '', label: 'Ops coverage', live: true },
             ].map((card, i) => (
               <motion.div
                 key={card.label}
-                className="hero-metric-card"
-                initial={{ opacity: 0, x: 24 }}
+                className="rounded-2xl border border-cyan-400/20 bg-white/5 backdrop-blur-sm p-4 min-w-[180px]"
+                initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7, delay: 1.0 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: 0.6,
+                  delay: 1.0 + i * 0.1,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                whileHover={{
+                  boxShadow: '0 0 24px rgba(0, 196, 154, 0.3)',
+                  scale: 1.02,
+                }}
               >
-                <div className="flex items-center gap-2 mb-1">
-                  {card.live && <span className="hero-metric-dot" />}
-                  <span className="hero-metric-label">{card.label}</span>
+                <div className="flex items-center gap-2 mb-2">
+                  {card.live && (
+                    <motion.span
+                      className="w-2 h-2 rounded-full bg-cyan-400"
+                      animate={{ opacity: [1, 0.5, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                  )}
+                  <span className="text-[10px] uppercase tracking-widest text-white/60 font-semibold">
+                    {card.label}
+                  </span>
                 </div>
-                <span className="hero-metric-value">{card.value}<span className="hero-metric-unit">{card.unit}</span></span>
+                <span className="text-2xl font-bold text-white">
+                  {card.value}
+                  <span className="text-sm opacity-70 ml-1">{card.unit}</span>
+                </span>
               </motion.div>
             ))}
           </motion.div>
         </motion.div>
 
-        {/* Mobile-only 2×2 stat grid — shown below buttons on small screens.
-            This is the only stat rendering on mobile; desktop uses the floating
-            cards above instead, so the numbers never repeat within a breakpoint. */}
+        {/* MOBILE METRICS — 2×2 grid on small screens */}
         <motion.div
           className="lg:hidden w-full px-0 pb-10 relative z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.9, duration: 0.8 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
         >
           <div className="max-w-7xl mx-auto grid grid-cols-2 gap-3">
             {[
-              { value: '30 days', label: 'Avg. time to hire' },
-              { value: 'Up to 40%', label: 'Cost savings' },
-              { value: '6',       label: 'Countries sourced' },
-              { value: '24/7',    label: 'Ops coverage' },
+              { value: '~30', unit: 'days', label: 'Avg. time to hire' },
+              { value: 'Up to 40', unit: '%', label: 'Cost savings' },
+              { value: '6', unit: '', label: 'Countries sourced' },
+              { value: '24/7', unit: '', label: 'Ops coverage' },
             ].map(s => (
-              <div key={s.label} className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
-                <p className="text-xl font-bold text-white leading-none mb-1">{s.value}</p>
-                <p className="text-[10px] uppercase tracking-widest text-white/60 font-semibold">{s.label}</p>
-              </div>
+              <motion.div
+                key={s.label}
+                className="rounded-2xl border border-cyan-400/20 bg-white/5 p-4 backdrop-blur-sm"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <p className="text-lg font-bold text-white leading-none mb-1">
+                  {s.value}
+                  <span className="text-xs opacity-70 ml-1">{s.unit}</span>
+                </p>
+                <p className="text-[10px] uppercase tracking-widest text-white/60 font-semibold">
+                  {s.label}
+                </p>
+              </motion.div>
             ))}
           </div>
         </motion.div>
@@ -419,7 +471,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <span className="text-holo">Start with six proven talent hubs.</span>
             </h2>
             <p className="text-muted text-lg max-w-3xl mx-auto">
-              TrivianEdge is a Toronto-based BPO, RPO, and bespoke software development company that deploys offshore teams in as little as 30 days. We hire people for your back office, run your recruiting pipeline, and build the custom software your product needs, sourced from six global talent hubs (Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica) and matched to your time zone. Most companies juggle three or four vendors for hiring, payroll, and software. We bring people and software delivery under one roof, so nothing falls through the cracks.
+              TrivianEdge is a Toronto-based BPO, RPO, and bespoke software development company that typically deploys offshore teams within 30 days. We hire people for your back office, run your recruiting pipeline, and build the custom software your product needs, sourced from six global talent hubs (Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica) and matched to your time zone. Most companies juggle three or four vendors for hiring, payroll, and software. We bring people and software delivery under one roof, so nothing falls through the cracks.
             </p>
           </div>
 
@@ -437,10 +489,18 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   key={feature.title}
                   initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={shouldReduceMotion ? {} : {
+                    scale: 1.02,
+                    boxShadow: '0 0 24px rgba(0, 196, 154, 0.3), 0 8px 32px rgba(0, 0, 0, 0.1)'
+                  }}
                   viewport={{ once: true, amount: 0.25 }}
-                  transition={{ duration: shouldReduceMotion ? 0.01 : 0.55, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className={`card-glow bg-white dark:bg-white/5 rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 ${wide ? 'md:col-span-2' : ''}`}
-                  style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
+                  transition={{
+                    duration: shouldReduceMotion ? 0.01 : (wide ? 0.65 : 0.55),
+                    delay: shouldReduceMotion ? 0 : idx * 0.08,
+                    ease: [0.16, 1, 0.3, 1]
+                  }}
+                  className={`bg-white dark:bg-white/5 rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 ${wide ? 'md:col-span-2' : ''}`}
+                  style={{ boxShadow: '0 8px 32px rgba(0, 196, 154, 0.06)' }}
                   role="link"
                   tabIndex={0}
                   onClick={() => navigate(feature.link)}
@@ -453,9 +513,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 >
                   <div className={`absolute -top-8 -right-8 w-32 h-32 ${feature.glow} blur-3xl pointer-events-none rounded-full`} />
                   <div className={wide ? 'flex flex-col md:flex-row md:items-center gap-4 md:gap-8' : 'flex items-start gap-4'}>
-                    <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br ${feature.iconBg} border ${feature.iconBorder} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                    <motion.div
+                      whileHover={shouldReduceMotion ? {} : { scale: 1.1 }}
+                      transition={{ duration: 0.2, ease: 'easeOut' }}
+                      className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br ${feature.iconBg} border ${feature.iconBorder} flex items-center justify-center flex-shrink-0`}
+                    >
                       <Icon className={`w-6 h-6 md:w-8 md:h-8 ${feature.accent}`} />
-                    </div>
+                    </motion.div>
                     <div className="min-w-0 flex-1">
                       <div className={wide ? 'md:max-w-md' : ''}>
                         <h3 className={`font-bold text-text mb-2 ${wide ? 'text-2xl' : 'text-xl'}`}>{feature.title}</h3>
@@ -538,8 +602,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 key={step.number}
                 initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: 0.6,
+                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
                 className="relative group"
               >
                 {/* Connector line between steps */}
@@ -547,9 +616,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   <div className="hidden lg:block absolute top-9 left-full w-full h-px bg-gradient-to-r from-border to-transparent z-0 -translate-y-px" style={{ width: 'calc(100% - 2rem)', left: '2rem' }} />
                 )}
                 <span className="step-number">{step.number}</span>
-                <div className="w-12 h-12 rounded-2xl border border-border bg-surface flex items-center justify-center mb-5 group-hover:border-cyan-400/40 group-hover:bg-cyan-400/5 transition-all duration-300">
+                <motion.div
+                  whileHover={shouldReduceMotion ? {} : { scale: 1.1 }}
+                  transition={{ duration: 0.2, ease: 'easeOut' }}
+                  className="w-12 h-12 rounded-2xl border border-border bg-surface flex items-center justify-center mb-5 group-hover:border-cyan-400/40 group-hover:bg-cyan-400/5 transition-colors duration-300"
+                >
                   {step.icon}
-                </div>
+                </motion.div>
                 <h3 className="text-lg font-bold text-text mb-3 leading-snug">{step.title}</h3>
                 <p className="text-muted text-sm leading-relaxed">{step.description}</p>
               </motion.div>
@@ -583,12 +656,20 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {CASE_STUDIES.map((study, idx) => (
               <motion.article
                 key={study.client}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={shouldReduceMotion ? {} : {
+                  scale: 1.02,
+                  boxShadow: '0 0 24px rgba(0, 196, 154, 0.3), 0 12px 40px rgba(0, 0, 0, 0.15)'
+                }}
                 viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
-                className="reveal card-glow micro-lift-card rounded-[2rem] border border-border bg-white dark:bg-white/5 overflow-hidden flex flex-col"
-                style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,196,154,0.08)' }}
+                transition={{
+                  duration: shouldReduceMotion ? 0.01 : 0.65,
+                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                className="rounded-[2rem] border border-border bg-white dark:bg-white/5 overflow-hidden flex flex-col cursor-pointer hover:border-cyan-400/30 transition-colors duration-300"
+                style={{ boxShadow: '0 8px 32px rgba(0, 196, 154, 0.06)' }}
               >
                 <div className="h-1 w-full bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600/50" />
                 <div className="p-6 md:p-7 flex flex-col flex-1">
@@ -605,9 +686,25 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {TESTIMONIALS.slice(0, 2).map((item) => (
-              <blockquote key={item.author + item.role} className="reveal quote-card micro-lift-card">
-                <p className="relative z-10 text-lg leading-relaxed text-text/90 mb-8 pt-8">{item.quote}</p>
+            {TESTIMONIALS.slice(0, 2).map((item, idx) => (
+              <motion.blockquote
+                key={item.author + item.role}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={shouldReduceMotion ? {} : {
+                  scale: 1.02,
+                  boxShadow: '0 0 20px rgba(0, 196, 154, 0.2)'
+                }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{
+                  duration: 0.6,
+                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                className="quote-card rounded-2xl border border-border bg-white/[0.02] p-7 md:p-9 cursor-pointer hover:border-cyan-400/30 transition-colors duration-300"
+                style={{ boxShadow: '0 8px 24px rgba(0, 196, 154, 0.04)' }}
+              >
+                <p className="relative z-10 text-lg leading-relaxed text-text/90 mb-8 pt-2">{item.quote}</p>
                 <footer className="flex items-center gap-3 border-t border-border/50 pt-5">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
                     {item.author[0]}
@@ -617,7 +714,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                     <p className="text-muted text-xs">{item.role}</p>
                   </div>
                 </footer>
-              </blockquote>
+              </motion.blockquote>
             ))}
           </div>
 
@@ -636,7 +733,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         className="section-shell px-4 md:px-6"
       >
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 reveal">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
             <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-text/70 mb-4">Where your team comes from</p>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
               <span className="sr-only">Where does TrivianEdge source talent from? </span>
@@ -645,17 +748,40 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <p className="text-muted text-lg max-w-2xl mx-auto">
               We source from 6 countries selected for their talent quality, English proficiency, and timezone fit with your business. Hover any pin to explore.
             </p>
-          </div>
+          </motion.div>
 
           {/* Interactive world map — neural-bg reinforces "network" both literally (talent graph) and visually (tech-forward texture) */}
-          <div className="reveal neural-bg rounded-[3rem] border border-cyan-400/15 bg-[#f4fcf9] dark:bg-white/[0.03] p-4 md:p-8 mb-12 overflow-hidden relative" style={{ boxShadow: '0 0 60px rgba(0,196,154,0.08), inset 0 1px 0 rgba(255,255,255,0.8)' }}>
+          <motion.div
+            className="neural-bg rounded-[3rem] border border-cyan-400/15 bg-[#f4fcf9] dark:bg-white/[0.03] p-4 md:p-8 mb-12 overflow-hidden relative"
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{ boxShadow: '0 0 60px rgba(0,196,154,0.08), inset 0 1px 0 rgba(255,255,255,0.8)' }}
+          >
             <WorldMapLazy hubs={TALENT_HUBS} onHubClick={setSelectedHub} />
-          </div>
+          </motion.div>
 
           {/* Hub detail cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {TALENT_HUBS.map((hub, idx) => (
-              <TalentHubCard key={hub.id} hub={hub} index={idx} onClick={setSelectedHub} />
+              <motion.div
+                key={hub.id}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={shouldReduceMotion ? {} : {
+                  scale: 1.02,
+                  boxShadow: '0 0 20px rgba(0, 196, 154, 0.25)'
+                }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{
+                  duration: 0.6,
+                  delay: idx * 0.08,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+              >
+                <TalentHubCard hub={hub} index={idx} onClick={setSelectedHub} />
+              </motion.div>
             ))}
           </div>
         </div>
@@ -684,34 +810,60 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
       {/* ===== ACT 8: CTA + CONTACT ===== */}
       <section id="contact" aria-label="Contact Us" className="section-dark section-shell px-4 md:px-6">
-          <div className="max-w-7xl mx-auto reveal text-center relative z-10">
-            <h2 className="display-section text-3xl sm:text-5xl md:text-7xl font-bold mb-5 text-white">
-              Tell us what you need.
-            </h2>
-            <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-6 leading-relaxed">
-              Tech hiring, non-tech hiring, delivery support, market expansion.
-            </p>
+          <div className="max-w-7xl mx-auto text-center relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <h2 className="display-section text-3xl sm:text-5xl md:text-7xl font-bold mb-5 text-white">
+                Tell us what you need.
+              </h2>
+              <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-6 leading-relaxed">
+                Tech hiring, non-tech hiring, delivery support, market expansion.
+              </p>
+            </motion.div>
 
-            <a
+            <motion.a
               href={BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm mb-10 btn-magnetic premium-button-secondary micro-press-button !text-white border-white/20 hover:border-white/40 hover:bg-white/5"
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
+              whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.55, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm mb-10 premium-button-secondary !text-white border-white/20 hover:border-white/40 hover:bg-white/5 transition-colors"
             >
               Or book a 15-minute call
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </motion.a>
 
-            <div className="max-w-4xl mx-auto text-left mb-6 rounded-3xl bg-white dark:bg-white/5 p-6 md:p-10 shadow-[0_0_60px_rgba(0,196,154,0.15)]">
+            <motion.div
+              className="max-w-4xl mx-auto text-left mb-6 rounded-3xl bg-white dark:bg-white/5 p-6 md:p-10"
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 28, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.65, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              style={{ boxShadow: '0 0 60px rgba(0,196,154,0.15)' }}
+            >
               <InquiryForm />
-            </div>
+            </motion.div>
 
-            <p className="text-white/60 text-sm">
+            <motion.p
+              className="text-white/60 text-sm"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.35 }}
+            >
               Prefer to reach out directly?{' '}
               <a href="mailto:kevin.v@trivianedge.com" className="text-white/70 hover:text-cyan-400 underline underline-offset-4 transition-colors">Email us</a>
               {' '}or{' '}
               <a href="tel:+18883472489" className="text-white/70 hover:text-cyan-400 underline underline-offset-4 transition-colors">call +1 888-347-2489</a>.
-            </p>
+            </motion.p>
           </div>
       </section>
     </>
@@ -934,10 +1086,10 @@ export default function App() {
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={location.pathname}
-                    initial={{ opacity: 0, y: 8 }}
+                    initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.22, ease: 'easeOut' }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <Routes location={location}>
                       <Route path="/" element={<HomePage setSelectedHub={setSelectedHub} />} />

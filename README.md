@@ -111,6 +111,53 @@ See `.env.example` for the full list.
 
 ---
 
+## Premium Design System
+
+TrivianEdge features a **$50k+ bespoke agency aesthetic** with award-winning animations and premium motion design.
+
+### Design Philosophy: "Kinetic Minimalism"
+- **Confident**: Forward-thinking operator's dashboard
+- **Premium**: Minimal colors, generous whitespace, purposeful motion
+- **Accessible**: All animations respect `prefers-reduced-motion`, WCAG AA compliance
+- **Performant**: 60 FPS animations using GPU-accelerated transforms only
+
+### Key Documentation
+- **[PREMIUM_DESIGN_CONCEPT.md](./PREMIUM_DESIGN_CONCEPT.md)** — Complete visual direction, 3 concepts, animation techniques, component specs
+- **[ANIMATION_PATTERNS.md](./ANIMATION_PATTERNS.md)** — Reusable animation patterns, timing guidelines, code examples
+- **[PERFORMANCE_OPTIMIZATION.md](./PERFORMANCE_OPTIMIZATION.md)** — Build config, asset optimization, performance targets
+- **[ACCESSIBILITY_AUDIT.md](./ACCESSIBILITY_AUDIT.md)** — WCAG 2.1 AA compliance, testing procedures, guidelines
+
+### Animation Timing & Easing
+All animations use custom easing `[0.16, 1, 0.3, 1]` for premium feel:
+- **Hover effects**: 200ms (instant feedback)
+- **Entrance animations**: 600–800ms (deliberate, measured)
+- **Page transitions**: 400ms (fast, seamless)
+- **Stagger**: 80–100ms between items (natural flow)
+
+### Reusable Components
+```typescript
+// Scroll-triggered fade + slide
+import { RevealBlock } from '@/components/RevealBlock';
+
+// Staggered card reveals
+import { StaggerList } from '@/components/StaggerList';
+
+// Interactive hover with scale + glow
+import { HoverGlow } from '@/components/HoverGlow';
+```
+
+### Color Palette
+- **Primary Accent**: #00C49A (teal, brand identity)
+- **Highlight**: #00FFE0 (cyan, animated elements)
+- **Primary Dark**: #0A0E17 (near-black, premium darkness)
+- **Text**: #FFFFFF (pure white, WCAG AAA contrast)
+
+### Typography
+- **Display/Headlines**: Fraunces (serif, prestige)
+- **Body/UI**: Manrope (sans-serif, modern contrast)
+
+---
+
 ## Development Scripts
 
 | Command | Description |
