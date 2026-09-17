@@ -733,7 +733,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         className="section-shell px-4 md:px-6"
       >
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 reveal">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
             <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-text/70 mb-4">Where your team comes from</p>
             <h2 className="display-section text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-text">
               <span className="sr-only">Where does TrivianEdge source talent from? </span>
@@ -742,17 +748,40 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <p className="text-muted text-lg max-w-2xl mx-auto">
               We source from 6 countries selected for their talent quality, English proficiency, and timezone fit with your business. Hover any pin to explore.
             </p>
-          </div>
+          </motion.div>
 
           {/* Interactive world map — neural-bg reinforces "network" both literally (talent graph) and visually (tech-forward texture) */}
-          <div className="reveal neural-bg rounded-[3rem] border border-cyan-400/15 bg-[#f4fcf9] dark:bg-white/[0.03] p-4 md:p-8 mb-12 overflow-hidden relative" style={{ boxShadow: '0 0 60px rgba(0,196,154,0.08), inset 0 1px 0 rgba(255,255,255,0.8)' }}>
+          <motion.div
+            className="neural-bg rounded-[3rem] border border-cyan-400/15 bg-[#f4fcf9] dark:bg-white/[0.03] p-4 md:p-8 mb-12 overflow-hidden relative"
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{ boxShadow: '0 0 60px rgba(0,196,154,0.08), inset 0 1px 0 rgba(255,255,255,0.8)' }}
+          >
             <WorldMapLazy hubs={TALENT_HUBS} onHubClick={setSelectedHub} />
-          </div>
+          </motion.div>
 
           {/* Hub detail cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {TALENT_HUBS.map((hub, idx) => (
-              <TalentHubCard key={hub.id} hub={hub} index={idx} onClick={setSelectedHub} />
+              <motion.div
+                key={hub.id}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={shouldReduceMotion ? {} : {
+                  scale: 1.02,
+                  boxShadow: '0 0 20px rgba(0, 196, 154, 0.25)'
+                }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{
+                  duration: 0.6,
+                  delay: idx * 0.08,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+              >
+                <TalentHubCard hub={hub} index={idx} onClick={setSelectedHub} />
+              </motion.div>
             ))}
           </div>
         </div>
@@ -781,34 +810,60 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
       {/* ===== ACT 8: CTA + CONTACT ===== */}
       <section id="contact" aria-label="Contact Us" className="section-dark section-shell px-4 md:px-6">
-          <div className="max-w-7xl mx-auto reveal text-center relative z-10">
-            <h2 className="display-section text-3xl sm:text-5xl md:text-7xl font-bold mb-5 text-white">
-              Tell us what you need.
-            </h2>
-            <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-6 leading-relaxed">
-              Tech hiring, non-tech hiring, delivery support, market expansion.
-            </p>
+          <div className="max-w-7xl mx-auto text-center relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <h2 className="display-section text-3xl sm:text-5xl md:text-7xl font-bold mb-5 text-white">
+                Tell us what you need.
+              </h2>
+              <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-6 leading-relaxed">
+                Tech hiring, non-tech hiring, delivery support, market expansion.
+              </p>
+            </motion.div>
 
-            <a
+            <motion.a
               href={BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm mb-10 btn-magnetic premium-button-secondary micro-press-button !text-white border-white/20 hover:border-white/40 hover:bg-white/5"
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
+              whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.55, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm mb-10 premium-button-secondary !text-white border-white/20 hover:border-white/40 hover:bg-white/5 transition-colors"
             >
               Or book a 15-minute call
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </motion.a>
 
-            <div className="max-w-4xl mx-auto text-left mb-6 rounded-3xl bg-white dark:bg-white/5 p-6 md:p-10 shadow-[0_0_60px_rgba(0,196,154,0.15)]">
+            <motion.div
+              className="max-w-4xl mx-auto text-left mb-6 rounded-3xl bg-white dark:bg-white/5 p-6 md:p-10"
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 28, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.65, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              style={{ boxShadow: '0 0 60px rgba(0,196,154,0.15)' }}
+            >
               <InquiryForm />
-            </div>
+            </motion.div>
 
-            <p className="text-white/60 text-sm">
+            <motion.p
+              className="text-white/60 text-sm"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.35 }}
+            >
               Prefer to reach out directly?{' '}
               <a href="mailto:kevin.v@trivianedge.com" className="text-white/70 hover:text-cyan-400 underline underline-offset-4 transition-colors">Email us</a>
               {' '}or{' '}
               <a href="tel:+18883472489" className="text-white/70 hover:text-cyan-400 underline underline-offset-4 transition-colors">call +1 888-347-2489</a>.
-            </p>
+            </motion.p>
           </div>
       </section>
     </>
