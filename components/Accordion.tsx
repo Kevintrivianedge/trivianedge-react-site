@@ -32,7 +32,7 @@ const Accordion: React.FC<AccordionProps> = ({ items }) => {
         return (
           <div
             key={i}
-            className="glass rounded-2xl border-border overflow-hidden"
+            className={`glass rounded-2xl border-border overflow-hidden transition-colors duration-300 ${isOpen ? 'border-cyan-400/30' : 'hover:border-cyan-400/20'}`}
           >
             <button
               id={`faq-trigger-${i}`}

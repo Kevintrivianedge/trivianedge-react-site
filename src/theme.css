@@ -72,6 +72,14 @@
         [data-theme="dark"] .hero-fade-out::after {
             background: linear-gradient(to bottom, transparent 0%, #020203 100%);
         }
+        [data-theme="dark"] .hero-mesh {
+            background:
+                radial-gradient(ellipse 110% 80% at -5% 55%, rgba(0,196,154,0.14) 0%, transparent 55%),
+                radial-gradient(ellipse 70% 60% at 100% 0%, rgba(0,196,154,0.10) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 50% at 65% 110%, rgba(6,182,212,0.08) 0%, transparent 52%),
+                radial-gradient(ellipse 40% 35% at 40% 20%, rgba(0,196,154,0.05) 0%, transparent 50%),
+                #020203;
+        }
 
         body {
             font-family: var(--font-body);

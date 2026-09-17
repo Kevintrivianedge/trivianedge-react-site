@@ -49,7 +49,11 @@ export const Preloader: React.FC = () => {
   useEffect(() => {
     if (!isVisible) return;
 
-    // Bar animates for 2200ms, then we hide at 2200ms so the exit fade (500ms) starts
+    // Kept intentionally short: this overlay sits directly on top of the
+    // real hero content (already painted underneath), so every extra ms
+    // here is measured as LCP render delay for first-time visitors —
+    // exactly the audience Core Web Vitals scoring weighs most heavily.
+    // Bar animates for 900ms, then we hide so the exit fade (250ms) starts
     // immediately as the bar completes — no awkward gap (#22).
     const timer = setTimeout(() => {
       setIsVisible(false);
@@ -58,7 +62,7 @@ export const Preloader: React.FC = () => {
       } catch (e) {
         // ignore storage errors
       }
-    }, 2200);
+    }, 900);
 
     return () => clearTimeout(timer);
   }, [isVisible]);
@@ -70,9 +74,9 @@ export const Preloader: React.FC = () => {
           key="preloader"
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background text-text overflow-hidden px-6"
           initial={{ opacity: 1 }}
-          exit={{ 
+          exit={{
             opacity: 0,
-            transition: { duration: 0.5, ease: "easeInOut" } 
+            transition: { duration: 0.25, ease: "easeInOut" }
           }}
         >
           {/* Ambient Background Glow */}
@@ -90,11 +94,11 @@ export const Preloader: React.FC = () => {
 
             {/* Brand Name Build */}
             <div className="overflow-hidden mb-4">
-              <motion.h1 
+              <motion.h1
                 className="text-4xl md:text-6xl font-bold font-['Space_Grotesk'] tracking-tight"
                 initial={{ y: 50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: "circOut" }}
+                transition={{ duration: 0.35, delay: 0.1, ease: "circOut" }}
               >
                 Trivian<span className="text-muted">Edge</span>
               </motion.h1>
@@ -105,7 +109,7 @@ export const Preloader: React.FC = () => {
               className="text-lg md:text-2xl font-bold text-cyan-400 mb-6"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
+              transition={{ duration: 0.3, delay: 0.25 }}
             >
               Engineering the Future of Talent & Technology
             </motion.p>
@@ -115,7 +119,7 @@ export const Preloader: React.FC = () => {
               className="max-w-2xl"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1.2 }}
+              transition={{ duration: 0.25, delay: 0.4 }}
             >
               <p className="text-[10px] md:text-xs text-muted font-mono uppercase tracking-widest leading-relaxed">
                 Optimizing <span className="text-cyan-400/80">Global Talent Solutions</span> and <span className="text-cyan-500/80">AI Automation</span> alongside <span className="text-cyan-400/80">Cybersecurity</span> & <span className="text-text/60">Cloud DevOps</span> to build the next generation of <span className="text-cyan-500/80">Software & Mobile Development</span>.
@@ -127,13 +131,13 @@ export const Preloader: React.FC = () => {
               className="mt-12 h-0.5 bg-surface rounded-full w-32 overflow-hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.15 }}
             >
-              <motion.div 
+              <motion.div
                 className="h-full bg-gradient-to-r from-cyan-400 to-cyan-600"
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
-                transition={{ duration: 2.0, ease: "easeInOut" }}
+                transition={{ duration: 0.75, ease: "easeInOut" }}
               />
             </motion.div>
           </div>

@@ -97,7 +97,7 @@ const BlogView: React.FC = () => {
               type="button"
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
               disabled={safePage === 1}
-              className="p-3 rounded-full border border-border bg-surface text-muted hover:text-text hover:border-border transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className="p-3 rounded-full border border-border bg-surface text-muted hover:text-text hover:border-cyan-400/40 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Previous page"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -109,7 +109,7 @@ const BlogView: React.FC = () => {
               type="button"
               onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
               disabled={safePage === totalPages}
-              className="p-3 rounded-full border border-border bg-surface text-muted hover:text-text hover:border-border transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className="p-3 rounded-full border border-border bg-surface text-muted hover:text-text hover:border-cyan-400/40 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Next page"
             >
               <ChevronRight className="w-5 h-5" />

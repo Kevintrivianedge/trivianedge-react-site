@@ -43,7 +43,6 @@ import { getSEOTrendSignal, getTrendKeywords } from './utils/seoTrends';
 import Logo from './components/Logo';
 import Navbar from './components/Navbar';
 import Accordion from './components/Accordion';
-import ProcessTimeline from './components/ProcessTimeline';
 import TalentHubCard from './components/TalentHubCard';
 import ScrollToTop from './components/ScrollToTop';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -1123,8 +1122,16 @@ export default function App() {
             </ErrorBoundary>
           </main>
 
-          <footer className="bg-[#020306] text-white pt-16 md:pt-20 pb-10 px-4 md:px-6">
-            <div className="max-w-7xl mx-auto grid md:grid-cols-5 gap-8 mb-14">
+          <footer className="relative bg-[#020306] text-white pt-16 md:pt-20 pb-10 px-4 md:px-6 overflow-hidden">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[420px] rounded-full bg-cyan-400/[0.06] blur-[120px]"
+            />
+            <div className="relative max-w-7xl mx-auto grid md:grid-cols-5 gap-8 mb-14">
               <div className="md:col-span-2">
                 <div className="mb-6">
                   <Logo light onClick={() => { navigate('/'); window.scrollTo({top: 0, behavior: 'smooth'}); }} />
@@ -1148,36 +1155,36 @@ export default function App() {
               <div>
                 <h3 className="font-bold text-white/55 mb-6 tracking-widest uppercase text-[10px]">Services</h3>
                 <ul className="space-y-3">
-                  <li><Link to="/services" className="text-white/55 hover:text-white text-sm transition-colors">All Services</Link></li>
-                  <li><Link to="/services/bpo" className="text-white/55 hover:text-white text-sm transition-colors">BPO</Link></li>
-                  <li><Link to="/services/rpo" className="text-white/55 hover:text-white text-sm transition-colors">RPO</Link></li>
-                  <li><Link to="/services/ai-development" className="text-white/55 hover:text-white text-sm transition-colors">AI Development</Link></li>
-                  <li><Link to="/services/it-outsourcing" className="text-white/55 hover:text-white text-sm transition-colors">Bespoke Software Development</Link></li>
+                  <li><Link to="/services" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">All Services</Link></li>
+                  <li><Link to="/services/bpo" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">BPO</Link></li>
+                  <li><Link to="/services/rpo" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">RPO</Link></li>
+                  <li><Link to="/services/ai-development" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">AI Development</Link></li>
+                  <li><Link to="/services/it-outsourcing" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">Bespoke Software Development</Link></li>
                 </ul>
               </div>
               <div>
                 <h3 className="font-bold text-white/55 mb-6 tracking-widest uppercase text-[10px]">Platform</h3>
                 <ul className="space-y-3">
-                  <li><Link to="/about" className="text-white/55 hover:text-white text-sm transition-colors">About</Link></li>
-                  <li><Link to="/proof" className="text-white/55 hover:text-white text-sm transition-colors">Proof</Link></li>
-                  <li><Link to="/trust" className="text-white/55 hover:text-white text-sm transition-colors">Trust</Link></li>
-                  <li><Link to="/venture-studio" className="text-white/55 hover:text-white text-sm transition-colors">Venture Studio</Link></li>
-                  <li><Link to="/blog" className="text-white/55 hover:text-white text-sm transition-colors">Blog</Link></li>
+                  <li><Link to="/about" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">About</Link></li>
+                  <li><Link to="/proof" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">Proof</Link></li>
+                  <li><Link to="/trust" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">Trust</Link></li>
+                  <li><Link to="/venture-studio" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">Venture Studio</Link></li>
+                  <li><Link to="/blog" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">Blog</Link></li>
                 </ul>
               </div>
               <div>
                 <h3 className="font-bold text-white/55 mb-6 tracking-widest uppercase text-[10px]">Resources</h3>
                 <ul className="space-y-3">
-                  <li><Link to="/contact" className="text-white/55 hover:text-white text-sm transition-colors">Contact</Link></li>
-                  <li><Link to="/savings-calculator" className="text-white/55 hover:text-white text-sm transition-colors">Savings Calculator</Link></li>
-                  <li><Link to="/proof" className="text-white/55 hover:text-white text-sm transition-colors">Case Studies</Link></li>
-                  <li><Link to="/venture-studio" className="text-white/55 hover:text-white text-sm transition-colors">MVP Qualification</Link></li>
-                  <li><Link to="/privacy" className="text-white/55 hover:text-white text-sm transition-colors">Privacy Policy</Link></li>
-                  <li><Link to="/trust" className="text-white/55 hover:text-white text-sm transition-colors">Security & Compliance</Link></li>
+                  <li><Link to="/contact" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">Contact</Link></li>
+                  <li><Link to="/savings-calculator" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">Savings Calculator</Link></li>
+                  <li><Link to="/proof" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">Case Studies</Link></li>
+                  <li><Link to="/venture-studio" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">MVP Qualification</Link></li>
+                  <li><Link to="/privacy" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">Privacy Policy</Link></li>
+                  <li><Link to="/trust" className="inline-block text-white/55 hover:text-white hover:translate-x-1 text-sm transition-all duration-200">Security & Compliance</Link></li>
                 </ul>
               </div>
             </div>
-            <div className="max-w-7xl mx-auto pt-8 pr-20 sm:pr-28 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest uppercase text-white/55">
+            <div className="relative max-w-7xl mx-auto pt-8 pr-20 sm:pr-28 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest uppercase text-white/55">
               <p>© {new Date().getFullYear()} TrivianEdge Global, Canada's Offshore Operations Partner</p>
               <div className="flex gap-8">
                 <Link to="/privacy" className="hover:text-white/80 transition-colors">Privacy</Link>

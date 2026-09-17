@@ -93,7 +93,7 @@ const ServicesPage: React.FC = () => {
           initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: shouldReduceMotion ? 0.01 : 0.6 }}
-          className="pt-10 pb-16 px-4 md:px-6 text-center"
+          className="relative pt-10 pb-16 px-4 md:px-6 text-center hero-mesh"
         >
           <div className="max-w-3xl mx-auto">
             <p className="text-xs font-mono tracking-widest uppercase text-cyan-400 mb-4">

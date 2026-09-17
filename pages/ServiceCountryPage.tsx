@@ -113,7 +113,7 @@ const ServiceCountryPage: React.FC = () => {
             <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><Code2 className="w-4 h-4 text-cyan-600" /> Typical roles for this pairing</h2>
             <div className="flex flex-wrap gap-2">
               {combo.typicalRoles.map(role => (
-                <span key={role} className="px-3 py-1.5 rounded-lg border border-cyan-500/20 bg-cyan-500/5 text-sm text-cyan-700">{role}</span>
+                <span key={role} className="px-3 py-1.5 rounded-lg border border-cyan-500/20 bg-cyan-500/5 text-sm text-cyan-700 dark:text-cyan-400">{role}</span>
               ))}
             </div>
           </div>

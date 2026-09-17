@@ -114,7 +114,7 @@ const AIPoweredRecruitmentPage: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: shouldReduceMotion ? 0.01 : 0.6 }}
-          className="pt-8 pb-20 px-4 md:px-6 text-center"
+          className="relative pt-8 pb-20 px-4 md:px-6 text-center hero-mesh"
         >
           <div className="max-w-4xl mx-auto">
             <p className="text-xs font-mono tracking-widest uppercase text-cyan-400 mb-4">

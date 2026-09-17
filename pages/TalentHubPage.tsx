@@ -171,7 +171,7 @@ const TalentHubPage: React.FC = () => {
               <h2 className="font-bold text-lg mb-4 flex items-center gap-2"><Code2 className="w-4 h-4 text-cyan-600" /> Typical tech & skills</h2>
               <div className="flex flex-wrap gap-2">
                 {hub.popularTech.map(tech => (
-                  <span key={tech} className="px-3 py-1.5 rounded-lg border border-cyan-500/20 bg-cyan-500/5 text-sm text-cyan-700 font-mono">{tech}</span>
+                  <span key={tech} className="px-3 py-1.5 rounded-lg border border-cyan-500/20 bg-cyan-500/5 text-sm text-cyan-700 dark:text-cyan-400 font-mono">{tech}</span>
                 ))}
               </div>
             </div>

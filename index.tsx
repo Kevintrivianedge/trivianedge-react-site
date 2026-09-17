@@ -126,7 +126,7 @@ const initServiceWorker = () => {
 
 if (!isPrerendering) {
   if (typeof requestIdleCallback !== 'undefined') {
-    requestIdleCallback(initCookieConsent, { timeout: 4000 });
+    requestIdleCallback(initCookieConsent, { timeout: 2000 });
     requestIdleCallback(initGoogleAnalytics, { timeout: 4000 });
     requestIdleCallback(initServiceWorker, { timeout: 5000 });
   } else {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ChevronDown, Loader2 } from 'lucide-react';
 import { API_ENDPOINTS } from '../constants/api';
 import { getCsrfToken, addCsrfTokenToFormData } from '../utils/csrf';
 import { storeFailedSubmission } from '../utils/serviceWorkerRegistry';
@@ -132,71 +132,83 @@ const InquiryForm: React.FC = () => {
         </div>
         <div>
           <label htmlFor="inquiry-need" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Primary need</label>
-          <select
-            id="inquiry-need"
-            value={form.need}
-            onChange={(e) => setForm({ ...form, need: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
-          >
-            <option>Build a team</option>
-            <option>Build bespoke software</option>
-            <option>Outsource IT</option>
-            <option>Hire RPO support</option>
-            <option>Explore AI services</option>
-            <option>Talk through a market entry plan</option>
-          </select>
+          <div className="relative">
+            <select
+              id="inquiry-need"
+              value={form.need}
+              onChange={(e) => setForm({ ...form, need: e.target.value })}
+              className="w-full bg-background border border-border rounded-2xl px-4 py-3 pr-10 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
+            >
+              <option>Build a team</option>
+              <option>Build bespoke software</option>
+              <option>Outsource IT</option>
+              <option>Hire RPO support</option>
+              <option>Explore AI services</option>
+              <option>Talk through a market entry plan</option>
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+          </div>
         </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <label htmlFor="inquiry-timeline" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Timing</label>
-          <select
-            id="inquiry-timeline"
-            value={form.timeline}
-            onChange={(e) => setForm({ ...form, timeline: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
-          >
-            <option>Immediately</option>
-            <option>1-2 weeks</option>
-            <option>2-4 weeks</option>
-            <option>30+ days</option>
-          </select>
+          <div className="relative">
+            <select
+              id="inquiry-timeline"
+              value={form.timeline}
+              onChange={(e) => setForm({ ...form, timeline: e.target.value })}
+              className="w-full bg-background border border-border rounded-2xl px-4 py-3 pr-10 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
+            >
+              <option>Immediately</option>
+              <option>1-2 weeks</option>
+              <option>2-4 weeks</option>
+              <option>30+ days</option>
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+          </div>
         </div>
         <div>
           <label htmlFor="inquiry-company-size" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Company size</label>
-          <select
-            id="inquiry-company-size"
-            value={form.companySize}
-            onChange={(e) => setForm({ ...form, companySize: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
-          >
-            <option value="">Prefer not to say</option>
-            <option>1-10 employees</option>
-            <option>11-50 employees</option>
-            <option>51-200 employees</option>
-            <option>201-1000 employees</option>
-            <option>1000+ employees</option>
-          </select>
+          <div className="relative">
+            <select
+              id="inquiry-company-size"
+              value={form.companySize}
+              onChange={(e) => setForm({ ...form, companySize: e.target.value })}
+              className="w-full bg-background border border-border rounded-2xl px-4 py-3 pr-10 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
+            >
+              <option value="">Prefer not to say</option>
+              <option>1-10 employees</option>
+              <option>11-50 employees</option>
+              <option>51-200 employees</option>
+              <option>201-1000 employees</option>
+              <option>1000+ employees</option>
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+          </div>
         </div>
       </div>
 
       <div className="grid md:grid-cols-3 gap-4">
         <div>
           <label htmlFor="inquiry-headcount" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">People needed</label>
-          <select
-            id="inquiry-headcount"
-            value={form.headcount}
-            onChange={(e) => setForm({ ...form, headcount: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
-          >
-            <option value="">Not sure yet</option>
-            <option>1 person</option>
-            <option>2-5 people</option>
-            <option>6-15 people</option>
-            <option>16-50 people</option>
-            <option>50+ people</option>
-          </select>
+          <div className="relative">
+            <select
+              id="inquiry-headcount"
+              value={form.headcount}
+              onChange={(e) => setForm({ ...form, headcount: e.target.value })}
+              className="w-full bg-background border border-border rounded-2xl px-4 py-3 pr-10 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
+            >
+              <option value="">Not sure yet</option>
+              <option>1 person</option>
+              <option>2-5 people</option>
+              <option>6-15 people</option>
+              <option>16-50 people</option>
+              <option>50+ people</option>
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+          </div>
         </div>
         <div>
           <label htmlFor="inquiry-market" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Country / market</label>
@@ -211,18 +223,21 @@ const InquiryForm: React.FC = () => {
         </div>
         <div>
           <label htmlFor="inquiry-budget" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Est. monthly budget</label>
-          <select
-            id="inquiry-budget"
-            value={form.budget}
-            onChange={(e) => setForm({ ...form, budget: e.target.value })}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
-          >
-            <option value="">Prefer not to say</option>
-            <option>Under $5,000</option>
-            <option>$5,000-$15,000</option>
-            <option>$15,000-$50,000</option>
-            <option>$50,000+</option>
-          </select>
+          <div className="relative">
+            <select
+              id="inquiry-budget"
+              value={form.budget}
+              onChange={(e) => setForm({ ...form, budget: e.target.value })}
+              className="w-full bg-background border border-border rounded-2xl px-4 py-3 pr-10 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
+            >
+              <option value="">Prefer not to say</option>
+              <option>Under $5,000</option>
+              <option>$5,000-$15,000</option>
+              <option>$15,000-$50,000</option>
+              <option>$50,000+</option>
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+          </div>
         </div>
       </div>
 
@@ -237,7 +252,14 @@ const InquiryForm: React.FC = () => {
         />
       </div>
 
-      {error && <p className="text-sm text-rose-700 dark:text-rose-400 font-medium" role="alert">{error}</p>}
+      {error && (
+        <p
+          className="rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-300 px-4 py-3 text-sm font-medium"
+          role="alert"
+        >
+          {error}
+        </p>
+      )}
 
       <button
         type="submit"

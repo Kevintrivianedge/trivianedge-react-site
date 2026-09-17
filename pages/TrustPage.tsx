@@ -34,7 +34,7 @@ const TrustPage: React.FC = () => {
           </button>
 
           <div className="max-w-3xl mb-14 reveal">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-700 text-xs font-bold uppercase tracking-widest mb-6">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-700 dark:text-cyan-400 text-xs font-bold uppercase tracking-widest mb-6">
               <ShieldCheck className="w-3 h-3" />
               Trust and security
             </span>

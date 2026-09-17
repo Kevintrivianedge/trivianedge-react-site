@@ -189,10 +189,14 @@ const Navbar: React.FC = () => {
                   type="button"
                   onClick={() => setOpenDropdown(openDropdown === link.name ? null : link.name)}
                   aria-expanded={openDropdown === link.name}
-                  className={`flex items-center gap-1 text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest hover:text-cyan-400 transition-colors ${onDarkHero ? 'text-white/70' : 'text-muted'}`}
+                  aria-current={location.pathname.startsWith(link.href) ? 'page' : undefined}
+                  className={`group relative flex items-center gap-1 text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest hover:text-cyan-400 transition-colors ${onDarkHero ? 'text-white/70' : 'text-muted'} ${location.pathname.startsWith(link.href) ? '!text-cyan-400' : ''}`}
                 >
                   {link.name}
                   <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === link.name ? 'rotate-180' : ''}`} />
+                  <span
+                    className={`pointer-events-none absolute -bottom-2 left-0 h-[2px] rounded-full bg-cyan-400 transition-all duration-300 ${location.pathname.startsWith(link.href) ? 'w-full' : 'w-0 group-hover:w-full'}`}
+                  />
                 </button>
                 <AnimatePresence>
                   {openDropdown === link.name && (
@@ -222,9 +226,13 @@ const Navbar: React.FC = () => {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                className={`text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest hover:text-cyan-400 transition-colors ${onDarkHero ? 'text-white/70' : 'text-muted'}`}
+                aria-current={location.pathname === link.href ? 'page' : undefined}
+                className={`group relative text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest hover:text-cyan-400 transition-colors ${onDarkHero ? 'text-white/70' : 'text-muted'} ${location.pathname === link.href ? '!text-cyan-400' : ''}`}
               >
                 {link.name}
+                <span
+                  className={`pointer-events-none absolute -bottom-2 left-0 h-[2px] rounded-full bg-cyan-400 transition-all duration-300 ${location.pathname === link.href ? 'w-full' : 'w-0 group-hover:w-full'}`}
+                />
               </a>
             )
           ))}
@@ -268,21 +276,26 @@ const Navbar: React.FC = () => {
               <motion.a
                 href="/"
                 variants={itemVariants}
-                className="text-2xl font-bold text-text hover:text-cyan-400 transition-colors"
+                aria-current={location.pathname === '/' ? 'page' : undefined}
+                className={`flex items-center gap-2 text-2xl font-bold hover:text-cyan-400 transition-colors ${location.pathname === '/' ? 'text-cyan-400' : 'text-text'}`}
                 onClick={(e) => { e.preventDefault(); setIsOpen(false); navigate('/'); window.scrollTo({ top: 0 }); }}
               >
+                {location.pathname === '/' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
                 Home
               </motion.a>
 
-              {NAV_LINKS.map(link => (
-                link.children ? (
+              {NAV_LINKS.map(link => {
+                const isActiveParent = link.children ? location.pathname.startsWith(link.href) : location.pathname === link.href;
+                return link.children ? (
                   <motion.div key={link.name} variants={itemVariants} className="flex flex-col items-center gap-4">
                     <button
                       type="button"
                       onClick={() => setExpandedMobile(expandedMobile === link.name ? null : link.name)}
                       aria-expanded={expandedMobile === link.name}
-                      className="flex items-center gap-2 text-2xl font-bold text-text hover:text-cyan-400 transition-colors"
+                      aria-current={isActiveParent ? 'page' : undefined}
+                      className={`flex items-center gap-2 text-2xl font-bold hover:text-cyan-400 transition-colors ${isActiveParent ? 'text-cyan-400' : 'text-text'}`}
                     >
+                      {isActiveParent && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
                       {link.name}
                       <ChevronDown className={`w-5 h-5 transition-transform ${expandedMobile === link.name ? 'rotate-180' : ''}`} />
                     </button>
@@ -298,7 +311,8 @@ const Navbar: React.FC = () => {
                             <a
                               key={child.href}
                               href={child.href}
-                              className={`font-semibold text-text/80 hover:text-cyan-400 transition-colors ${'isSub' in child && child.isSub ? 'text-base' : 'text-lg'}`}
+                              aria-current={location.pathname === child.href ? 'page' : undefined}
+                              className={`font-semibold hover:text-cyan-400 transition-colors ${location.pathname === child.href ? 'text-cyan-400' : 'text-text/80'} ${'isSub' in child && child.isSub ? 'text-base' : 'text-lg'}`}
                               onClick={(e) => { e.preventDefault(); handleNavClick(child.href); }}
                             >
                               {child.name}
@@ -313,13 +327,15 @@ const Navbar: React.FC = () => {
                     key={link.name}
                     href={link.href}
                     variants={itemVariants}
-                    className="text-2xl font-bold text-text hover:text-cyan-400 transition-colors"
+                    aria-current={isActiveParent ? 'page' : undefined}
+                    className={`flex items-center gap-2 text-2xl font-bold hover:text-cyan-400 transition-colors ${isActiveParent ? 'text-cyan-400' : 'text-text'}`}
                     onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
                   >
+                    {isActiveParent && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
                     {link.name}
                   </motion.a>
-                )
-              ))}
+                );
+              })}
 
               <motion.a
                 href="/contact"

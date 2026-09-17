@@ -117,10 +117,8 @@ const BlogPostDetail: React.FC = () => {
         <div className="reveal">
           <h1 className="text-4xl md:text-6xl font-bold mb-12 mt-12 leading-tight text-text">{post.title}</h1>
 
-          <div className="prose prose-invert prose-lg max-w-none">
-            <div className="text-muted leading-relaxed space-y-6 text-xl">
-              {renderMarkdown(post.content)}
-            </div>
+          <div className="text-muted leading-relaxed space-y-6 text-xl">
+            {renderMarkdown(post.content)}
           </div>
 
           <div className="mt-24 p-12 glass border-border rounded-[3rem] text-center">

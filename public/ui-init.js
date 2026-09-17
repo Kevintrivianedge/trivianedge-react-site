@@ -1,52 +1,36 @@
-/* TrivianEdge 2050-ready UI — cursor, scroll progress, reveal, and 3D tilt.
+/* TrivianEdge 2050-ready UI — scroll reveal and 3D tilt.
    Served as a static asset so script-src can omit 'unsafe-inline'. */
 
-/* ── Custom cursor tracking ── */
+/* ── Scroll reveal (IntersectionObserver — no polling) ── */
 (function() {
-  var dot = document.getElementById('cursor-dot');
-  var ring = document.getElementById('cursor-ring');
-  var mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', function(e) {
-    mx = e.clientX; my = e.clientY;
-    if (dot) { dot.style.left = mx + 'px'; dot.style.top = my + 'px'; }
-  }, { passive: true });
-  function animateRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    if (ring) { ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; }
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
-})();
-
-/* ── Scroll progress bar ── */
-(function() {
-  var bar = document.getElementById('scroll-progress');
-  function update() {
-    var s = document.documentElement;
-    var pct = (s.scrollTop / (s.scrollHeight - s.clientHeight)) * 100;
-    if (bar) bar.style.width = pct + '%';
-  }
-  document.addEventListener('scroll', update, { passive: true });
-})();
-
-/* ── Scroll reveal ── */
-(function() {
-  function check() {
-    var vh = window.innerHeight;
-    // Read all geometry first, then apply class changes in a separate pass —
-    // interleaving reads/writes forces a synchronous layout recalc per element.
-    var toReveal = [];
+  if (typeof IntersectionObserver === 'undefined') {
+    // Ancient-browser fallback: just show everything.
     document.querySelectorAll('.reveal:not(.active)').forEach(function(el) {
-      if (el.getBoundingClientRect().top < vh * 0.9) toReveal.push(el);
+      el.classList.add('active');
     });
-    toReveal.forEach(function(el) { el.classList.add('active'); });
+    return;
   }
-  document.addEventListener('scroll', check, { passive: true });
-  // Run immediately so above-fold elements are visible without requiring a scroll
-  check();
-  window.addEventListener('load', check);
-  setInterval(check, 400);
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
+
+  function observeAll() {
+    document.querySelectorAll('.reveal:not(.active)').forEach(function(el) {
+      observer.observe(el);
+    });
+  }
+
+  observeAll();
+  // Route changes and lazy-loaded sections add new .reveal nodes after
+  // initial load — a lightweight mutation watcher keeps them covered
+  // without ever re-scanning on a timer.
+  new MutationObserver(observeAll).observe(document.body, { childList: true, subtree: true });
 })();
 
 /* ── 3D card tilt (mouse-hover parallax) ── */
@@ -55,18 +39,28 @@
   // trigger layout (getBoundingClientRect) on every single mousemove event.
   var cards = [];
   var rects = [];
+  var refreshQueued = false;
 
   function refreshCards() {
+    refreshQueued = false;
     cards = Array.prototype.slice.call(document.querySelectorAll('.tilt-card'));
     rects = cards.map(function(c) { return c.getBoundingClientRect(); });
   }
 
-  // Rebuild the snapshot after initial paint and whenever layout changes.
+  function queueRefresh() {
+    if (refreshQueued) return;
+    refreshQueued = true;
+    requestAnimationFrame(refreshCards);
+  }
+
   window.addEventListener('load', refreshCards, { passive: true });
-  window.addEventListener('resize', refreshCards, { passive: true });
-  document.addEventListener('scroll', refreshCards, { passive: true });
-  // Periodic refresh catches dynamically-added cards (e.g. lazy-loaded sections).
-  setInterval(refreshCards, 2000);
+  window.addEventListener('resize', queueRefresh, { passive: true });
+  document.addEventListener('scroll', queueRefresh, { passive: true });
+  // New cards (lazy-loaded routes/sections) trigger a refresh instead of a
+  // blind poll.
+  if (typeof MutationObserver !== 'undefined') {
+    new MutationObserver(queueRefresh).observe(document.body, { childList: true, subtree: true });
+  }
   refreshCards();
 
   document.addEventListener('mousemove', function(e) {

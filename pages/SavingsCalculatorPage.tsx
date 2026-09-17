@@ -8,6 +8,7 @@ import {
   Copy,
   CheckCircle2,
   ArrowRight,
+  ChevronDown,
   Linkedin,
 } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
@@ -182,16 +183,19 @@ const SavingsCalculatorPage: React.FC = () => {
               <div className="grid sm:grid-cols-2 gap-5 mb-5">
                 <div>
                   <label htmlFor="calc-role" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Role type</label>
-                  <select
-                    id="calc-role"
-                    value={roleType}
-                    onChange={(e) => setRoleType(e.target.value)}
-                    className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus:outline-none focus:border-cyan-500/40 transition-colors appearance-none cursor-pointer"
-                  >
-                    {ROLE_TYPES.map((role) => (
-                      <option key={role}>{role}</option>
-                    ))}
-                  </select>
+                  <div className="relative">
+                    <select
+                      id="calc-role"
+                      value={roleType}
+                      onChange={(e) => setRoleType(e.target.value)}
+                      className="w-full bg-background border border-border rounded-2xl px-4 py-3 pr-10 text-sm text-text focus:outline-none focus:border-cyan-500/40 transition-colors appearance-none cursor-pointer"
+                    >
+                      {ROLE_TYPES.map((role) => (
+                        <option key={role}>{role}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+                  </div>
                 </div>
                 <div>
                   <label htmlFor="calc-count" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Number of hires</label>
