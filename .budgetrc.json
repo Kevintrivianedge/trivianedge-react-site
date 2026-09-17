@@ -1,0 +1,22 @@
+{
+  "bundles": [
+    {
+      "name": "main",
+      "path": "dist/index.*.js",
+      "maxSize": "250kb"
+    },
+    {
+      "name": "vendor",
+      "path": "dist/vendor.*.js",
+      "maxSize": "400kb"
+    }
+  ],
+  "metrics": {
+    "lighthouse": {
+      "performance": 90,
+      "accessibility": 90,
+      "best-practices": 90,
+      "seo": 90
+    }
+  }
+}

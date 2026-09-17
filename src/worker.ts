@@ -1132,17 +1132,21 @@ const BASE_SECURITY_HEADERS: Record<string, string> = {
   'Cross-Origin-Opener-Policy': 'same-origin',
   // Cross-origin resource policy: restrict resource loading to same-origin/same-site
   'Cross-Origin-Resource-Policy': 'cross-origin',
-  // COEP: require-corp was removed — it only matters for pages that need
-  // cross-origin isolation (SharedArrayBuffer, WASM threading), which this
-  // site never uses, and it silently blocks every cross-origin subresource
-  // that doesn't send back its own Cross-Origin-Resource-Policy header. Most
-  // third-party scripts don't: with it set, CookieYes's consent script,
-  // GA4's event beacons, and Amplitude's session-replay config fetch were
-  // all failing with net::ERR_BLOCKED_BY_RESPONSE in the browser console —
-  // confirmed live via a headless run capturing requestfailed/console.error
-  // events, not just a PageSpeed nitpick.
   // Permitted cross-domain policies: deny Flash/PDF policy file access
   'X-Permitted-Cross-Domain-Policies': 'none',
+  // Content Security Policy: prevent XSS, data injection, clickjacking
+  'Content-Security-Policy': [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net",
+    "img-src 'self' data: https: blob:",
+    "font-src 'self' https://fonts.gstatic.com data:",
+    "connect-src 'self' https://api.anthropic.com https://api.resend.com https://www.google-analytics.com https://region1.analytics.google.com",
+    "frame-src 'none'",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+  ].join('; '),
 };
 
 // Cloudflare Workers Static Assets concatenates Cache-Control from every
