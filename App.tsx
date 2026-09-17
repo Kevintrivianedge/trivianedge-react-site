@@ -285,7 +285,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 — measured at 4+ seconds of pure "element render delay" with
                 a 10ms TTFB, i.e. the content was ready but hidden. */}
             <p className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light">
-              Offshore teams and bespoke software, deployed in as little as 30 days. Hiring, payroll, compliance, and delivery, handled entirely by us.
+              Offshore teams and bespoke software, typically deployed within 30 days. Hiring, payroll, compliance, and delivery, handled entirely by us.
             </p>
 
             <motion.div
@@ -323,7 +323,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             transition={{ duration: 1.0, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
           >
             {[
-              { value: '30', unit: ' days', label: 'Average time to hire', live: true },
+              { value: '~30', unit: ' days', label: 'Average time to hire', live: true },
               { value: 'Up to 40', unit: '%', label: 'Cost savings', live: false },
               { value: '6',  unit: '',      label: 'Countries we source from', live: false },
               { value: '24/7', unit: '',    label: 'Operations coverage', live: true },
@@ -356,7 +356,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         >
           <div className="max-w-7xl mx-auto grid grid-cols-2 gap-3">
             {[
-              { value: '30 days', label: 'Avg. time to hire' },
+              { value: '~30 days', label: 'Avg. time to hire' },
               { value: 'Up to 40%', label: 'Cost savings' },
               { value: '6',       label: 'Countries sourced' },
               { value: '24/7',    label: 'Ops coverage' },
@@ -419,7 +419,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               <span className="text-holo">Start with six proven talent hubs.</span>
             </h2>
             <p className="text-muted text-lg max-w-3xl mx-auto">
-              TrivianEdge is a Toronto-based BPO, RPO, and bespoke software development company that deploys offshore teams in as little as 30 days. We hire people for your back office, run your recruiting pipeline, and build the custom software your product needs, sourced from six global talent hubs (Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica) and matched to your time zone. Most companies juggle three or four vendors for hiring, payroll, and software. We bring people and software delivery under one roof, so nothing falls through the cracks.
+              TrivianEdge is a Toronto-based BPO, RPO, and bespoke software development company that typically deploys offshore teams within 30 days. We hire people for your back office, run your recruiting pipeline, and build the custom software your product needs, sourced from six global talent hubs (Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica) and matched to your time zone. Most companies juggle three or four vendors for hiring, payroll, and software. We bring people and software delivery under one roof, so nothing falls through the cracks.
             </p>
           </div>
 
