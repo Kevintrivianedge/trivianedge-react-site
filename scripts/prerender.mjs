@@ -50,6 +50,15 @@ async function main() {
   await context.addInitScript(() => {
     window.sessionStorage.setItem('trivian_intro_shown_v2', 'true');
   });
+  // Tells index.tsx not to fire GA4/Clarity/cookie-consent during this
+  // headless pass — see the isPrerendering guard there for why: this run
+  // waits well past requestIdleCallback's timeout, so without this flag
+  // those "deferred" resources would get baked into the static snapshot
+  // as if they were eager/static, making every real visitor's first load
+  // render-block on them instead of actually deferring.
+  await context.addInitScript(() => {
+    window.__PRERENDER__ = true;
+  });
 
   const failures = [];
 

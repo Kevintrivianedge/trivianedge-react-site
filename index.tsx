@@ -12,6 +12,16 @@ if (!rootElement) {
   throw new Error("Could not find root element to mount to");
 }
 
+// scripts/prerender.mjs sets this via an init script before the headless
+// browser loads each route. `waitUntil: 'networkidle'` plus its own extra
+// wait comfortably outlasts requestIdleCallback's 4s timeout below, so
+// without this guard every "deferred" script/stylesheet (GA4, Clarity,
+// the cookie-consent banner's CSS) would actually fire during the
+// prerender pass and get baked into the static snapshot as if it were
+// static markup — real visitors would then get it eagerly, render-blocking,
+// on first load, exactly the opposite of what deferring it was for.
+const isPrerendering = typeof window !== 'undefined' && Boolean((window as { __PRERENDER__?: boolean }).__PRERENDER__);
+
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
@@ -129,14 +139,16 @@ const initServiceWorker = () => {
   });
 };
 
-if (typeof requestIdleCallback !== 'undefined') {
-  requestIdleCallback(initCookieConsent, { timeout: 4000 });
-  requestIdleCallback(initGoogleAnalytics, { timeout: 4000 });
-  requestIdleCallback(initClarity, { timeout: 4000 });
-  requestIdleCallback(initServiceWorker, { timeout: 5000 });
-} else {
-  setTimeout(initCookieConsent, 1000);
-  setTimeout(initGoogleAnalytics, 1000);
-  setTimeout(initClarity, 1000);
-  setTimeout(initServiceWorker, 2000);
+if (!isPrerendering) {
+  if (typeof requestIdleCallback !== 'undefined') {
+    requestIdleCallback(initCookieConsent, { timeout: 4000 });
+    requestIdleCallback(initGoogleAnalytics, { timeout: 4000 });
+    requestIdleCallback(initClarity, { timeout: 4000 });
+    requestIdleCallback(initServiceWorker, { timeout: 5000 });
+  } else {
+    setTimeout(initCookieConsent, 1000);
+    setTimeout(initGoogleAnalytics, 1000);
+    setTimeout(initClarity, 1000);
+    setTimeout(initServiceWorker, 2000);
+  }
 }
