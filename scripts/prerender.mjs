@@ -125,6 +125,29 @@ async function main() {
         document.querySelectorAll('head script[src*="connect.facebook.net"]').forEach(el => el.remove());
       });
 
+      // The main app CSS and the Google Fonts stylesheet are both loaded
+      // non-blocking for real visitors (media="print" + onload swap, and
+      // rel="preload" + JS swap, respectively) — but by the time this
+      // headless page has reached networkidle, both onload/load handlers
+      // have already fired, so page.content() captures the POST-swap,
+      // eager state (media="all", rel="stylesheet") and bakes it into the
+      // static snapshot every real visitor gets. That silently turns both
+      // deferred resources back into render-blocking ones for everyone,
+      // defeating the defer entirely — the same failure mode as the
+      // requestIdleCallback-deferred scripts guarded by __PRERENDER__ above,
+      // just for CSS instead of JS. Reset them to their pre-load form here so
+      // the shipped HTML preserves the actual deferred behavior; real
+      // visitors' own onload/load handlers resolve them exactly as before.
+      await page.evaluate(() => {
+        document.querySelectorAll('link[rel="stylesheet"][media="all"][onload]').forEach((el) => {
+          el.setAttribute('media', 'print');
+        });
+        const fontLink = document.getElementById('font-preload');
+        if (fontLink && fontLink.getAttribute('rel') === 'stylesheet') {
+          fontLink.setAttribute('rel', 'preload');
+        }
+      });
+
       const html = await page.content();
       const outDir = routePath === '/' ? distDir : join(distDir, routePath.replace(/^\//, ''));
       mkdirSync(outDir, { recursive: true });

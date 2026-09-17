@@ -273,15 +273,14 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               </motion.span>
             </h1>
 
-            {/* SUBHEADING — Fade in after headline completes */}
-            <motion.p
-              className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.7, ease: 'easeOut' }}
-            >
+            {/* SUBHEADING — no entrance animation, deliberately. Lighthouse
+                identifies this paragraph (not the H1 spans above, which paint
+                individually smaller) as the page's actual LCP element — a
+                0.7s Framer Motion delay plus 0.6s fade-in was adding ~1.3s of
+                pure, deliberate invisibility directly to LCP timing. */}
+            <p className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light">
               Offshore teams, global compliance, bespoke software. One partner, one contract, one point of accountability.
-            </motion.p>
+            </p>
 
             {/* CTAs — Premium hover states */}
             <motion.div
