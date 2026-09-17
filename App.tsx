@@ -602,8 +602,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 key={step.number}
                 initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: 0.6,
+                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
                 className="relative group"
               >
                 {/* Connector line between steps */}
@@ -611,9 +616,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   <div className="hidden lg:block absolute top-9 left-full w-full h-px bg-gradient-to-r from-border to-transparent z-0 -translate-y-px" style={{ width: 'calc(100% - 2rem)', left: '2rem' }} />
                 )}
                 <span className="step-number">{step.number}</span>
-                <div className="w-12 h-12 rounded-2xl border border-border bg-surface flex items-center justify-center mb-5 group-hover:border-cyan-400/40 group-hover:bg-cyan-400/5 transition-all duration-300">
+                <motion.div
+                  whileHover={shouldReduceMotion ? {} : { scale: 1.1 }}
+                  transition={{ duration: 0.2, ease: 'easeOut' }}
+                  className="w-12 h-12 rounded-2xl border border-border bg-surface flex items-center justify-center mb-5 group-hover:border-cyan-400/40 group-hover:bg-cyan-400/5 transition-colors duration-300"
+                >
                   {step.icon}
-                </div>
+                </motion.div>
                 <h3 className="text-lg font-bold text-text mb-3 leading-snug">{step.title}</h3>
                 <p className="text-muted text-sm leading-relaxed">{step.description}</p>
               </motion.div>
@@ -647,12 +656,20 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {CASE_STUDIES.map((study, idx) => (
               <motion.article
                 key={study.client}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={shouldReduceMotion ? {} : {
+                  scale: 1.02,
+                  boxShadow: '0 0 24px rgba(0, 196, 154, 0.3), 0 12px 40px rgba(0, 0, 0, 0.15)'
+                }}
                 viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
-                className="reveal card-glow micro-lift-card rounded-[2rem] border border-border bg-white dark:bg-white/5 overflow-hidden flex flex-col"
-                style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,196,154,0.08)' }}
+                transition={{
+                  duration: shouldReduceMotion ? 0.01 : 0.65,
+                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                className="rounded-[2rem] border border-border bg-white dark:bg-white/5 overflow-hidden flex flex-col cursor-pointer hover:border-cyan-400/30 transition-colors duration-300"
+                style={{ boxShadow: '0 8px 32px rgba(0, 196, 154, 0.06)' }}
               >
                 <div className="h-1 w-full bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600/50" />
                 <div className="p-6 md:p-7 flex flex-col flex-1">
@@ -669,9 +686,25 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {TESTIMONIALS.slice(0, 2).map((item) => (
-              <blockquote key={item.author + item.role} className="reveal quote-card micro-lift-card">
-                <p className="relative z-10 text-lg leading-relaxed text-text/90 mb-8 pt-8">{item.quote}</p>
+            {TESTIMONIALS.slice(0, 2).map((item, idx) => (
+              <motion.blockquote
+                key={item.author + item.role}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={shouldReduceMotion ? {} : {
+                  scale: 1.02,
+                  boxShadow: '0 0 20px rgba(0, 196, 154, 0.2)'
+                }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{
+                  duration: 0.6,
+                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                className="quote-card rounded-2xl border border-border bg-white/[0.02] p-7 md:p-9 cursor-pointer hover:border-cyan-400/30 transition-colors duration-300"
+                style={{ boxShadow: '0 8px 24px rgba(0, 196, 154, 0.04)' }}
+              >
+                <p className="relative z-10 text-lg leading-relaxed text-text/90 mb-8 pt-2">{item.quote}</p>
                 <footer className="flex items-center gap-3 border-t border-border/50 pt-5">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
                     {item.author[0]}
@@ -681,7 +714,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                     <p className="text-muted text-xs">{item.role}</p>
                   </div>
                 </footer>
-              </blockquote>
+              </motion.blockquote>
             ))}
           </div>
 
