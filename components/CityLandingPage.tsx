@@ -67,7 +67,7 @@ const CityLandingPage: React.FC = () => {
                 ← Back to Home
               </Link>
               <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight text-text">
-                Hire Talent in <span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">{city.name}</span>
+                Hire Talent in <span className="text-gradient">{city.name}</span>
               </h1>
               <p className="text-xl text-muted leading-relaxed max-w-2xl mb-8">
                 {city.description} Our team of {city.teamSize} is ready to extend your operations across time zones.
@@ -159,7 +159,7 @@ const CityLandingPage: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-8 mb-12">
                 <div className="glass p-8 rounded-2xl border-border">
                   <Phone className="w-8 h-8 text-cyan-400 mx-auto mb-4" />
-                  <p className="text-muted text-sm uppercase tracking-widest font-bold mb-2">Phone</p>
+                  <p className="text-muted text-sm uppercase tracking-widest font-bold mb-2">Local Code</p>
                   <p className="text-lg font-bold text-text">{city.phone}</p>
                 </div>
                 <div className="glass p-8 rounded-2xl border-border">

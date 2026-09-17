@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, CalendarDays, Phone, Mail, MapPin } from 'lucide-react';
+import { ArrowLeft, CalendarDays, MapPin } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import InquiryForm from '../components/InquiryForm';
 import { buildLocalBusinessSchema, breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
@@ -84,17 +84,6 @@ const ContactPage: React.FC = () => {
             <div className="pb-16 sm:pb-0 reveal" style={{ transitionDelay: '100ms' }}>
               <InquiryForm />
             </div>
-          </div>
-
-          <div className="mt-12 grid md:grid-cols-2 gap-4">
-            <a href="tel:+18883472489" className="glass p-6 rounded-3xl border-border flex items-center gap-4 hover:border-cyan-500/30 transition-colors reveal">
-              <Phone className="w-5 h-5 text-cyan-500" />
-              <span>Prefer to call? Use the direct line.</span>
-            </a>
-            <a href="mailto:kevin.v@trivianedge.com" className="glass p-6 rounded-3xl border-border flex items-center gap-4 hover:border-cyan-500/30 transition-colors reveal" style={{ transitionDelay: '60ms' }}>
-              <Mail className="w-5 h-5 text-cyan-500" />
-              <span>Prefer email? Send the team a message.</span>
-            </a>
           </div>
         </div>
       </div>
