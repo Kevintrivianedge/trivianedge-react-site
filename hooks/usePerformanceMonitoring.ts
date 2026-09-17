@@ -32,11 +32,12 @@ export const usePerformanceMonitoring = (onMetric?: OnMetricCallback) => {
       const observer = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         const lastEntry = entries[entries.length - 1];
+        const value = (lastEntry as any).renderTime || lastEntry.startTime;
 
         const metric: WebVitalMetric = {
           name: 'LCP',
-          value: lastEntry.renderTime || lastEntry.loadTime,
-          rating: lastEntry.renderTime || lastEntry.loadTime < 2500 ? 'good' : 'poor',
+          value,
+          rating: value < 2500 ? 'good' : 'poor',
           isFinal: true,
         };
 
