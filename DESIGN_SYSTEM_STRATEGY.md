@@ -63,7 +63,7 @@ Visual: Motion graphic showing three inputs (People, Compliance, Software) flowi
 Message: You solve the multi-vendor problem—hiring, payroll, and delivery are one contract.
 
 **Act 2 — What We Do: Three Pillars**
-1. **We Find the People** (RPO — 30 days to hire across 6 countries)
+1. **We Find the People** (RPO — typically 30 days to hire across 6 countries)
 2. **We Handle the Paperwork** (BPO — compliance, payroll, taxes across all hubs)
 3. **We Build Bespoke Software** (Custom delivery, 24/7 coverage, you own the code)
 
@@ -250,7 +250,7 @@ Scroll reveals margin:        -50px to -100px (start before viewport entry)
 - **Headline**: "Build the team. / Run the system." — line-by-line reveal (Technique 1)
 - **Copy**: Concise, direct. Current copy is strong; just add visual hierarchy via weight
 - **CTAs**: "Start the conversation" (primary, teal) + "How it works" (secondary, outlined)
-- **Metrics cards** (right side, desktop only): "30 days", "Up to 40%", "6 countries", "24/7"
+- **Metrics cards** (right side, desktop only): "~30 days avg", "Up to 40%", "6 countries", "24/7"
   - Animate in with stagger (Technique 3)
   - Each metric tells a different story (speed, savings, scope, availability)
 - **Background**: Network visual (already implemented, keep it)
@@ -292,7 +292,7 @@ Scroll reveals margin:        -50px to -100px (start before viewport entry)
 - Typography: Manrope body, Fraunces for card titles (h3)
 
 ### "How It Works" / Process Timeline Section
-**Content Goal**: Show the 30-day deployment journey. Remove friction concerns ("How fast? How clear is the process?").
+**Content Goal**: Show the typical deployment journey (~30 days). Remove friction concerns ("How fast? How clear is the process?").
 
 **Current State**: Your 4-step timeline is clear. Improve:
 - Step icons: Use your icon library, teal accents
