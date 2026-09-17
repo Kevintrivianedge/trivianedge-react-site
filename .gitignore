@@ -14,6 +14,11 @@ dist-ssr
 .dev.vars
 .wrangler
 
+# Local Playwright preview-server state, created each time scripts/prerender.mjs
+# runs the build locally. Contains local server metadata, not app config —
+# never meant to be committed.
+.tmp/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
