@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { TalentHub } from '../types';
 
 // This SVG uses Mercator projection, not equirectangular.
@@ -56,10 +56,37 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
     return () => query.removeEventListener('change', handler);
   }, []);
 
+  // Staggered scroll-reveal: each hub's flight path "draws in" and its pin
+  // arrives in sequence as the map crosses into view, instead of every arc
+  // being fully drawn and every pulse already animating the instant the
+  // (already-lazy-loaded, see WorldMapLazy's own earlier 500px-out
+  // pre-mount) component happens to render. This observer is deliberately
+  // separate from that pre-mount one and uses a tight threshold/no
+  // rootMargin so it fires right as the map is actually visible, not 500px
+  // early. Runs once (matches the `viewport={{ once: true }}` convention
+  // used by the framer-motion reveals elsewhere on this page).
+  const revealRootRef = useRef<HTMLDivElement>(null);
+  const [hasEnteredView, setHasEnteredView] = useState(false);
+
+  useEffect(() => {
+    if (!revealRootRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasEnteredView(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(revealRootRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   const [homeX, homeY] = project(HOME_COORDS[0], HOME_COORDS[1]);
 
   return (
-    <div className="relative w-full select-none">
+    <div className="relative w-full select-none" ref={revealRootRef}>
       <div className="relative w-full pb-[65.94%]">
         <img
           src="/world-map.svg"
@@ -100,6 +127,15 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
             // break hydration. Both animations on a dot share one duration
             // so its fade stays in sync with its position along the path.
             const dur = `${5 + (hubIndex % 3) * 0.75}s`;
+            // Signature scroll moment: each hub's flight path draws in
+            // left-to-right (pathLength normalizes stroke-dasharray to 1
+            // regardless of the arc's real geometric length) staggered by
+            // hub index, and its pulse dot only starts looping once its
+            // own path has finished drawing -- so hubs visibly "arrive"
+            // one after another rather than every connection existing
+            // fully-formed the instant the component mounts.
+            const drawDelay = hubIndex * 0.15;
+            const drawDuration = 0.9;
             return (
               <g key={`arc-${hub.id}`} opacity={isActive ? 1 : 0.15} style={{ transition: 'opacity 0.3s ease' }}>
                 <path
@@ -109,25 +145,40 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
                   strokeOpacity={0.8}
                   strokeWidth={0.32}
                   vectorEffect="non-scaling-stroke"
+                  pathLength={1}
+                  strokeDasharray={1}
+                  strokeDashoffset={reducedMotion || hasEnteredView ? 0 : 1}
+                  style={{
+                    transition: reducedMotion
+                      ? 'none'
+                      : `stroke-dashoffset ${drawDuration}s cubic-bezier(0.16, 1, 0.3, 1) ${drawDelay}s`,
+                  }}
                 />
                 {/* Pulse fades in fast (5%) and stays visible almost to
                     arrival (96%), a wide fade window made the dot vanish
                     well before reaching the pin, which read as the
-                    connection "falling off" short of its destination. */}
-                <circle r={0.5} fill="var(--cyan)" vectorEffect="non-scaling-stroke">
-                  <animateMotion
-                    dur={dur}
-                    repeatCount={reducedMotion ? 1 : 'indefinite'}
-                    path={path}
-                  />
-                  <animate
-                    attributeName="opacity"
-                    values="0;1;1;0"
-                    keyTimes="0;0.05;0.96;1"
-                    dur={dur}
-                    repeatCount={reducedMotion ? 1 : 'indefinite'}
-                  />
-                </circle>
+                    connection "falling off" short of its destination.
+                    Not mounted until its own arc has drawn in, so the loop
+                    never starts running ahead of a path the visitor hasn't
+                    seen appear yet. */}
+                {(reducedMotion || hasEnteredView) && (
+                  <circle r={0.5} fill="var(--cyan)" vectorEffect="non-scaling-stroke">
+                    <animateMotion
+                      dur={dur}
+                      begin={reducedMotion ? '0s' : `${drawDelay + drawDuration}s`}
+                      repeatCount={reducedMotion ? 1 : 'indefinite'}
+                      path={path}
+                    />
+                    <animate
+                      attributeName="opacity"
+                      values="0;1;1;0"
+                      keyTimes="0;0.05;0.96;1"
+                      dur={dur}
+                      begin={reducedMotion ? '0s' : `${drawDelay + drawDuration}s`}
+                      repeatCount={reducedMotion ? 1 : 'indefinite'}
+                    />
+                  </circle>
+                )}
               </g>
             );
           })}
@@ -164,11 +215,15 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
           </text>
         </svg>
 
-        {hubs.map((hub) => {
+        {hubs.map((hub, hubIndex) => {
           const coords = HUB_COORDS[hub.id];
           if (!coords) return null;
           const [x, y] = project(coords[0], coords[1]);
           const isHovered = hoveredId === hub.id;
+          // Pin arrives right as its own flight path (same hubIndex-based
+          // delay/duration as the arc above) finishes drawing in.
+          const pinRevealed = reducedMotion || hasEnteredView;
+          const pinDelay = hubIndex * 0.15 + 0.9;
 
           return (
             <button
@@ -179,8 +234,16 @@ const WorldMapSVG: React.FC<WorldMapSVGProps> = ({ hubs, onHubClick }) => {
               onMouseLeave={() => setHoveredId(null)}
               onFocus={() => setHoveredId(hub.id)}
               onBlur={() => setHoveredId(null)}
-              className="absolute -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-transparent border-0 p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 rounded-full"
-              style={{ left: `${x}%`, top: `${y}%` }}
+              className="absolute w-11 h-11 bg-transparent border-0 p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 rounded-full"
+              style={{
+                left: `${x}%`,
+                top: `${y}%`,
+                opacity: pinRevealed ? 1 : 0,
+                transform: `translate(-50%, -50%) scale(${pinRevealed ? 1 : 0.4})`,
+                transition: reducedMotion
+                  ? 'none'
+                  : `opacity 0.4s ease ${pinDelay}s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${pinDelay}s`,
+              }}
               aria-label={`${hub.country} talent hub: ${hub.specialty}`}
             >
               <span
