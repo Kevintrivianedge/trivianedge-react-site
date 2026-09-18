@@ -6,8 +6,12 @@
   --cc-primary-color: #0f172a;
   --cc-secondary-color: #334155;
   --cc-btn-primary-bg: #00c49a;
-  --cc-btn-primary-color: #ffffff;
+  /* Dark navy, not white: white-on-#00c49a is ~2.2:1 (WCAG AA needs 4.5:1
+     for this button's ~13px bold label) -- caught by Lighthouse's
+     color-contrast audit. Dark text against this teal clears ~8:1. */
+  --cc-btn-primary-color: #0f172a;
   --cc-btn-primary-hover-bg: #00a882;
+  --cc-btn-primary-hover-color: #0f172a;
   --cc-btn-secondary-bg: rgba(15, 23, 42, 0.06);
   --cc-btn-secondary-color: #0f172a;
   --cc-btn-secondary-hover-bg: rgba(15, 23, 42, 0.12);

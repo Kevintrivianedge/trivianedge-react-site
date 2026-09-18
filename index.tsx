@@ -33,6 +33,49 @@ root.render(
   </React.StrictMode>
 );
 
+// Hands off from the pre-boot scrim (index.html) to the real app. Gated on
+// the deferred (media="print") stylesheets actually being active, not just
+// on root.render() having run: src/worker.ts serves each route as a
+// *prerendered* snapshot (scripts/prerender.mjs), so #root already has
+// real, fully-formed markup by the time this file executes — the visible
+// "static stuff" isn't missing content, it's that content briefly painting
+// unstyled while the main CSS bundle and Google Fonts sit at media="print"
+// waiting on critical-loader.js's load-driven swap to "all" (see that
+// file). Revealing only once every such stylesheet's .sheet is populated
+// means the scrim comes down exactly when there's a styled page under it,
+// same signal critical-loader.js itself relies on for the swap.
+function prebootStylesReady(): boolean {
+  const deferredLinks = document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"][media="print"]');
+  return Array.from(deferredLinks).every((link) => link.sheet);
+}
+
+function revealApp() {
+  const splash = document.getElementById('preboot-splash');
+  if (!splash) return;
+  splash.classList.add('preboot-splash-hide');
+  setTimeout(() => splash.remove(), 150);
+}
+
+// requestAnimationFrame-driven poll rather than a timer: these are same-origin
+// (Google Fonts aside) stylesheets already in flight before this module even
+// runs, so they typically resolve within a handful of frames — polling on
+// paint ticks reveals the app the moment it's actually styled instead of on
+// a fixed guess. deadline is a last-resort escape hatch (a blocked/failed
+// font or CSS request) so a real visitor is never stuck looking at the
+// splash indefinitely if a stylesheet never fires 'load'.
+const prebootDeadline = Date.now() + 4000;
+function waitForStylesThenReveal() {
+  if (prebootStylesReady() || Date.now() > prebootDeadline) {
+    // Double rAF: the first callback can fire before the browser has
+    // painted the styles that just became active; the second is
+    // guaranteed to run after that paint.
+    requestAnimationFrame(() => requestAnimationFrame(revealApp));
+    return;
+  }
+  requestAnimationFrame(waitForStylesThenReveal);
+}
+waitForStylesThenReveal();
+
 // Amplitude and the Meta Pixel no longer start unconditionally here — they
 // wait on the visitor actually granting consent via the self-hosted banner
 // in src/cookieConsent.ts (which also forwards the choice to Google's
