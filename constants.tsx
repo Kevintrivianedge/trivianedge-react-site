@@ -33,6 +33,17 @@ export const NAV_LINKS = [
       { name: 'Industries We Serve', href: '/industries' },
     ],
   },
+  {
+    name: 'Compare',
+    href: '/compare/bpo-vs-internal-team',
+    children: [
+      { name: 'BPO vs. Internal Team', href: '/compare/bpo-vs-internal-team' },
+      { name: 'RPO vs. Recruitment Agency', href: '/compare/rpo-vs-recruitment-agency' },
+      { name: 'EOR Partner vs. Foreign Entity', href: '/compare/eor-vs-foreign-entity' },
+      { name: 'AI Dev Agency vs. In-House Team', href: '/compare/ai-development-agency-vs-in-house-team' },
+      { name: 'Bespoke Software vs. Freelance Platforms', href: '/compare/bespoke-software-vs-freelance-platforms' },
+    ],
+  },
   { name: 'Venture Studio', href: '/venture-studio' },
   { name: 'Proof', href: '/proof' },
   { name: 'Trust', href: '/trust' },

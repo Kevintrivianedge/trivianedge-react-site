@@ -743,6 +743,16 @@
             animation-play-state: paused;
         }
 
+        /* --- Kinetic text banner (section divider). Same scroll mechanic as
+           the logo marquee above, reused for a horizontally-scrolling text
+           ticker instead of logos -- an Awwwards-common B2B pattern (see
+           WeEvolveIT) for breaking up section rhythm without new content or
+           imagery. Slower than the logo marquee since the content is denser
+           and needs to stay legible while moving. */
+        .text-marquee-track {
+            animation-duration: 34s;
+        }
+
         /* --- Bento grid helper --- */
         .bento-grid {
             display: grid;

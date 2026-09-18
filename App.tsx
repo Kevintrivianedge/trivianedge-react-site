@@ -617,6 +617,31 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
+      {/* ===== KINETIC DIVIDER =====
+          Scrolling text ticker as a section break, not a hero -- kept to a
+          single compact line (not hero-scale type) so it reads as rhythm
+          punctuation between "How We Get You Set Up" and "Proof" rather
+          than competing with either section's own heading. Repeats real
+          hero copy (the eyebrow + subheading above) rather than inventing
+          new claims. aria-hidden: purely decorative restatement of content
+          already announced in the hero. */}
+      <section aria-hidden="true" className="section-dark py-8 md:py-10 border-y border-border overflow-hidden">
+        <div className="marquee-viewport">
+          <div className="marquee-track text-marquee-track">
+            {[0, 1, 2].map(rep => (
+              <div key={rep} className="flex items-center shrink-0">
+                <span className="text-xl md:text-2xl font-bold uppercase tracking-tight whitespace-nowrap pr-3">
+                  Operator. Builder. Partner.
+                </span>
+                <span className="text-xl md:text-2xl font-bold uppercase tracking-tight whitespace-nowrap text-holo px-10 md:px-14">
+                  One partner, one contract, one point of accountability.
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ===== ACT 5: PROOF ===== */}
       <section
         id="why-us"
