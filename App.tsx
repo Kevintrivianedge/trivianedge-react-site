@@ -55,6 +55,9 @@ import HeroVideoSection from './components/HeroVideoSection';
 import ServiceCard3D from './components/ServiceCard3D';
 import PageTransition from './components/PageTransition';
 import AnimatedGlobe from './components/AnimatedGlobe';
+import RealtimeDashboard from './components/RealtimeDashboard';
+import BenefitsVisualization from './components/BenefitsVisualization';
+import AIChatNotification from './components/AIChatNotification';
 
 // Lazy-load route-level pages and heavy below-fold interactive modules.
 // This splits each into its own chunk so the main bundle only contains
@@ -419,6 +422,29 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               </motion.div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ===== REAL-TIME DASHBOARD SECTION ===== */}
+      <section aria-label="Real-time operations dashboard" className="relative px-4 sm:px-6 py-20 md:py-28 border-b border-border overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-0 left-1/4 w-80 h-80 bg-cyan-400/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-emerald-400/10 rounded-full blur-3xl" />
+        </div>
+
+        <div className="max-w-7xl mx-auto">
+          <RealtimeDashboard />
+        </div>
+      </section>
+
+      {/* ===== BENEFITS VISUALIZATION SECTION ===== */}
+      <section aria-label="Benefits and value visualization" className="relative px-4 sm:px-6 py-20 md:py-28 border-b border-border overflow-hidden section-tint">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-cyan-400/10 to-emerald-400/10 rounded-full blur-3xl" />
+        </div>
+
+        <div className="max-w-7xl mx-auto">
+          <BenefitsVisualization />
         </div>
       </section>
 
@@ -1053,6 +1079,7 @@ export default function App() {
         <div className="bg-background min-h-screen text-text overflow-x-hidden selection:bg-cyan-500/30 transition-colors duration-300">
           <ScrollProgressBar />
           <Navbar />
+          <AIChatNotification />
           <AnimatePresence>
             {selectedHub && (
               <ErrorBoundary fallback={null}>
