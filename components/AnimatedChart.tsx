@@ -62,9 +62,9 @@ export const AnimatedChart: React.FC<AnimatedChartProps> = ({
               >
                 {/* Bar */}
                 <motion.div
-                  className="w-full rounded-t-lg bg-gradient-to-t transition-all hover:shadow-lg"
+                  className="w-full rounded-t-lg transition-all hover:shadow-lg"
                   style={{
-                    backgroundImage: `linear-gradient(to top, ${point.color}, ${point.color}dd)`,
+                    background: `linear-gradient(to top, ${point.color}, ${point.color}dd)`,
                     height: `${heightPercent}%`,
                   }}
                   whileHover={{ scale: 1.05, boxShadow: `0 0 20px ${point.color}40` }}
