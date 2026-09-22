@@ -1,11 +1,22 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ArrowLeft, Star, ExternalLink, ArrowRight } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import RelatedLinks from '../components/RelatedLinks';
 import { CASE_STUDIES, TESTIMONIALS } from '../constants/proof';
 import { INDUSTRIES } from '../constants/industries';
 import { breadcrumbSchema, reviewSchema, SEO_CONFIG } from '../utils/seo';
+
+// Same figures as the homepage stats showcase — kept in one place there would be
+// ideal, but these numbers are operating-model constants restated for a reader
+// landing directly on /proof without having seen the homepage first.
+const PROOF_STATS = [
+  { value: '30', unit: 'days', label: 'Avg. time to deploy', description: 'From intake to a working team' },
+  { value: 'Up to 40', unit: '%', label: 'Cost savings', description: 'vs. equivalent North American hires' },
+  { value: '6', unit: 'hubs', label: 'Talent hubs', description: 'Philippines, Vietnam, Sri Lanka, Turkey, South Africa, Costa Rica' },
+  { value: '24/7', unit: '', label: 'Ops coverage', description: 'Global timezone alignment' },
+];
 
 const ProofPage: React.FC = () => {
   const navigate = useNavigate();
@@ -51,6 +62,32 @@ const ProofPage: React.FC = () => {
                 Team sizes and timelines above reflect TrivianEdge's standard engagement model for that kind of work. Percentage figures elsewhere on this site (e.g., "up to 40% cost savings") describe the typical range across our engagements (comparing fully loaded offshore cost, including compliance, payroll administration, and management overhead, against the equivalent fully loaded cost of a direct North American hire), not a single formal audited study. <Link to="/savings-calculator" className="text-cyan-600 hover:underline font-medium">Run your own roles through the savings calculator</Link> for a number specific to your situation.
               </p>
             </div>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {PROOF_STATS.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.02 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="rounded-2xl border border-cyan-400/20 bg-surface backdrop-blur-sm p-6 relative group hover:border-cyan-400/40 transition-colors duration-300"
+                style={{ boxShadow: '0 8px 32px rgba(0, 196, 154, 0.06)' }}
+              >
+                <span className="text-[10px] uppercase tracking-widest text-muted font-semibold block mb-4">
+                  {stat.label}
+                </span>
+                <div className="mb-2">
+                  <span className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">
+                    {stat.value}
+                  </span>
+                  <span className="text-lg md:text-xl text-text opacity-70 ml-2">{stat.unit}</span>
+                </div>
+                <p className="text-xs text-muted">{stat.description}</p>
+              </motion.div>
+            ))}
           </div>
 
           <div className="grid lg:grid-cols-2 gap-6 mb-16">
