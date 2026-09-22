@@ -58,6 +58,15 @@ import AnimatedGlobe from './components/AnimatedGlobe';
 import RealtimeDashboard from './components/RealtimeDashboard';
 import BenefitsVisualization from './components/BenefitsVisualization';
 import AIChatNotification from './components/AIChatNotification';
+import AnimatedFormInput from './components/AnimatedFormInput';
+import SectionReveal from './components/SectionReveal';
+import AnimatedChart from './components/AnimatedChart';
+import SkeletonLoader from './components/SkeletonLoader';
+import VideoTestimonialCard from './components/VideoTestimonialCard';
+import MobileGestureWrapper from './components/MobileGestureWrapper';
+import MultiLayerParallax from './components/MultiLayerParallax';
+import EnhancedVideoHero from './components/EnhancedVideoHero';
+import LiveMetricsStream from './components/LiveMetricsStream';
 
 // Lazy-load route-level pages and heavy below-fold interactive modules.
 // This splits each into its own chunk so the main bundle only contains
@@ -562,6 +571,138 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <ChevronRight className="w-4 h-4" />
           </span>
         </Link>
+      </section>
+
+      {/* ===== PHASE 6: LIVE METRICS STREAM ===== */}
+      <section aria-label="Real-time metrics streaming" className="relative px-4 sm:px-6 py-20 md:py-28 border-b border-border overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-400/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-400/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="max-w-7xl mx-auto">
+          <SectionReveal direction="up" className="text-center mb-12">
+            <h3 className="text-3xl md:text-4xl font-bold text-text mb-3">Live Operations Feed</h3>
+            <p className="text-muted text-lg max-w-2xl mx-auto">Real-time insights into our global team activity and deployment metrics.</p>
+          </SectionReveal>
+
+          <LiveMetricsStream
+            metrics={[
+              { id: '1', label: 'Active Deployments', value: 47, delta: 12, trend: 'up', icon: <Zap className="w-6 h-6" />, color: 'cyan' },
+              { id: '2', label: 'Team Members Online', value: 287, delta: 23, trend: 'up', icon: <Users2 className="w-6 h-6" />, color: 'emerald' },
+              { id: '3', label: 'Tickets Resolved', value: 1042, delta: 8, trend: 'up', icon: <CheckCircle2 className="w-6 h-6" />, color: 'amber' },
+              { id: '4', label: 'Avg Response Time', value: 2, delta: -15, trend: 'down', icon: <Code2 className="w-6 h-6" />, color: 'cyan' },
+            ]}
+            updateInterval={4000}
+          />
+        </div>
+      </section>
+
+      {/* ===== PHASE 6: ANIMATED METRICS CHARTS ===== */}
+      <section aria-label="Performance metrics visualization" className="relative px-4 sm:px-6 py-20 md:py-28 border-b border-border overflow-hidden section-tint">
+        <div className="max-w-7xl mx-auto">
+          <SectionReveal direction="left" className="text-center mb-12">
+            <h3 className="text-3xl md:text-4xl font-bold text-text mb-3">Performance Over Time</h3>
+            <p className="text-muted text-lg">Track key metrics with interactive visualizations.</p>
+          </SectionReveal>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            <AnimatedChart
+              type="bar"
+              title="Deployment Speed by Region"
+              data={[
+                { label: 'Philippines', value: 18, color: 'rgb(0, 196, 154)' },
+                { label: 'Vietnam', value: 22, color: 'rgb(34, 197, 94)' },
+                { label: 'Turkey', value: 15, color: 'rgb(59, 130, 246)' },
+                { label: 'Costa Rica', value: 12, color: 'rgb(168, 85, 247)' },
+              ]}
+            />
+            <AnimatedChart
+              type="line"
+              title="Monthly Growth Trajectory"
+              data={[
+                { label: 'Jan', value: 120, color: 'rgb(0, 196, 154)' },
+                { label: 'Feb', value: 150, color: 'rgb(0, 196, 154)' },
+                { label: 'Mar', value: 190, color: 'rgb(0, 196, 154)' },
+                { label: 'Apr', value: 240, color: 'rgb(0, 196, 154)' },
+                { label: 'May', value: 310, color: 'rgb(0, 196, 154)' },
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ===== PHASE 6: ENHANCED INQUIRY FORM SECTION ===== */}
+      <section aria-label="Advanced inquiry form" className="relative px-4 sm:px-6 py-20 md:py-28 border-b border-border overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-cyan-400/10 to-emerald-400/10 rounded-full blur-3xl" />
+        </div>
+
+        <div className="max-w-4xl mx-auto">
+          <SectionReveal direction="up" className="text-center mb-12">
+            <h3 className="text-3xl md:text-4xl font-bold text-text mb-3">Get Started Today</h3>
+            <p className="text-muted text-lg">Our enhanced form makes it easy to tell us what you need.</p>
+          </SectionReveal>
+
+          <motion.div
+            className="glass rounded-2xl p-8 md:p-12 border border-border"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <AnimatedFormInput
+                  label="Full Name"
+                  type="text"
+                  value=""
+                  onChange={() => {}}
+                  placeholder="John Doe"
+                  required={true}
+                />
+                <AnimatedFormInput
+                  label="Company"
+                  type="text"
+                  value=""
+                  onChange={() => {}}
+                  placeholder="Your Company"
+                  required={true}
+                />
+              </div>
+
+              <AnimatedFormInput
+                label="Email"
+                type="email"
+                value=""
+                onChange={() => {}}
+                placeholder="john@example.com"
+                required={true}
+                validation={(value) => ({
+                  valid: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+                  error: 'Please enter a valid email',
+                })}
+              />
+
+              <AnimatedFormInput
+                label="Tell us about your project"
+                value=""
+                onChange={() => {}}
+                placeholder="Describe what you're looking to build or improve..."
+                maxLength={500}
+                showCharCount={true}
+              />
+
+              <motion.button
+                className="w-full py-3 rounded-lg font-bold text-lg bg-gradient-to-r from-cyan-400 to-emerald-400 text-black hover:shadow-lg hover:shadow-cyan-400/30 transition-all"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Get Free Consultation
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
       {/* ===== ACT 4: HOW IT WORKS ===== */}
