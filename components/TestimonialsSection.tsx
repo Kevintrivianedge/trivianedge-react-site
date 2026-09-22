@@ -21,10 +21,10 @@ export const TestimonialsSection: React.FC = () => {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-12 border-t border-border">
           {[
-            { number: '500+', label: 'Teams Deployed' },
-            { number: '95%', label: 'Client Retention' },
+            { number: '50+', label: 'Active Clients' },
+            { number: '98%', label: 'Satisfaction Rate' },
             { number: '28 Days', label: 'Avg Deployment' },
-            { number: '$50M+', label: 'Cost Saved' },
+            { number: '200+', label: 'Team Members' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">
