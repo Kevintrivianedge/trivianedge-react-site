@@ -5,7 +5,7 @@ import { SectionReveal } from './SectionReveal';
 
 export const TestimonialsSection: React.FC = () => {
   return (
-    <section className="py-20 px-4 md:px-8">
+    <section className="py-20 px-4 md:px-8 border-b border-border">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <SectionReveal direction="up" delay={0}>

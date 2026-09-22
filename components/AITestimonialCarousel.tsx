@@ -57,7 +57,7 @@ export const AITestimonialCarousel: React.FC<AITestimonialCarouselProps> = ({
   return (
     <div className="w-full">
       {/* Main Testimonial */}
-      <div className="relative h-full">
+      <div className="relative min-h-96">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={currentIndex}
