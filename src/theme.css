@@ -264,6 +264,28 @@
             transform: translateX(120%);
         }
 
+        .premium-button:active {
+            transform: scale(0.98);
+        }
+
+        .premium-button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.1) 0%, transparent 80%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .premium-button:hover::before {
+            opacity: 1;
+        }
+
         .premium-button-secondary {
             position: relative;
             isolation: isolate;
@@ -797,6 +819,146 @@
         }
         .float-badge { animation: float-badge 3s ease-in-out infinite; }
 
+        /* --- Premium button ripple effect --- */
+        @keyframes button-ripple {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .button-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            animation: button-ripple 0.6s ease-out;
+        }
+
+        /* --- Enhanced card entrance animation --- */
+        @keyframes card-entrance {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) rotateX(10deg);
+                filter: blur(4px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+                filter: blur(0);
+            }
+        }
+
+        .card-entrance {
+            animation: card-entrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* --- Enhanced form input animations --- */
+        input:focus {
+            animation: input-focus 0.3s ease-out forwards;
+        }
+
+        @keyframes input-focus {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 196, 154, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 0 3px rgba(0, 196, 154, 0.1);
+            }
+        }
+
+        /* --- Number counter animation --- */
+        @keyframes count-up {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .count-up {
+            animation: count-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* --- Interactive carousel animations --- */
+        @keyframes carousel-slide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .carousel-item {
+            animation: carousel-slide 0.5s ease-out forwards;
+        }
+
+        /* --- Comparison slider animations --- */
+        @keyframes slider-pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(0, 196, 154, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 0 6px rgba(0, 196, 154, 0);
+            }
+        }
+
+        .slider-handle {
+            animation: slider-pulse 2s infinite;
+        }
+
+        /* --- Interactive card expand animation --- */
+        @keyframes expand-smooth {
+            0% {
+                opacity: 0;
+                max-height: 0;
+            }
+            100% {
+                opacity: 1;
+                max-height: 500px;
+            }
+        }
+
+        .expand-content {
+            animation: expand-smooth 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* --- Benefit list dot animation --- */
+        @keyframes dot-pulse {
+            0%, 100% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        .benefit-dot {
+            animation: dot-pulse 2s ease-in-out infinite;
+        }
+
+        /* --- Grid column helper for Tailwind --- */
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+        @media (max-width: 768px) {
+            .grid-cols-4 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+            .grid-cols-3 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        }
+
         /* --- Shimmer skeleton loader --- */
         @keyframes shimmer {
             0% { background-position: -200% 0; }
@@ -982,6 +1144,136 @@
 
             .choreo-line-fill {
                 transform: none !important;
+            }
+        }
+
+        /* ===== PHASE 3: 3D TRANSFORMS & PAGE TRANSITIONS ===== */
+
+        /* 3D Service Card Effects */
+        @keyframes card-3d-hover {
+            0% {
+                transform: translateY(0) rotateX(0) rotateY(0);
+            }
+            100% {
+                box-shadow: 0 20px 60px rgba(0, 196, 154, 0.2);
+            }
+        }
+
+        /* Globe rotation animation */
+        @keyframes globe-rotate {
+            0% {
+                transform: rotateY(0deg);
+            }
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+
+        /* Globe glow pulse */
+        @keyframes globe-glow-pulse {
+            0%, 100% {
+                box-shadow: 0 0 40px rgba(0, 196, 154, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 80px rgba(0, 196, 154, 0.5);
+            }
+        }
+
+        /* Page transition fade */
+        @keyframes page-fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes page-fade-out {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Video hero overlay effect */
+        @keyframes hero-video-overlay-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* 3D card shine effect */
+        @keyframes card-shine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        /* Location pin pulse on globe */
+        @keyframes location-pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 196, 154, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(0, 196, 154, 0);
+            }
+        }
+
+        /* Utility classes for Phase 3 animations */
+        .globe-animate {
+            animation: globe-rotate 20s linear infinite;
+        }
+
+        .globe-glow {
+            animation: globe-glow-pulse 3s ease-in-out infinite;
+        }
+
+        .page-transition-enter {
+            animation: page-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .page-transition-exit {
+            animation: page-fade-out 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card-3d {
+            perspective: 1000px;
+        }
+
+        .card-shine {
+            animation: card-shine 3s ease-in-out infinite;
+        }
+
+        .location-pulse {
+            animation: location-pulse 2s ease-out infinite;
+        }
+
+        /* Responsive 3D transforms */
+        @media (prefers-reduced-motion: reduce) {
+            .globe-animate,
+            .globe-glow,
+            .card-shine,
+            .location-pulse {
+                animation: none !important;
             }
         }
 

@@ -1,5 +1,10 @@
 import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import { AnimatePresence, motion, useReducedMotion, useInView } from 'framer-motion';
+import ScrollProgressBar from './components/ScrollProgressBar';
+import TextReveal from './components/TextReveal';
+import AnimatedCounter from './components/AnimatedCounter';
+import InteractiveStatsGrid from './components/InteractiveStatsGrid';
+import InteractiveServiceCard from './components/InteractiveServiceCard';
 import {
   ArrowRight,
   ChevronRight,
@@ -17,7 +22,6 @@ import { CASE_STUDIES, TESTIMONIALS } from './constants/proof';
 import { TalentHub } from './types';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { GeoProvider } from './contexts/GeoContext';
-import Preloader from './components/Preloader';
 import { ThemeProvider } from './contexts/ThemeContext';
 import SEOHead from './components/SEOHead';
 import AlgorithmMonitor from './components/AlgorithmMonitor';
@@ -47,6 +51,10 @@ import TalentHubCard from './components/TalentHubCard';
 import ScrollToTop from './components/ScrollToTop';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import HeroNetworkVisual from './components/HeroNetworkVisual';
+import HeroVideoSection from './components/HeroVideoSection';
+import ServiceCard3D from './components/ServiceCard3D';
+import PageTransition from './components/PageTransition';
+import AnimatedGlobe from './components/AnimatedGlobe';
 
 // Lazy-load route-level pages and heavy below-fold interactive modules.
 // This splits each into its own chunk so the main bundle only contains
@@ -216,129 +224,102 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
   return (
     <>
       {/* ===== ACT 1: HERO ===== */}
-      <section
-        aria-label="Hero"
-        className="hero-dark hero-fade-out relative min-h-screen sm:min-h-0 lg:min-h-screen flex flex-col px-4 sm:px-6 overflow-hidden"
+      <HeroVideoSection
+        videoSrc={undefined}
+        fallbackImageSrc={undefined}
       >
-        {/* PARALLAX BACKGROUND — Subtle animated grid that moves slower than scroll */}
-        <motion.div
-          className="hidden lg:block absolute inset-0 -z-10"
-          style={{
-            background: 'linear-gradient(135deg, rgba(0, 196, 154, 0.08) 0%, rgba(0, 255, 224, 0.04) 100%)',
-            opacity: 0.5,
-          }}
-        />
+        <div className="flex-1 min-w-0 max-w-[760px]">
+          {/* EYEBROW — Operator positioning */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="text-xs font-bold tracking-[0.25em] uppercase text-cyan-400 mb-8"
+          >
+            Operator. Builder. Partner.
+          </motion.p>
 
-        {/* Abstract network graphic */}
-        <div className="hidden lg:block !absolute inset-y-0 right-0" style={{ left: '820px' }}>
-          <HeroNetworkVisual />
+          {/* HEADLINE — Line-by-line reveal with stagger */}
+          <h1 className="display-hero font-bold tracking-tight mb-8 leading-[1.02] text-white">
+            <motion.span
+              className="block"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            >
+              Built For
+            </motion.span>
+            <motion.span
+              className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-300"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            >
+              What's Next
+            </motion.span>
+          </h1>
+
+          {/* SUBHEADING */}
+          <p className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light">
+            Offshore teams, global compliance, bespoke software. One partner, one contract, one point of accountability.
+          </p>
+
+          {/* CTAs — Premium hover states */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col sm:flex-row items-start gap-4"
+          >
+            {/* Primary CTA */}
+            <motion.a
+              href="#contact"
+              onClick={e => { e.preventDefault(); scrollTo('contact'); }}
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 group bg-cyan-400 text-black hover:text-black transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              style={{
+                boxShadow: '0 0 0px rgba(0, 196, 154, 0)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = '0 0 40px rgba(0, 196, 154, 0.4), 0 0 80px rgba(0, 255, 224, 0.2)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = '0 0 0px rgba(0, 196, 154, 0)';
+              }}
+            >
+              Get Started
+              <motion.div
+                animate={{ x: 0 }}
+                whileHover={{ x: 4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ArrowRight className="w-5 h-5" />
+              </motion.div>
+            </motion.a>
+
+            {/* Secondary CTA */}
+            <motion.a
+              href="#how-it-works"
+              onClick={e => { e.preventDefault(); scrollTo('how-it-works'); }}
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 text-white border border-white/20 hover:border-white/40 hover:bg-white/5 transition-colors"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+            >
+              How It Works
+              <motion.div
+                animate={{ x: 0 }}
+                whileHover={{ x: 2 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ChevronRight className="w-5 h-5" />
+              </motion.div>
+            </motion.a>
+          </motion.div>
         </div>
-
-        {/* Hero content — flex-1 so it expands and pushes stats to the bottom */}
-        <motion.div
-          className="flex-1 flex items-center max-w-7xl mx-auto w-full relative z-10 pt-20 pb-8 gap-8 xl:gap-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <div className="flex-1 min-w-0 max-w-[760px]">
-            {/* EYEBROW — Operator positioning */}
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="text-xs font-bold tracking-[0.25em] uppercase text-cyan-400 mb-8"
-            >
-              Operator. Builder. Partner.
-            </motion.p>
-
-            {/* HEADLINE — Line-by-line reveal with stagger */}
-            <h1 className="display-hero font-bold tracking-tight mb-8 leading-[1.02] text-white">
-              <motion.span
-                className="block"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              >
-                Built For
-              </motion.span>
-              <motion.span
-                className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-300"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              >
-                What's Next
-              </motion.span>
-            </h1>
-
-            {/* SUBHEADING — no entrance animation, deliberately. Lighthouse
-                identifies this paragraph (not the H1 spans above, which paint
-                individually smaller) as the page's actual LCP element — a
-                0.7s Framer Motion delay plus 0.6s fade-in was adding ~1.3s of
-                pure, deliberate invisibility directly to LCP timing. */}
-            <p className="text-white/70 text-xl md:text-2xl max-w-2xl mb-12 md:mb-16 leading-relaxed font-light">
-              Offshore teams, global compliance, bespoke software. One partner, one contract, one point of accountability.
-            </p>
-
-            {/* CTAs — Premium hover states */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col sm:flex-row items-start gap-4"
-            >
-              {/* Primary CTA */}
-              <motion.a
-                href="#contact"
-                onClick={e => { e.preventDefault(); scrollTo('contact'); }}
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 group bg-cyan-400 text-black hover:text-black transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
-                style={{
-                  boxShadow: '0 0 0px rgba(0, 196, 154, 0)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 0 40px rgba(0, 196, 154, 0.4), 0 0 80px rgba(0, 255, 224, 0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '0 0 0px rgba(0, 196, 154, 0)';
-                }}
-              >
-                Get Started
-                <motion.div
-                  animate={{ x: 0 }}
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </motion.div>
-              </motion.a>
-
-              {/* Secondary CTA */}
-              <motion.a
-                href="#how-it-works"
-                onClick={e => { e.preventDefault(); scrollTo('how-it-works'); }}
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 text-white border border-white/20 hover:border-white/40 hover:bg-white/5 transition-colors"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
-              >
-                How It Works
-                <motion.div
-                  animate={{ x: 0 }}
-                  whileHover={{ x: 2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </motion.div>
-              </motion.a>
-            </motion.div>
-          </div>
-
-        </motion.div>
-      </section>
+      </HeroVideoSection>
 
       {/* ===== STATS SHOWCASE ===== */}
       <section aria-label="Key metrics" className="relative px-4 sm:px-6 py-16 md:py-20 border-b border-border overflow-hidden">
@@ -356,54 +337,87 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { value: '30', unit: 'days', label: 'Avg. time to hire', description: 'From intake to deployment', live: true },
-              { value: 'Up to 40', unit: '%', label: 'Cost savings', description: 'vs. equivalent North American hires', live: false },
-              { value: '6', unit: 'hubs', label: 'Countries sourced', description: 'Across five continents', live: false },
-              { value: '24/7', unit: '', label: 'Ops coverage', description: 'Global timezone alignment', live: true },
-            ].map((card, i) => (
+          <InteractiveStatsGrid
+            stats={[
+              {
+                value: 30,
+                label: 'Days to Deploy',
+                description: 'From intake to full team setup',
+                suffix: ' days',
+                icon: <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" /></svg>,
+              },
+              {
+                value: 40,
+                label: 'Cost Savings',
+                description: 'vs. North American hires',
+                suffix: '%',
+                icon: <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>,
+              },
+              {
+                value: 6,
+                label: 'Global Hubs',
+                description: 'Across five continents',
+                icon: <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>,
+              },
+              {
+                value: 24,
+                label: 'Hour Coverage',
+                description: 'Round-the-clock operations',
+                suffix: '/7',
+                icon: <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M13 9h-2v2h2V9zm0 4h-2v2h2v-2zm4-4h-2v2h2V9zm0 4h-2v2h2v-2zM19 3h-1V1h-2v2h-4V1H9v2H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H8V8h11v11z" /></svg>,
+              },
+            ]}
+            columns={4}
+          />
+        </div>
+      </section>
+
+      {/* ===== ANIMATED GLOBE SECTION ===== */}
+      <section aria-label="Global operations visualization" className="relative px-4 sm:px-6 py-20 md:py-28 border-b border-border overflow-hidden section-tint">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-400/10 rounded-full blur-3xl" />
+        </div>
+
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 reveal">
+            <h2 className="text-3xl md:text-4xl font-bold text-text mb-3">
+              Talent across continents
+            </h2>
+            <p className="text-muted text-lg max-w-2xl mx-auto">
+              Six global hubs strategically positioned for 24/7 coverage and timezone optimization.
+            </p>
+          </div>
+
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            <div className="flex-1 reveal">
+              <AnimatedGlobe autoRotate={true} interactive={true} />
+            </div>
+            <div className="flex-1">
               <motion.div
-                key={card.label}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.02 }}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{
-                  duration: 0.6,
-                  delay: i * 0.1,
-                  ease: [0.16, 1, 0.3, 1]
-                }}
-                className="rounded-2xl border border-cyan-400/20 bg-surface backdrop-blur-sm p-6 md:p-8 relative group hover:border-cyan-400/40 transition-colors duration-300"
-                style={{ boxShadow: '0 8px 32px rgba(0, 196, 154, 0.06)' }}
+                transition={{ duration: 0.6 }}
+                className="space-y-6"
               >
-                <div className="absolute -top-8 -right-8 w-24 h-24 bg-cyan-400/8 rounded-full blur-2xl group-hover:bg-cyan-400/12 transition-colors duration-300" />
-
-                <div className="flex items-start gap-3 mb-4">
-                  {card.live && (
-                    <motion.span
-                      className="w-2 h-2 rounded-full bg-cyan-400 flex-shrink-0 mt-1"
-                      animate={{
-                        scale: [1, 1.2, 1],
-                        boxShadow: ['0 0 0 0 rgba(0, 196, 154, 0.4)', '0 0 0 6px rgba(0, 196, 154, 0)', '0 0 0 0 rgba(0, 196, 154, 0)']
-                      }}
-                      transition={{ duration: 2.5, repeat: Infinity }}
-                    />
-                  )}
-                  <span className="text-[10px] uppercase tracking-widest text-muted font-semibold flex-1">
-                    {card.label}
-                  </span>
+                <div>
+                  <h3 className="text-xl font-bold text-text mb-2">Philippines</h3>
+                  <p className="text-muted text-sm">Largest hub with 200+ developers, designers, and support specialists</p>
                 </div>
-
-                <div className="mb-4">
-                  <div className="text-3xl md:text-4xl font-bold mb-1">
-                    <span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">{card.value}</span>
-                    <span className="text-lg md:text-xl text-text opacity-70 ml-2">{card.unit}</span>
-                  </div>
-                  <p className="text-xs text-muted">{card.description}</p>
+                <div>
+                  <h3 className="text-xl font-bold text-text mb-2">Vietnam & Sri Lanka</h3>
+                  <p className="text-muted text-sm">Emerging talent pools with strong engineering and operations expertise</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-text mb-2">Turkey & South Africa</h3>
+                  <p className="text-muted text-sm">Hybrid timezone coverage bridging Asia and North America</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-text mb-2">Costa Rica</h3>
+                  <p className="text-muted text-sm">Americas-based talent for projects requiring same-timezone collaboration</p>
                 </div>
               </motion.div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
@@ -461,63 +475,21 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </p>
           </div>
 
-          {/* Asymmetric 1+2 bento rather than three identical cards in a row:
-              the first (highest-intent) feature gets a wide, horizontal
-              treatment; the other two share a row beneath it. Three equal
-              cards side by side is the single most recognizable templated
-              layout there is, so this trio deliberately isn't one. */}
-          <div className="grid md:grid-cols-2 gap-6 reveal">
+          {/* 3D Service Cards Grid */}
+          <div className="grid md:grid-cols-3 gap-6 reveal">
             {PREMIUM_FEATURES.map((feature, idx) => {
               const Icon = feature.icon;
-              const wide = idx === 0;
               return (
-                <motion.div
+                <ServiceCard3D
                   key={feature.title}
-                  initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  whileHover={shouldReduceMotion ? {} : {
-                    scale: 1.02,
-                    boxShadow: '0 0 24px rgba(0, 196, 154, 0.3), 0 8px 32px rgba(0, 0, 0, 0.1)'
-                  }}
-                  viewport={{ once: true, amount: 0.25 }}
-                  transition={{
-                    duration: shouldReduceMotion ? 0.01 : (wide ? 0.65 : 0.55),
-                    delay: shouldReduceMotion ? 0 : idx * 0.08,
-                    ease: [0.16, 1, 0.3, 1]
-                  }}
-                  className={`bg-white dark:bg-white/5 rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 ${wide ? 'md:col-span-2' : ''}`}
-                  style={{ boxShadow: '0 8px 32px rgba(0, 196, 154, 0.06)' }}
-                  role="link"
-                  tabIndex={0}
-                  onClick={() => navigate(feature.link)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      navigate(feature.link);
-                    }
-                  }}
-                >
-                  <div className={`absolute -top-8 -right-8 w-32 h-32 ${feature.glow} blur-3xl pointer-events-none rounded-full`} />
-                  <div className={wide ? 'flex flex-col md:flex-row md:items-center gap-4 md:gap-8' : 'flex items-start gap-4'}>
-                    <motion.div
-                      whileHover={shouldReduceMotion ? {} : { scale: 1.1 }}
-                      transition={{ duration: 0.2, ease: 'easeOut' }}
-                      className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br ${feature.iconBg} border ${feature.iconBorder} flex items-center justify-center flex-shrink-0`}
-                    >
-                      <Icon className={`w-6 h-6 md:w-8 md:h-8 ${feature.accent}`} />
-                    </motion.div>
-                    <div className="min-w-0 flex-1">
-                      <div className={wide ? 'md:max-w-md' : ''}>
-                        <h3 className={`font-bold text-text mb-2 ${wide ? 'text-2xl' : 'text-xl'}`}>{feature.title}</h3>
-                        <span className={`inline-block text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border ${feature.iconBorder} ${feature.accent} opacity-70 whitespace-nowrap mb-3`}>{feature.metric}</span>
-                        <p className="text-text/60 text-sm leading-relaxed mb-3">{feature.description}</p>
-                        <span className={`inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider ${feature.accent} group-hover:gap-2 transition-all duration-200`}>
-                          Learn more <ChevronRight className="w-3 h-3" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
+                  icon={<Icon className="w-6 h-6" />}
+                  title={feature.title}
+                  description={feature.description}
+                  metric={feature.metric}
+                  accent={feature.accent}
+                  link={feature.link}
+                  index={idx}
+                />
               );
             })}
           </div>
@@ -586,13 +558,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {STEPS.map((step, idx) => (
               <motion.div
                 key={step.number}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 40, rotateY: -10 }}
+                whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+                whileHover={shouldReduceMotion ? {} : { y: -4, scale: 1.02 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{
                   duration: 0.6,
-                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  delay: shouldReduceMotion ? 0 : idx * 0.12,
                   ease: [0.16, 1, 0.3, 1]
                 }}
                 className="relative group"
@@ -667,16 +639,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {CASE_STUDIES.map((study, idx) => (
               <motion.article
                 key={study.client}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 32, rotateX: 10 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                 whileHover={shouldReduceMotion ? {} : {
+                  y: -8,
                   scale: 1.02,
-                  boxShadow: '0 0 24px rgba(0, 196, 154, 0.3), 0 12px 40px rgba(0, 0, 0, 0.15)'
+                  boxShadow: '0 0 24px rgba(0, 196, 154, 0.3), 0 20px 48px rgba(0, 0, 0, 0.15)'
                 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{
                   duration: shouldReduceMotion ? 0.01 : 0.65,
-                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  delay: shouldReduceMotion ? 0 : idx * 0.12,
                   ease: [0.16, 1, 0.3, 1]
                 }}
                 className="rounded-[2rem] border border-border bg-white dark:bg-white/5 overflow-hidden flex flex-col cursor-pointer hover:border-cyan-400/30 transition-colors duration-300"
@@ -700,16 +673,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {TESTIMONIALS.slice(0, 2).map((item, idx) => (
               <motion.blockquote
                 key={item.author + item.role}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 28, rotateY: -8 }}
+                whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
                 whileHover={shouldReduceMotion ? {} : {
+                  y: -6,
                   scale: 1.02,
-                  boxShadow: '0 0 20px rgba(0, 196, 154, 0.2)'
+                  boxShadow: '0 12px 32px rgba(0, 196, 154, 0.15)'
                 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{
                   duration: 0.6,
-                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  delay: shouldReduceMotion ? 0 : idx * 0.15,
                   ease: [0.16, 1, 0.3, 1]
                 }}
                 className="quote-card rounded-2xl border border-border bg-white/[0.02] p-7 md:p-9 cursor-pointer hover:border-cyan-400/30 transition-colors duration-300"
@@ -780,16 +754,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {TALENT_HUBS.map((hub, idx) => (
               <motion.div
                 key={hub.id}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 32, rotateX: 15 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                 whileHover={shouldReduceMotion ? {} : {
+                  y: -8,
                   scale: 1.02,
-                  boxShadow: '0 0 20px rgba(0, 196, 154, 0.25)'
+                  boxShadow: '0 20px 40px rgba(0, 196, 154, 0.2)'
                 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{
                   duration: 0.6,
-                  delay: idx * 0.08,
+                  delay: idx * 0.12,
                   ease: [0.16, 1, 0.3, 1]
                 }}
               >
@@ -1076,7 +1051,7 @@ export default function App() {
         <SEOHead {...seoProps} />
         <AlgorithmMonitor signals={signals} recommendations={recommendations} />
         <div className="bg-background min-h-screen text-text overflow-x-hidden selection:bg-cyan-500/30 transition-colors duration-300">
-          <Preloader />
+          <ScrollProgressBar />
           <Navbar />
           <AnimatePresence>
             {selectedHub && (
