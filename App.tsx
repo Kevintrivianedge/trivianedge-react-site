@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import { AnimatePresence, motion, useReducedMotion, useInView } from 'framer-motion';
+import ScrollProgressBar from './components/ScrollProgressBar';
+import TextReveal from './components/TextReveal';
 import {
   ArrowRight,
   ChevronRight,
@@ -364,13 +366,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             ].map((card, i) => (
               <motion.div
                 key={card.label}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.02 }}
+                initial={{ opacity: 0, y: 32, rotateY: -15 }}
+                whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+                whileHover={{ y: -6, scale: 1.03, boxShadow: '0 24px 48px rgba(0, 196, 154, 0.15)' }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{
                   duration: 0.6,
-                  delay: i * 0.1,
+                  delay: i * 0.12,
                   ease: [0.16, 1, 0.3, 1]
                 }}
                 className="rounded-2xl border border-cyan-400/20 bg-surface backdrop-blur-sm p-6 md:p-8 relative group hover:border-cyan-400/40 transition-colors duration-300"
@@ -472,16 +474,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               return (
                 <motion.div
                   key={feature.title}
-                  initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 40, rotateX: 10 }}
+                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                   whileHover={shouldReduceMotion ? {} : {
+                    y: -12,
                     scale: 1.02,
-                    boxShadow: '0 0 24px rgba(0, 196, 154, 0.3), 0 8px 32px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 0 40px rgba(0, 196, 154, 0.25), 0 16px 48px rgba(0, 0, 0, 0.12)'
                   }}
                   viewport={{ once: true, amount: 0.25 }}
                   transition={{
                     duration: shouldReduceMotion ? 0.01 : (wide ? 0.65 : 0.55),
-                    delay: shouldReduceMotion ? 0 : idx * 0.08,
+                    delay: shouldReduceMotion ? 0 : idx * 0.15,
                     ease: [0.16, 1, 0.3, 1]
                   }}
                   className={`bg-white dark:bg-white/5 rounded-[1.75rem] p-7 md:p-9 border border-border relative overflow-hidden group cursor-pointer hover:border-cyan-400/30 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 ${wide ? 'md:col-span-2' : ''}`}
@@ -585,13 +588,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {STEPS.map((step, idx) => (
               <motion.div
                 key={step.number}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 40, rotateY: -10 }}
+                whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+                whileHover={shouldReduceMotion ? {} : { y: -4, scale: 1.02 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{
                   duration: 0.6,
-                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  delay: shouldReduceMotion ? 0 : idx * 0.12,
                   ease: [0.16, 1, 0.3, 1]
                 }}
                 className="relative group"
@@ -666,16 +669,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {CASE_STUDIES.map((study, idx) => (
               <motion.article
                 key={study.client}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 32, rotateX: 10 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                 whileHover={shouldReduceMotion ? {} : {
+                  y: -8,
                   scale: 1.02,
-                  boxShadow: '0 0 24px rgba(0, 196, 154, 0.3), 0 12px 40px rgba(0, 0, 0, 0.15)'
+                  boxShadow: '0 0 24px rgba(0, 196, 154, 0.3), 0 20px 48px rgba(0, 0, 0, 0.15)'
                 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{
                   duration: shouldReduceMotion ? 0.01 : 0.65,
-                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  delay: shouldReduceMotion ? 0 : idx * 0.12,
                   ease: [0.16, 1, 0.3, 1]
                 }}
                 className="rounded-[2rem] border border-border bg-white dark:bg-white/5 overflow-hidden flex flex-col cursor-pointer hover:border-cyan-400/30 transition-colors duration-300"
@@ -699,16 +703,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {TESTIMONIALS.slice(0, 2).map((item, idx) => (
               <motion.blockquote
                 key={item.author + item.role}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 28, rotateY: -8 }}
+                whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
                 whileHover={shouldReduceMotion ? {} : {
+                  y: -6,
                   scale: 1.02,
-                  boxShadow: '0 0 20px rgba(0, 196, 154, 0.2)'
+                  boxShadow: '0 12px 32px rgba(0, 196, 154, 0.15)'
                 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{
                   duration: 0.6,
-                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  delay: shouldReduceMotion ? 0 : idx * 0.15,
                   ease: [0.16, 1, 0.3, 1]
                 }}
                 className="quote-card rounded-2xl border border-border bg-white/[0.02] p-7 md:p-9 cursor-pointer hover:border-cyan-400/30 transition-colors duration-300"
@@ -779,16 +784,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             {TALENT_HUBS.map((hub, idx) => (
               <motion.div
                 key={hub.id}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 32, rotateX: 15 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                 whileHover={shouldReduceMotion ? {} : {
+                  y: -8,
                   scale: 1.02,
-                  boxShadow: '0 0 20px rgba(0, 196, 154, 0.25)'
+                  boxShadow: '0 20px 40px rgba(0, 196, 154, 0.2)'
                 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{
                   duration: 0.6,
-                  delay: idx * 0.08,
+                  delay: idx * 0.12,
                   ease: [0.16, 1, 0.3, 1]
                 }}
               >
@@ -1075,6 +1081,7 @@ export default function App() {
         <SEOHead {...seoProps} />
         <AlgorithmMonitor signals={signals} recommendations={recommendations} />
         <div className="bg-background min-h-screen text-text overflow-x-hidden selection:bg-cyan-500/30 transition-colors duration-300">
+          <ScrollProgressBar />
           <Navbar />
           <AnimatePresence>
             {selectedHub && (
