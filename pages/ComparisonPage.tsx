@@ -102,7 +102,11 @@ const ComparisonPage: React.FC = () => {
               </thead>
               <tbody>
                 {comparison.rows.map((row, idx) => (
-                  <tr key={row.factor} className={idx % 2 === 0 ? '' : 'bg-surface/40'}>
+                  <tr
+                    key={row.factor}
+                    className={`reveal ${idx % 2 === 0 ? '' : 'bg-surface/40'}`}
+                    style={{ transitionDelay: `${Math.min(idx, 8) * 60}ms` }}
+                  >
                     <td className="p-5 font-semibold text-text align-top whitespace-nowrap">{row.factor}</td>
                     <td className="p-5 text-muted align-top">{row.a}</td>
                     <td className="p-5 text-muted align-top">{row.b}</td>
