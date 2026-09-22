@@ -17,7 +17,6 @@ import { CASE_STUDIES, TESTIMONIALS } from './constants/proof';
 import { TalentHub } from './types';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { GeoProvider } from './contexts/GeoContext';
-import Preloader from './components/Preloader';
 import { ThemeProvider } from './contexts/ThemeContext';
 import SEOHead from './components/SEOHead';
 import AlgorithmMonitor from './components/AlgorithmMonitor';
@@ -1076,7 +1075,6 @@ export default function App() {
         <SEOHead {...seoProps} />
         <AlgorithmMonitor signals={signals} recommendations={recommendations} />
         <div className="bg-background min-h-screen text-text overflow-x-hidden selection:bg-cyan-500/30 transition-colors duration-300">
-          <Preloader />
           <Navbar />
           <AnimatePresence>
             {selectedHub && (
