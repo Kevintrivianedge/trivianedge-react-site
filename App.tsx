@@ -55,7 +55,6 @@ import HeroNetworkVisual from './components/HeroNetworkVisual';
 import HeroVideoSection from './components/HeroVideoSection';
 import ServiceCard3D from './components/ServiceCard3D';
 import PageTransition from './components/PageTransition';
-import AnimatedGlobe from './components/AnimatedGlobe';
 import RealtimeDashboard from './components/RealtimeDashboard';
 import BenefitsVisualization from './components/BenefitsVisualization';
 import AIChatNotification from './components/AIChatNotification';
@@ -392,44 +391,31 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
 
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 reveal">
+          <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-3">
               Talent across continents
             </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto">
+            <p className="text-muted text-lg max-w-2xl mx-auto mb-12">
               Six global hubs strategically positioned for 24/7 coverage and timezone optimization.
             </p>
           </div>
 
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="flex-1 reveal">
-              <AnimatedGlobe autoRotate={true} interactive={true} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="p-6 rounded-lg bg-white/5 border border-border">
+              <h3 className="text-lg font-bold text-text mb-2">Philippines</h3>
+              <p className="text-muted text-sm">Largest hub with 200+ developers, designers, and support specialists</p>
             </div>
-            <div className="flex-1">
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.6 }}
-                className="space-y-6"
-              >
-                <div>
-                  <h3 className="text-xl font-bold text-text mb-2">Philippines</h3>
-                  <p className="text-muted text-sm">Largest hub with 200+ developers, designers, and support specialists</p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-text mb-2">Vietnam & Sri Lanka</h3>
-                  <p className="text-muted text-sm">Emerging talent pools with strong engineering and operations expertise</p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-text mb-2">Turkey & South Africa</h3>
-                  <p className="text-muted text-sm">Hybrid timezone coverage bridging Asia and North America</p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-text mb-2">Costa Rica</h3>
-                  <p className="text-muted text-sm">Americas-based talent for projects requiring same-timezone collaboration</p>
-                </div>
-              </motion.div>
+            <div className="p-6 rounded-lg bg-white/5 border border-border">
+              <h3 className="text-lg font-bold text-text mb-2">Vietnam & Sri Lanka</h3>
+              <p className="text-muted text-sm">Emerging talent pools with strong engineering and operations expertise</p>
+            </div>
+            <div className="p-6 rounded-lg bg-white/5 border border-border">
+              <h3 className="text-lg font-bold text-text mb-2">Turkey & South Africa</h3>
+              <p className="text-muted text-sm">Hybrid timezone coverage bridging Asia and North America</p>
+            </div>
+            <div className="p-6 rounded-lg bg-white/5 border border-border">
+              <h3 className="text-lg font-bold text-text mb-2">Costa Rica</h3>
+              <p className="text-muted text-sm">Americas-based talent for projects requiring same-timezone collaboration</p>
             </div>
           </div>
         </div>
