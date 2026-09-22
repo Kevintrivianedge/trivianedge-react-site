@@ -68,8 +68,6 @@ import MobileGestureWrapper from './components/MobileGestureWrapper';
 import MultiLayerParallax from './components/MultiLayerParallax';
 import EnhancedVideoHero from './components/EnhancedVideoHero';
 import LiveMetricsStream from './components/LiveMetricsStream';
-import SocialProofNotification from './components/SocialProofNotification';
-import TestimonialsSection from './components/TestimonialsSection';
 
 // Lazy-load route-level pages and heavy below-fold interactive modules.
 // This splits each into its own chunk so the main bundle only contains
@@ -459,9 +457,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           <BenefitsVisualization />
         </div>
       </section>
-
-      {/* ===== PHASE 7: AI TESTIMONIALS SECTION ===== */}
-      <TestimonialsSection />
 
       {/* ===== ACT 2: TRUST STRIP ===== */}
       <section aria-label="Trust signals" className="py-8 md:py-10 border-y border-border bg-[#fafafa] dark:bg-white/[0.03] overflow-hidden">
@@ -1227,7 +1222,6 @@ export default function App() {
           <ScrollProgressBar />
           <Navbar />
           <AIChatNotification />
-          <SocialProofNotification />
           <AnimatePresence>
             {selectedHub && (
               <ErrorBoundary fallback={null}>
