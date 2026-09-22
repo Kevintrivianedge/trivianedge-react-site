@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
+import AnimatedCounter from '../components/AnimatedCounter';
 import {
   Calculator,
   TrendingDown,
@@ -230,15 +231,31 @@ const SavingsCalculatorPage: React.FC = () => {
               aria-live="polite"
               className="rounded-[2rem] p-6 md:p-10 text-center relative overflow-hidden section-dark"
             >
-              <p className="text-xs font-bold tracking-[0.25em] uppercase text-cyan-400 mb-4">Estimated result</p>
-              <p className="text-white/60 text-sm mb-2">You could save</p>
-              <p className="text-4xl md:text-6xl font-bold text-white mb-2">
-                {formatCurrency(annualSavings)}
-                <span className="text-lg md:text-2xl text-white/50 font-medium"> / year</span>
-              </p>
-              <p className="text-white/50 text-sm mb-8">
-                {formatCurrency(threeYearSavings)} over 3 years, offshore cost estimate {formatCurrency(offshoreCost)}/yr vs. {formatCurrency(annualCost)}/yr today.
-              </p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.6 }}
+              >
+                <p className="text-xs font-bold tracking-[0.25em] uppercase text-cyan-400 mb-4">Estimated result</p>
+                <p className="text-white/60 text-sm mb-2">You could save</p>
+                <p className="text-4xl md:text-6xl font-bold text-white mb-2">
+                  <AnimatedCounter
+                    value={annualSavings}
+                    duration={2.5}
+                    prefix="$"
+                  />
+                  <span className="text-lg md:text-2xl text-white/50 font-medium"> / year</span>
+                </p>
+                <p className="text-white/50 text-sm mb-8">
+                  <AnimatedCounter
+                    value={threeYearSavings}
+                    duration={2.5}
+                    prefix="$"
+                  />
+                  {' '}over 3 years, offshore cost estimate {formatCurrency(offshoreCost)}/yr vs. {formatCurrency(annualCost)}/yr today.
+                </p>
+              </motion.div>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button

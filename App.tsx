@@ -2,6 +2,9 @@ import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import { AnimatePresence, motion, useReducedMotion, useInView } from 'framer-motion';
 import ScrollProgressBar from './components/ScrollProgressBar';
 import TextReveal from './components/TextReveal';
+import AnimatedCounter from './components/AnimatedCounter';
+import InteractiveStatsGrid from './components/InteractiveStatsGrid';
+import InteractiveServiceCard from './components/InteractiveServiceCard';
 import {
   ArrowRight,
   ChevronRight,
@@ -357,55 +360,38 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { value: '30', unit: 'days', label: 'Avg. time to hire', description: 'From intake to deployment', live: true },
-              { value: 'Up to 40', unit: '%', label: 'Cost savings', description: 'vs. equivalent North American hires', live: false },
-              { value: '6', unit: 'hubs', label: 'Countries sourced', description: 'Across five continents', live: false },
-              { value: '24/7', unit: '', label: 'Ops coverage', description: 'Global timezone alignment', live: true },
-            ].map((card, i) => (
-              <motion.div
-                key={card.label}
-                initial={{ opacity: 0, y: 32, rotateY: -15 }}
-                whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
-                whileHover={{ y: -6, scale: 1.03, boxShadow: '0 24px 48px rgba(0, 196, 154, 0.15)' }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{
-                  duration: 0.6,
-                  delay: i * 0.12,
-                  ease: [0.16, 1, 0.3, 1]
-                }}
-                className="rounded-2xl border border-cyan-400/20 bg-surface backdrop-blur-sm p-6 md:p-8 relative group hover:border-cyan-400/40 transition-colors duration-300"
-                style={{ boxShadow: '0 8px 32px rgba(0, 196, 154, 0.06)' }}
-              >
-                <div className="absolute -top-8 -right-8 w-24 h-24 bg-cyan-400/8 rounded-full blur-2xl group-hover:bg-cyan-400/12 transition-colors duration-300" />
-
-                <div className="flex items-start gap-3 mb-4">
-                  {card.live && (
-                    <motion.span
-                      className="w-2 h-2 rounded-full bg-cyan-400 flex-shrink-0 mt-1"
-                      animate={{
-                        scale: [1, 1.2, 1],
-                        boxShadow: ['0 0 0 0 rgba(0, 196, 154, 0.4)', '0 0 0 6px rgba(0, 196, 154, 0)', '0 0 0 0 rgba(0, 196, 154, 0)']
-                      }}
-                      transition={{ duration: 2.5, repeat: Infinity }}
-                    />
-                  )}
-                  <span className="text-[10px] uppercase tracking-widest text-muted font-semibold flex-1">
-                    {card.label}
-                  </span>
-                </div>
-
-                <div className="mb-4">
-                  <div className="text-3xl md:text-4xl font-bold mb-1">
-                    <span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">{card.value}</span>
-                    <span className="text-lg md:text-xl text-text opacity-70 ml-2">{card.unit}</span>
-                  </div>
-                  <p className="text-xs text-muted">{card.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <InteractiveStatsGrid
+            stats={[
+              {
+                value: 30,
+                label: 'Days to Deploy',
+                description: 'From intake to full team setup',
+                suffix: ' days',
+                icon: <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" /></svg>,
+              },
+              {
+                value: 40,
+                label: 'Cost Savings',
+                description: 'vs. North American hires',
+                suffix: '%',
+                icon: <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>,
+              },
+              {
+                value: 6,
+                label: 'Global Hubs',
+                description: 'Across five continents',
+                icon: <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>,
+              },
+              {
+                value: 24,
+                label: 'Hour Coverage',
+                description: 'Round-the-clock operations',
+                suffix: '/7',
+                icon: <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M13 9h-2v2h2V9zm0 4h-2v2h2v-2zm4-4h-2v2h2V9zm0 4h-2v2h2v-2zM19 3h-1V1h-2v2h-4V1H9v2H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H8V8h11v11z" /></svg>,
+              },
+            ]}
+            columns={4}
+          />
         </div>
       </section>
 

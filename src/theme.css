@@ -886,6 +886,79 @@
             animation: count-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
+        /* --- Interactive carousel animations --- */
+        @keyframes carousel-slide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .carousel-item {
+            animation: carousel-slide 0.5s ease-out forwards;
+        }
+
+        /* --- Comparison slider animations --- */
+        @keyframes slider-pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(0, 196, 154, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 0 6px rgba(0, 196, 154, 0);
+            }
+        }
+
+        .slider-handle {
+            animation: slider-pulse 2s infinite;
+        }
+
+        /* --- Interactive card expand animation --- */
+        @keyframes expand-smooth {
+            0% {
+                opacity: 0;
+                max-height: 0;
+            }
+            100% {
+                opacity: 1;
+                max-height: 500px;
+            }
+        }
+
+        .expand-content {
+            animation: expand-smooth 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* --- Benefit list dot animation --- */
+        @keyframes dot-pulse {
+            0%, 100% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        .benefit-dot {
+            animation: dot-pulse 2s ease-in-out infinite;
+        }
+
+        /* --- Grid column helper for Tailwind --- */
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+        @media (max-width: 768px) {
+            .grid-cols-4 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+            .grid-cols-3 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        }
+
         /* --- Shimmer skeleton loader --- */
         @keyframes shimmer {
             0% { background-position: -200% 0; }
