@@ -1094,6 +1094,7 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 //   - Microsoft Clarity (analytics + session replay)
 //   - ipapi.co (geolocation)
 //   - Open-Meteo (weather)
+//   - Trustpilot (TrustBox review-collector widget on the Trust page)
 //   - Anthropic API (proxied through the worker, never called from browser)
 // CookieYes was removed (see src/cookieConsent.ts) in favour of a self-hosted,
 // open-source consent banner (vanilla-cookieconsent) that ships as part of
@@ -1104,8 +1105,9 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 // ---------------------------------------------------------------------------
 const CSP_HEADER =
   "default-src 'self'; " +
-  "script-src 'self' https://www.googletagmanager.com https://connect.facebook.net https://static.cloudflareinsights.com https://*.clarity.ms; " +
-  "connect-src 'self' https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com https://*.clarity.ms; " +
+  "script-src 'self' https://www.googletagmanager.com https://connect.facebook.net https://static.cloudflareinsights.com https://*.clarity.ms https://widget.trustpilot.com; " +
+  "connect-src 'self' https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com https://*.clarity.ms https://widget.trustpilot.com; " +
+  "frame-src https://widget.trustpilot.com; " +
   "img-src 'self' data: https:; " +
   "font-src 'self' https://fonts.gstatic.com; " +
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +

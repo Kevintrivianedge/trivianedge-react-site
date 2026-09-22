@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, ShieldCheck, Lock, Server, Bot, Scale } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import TrustpilotWidget from '../components/TrustpilotWidget';
 import { TRUST_PILLARS } from '../constants/proof';
 import { breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
 
@@ -65,6 +66,14 @@ const TrustPage: React.FC = () => {
                 </section>
               );
             })}
+          </div>
+
+          <div className="glass p-8 rounded-[2rem] border-border mb-16 reveal">
+            <h2 className="text-2xl font-bold mb-2">Worked with us? Leave a review.</h2>
+            <p className="text-muted text-sm mb-6">
+              We use Trustpilot for independently verified client feedback rather than curating quotes ourselves.
+            </p>
+            <TrustpilotWidget />
           </div>
 
           <div className="glass p-8 md:p-10 rounded-[2rem] border-border flex flex-col md:flex-row md:items-center md:justify-between gap-6 reveal">
