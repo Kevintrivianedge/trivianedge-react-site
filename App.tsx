@@ -238,7 +238,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       {/* ===== ACT 1: HERO ===== */}
       <HeroVideoSection
         videoSrc={undefined}
-        fallbackImageSrc={undefined}
+        fallbackImageSrc="/hero-global-ops.svg"
       >
         <div className="flex-1 min-w-0 max-w-[760px]">
           {/* EYEBROW — Operator positioning */}
