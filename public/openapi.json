@@ -1,0 +1,36 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "TrivianEdge Public API",
+    "version": "1.0.0",
+    "description": "Public, unauthenticated endpoints of www.trivianedge.com. The site's form and chat endpoints are same-origin, CSRF-protected backends for the website itself and are intentionally not part of this public API."
+  },
+  "servers": [{ "url": "https://www.trivianedge.com" }],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Service health check",
+        "responses": {
+          "200": {
+            "description": "The API is operational.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "timestamp"],
+                  "properties": {
+                    "status": { "type": "string", "enum": ["ok"] },
+                    "timestamp": { "type": "integer", "description": "Unix epoch milliseconds." },
+                    "anthropic_key_set": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          },
+          "429": { "description": "Rate limit exceeded." }
+        }
+      }
+    }
+  }
+}

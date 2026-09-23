@@ -16,6 +16,8 @@ export interface Env {
   ASSETS?: Fetcher; // optional so missing binding won't crash
 }
 
+import { negotiateMarkdown } from './markdown';
+
 const ANTHROPIC_API_BASE = 'https://api.anthropic.com/v1/messages';
 const ANTHROPIC_VERSION = '2023-06-01';
 const ANTHROPIC_DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
@@ -1162,6 +1164,14 @@ function cacheControlFor(pathname: string): string {
   return 'public, no-cache';
 }
 
+// RFC 8288 / RFC 9727 §3 agent-discovery links, sent on the homepage.
+const HOMEPAGE_LINK_HEADER = [
+  '</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
+  '</openapi.json>; rel="service-desc"; type="application/vnd.oai.openapi+json"',
+  '</api-docs.md>; rel="service-doc"; type="text/markdown"',
+  '</llms.txt>; rel="describedby"; type="text/plain"',
+].join(', ');
+
 /** Attach CSP, security headers, and a corrected Cache-Control to a static-asset response. */
 function addSecurityHeaders(response: Response, pathname: string, statusOverride?: number): Response {
   const headers = new Headers(response.headers);
@@ -1170,6 +1180,7 @@ function addSecurityHeaders(response: Response, pathname: string, statusOverride
     headers.set(key, value);
   }
   headers.set('Cache-Control', cacheControlFor(pathname));
+  if (pathname === '/' || pathname === '/index.html') headers.set('Link', HOMEPAGE_LINK_HEADER);
   return new Response(response.body, { status: statusOverride ?? response.status, headers });
 }
 
@@ -1220,6 +1231,31 @@ export default {
       const target = new URL(request.url);
       target.pathname = LEGACY_REDIRECTS[url.pathname];
       return Response.redirect(target.toString(), 301);
+    }
+
+    // RFC 9727 API catalog: machine-discoverable index of the public API.
+    // Served from the Worker (not a static file) to guarantee the
+    // application/linkset+json media type the RFC requires.
+    if (url.pathname === '/.well-known/api-catalog' && (request.method === 'GET' || request.method === 'HEAD')) {
+      const base = 'https://www.trivianedge.com';
+      const catalog = {
+        linkset: [
+          {
+            anchor: `${base}/api`,
+            'service-desc': [{ href: `${base}/openapi.json`, type: 'application/vnd.oai.openapi+json' }],
+            'service-doc': [{ href: `${base}/api-docs.md`, type: 'text/markdown' }],
+            status: [{ href: `${base}/api/health`, type: 'application/json' }],
+          },
+        ],
+      };
+      return new Response(request.method === 'HEAD' ? null : JSON.stringify(catalog, null, 2), {
+        headers: {
+          'Content-Type': 'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
+          'Cache-Control': 'public, max-age=3600',
+          'Access-Control-Allow-Origin': '*',
+          'X-Content-Type-Options': 'nosniff',
+        },
+      });
     }
 
     // ALL /api/* routes, rate-limited and CORS-gated in one place
@@ -1297,7 +1333,7 @@ export default {
           new Request(new URL(snapshotPath, request.url).toString()),
         );
         if (snapshotResponse.status !== 404) {
-          return addSecurityHeaders(snapshotResponse, url.pathname);
+          return negotiateMarkdown(request, addSecurityHeaders(snapshotResponse, url.pathname));
         }
 
         // Neither a real asset nor a prerendered snapshot exists for this path, so
@@ -1311,9 +1347,9 @@ export default {
         // (correctly 404) signaling otherwise. Real users still get the
         // client-rendered NotFoundPage either way once JS hydrates.
         const notFoundSnapshotRequest = new Request(new URL('/__404-snapshot/index.html', request.url).toString());
-        return addSecurityHeaders(await env.ASSETS.fetch(notFoundSnapshotRequest), url.pathname, 404);
+        return negotiateMarkdown(request, addSecurityHeaders(await env.ASSETS.fetch(notFoundSnapshotRequest), url.pathname, 404));
       }
-      return addSecurityHeaders(assetResponse, url.pathname);
+      return negotiateMarkdown(request, addSecurityHeaders(assetResponse, url.pathname));
     }
 
     return new Response('Not found', { status: 404 });
