@@ -384,43 +384,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      {/* ===== ANIMATED GLOBE SECTION ===== */}
-      <section aria-label="Global operations visualization" className="relative px-4 sm:px-6 py-20 md:py-28 border-b border-border overflow-hidden section-tint">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-400/10 rounded-full blur-3xl" />
-        </div>
-
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-text mb-3">
-              Talent across continents
-            </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto mb-12">
-              Six global hubs strategically positioned for 24/7 coverage and timezone optimization.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-6 rounded-lg bg-white/5 border border-border">
-              <h3 className="text-lg font-bold text-text mb-2">Philippines</h3>
-              <p className="text-muted text-sm">Largest hub with 200+ developers, designers, and support specialists</p>
-            </div>
-            <div className="p-6 rounded-lg bg-white/5 border border-border">
-              <h3 className="text-lg font-bold text-text mb-2">Vietnam & Sri Lanka</h3>
-              <p className="text-muted text-sm">Emerging talent pools with strong engineering and operations expertise</p>
-            </div>
-            <div className="p-6 rounded-lg bg-white/5 border border-border">
-              <h3 className="text-lg font-bold text-text mb-2">Turkey & South Africa</h3>
-              <p className="text-muted text-sm">Hybrid timezone coverage bridging Asia and North America</p>
-            </div>
-            <div className="p-6 rounded-lg bg-white/5 border border-border">
-              <h3 className="text-lg font-bold text-text mb-2">Costa Rica</h3>
-              <p className="text-muted text-sm">Americas-based talent for projects requiring same-timezone collaboration</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ===== REAL-TIME DASHBOARD SECTION ===== */}
       <section aria-label="Real-time operations dashboard" className="relative px-4 sm:px-6 py-20 md:py-28 border-b border-border overflow-hidden">
         <div className="absolute inset-0 -z-10">
