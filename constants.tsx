@@ -269,7 +269,7 @@ export const STEPS: Step[] = [
   },
   {
     number: "03",
-    title: "They Start in 30 Days",
+    title: "They Start in ~30 Days",
     description: "We onboard your new team member and make sure they fit right into your existing workflow. Day one feels like they have been there for months.",
     icon: <Zap className="w-6 h-6 text-cyan-400" />
   },

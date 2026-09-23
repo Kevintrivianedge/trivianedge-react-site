@@ -353,8 +353,9 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             stats={[
               {
                 value: 30,
-                label: 'Days to Deploy',
+                label: 'Avg. Days to Deploy',
                 description: 'From intake to full team setup',
+                prefix: '~',
                 suffix: ' days',
                 icon: <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" /></svg>,
               },
@@ -381,43 +382,6 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             ]}
             columns={4}
           />
-        </div>
-      </section>
-
-      {/* ===== ANIMATED GLOBE SECTION ===== */}
-      <section aria-label="Global operations visualization" className="relative px-4 sm:px-6 py-20 md:py-28 border-b border-border overflow-hidden section-tint">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-400/10 rounded-full blur-3xl" />
-        </div>
-
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-text mb-3">
-              Talent across continents
-            </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto mb-12">
-              Six global hubs strategically positioned for 24/7 coverage and timezone optimization.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-6 rounded-lg bg-white/5 border border-border">
-              <h3 className="text-lg font-bold text-text mb-2">Philippines</h3>
-              <p className="text-muted text-sm">Largest hub with 200+ developers, designers, and support specialists</p>
-            </div>
-            <div className="p-6 rounded-lg bg-white/5 border border-border">
-              <h3 className="text-lg font-bold text-text mb-2">Vietnam & Sri Lanka</h3>
-              <p className="text-muted text-sm">Emerging talent pools with strong engineering and operations expertise</p>
-            </div>
-            <div className="p-6 rounded-lg bg-white/5 border border-border">
-              <h3 className="text-lg font-bold text-text mb-2">Turkey & South Africa</h3>
-              <p className="text-muted text-sm">Hybrid timezone coverage bridging Asia and North America</p>
-            </div>
-            <div className="p-6 rounded-lg bg-white/5 border border-border">
-              <h3 className="text-lg font-bold text-text mb-2">Costa Rica</h3>
-              <p className="text-muted text-sm">Americas-based talent for projects requiring same-timezone collaboration</p>
-            </div>
-          </div>
         </div>
       </section>
 
