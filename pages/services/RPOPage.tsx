@@ -101,7 +101,7 @@ const RPO_MODELS = [
 ];
 
 const STATS = [
-  { value: '30 Days', label: 'Deployment' },
+  { value: '~30 Days', label: 'Avg. Deployment' },
   { value: 'Up to 40%', label: 'Cost Reduction' },
   { value: '6', label: 'Time Zones' },
   { value: '100%', label: 'Embedded' },
@@ -339,7 +339,7 @@ const RPOPage: React.FC = () => {
         <section className="py-24 px-4 md:px-6">
           <div className="max-w-2xl mx-auto text-center reveal">
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
-              Start Hiring in 30 Days
+              Start Hiring in ~30 Days
             </h2>
             <p className="text-muted mb-8">
               Embedded talent acquisition with up to 40% lower cost-per-hire.

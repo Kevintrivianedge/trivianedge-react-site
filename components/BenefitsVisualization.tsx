@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, Clock, Shield, Users } from 'lucide-react';
+import { TrendingDown, Server, Shield } from 'lucide-react';
 
 interface BenefitCircle {
   label: string;
@@ -13,18 +13,18 @@ interface BenefitCircle {
 export const BenefitsVisualization: React.FC = () => {
   const benefits: BenefitCircle[] = [
     {
-      label: 'Cost Savings',
-      percentage: 40,
-      icon: <TrendingUp className="w-6 h-6" />,
+      label: 'Admin Overhead Reduced',
+      percentage: 30,
+      icon: <TrendingDown className="w-6 h-6" />,
       color: 'from-emerald-400 to-emerald-600',
-      description: 'Average savings vs. local hiring',
+      description: 'Average cut in back-office and admin costs',
     },
     {
-      label: 'Time to Deploy',
-      percentage: 30,
-      icon: <Clock className="w-6 h-6" />,
+      label: 'Infrastructure Uptime',
+      percentage: 99.99,
+      icon: <Server className="w-6 h-6" />,
       color: 'from-cyan-400 to-cyan-600',
-      description: 'Days from intake to live team',
+      description: 'Monitored and maintained around the clock',
     },
     {
       label: 'Compliance Handled',
@@ -32,13 +32,6 @@ export const BenefitsVisualization: React.FC = () => {
       icon: <Shield className="w-6 h-6" />,
       color: 'from-amber-400 to-amber-600',
       description: 'End-to-end legal & payroll',
-    },
-    {
-      label: 'Global Coverage',
-      percentage: 24,
-      icon: <Users className="w-6 h-6" />,
-      color: 'from-rose-400 to-rose-600',
-      description: 'Hour availability across zones',
     },
   ];
 
@@ -56,13 +49,13 @@ export const BenefitsVisualization: React.FC = () => {
             Why Companies Choose TrivianEdge
           </h3>
           <p className="text-muted text-lg max-w-2xl mx-auto">
-            Measurable impact on cost, speed, compliance, and operations.
+            Measurable impact on cost, reliability, and compliance.
           </p>
         </motion.div>
       </div>
 
       {/* Circular Progress Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6">
+      <div className="grid md:grid-cols-3 gap-8 md:gap-6">
         {benefits.map((benefit, idx) => (
           <motion.div
             key={benefit.label}

@@ -63,7 +63,7 @@ const INCLUDED = [
 ];
 
 const STATS = [
-  { value: '30 Days', label: 'To Deployed Team' },
+  { value: '~30 Days', label: 'Avg. To Deployed Team' },
   { value: 'Up to 40%', label: 'Cost Reduction' },
   { value: '6', label: 'Sourcing Countries' },
   { value: '100%', label: 'IP Ownership' },
