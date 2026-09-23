@@ -165,34 +165,6 @@ export const BenefitsVisualization: React.FC = () => {
           </motion.div>
         ))}
       </div>
-
-      {/* Bottom stat bar */}
-      <motion.div
-        className="mt-16 glass rounded-2xl p-8 border border-border"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.6 }}
-      >
-        <div className="grid md:grid-cols-3 gap-6 text-center">
-          {[
-            { stat: '47+', label: 'Active Clients' },
-            { stat: '312', label: 'Team Members Deployed' },
-            { stat: '6', label: 'Global Talent Hubs' },
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6 + idx * 0.1 }}
-            >
-              <p className="text-3xl font-bold text-cyan-400 mb-1">{item.stat}</p>
-              <p className="text-muted text-sm">{item.label}</p>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
     </div>
   );
 };
