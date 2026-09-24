@@ -27,7 +27,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 const SectionHead: React.FC<{ label: string; title: React.ReactNode; intro?: string; dark?: boolean }> = ({ label, title, intro, dark }) => (
   <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 mb-12 md:mb-16">
-    <p className={`lg:col-span-3 text-[11px] font-bold uppercase tracking-[0.25em] pt-3 ${dark ? 'text-cyan-400' : 'text-cyan-600 dark:text-cyan-400'}`}>
+    <p className={`lg:col-span-3 text-[11px] font-bold uppercase tracking-[0.25em] pt-3 ${dark ? 'text-cyan-400' : 'text-cyan-700 dark:text-cyan-400'}`}>
       {label}
     </p>
     <div className="lg:col-span-9">
@@ -39,11 +39,6 @@ const SectionHead: React.FC<{ label: string; title: React.ReactNode; intro?: str
 
 const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = ({ setSelectedHub }) => {
   const reduceMotion = useReducedMotion();
-  const rise = (delay = 0) => ({
-    initial: { opacity: 0, y: reduceMotion ? 0 : 24 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.8, delay, ease: EASE },
-  });
   const reveal = {
     initial: { opacity: 0, y: reduceMotion ? 0 : 24 },
     whileInView: { opacity: 1, y: 0 },
@@ -69,7 +64,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-6 items-center">
           <div className="lg:col-span-7">
             {MICROSOFT_PARTNER.enabled && (
-              <motion.div {...rise(0)} className="mb-8">
+              <div className="mb-8">
                 <Link
                   to={`/services#${MICROSOFT_PARTNER.anchor}`}
                   className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-white/70 backdrop-blur transition-colors hover:border-white/30 hover:text-white"
@@ -78,20 +73,20 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   {partnerBadgeLabel()}
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
                 </Link>
-              </motion.div>
+              </div>
             )}
 
-            <motion.h1 {...rise(0.1)} className="display-hero font-semibold text-white">
+            <h1 className="display-hero font-semibold text-white">
               Cloud, AI, and global teams.{' '}
               <span className="text-white/45">One partner runs all three.</span>
-            </motion.h1>
+            </h1>
 
-            <motion.p {...rise(0.25)} className="mt-8 text-lg md:text-xl text-white/65 max-w-xl leading-relaxed">
+            <p className="mt-8 text-lg md:text-xl text-white/65 max-w-xl leading-relaxed">
               TrivianEdge is a Toronto-based technology partner. We migrate and manage Microsoft and Google cloud, build AI and
               custom software, and staff offshore teams from six talent hubs.
-            </motion.p>
+            </p>
 
-            <motion.div {...rise(0.4)} className="mt-10 flex flex-col sm:flex-row gap-3">
+            <div className="mt-10 flex flex-col sm:flex-row gap-3">
               <a
                 href={BOOKING_URL}
                 target="_blank"
@@ -107,7 +102,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               >
                 What we do
               </a>
-            </motion.div>
+            </div>
           </div>
 
           <div className="lg:col-span-5 relative aspect-square w-full max-w-[560px] mx-auto">
@@ -150,7 +145,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                     </Link>
                   </h3>
                   <p className="mt-4 text-muted leading-relaxed max-w-md">{p.answer}</p>
-                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-cyan-600 dark:text-cyan-400">
+                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-cyan-700 dark:text-cyan-400">
                     {p.cta}
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
                   </span>
@@ -177,14 +172,14 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   <button
                     type="button"
                     onClick={() => setSelectedHub(hub)}
-                    className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:border-cyan-400 hover:text-cyan-600 dark:hover:text-cyan-400"
+                    className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:border-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-400"
                   >
                     {hub.country}
                   </button>
                 </li>
               ))}
             </ul>
-            <Link to="/savings-calculator" className="md:ml-auto text-sm font-bold text-cyan-600 dark:text-cyan-400 hover:underline underline-offset-4">
+            <Link to="/savings-calculator" className="md:ml-auto text-sm font-bold text-cyan-700 dark:text-cyan-400 hover:underline underline-offset-4">
               Estimate your savings →
             </Link>
           </motion.div>
@@ -235,7 +230,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           <ol className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
             {STEPS.map(step => (
               <motion.li key={step.number} {...reveal} className="border-t border-text/80 pt-6">
-                <span className="[font-family:var(--font-display)] text-5xl font-light text-cyan-600 dark:text-cyan-400 tabular-nums">{step.number}</span>
+                <span className="[font-family:var(--font-display)] text-5xl font-light text-cyan-700 dark:text-cyan-400 tabular-nums">{step.number}</span>
                 <h3 className="mt-5 text-lg font-semibold text-text">{step.title}</h3>
                 <p className="mt-3 text-sm text-muted leading-relaxed">{step.description}</p>
               </motion.li>
@@ -248,10 +243,10 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section id="faq" aria-labelledby="faq-heading" className="section-tint section-shell px-4 md:px-6 border-t border-border">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-4 lg:sticky lg:top-28 self-start">
-            <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-cyan-600 dark:text-cyan-400">FAQ</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-cyan-700 dark:text-cyan-400">FAQ</p>
             <h2 id="faq-heading" className="display-section font-semibold text-text mt-4">Straight answers.</h2>
             <p className="mt-5 text-muted leading-relaxed">
-              Not covered here? <Link to="/contact" className="text-text underline underline-offset-4 hover:text-cyan-600">Ask us directly</Link>.
+              Not covered here? <Link to="/contact" className="text-text underline underline-offset-4 hover:text-cyan-700">Ask us directly</Link>.
             </p>
           </div>
           <div className="lg:col-span-8">

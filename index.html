@@ -131,44 +131,7 @@
          requestIdleCallback the same way as GA4 and Amplitude below, instead
          of running eagerly here at head-parse time. -->
 
-    <!-- Pre-boot scrim: a plain, undecorated cover -- deliberately NOT a
-         branded splash/intro screen. Competitor research (BPO/offshore
-         peers TaskUs/Toptal/Remote.com, agency peers Netguru/Fireart,
-         SaaS/Awwwards-tier peers Linear/Ramp/Vercel/Attio) turned up zero
-         sites using a full-screen loading gate -- all of them paint straight
-         into real content, premium look coming from the content itself
-         (video hero, entrance micro-animation), never a screen the visitor
-         has to wait out. A branded splash here would make TrivianEdge the
-         outlier for no benefit.
-         What this covers instead: src/worker.ts serves every route as a
-         prerendered snapshot (scripts/prerender.mjs), so #root already has
-         real content on arrival -- the "static"/unstyled flash is that
-         content briefly painting before the main CSS bundle and Google
-         Fonts swap on from media="print" (see critical-loader.js). This
-         scrim just matches the background color so that brief gap reads as
-         nothing (not as a loading screen), then fades out fast the moment
-         styles are ready. Genuinely inline (not the deferred stylesheet),
-         so it paints on first parse with no dependency on anything else
-         loading. index.tsx removes it once the deferred stylesheets are
-         active; the <noscript> rule guards visitors who never run that
-         removal script. -->
-    <style>
-        #preboot-splash {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: #ffffff;
-            opacity: 1;
-            transition: opacity 0.15s ease;
-        }
-        #preboot-splash.preboot-splash-hide {
-            opacity: 0;
-            pointer-events: none;
-        }
-        @media (prefers-color-scheme: dark) {
-            #preboot-splash { background: #020203; }
-        }
-    </style>
+    
 </head>
 <body>
     <noscript><img height="1" width="1" style="display:none"
@@ -178,10 +141,6 @@
     <!-- Skip to main content, visible on keyboard focus for screen reader / keyboard users (WCAG 2.1 AA) -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- See the pre-boot scrim comment in <head> for why this plain div
-         exists instead of a branded splash. -->
-    <div id="preboot-splash" aria-hidden="true"></div>
-    <noscript><style>#preboot-splash { display: none; }</style></noscript>
 
     <div id="root"></div>
 <script type="module" src="/index.tsx"></script>

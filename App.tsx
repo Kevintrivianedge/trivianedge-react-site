@@ -56,7 +56,6 @@ import HeroNetworkVisual from './components/HeroNetworkVisual';
 import HeroVideoSection from './components/HeroVideoSection';
 import ServiceCard3D from './components/ServiceCard3D';
 import PageTransition from './components/PageTransition';
-import AIChatNotification from './components/AIChatNotification';
 import AnimatedFormInput from './components/AnimatedFormInput';
 import SectionReveal from './components/SectionReveal';
 import SkeletonLoader from './components/SkeletonLoader';
@@ -302,7 +301,6 @@ export default function App() {
         <div className="bg-background min-h-screen text-text overflow-x-hidden selection:bg-cyan-500/30 transition-colors duration-300">
           <ScrollProgressBar />
           <Navbar />
-          <AIChatNotification />
           <AnimatePresence>
             {selectedHub && (
               <ErrorBoundary fallback={null}>

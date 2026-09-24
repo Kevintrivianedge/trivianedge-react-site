@@ -24,7 +24,10 @@ export const GLOBE_POINTS: GlobePoint[] = [
   { label: 'Costa Rica', lat: 9.9, lon: -84.1 },
 ];
 
-const DOTS = 1400;
+const DOTS_DESKTOP = 1200;
+const DOTS_MOBILE = 600;
+const FRAME_MS = 1000 / 30; // 30fps is plenty for a slow rotation
+const ALPHA_BUCKETS = 6;
 const TILT = 0.38; // radians, tilts the north pole toward the viewer
 const ACCENT = '0, 196, 154';
 
@@ -65,8 +68,9 @@ const OpsGlobe: React.FC<{ className?: string }> = ({ className = '' }) => {
     if (!canvas || !ctx) return;
 
     const golden = Math.PI * (3 - Math.sqrt(5));
-    const dots: Vec3[] = Array.from({ length: DOTS }, (_, i) => {
-      const y = 1 - (i / (DOTS - 1)) * 2;
+    const count = window.matchMedia('(max-width: 768px)').matches ? DOTS_MOBILE : DOTS_DESKTOP;
+    const dots: Vec3[] = Array.from({ length: count }, (_, i) => {
+      const y = 1 - (i / (count - 1)) * 2;
       const r = Math.sqrt(1 - y * y);
       return [Math.cos(golden * i) * r, y, Math.sin(golden * i) * r];
     });
@@ -91,12 +95,19 @@ const OpsGlobe: React.FC<{ className?: string }> = ({ className = '' }) => {
     let yaw = 1.2;
     let raf = 0;
     let visible = true;
+    let started = false; // animation waits for idle-after-load; see start()
     let last = performance.now();
 
+    // Dots are drawn in a few alpha buckets, one path each, instead of one
+    // fillStyle change per dot; this is the bulk of the per-frame cost.
+    const buckets: number[][] = Array.from({ length: ALPHA_BUCKETS }, () => []);
+
     const draw = (now: number) => {
-      const dt = Math.min(now - last, 64);
+      if (!reduceMotion && visible) raf = requestAnimationFrame(draw);
+      const dt = now - last;
+      if (dt < FRAME_MS && !reduceMotion) return;
       last = now;
-      if (!reduceMotion) yaw += dt * 0.00012;
+      if (!reduceMotion) yaw += Math.min(dt, 64) * 0.00012;
 
       const w = canvas.width, h = canvas.height;
       const R = size * dpr * 0.42;
@@ -113,13 +124,21 @@ const OpsGlobe: React.FC<{ className?: string }> = ({ className = '' }) => {
       ctx.fill();
 
       // Point cloud; back hemisphere dimmed rather than hidden for depth.
+      for (const b of buckets) b.length = 0;
       for (const d of dots) {
         const [x, y, z] = rotate(d, yaw);
-        const alpha = z > 0 ? 0.18 + z * 0.5 : 0.05;
-        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-        const s = (z > 0 ? 1.3 : 0.9) * dpr;
-        ctx.fillRect(cx + x * R - s / 2, cy - y * R - s / 2, s, s);
+        const bi = z > 0 ? 1 + Math.min(ALPHA_BUCKETS - 2, Math.floor(z * (ALPHA_BUCKETS - 1))) : 0;
+        buckets[bi].push(cx + x * R, cy - y * R);
       }
+      buckets.forEach((pts, bi) => {
+        if (!pts.length) return;
+        const alpha = bi === 0 ? 0.05 : 0.18 + (bi / (ALPHA_BUCKETS - 1)) * 0.5;
+        const s = (bi === 0 ? 0.9 : 1.3) * dpr;
+        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        ctx.beginPath();
+        for (let i = 0; i < pts.length; i += 2) ctx.rect(pts[i] - s / 2, pts[i + 1] - s / 2, s, s);
+        ctx.fill();
+      });
 
       // Arcs HQ → hubs with a travelling pulse
       const phase = reduceMotion ? 0.6 : (now / 2600) % 1;
@@ -164,26 +183,33 @@ const OpsGlobe: React.FC<{ className?: string }> = ({ className = '' }) => {
         ctx.fillStyle = `rgba(255,255,255,${0.35 + z * 0.55})`;
         ctx.fillText(p.hq ? `${p.label} · HQ` : p.label, px + 12 * dpr, py + 4 * dpr);
       }
-
-      if (!reduceMotion && visible) raf = requestAnimationFrame(draw);
     };
 
     const io = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting && !document.hidden;
       cancelAnimationFrame(raf);
-      if (visible) { last = performance.now(); raf = requestAnimationFrame(draw); }
+      if (visible && started) { last = performance.now(); raf = requestAnimationFrame(draw); }
     });
     io.observe(canvas);
     const onVisibility = () => {
       visible = !document.hidden;
       cancelAnimationFrame(raf);
-      if (visible) { last = performance.now(); raf = requestAnimationFrame(draw); }
+      if (visible && started) { last = performance.now(); raf = requestAnimationFrame(draw); }
     };
     document.addEventListener('visibilitychange', onVisibility);
-    raf = requestAnimationFrame(draw);
+    let idleId = 0;
+    const start = () => {
+      const ric = (window as any).requestIdleCallback as ((cb: () => void, o?: { timeout: number }) => number) | undefined;
+      const kick = () => { started = true; last = 0; raf = requestAnimationFrame(draw); };
+      idleId = ric ? ric(kick, { timeout: 2500 }) : window.setTimeout(kick, 1200);
+    };
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start, { once: true });
 
     return () => {
       cancelAnimationFrame(raf);
+      window.removeEventListener('load', start);
+      ((window as any).cancelIdleCallback ?? window.clearTimeout)(idleId);
       ro.disconnect();
       io.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
