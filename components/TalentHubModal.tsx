@@ -120,7 +120,7 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
         transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
       >
         {/* Hero header strip — gradient with flag watermark */}
-        <div className={`relative h-36 sm:h-48 overflow-hidden rounded-none sm:rounded-t-[2.5rem] bg-gradient-to-br ${hub.gradient}`}>
+        <div className={`relative h-36 sm:h-48 overflow-hidden rounded-none sm:rounded-t-[2.5rem] hero-mesh`}>
           <div className="absolute inset-0 bg-black/55" />
           <div className="absolute inset-0 flex items-end p-6 sm:p-10">
             <div className="flex items-end gap-5">
@@ -144,7 +144,7 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
         </div>
 
         {/* Decorative glow below header */}
-        <div className={`absolute top-0 left-0 w-full h-80 bg-gradient-to-b ${hub.gradient} opacity-[0.08] blur-3xl pointer-events-none`} aria-hidden="true" />
+        <div className={`absolute top-0 left-0 w-full h-80 bg-gradient-to-b from-cyan-400 to-transparent opacity-[0.08] blur-3xl pointer-events-none`} aria-hidden="true" />
 
         {/* Close Button */}
         <button 
@@ -259,7 +259,7 @@ export const TalentHubModal: React.FC<TalentHubModalProps> = ({ hub, onClose }) 
                   onClose();
                   setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 300);
                 }}
-                className="group flex items-center gap-3 px-8 py-4 bg-white text-black rounded-xl font-bold uppercase tracking-widest hover:bg-cyan-400 hover:text-white transition-all shadow-lg hover:shadow-cyan-400/20"
+                className="group flex items-center gap-3 px-8 py-4 bg-white text-black rounded-xl font-bold uppercase tracking-widest hover:bg-cyan-400 hover:text-black transition-all shadow-lg hover:shadow-cyan-400/20"
               >
                   <span>Initiate Hiring Protocol</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

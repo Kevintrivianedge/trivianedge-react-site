@@ -80,7 +80,7 @@ const ProofPage: React.FC = () => {
                   {stat.label}
                 </span>
                 <div className="mb-2">
-                  <span className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">
+                  <span className="text-3xl md:text-4xl font-bold text-cyan-700 dark:text-cyan-400">
                     {stat.value}
                   </span>
                   <span className="text-lg md:text-xl text-text opacity-70 ml-2">{stat.unit}</span>

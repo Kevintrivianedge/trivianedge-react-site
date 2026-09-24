@@ -24,7 +24,7 @@ Full spec (palette, states, gradients, contrast matrix): https://claude.ai/artif
 | cyan-700 | `#1F6655` | stronger text on white |
 
 - **Brand fills take black text.** White on jade is 2.33:1 and fails WCAG.
-- Secondary: lagoon `#40C9C8` for map connections, second chart series and gradient ends, never for links. Leaf `#60B46D` appears only inside gradients (Tailwind `emerald-400`).
+- Secondary: lagoon `#40C9C8` for map connections, second chart series and gradient ends, never for links. Leaf `#60B46D` appears only inside the `--te-gradient-*` tokens. Tailwind `emerald`/`green` = success (#9BD86A), `red` = error (#F47C70), `amber`/`yellow` = warning (#F2B544); use shade 600+ for status text on white.
 - **Violet is retired.** It isn't in the logo; the `violet-*` scale is remapped to jade. Don't add purple.
 - Status colours sit outside the brand hue band: success `#9BD86A`, warning `#F2B544`, error `#F47C70`, info `#7FAEF5`.
 
@@ -49,7 +49,7 @@ Never hardcode theme colours in components. Use the `background`/`surface`/`text
 
 **Display font: Fraunces** (`--font-display`, variable weight 300–800, optical size axis), loaded from Google Fonts alongside Manrope in [index.html](../../../index.html). Applies to `h1`–`h4`, `.display-hero`, and `.display-section` only — every heading level, consistently, so it reads as a designed system rather than a one-off hero flourish. **Never apply Fraunces outside a heading element or `.display-*` class** — body copy, nav links, buttons, and UI chrome stay on Manrope. Added 2026-09 as the site's typographic signature (chosen for Awwwards-caliber distinctiveness — see `feedback_50k_agency_design_bar` and `project_award_nomination` memory).
 
-**Known exception — Space Grotesk**: appears only in [components/Logo.tsx](../../../components/Logo.tsx) (wordmark), [components/Preloader.tsx](../../../components/Preloader.tsx), and the "Aria" heading in [components/ChatSidebar.tsx](../../../components/ChatSidebar.tsx). This is a deliberate legacy carve-out, not a second brand font — a regression test (`__tests__/components/PremiumDesign.test.tsx`) explicitly asserts nav links do NOT use it. **Do not add `font-['Space_Grotesk']` to any new component.** The same non-spreading discipline now applies to Fraunces — it stays confined to headings, not because of a test, but by the same principle: an uncontrolled second (or third) display face is how sites drift back into looking templated.
+**Known exception — Space Grotesk**: appears only in [components/Logo.tsx](../../../components/Logo.tsx) (wordmark), and the "Aria" heading in [components/ChatSidebar.tsx](../../../components/ChatSidebar.tsx). This is a deliberate legacy carve-out, not a second brand font — a regression test (`__tests__/components/PremiumDesign.test.tsx`) explicitly asserts nav links do NOT use it. **Do not add `font-['Space_Grotesk']` to any new component.** The same non-spreading discipline now applies to Fraunces — it stays confined to headings, not because of a test, but by the same principle: an uncontrolled second (or third) display face is how sites drift back into looking templated.
 
 Display/heading scale uses `clamp()` for fluid sizing plus shared tracking/leading vars — reuse these rather than picking arbitrary sizes:
 - `--tracking-hero: -0.03em` (`.display-hero`), `--tracking-section: -0.02em` (`.display-section`), `--tracking-heading: -0.01em` (`h1`–`h4`) — tracking scales with size rather than one flat value
