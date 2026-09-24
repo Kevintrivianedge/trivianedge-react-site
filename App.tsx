@@ -341,7 +341,7 @@ export default function App() {
             </ErrorBoundary>
           </main>
 
-          <footer className="relative bg-[#020306] text-white pt-16 md:pt-20 pb-10 px-4 md:px-6 overflow-hidden">
+          <footer className="relative bg-[#000000] text-white pt-16 md:pt-20 pb-10 px-4 md:px-6 overflow-hidden">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent"

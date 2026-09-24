@@ -32,7 +32,7 @@ export const FormInputAnimated: React.FC<FormInputAnimatedProps> = ({
         animate={{
           y: isFocused || isFilled ? -24 : 0,
           scale: isFocused || isFilled ? 0.85 : 1,
-          color: isFocused ? 'rgb(0, 196, 154)' : 'rgb(15, 23, 42, 0.6)',
+          color: isFocused ? 'rgb(77, 188, 159)' : 'rgb(15, 23, 42, 0.6)',
         }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
       >
@@ -61,13 +61,13 @@ export const FormInputAnimated: React.FC<FormInputAnimatedProps> = ({
         }`}
         animate={{
           borderColor: isFocused
-            ? 'rgb(0, 196, 154)'
+            ? 'rgb(77, 188, 159)'
             : error
               ? 'rgb(239, 68, 68)'
               : undefined,
         }}
         whileFocus={{
-          boxShadow: `0 0 0 3px rgba(0, 196, 154, 0.1)`,
+          boxShadow: `0 0 0 3px rgba(77, 188, 159, 0.1)`,
         }}
       />
 

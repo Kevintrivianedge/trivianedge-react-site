@@ -19,7 +19,8 @@
     "analyze:bundle": "node scripts/analyze-bundle.mjs",
     "seo:report": "node scripts/google-seo-report.mjs",
     "deploy": "npm run build && wrangler deploy",
-    "postdeploy": "node scripts/indexnow-submit.mjs"
+    "postdeploy": "node scripts/indexnow-submit.mjs",
+    "test:browsers": "playwright test -c playwright.prod.config.ts"
   },
   "dependencies": {
     "@microsoft/clarity": "^1.0.2",
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.0.0",
+    "@playwright/test": "^1.60.0",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -58,5 +60,12 @@
     "vite": "^6.2.0",
     "vitest": "^4.1.2",
     "wrangler": "^4.0.0"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "Safari >= 14",
+    "iOS >= 14",
+    "Firefox ESR",
+    "not dead"
+  ]
 }

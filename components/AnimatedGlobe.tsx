@@ -99,7 +99,7 @@ export const AnimatedGlobe: React.FC<AnimatedGlobeProps> = ({
           className="absolute inset-0 w-full h-full"
           viewBox="0 0 200 200"
           style={{
-            filter: 'drop-shadow(0 0 60px rgba(0, 196, 154, 0.3))',
+            filter: 'drop-shadow(0 0 60px rgba(77, 188, 159, 0.3))',
           }}
         >
           {/* Outer sphere border */}
@@ -116,7 +116,7 @@ export const AnimatedGlobe: React.FC<AnimatedGlobeProps> = ({
           {/* Globe gradient */}
           <defs>
             <radialGradient id="globeGradient" cx="35%" cy="35%">
-              <stop offset="0%" stopColor="rgba(0, 196, 154, 0.6)" />
+              <stop offset="0%" stopColor="rgba(77, 188, 159, 0.6)" />
               <stop offset="100%" stopColor="rgba(0, 150, 130, 0.2)" />
             </radialGradient>
             <linearGradient id="globeLight" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -153,7 +153,7 @@ export const AnimatedGlobe: React.FC<AnimatedGlobeProps> = ({
                 cy={100 + (lat / 180) * 90}
                 r={Math.cos((lat * Math.PI) / 180) * 95}
                 fill="none"
-                stroke="rgba(0, 196, 154, 0.1)"
+                stroke="rgba(77, 188, 159, 0.1)"
                 strokeWidth="0.5"
               />
             );
@@ -172,7 +172,7 @@ export const AnimatedGlobe: React.FC<AnimatedGlobeProps> = ({
                 y1="100"
                 x2={x1}
                 y2={y1}
-                stroke="rgba(0, 196, 154, 0.1)"
+                stroke="rgba(77, 188, 159, 0.1)"
                 strokeWidth="0.5"
               />
             );

@@ -68,7 +68,7 @@ export const SEOMetaTags: React.FC<SEOMetaTagsProps> = ({
       {twitterCreator && <meta name="twitter:creator" content={twitterCreator} />}
 
       {/* Additional Meta Tags */}
-      <meta name="theme-color" content="#00C49A" />
+      <meta name="theme-color" content="#4DBC9F" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       <meta name="apple-mobile-web-app-title" content="TrivianEdge" />

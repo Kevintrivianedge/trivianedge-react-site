@@ -10,9 +10,10 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Server and first client render both use 'light' so hydration matches;
-  // a stored preference is applied right after mount.
-  const [theme, setTheme] = useState<Theme>('light');
+  // Dark-first (OLED colour system). Server and first client render both use
+  // 'dark' so hydration matches; index.html ships data-theme="dark" so there's
+  // no flash. A stored 'light' preference is applied right after mount.
+  const [theme, setTheme] = useState<Theme>('dark');
   // The stored preference, until it has been applied to state. While set,
   // the DOM/storage sync below skips so the default never flashes or
   // overwrites the saved choice.
@@ -20,7 +21,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   useEffect(() => {
     const stored = localStorage.getItem('theme');
-    if (stored === 'dark') {
+    if (stored === 'light') {
       pending.current = stored;
       startTransition(() => setTheme(stored));
     }

@@ -61,7 +61,9 @@ describe('TalentHubModal', () => {
     const { container } = renderModal();
     const dialog = container.querySelector('[role="dialog"]');
     // The scrollable inner div should have h-[100dvh] for iOS Safari dynamic viewport
-    const inner = dialog!.querySelector('.h-\\[100dvh\\]');
+    // h-screen is the fallback for browsers without dvh (Safari < 15.4).
+    const inner = dialog!.querySelector('.h-screen');
     expect(inner).not.toBeNull();
+    expect(inner!.className).toContain('supports-[height:100dvh]:h-[100dvh]');
   });
 });

@@ -71,7 +71,7 @@ export const HeroVideoSection: React.FC<HeroVideoSectionProps> = ({
       <motion.div
         className="hidden lg:block absolute inset-0 -z-10"
         style={{
-          background: 'linear-gradient(135deg, rgba(0, 196, 154, 0.08) 0%, rgba(0, 255, 224, 0.04) 100%)',
+          background: 'linear-gradient(135deg, rgba(77, 188, 159, 0.08) 0%, rgba(0, 255, 224, 0.04) 100%)',
           opacity: 0.3,
         }}
       />

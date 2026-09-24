@@ -84,7 +84,7 @@ export const TeamMemberCard3D: React.FC<TeamMemberCard3DProps> = ({ member, inde
           animate={{
             boxShadow:
               rotateX !== 0
-                ? '0 20px 60px rgba(0, 196, 154, 0.2)'
+                ? '0 20px 60px rgba(77, 188, 159, 0.2)'
                 : '0 4px 12px rgba(0, 0, 0, 0.08)',
           }}
         >

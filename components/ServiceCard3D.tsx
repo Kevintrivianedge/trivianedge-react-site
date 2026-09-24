@@ -72,7 +72,7 @@ export const ServiceCard3D: React.FC<ServiceCard3DProps> = ({
           transformStyle: 'preserve-3d',
           boxShadow:
             rotateX !== 0
-              ? `0 20px 60px rgba(0, 196, 154, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)`
+              ? `0 20px 60px rgba(77, 188, 159, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)`
               : '0 4px 12px rgba(0, 0, 0, 0.08)',
         }}
       >
@@ -97,7 +97,7 @@ export const ServiceCard3D: React.FC<ServiceCard3DProps> = ({
             }}
             transition={{ type: 'spring', stiffness: 200 }}
             style={{
-              background: `linear-gradient(135deg, rgba(0, 196, 154, 0.2) 0%, rgba(0, 150, 130, 0.05) 100%)`,
+              background: `linear-gradient(135deg, rgba(77, 188, 159, 0.2) 0%, rgba(0, 150, 130, 0.05) 100%)`,
             }}
           >
             {icon}

@@ -49,7 +49,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
   return (
     <>
       {/* ===== 1. HERO ===== */}
-      <section aria-label="Introduction" className="hero-dark relative overflow-hidden px-4 sm:px-6 pt-32 md:pt-40 pb-0">
+      <section aria-label="Introduction" className="hero-dark relative overflow-hidden px-4 sm:px-6 pt-32 md:pt-40 pb-0" style={{ background: 'var(--te-gradient-hero)' }}>
         {/* Hairline grid — reads as an engineering surface, fades out at the edges */}
         <div
           aria-hidden
@@ -76,12 +76,12 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               </div>
             )}
 
-            <h1 className="display-hero font-semibold text-white">
-              Cloud, AI, and global teams.{' '}
-              <span className="text-white/45">One partner runs all three.</span>
+            {/* The one gradient headline on the page (colour system rule 07). */}
+            <h1 className="display-hero font-semibold te-gradient-text">
+              Cloud, AI, and global teams. One partner runs all three.
             </h1>
 
-            <p className="mt-8 text-lg md:text-xl text-white/65 max-w-xl leading-relaxed">
+            <p className="mt-8 text-lg md:text-xl text-[#B4BCBA] max-w-xl leading-relaxed">
               TrivianEdge is a Toronto-based technology partner. We migrate and manage Microsoft and Google cloud, build AI and
               custom software, and staff offshore teams from six talent hubs.
             </p>

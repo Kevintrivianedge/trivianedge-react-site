@@ -77,10 +77,9 @@
  * so this adds no additional request. */
 
         :root {
-            /* Light Theme (Default) */
-            --cyan: #00C49A;
-            /* Reserved secondary accent — used once, deliberately, on the chat launcher only. */
-            --violet: #6366f1;
+            /* Brand accent: logo jade (see src/te-tokens.css and the colour
+               system spec). Light theme values below; dark is the default. */
+            --cyan: #4DBC9F;
 
             /* Luxury typography and spacing scale */
             --font-body: 'Manrope', 'Manrope Fallback', sans-serif;
@@ -102,55 +101,53 @@
             --space-stack-md: clamp(1rem, 1.6vw, 1.4rem);
             
             --background: #ffffff;
-            --text: #0f172a;
-            --text-muted: #334155;
+            --text: #0B1211;
+            --text-muted: #3A4543;
             --surface: rgba(255, 255, 255, 0.78);
-            --border: rgba(15, 23, 42, 0.08);
+            --border: rgba(11, 18, 17, 0.09);
             
             --glass-bg: rgba(255, 255, 255, 0.72);
             --glass-border: rgba(15, 23, 42, 0.06);
             --glass-shadow: rgba(15, 23, 42, 0.05);
             
-            --btn-bg: #00C49A;
-            --btn-text: #ffffff;
+            /* Black on jade: white on jade fails contrast (2.33:1). */
+            --btn-bg: #4DBC9F;
+            --btn-text: #000000;
         }
 
+        /* OLED-first dark theme (the default): true-black ground, #EDEFEE
+           text instead of pure white to avoid halation. */
         [data-theme="dark"] {
-            --background: #020203;
-            --text: #ffffff;
-            --text-muted: #9ca3af;
-            --surface: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.18);
+            --background: #000000;
+            --text: #EDEFEE;
+            --text-muted: #B4BCBA;
+            --surface: #111515;
+            --border: #232A29;
 
-            --glass-bg: rgba(255, 255, 255, 0.02);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-shadow: rgba(0, 0, 0, 0.5);
+            --glass-bg: rgba(14, 18, 18, 0.72);
+            --glass-border: rgba(237, 239, 238, 0.08);
+            --glass-shadow: rgba(0, 0, 0, 0.4);
 
-            --btn-bg: #ffffff;
+            --btn-bg: #4DBC9F;
             --btn-text: #000000;
         }
 
         /* ── Dark mode overrides for new white-bg card components ── */
         [data-theme="dark"] .quote-card {
             background: rgba(255,255,255,0.04);
-            border-color: rgba(0,196,154,0.15);
+            border-color: rgba(77, 188, 159,0.15);
         }
         [data-theme="dark"] .quote-card::before {
-            color: rgba(0,196,154,0.12);
+            color: rgba(77, 188, 159,0.12);
         }
         [data-theme="dark"] .section-tint {
-            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+            background: #090C0C; /* colour system: section background */
         }
         [data-theme="dark"] .hero-fade-out::after {
-            background: linear-gradient(to bottom, transparent 0%, #020203 100%);
+            background: linear-gradient(to bottom, transparent 0%, #000000 100%);
         }
         [data-theme="dark"] .hero-mesh {
-            background:
-                radial-gradient(ellipse 110% 80% at -5% 55%, rgba(0,196,154,0.14) 0%, transparent 55%),
-                radial-gradient(ellipse 70% 60% at 100% 0%, rgba(0,196,154,0.10) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 50% at 65% 110%, rgba(6,182,212,0.08) 0%, transparent 52%),
-                radial-gradient(ellipse 40% 35% at 40% 20%, rgba(0,196,154,0.05) 0%, transparent 50%),
-                #020203;
+            background: var(--te-gradient-hero);
         }
 
         body {
@@ -232,8 +229,8 @@
         
         @keyframes neon-glow-shift {
             0%, 100% {
-                box-shadow: 0 0 30px -5px rgba(0, 196, 154, 0.5), 0 0 15px -2px rgba(0, 196, 154, 0.3);
-                border-color: rgba(0, 196, 154, 0.4);
+                box-shadow: 0 0 30px -5px rgba(77, 188, 159, 0.5), 0 0 15px -2px rgba(77, 188, 159, 0.3);
+                border-color: rgba(77, 188, 159, 0.4);
             }
             50% {
                 box-shadow: 0 0 50px -5px rgba(0, 140, 107, 0.6), 0 0 25px -2px rgba(0, 140, 107, 0.4);
@@ -268,7 +265,7 @@
             inset: -1px;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(135deg, var(--cyan), #008C6B, var(--cyan));
+            background: linear-gradient(135deg, var(--cyan), #247A65, var(--cyan));
             background-size: 300% 300%;
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask-composite: exclude;
@@ -295,9 +292,9 @@
             overflow: hidden;
             background: var(--btn-bg);
             color: var(--btn-text);
-            box-shadow: 0 0 0 1px rgba(0,196,154,0.30),
-                        0 0 20px rgba(0,196,154,0.30),
-                        0 8px 28px rgba(0,196,154,0.22),
+            box-shadow: 0 0 0 1px rgba(77, 188, 159,0.30),
+                        0 0 20px rgba(77, 188, 159,0.30),
+                        0 8px 28px rgba(77, 188, 159,0.22),
                         inset 0 1px 0 rgba(255,255,255,0.22);
             border: none;
             transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
@@ -325,9 +322,9 @@
 
         .premium-button:hover {
             transform: translateY(-2px) scale(1.01);
-            box-shadow: 0 0 0 1px rgba(0,196,154,0.50),
-                        0 0 40px rgba(0,196,154,0.50),
-                        0 14px 40px rgba(0,196,154,0.32),
+            box-shadow: 0 0 0 1px rgba(77, 188, 159,0.50),
+                        0 0 40px rgba(77, 188, 159,0.50),
+                        0 14px 40px rgba(77, 188, 159,0.32),
                         inset 0 1px 0 rgba(255,255,255,0.28);
             filter: brightness(1.06);
         }
@@ -397,7 +394,7 @@
         .service-card-glow:hover {
             transform: translateY(-5px) scale(1.02);
             animation: neon-glow-shift 3s infinite ease-in-out;
-            border-color: rgba(0, 196, 154, 0.5);
+            border-color: rgba(77, 188, 159, 0.5);
         }
 
         .micro-lift-card {
@@ -409,7 +406,7 @@
 
         .micro-lift-card:hover {
             transform: translateY(-8px) scale(1.01);
-            box-shadow: 0 28px 60px rgba(15, 23, 42, 0.13), 0 0 0 1px rgba(0,196,154,0.08) inset;
+            box-shadow: 0 28px 60px rgba(15, 23, 42, 0.13), 0 0 0 1px rgba(77, 188, 159,0.08) inset;
         }
 
         .luxury-panel {
@@ -501,7 +498,7 @@
         }
         .hero-metric-card:hover {
             background: rgba(255,255,255,0.11);
-            border-color: rgba(0,196,154,0.35);
+            border-color: rgba(77, 188, 159,0.35);
             transform: translateY(-3px);
         }
         .hero-metric-value {
@@ -529,10 +526,10 @@
             width: 7px;
             height: 7px;
             border-radius: 50%;
-            background: #00C49A;
+            background: #4DBC9F;
             display: inline-block;
             margin-right: 6px;
-            box-shadow: 0 0 8px rgba(0,196,154,0.7);
+            box-shadow: 0 0 8px rgba(77, 188, 159,0.7);
             animation: pulse-glow 2s ease-in-out infinite;
         }
 
@@ -557,7 +554,7 @@
         .quote-card {
             position: relative;
             background: #ffffff;
-            border: 1px solid rgba(0,196,154,0.15);
+            border: 1px solid rgba(77, 188, 159,0.15);
             border-radius: 2rem;
             padding: 2.5rem;
             overflow: hidden;
@@ -569,7 +566,7 @@
             left: 24px;
             font-size: 8rem;
             font-weight: 900;
-            color: rgba(0,196,154,0.15);
+            color: rgba(77, 188, 159,0.15);
             line-height: 1;
             font-family: Georgia, serif;
             pointer-events: none;
@@ -580,7 +577,7 @@
             font-size: 4.5rem;
             font-weight: 900;
             line-height: 1;
-            color: rgba(0,196,154,0.35);
+            color: rgba(77, 188, 159,0.35);
             letter-spacing: -0.04em;
             margin-bottom: 1rem;
             display: block;
@@ -589,45 +586,39 @@
         /* ── Service card dark treatments ── */
         .service-dark {
             background: linear-gradient(145deg, #030d0a 0%, #050f0b 100%);
-            border-color: rgba(0,196,154,0.18) !important;
+            border-color: rgba(77, 188, 159,0.18) !important;
             color: #ffffff;
         }
         .service-dark h3 { color: #ffffff; }
         .service-dark p  { color: rgba(255,255,255,0.65); }
         .service-dark li { color: rgba(255,255,255,0.65); }
-        .service-dark .service-metric { color: #00C49A; }
+        .service-dark .service-metric { color: #4DBC9F; }
 
         /* ── Case study metric pill ── */
         .metric-pill {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(0,196,154,0.1);
-            border: 1px solid rgba(0,196,154,0.25);
+            background: rgba(77, 188, 159,0.1);
+            border: 1px solid rgba(77, 188, 159,0.25);
             border-radius: 999px;
             padding: 4px 14px;
             font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-            color: #00C49A;
+            color: #4DBC9F;
             margin-bottom: 1rem;
         }
 
-        @keyframes mesh-breathe {
-            0%, 100% { opacity: 1; }
-            50%       { opacity: 0.82; }
-        }
-        @keyframes mesh-shift {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33%       { transform: translate(-2%, 1.5%) scale(1.03); }
-            66%       { transform: translate(1.5%, -1%) scale(0.98); }
-        }
 
         /* ── Dark cinematic hero (Tesla × Linear × Stripe style) ── */
+        /* Colour system hero (gradient B): true black with two static glows
+           at 10% / 6%. Previously 44-78% glows on two infinite animations,
+           which read as "neon" and repainted every frame. */
         .hero-dark {
-            background: #030608;
-            color: #ffffff;
+            background: #000000;
+            color: #EDEFEE;
             position: relative;
             isolation: isolate;
         }
@@ -636,11 +627,8 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(ellipse 145% 105% at -18% 72%, rgba(0,196,154,0.78) 0%, transparent 52%),
-                radial-gradient(ellipse 85% 72% at 112% -2%,   rgba(0,196,154,0.58) 0%, transparent 50%),
-                radial-gradient(ellipse 68% 62% at 74% 118%,   rgba(6,182,212,0.44) 0%, transparent 52%),
-                radial-gradient(ellipse 55% 50% at 46% 26%,    rgba(0,196,154,0.22) 0%, transparent 50%);
-            animation: mesh-breathe 8s ease-in-out infinite, mesh-shift 18s ease-in-out infinite;
+                radial-gradient(60% 50% at 72% 18%, rgba(77, 188, 159, 0.10) 0%, rgba(77, 188, 159, 0) 70%),
+                radial-gradient(40% 40% at 8% 92%, rgba(64, 201, 200, 0.06) 0%, rgba(64, 201, 200, 0) 70%);
             pointer-events: none;
             z-index: 0;
         }
@@ -657,17 +645,17 @@
         .hero-dark > * { position: relative; z-index: 2; }
         .hero-mesh {
             background:
-                radial-gradient(ellipse 110% 80% at -5% 55%, rgba(0,196,154,0.22) 0%, transparent 55%),
-                radial-gradient(ellipse 70% 60% at 100% 0%, rgba(0,196,154,0.14) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 50% at 65% 110%, rgba(6,182,212,0.10) 0%, transparent 52%),
-                radial-gradient(ellipse 40% 35% at 40% 20%, rgba(0,196,154,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 110% 80% at -5% 55%, rgba(77, 188, 159,0.22) 0%, transparent 55%),
+                radial-gradient(ellipse 70% 60% at 100% 0%, rgba(77, 188, 159,0.14) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 50% at 65% 110%, rgba(64, 201, 200,0.10) 0%, transparent 52%),
+                radial-gradient(ellipse 40% 35% at 40% 20%, rgba(77, 188, 159,0.06) 0%, transparent 50%),
                 #ffffff;
         }
 
         /* ── Dark CTA section (Stripe/Tesla bookend style) ── */
         .section-dark {
-            background: linear-gradient(160deg, #04090f 0%, #060d14 60%, #04090f 100%);
-            color: #ffffff;
+            background: linear-gradient(180deg, #000000 0%, #090C0C 100%);
+            color: #EDEFEE;
             position: relative;
             overflow: hidden;
         }
@@ -676,9 +664,9 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,196,154,0.28) 0%, transparent 55%),
-                radial-gradient(ellipse 50% 40% at 10% 100%, rgba(0,196,154,0.12) 0%, transparent 50%),
-                radial-gradient(ellipse 40% 40% at 90% 100%, rgba(6,182,212,0.10) 0%, transparent 50%);
+                radial-gradient(35% 45% at 20% 20%, rgba(96, 180, 109, 0.05) 0%, transparent 70%),
+                radial-gradient(35% 45% at 80% 30%, rgba(64, 201, 200, 0.05) 0%, transparent 70%),
+                radial-gradient(50% 40% at 50% 100%, rgba(77, 188, 159, 0.04) 0%, transparent 70%);
             pointer-events: none;
         }
 
@@ -698,7 +686,7 @@
             inset: 0;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(135deg, rgba(0,196,154,0.35) 0%, rgba(0,196,154,0.06) 50%, rgba(6,182,212,0.20) 100%);
+            background: linear-gradient(135deg, rgba(77, 188, 159,0.35) 0%, rgba(77, 188, 159,0.06) 50%, rgba(64, 201, 200,0.20) 100%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -771,7 +759,7 @@
         }
         [data-theme="light"] .glass {
             background: #ffffff;
-            border: 1px solid rgba(0,196,154,0.14);
+            border: 1px solid rgba(77, 188, 159,0.14);
             box-shadow: 0 1px 3px rgba(0,0,0,0.04),
                         0 6px 24px rgba(0,0,0,0.06),
                         inset 0 1px 0 rgba(255,255,255,1);
@@ -779,9 +767,9 @@
             -webkit-backdrop-filter: none;
         }
         [data-theme="light"] .glass:hover {
-            border-color: rgba(0,196,154,0.28);
+            border-color: rgba(77, 188, 159,0.28);
             box-shadow: 0 2px 8px rgba(0,0,0,0.05),
-                        0 12px 40px rgba(0,196,154,0.10),
+                        0 12px 40px rgba(77, 188, 159,0.10),
                         inset 0 1px 0 rgba(255,255,255,1);
         }
         [data-theme="dark"] .glass {
@@ -863,7 +851,7 @@
             inset: -2px;
             border-radius: inherit;
             padding: 2px;
-            background: linear-gradient(135deg, var(--cyan), #008C6B, var(--cyan));
+            background: linear-gradient(135deg, var(--cyan), #247A65, var(--cyan));
             background-size: 300% 300%;
             animation: holo-shift 4s linear infinite;
             -webkit-mask: linear-gradient(#fff 0 0) content-box,
@@ -878,8 +866,8 @@
            literally (a real map) and visually. Not a decorative default. */
         .neural-bg {
             background-image:
-                radial-gradient(circle, rgba(0,196,154,0.15) 1px, transparent 1px),
-                radial-gradient(circle, rgba(0,196,154,0.07) 1px, transparent 1px);
+                radial-gradient(circle, rgba(77, 188, 159,0.15) 1px, transparent 1px),
+                radial-gradient(circle, rgba(77, 188, 159,0.07) 1px, transparent 1px);
             background-size: 50px 50px, 80px 80px;
             background-position: 0 0, 25px 25px;
         }
@@ -935,10 +923,10 @@
 
         @keyframes input-focus {
             0% {
-                box-shadow: 0 0 0 0 rgba(0, 196, 154, 0.2);
+                box-shadow: 0 0 0 0 rgba(77, 188, 159, 0.2);
             }
             100% {
-                box-shadow: 0 0 0 3px rgba(0, 196, 154, 0.1);
+                box-shadow: 0 0 0 3px rgba(77, 188, 159, 0.1);
             }
         }
 
@@ -977,10 +965,10 @@
         /* --- Comparison slider animations --- */
         @keyframes slider-pulse {
             0%, 100% {
-                box-shadow: 0 0 0 0 rgba(0, 196, 154, 0.5);
+                box-shadow: 0 0 0 0 rgba(77, 188, 159, 0.5);
             }
             50% {
-                box-shadow: 0 0 0 6px rgba(0, 196, 154, 0);
+                box-shadow: 0 0 0 6px rgba(77, 188, 159, 0);
             }
         }
 
@@ -1055,7 +1043,7 @@
             position: absolute;
             bottom: 2px; left: 0; right: 0;
             height: 30%;
-            background: rgba(0,196,154,0.2);
+            background: rgba(77, 188, 159,0.2);
             border-radius: 2px;
             z-index: -1;
         }
@@ -1065,7 +1053,7 @@
             top: -999px;
             left: 0;
             padding: 0.75rem 1.25rem;
-            background: #00C49A;
+            background: #4DBC9F;
             color: #000;
             font-weight: 700;
             font-size: 0.875rem;
@@ -1123,14 +1111,14 @@
         input:focus-visible,
         textarea:focus-visible,
         select:focus-visible {
-            border-color: rgba(0, 196, 154, 0.60) !important;
-            box-shadow: 0 0 0 2px rgba(0, 196, 154, 0.15) !important;
+            border-color: rgba(77, 188, 159, 0.60) !important;
+            box-shadow: 0 0 0 2px rgba(77, 188, 159, 0.15) !important;
         }
         [data-theme="light"] input:focus-visible,
         [data-theme="light"] textarea:focus-visible,
         [data-theme="light"] select:focus-visible {
-            border-color: rgba(0, 196, 154, 0.80) !important;
-            box-shadow: 0 0 0 2px rgba(0, 196, 154, 0.08) !important;
+            border-color: rgba(77, 188, 159, 0.80) !important;
+            box-shadow: 0 0 0 2px rgba(77, 188, 159, 0.08) !important;
         }
 
         /* Disabled form state — reduce opacity to 60% instead of 50%
@@ -1227,7 +1215,7 @@
                 transform: translateY(0) rotateX(0) rotateY(0);
             }
             100% {
-                box-shadow: 0 20px 60px rgba(0, 196, 154, 0.2);
+                box-shadow: 0 20px 60px rgba(77, 188, 159, 0.2);
             }
         }
 
@@ -1244,10 +1232,10 @@
         /* Globe glow pulse */
         @keyframes globe-glow-pulse {
             0%, 100% {
-                box-shadow: 0 0 40px rgba(0, 196, 154, 0.3);
+                box-shadow: 0 0 40px rgba(77, 188, 159, 0.3);
             }
             50% {
-                box-shadow: 0 0 80px rgba(0, 196, 154, 0.5);
+                box-shadow: 0 0 80px rgba(77, 188, 159, 0.5);
             }
         }
 
@@ -1303,10 +1291,10 @@
         @keyframes location-pulse {
             0%, 100% {
                 transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(0, 196, 154, 0.7);
+                box-shadow: 0 0 0 0 rgba(77, 188, 159, 0.7);
             }
             50% {
-                box-shadow: 0 0 0 10px rgba(0, 196, 154, 0);
+                box-shadow: 0 0 0 10px rgba(77, 188, 159, 0);
             }
         }
 
@@ -1397,4 +1385,9 @@
 }
 .cookieyes-generated-content th {
     color: var(--text);
+}
+
+/* Safari < 15.4 / older Android lack dvh units; fall back to vh there. */
+@supports not (height: 100dvh) {
+    .min-h-dvh { min-height: 100vh; }
 }

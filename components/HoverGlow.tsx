@@ -14,12 +14,12 @@ interface HoverGlowProps {
  * Use for: cards, buttons, interactive elements
  *
  * Applies hover scale and box-shadow glow on mouse enter/leave
- * Uses teal #00C49A by default (your brand accent)
+ * Uses teal #4DBC9F by default (your brand accent)
  */
 export const HoverGlow: React.FC<HoverGlowProps> = ({
   children,
   scale = 1.02,
-  glowColor = 'rgba(0, 196, 154, 0.3)', // teal with 30% opacity
+  glowColor = 'rgba(77, 188, 159, 0.3)', // teal with 30% opacity
   duration = 0.2,
   className = '',
 }) => {

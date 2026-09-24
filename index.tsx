@@ -1,6 +1,7 @@
 
 import './src/tailwind.css';
 import './src/theme.css';
+import './src/te-tokens.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';

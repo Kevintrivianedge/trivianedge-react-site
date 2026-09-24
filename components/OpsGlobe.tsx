@@ -29,7 +29,7 @@ const DOTS_MOBILE = 600;
 const FRAME_MS = 1000 / 30; // 30fps is plenty for a slow rotation
 const ALPHA_BUCKETS = 6;
 const TILT = 0.38; // radians, tilts the north pole toward the viewer
-const ACCENT = '0, 196, 154';
+const ACCENT = '77, 188, 159'; // logo jade #4DBC9F
 
 type Vec3 = [number, number, number];
 

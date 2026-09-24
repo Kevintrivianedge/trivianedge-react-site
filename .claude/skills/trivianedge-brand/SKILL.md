@@ -9,34 +9,39 @@ Source of truth: [tailwind.config.js](../../../tailwind.config.js), [src/theme.c
 
 ## Color
 
-**Primary brand color — teal `#00C49A`** (CSS var `--cyan`, also aliased over Tailwind's built-in `cyan-*` scale):
+Full spec (palette, states, gradients, contrast matrix): https://claude.ai/artifact/UsSquMUNQjzNDb5MKroymo. Tokens live in [src/te-tokens.css](../../../src/te-tokens.css) (imported globally). Adopted site-wide 2026-09-24.
 
-| Token | Hex | Tailwind |
+**Everything derives from the logo mark:** `#60B46D` (leaf) → `#4DBC9F` (jade) → `#46C5B3` → `#40C9C8` (lagoon).
+
+**Primary brand colour: jade `#4DBC9F`** (CSS var `--cyan`; Tailwind's whole `cyan-*` scale is overridden with a jade ramp, so `cyan-*` classes ARE brand classes):
+
+| Tailwind | Hex | Use |
 |---|---|---|
-| cyan-400 (brand) | `#00C49A` | `cyan-400`, `bg-cyan-400`, etc. |
-| cyan-500 (hover) | `#00A882` | `cyan-500` |
-| cyan-600 | `#008C6B` | `cyan-600` |
-| cyan-700 | `#007158` | `cyan-700` |
+| cyan-300 | `#8FE3CB` | hover on dark, focus ring |
+| cyan-400 | `#4DBC9F` | brand: CTAs, active states, accents on dark |
+| cyan-500 | `#3FA88D` | pressed state |
+| cyan-600 | `#247A65` | brand-coloured **text on white** (5.19:1) |
+| cyan-700 | `#1F6655` | stronger text on white |
 
-Use `#00C49A` as the single accent for CTAs, links, active states, glows, and highlights. Don't introduce a second accent hue for the same purpose.
+- **Brand fills take black text.** White on jade is 2.33:1 and fails WCAG.
+- Secondary: lagoon `#40C9C8` for map connections, second chart series and gradient ends, never for links. Leaf `#60B46D` appears only inside gradients (Tailwind `emerald-400`).
+- **Violet is retired.** It isn't in the logo; the `violet-*` scale is remapped to jade. Don't add purple.
+- Status colours sit outside the brand hue band: success `#9BD86A`, warning `#F2B544`, error `#F47C70`, info `#7FAEF5`.
 
-**Secondary accent — violet `#6366f1`** (CSS var `--violet`). Reserved deliberately for **one surface only: the chat launcher/Aria widget**. Do not spread violet into buttons, links, or general UI — that dilutes the single-accent system the rest of the site relies on.
+**Dark-first (OLED).** Dark is the default theme (`<html data-theme="dark">`); light remains a user choice.
 
-**Theme tokens** (swap automatically via `[data-theme="dark"]` on a root element, not `prefers-color-scheme`):
-
-| Token | Light | Dark |
+| Token | Dark (default) | Light |
 |---|---|---|
-| `--background` | `#ffffff` | `#020203` |
-| `--text` | `#0f172a` | `#ffffff` |
-| `--text-muted` | `#334155` | `#9ca3af` |
-| `--surface` | `rgba(255,255,255,0.78)` | `rgba(255,255,255,0.05)` |
-| `--border` | `rgba(15,23,42,0.08)` | `rgba(255,255,255,0.1)` |
-| `--btn-bg` | `#00C49A` | `#ffffff` |
-| `--btn-text` | `#ffffff` | `#000000` |
+| `--background` | `#000000` | `#ffffff` |
+| `--text` | `#EDEFEE` (not pure white) | `#0B1211` |
+| `--text-muted` | `#B4BCBA` | `#3A4543` |
+| `--surface` | `#111515` | `rgba(255,255,255,0.78)` |
+| `--border` | `#232A29` | `rgba(11,18,17,0.09)` |
+| `--btn-bg` / `--btn-text` | `#4DBC9F` / `#000000` | `#4DBC9F` / `#000000` |
 
-Never hardcode `#0f172a`/`#ffffff`/etc. directly in new components — use the `background`/`surface`/`text`/`muted`/`border`/`btn-bg`/`btn-text` Tailwind color aliases (they map to these CSS vars) so dark mode works automatically.
+Never hardcode theme colours in components. Use the `background`/`surface`/`text`/`muted`/`border`/`btn-bg`/`btn-text` Tailwind aliases, or `--te-*` tokens.
 
-**Logo mark only** uses its own 4-stop gradient, distinct from the primary teal — don't reuse these outside the logo SVG: `#60B46D → #4DBC9F → #46C5B3 → #40C9C8`.
+**Gradients and glow:** the text gradient (`.te-gradient-text`) goes on the homepage H1 only (at most one H1 per page). Hero glows stay at 6–10% and never animate. Allow at most one glowing element per viewport. Brand colour budget per viewport: about 6% jade and 2% lagoon/gradients; the rest is neutral.
 
 ## Typography
 
@@ -84,7 +89,7 @@ Micro-interaction/accessibility conventions already encoded in [src/theme.css](.
 
 ## Quick checklist before shipping new UI
 
-1. Accent color is teal `#00C49A` only (violet stays confined to the chat widget).
+1. Accent is logo jade `#4DBC9F` (`cyan-*` classes); brand fills use black text; no violet/purple.
 2. Body/UI font is Manrope; headings use Fraunces via `--font-display` (already wired to `h1`–`h4`/`.display-*` — don't hand-apply it elsewhere). No new `Space_Grotesk` usage.
 3. Colors reference the `background`/`surface`/`text`/`muted`/`border`/`btn-bg`/`btn-text` tokens, not hardcoded hex, so dark mode via `[data-theme="dark"]` works.
 4. Reuse an existing named class (`.premium-button`, `.glass`, `.card-lift`, etc.) before writing new CSS for the same pattern.
