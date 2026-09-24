@@ -4,6 +4,8 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Users2, ShieldCheck, Cpu, Server } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import RelatedLinks from '../components/RelatedLinks';
+import PremiumCloudShowcase from '../components/PremiumCloudShowcase';
+import { MICROSOFT_PARTNER } from '../constants/microsoftPartner';
 import { breadcrumbSchema } from '../utils/seo';
 import { COMPARISONS } from '../constants/comparisons';
 import { INDUSTRIES } from '../constants/industries';
@@ -172,6 +174,8 @@ const ServicesPage: React.FC = () => {
           title="Compare your options"
           links={COMPARISONS.map(c => ({ label: c.title, desc: c.subtitle, to: `/compare/${c.slug}` }))}
         />
+
+        {MICROSOFT_PARTNER.enabled && <PremiumCloudShowcase />}
 
         <RelatedLinks
           title="Industries we serve"

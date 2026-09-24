@@ -19,6 +19,7 @@ import {
 import { Routes, Route, useLocation, useNavigate, Link } from 'react-router-dom';
 import { TALENT_HUBS, STEPS, BOOKING_URL } from './constants';
 import { CASE_STUDIES, TESTIMONIALS } from './constants/proof';
+import { MICROSOFT_PARTNER, partnerBadgeLabel } from './constants/microsoftPartner';
 import { TalentHub } from './types';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { GeoProvider } from './contexts/GeoContext';
@@ -236,6 +237,30 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         fallbackImageSrc="/hero-global-ops.svg"
       >
         <div className="flex-1 min-w-0 max-w-[760px]">
+          {/* PARTNER BADGE — deep-links to the Microsoft cloud section on /services */}
+          {MICROSOFT_PARTNER.enabled && (
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-6"
+            >
+              <Link
+                to={`/services#${MICROSOFT_PARTNER.anchor}`}
+                className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-white/70 backdrop-blur transition-colors hover:border-white/30 hover:text-white"
+              >
+                <span className="relative flex h-1.5 w-1.5">
+                  {!shouldReduceMotion && (
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                  )}
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                </span>
+                {partnerBadgeLabel()}
+                <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
+              </Link>
+            </motion.div>
+          )}
+
           {/* EYEBROW — Operator positioning */}
           <motion.p
             initial={{ opacity: 0, y: 12 }}
