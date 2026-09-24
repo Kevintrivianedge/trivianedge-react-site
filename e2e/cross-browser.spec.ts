@@ -20,7 +20,9 @@ const ROUTES = [
 ];
 
 // Third-party noise we don't control (blocked trackers, offline CDNs in CI).
-const IGNORED = /googletagmanager|google-analytics|clarity\.ms|facebook|trustpilot|flagcdn|open-meteo|Failed to load resource/i;
+// "[Report Only]" notices come from Cloudflare Script Monitor (Page Shield),
+// which adds a sampled report-only CSP in production; it blocks nothing.
+const IGNORED = /googletagmanager|google-analytics|clarity\.ms|facebook|trustpilot|flagcdn|open-meteo|Failed to load resource|\[Report Only\]/i;
 
 function collectErrors(page: Page) {
   const errors: string[] = [];
