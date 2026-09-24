@@ -42,3 +42,8 @@ OmniRoute/
 # Google service-account keys for scripts/google-seo-report.mjs
 .secrets/
 *-sa.json
+
+# Playwright output and local Search Console reports (contain live search data)
+test-results/
+playwright-report/
+docs/seo-reports/
