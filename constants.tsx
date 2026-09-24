@@ -23,6 +23,7 @@ export const NAV_LINKS = [
     href: '/services',
     children: [
       { name: 'All Services', href: '/services' },
+      { name: 'Microsoft & Google Cloud', href: '/services/cloud' },
       { name: 'Business Process Outsourcing', href: '/services/bpo' },
       { name: 'Recruitment Process Outsourcing', href: '/services/rpo' },
       { name: 'Full-Cycle RPO', href: '/services/rpo/full-cycle-rpo', isSub: true },

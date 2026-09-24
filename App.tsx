@@ -24,7 +24,7 @@ import {
   ALL_KEYWORDS,
   KEYWORD_CLUSTERS,
 } from './utils/seo';
-import { getSEOTrendSignal, getTrendKeywords } from './utils/seoTrends';
+import { getTrendKeywords } from './utils/seoTrends';
 
 // Extracted components
 import Logo from './components/Logo';
@@ -64,6 +64,7 @@ const AIAutomationPage        = lazy(() => import('./pages/services/ai-developme
 const AIChatbotDevelopmentPage = lazy(() => import('./pages/services/ai-development/AIChatbotDevelopmentPage'));
 const MLOpsPage               = lazy(() => import('./pages/services/ai-development/MLOpsPage'));
 const ITOutsourcingPage       = lazy(() => import('./pages/services/ITOutsourcingPage'));
+const CloudServicesPage       = lazy(() => import('./pages/services/CloudServicesPage'));
 const VentureStudioPage       = lazy(() => import('./pages/VentureStudioPage'));
 const AriaOSPage               = lazy(() => import('./pages/AriaOSPage'));
 const AetherLogisticsPage       = lazy(() => import('./pages/AetherLogisticsPage'));
@@ -85,15 +86,15 @@ function getSEOProps(pathname: string) {
   // article schema, breadcrumb) so this only needs to fall through to the
   // generic default below — it must NOT also build a competing SEOHead here.
   if (pathname === '/blog') {
-    const signal = getSEOTrendSignal('blog');
+    // Fixed title/description: the rotating "Intelligence Feed" variants made
+    // the snippet unstable and didn't say what the blog is about.
     return {
-      title: signal.titleVariant,
-      description: signal.descriptionVariant,
-      keywords: `BPO insights, outsourcing blog, offshore development news, ${trendKeywords}`,
+      title: 'Blog | Outsourcing, AI and Cloud Insights | TrivianEdge',
+      description: 'Plain-English guides from TrivianEdge on offshore teams, AI development and cloud: real costs, how to decide, and case studies from client work.',
       canonical: `${SEO_CONFIG.siteUrl}/blog`,
       structuredData: breadcrumbSchema([
         { name: 'Home', url: SEO_CONFIG.siteUrl },
-        { name: 'Intelligence Feed', url: `${SEO_CONFIG.siteUrl}/blog` },
+        { name: 'Blog', url: `${SEO_CONFIG.siteUrl}/blog` },
       ]),
     };
   }
@@ -311,6 +312,7 @@ export default function App() {
                       <Route path="/terms" element={<TermsPage />} />
                       <Route path="/cookie-policy" element={<CookiePolicyPage />} />
                       <Route path="/services" element={<ServicesPage />} />
+                      <Route path="/services/cloud" element={<CloudServicesPage />} />
                       <Route path="/services/bpo" element={<BPOPage />} />
                       <Route path="/services/rpo" element={<RPOPage />} />
                       <Route path="/services/rpo/full-cycle-rpo" element={<FullCycleRPOPage />} />

@@ -8,6 +8,7 @@ import { test, expect, type Page } from '@playwright/test';
 const ROUTES = [
   '/',
   '/services',
+  '/services/cloud',
   '/services/ai-development',
   '/services/it-outsourcing',
   '/services/it-outsourcing/philippines',

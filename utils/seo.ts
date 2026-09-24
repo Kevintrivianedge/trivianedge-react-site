@@ -1,3 +1,4 @@
+import { COMPANY_SHORT } from '../constants/company';
 /**
  * TrivianEdge SEO Configuration & Schema.org Utilities
  * Centralises all SEO constants, keyword clusters, and structured-data builders.
@@ -13,9 +14,9 @@
 export const SEO_CONFIG = {
   siteName: 'TrivianEdge',
   siteUrl: 'https://www.trivianedge.com',
-  defaultTitle: 'TrivianEdge | BPO & Offshore Software Development Company | Canada',
-  defaultDescription:
-    'TrivianEdge is a Canada-based BPO and offshore outsourcing company. We deliver custom software development, IT outsourcing, global talent deployment, and managed remote teams across 6 time zones. 30-day deployment. Real results.',
+  defaultTitle: 'TrivianEdge | Cloud, AI & Offshore Teams | Toronto',
+  // Canonical company description; see constants/company.ts.
+  defaultDescription: COMPANY_SHORT,
   defaultKeywords:
     'BPO Canada, business process outsourcing, offshore software development, IT outsourcing, talent outsourcing, offshore development team, remote teams Canada, global staffing, managed IT services, AI staffing, custom software development, software development outsourcing, offshore BPO, outsourcing company Canada, TrivianEdge, global talent pipeline, remote workforce solutions, offshore team Philippines, software development company Canada',
   twitterHandle: '@TrivianEdge',
@@ -114,9 +115,11 @@ export function buildOrganizationSchema(): object {
       'https://x.com/trivianedge',
     ],
     knowsAbout: [
-      'Business Process Outsourcing', 'Bespoke Software Development', 'Offshore Software Development', 'IT Outsourcing',
-      'Global Talent Acquisition', 'Remote Team Management', 'AI Staffing',
-      'Managed IT Services', 'Cloud Operations',
+      'Microsoft 365', 'Microsoft Copilot', 'Microsoft Azure', 'Google Workspace', 'Google Cloud',
+      'Cloud Migration', 'Cloud Security', 'Managed Cloud Services',
+      'Generative AI', 'LLM Integration', 'AI Agents', 'AI Automation', 'Custom Software Development',
+      'Business Process Outsourcing', 'Recruitment Process Outsourcing', 'Offshore Software Development',
+      'Employer of Record', 'Remote Team Management',
     ],
     founder: { '@id': `${SEO_CONFIG.siteUrl}/about#founder` },
   };

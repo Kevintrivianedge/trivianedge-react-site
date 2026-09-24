@@ -35,7 +35,7 @@ const IndustriesIndexPage: React.FC = () => {
             <span className="text-xs font-bold uppercase tracking-widest">Back</span>
           </button>
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Industries We Serve</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Industries TrivianEdge works with</h1>
           <p className="text-muted text-lg md:text-xl leading-relaxed max-w-2xl">
             Every industry outsources differently. Here is how TrivianEdge's BPO, RPO, bespoke software, and AI development services apply to the industries we work in most.
           </p>

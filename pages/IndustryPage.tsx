@@ -66,7 +66,10 @@ const IndustryPage: React.FC = () => {
               <Building2 className="w-3 h-3" />
               Industries we serve
             </span>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">{industry.name}</h1>
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+              {/* Descriptive H1 (matches the page title), e.g. "Education Software & Outsourcing Solutions". */}
+              {industry.metaTitle ? industry.metaTitle.replace(/\s*\|\s*TrivianEdge\s*$/, '') : industry.name}
+            </h1>
             <p className="text-muted text-lg md:text-xl leading-relaxed">{industry.tagline}</p>
           </div>
 
