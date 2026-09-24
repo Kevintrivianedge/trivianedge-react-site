@@ -7,7 +7,10 @@
 //                              as a user on the Search Console property
 //   GSC_PROPERTY=sc-domain:trivianedge.com   (default)
 //
-//   node scripts/google-seo-report.mjs [--psi] [--gsc] [--urls /,/services]
+//   node scripts/google-seo-report.mjs [--psi] [--gsc] [--urls /,/services] [--submit-sitemap]
+//
+// --submit-sitemap resubmits /sitemap.xml first (needs the service account to
+// have Full permission on the property; read-only is enough for everything else).
 //
 // Writes docs/seo-reports/<date>.md and prints a summary. Either section runs
 // on its own when only its credential is set. No dependencies: the service
@@ -85,13 +88,13 @@ if (runPsi) {
 }
 
 // ------------------------------------------------------------ Search Console
-async function gscToken() {
+async function gscToken(scope = 'https://www.googleapis.com/auth/webmasters.readonly') {
   const sa = JSON.parse(readFileSync(process.env.GSC_SA_KEY, 'utf-8'));
   const b64 = o => Buffer.from(JSON.stringify(o)).toString('base64url');
   const now = Math.floor(Date.now() / 1000);
   const unsigned = `${b64({ alg: 'RS256', typ: 'JWT' })}.${b64({
     iss: sa.client_email,
-    scope: 'https://www.googleapis.com/auth/webmasters.readonly',
+    scope,
     aud: 'https://oauth2.googleapis.com/token',
     iat: now,
     exp: now + 3600,
@@ -119,8 +122,16 @@ async function gsc(token, path, init = {}) {
 
 if (runGsc) {
   if (!process.env.GSC_SA_KEY) throw new Error('GSC_SA_KEY is not set');
-  const { token, email } = await gscToken();
   const prop = encodeURIComponent(PROPERTY);
+  if (flag('--submit-sitemap')) {
+    const { token: rw } = await gscToken('https://www.googleapis.com/auth/webmasters');
+    const res = await fetch(`https://searchconsole.googleapis.com/webmasters/v3/sites/${prop}/sitemaps/${encodeURIComponent(SITE + '/sitemap.xml')}`, {
+      method: 'PUT', headers: { Authorization: `Bearer ${rw}` },
+    });
+    if (!res.ok) throw new Error(`Sitemap submit failed (${res.status}): ${(await res.json().catch(() => ({}))).error?.message || res.statusText}`);
+    console.log('Sitemap resubmitted: ' + SITE + '/sitemap.xml');
+  }
+  const { token, email } = await gscToken();
   out.push('## Search Console', '', `Property: \`${PROPERTY}\` · service account: \`${email}\``, '');
 
   // URL inspection: index status, canonical, mobile usability, rich results
