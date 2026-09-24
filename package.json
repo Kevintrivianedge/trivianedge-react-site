@@ -17,6 +17,7 @@
     "worker:dev": "wrangler dev",
     "generate-og": "node scripts/generate-og-image.mjs",
     "analyze:bundle": "node scripts/analyze-bundle.mjs",
+    "seo:report": "node scripts/google-seo-report.mjs",
     "deploy": "npm run build && wrangler deploy",
     "postdeploy": "node scripts/indexnow-submit.mjs"
   },

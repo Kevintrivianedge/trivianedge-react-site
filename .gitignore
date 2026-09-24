@@ -38,3 +38,7 @@ __pycache__/
 *.pyc
 .secrets/
 OmniRoute/
+
+# Google service-account keys for scripts/google-seo-report.mjs
+.secrets/
+*-sa.json
