@@ -1,0 +1,291 @@
+import React, { lazy, Suspense } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { TALENT_HUBS, STEPS, BOOKING_URL } from '../constants';
+import { CASE_STUDIES } from '../constants/proof';
+import { MICROSOFT_PARTNER, partnerBadgeLabel } from '../constants/microsoftPartner';
+import { PILLARS, HERO_FACTS, HOME_FAQS } from '../constants/home';
+import { TalentHub } from '../types';
+import Accordion from '../components/Accordion';
+import InquiryForm from '../components/InquiryForm';
+
+// The globe is canvas-only and purely visual, so it loads after the hero text.
+const OpsGlobe = lazy(() => import('../components/OpsGlobe'));
+
+// Real named clients only. width/height are intrinsic sizes to avoid CLS.
+const TRUST_CLIENTS = [
+  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', width: 86, height: 64 },
+  { name: 'Cargo Login', logo: '/logos/cargo-login.webp', width: 62, height: 64 },
+  { name: 'Keynotive', logo: '/logos/keynotive.webp', width: 201, height: 160 },
+  { name: 'Hub-Flx', logo: '/logos/hub-flx.webp', width: 250, height: 64 },
+  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', width: 69, height: 64 },
+  { name: 'MellieBugs', logo: '/logos/melliebugs.webp', width: 64, height: 64 },
+];
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+const SectionHead: React.FC<{ label: string; title: React.ReactNode; intro?: string; dark?: boolean }> = ({ label, title, intro, dark }) => (
+  <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 mb-12 md:mb-16">
+    <p className={`lg:col-span-3 text-[11px] font-bold uppercase tracking-[0.25em] pt-3 ${dark ? 'text-cyan-400' : 'text-cyan-600 dark:text-cyan-400'}`}>
+      {label}
+    </p>
+    <div className="lg:col-span-9">
+      <h2 className={`display-section font-semibold ${dark ? 'text-white' : 'text-text'}`}>{title}</h2>
+      {intro && <p className={`mt-5 text-lg max-w-2xl leading-relaxed ${dark ? 'text-white/60' : 'text-muted'}`}>{intro}</p>}
+    </div>
+  </div>
+);
+
+const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = ({ setSelectedHub }) => {
+  const reduceMotion = useReducedMotion();
+  const rise = (delay = 0) => ({
+    initial: { opacity: 0, y: reduceMotion ? 0 : 24 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.8, delay, ease: EASE },
+  });
+  const reveal = {
+    initial: { opacity: 0, y: reduceMotion ? 0 : 24 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.2 },
+    transition: { duration: 0.7, ease: EASE },
+  };
+
+  return (
+    <>
+      {/* ===== 1. HERO ===== */}
+      <section aria-label="Introduction" className="hero-dark relative overflow-hidden px-4 sm:px-6 pt-32 md:pt-40 pb-0">
+        {/* Hairline grid — reads as an engineering surface, fades out at the edges */}
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-[0.07] pointer-events-none"
+          style={{
+            backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
+            backgroundSize: '64px 64px',
+            maskImage: 'radial-gradient(ellipse 70% 60% at 60% 40%, #000 30%, transparent 75%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 60% 40%, #000 30%, transparent 75%)',
+          }}
+        />
+        <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-6 items-center">
+          <div className="lg:col-span-7">
+            {MICROSOFT_PARTNER.enabled && (
+              <motion.div {...rise(0)} className="mb-8">
+                <Link
+                  to={`/services#${MICROSOFT_PARTNER.anchor}`}
+                  className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-white/70 backdrop-blur transition-colors hover:border-white/30 hover:text-white"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" aria-hidden />
+                  {partnerBadgeLabel()}
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
+                </Link>
+              </motion.div>
+            )}
+
+            <motion.h1 {...rise(0.1)} className="display-hero font-semibold text-white">
+              Cloud, AI, and global teams.{' '}
+              <span className="text-white/45">One partner runs all three.</span>
+            </motion.h1>
+
+            <motion.p {...rise(0.25)} className="mt-8 text-lg md:text-xl text-white/65 max-w-xl leading-relaxed">
+              TrivianEdge is a Toronto-based technology partner. We migrate and manage Microsoft and Google cloud, build AI and
+              custom software, and staff offshore teams from six talent hubs.
+            </motion.p>
+
+            <motion.div {...rise(0.4)} className="mt-10 flex flex-col sm:flex-row gap-3">
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-cyan-400 px-7 py-4 font-bold text-black transition-colors hover:bg-cyan-300"
+              >
+                Book a 15-minute call
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+              </a>
+              <a
+                href="#services"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-7 py-4 font-bold text-white transition-colors hover:border-white/40 hover:bg-white/5"
+              >
+                What we do
+              </a>
+            </motion.div>
+          </div>
+
+          <div className="lg:col-span-5 relative aspect-square w-full max-w-[560px] mx-auto">
+            <Suspense fallback={null}>
+              <OpsGlobe />
+            </Suspense>
+          </div>
+        </div>
+
+        {/* Fact rail — plain, verifiable statements (also easy for AI search to quote) */}
+        <dl className="relative max-w-7xl mx-auto mt-12 lg:mt-4 grid grid-cols-2 md:grid-cols-4 border-t border-white/10">
+          {HERO_FACTS.map((f, i) => (
+            <div key={f.k} className={`py-6 md:py-8 ${i % 2 ? 'pl-5 md:pl-8' : ''} ${i > 0 ? 'md:pl-8 md:border-l md:border-white/10' : ''} ${i % 2 ? 'border-l border-white/10' : ''}`}>
+              <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">{f.k}</dt>
+              <dd className="mt-2 text-lg md:text-xl font-semibold text-white">{f.v}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      {/* ===== 2. SERVICES — editorial rows, not cards ===== */}
+      <section id="services" aria-labelledby="services-heading" className="section-shell px-4 md:px-6 scroll-mt-24">
+        <div className="max-w-7xl mx-auto">
+          <div id="services-heading">
+            <SectionHead
+              label="What we do"
+              title={<>Three services. <span className="text-muted">One contract.</span></>}
+              intro="Most companies juggle a cloud reseller, a dev shop, and a staffing agency. We bring all three under one roof, so nothing falls between vendors."
+            />
+          </div>
+
+          <div className="border-t border-border">
+            {PILLARS.map(p => (
+              <motion.article key={p.id} {...reveal} className="group relative grid lg:grid-cols-12 gap-6 lg:gap-10 py-10 md:py-14 border-b border-border">
+                <p className="lg:col-span-3 text-sm font-semibold text-muted tabular-nums">{p.kicker}</p>
+                <div className="lg:col-span-5">
+                  <h3 className="text-2xl md:text-3xl font-semibold text-text leading-tight">
+                    <Link to={p.href} className="after:absolute after:inset-0 focus-visible:outline-none">
+                      {p.title}
+                    </Link>
+                  </h3>
+                  <p className="mt-4 text-muted leading-relaxed max-w-md">{p.answer}</p>
+                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-cyan-600 dark:text-cyan-400">
+                    {p.cta}
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
+                  </span>
+                </div>
+                <ul className="lg:col-span-4 space-y-2.5 text-text/80">
+                  {p.items.map(item => (
+                    <li key={item} className="flex gap-3 text-[15px]">
+                      <span className="mt-2.5 h-px w-4 shrink-0 bg-cyan-400" aria-hidden />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-[-1px] h-px origin-left scale-x-0 bg-cyan-400 transition-transform duration-500 group-hover:scale-x-100" />
+              </motion.article>
+            ))}
+          </div>
+
+          {/* Hubs — the old map's job, done as a compact, clickable index */}
+          <motion.div {...reveal} className="mt-12 flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+            <p className="text-sm text-muted shrink-0">Talent hubs:</p>
+            <ul className="flex flex-wrap gap-2">
+              {TALENT_HUBS.map(hub => (
+                <li key={hub.id}>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedHub(hub)}
+                    className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:border-cyan-400 hover:text-cyan-600 dark:hover:text-cyan-400"
+                  >
+                    {hub.country}
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <Link to="/savings-calculator" className="md:ml-auto text-sm font-bold text-cyan-600 dark:text-cyan-400 hover:underline underline-offset-4">
+              Estimate your savings →
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ===== 3. PROOF ===== */}
+      <section id="proof" aria-labelledby="proof-heading" className="section-dark section-shell px-4 md:px-6">
+        <div className="max-w-7xl mx-auto">
+          <div id="proof-heading">
+            <SectionHead dark label="Client work" title={<>Real engagements. <span className="text-white/45">Plain outcomes.</span></>} />
+          </div>
+          <div className="grid md:grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-3xl overflow-hidden">
+            {CASE_STUDIES.map(study => (
+              <motion.article key={study.client} {...reveal} className="bg-[#07090a] p-8 md:p-10 flex flex-col">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-400">{study.sector}</p>
+                <h3 className="mt-3 text-2xl font-semibold text-white">{study.client}</h3>
+                <p className="mt-5 text-white/65 leading-relaxed">{study.outcome}</p>
+                <ul className="mt-auto pt-8 flex flex-wrap gap-2">
+                  {study.highlights.map(h => (
+                    <li key={h} className="rounded-full border border-white/10 px-3 py-1 text-xs text-white/55">{h}</li>
+                  ))}
+                </ul>
+              </motion.article>
+            ))}
+          </div>
+          <div className="mt-12 flex flex-col md:flex-row md:items-center gap-8">
+            <ul className="flex flex-wrap items-center gap-x-10 gap-y-6" aria-label="Clients">
+              {TRUST_CLIENTS.map(c => (
+                <li key={c.name}>
+                  <img src={c.logo} alt={c.name} width={c.width} height={c.height} loading="lazy" className="h-7 w-auto object-contain opacity-60 brightness-0 invert" />
+                </li>
+              ))}
+            </ul>
+            <Link to="/proof" className="md:ml-auto shrink-0 inline-flex items-center gap-1.5 text-sm font-bold text-cyan-400 hover:underline underline-offset-4">
+              Read the full case studies <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 4. HOW IT WORKS ===== */}
+      <section id="how-it-works" aria-labelledby="how-heading" className="section-shell px-4 md:px-6">
+        <div className="max-w-7xl mx-auto">
+          <div id="how-heading">
+            <SectionHead label="How it works" title="From first call to live team in about 30 days." />
+          </div>
+          <ol className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+            {STEPS.map(step => (
+              <motion.li key={step.number} {...reveal} className="border-t border-text/80 pt-6">
+                <span className="[font-family:var(--font-display)] text-5xl font-light text-cyan-600 dark:text-cyan-400 tabular-nums">{step.number}</span>
+                <h3 className="mt-5 text-lg font-semibold text-text">{step.title}</h3>
+                <p className="mt-3 text-sm text-muted leading-relaxed">{step.description}</p>
+              </motion.li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ===== 5. FAQ ===== */}
+      <section id="faq" aria-labelledby="faq-heading" className="section-tint section-shell px-4 md:px-6 border-t border-border">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-4 lg:sticky lg:top-28 self-start">
+            <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-cyan-600 dark:text-cyan-400">FAQ</p>
+            <h2 id="faq-heading" className="display-section font-semibold text-text mt-4">Straight answers.</h2>
+            <p className="mt-5 text-muted leading-relaxed">
+              Not covered here? <Link to="/contact" className="text-text underline underline-offset-4 hover:text-cyan-600">Ask us directly</Link>.
+            </p>
+          </div>
+          <div className="lg:col-span-8">
+            <Accordion items={HOME_FAQS} />
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 6. CONTACT ===== */}
+      <section id="contact" aria-labelledby="contact-heading" className="section-dark section-shell px-4 md:px-6">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-16">
+          <div className="lg:col-span-5">
+            <h2 id="contact-heading" className="display-section font-semibold text-white">Tell us what you need.</h2>
+            <p className="mt-6 text-lg text-white/60 leading-relaxed">
+              A cloud migration, an AI build, or a team. We usually reply the same business day with next steps and a rough estimate.
+            </p>
+            <div className="mt-10 space-y-3 text-white/70">
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 font-bold text-cyan-400 hover:underline underline-offset-4">
+                Book a 15-minute call <ArrowRight className="h-4 w-4" aria-hidden />
+              </a>
+              <p>
+                <a href="mailto:kevin.v@trivianedge.com" className="hover:text-white">kevin.v@trivianedge.com</a>
+                <span className="mx-2 text-white/30">·</span>
+                <a href="tel:+18883472489" className="hover:text-white">+1 888-347-2489</a>
+              </p>
+            </div>
+          </div>
+          <div className="lg:col-span-7 rounded-3xl bg-white dark:bg-white/5 p-6 md:p-10">
+            <InquiryForm />
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default HomePage;
