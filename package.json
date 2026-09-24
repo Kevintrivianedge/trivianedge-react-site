@@ -20,7 +20,8 @@
     "seo:report": "node scripts/google-seo-report.mjs",
     "deploy": "npm run build && wrangler deploy",
     "postdeploy": "node scripts/indexnow-submit.mjs",
-    "test:browsers": "playwright test -c playwright.prod.config.ts"
+    "test:browsers": "playwright test -c playwright.prod.config.ts",
+    "test:live": "playwright test -c playwright.live.config.ts"
   },
   "dependencies": {
     "@microsoft/clarity": "^1.0.2",
