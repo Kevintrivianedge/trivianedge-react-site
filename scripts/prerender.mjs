@@ -19,6 +19,7 @@
 import { readFileSync, mkdirSync, writeFileSync, rmSync } from 'fs';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { dirname, join } from 'path';
+import Beasties from 'beasties';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
@@ -29,6 +30,54 @@ const ssrEntry = join(rootDir, 'dist-ssr', 'entry-server.js');
 // Prerendered so src/worker.ts has a dedicated 404 snapshot (NotFoundPage sets
 // noIndex) to serve for unmatched paths instead of the homepage's.
 const NOT_FOUND_ROUTE = '/__404-snapshot';
+
+// Inline each route's critical CSS and load the full stylesheet without
+// blocking first paint (Lighthouse "render-blocking requests", ~150 ms on
+// mobile). The prerendered markup is exactly what paints first, so the
+// inlined subset is enough to render it fully styled. Deferred stylesheets
+// are switched on by public/critical-loader.js rather than beasties' inline
+// onload="" handler, for the CSP reason documented in that file.
+const beasties = new Beasties({
+  path: distDir,
+  publicPath: '/',
+  preload: 'media',
+  noscriptFallback: true,
+  // The stylesheet is shared by every route: never rewrite it.
+  pruneSource: false,
+  // @font-face rules are added separately below (fontFaceCss).
+  inlineFonts: false,
+  preloadFonts: false,
+  keyframes: 'critical',
+  // State classes toggled by JS before the full sheet may have arrived:
+  // scroll-reveal (.active), theme switching, open menus/dialogs. Space_Grotesk:
+  // the wordmark's escaped arbitrary-value class, which beasties fails to match.
+  allowRules: [/Space_Grotesk/, /\.active\b/, /\.dark\b/, /\.light\b/, /data-theme/, /prefers-color-scheme/, /prefers-reduced-motion/],
+  logLevel: 'warn',
+});
+
+// beasties can't see which families are used (they're set through CSS custom
+// properties), so it drops every @font-face and first paint would fall back
+// and then swap (CLS). Inline them all: unicode-range keeps the browser to the
+// files a page actually needs, and the Latin ones are preloaded in index.html.
+let fontFaceCss;
+function getFontFaceCss(page) {
+  if (fontFaceCss === undefined) {
+    const href = page.match(/<link rel="stylesheet"[^>]*href="(\/assets\/index-[^"]+\.css)"/)?.[1];
+    if (!href) throw new Error('main stylesheet link not found in prerendered HTML');
+    const css = readFileSync(join(distDir, href), 'utf-8');
+    fontFaceCss = (css.match(/@font-face\{[^}]*\}/g) || []).join('');
+    if (!fontFaceCss) throw new Error(`no @font-face rules found in ${href}`);
+  }
+  return fontFaceCss;
+}
+
+async function inlineCriticalCss(page) {
+  const fonts = getFontFaceCss(page);
+  const out = await beasties.process(page);
+  return out
+    .replace(/ onload="this\.media='all'"/g, '')
+    .replace('<style>', `<style>${fonts}`);
+}
 
 function getRoutePaths() {
   const sitemap = readFileSync(join(rootDir, 'public/sitemap.xml'), 'utf-8');
@@ -79,7 +128,9 @@ async function main() {
     try {
       const { html, helmet } = await render(routePath);
       if (html.length < 2000) throw new Error(`suspiciously short output (${html.length} chars)`);
-      const page = applyHead(template, helmet).replace('<div id="root"></div>', `<div id="root">${html}</div>`);
+      const page = await inlineCriticalCss(
+        applyHead(template, helmet).replace('<div id="root"></div>', `<div id="root">${html}</div>`),
+      );
       outputs.push([routePath, page]);
     } catch (err) {
       failures.push(`${routePath}: ${err.message}`);

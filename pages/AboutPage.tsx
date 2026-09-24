@@ -102,7 +102,9 @@ const AboutPage: React.FC = () => {
             <div className="glass p-8 md:p-10 rounded-[2rem] border-border grid md:grid-cols-[auto_1fr] gap-8 items-start">
               <div className="flex md:flex-col items-center md:items-start gap-4 md:w-40">
                 <img
-                  src="/founder/kevin-vaz.webp"
+                  src="/founder/kevin-vaz-256.webp"
+                  srcSet="/founder/kevin-vaz-128.webp 128w, /founder/kevin-vaz-256.webp 256w"
+                  sizes="(min-width: 768px) 128px, 96px"
                   alt="Kevin Vaz, Founder of TrivianEdge"
                   width={128}
                   height={128}
@@ -140,6 +142,8 @@ const AboutPage: React.FC = () => {
               <div className="flex md:flex-col items-center md:items-start gap-4 md:w-40">
                 <img
                   src="/team/velautham-prabaharan.webp"
+                  srcSet="/team/velautham-prabaharan-128.webp 128w, /team/velautham-prabaharan.webp 256w"
+                  sizes="(min-width: 768px) 128px, 96px"
                   alt="Velautham Prabaharan, Director of Marketing & Sales at TrivianEdge"
                   width={128}
                   height={128}
