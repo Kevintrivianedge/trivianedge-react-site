@@ -1,12 +1,20 @@
 # TrivianEdge
 
-> TrivianEdge is a Toronto-based technology partner with three service lines: Microsoft and Google cloud (Microsoft 365, Copilot, Azure, Google Workspace, Google Cloud), AI and custom software development, and offshore teams (BPO, RPO, and engineering) from six talent hubs, typically live in about 30 days.
+> TrivianEdge is a Toronto-based technology partner that sets up and runs Microsoft and Google cloud, builds AI and custom software, and hires and manages offshore teams, all under one contract.
 
-TrivianEdge is headquartered in Toronto, Ontario, Canada. It is a member of the Microsoft AI Cloud Partner Program (Partner ID 7154428); it is not a Microsoft CSP or Solutions Partner. It delivers Google Workspace and Google Cloud projects but is not a Google partner. Talent hubs: the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica. TrivianEdge works with in-country employer-of-record and payroll partners, so clients can hire in those countries without setting up a foreign entity. Offshore teams usually cost up to 40% less than hiring locally in Canada, the US, or the UK.
+TrivianEdge is a technology partner headquartered in Toronto, Canada. We help growing companies with three things, under one contract and one point of contact.
+
+Cloud: we plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud. TrivianEdge is a member of the Microsoft AI Cloud Partner Program (Partner ID 7154428). It is not a Microsoft CSP or Solutions Partner, and it is not a Google partner.
+
+AI and software: we build generative AI features, LLM integrations, AI agents and automations, and custom web applications. Clients own all the code.
+
+Global teams: we recruit, employ and manage dedicated staff in the Philippines, Vietnam, Sri Lanka, Turkey, South Africa and Costa Rica, for technical and non-technical roles, working through in-country employer-of-record and payroll partners. Teams are typically working within about 30 days, usually at up to 40% less than hiring locally in Canada, the US or the UK.
+
+TrivianEdge was founded in 2025 by Kevin Vaz, who has spent more than 20 years in outsourcing and operations.
 
 ## Cloud
 
-- [Microsoft & Google cloud services](https://www.trivianedge.com/services#microsoft-cloud): Microsoft 365 and Copilot rollout, Azure migration and cost review, Google Workspace migration (either direction), Google Cloud architecture, identity, MFA, and security baselines.
+- [Microsoft & Google cloud services](https://www.trivianedge.com/services/cloud): Microsoft 365 and Copilot rollout, Azure migration and cost review, Google Workspace migration (either direction), Google Cloud architecture, identity, MFA, and security baselines.
 
 ## Services
 

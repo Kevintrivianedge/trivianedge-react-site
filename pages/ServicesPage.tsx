@@ -1,16 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Users2, ShieldCheck, Cpu, Server } from 'lucide-react';
+import { ArrowRight, Users2, ShieldCheck, Cpu, Server, Cloud } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import RelatedLinks from '../components/RelatedLinks';
 import PremiumCloudShowcase from '../components/PremiumCloudShowcase';
 import { MICROSOFT_PARTNER } from '../constants/microsoftPartner';
 import { breadcrumbSchema } from '../utils/seo';
+import { COMPANY_SHORT } from '../constants/company';
 import { COMPARISONS } from '../constants/comparisons';
 import { INDUSTRIES } from '../constants/industries';
 
 const SERVICES_HUB = [
+  {
+    title: 'Microsoft & Google Cloud',
+    shortName: 'Cloud',
+    href: '/services/cloud',
+    icon: Cloud,
+    accent: 'text-cyan-400',
+    iconBg: 'from-cyan-400/20 to-cyan-400/5',
+    iconBorder: 'border-cyan-400/25',
+    glow: 'bg-cyan-400/8',
+    description: 'We plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud, including moves between Microsoft and Google.',
+    tags: ['Microsoft 365 & Copilot', 'Azure', 'Google Workspace', 'Google Cloud'],
+  },
   {
     title: 'Business Process Outsourcing',
     shortName: 'BPO',
@@ -68,8 +81,8 @@ const ServicesPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="Services | TrivianEdge: BPO, RPO & Bespoke Software Development"
-        description="Explore TrivianEdge's full service offering: BPO, RPO, bespoke software, and AI development. Offshore teams deployed in as little as 30 days across 6 countries."
+        title="Services | Cloud, AI & Software, Offshore Teams | TrivianEdge"
+        description="TrivianEdge services: Microsoft and Google cloud, AI and custom software development, and offshore teams (BPO, RPO, engineering) from six countries, typically live in about 30 days."
         keywords="TrivianEdge services, BPO RPO software development, outsourcing services Canada, offshore team services, AI development services, bespoke software development services"
         canonical="https://www.trivianedge.com/services"
         structuredData={[
@@ -102,11 +115,11 @@ const ServicesPage: React.FC = () => {
               What we do
             </p>
             <h1 className="text-4xl md:text-6xl font-bold text-text mb-6 leading-tight">
-              Everything we do,{' '}
-              <span className="text-cyan-400">in one place.</span>
+              Cloud, AI and software,{' '}
+              <span className="text-cyan-400">and global teams.</span>
             </h1>
             <p className="text-muted text-lg leading-relaxed max-w-2xl mx-auto mb-8">
-              TrivianEdge is a BPO, RPO, and bespoke software development company, AI development included as part of that software practice. One partner, three core lines, deployed in as little as 30 days.
+              {COMPANY_SHORT}
             </p>
             <Link
               to="/contact"

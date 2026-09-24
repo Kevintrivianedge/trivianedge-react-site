@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Building2, Globe2, Users, Clock, Linkedin } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import { TALENT_HUBS } from '../constants';
+import { COMPANY_ONE_LINER, COMPANY_SHORT, COMPANY_LONG } from '../constants/company';
 import { buildWebPageSchema, buildFounderPersonSchema, breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
 
 const STATS = [
@@ -19,14 +20,14 @@ const AboutPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="About TrivianEdge | Toronto BPO, RPO & Software Company"
-        description="TrivianEdge is a Toronto-based BPO, RPO, and offshore software development company deploying offshore teams across six global talent hubs in as little as 30 days."
-        keywords="about TrivianEdge, Toronto outsourcing company, Canadian BPO company, offshore staffing company Canada, global talent hubs, TrivianEdge company overview"
+        title="About TrivianEdge | Toronto Technology Partner for Cloud, AI & Offshore Teams"
+        description={COMPANY_SHORT}
+        keywords="about TrivianEdge, what does TrivianEdge do, Toronto technology partner, Microsoft cloud partner Toronto, AI development company Canada, offshore teams Canada, Kevin Vaz"
         canonical={aboutUrl}
         structuredData={[
           buildWebPageSchema({
             name: 'About TrivianEdge',
-            description: 'TrivianEdge is a Toronto-based BPO, RPO, and offshore software development company deploying offshore teams across six global talent hubs in as little as 30 days.',
+            description: COMPANY_SHORT,
             url: aboutUrl,
           }),
           breadcrumbSchema([
@@ -52,9 +53,9 @@ const AboutPage: React.FC = () => {
               <Building2 className="w-3 h-3" />
               About TrivianEdge
             </span>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">Build the team. Run the system.</h1>
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">A Toronto technology partner for cloud, AI and global teams.</h1>
             <p className="text-muted text-lg md:text-xl leading-relaxed">
-              TrivianEdge is a Toronto, Ontario-based BPO, RPO, and bespoke software development company. We deploy offshore teams in as little as 30 days, coordinating employment through in-country employer-of-record and payroll partners so clients never need to set up a foreign entity themselves.
+              {COMPANY_ONE_LINER}
             </p>
             <p className="text-muted/70 text-sm leading-relaxed mt-4">
               TrivianEdge Inc. was federally incorporated in Canada under the Canada Business Corporations Act in June 2025, registered at 37 Wiggens Ct, Toronto, ON.
@@ -72,10 +73,23 @@ const AboutPage: React.FC = () => {
           </div>
 
           <div className="max-w-3xl mb-16 reveal">
-            <h2 className="display-section text-3xl md:text-4xl font-bold mb-4">What we do</h2>
-            <p className="text-muted text-lg leading-relaxed mb-4">
-              We run four service lines: Business Process Outsourcing (BPO), Recruitment Process Outsourcing (RPO), bespoke software development (custom development, cloud/DevOps, QA, IT outsourcing), and AI development. Clients come to us to build offshore back-office, engineering, or support teams without the overhead of setting up and running a foreign entity themselves.
-            </p>
+            <h2 className="display-section text-3xl md:text-4xl font-bold mb-4">What does TrivianEdge do?</h2>
+            <p className="text-muted text-lg leading-relaxed mb-6">{COMPANY_LONG[0]}</p>
+            <dl className="space-y-5 mb-6">
+              {[
+                { term: 'Cloud', to: '/services/cloud', text: COMPANY_LONG[1] },
+                { term: 'AI and software', to: '/services/ai-development', text: COMPANY_LONG[2] },
+                { term: 'Global teams', to: '/services', text: COMPANY_LONG[3] },
+              ].map(item => (
+                <div key={item.term} className="border-l-2 border-cyan-400 pl-5">
+                  <dt className="font-bold text-text mb-1">
+                    <Link to={item.to} className="hover:text-cyan-600 dark:hover:text-cyan-400">{item.term}</Link>
+                  </dt>
+                  <dd className="text-muted leading-relaxed">{item.text.replace(/^[^:]+:\s*/, '')}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="text-muted leading-relaxed">{COMPANY_LONG[4]}</p>
             <div className="flex flex-wrap gap-3 mt-6">
               <Link to="/services" className="inline-flex items-center px-5 py-2.5 rounded-xl font-bold text-sm premium-button-secondary">All services</Link>
               <Link to="/proof" className="inline-flex items-center px-5 py-2.5 rounded-xl font-bold text-sm premium-button-secondary">Case studies</Link>

@@ -30,7 +30,7 @@ export const PILLARS: Pillar[] = [
     answer:
       'We plan, migrate, secure, and manage Microsoft 365, Azure, Google Workspace, and Google Cloud environments for growing companies.',
     items: ['Microsoft 365 & Copilot rollout', 'Azure migration & cost review', 'Google Workspace migration', 'Google Cloud architecture', 'Identity, MFA & security baselines'],
-    href: '/services#microsoft-cloud',
+    href: '/services/cloud',
     cta: 'Explore cloud services',
   },
   {

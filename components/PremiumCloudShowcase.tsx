@@ -49,7 +49,7 @@ const pillars = [
   {
     icon: Layers,
     title: 'White-Glove Migration',
-    body: 'Dedicated transition team ensuring zero downtime during tenant moves.',
+    body: 'A dedicated transition team and a planned, phased cut-over, so staff keep working during tenant moves.',
   },
   {
     icon: ShieldCheck,
