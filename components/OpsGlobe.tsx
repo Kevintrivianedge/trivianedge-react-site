@@ -39,12 +39,16 @@ const fromLatLon = (lat: number, lon: number): Vec3 => {
   return [Math.cos(phi) * Math.sin(lambda), Math.sin(phi), Math.cos(phi) * Math.cos(lambda)];
 };
 
-const rotate = ([x, y, z]: Vec3, yaw: number): Vec3 => {
+const COS_TILT = Math.cos(TILT), SIN_TILT = Math.sin(TILT);
+const ARC_STEPS = 40;
+
+// Trig for the yaw is computed once per frame, not once per point.
+const rotator = (yaw: number) => {
   const cy = Math.cos(yaw), sy = Math.sin(yaw);
-  const x1 = x * cy + z * sy;
-  const z1 = -x * sy + z * cy;
-  const ct = Math.cos(TILT), st = Math.sin(TILT);
-  return [x1, y * ct - z1 * st, y * st + z1 * ct];
+  return ([x, y, z]: Vec3): Vec3 => {
+    const z1 = -x * sy + z * cy;
+    return [x * cy + z * sy, y * COS_TILT - z1 * SIN_TILT, y * SIN_TILT + z1 * COS_TILT];
+  };
 };
 
 // Spherical interpolation, lifted off the surface mid-arc.
@@ -68,7 +72,7 @@ const OpsGlobe: React.FC<{ className?: string }> = ({ className = '' }) => {
     if (!canvas || !ctx) return;
 
     const golden = Math.PI * (3 - Math.sqrt(5));
-    const count = window.matchMedia('(max-width: 768px)').matches ? DOTS_MOBILE : DOTS_DESKTOP;
+    const count = window.innerWidth <= 768 ? DOTS_MOBILE : DOTS_DESKTOP;
     const dots: Vec3[] = Array.from({ length: count }, (_, i) => {
       const y = 1 - (i / (count - 1)) * 2;
       const r = Math.sqrt(1 - y * y);
@@ -77,6 +81,10 @@ const OpsGlobe: React.FC<{ className?: string }> = ({ className = '' }) => {
     const hq = GLOBE_POINTS.find(p => p.hq)!;
     const hqVec = fromLatLon(hq.lat, hq.lon);
     const pins = GLOBE_POINTS.map(p => ({ ...p, v: fromLatLon(p.lat, p.lon) }));
+    // Arcs are fixed on the sphere, so slerp them once; frames only rotate.
+    const arcs = pins.map(p => (p.hq ? [] : Array.from({ length: ARC_STEPS + 1 }, (_, i) => arcPoint(hqVec, p.v, i / ARC_STEPS))));
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const frameMs = isMobile ? FRAME_MS * 1.5 : FRAME_MS;
 
     let size = 0;
     let dpr = 1;
@@ -95,7 +103,8 @@ const OpsGlobe: React.FC<{ className?: string }> = ({ className = '' }) => {
     let yaw = 1.2;
     let raf = 0;
     let visible = true;
-    let started = false; // animation waits for idle-after-load; see start()
+    let started = false; // first frame waits for idle-after-load; see start()
+    let animating = false; // rotation waits for first interaction or a quiet delay
     let last = performance.now();
 
     // Dots are drawn in a few alpha buckets, one path each, instead of one
@@ -103,11 +112,12 @@ const OpsGlobe: React.FC<{ className?: string }> = ({ className = '' }) => {
     const buckets: number[][] = Array.from({ length: ALPHA_BUCKETS }, () => []);
 
     const draw = (now: number) => {
-      if (!reduceMotion && visible) raf = requestAnimationFrame(draw);
+      if (!reduceMotion && visible && animating) raf = requestAnimationFrame(draw);
       const dt = now - last;
-      if (dt < FRAME_MS && !reduceMotion) return;
+      if (dt < frameMs && !reduceMotion && animating) return;
       last = now;
-      if (!reduceMotion) yaw += Math.min(dt, 64) * 0.00012;
+      if (!reduceMotion && animating) yaw += Math.min(dt, 64) * 0.00012;
+      const rotate = rotator(yaw);
 
       const w = canvas.width, h = canvas.height;
       const R = size * dpr * 0.42;
@@ -126,7 +136,7 @@ const OpsGlobe: React.FC<{ className?: string }> = ({ className = '' }) => {
       // Point cloud; back hemisphere dimmed rather than hidden for depth.
       for (const b of buckets) b.length = 0;
       for (const d of dots) {
-        const [x, y, z] = rotate(d, yaw);
+        const [x, y, z] = rotate(d);
         const bi = z > 0 ? 1 + Math.min(ALPHA_BUCKETS - 2, Math.floor(z * (ALPHA_BUCKETS - 1))) : 0;
         buckets[bi].push(cx + x * R, cy - y * R);
       }
@@ -145,19 +155,19 @@ const OpsGlobe: React.FC<{ className?: string }> = ({ className = '' }) => {
       pins.forEach((p, i) => {
         if (p.hq) return;
         ctx.beginPath();
-        let started = false;
-        for (let t = 0; t <= 1.0001; t += 0.025) {
-          const [x, y, z] = rotate(arcPoint(hqVec, p.v, t), yaw);
-          if (z < -0.15) { started = false; continue; }
+        const arc = arcs[i].map(rotate);
+        let penDown = false;
+        for (const [x, y, z] of arc) {
+          if (z < -0.15) { penDown = false; continue; }
           const px = cx + x * R, py = cy - y * R;
-          if (!started) { ctx.moveTo(px, py); started = true; } else ctx.lineTo(px, py);
+          if (!penDown) { ctx.moveTo(px, py); penDown = true; } else ctx.lineTo(px, py);
         }
         ctx.strokeStyle = `rgba(${ACCENT}, 0.35)`;
         ctx.lineWidth = 1 * dpr;
         ctx.stroke();
 
         const t = (phase + i * 0.17) % 1;
-        const [x, y, z] = rotate(arcPoint(hqVec, p.v, t), yaw);
+        const [x, y, z] = arc[Math.round(t * ARC_STEPS)];
         if (z > -0.15) {
           ctx.fillStyle = `rgba(${ACCENT}, 0.95)`;
           ctx.beginPath();
@@ -169,7 +179,7 @@ const OpsGlobe: React.FC<{ className?: string }> = ({ className = '' }) => {
       // Pins + labels (front hemisphere only)
       ctx.font = `${500} ${11 * dpr}px Manrope, system-ui, sans-serif`;
       for (const p of pins) {
-        const [x, y, z] = rotate(p.v, yaw);
+        const [x, y, z] = rotate(p.v);
         if (z <= 0.05) continue;
         const px = cx + x * R, py = cy - y * R;
         ctx.fillStyle = p.hq ? '#ffffff' : `rgb(${ACCENT})`;
@@ -197,10 +207,29 @@ const OpsGlobe: React.FC<{ className?: string }> = ({ className = '' }) => {
       if (visible && started) { last = performance.now(); raf = requestAnimationFrame(draw); }
     };
     document.addEventListener('visibilitychange', onVisibility);
+    // Draw one static frame when idle, then rotate only after the visitor
+    // interacts (or after a quiet delay), keeping the load window free of
+    // per-frame work.
     let idleId = 0;
+    let delayId = 0;
+    const INTERACTIONS = ['pointerdown', 'pointermove', 'scroll', 'keydown', 'touchstart'] as const;
+    const animate = () => {
+      if (animating) return;
+      animating = true;
+      INTERACTIONS.forEach(e => window.removeEventListener(e, animate));
+      window.clearTimeout(delayId);
+      if (started && visible) { cancelAnimationFrame(raf); last = performance.now(); raf = requestAnimationFrame(draw); }
+    };
     const start = () => {
       const ric = (window as any).requestIdleCallback as ((cb: () => void, o?: { timeout: number }) => number) | undefined;
-      const kick = () => { started = true; last = 0; raf = requestAnimationFrame(draw); };
+      const kick = () => {
+        started = true;
+        last = 0;
+        raf = requestAnimationFrame(draw);
+        if (reduceMotion) return;
+        INTERACTIONS.forEach(e => window.addEventListener(e, animate, { once: true, passive: true }));
+        delayId = window.setTimeout(animate, 6000);
+      };
       idleId = ric ? ric(kick, { timeout: 2500 }) : window.setTimeout(kick, 1200);
     };
     if (document.readyState === 'complete') start();
@@ -210,6 +239,8 @@ const OpsGlobe: React.FC<{ className?: string }> = ({ className = '' }) => {
       cancelAnimationFrame(raf);
       window.removeEventListener('load', start);
       ((window as any).cancelIdleCallback ?? window.clearTimeout)(idleId);
+      window.clearTimeout(delayId);
+      INTERACTIONS.forEach(e => window.removeEventListener(e, animate));
       ro.disconnect();
       io.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
