@@ -79,7 +79,7 @@ export const ParallaxVideoHero: React.FC<ParallaxVideoHeroProps> = ({
             style={{
               backgroundImage: posterUrl
                 ? `url(${posterUrl})`
-                : 'linear-gradient(135deg, rgba(0, 15, 30, 0.8) 0%, rgba(0, 196, 154, 0.1) 100%)',
+                : 'linear-gradient(135deg, rgba(0, 15, 30, 0.8) 0%, rgba(77, 188, 159, 0.1) 100%)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
@@ -99,7 +99,7 @@ export const ParallaxVideoHero: React.FC<ParallaxVideoHeroProps> = ({
           ease: 'easeInOut',
         }}
         style={{
-          background: `linear-gradient(135deg, rgba(0, 20, 40, ${0.3 + scrollProgress * 0.3}) 0%, rgba(0, 196, 154, ${0.05 + scrollProgress * 0.15}) 100%)`,
+          background: `linear-gradient(135deg, rgba(0, 20, 40, ${0.3 + scrollProgress * 0.3}) 0%, rgba(77, 188, 159, ${0.05 + scrollProgress * 0.15}) 100%)`,
         }}
       />
 

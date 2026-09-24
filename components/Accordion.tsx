@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
 export interface AccordionItem {
@@ -43,13 +43,13 @@ const Accordion: React.FC<AccordionProps> = ({ items }) => {
               aria-controls={`faq-panel-${i}`}
             >
               <span>{item.question}</span>
-              <motion.span
+              <m.span
                 animate={{ rotate: isOpen ? 180 : 0 }}
                 transition={{ duration: 0.25 }}
                 className="shrink-0 text-cyan-400"
               >
                 <ChevronDown className="w-5 h-5" />
-              </motion.span>
+              </m.span>
             </button>
             {/* Answer stays in the DOM even when collapsed (height/opacity animated,
                 not conditionally mounted) so crawlers that don't execute JS or click
@@ -57,7 +57,7 @@ const Accordion: React.FC<AccordionProps> = ({ items }) => {
                 aria-hidden keeps screen readers from announcing it while collapsed
                 (CSS clipping alone doesn't remove content from the a11y tree) without
                 removing it from the raw HTML those crawlers read. */}
-            <motion.div
+            <m.div
               id={`faq-panel-${i}`}
               role="region"
               aria-labelledby={`faq-trigger-${i}`}
@@ -70,7 +70,7 @@ const Accordion: React.FC<AccordionProps> = ({ items }) => {
               <p className="px-6 pb-5 text-muted leading-relaxed">
                 {item.answer}
               </p>
-            </motion.div>
+            </m.div>
           </div>
         );
       })}

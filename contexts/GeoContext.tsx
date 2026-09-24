@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { fetchGeoLocation, GEO_CACHE_KEY } from '../utils/geoService';
+import React, { createContext, useContext, useState, useEffect, startTransition } from 'react';
+import { fetchGeoLocation } from '../utils/geoService';
 import { GeoLocationData } from '../types';
 
 interface GeoContextType {
@@ -13,41 +13,31 @@ const GeoContext = createContext<GeoContextType>({ geoData: null, isLoading: tru
  * GeoProvider — fetches geolocation once and shares it across all consumers.
  *
  * Both GreetingBanner and ChatSidebar previously issued independent
- * ipapi.co requests. Lifting state here eliminates the duplicate network call.
+ * /api/geo requests. Lifting state here eliminates the duplicate network call.
  * The fetch result is cached in localStorage for 24 hours (see geoService.ts).
  */
 export const GeoProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [geoData, setGeoData] = useState<GeoLocationData | null>(() => {
-    if (typeof window === 'undefined') return null;
-    // Warm-start from the cache so there's no flash on return visits
-    const cached = localStorage.getItem(GEO_CACHE_KEY);
-    if (cached) {
-      try {
-        const parsed = JSON.parse(cached) as { data: GeoLocationData; expiresAt: number };
-        if (Date.now() < parsed.expiresAt) return parsed.data;
-      } catch {
-        localStorage.removeItem(GEO_CACHE_KEY);
-      }
-    }
-    return null;
-  });
-
-  const [isLoading, setIsLoading] = useState<boolean>(!geoData);
+  // Starts empty on both server and client so hydration matches; the cached
+  // or fetched value is applied after mount as a transition, which React can
+  // defer until hydration finishes (a plain update here caused React #421).
+  const [geoData, setGeoData] = useState<GeoLocationData | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (geoData) return; // already resolved from cache
     let cancelled = false;
-
-    fetchGeoLocation().then((data) => {
-      if (!cancelled) {
+    const apply = (data: GeoLocationData) => {
+      if (cancelled) return;
+      startTransition(() => {
         setGeoData(data);
         setIsLoading(false);
-      }
-    });
+      });
+    };
+
+    // fetchGeoLocation returns the 24h localStorage cache when it's fresh.
+    fetchGeoLocation().then(apply);
 
     return () => { cancelled = true; };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // intentionally run once — geoData is initialised from localStorage
+  }, []);
 
   return (
     <GeoContext.Provider value={{ geoData, isLoading }}>

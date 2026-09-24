@@ -23,7 +23,7 @@ export const InteractiveServiceCard: React.FC<InteractiveServiceCardProps> = ({
     <motion.div
       className="rounded-2xl border border-border bg-white dark:bg-white/5 p-6 md:p-8 cursor-pointer overflow-hidden"
       onClick={() => setIsExpanded(!isExpanded)}
-      whileHover={{ borderColor: 'rgba(0, 196, 154, 0.3)' }}
+      whileHover={{ borderColor: 'rgba(77, 188, 159, 0.3)' }}
       transition={{ duration: 0.3 }}
     >
       {/* Header */}

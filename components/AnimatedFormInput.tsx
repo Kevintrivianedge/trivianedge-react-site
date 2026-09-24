@@ -60,7 +60,7 @@ export const AnimatedFormInput: React.FC<AnimatedFormInputProps> = ({
           className="relative"
           animate={{
             boxShadow: isFocused
-              ? '0 0 0 3px rgba(0, 196, 154, 0.1), 0 0 20px rgba(0, 196, 154, 0.2)'
+              ? '0 0 0 3px rgba(77, 188, 159, 0.1), 0 0 20px rgba(77, 188, 159, 0.2)'
               : hasError
               ? '0 0 0 3px rgba(239, 68, 68, 0.1), 0 0 20px rgba(239, 68, 68, 0.1)'
               : '0 0 0 1px rgba(51, 65, 85, 0.3)',

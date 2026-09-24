@@ -1,169 +1,107 @@
 /**
- * Build-time prerender step: after `vite build`, boot the built dist/ on a local
- * preview server and use headless Chromium to snapshot each real route's fully
- * rendered HTML to disk. The Cloudflare Worker then serves these static
- * snapshots directly instead of the bare SPA shell (see src/worker.ts).
+ * Build-time prerender: server-renders every route with React
+ * (entry-server.tsx → renderToPipeableStream) and writes the result into a
+ * copy of the built dist/index.html. The Cloudflare Worker serves these files
+ * directly (see src/worker.ts), and index.tsx hydrates them.
  *
- * Why: crawlers that don't execute JavaScript (GPTBot, ClaudeBot,
- * PerplexityBot, CCBot) only ever see whatever HTML is returned on first
- * request. Without this step they'd see an empty <div id="root"></div> for
- * every route — robots.txt/llms.txt inviting them in doesn't help if there's
- * no actual content to read once they arrive.
+ * Why real SSR instead of a headless-browser snapshot (the previous approach):
+ * a DOM snapshot is taken after effects have run and has no Suspense boundary
+ * markers (<!--$-->) or text-node separators (<!-- -->), so it can never match
+ * React's first client render. Hydration failed with React #418 on every
+ * route, forcing a full client re-render (~0.5s main thread on mobile).
+ * renderToPipeableStream emits exactly the markup hydrateRoot expects.
  *
- * Run automatically as part of `npm run build`.
+ * Crawlers that don't run JavaScript (GPTBot, ClaudeBot, PerplexityBot) still
+ * get full content: onAllReady waits for every lazy route before writing.
+ *
+ * Run automatically as part of `npm run build`, after `vite build --ssr`.
  */
-import { chromium } from 'playwright';
-import { preview } from 'vite';
-import { readFileSync, mkdirSync, writeFileSync } from 'fs';
-import { fileURLToPath } from 'url';
+import { readFileSync, mkdirSync, writeFileSync, rmSync } from 'fs';
+import { fileURLToPath, pathToFileURL } from 'url';
 import { dirname, join } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
 const distDir = join(rootDir, 'dist');
+const ssrEntry = join(rootDir, 'dist-ssr', 'entry-server.js');
 
-// Not a real, indexable page — deliberately excluded from sitemap.xml (a
-// noindex URL listed in a sitemap is its own SEO anti-pattern). Prerendered
-// separately so src/worker.ts has a dedicated 404 snapshot (NotFoundPage,
-// which already sets noIndex) to serve for unmatched paths, instead of
-// reusing the homepage's snapshot — see the fallback comment in worker.ts.
+// Not a real, indexable page — deliberately excluded from sitemap.xml.
+// Prerendered so src/worker.ts has a dedicated 404 snapshot (NotFoundPage sets
+// noIndex) to serve for unmatched paths instead of the homepage's.
 const NOT_FOUND_ROUTE = '/__404-snapshot';
 
 function getRoutePaths() {
   const sitemap = readFileSync(join(rootDir, 'public/sitemap.xml'), 'utf-8');
   const matches = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)];
-  return [...matches.map(([, url]) => new URL(url).pathname), NOT_FOUND_ROUTE];
+  return [...new Set(matches.map(([, url]) => new URL(url).pathname)), NOT_FOUND_ROUTE];
+}
+
+/**
+ * Replace the template's generic head tags with the route's Helmet output.
+ * Helmet only knows about tags it created, so without this every page would
+ * ship two conflicting copies of title/description/og:* (the homepage default
+ * from index.html plus the real per-page one).
+ */
+function applyHead(template, helmet) {
+  if (!helmet) return template;
+  const title = helmet.title.toString();
+  const meta = helmet.meta.toString();
+  const link = helmet.link.toString();
+  const script = helmet.script.toString();
+
+  let html = template;
+  if (title.replace(/<[^>]+>/g, '').trim()) html = html.replace(/<title>[\s\S]*?<\/title>/, '');
+
+  // Drop template <meta> tags whose name/property the page redefines.
+  const keys = new Set([...meta.matchAll(/(?:name|property)="([^"]+)"/g)].map(m => m[1]));
+  html = html.replace(/<meta\s+(?:name|property)="([^"]+)"[^>]*>\s*/g, (tag, key) => (keys.has(key) ? '' : tag));
+
+  // Same for canonical / alternate links.
+  if (/rel="canonical"/.test(link)) html = html.replace(/<link\s+rel="canonical"[^>]*>\s*/g, '');
+  if (/rel="alternate"/.test(link)) html = html.replace(/<link\s+rel="alternate"\s+hreflang[^>]*>\s*/g, '');
+
+  return html.replace('</head>', `${title}${meta}${link}${script}\n</head>`);
 }
 
 async function main() {
+  const { render } = await import(pathToFileURL(ssrEntry).href);
+  const template = readFileSync(join(distDir, 'index.html'), 'utf-8');
+  if (!template.includes('<div id="root"></div>')) {
+    throw new Error('dist/index.html has no empty <div id="root"></div>; was it already prerendered?');
+  }
+
   const routes = getRoutePaths();
-  console.log(`Prerendering ${routes.length} routes...`);
-
-  const server = await preview({ root: rootDir, preview: { port: 0, strictPort: false } });
-  const url = server.resolvedUrls?.local?.[0];
-  if (!url) throw new Error('Could not resolve preview server URL');
-
-  const browser = await chromium.launch({ args: ['--no-sandbox'] });
-  const context = await browser.newContext({ reducedMotion: 'reduce' });
-  // Skip the branded intro splash (sessionStorage-gated, 2.2s) so snapshots
-  // capture real page content instead of the intro animation frame.
-  await context.addInitScript(() => {
-    window.sessionStorage.setItem('trivian_intro_shown_v2', 'true');
-  });
-  // Tells index.tsx not to fire GA4/Clarity/cookie-consent during this
-  // headless pass — see the isPrerendering guard there for why: this run
-  // waits well past requestIdleCallback's timeout, so without this flag
-  // those "deferred" resources would get baked into the static snapshot
-  // as if they were eager/static, making every real visitor's first load
-  // render-block on them instead of actually deferring.
-  await context.addInitScript(() => {
-    window.__PRERENDER__ = true;
-  });
-
+  console.log(`Prerendering ${routes.length} routes (React SSR)...`);
   const failures = [];
+  const outputs = [];
 
   for (const routePath of routes) {
     try {
-      const page = await context.newPage();
-      await page.goto(`${url.replace(/\/$/, '')}${routePath}`, {
-        waitUntil: 'networkidle',
-        timeout: 30_000,
-      });
-      // Let React finish its post-load effects (SEOHead title/meta, any
-      // client-side data derivation) settle before snapshotting.
-      await page.waitForTimeout(500);
-
-      // Most sections use scroll-triggered reveal animations (IntersectionObserver
-      // adds an "active"/visible class, or a Framer Motion whileInView prop flips
-      // opacity 0 -> 1) that only fire once an element crosses the viewport. A
-      // snapshot taken without scrolling captures those sections mid-animation —
-      // e.g. opacity: 0 baked into the static HTML — which is exactly what Google's
-      // renderer does too (it doesn't scroll), and exactly what non-JS crawlers
-      // (GPTBot, ClaudeBot, PerplexityBot) would receive verbatim since they never
-      // execute the JS that would otherwise reveal it. Scrolling the full height
-      // before snapshotting ensures every reveal has fired first.
-      const scrollHeight = await page.evaluate(() => document.body.scrollHeight);
-      for (let y = 0; y < scrollHeight; y += 400) {
-        await page.evaluate((yy) => window.scrollTo(0, yy), y);
-        await page.waitForTimeout(120);
-      }
-      await page.evaluate(() => window.scrollTo(0, 0));
-      await page.waitForTimeout(300);
-
-      // The static index.html shell ships sane default <meta name/property> tags
-      // (description, keywords, robots, og:*, twitter:*) as a fallback for the
-      // brief window before React mounts. Once SEOHead (react-helmet-async) runs,
-      // it appends its own page-specific versions of those same tags rather than
-      // replacing the originals — Helmet only manages tags it created, and has no
-      // way to know the static ones exist. page.content() captures both, so every
-      // prerendered snapshot shipped two conflicting copies of ~20 meta tags (the
-      // generic homepage default plus the real per-page one), which risks search
-      // engines picking the wrong one. Keep only the last occurrence of each
-      // duplicated name/property — that's the one Helmet inserted.
-      await page.evaluate(() => {
-        const seen = new Map();
-        document.querySelectorAll('head meta[name], head meta[property]').forEach(el => {
-          const key = el.getAttribute('name') ?? el.getAttribute('property');
-          if (seen.has(key)) seen.get(key).remove();
-          seen.set(key, el);
-        });
-      });
-
-      // CookieYes's dashboard has its own "Facebook Pixel" integration configured
-      // in addition to the hand-rolled one this app already loads via
-      // public/meta-pixel.js (deferred, same pixel ID). Once CookieYes's script
-      // runs during the headless page load above, it injects its own copy —
-      // a large inline config script plus a second connect.facebook.net/fbevents.js
-      // — directly into <head>, ahead of the title, fonts, and app bundle.
-      // page.content() captures that injected markup verbatim, so every
-      // prerendered snapshot (including dist/index.html, served as-is to real
-      // visitors on "/") shipped a duplicate, render-blocking pixel load in
-      // front of every other resource on the page. Strip it here rather than
-      // disabling the integration in the CookieYes dashboard, since the dashboard
-      // config can drift back at any time and this check is idempotent either way.
-      await page.evaluate(() => {
-        document.querySelectorAll('head script[src*="connect.facebook.net"]').forEach(el => el.remove());
-      });
-
-      // The main app CSS and the Google Fonts stylesheet are both loaded
-      // non-blocking for real visitors (media="print" -> "all" swap via
-      // /critical-loader.js's load listeners) — but by the time this
-      // headless page has reached networkidle, those listeners have already
-      // fired, so page.content() captures the POST-swap, eager state and
-      // bakes it into the static snapshot every real visitor gets. That
-      // silently turns both deferred resources back into render-blocking
-      // ones for everyone, defeating the defer entirely — the same failure
-      // mode as the requestIdleCallback-deferred scripts guarded by
-      // __PRERENDER__ above, just for CSS instead of JS. Reset them to their
-      // pre-load form here so the shipped HTML preserves the actual deferred
-      // behavior; real visitors' own critical-loader.js resolves them
-      // exactly as before.
-      await page.evaluate(() => {
-        document.querySelectorAll('link[rel="stylesheet"][media="all"]').forEach((el) => {
-          el.setAttribute('media', 'print');
-        });
-      });
-
-      const html = await page.content();
-      const outDir = routePath === '/' ? distDir : join(distDir, routePath.replace(/^\//, ''));
-      mkdirSync(outDir, { recursive: true });
-      writeFileSync(join(outDir, 'index.html'), html);
-      console.log(`  ✓ ${routePath}`);
-      await page.close();
+      const { html, helmet } = await render(routePath);
+      if (html.length < 2000) throw new Error(`suspiciously short output (${html.length} chars)`);
+      const page = applyHead(template, helmet).replace('<div id="root"></div>', `<div id="root">${html}</div>`);
+      outputs.push([routePath, page]);
     } catch (err) {
       failures.push(`${routePath}: ${err.message}`);
       console.error(`  ✗ ${routePath}: ${err.message}`);
     }
   }
 
-  await browser.close();
-  await server.close();
-
   if (failures.length > 0) {
     throw new Error(`Prerendering failed for ${failures.length} route(s):\n${failures.join('\n')}`);
   }
 
+  // Write only after every route succeeded, so a failed build never leaves a
+  // half-prerendered dist/ (the root index.html doubles as the template).
+  for (const [routePath, page] of outputs) {
+    const outDir = routePath === '/' ? distDir : join(distDir, routePath.replace(/^\//, ''));
+    mkdirSync(outDir, { recursive: true });
+    writeFileSync(join(outDir, 'index.html'), page);
+  }
+  rmSync(join(rootDir, 'dist-ssr'), { recursive: true, force: true });
   console.log(`Prerendered ${routes.length} routes successfully.`);
+  // renderToPipeableStream can leave timers (e.g. the per-route timeout) pending.
+  process.exit(0);
 }
 
 main().catch((err) => {

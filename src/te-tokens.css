@@ -1,0 +1,182 @@
+/* ==========================================================================
+   TrivianEdge colour system: OLED-first tokens
+   Derived from the logo mark: #60B46D → #4DBC9F → #46C5B3 → #40C9C8
+   (components/Logo.tsx). Contrast ratios are WCAG 2.x, measured against
+   #000000 and --te-surface-card unless noted. See docs/color-system.
+   ========================================================================== */
+
+:root {
+  /* ---- Logo source colours (never edit; everything else derives) ---- */
+  --te-logo-leaf:   #60B46D; /* hsl(129 36% 54%): gradient start, top-left */
+  --te-logo-jade:   #4DBC9F; /* hsl(164 45% 52%): centre of mass of the mark */
+  --te-logo-aqua:   #46C5B3; /* hsl(171 52% 52%) */
+  --te-logo-lagoon: #40C9C8; /* hsl(180 56% 52%): gradient end, bottom-right */
+  --te-logo-ink:    #111111; /* wordmark on light grounds */
+
+  /* ---- Backgrounds ---- */
+  --te-bg-oled:      #000000; /* page ground, hero, footer */
+  --te-bg-primary:   #050707; /* long reading sections */
+  --te-bg-section:   #090C0C; /* alternating section band */
+  --te-surface-elev: #0E1212; /* nav bar, sticky elements */
+  --te-surface-card: #111515; /* cards, panels */
+  --te-surface-modal:#161B1B; /* dialogs, popovers, menus */
+  --te-surface-input:#0B0E0E; /* form fields */
+
+  /* ---- Borders ---- */
+  --te-border-subtle:  #161B1B; /* card edge on black: separation, not outline */
+  --te-border:         #232A29; /* dividers, table rules */
+  --te-border-strong:  #343C3C; /* hovered card, emphasised divider */
+  --te-border-input:   #5A6462; /* form field edge: 3.17:1 vs input, meets 1.4.11 */
+  --te-border-active:  #4DBC9F; /* selected / focused-within */
+
+  /* ---- Text ---- */
+  --te-text-primary:   #EDEFEE; /* 18.18:1 on black */
+  --te-text-secondary: #B4BCBA; /* 10.84:1 */
+  --te-text-tertiary:  #8C9694; /*  6.91:1 */
+  --te-text-muted:     #7C8684; /*  5.60:1 black, 4.90:1 card */
+  --te-text-disabled:  #48504E; /*  2.53:1: disabled only, never content */
+  --te-text-placeholder:#7C8684;/*  5.17:1 on input */
+  --te-text-on-brand:  #000000; /*  9.01:1 on jade. White fails (2.33:1). */
+
+  /* ---- Brand accents ---- */
+  --te-brand:            #4DBC9F;
+  --te-brand-hover:      #62CBAE;
+  --te-brand-active:     #3FA88D;
+  --te-brand-soft:       rgba(77, 188, 159, 0.10);
+  --te-brand-muted:      #2F6F5F;
+  --te-brand-border:     rgba(77, 188, 159, 0.40);
+  --te-brand-glow:       rgba(77, 188, 159, 0.18);
+  --te-secondary:        #40C9C8;
+  --te-secondary-hover:  #5FD5D4;
+  --te-secondary-active: #34AEAD;
+  --te-support:          #60B46D; /* gradient start only; not a UI colour */
+
+  /* ---- Interaction ---- */
+  --te-link:        #62CBAE;
+  --te-link-hover:  #8FE3CB;
+  --te-focus:       #8FE3CB; /* 14.02:1 on black */
+  --te-nav-active:  #EDEFEE;
+  --te-nav-hover:   #B4BCBA;
+  --te-btn-disabled-bg:   #1A1F1F;
+  --te-btn-disabled-text: #6E7876;
+  --te-tooltip-bg:   #EDEFEE;
+  --te-tooltip-text: #0A0C0C;
+
+  /* ---- Status (hue-separated from the teal brand band 129–180°) ---- */
+  --te-success: #9BD86A; /* 95° lime-green */
+  --te-warning: #F2B544;
+  --te-error:   #F47C70;
+  --te-info:    #7FAEF5;
+  --te-neutral: #8C9694;
+
+  /* ---- Data visualisation ---- */
+  --te-data-1: #4DBC9F; /* primary series */
+  --te-data-2: #7FAEF5; /* secondary series */
+  --te-data-3: #E3B878; /* tertiary */
+  --te-data-4: #B79CE8; /* quaternary, only when 4 series are unavoidable */
+  --te-data-grid: #1A1F1F;
+  --te-data-axis: #8C9694;
+
+  /* ---- Elevation ---- */
+  --te-shadow-card:  0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 24px rgba(0, 0, 0, 0.45);
+  --te-shadow-modal: 0 24px 64px rgba(0, 0, 0, 0.6);
+
+  /* ---- Gradients ---- */
+  --te-gradient-brand:   linear-gradient(135deg, #60B46D 0%, #4DBC9F 45%, #40C9C8 100%);
+  --te-gradient-button:  linear-gradient(135deg, #58B983 0%, #4DBC9F 50%, #46C5B3 100%);
+  --te-gradient-hero:
+    radial-gradient(60% 50% at 72% 18%, rgba(77, 188, 159, 0.10) 0%, rgba(77, 188, 159, 0) 70%),
+    radial-gradient(40% 40% at 8% 92%, rgba(64, 201, 200, 0.06) 0%, rgba(64, 201, 200, 0) 70%),
+    #000000;
+  --te-gradient-border:  linear-gradient(135deg, rgba(96, 180, 109, 0.55) 0%, rgba(64, 201, 200, 0.12) 45%, rgba(64, 201, 200, 0) 100%);
+  --te-gradient-mesh:
+    radial-gradient(35% 45% at 20% 20%, rgba(96, 180, 109, 0.05) 0%, transparent 70%),
+    radial-gradient(35% 45% at 80% 30%, rgba(64, 201, 200, 0.05) 0%, transparent 70%),
+    radial-gradient(50% 40% at 50% 100%, rgba(77, 188, 159, 0.04) 0%, transparent 70%);
+  --te-gradient-section: linear-gradient(180deg, #000000 0%, #090C0C 100%);
+  --te-gradient-hairline:linear-gradient(90deg, rgba(77, 188, 159, 0) 0%, rgba(77, 188, 159, 0.35) 50%, rgba(77, 188, 159, 0) 100%);
+  --te-gradient-text:    linear-gradient(100deg, #EDEFEE 0%, #EDEFEE 38%, #9FDCC6 62%, #4DBC9F 82%, #40C9C8 100%);
+}
+
+/* ---- Premium H1 text gradient: hero H1 only, once per page ---- */
+.te-gradient-text {
+  color: var(--te-text-primary); /* fallback */
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .te-gradient-text {
+    background: var(--te-gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+@media (forced-colors: active) {
+  .te-gradient-text { -webkit-text-fill-color: CanvasText; background: none; }
+}
+
+/* ---- Buttons ---- */
+.te-brand-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  min-height: 44px; padding: 0.875rem 1.75rem; border: 0; border-radius: 999px;
+  background: var(--te-brand); color: var(--te-text-on-brand);
+  font-weight: 700; text-decoration: none; cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.te-brand-button:hover  { background: var(--te-brand-hover); box-shadow: 0 0 0 6px var(--te-brand-soft); }
+.te-brand-button:active { background: var(--te-brand-active); box-shadow: none; }
+.te-brand-button:disabled, .te-brand-button[aria-disabled="true"] {
+  background: var(--te-btn-disabled-bg); color: var(--te-btn-disabled-text); box-shadow: none; cursor: not-allowed;
+}
+
+/* ---- Cards ---- */
+.te-card {
+  position: relative; border-radius: 20px;
+  background: var(--te-surface-card);
+  border: 1px solid var(--te-border-subtle);
+  box-shadow: var(--te-shadow-card);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.te-card::before { /* gradient border, revealed on hover */
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px;
+  background: var(--te-gradient-border);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+}
+.te-card:hover { border-color: var(--te-border-strong); background: #131818; }
+.te-card:hover::before { opacity: 1; }
+
+/* ---- Glow: one focal element per viewport, never on text ---- */
+.te-glow { box-shadow: 0 0 0 1px var(--te-brand-border), 0 0 32px var(--te-brand-glow); }
+
+/* ---- Focus ---- */
+.te-focus-ring:focus-visible,
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--te-focus);
+  outline-offset: 2px;
+}
+
+/* ---- Glass: nav bar and overlays on imagery only ---- */
+.te-glass {
+  background: rgba(14, 18, 18, 0.72);
+  border: 1px solid rgba(237, 239, 238, 0.08);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Forms ---- */
+.te-input {
+  min-height: 44px; width: 100%; padding: 0.75rem 1rem; border-radius: 12px;
+  background: var(--te-surface-input); color: var(--te-text-primary);
+  border: 1px solid var(--te-border-input);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.te-input::placeholder { color: var(--te-text-placeholder); }
+.te-input:focus { outline: none; border-color: var(--te-brand); box-shadow: 0 0 0 3px var(--te-brand-soft); }
+.te-input[aria-invalid="true"] { border-color: var(--te-error); box-shadow: 0 0 0 3px rgba(244, 124, 112, 0.14); }
+.te-input[data-valid="true"]   { border-color: var(--te-success); }
+
+@media (prefers-reduced-motion: reduce) {
+  .te-brand-button, .te-card, .te-card::before, .te-input { transition: none; }
+}

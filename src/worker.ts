@@ -1094,7 +1094,6 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 // Explicitly allowlists only the origins the app actually needs:
 //   - Google Analytics (gtag.js)
 //   - Microsoft Clarity (analytics + session replay)
-//   - ipapi.co (geolocation)
 //   - Open-Meteo (weather)
 //   - Trustpilot (TrustBox review-collector widget on the Trust page)
 //   - Anthropic API (proxied through the worker, never called from browser)
@@ -1108,11 +1107,11 @@ function buildBookingLinks(name: string, email: string, locale?: string, timezon
 const CSP_HEADER =
   "default-src 'self'; " +
   "script-src 'self' https://www.googletagmanager.com https://connect.facebook.net https://static.cloudflareinsights.com https://*.clarity.ms https://widget.trustpilot.com; " +
-  "connect-src 'self' https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com https://*.clarity.ms https://widget.trustpilot.com; " +
+  "connect-src 'self' https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com https://*.clarity.ms https://widget.trustpilot.com; " +
   "frame-src https://widget.trustpilot.com; " +
   "img-src 'self' data: https:; " +
-  "font-src 'self' https://fonts.gstatic.com; " +
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+  "font-src 'self'; " +
+  "style-src 'self' 'unsafe-inline'; " +
   "frame-ancestors 'none'; " +
   "base-uri 'self'; " +
   "form-action 'self'; " +
@@ -1157,6 +1156,8 @@ const BASE_SECURITY_HEADERS: Record<string, string> = {
 // since Headers.set() replaces rather than appends.
 function cacheControlFor(pathname: string): string {
   if (pathname.startsWith('/assets/')) return 'public, max-age=31536000, immutable';
+  // Not content-hashed, so long-lived but not immutable; rename the file to bust.
+  if (pathname.startsWith('/fonts/')) return 'public, max-age=2592000, stale-while-revalidate=86400';
   if (/\.(svg|png)$/.test(pathname)) return 'public, max-age=86400, stale-while-revalidate=86400';
   if (pathname.endsWith('.ico')) return 'public, max-age=86400';
   if (pathname === '/manifest.json') return 'public, max-age=3600';
@@ -1275,6 +1276,27 @@ export default {
         return new Response(
           JSON.stringify({ status: 'ok', timestamp: Date.now(), anthropic_key_set: !!env.ANTHROPIC_API_KEY }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+        );
+      }
+      // Visitor geolocation from Cloudflare's own edge metadata. Replaces a
+      // browser call to ipapi.co: no third-party request, no CORS failures,
+      // no extra connection on page load. Never cached: it is per-visitor.
+      if (url.pathname === '/api/geo' && request.method === 'GET') {
+        const cf = (request as unknown as { cf?: Record<string, unknown> }).cf ?? {};
+        const code = typeof cf.country === 'string' ? cf.country : 'US';
+        let countryName = code;
+        try { countryName = new Intl.DisplayNames(['en'], { type: 'region' }).of(code) ?? code; } catch { /* keep code */ }
+        const num = (v: unknown) => (typeof v === 'string' || typeof v === 'number') && !Number.isNaN(Number(v)) ? Number(v) : undefined;
+        return new Response(
+          JSON.stringify({
+            country_code: code,
+            country_name: countryName,
+            city: typeof cf.city === 'string' ? cf.city : undefined,
+            timezone: typeof cf.timezone === 'string' ? cf.timezone : undefined,
+            latitude: num(cf.latitude),
+            longitude: num(cf.longitude),
+          }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'private, no-store' } },
         );
       }
       if (url.pathname === '/api/chat' && request.method === 'POST') {

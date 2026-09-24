@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-CA">
+<html lang="en-CA" data-theme="dark" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +10,7 @@
     <meta name="keywords" content="global operations, offshore talent, BPO Canada, business process outsourcing, offshore software development, IT outsourcing, talent deployment, managed remote teams, TrivianEdge">
     <meta name="author" content="TrivianEdge Global">
     <meta name="application-name" content="TrivianEdge">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#000000">
     <meta name="rating" content="general">
     <meta name="revisit-after" content="1 day">
     <meta name="language" content="English">
@@ -77,47 +77,22 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.json">
     <!-- CSP: 'unsafe-inline' in script-src is required for JSON-LD structured-data injected by react-helmet-async -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://static.cloudflareinsights.com https://*.clarity.ms https://widget.trustpilot.com; connect-src 'self' https://ipapi.co https://api.open-meteo.com https://api.resend.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com https://*.clarity.ms https://widget.trustpilot.com; frame-src https://widget.trustpilot.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; worker-src 'self' blob:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://static.cloudflareinsights.com https://*.clarity.ms https://widget.trustpilot.com; connect-src 'self' https://api.open-meteo.com https://api.resend.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com https://*.clarity.ms https://widget.trustpilot.com; frame-src https://widget.trustpilot.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; worker-src 'self' blob:;">
 
-    <!-- DNS prefetch for performance -->
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://flagcdn.com" crossorigin>
 
-    <!-- Google Fonts, loaded as a non-blocking media="print" -> "all" swap
-         (same pattern as the main app CSS bundle below) instead of a
-         synchronous <link rel="stylesheet">, so the font request no longer
-         sits in the render-blocking critical path. font-display=swap in the
-         URL means fallback text still shows immediately either way.
-         Originally used <link rel="preload" as="style"> instead, but that
-         relies on the preload link's own 'load' event, which measurably
-         doesn't fire reliably across engines (confirmed live: listener
-         attached, the resource returned 200, document.readyState reached
-         "complete", and the event still never fired) — media="print"/"all"
-         doesn't have that problem since the resource is genuinely loaded as
-         a (temporarily inactive) stylesheet, not merely preloaded.
-         The swap itself runs from /critical-loader.js, an external,
-         same-origin script (see that file for why: inline <script> bodies
-         and inline onload="" attributes are the only things a CSP's
-         script-src can gate behind a nonce/hash, and an edge layer outside
-         this app's own control has been observed doing exactly that on some
-         requests — an external same-origin file isn't subject to it either
-         way. Optimized weights: Manrope only loads 400/600/700 (actual
-         usage); Fraunces loads 400-700 range for headings.
-         The script tag below is deliberately deferred: Vite injects its
-         own CSS <link> further down in <head> than this tag, so running
-         critical-loader.js any earlier means querySelectorAll finds zero
-         matching elements for it — no listener ever gets attached, and the
-         whole site's stylesheet stays stuck at media="print" (invisible)
-         forever. defer guarantees the full document is parsed, so every
-         target <link> exists by the time this runs, regardless of where
-         Vite happens to place its own tag. -->
-    <link rel="stylesheet" media="print" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
+    <!-- Self-hosted variable fonts (public/fonts, SIL OFL). Preloading the two
+         Latin files gets them in before first paint in most loads, so the
+         font swap (previously 0.25 CLS from Google Fonts arriving late)
+         usually never happens; metric-matched fallbacks in src/theme.css
+         cover the rest. Latin-ext files load on demand via unicode-range. -->
+    <link rel="preload" href="/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- critical-loader.js swaps deferred (media="print") stylesheets to
+         media="all" once loaded. Deferred so every target <link> exists
+         when it runs; see that file for why it's external. -->
     <script src="/critical-loader.js" defer></script>
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap" rel="stylesheet"></noscript>
 
 <!-- Vite bundles all dependencies, no browser importmap needed -->
 
@@ -131,44 +106,7 @@
          requestIdleCallback the same way as GA4 and Amplitude below, instead
          of running eagerly here at head-parse time. -->
 
-    <!-- Pre-boot scrim: a plain, undecorated cover -- deliberately NOT a
-         branded splash/intro screen. Competitor research (BPO/offshore
-         peers TaskUs/Toptal/Remote.com, agency peers Netguru/Fireart,
-         SaaS/Awwwards-tier peers Linear/Ramp/Vercel/Attio) turned up zero
-         sites using a full-screen loading gate -- all of them paint straight
-         into real content, premium look coming from the content itself
-         (video hero, entrance micro-animation), never a screen the visitor
-         has to wait out. A branded splash here would make TrivianEdge the
-         outlier for no benefit.
-         What this covers instead: src/worker.ts serves every route as a
-         prerendered snapshot (scripts/prerender.mjs), so #root already has
-         real content on arrival -- the "static"/unstyled flash is that
-         content briefly painting before the main CSS bundle and Google
-         Fonts swap on from media="print" (see critical-loader.js). This
-         scrim just matches the background color so that brief gap reads as
-         nothing (not as a loading screen), then fades out fast the moment
-         styles are ready. Genuinely inline (not the deferred stylesheet),
-         so it paints on first parse with no dependency on anything else
-         loading. index.tsx removes it once the deferred stylesheets are
-         active; the <noscript> rule guards visitors who never run that
-         removal script. -->
-    <style>
-        #preboot-splash {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: #ffffff;
-            opacity: 1;
-            transition: opacity 0.15s ease;
-        }
-        #preboot-splash.preboot-splash-hide {
-            opacity: 0;
-            pointer-events: none;
-        }
-        @media (prefers-color-scheme: dark) {
-            #preboot-splash { background: #020203; }
-        }
-    </style>
+    
 </head>
 <body>
     <noscript><img height="1" width="1" style="display:none"
@@ -178,10 +116,6 @@
     <!-- Skip to main content, visible on keyboard focus for screen reader / keyboard users (WCAG 2.1 AA) -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- See the pre-boot scrim comment in <head> for why this plain div
-         exists instead of a branded splash. -->
-    <div id="preboot-splash" aria-hidden="true"></div>
-    <noscript><style>#preboot-splash { display: none; }</style></noscript>
 
     <div id="root"></div>
 <script type="module" src="/index.tsx"></script>

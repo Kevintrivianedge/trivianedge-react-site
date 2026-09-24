@@ -21,6 +21,10 @@ html = html.replace(
   (match, before, href, after) => {
     // Keep Google Fonts and other critical resources synchronous
     if (href.includes('fonts.googleapis.com')) return match;
+    // The main app stylesheet (~17 KB gzipped) stays render-blocking: the
+    // prerendered HTML can then paint styled on first frame, with no scrim
+    // waiting on JS. Deferring it cost ~3.7s of LCP render delay on mobile.
+    if (/\/assets\/index-[^/]*\.css$/.test(href)) return match;
 
     // Defer Vite-generated CSS
     return `<link rel="stylesheet" media="print"${before}href="${href}"${after}>`;

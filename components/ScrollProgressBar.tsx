@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 export const ScrollProgressBar: React.FC = () => {
   const [progress, setProgress] = useState(0);
@@ -17,7 +17,7 @@ export const ScrollProgressBar: React.FC = () => {
   }, []);
 
   return (
-    <motion.div
+    <m.div
       className="fixed top-0 left-0 h-1 bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 z-50 origin-left"
       style={{ width: `${progress}%` }}
       transition={{ type: 'tween', duration: 0.1 }}

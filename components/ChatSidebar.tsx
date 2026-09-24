@@ -180,7 +180,7 @@ const AriaAvatar = ({ isTyping = false, size = 'md' }) => {
                     rotateZ: 360 
                 }}
                 transition={{ duration: isTyping ? 2 : (isInteracting ? 1 : 10), repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 rounded-full border border-cyan-400/50 border-t-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                className="absolute inset-0 rounded-full border border-cyan-400/50 border-t-cyan-300 shadow-[0_0_10px_rgba(64, 201, 200,0.5)]"
                 style={{ transformStyle: 'preserve-3d' }}
             />
             <motion.div 
@@ -206,7 +206,7 @@ const AriaAvatar = ({ isTyping = false, size = 'md' }) => {
                         y: p.y
                     }}
                     transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: "easeOut" }}
-                    className="absolute w-1.5 h-1.5 bg-cyan-300 rounded-full shadow-[0_0_5px_#22d3ee]"
+                    className="absolute w-1.5 h-1.5 bg-cyan-300 rounded-full shadow-[0_0_5px_#40C9C8]"
                 />
             ))}
 
@@ -218,7 +218,7 @@ const AriaAvatar = ({ isTyping = false, size = 'md' }) => {
                     rotate: isInteracting ? 360 : (isTyping ? 90 : 0)
                 }}
                 transition={{ duration: isInteracting ? 0.8 : (isTyping ? 1.5 : 4), repeat: Infinity, ease: "easeInOut" }}
-                className={`absolute ${coreClass} bg-gradient-to-br from-cyan-400 via-violet-500 to-fuchsia-600 shadow-[0_0_15px_rgba(34,211,238,0.8)] flex items-center justify-center overflow-hidden`}
+                className={`absolute ${coreClass} bg-gradient-to-br from-cyan-400 via-violet-500 to-fuchsia-600 shadow-[0_0_15px_rgba(64, 201, 200,0.8)] flex items-center justify-center overflow-hidden`}
             >
                 <div className="absolute inset-0 bg-white/20 mix-blend-overlay" />
                 
@@ -620,7 +620,7 @@ ${userContext}
       <button
         ref={launcherRef}
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-4 sm:bottom-10 sm:right-10 z-[150] p-4 rounded-full bg-gradient-to-tr from-cyan-600 to-violet-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.5)] hover:scale-110 transition-all duration-300 group ${isOpen ? 'hidden' : 'flex'} items-center justify-center`}
+        className={`fixed bottom-6 right-4 sm:bottom-10 sm:right-10 z-[150] p-4 rounded-full bg-gradient-to-tr from-cyan-600 to-violet-600 text-white shadow-[0_0_20px_rgba(64, 201, 200,0.5)] hover:scale-110 transition-all duration-300 group ${isOpen ? 'hidden' : 'flex'} items-center justify-center`}
         aria-label="Open AI Assistant"
       >
         <MessageSquare className="w-6 h-6 animate-pulse" />
@@ -656,7 +656,7 @@ ${userContext}
                 <div>
                     <h3 id={CHAT_TITLE_ID} className="font-bold text-white text-xl tracking-tight font-['Space_Grotesk']">Aria</h3>
                     <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_#10b981]" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_#60B46D]" />
                         <span className="text-[10px] uppercase tracking-widest text-emerald-500/80 font-mono">
                             {isTyping ? "Analyzing..." : "Online"}
                         </span>

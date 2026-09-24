@@ -1,12 +1,16 @@
 # TrivianEdge
 
-> Canada-based BPO, RPO, and bespoke software development company. TrivianEdge deploys offshore teams in as little as 30 days, delivering up to 40% cost savings across 6 global time zones. Services span Business Process Outsourcing (BPO), Recruitment Process Outsourcing (RPO), Bespoke Software Development (custom development, cloud/DevOps, QA, IT outsourcing), and AI Development.
+> TrivianEdge is a Toronto-based technology partner with three service lines: Microsoft and Google cloud (Microsoft 365, Copilot, Azure, Google Workspace, Google Cloud), AI and custom software development, and offshore teams (BPO, RPO, and engineering) from six talent hubs, typically live in about 30 days.
 
-TrivianEdge is headquartered in Toronto, Ontario, Canada and sources talent from global hubs including the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica. TrivianEdge acts as employer of record in each country, so clients never need to set up a foreign entity.
+TrivianEdge is headquartered in Toronto, Ontario, Canada. It is a member of the Microsoft AI Cloud Partner Program (Partner ID 7154428); it is not a Microsoft CSP or Solutions Partner. It delivers Google Workspace and Google Cloud projects but is not a Google partner. Talent hubs: the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica. TrivianEdge works with in-country employer-of-record and payroll partners, so clients can hire in those countries without setting up a foreign entity. Offshore teams usually cost up to 40% less than hiring locally in Canada, the US, or the UK.
+
+## Cloud
+
+- [Microsoft & Google cloud services](https://www.trivianedge.com/services#microsoft-cloud): Microsoft 365 and Copilot rollout, Azure migration and cost review, Google Workspace migration (either direction), Google Cloud architecture, identity, MFA, and security baselines.
 
 ## Services
 
-- [Services overview](https://www.trivianedge.com/services): All four TrivianEdge service lines in one place.
+- [Services overview](https://www.trivianedge.com/services): Every TrivianEdge service line in one place.
 - [BPO](https://www.trivianedge.com/services/bpo): Business Process Outsourcing — offshore back-office, customer support, finance, and HR admin teams.
 - [RPO](https://www.trivianedge.com/services/rpo): Recruitment Process Outsourcing — embedded hiring, sourcing, screening, and onboarding.
   - [Full-Cycle RPO](https://www.trivianedge.com/services/rpo/full-cycle-rpo): Ongoing, embedded recruitment function for continuous hiring needs.
@@ -57,6 +61,12 @@ TrivianEdge is headquartered in Toronto, Ontario, Canada and sources talent from
 - [Trust](https://www.trivianedge.com/trust): Security, compliance, and data-handling posture (PIPEDA, GDPR).
 - [Venture Studio](https://www.trivianedge.com/venture-studio): Free MVP builds for qualified startup founders.
 - [Contact](https://www.trivianedge.com/contact): Book a call or submit an inquiry.
+
+## For AI agents
+
+- [Agent skill: TrivianEdge company information](https://www.trivianedge.com/.well-known/agent-skills/trivianedge-company/SKILL.md): Facts, claim limits, and contact routing for agents answering questions about TrivianEdge. Indexed at /.well-known/agent-skills/index.json.
+- [auth.md](https://www.trivianedge.com/auth.md): Access is anonymous and read-only; no agent registration.
+- [API catalog](https://www.trivianedge.com/.well-known/api-catalog): RFC 9727 catalog of the public API.
 
 ## Optional
 

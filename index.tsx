@@ -1,10 +1,12 @@
 
 import './src/tailwind.css';
 import './src/theme.css';
+import './src/te-tokens.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
+import { LazyMotion } from 'framer-motion';
 import App from './App';
 
 const rootElement = document.getElementById('root');
@@ -22,16 +24,50 @@ if (!rootElement) {
 // on first load, exactly the opposite of what deferring it was for.
 const isPrerendering = typeof window !== 'undefined' && Boolean((window as { __PRERENDER__?: boolean }).__PRERENDER__);
 
-const root = ReactDOM.createRoot(rootElement);
-root.render(
+// framer-motion's animation features load after hydration: on the first
+// interaction, or when the browser is idle after load. Loading them during
+// hydration made LazyMotion update its context mid-hydrate, which forced
+// Suspense boundaries to client-render (React #421) on slow devices.
+const loadMotionFeatures = () =>
+  new Promise<void>((resolve) => {
+    const events = ['pointerdown', 'keydown', 'scroll', 'touchstart'] as const;
+    let done = false;
+    const go = () => {
+      if (done) return;
+      done = true;
+      events.forEach((e) => window.removeEventListener(e, go));
+      resolve();
+    };
+    events.forEach((e) => window.addEventListener(e, go, { once: true, passive: true }));
+    const idle = () =>
+      typeof requestIdleCallback !== 'undefined' ? requestIdleCallback(go, { timeout: 3000 }) : setTimeout(go, 1500);
+    if (document.readyState === 'complete') idle();
+    else window.addEventListener('load', idle, { once: true });
+  }).then(() => import('./utils/motionFeatures').then((mod) => mod.default));
+
+const app = (
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <App />
+        <LazyMotion features={loadMotionFeatures}>
+          <App />
+        </LazyMotion>
       </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>
 );
+
+// Prerendered routes arrive with React SSR markup in #root (scripts/prerender.mjs
+// + entry-server.tsx): hydrate it rather than discarding and re-rendering.
+if (rootElement.hasChildNodes()) {
+  // Let the browser paint the server HTML before hydration starts, so first
+  // paint isn't queued behind JS execution. Content and links work as plain
+  // HTML in the meantime.
+  const hydrate = () => ReactDOM.hydrateRoot(rootElement, app);
+  requestAnimationFrame(() => setTimeout(hydrate, 0));
+} else {
+  ReactDOM.createRoot(rootElement).render(app);
+}
 
 // Hands off from the pre-boot scrim (index.html) to the real app. Gated on
 // the deferred (media="print") stylesheets actually being active, not just
@@ -147,10 +183,23 @@ const initGoogleAnalytics = () => {
   window.gtag('js', new Date());
   window.gtag('config', GA_MEASUREMENT_ID);
 
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-  document.head.appendChild(script);
+  // The queued calls above are timestamped now; gtag.js itself (~300ms of
+  // main-thread work on mobile) loads on the first interaction, or after 8s,
+  // so it never lands in the page-load window. Visitors who leave within 8s
+  // without interacting aren't counted.
+  const events = ['pointerdown', 'keydown', 'scroll', 'touchstart'] as const;
+  let loaded = false;
+  const load = () => {
+    if (loaded) return;
+    loaded = true;
+    events.forEach(e => window.removeEventListener(e, load));
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+    document.head.appendChild(script);
+  };
+  events.forEach(e => window.addEventListener(e, load, { once: true, passive: true }));
+  setTimeout(load, 8000);
 };
 
 const initServiceWorker = () => {

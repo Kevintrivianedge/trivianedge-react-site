@@ -74,7 +74,7 @@ const ProofPage: React.FC = () => {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="rounded-2xl border border-cyan-400/20 bg-surface backdrop-blur-sm p-6 relative group hover:border-cyan-400/40 transition-colors duration-300"
-                style={{ boxShadow: '0 8px 32px rgba(0, 196, 154, 0.06)' }}
+                style={{ boxShadow: '0 8px 32px rgba(77, 188, 159, 0.06)' }}
               >
                 <span className="text-[10px] uppercase tracking-widest text-muted font-semibold block mb-4">
                   {stat.label}

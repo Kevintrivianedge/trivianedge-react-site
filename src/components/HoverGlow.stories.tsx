@@ -30,7 +30,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     scale: 1.05,
-    glowColor: 'rgba(0, 196, 154, 0.3)',
+    glowColor: 'rgba(77, 188, 159, 0.3)',
     duration: 0.2,
     children: (
       <button className="px-6 py-3 bg-teal-500 text-white rounded-lg font-semibold hover:cursor-pointer">
@@ -56,7 +56,7 @@ export const StrongGlow: Story = {
 export const SubtleGlow: Story = {
   args: {
     scale: 1.02,
-    glowColor: 'rgba(0, 196, 154, 0.15)',
+    glowColor: 'rgba(77, 188, 159, 0.15)',
     duration: 0.15,
     children: (
       <button className="px-6 py-3 bg-gray-700 text-white rounded-lg font-semibold hover:cursor-pointer">
@@ -69,7 +69,7 @@ export const SubtleGlow: Story = {
 export const CardWithGlow: Story = {
   args: {
     scale: 1.05,
-    glowColor: 'rgba(0, 196, 154, 0.4)',
+    glowColor: 'rgba(77, 188, 159, 0.4)',
     duration: 0.2,
     children: (
       <div className="w-64 p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl">

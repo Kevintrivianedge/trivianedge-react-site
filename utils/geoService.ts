@@ -1,8 +1,8 @@
 import { GeoLocationData } from '../types';
 
-// In production, use a backend proxy to hide API keys or avoid rate limits.
-// Using ipapi.co for this implementation.
-const API_URL = 'https://ipapi.co/json/';
+// Served by the Cloudflare Worker from the request's edge metadata (request.cf),
+// so there's no third-party geolocation call. See /api/geo in src/worker.ts.
+const API_URL = '/api/geo';
 
 export const GEO_CACHE_KEY = 'trivian_geo_cache_v2';
 const LEGACY_CACHE_KEY = 'trivian_geo_cache_v1';

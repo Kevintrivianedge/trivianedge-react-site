@@ -91,8 +91,10 @@ export function initCookieConsent(): void {
   CookieConsent.run({
     guiOptions: {
       consentModal: {
-        layout: 'box',
-        position: 'bottom right',
+        // Compact bar: the old box's paragraph was bigger than the hero H1 on
+        // mobile, so it became the page's LCP element ~5s in.
+        layout: 'bar inline',
+        position: 'bottom',
         equalWeightButtons: true,
         flipButtons: false,
       },
@@ -122,12 +124,11 @@ export function initCookieConsent(): void {
       translations: {
         en: {
           consentModal: {
-            title: 'We use cookies',
-            description:
-              'TrivianEdge uses cookies for analytics and marketing so we can understand how visitors use this site and measure our campaigns. You can accept, reject, or customize your choice at any time.',
+            title: 'Cookies',
+            description: 'We use cookies for analytics and marketing. You can change this any time.',
             acceptAllBtn: 'Accept all',
             acceptNecessaryBtn: 'Reject all',
-            showPreferencesBtn: 'Manage preferences',
+            showPreferencesBtn: 'Preferences',
             footer: '<a href="/privacy">Privacy Policy</a> <a href="/cookie-policy">Cookie Policy</a>',
           },
           preferencesModal: {

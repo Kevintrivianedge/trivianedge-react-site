@@ -165,7 +165,7 @@ const HeroNetworkVisual: React.FC = () => {
         pulseEdges.map(({ a, b }, i) => (
           <g key={`pulse-${i}`}>
             {/* Glow halo */}
-            <circle r="6" fill="#00c49a" fillOpacity="0">
+            <circle r="6" fill="#4DBC9F" fillOpacity="0">
               <animateMotion
                 dur={`${3.5 + (i % 3)}s`}
                 begin={`${i * 0.7}s`}
