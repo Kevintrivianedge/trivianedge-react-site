@@ -69,6 +69,8 @@ export interface BlogPost {
   dateModified?: string;
   authorTwitter?: string;
   imageUrl?: string;
+  /** Question-and-answer pairs shown under the post and emitted as FAQPage schema. */
+  faqs?: { question: string; answer: string }[];
 }
 
 // New Greeting & Geo Interfaces
