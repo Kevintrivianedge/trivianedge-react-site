@@ -1,46 +1,51 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { BLOG_POSTS } from '../constants';
 import SEOHead from './SEOHead';
 import BlogMeta from './BlogMeta';
-import { articleSchema, breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
+import { articleSchema, breadcrumbSchema, faqSchema, SEO_CONFIG } from '../utils/seo';
 import { calculateReadingTime } from '../utils/readingTime';
 
-// Lightweight inline markdown renderer — handles **bold**, *italic*, [links](url),
-// # headings, and ## sub-headings so blog content formats correctly (#19).
+// Lightweight markdown renderer: ## headings, "- " bullet lists, **bold**,
+// *italic* and [links](url). Internal links (starting with "/") use the router.
+function renderInline(text: string): React.ReactNode[] {
+  return text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\([^)]+\))/g).map((tok, ti) => {
+    if (tok.startsWith('**') && tok.endsWith('**')) {
+      return <strong key={ti} className="text-text font-bold">{tok.slice(2, -2)}</strong>;
+    }
+    if (tok.startsWith('*') && tok.endsWith('*')) {
+      return <em key={ti}>{tok.slice(1, -1)}</em>;
+    }
+    const linkMatch = tok.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (linkMatch) {
+      const cls = 'text-cyan-700 dark:text-cyan-400 underline hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors';
+      return linkMatch[2].startsWith('/') ? (
+        <Link key={ti} to={linkMatch[2]} className={cls}>{linkMatch[1]}</Link>
+      ) : (
+        <a key={ti} href={linkMatch[2]} target="_blank" rel="noopener noreferrer" className={cls}>{linkMatch[1]}</a>
+      );
+    }
+    return tok;
+  });
+}
+
 function renderMarkdown(text: string): React.ReactNode[] {
-  const paragraphs = text.split('\n\n');
-  return paragraphs.map((para, pi) => {
-    // Heading H2
+  return text.split('\n\n').map((para, pi) => {
     if (para.startsWith('## ')) {
-      return <h2 key={pi} className="text-2xl font-bold text-text mt-4 mb-2">{para.slice(3)}</h2>;
+      return <h2 key={pi} className="text-2xl md:text-3xl font-bold text-text pt-6">{para.slice(3)}</h2>;
     }
-    // Heading H1
     if (para.startsWith('# ')) {
-      return <h2 key={pi} className="text-3xl font-bold text-text mt-6 mb-3">{para.slice(2)}</h2>;
+      return <h2 key={pi} className="text-3xl font-bold text-text pt-6">{para.slice(2)}</h2>;
     }
-    // Parse inline bold, italic, links within a paragraph
-    const inlineTokens = para.split(/(\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\([^)]+\))/g);
-    const inline = inlineTokens.map((tok, ti) => {
-      if (tok.startsWith('**') && tok.endsWith('**')) {
-        return <strong key={ti} className="text-text font-bold">{tok.slice(2, -2)}</strong>;
-      }
-      if (tok.startsWith('*') && tok.endsWith('*')) {
-        return <em key={ti}>{tok.slice(1, -1)}</em>;
-      }
-      const linkMatch = tok.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-      if (linkMatch) {
-        return (
-          <a key={ti} href={linkMatch[2]} target="_blank" rel="noopener noreferrer"
-            className="text-cyan-400 underline hover:text-cyan-300 transition-colors">
-            {linkMatch[1]}
-          </a>
-        );
-      }
-      return tok;
-    });
-    return <p key={pi}>{inline}</p>;
+    if (para.startsWith('- ')) {
+      return (
+        <ul key={pi} className="list-disc pl-6 space-y-2 marker:text-cyan-700 dark:marker:text-cyan-400">
+          {para.split('\n').map((li, i) => <li key={i}>{renderInline(li.replace(/^- /, ''))}</li>)}
+        </ul>
+      );
+    }
+    return <p key={pi}>{renderInline(para)}</p>;
   });
 }
 
@@ -61,7 +66,7 @@ const BlogPostDetail: React.FC = () => {
             className="flex items-center gap-2 text-muted hover:text-cyan-400 transition-colors mx-auto group"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            <span className="text-xs font-bold uppercase tracking-widest">Back to Intelligence Feed</span>
+            <span className="text-xs font-bold uppercase tracking-widest">Back to the blog</span>
           </button>
         </div>
       </div>
@@ -93,6 +98,7 @@ const BlogPostDetail: React.FC = () => {
             { name: 'Blog', url: `${SEO_CONFIG.siteUrl}/blog` },
             { name: post.title, url: postUrl },
           ]),
+          ...(post.faqs?.length ? [faqSchema(post.faqs)] : []),
         ]}
       />
     <article aria-label={post.title} className="py-16 md:py-32 px-4 md:px-6 min-h-screen relative">
@@ -103,7 +109,7 @@ const BlogPostDetail: React.FC = () => {
           className="flex items-center gap-2 text-muted hover:text-cyan-400 transition-colors mb-12 group"
         >
           <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-          <span className="text-xs font-bold uppercase tracking-widest">Back to Intelligence Feed</span>
+          <span className="text-xs font-bold uppercase tracking-widest">Back to the blog</span>
         </button>
 
         <BlogMeta
@@ -120,6 +126,20 @@ const BlogPostDetail: React.FC = () => {
           <div className="text-muted leading-relaxed space-y-6 text-xl">
             {renderMarkdown(post.content)}
           </div>
+
+          {post.faqs?.length ? (
+            <section aria-labelledby="post-faq" className="mt-20 border-t border-border pt-12">
+              <h2 id="post-faq" className="text-2xl md:text-3xl font-bold text-text mb-8">Frequently asked questions</h2>
+              <div className="space-y-8">
+                {post.faqs.map(f => (
+                  <div key={f.question}>
+                    <h3 className="text-lg md:text-xl font-semibold text-text mb-2">{f.question}</h3>
+                    <p className="text-muted leading-relaxed text-lg">{f.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ) : null}
 
           <div className="mt-24 p-12 glass border-border rounded-[3rem] text-center">
             <h3 className="text-2xl font-bold mb-6 text-text">Want the same kind of operating clarity?</h3>
