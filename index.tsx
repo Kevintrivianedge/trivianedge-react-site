@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
+import { LazyMotion } from 'framer-motion';
 import App from './App';
 
 const rootElement = document.getElementById('root');
@@ -22,16 +23,23 @@ if (!rootElement) {
 // on first load, exactly the opposite of what deferring it was for.
 const isPrerendering = typeof window !== 'undefined' && Boolean((window as { __PRERENDER__?: boolean }).__PRERENDER__);
 
-const root = ReactDOM.createRoot(rootElement);
-root.render(
+const app = (
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <App />
+        <LazyMotion features={() => import('./utils/motionFeatures').then(mod => mod.default)}>
+          <App />
+        </LazyMotion>
       </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>
 );
+
+// createRoot, not hydrateRoot: the prerender snapshot (scripts/prerender.mjs)
+// is captured after effects run (theme, geo, lazy chunks), so it never matches
+// the first client render and hydration fails with React #418 on every route.
+// Switching to hydrateRoot first needs the snapshot taken pre-effects.
+ReactDOM.createRoot(rootElement).render(app);
 
 // Hands off from the pre-boot scrim (index.html) to the real app. Gated on
 // the deferred (media="print") stylesheets actually being active, not just

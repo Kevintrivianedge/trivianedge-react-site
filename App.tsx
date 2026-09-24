@@ -1,39 +1,20 @@
 import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
-import { AnimatePresence, motion, useReducedMotion, useInView } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import ScrollProgressBar from './components/ScrollProgressBar';
-import TextReveal from './components/TextReveal';
-import AnimatedCounter from './components/AnimatedCounter';
-import InteractiveStatsGrid from './components/InteractiveStatsGrid';
-import InteractiveServiceCard from './components/InteractiveServiceCard';
-import {
-  ArrowRight,
-  ChevronRight,
-  Mail,
-  Linkedin,
-  Twitter,
-  CheckCircle2,
-  Code2,
-  Users2,
-  ShieldCheck,
-} from 'lucide-react';
+import { Mail, Linkedin, Twitter } from 'lucide-react';
 import { Routes, Route, useLocation, useNavigate, Link } from 'react-router-dom';
-import { TALENT_HUBS, STEPS, BOOKING_URL } from './constants';
-import { CASE_STUDIES, TESTIMONIALS } from './constants/proof';
-import { MICROSOFT_PARTNER, partnerBadgeLabel } from './constants/microsoftPartner';
 import { TalentHub } from './types';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { GeoProvider } from './contexts/GeoContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import SEOHead from './components/SEOHead';
 import AlgorithmMonitor from './components/AlgorithmMonitor';
-import InquiryForm from './components/InquiryForm';
 import { HOME_FAQS, HOME_TITLE, HOME_DESCRIPTION } from './constants/home';
 import { useAlgorithmIntelligence } from './hooks/useAlgorithmIntelligence';
 import {
   buildOrganizationSchema,
   buildWebSiteSchema,
   buildServiceSchema,
-  buildArticleSchema,
   buildLocalBusinessSchema,
   breadcrumbSchema,
   buildWebPageSchema,
@@ -48,21 +29,8 @@ import { getSEOTrendSignal, getTrendKeywords } from './utils/seoTrends';
 // Extracted components
 import Logo from './components/Logo';
 import Navbar from './components/Navbar';
-import Accordion from './components/Accordion';
-import TalentHubCard from './components/TalentHubCard';
 import ScrollToTop from './components/ScrollToTop';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import HeroNetworkVisual from './components/HeroNetworkVisual';
-import HeroVideoSection from './components/HeroVideoSection';
-import ServiceCard3D from './components/ServiceCard3D';
-import PageTransition from './components/PageTransition';
-import AnimatedFormInput from './components/AnimatedFormInput';
-import SectionReveal from './components/SectionReveal';
-import SkeletonLoader from './components/SkeletonLoader';
-import VideoTestimonialCard from './components/VideoTestimonialCard';
-import MobileGestureWrapper from './components/MobileGestureWrapper';
-import MultiLayerParallax from './components/MultiLayerParallax';
-import EnhancedVideoHero from './components/EnhancedVideoHero';
 import HomePage from './pages/HomePage';
 
 // Lazy-load route-level pages and heavy below-fold interactive modules.
@@ -319,8 +287,11 @@ export default function App() {
           <main id="main-content" className="min-h-dvh">
             <ErrorBoundary fallback={null}>
               <Suspense fallback={null}>
-                <AnimatePresence mode="wait">
-                  <motion.div
+                {/* initial={false}: the first paint is the prerendered HTML; fading it
+                    in from opacity 0 on the client render hid the hero from LCP.
+                    Route changes still animate. */}
+                <AnimatePresence mode="wait" initial={false}>
+                  <m.div
                     key={location.pathname}
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -364,7 +335,7 @@ export default function App() {
                       <Route path="/locations/:slug" element={<CityLandingPage />} />
                       <Route path="*" element={<NotFoundPage />} />
                     </Routes>
-                  </motion.div>
+                  </m.div>
                 </AnimatePresence>
               </Suspense>
             </ErrorBoundary>

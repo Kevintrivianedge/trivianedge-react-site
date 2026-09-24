@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 interface AnimatedHamburgerProps {
   isOpen: boolean;
@@ -61,7 +61,7 @@ const AnimatedHamburger: React.FC<AnimatedHamburgerProps> = ({
   };
 
   return (
-    <motion.button
+    <m.button
       type="button"
       onClick={onClick}
       aria-label={ariaLabel}
@@ -71,7 +71,7 @@ const AnimatedHamburger: React.FC<AnimatedHamburgerProps> = ({
       whileTap={{ scale: 0.95 }}
       initial={false}
     >
-      <motion.svg
+      <m.svg
         width="24"
         height="24"
         viewBox="0 0 24 24"
@@ -85,7 +85,7 @@ const AnimatedHamburger: React.FC<AnimatedHamburgerProps> = ({
         initial={false}
       >
         {/* Top line — rotates to form top of X */}
-        <motion.line
+        <m.line
           x1="3"
           y1="6"
           x2="21"
@@ -96,7 +96,7 @@ const AnimatedHamburger: React.FC<AnimatedHamburgerProps> = ({
         />
 
         {/* Middle line — fades out */}
-        <motion.line
+        <m.line
           x1="3"
           y1="12"
           x2="21"
@@ -107,7 +107,7 @@ const AnimatedHamburger: React.FC<AnimatedHamburgerProps> = ({
         />
 
         {/* Bottom line — rotates to form bottom of X */}
-        <motion.line
+        <m.line
           x1="3"
           y1="18"
           x2="21"
@@ -116,8 +116,8 @@ const AnimatedHamburger: React.FC<AnimatedHamburgerProps> = ({
           animate={isOpen ? 'open' : 'closed'}
           initial={false}
         />
-      </motion.svg>
-    </motion.button>
+      </m.svg>
+    </m.button>
   );
 };
 

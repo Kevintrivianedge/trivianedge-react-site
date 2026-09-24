@@ -1,3 +1,69 @@
+/* Self-hosted variable fonts (SIL Open Font License), subset files from Google Fonts. */
+@font-face {
+    font-family: 'Fraunces';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('/fonts/fraunces-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+    font-family: 'Fraunces';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('/fonts/fraunces-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400 800;
+    font-display: swap;
+    src: url('/fonts/manrope-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400 800;
+    font-display: swap;
+    src: url('/fonts/manrope-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Metric-matched fallbacks: local system fonts scaled to occupy the same
+   space as the web fonts, so the swap when Manrope/Fraunces arrive causes no
+   layout shift (it was 0.25 CLS on desktop). Values from @capsizecss/metrics:
+   size-adjust = avg-char-width ratio; ascent/descent = web font metrics / size-adjust. */
+@font-face {
+    font-family: 'Manrope Fallback';
+    /* Liberation Sans / Arimo are metric-identical to Arial (Linux, Android, ChromeOS) */
+    src: local('Arial'), local('Helvetica'), local('Liberation Sans'), local('Arimo');
+    size-adjust: 103.19%;
+    ascent-override: 103.31%;
+    descent-override: 29.07%;
+    line-gap-override: 0%;
+}
+@font-face {
+    font-family: 'Fraunces Fallback';
+    src: local('Georgia');
+    size-adjust: 105.20%;
+    ascent-override: 92.96%;
+    descent-override: 24.24%;
+    line-gap-override: 0%;
+}
+/* Used where Georgia is absent. Times metrics; Liberation Serif / Tinos are
+   metric-identical to Times New Roman. */
+@font-face {
+    font-family: 'Fraunces Fallback Serif';
+    src: local('Times New Roman'), local('Liberation Serif'), local('Tinos');
+    size-adjust: 115.45%;
+    ascent-override: 84.71%;
+    descent-override: 22.09%;
+    line-gap-override: 0%;
+}
+
 /* Extracted from the inline <style> block in index.html so Vite's CSS
  * pipeline actually minifies and long-term-caches it (previously it
  * shipped verbatim/unminified inline on every page load — 'Minify CSS'
@@ -11,12 +77,12 @@
             --violet: #6366f1;
 
             /* Luxury typography and spacing scale */
-            --font-body: 'Manrope', sans-serif;
+            --font-body: 'Manrope', 'Manrope Fallback', sans-serif;
             /* Display serif, headings only (h1-h4, .display-hero,
                .display-section) — Manrope stays the body/nav/UI face
                everywhere else. Deliberate signature, not a stunt: applied
                consistently across every heading level, not just the hero. */
-            --font-display: 'Fraunces', 'Manrope', sans-serif;
+            --font-display: 'Fraunces', 'Fraunces Fallback', 'Fraunces Fallback Serif', 'Manrope', sans-serif;
             /* Tracking scales with size — bigger display type reads tighter,
                smaller headings stay close to neutral. Flat tracking across
                every size read as less deliberate than graduated tracking. */

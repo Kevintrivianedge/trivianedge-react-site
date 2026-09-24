@@ -1111,8 +1111,8 @@ const CSP_HEADER =
   "connect-src 'self' https://ipapi.co https://api.open-meteo.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com https://*.clarity.ms https://widget.trustpilot.com; " +
   "frame-src https://widget.trustpilot.com; " +
   "img-src 'self' data: https:; " +
-  "font-src 'self' https://fonts.gstatic.com; " +
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+  "font-src 'self'; " +
+  "style-src 'self' 'unsafe-inline'; " +
   "frame-ancestors 'none'; " +
   "base-uri 'self'; " +
   "form-action 'self'; " +
@@ -1157,6 +1157,8 @@ const BASE_SECURITY_HEADERS: Record<string, string> = {
 // since Headers.set() replaces rather than appends.
 function cacheControlFor(pathname: string): string {
   if (pathname.startsWith('/assets/')) return 'public, max-age=31536000, immutable';
+  // Not content-hashed, so long-lived but not immutable; rename the file to bust.
+  if (pathname.startsWith('/fonts/')) return 'public, max-age=2592000, stale-while-revalidate=86400';
   if (/\.(svg|png)$/.test(pathname)) return 'public, max-age=86400, stale-while-revalidate=86400';
   if (pathname.endsWith('.ico')) return 'public, max-age=86400';
   if (pathname === '/manifest.json') return 'public, max-age=3600';

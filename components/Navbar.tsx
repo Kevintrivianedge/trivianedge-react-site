@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { NAV_LINKS } from '../constants';
@@ -163,7 +163,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <motion.nav
+    <m.nav
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -200,7 +200,7 @@ const Navbar: React.FC = () => {
                 </button>
                 <AnimatePresence>
                   {openDropdown === link.name && (
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, y: -8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
@@ -217,7 +217,7 @@ const Navbar: React.FC = () => {
                           {child.name}
                         </Link>
                       ))}
-                    </motion.div>
+                    </m.div>
                   )}
                 </AnimatePresence>
               </div>
@@ -256,7 +256,7 @@ const Navbar: React.FC = () => {
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
             ref={drawerRef}
             role="dialog"
             aria-modal="true"
@@ -269,11 +269,11 @@ const Navbar: React.FC = () => {
           >
             <div className="absolute inset-x-0 top-0 h-px bg-border/70" />
 
-            <motion.div
+            <m.div
               className="flex flex-col items-center justify-center min-h-full gap-8 relative z-10 py-24"
               variants={containerVariants}
             >
-              <motion.a
+              <m.a
                 href="/"
                 variants={itemVariants}
                 aria-current={location.pathname === '/' ? 'page' : undefined}
@@ -282,12 +282,12 @@ const Navbar: React.FC = () => {
               >
                 {location.pathname === '/' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
                 Home
-              </motion.a>
+              </m.a>
 
               {NAV_LINKS.map(link => {
                 const isActiveParent = link.children ? location.pathname.startsWith(link.href) : location.pathname === link.href;
                 return link.children ? (
-                  <motion.div key={link.name} variants={itemVariants} className="flex flex-col items-center gap-4">
+                  <m.div key={link.name} variants={itemVariants} className="flex flex-col items-center gap-4">
                     <button
                       type="button"
                       onClick={() => setExpandedMobile(expandedMobile === link.name ? null : link.name)}
@@ -301,7 +301,7 @@ const Navbar: React.FC = () => {
                     </button>
                     <AnimatePresence>
                       {expandedMobile === link.name && (
-                        <motion.div
+                        <m.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
@@ -318,12 +318,12 @@ const Navbar: React.FC = () => {
                               {child.name}
                             </a>
                           ))}
-                        </motion.div>
+                        </m.div>
                       )}
                     </AnimatePresence>
-                  </motion.div>
+                  </m.div>
                 ) : (
-                  <motion.a
+                  <m.a
                     key={link.name}
                     href={link.href}
                     variants={itemVariants}
@@ -333,23 +333,23 @@ const Navbar: React.FC = () => {
                   >
                     {isActiveParent && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
                     {link.name}
-                  </motion.a>
+                  </m.a>
                 );
               })}
 
-              <motion.a
+              <m.a
                 href="/contact"
                 variants={itemVariants}
                 className="mt-4 px-10 py-4 rounded-full font-bold text-base uppercase tracking-widest premium-button"
                 onClick={(e) => { e.preventDefault(); handleNavClick('/contact'); }}
               >
                 Start here
-              </motion.a>
-            </motion.div>
-          </motion.div>
+              </m.a>
+            </m.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </m.nav>
   );
 };
 

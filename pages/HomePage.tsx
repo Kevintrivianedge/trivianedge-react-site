@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { TALENT_HUBS, STEPS, BOOKING_URL } from '../constants';
@@ -136,7 +136,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
           <div className="border-t border-border">
             {PILLARS.map(p => (
-              <motion.article key={p.id} {...reveal} className="group relative grid lg:grid-cols-12 gap-6 lg:gap-10 py-10 md:py-14 border-b border-border">
+              <m.article key={p.id} {...reveal} className="group relative grid lg:grid-cols-12 gap-6 lg:gap-10 py-10 md:py-14 border-b border-border">
                 <p className="lg:col-span-3 text-sm font-semibold text-muted tabular-nums">{p.kicker}</p>
                 <div className="lg:col-span-5">
                   <h3 className="text-2xl md:text-3xl font-semibold text-text leading-tight">
@@ -159,12 +159,12 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   ))}
                 </ul>
                 <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-[-1px] h-px origin-left scale-x-0 bg-cyan-400 transition-transform duration-500 group-hover:scale-x-100" />
-              </motion.article>
+              </m.article>
             ))}
           </div>
 
           {/* Hubs — the old map's job, done as a compact, clickable index */}
-          <motion.div {...reveal} className="mt-12 flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+          <m.div {...reveal} className="mt-12 flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
             <p className="text-sm text-muted shrink-0">Talent hubs:</p>
             <ul className="flex flex-wrap gap-2">
               {TALENT_HUBS.map(hub => (
@@ -182,7 +182,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <Link to="/savings-calculator" className="md:ml-auto text-sm font-bold text-cyan-700 dark:text-cyan-400 hover:underline underline-offset-4">
               Estimate your savings →
             </Link>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
@@ -194,7 +194,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </div>
           <div className="grid md:grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-3xl overflow-hidden">
             {CASE_STUDIES.map(study => (
-              <motion.article key={study.client} {...reveal} className="bg-[#07090a] p-8 md:p-10 flex flex-col">
+              <m.article key={study.client} {...reveal} className="bg-[#07090a] p-8 md:p-10 flex flex-col">
                 <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-400">{study.sector}</p>
                 <h3 className="mt-3 text-2xl font-semibold text-white">{study.client}</h3>
                 <p className="mt-5 text-white/65 leading-relaxed">{study.outcome}</p>
@@ -203,7 +203,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                     <li key={h} className="rounded-full border border-white/10 px-3 py-1 text-xs text-white/55">{h}</li>
                   ))}
                 </ul>
-              </motion.article>
+              </m.article>
             ))}
           </div>
           <div className="mt-12 flex flex-col md:flex-row md:items-center gap-8">
@@ -229,11 +229,11 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </div>
           <ol className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
             {STEPS.map(step => (
-              <motion.li key={step.number} {...reveal} className="border-t border-text/80 pt-6">
+              <m.li key={step.number} {...reveal} className="border-t border-text/80 pt-6">
                 <span className="[font-family:var(--font-display)] text-5xl font-light text-cyan-700 dark:text-cyan-400 tabular-nums">{step.number}</span>
                 <h3 className="mt-5 text-lg font-semibold text-text">{step.title}</h3>
                 <p className="mt-3 text-sm text-muted leading-relaxed">{step.description}</p>
-              </motion.li>
+              </m.li>
             ))}
           </ol>
         </div>
