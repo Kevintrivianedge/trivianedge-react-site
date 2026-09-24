@@ -20,10 +20,7 @@ const ROUTES = [
 ];
 
 // Third-party noise we don't control (blocked trackers, offline CDNs in CI).
-// "Report-Only policy" notices never block anything; on the live site Firefox
-// logs them for the report-only CSP that Cloudflare's injected WebMCP bridge
-// (/.webmcp/bridge.js) sets up. Enforced-CSP violations still fail the test.
-const IGNORED = /googletagmanager|google-analytics|clarity\.ms|facebook|trustpilot|flagcdn|open-meteo|Failed to load resource|Report-Only policy/i;
+const IGNORED = /googletagmanager|google-analytics|clarity\.ms|facebook|trustpilot|flagcdn|open-meteo|Failed to load resource/i;
 
 function collectErrors(page: Page) {
   const errors: string[] = [];
