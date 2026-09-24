@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "postinstall": "[ -z \"$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD\" ] && playwright install chromium || true",
-    "build": "vite build && vite build --ssr entry-server.tsx --outDir dist-ssr && node scripts/agent-skills-index.mjs && node scripts/defer-css.mjs && node scripts/prerender.mjs",
+    "build": "vite build && vite build --ssr entry-server.tsx --outDir dist-ssr && node scripts/agent-skills-index.mjs && node scripts/defer-css.mjs && node scripts/prerender.mjs && node scripts/llms-full.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",

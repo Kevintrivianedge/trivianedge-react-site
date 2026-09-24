@@ -208,6 +208,12 @@ describe('articleSchema', () => {
     expect(author['@type']).toBe('Organization');
   });
 
+  it('links the founder byline to the founder Person entity', () => {
+    const author = articleSchema({ ...params, author: 'Kevin Vaz' })['author'] as Record<string, unknown>;
+    expect(author['@type']).toBe('Person');
+    expect(author['@id']).toBe('https://www.trivianedge.com/about#founder');
+  });
+
   it('publisher.name equals "TrivianEdge"', () => {
     const schema = articleSchema(params);
     const publisher = schema['publisher'] as Record<string, unknown>;

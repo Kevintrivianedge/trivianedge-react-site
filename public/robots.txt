@@ -132,3 +132,4 @@ Sitemap: https://www.trivianedge.com/sitemap.xml
 
 # llms.txt — structured summary for LLM/agent crawlers (llmstxt.org)
 # https://www.trivianedge.com/llms.txt
+# Full text of every public page: https://www.trivianedge.com/llms-full.txt

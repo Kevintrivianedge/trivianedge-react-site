@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React from 'react';
 import { Calendar, Clock, User } from 'lucide-react';
 
@@ -62,7 +63,11 @@ const BlogMeta: React.FC<BlogMetaProps> = ({
         </div>
         <div>
           <p className="text-[10px] text-muted font-mono uppercase tracking-widest">Authored By</p>
-          <p className="text-text font-bold">{author}</p>
+          <p className="text-text font-bold">
+            {author === 'Kevin Vaz' ? (
+              <Link to="/about" rel="author" className="hover:text-cyan-400 transition-colors">{author}</Link>
+            ) : author}
+          </p>
         </div>
       </div>
     </div>

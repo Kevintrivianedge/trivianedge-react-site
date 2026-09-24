@@ -70,6 +70,7 @@ TrivianEdge is headquartered in Toronto, Ontario, Canada. It is a member of the 
 
 ## Optional
 
+- [Full site text](https://www.trivianedge.com/llms-full.txt): Every public page's content in one plain-text file.
 - [Blog](https://www.trivianedge.com/blog): Insights on BPO, outsourcing, and offshore software development.
   - [What an Offshore Team Actually Costs in 2026](https://www.trivianedge.com/blog/offshore-team-cost-2026): Real cost breakdown of salary, employer overhead, and management drag.
   - [BPO vs. RPO: What's the Difference](https://www.trivianedge.com/blog/bpo-vs-rpo-difference): Definitional explainer distinguishing the two service models.

@@ -464,7 +464,16 @@ export function articleSchema(params: {
     datePublished: params.datePublished,
     dateModified: params.dateModified,
     author: isNamedPerson
-      ? { '@type': 'Person', name: authorName }
+      ? authorName === 'Kevin Vaz'
+        ? {
+            '@type': 'Person',
+            '@id': 'https://www.trivianedge.com/about#founder',
+            name: 'Kevin Vaz',
+            jobTitle: 'Founder',
+            url: 'https://www.trivianedge.com/about',
+            sameAs: ['https://www.linkedin.com/in/kevin-v-0b714b30/'],
+          }
+        : { '@type': 'Person', name: authorName }
       : {
           '@type': 'Organization',
           '@id': 'https://www.trivianedge.com/#organization',
