@@ -61,6 +61,16 @@ const FAQS = [
       'Yes. TrivianEdge is headquartered in Toronto, Ontario, Canada. We are a Canada-based bespoke software development and IT outsourcing company serving clients across North America, the UK, Australia, and the Middle East. Our operations, contracts, and client management are run from Canada, giving you a local partner with global engineering reach.',
   },
   {
+    question: 'How do Canadian startups hire offshore developers with TrivianEdge?',
+    answer:
+      'Canadian startups hire a dedicated offshore development team through TrivianEdge in three steps: a scoping call from our Toronto office, a shortlist of vetted developers from the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, or Costa Rica, and onboarding into your repos and stand-ups in as little as 30 days. You can start with a single developer and scale; contracts, invoicing, and client management are handled in Canada.',
+  },
+  {
+    question: 'Does TrivianEdge offer offshore software development in the Philippines?',
+    answer:
+      'Yes. The Philippines is one of TrivianEdge\'s six talent hubs, with strong English and overlap with North American business hours for support-heavy and full-stack roles. Many Canadian clients combine a Philippines team for web, QA, and operations work with engineers from Sri Lanka or Vietnam for backend and AI work, all under one Canadian contract.',
+  },
+  {
     question: 'What is the difference between bespoke software development and IT outsourcing?',
     answer:
       'Bespoke software development is the specific work of designing and building custom applications for one company. IT outsourcing is the broader practice of delegating technology functions, development, cloud, security, support, to an external provider. TrivianEdge offers both: dedicated offshore teams that build bespoke software, and the managed IT outsourcing layer that keeps it running once it ships.',
@@ -83,9 +93,9 @@ const ITOutsourcingPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="Bespoke Software Development Canada | Custom Engineering Teams | TrivianEdge"
-        description="TrivianEdge builds bespoke software with offshore engineering teams you own. Custom development, IT outsourcing, cloud & DevOps, 30-day deployment."
-        keywords="bespoke software development, bespoke software development Canada, custom software development company, IT outsourcing Canada, offshore software development, offshore development team, software development outsourcing, TrivianEdge bespoke software"
+        title="Offshore Software Development Company in Canada | TrivianEdge"
+        description="Toronto-based offshore software development company. Dedicated offshore developers for Canadian startups and scale-ups, from the Philippines to Vietnam, live in ~30 days."
+        keywords="offshore development company Canada, offshore developers for Canadian startups, offshore dedicated development team, offshore software development Canada Philippines, bespoke software development, bespoke software development Canada, custom software development company, IT outsourcing Canada, offshore software development, offshore development team, software development outsourcing, TrivianEdge bespoke software"
         schema={[
           serviceSchema(
             'Bespoke Software Development',
@@ -128,9 +138,9 @@ const ITOutsourcingPage: React.FC = () => {
               Bespoke Software Development & IT Outsourcing
             </p>
             <h1 className="text-4xl md:text-6xl font-bold text-text mb-6 leading-tight">
-              Bespoke Software Development:{' '}
+              Offshore Software Development Company in Canada:{' '}
               <span className="text-cyan-400">
-                Custom-Built Offshore Engineering Teams
+                Bespoke, Dedicated Engineering Teams
               </span>
             </h1>
 
@@ -243,6 +253,7 @@ const ITOutsourcingPage: React.FC = () => {
           links={[
             { label: 'AI development', desc: 'Add AI features, RAG, or agentic workflows to the product we build for you.', to: '/services/ai-development' },
             { label: 'IT outsourcing in Costa Rica', desc: 'Nearshore, US-timezone-aligned engineering: roles and typical work.', to: '/services/it-outsourcing/costa-rica' },
+            { label: 'Offshore developers in the Philippines', desc: 'Our Philippines talent hub: roles, time-zone overlap, and typical engineering work.', to: '/talent/philippines' },
             { label: 'IT outsourcing in Sri Lanka', desc: 'Our core software engineering hub for custom application development.', to: '/services/it-outsourcing/sri-lanka' },
             { label: 'IT outsourcing in Vietnam', desc: 'Fast-moving custom development from our fastest-growing tech hub.', to: '/services/it-outsourcing/vietnam' },
             { label: 'IT outsourcing in Turkey', desc: 'EU/UK-aligned custom software delivery from our Turkey hub.', to: '/services/it-outsourcing/turkey' },

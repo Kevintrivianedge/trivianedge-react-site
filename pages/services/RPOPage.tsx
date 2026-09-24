@@ -124,8 +124,8 @@ const RPOPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="RPO Services Canada | Recruitment Process Outsourcing | TrivianEdge"
-        description="Scale your hiring with TrivianEdge RPO. We embed into your HR team, source top talent globally, and deliver shortlisted candidates in as little as 30 days."
+        title="RPO Services in Canada & Toronto | Recruitment Process Outsourcing | TrivianEdge"
+        description="Toronto-based RPO company for Canadian tech and engineering hiring. We embed into your HR team, source globally, and deliver vetted shortlists in as little as 30 days."
         keywords="RPO services Canada, recruitment process outsourcing Canada, embedded recruitment team, offshore hiring partner, global talent sourcing, RPO company Toronto, full-cycle recruitment outsourcing, TrivianEdge RPO"
         schema={[
           serviceSchema(

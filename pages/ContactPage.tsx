@@ -77,6 +77,12 @@ const ContactPage: React.FC = () => {
 
               <div className="space-y-4 text-sm text-muted max-w-2xl">
                 <p>Use this page if you want to talk about hiring, outsourcing, AI delivery, or a market entry plan.</p>
+                <h2 className="text-text text-base font-semibold pt-2">What happens after you get in touch</h2>
+                <ol className="list-decimal pl-5 space-y-2">
+                  <li>We reply, same business day when possible, to book a scoping call with our Toronto team.</li>
+                  <li>You get a written proposal covering team shape, talent hub, monthly cost, and start date.</li>
+                  <li>Once approved, vetted candidates are shortlisted and your team is typically working inside 30 days.</li>
+                </ol>
                 <p>If you need compliance, security, or operating-model details first, review the <Link to="/trust" className="text-cyan-500 hover:underline">Trust page</Link>.</p>
               </div>
             </div>

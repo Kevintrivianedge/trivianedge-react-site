@@ -16,6 +16,11 @@ import { serviceSchema, faqSchema, breadcrumbSchema } from '../../utils/seo';
 
 const FAQS = [
   {
+    question: 'Can I hire offshore AI developers through a Canadian company?',
+    answer:
+      'Yes. TrivianEdge is a Toronto-based AI development company that places dedicated offshore AI and ML developers from Vietnam, Sri Lanka, and our other talent hubs. You work under a Canadian contract with Canadian client management, while the engineers build generative AI features, LLM integrations, and machine learning models inside your stack, typically at up to 40% lower cost than local hiring.',
+  },
+  {
     question: 'What AI development services does TrivianEdge offer?',
     answer:
       'TrivianEdge builds generative AI applications, LLM integrations, machine learning models, AI automation pipelines, AI chatbots, and MLOps infrastructure. We work with OpenAI, Anthropic Claude, HuggingFace, LangChain, TensorFlow, PyTorch, AWS SageMaker, and Azure AI. Whether you need a standalone AI product or AI embedded into your existing software, our team handles the full build.',
@@ -125,8 +130,8 @@ const AIDevelopmentPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="AI Development Services Canada | Machine Learning & LLM | TrivianEdge"
-        description="Build custom AI solutions with TrivianEdge's offshore AI team. Generative AI, LLM integration, ML models, AI automation, deployed in as little as 30 days."
+        title="AI Development Company in Canada | Offshore AI Developers | TrivianEdge"
+        description="Toronto-based AI development company. Hire offshore AI/ML developers for generative AI, LLM integration, and machine learning, deployed in as little as 30 days."
         keywords="AI development company Canada, AI development services Canada, offshore AI development team, generative AI development, LLM integration services, machine learning development company, AI automation agency, hire AI developers, TrivianEdge AI development"
         schema={[
           serviceSchema(
@@ -170,9 +175,9 @@ const AIDevelopmentPage: React.FC = () => {
               AI Development Services
             </p>
             <h1 className="text-4xl md:text-6xl font-bold text-text mb-6 leading-tight">
-              AI Development Services:{' '}
+              AI Development Services in Canada:{' '}
               <span className="text-cyan-400">
-                Canada's Offshore AI Engineering Partner
+                Offshore AI &amp; ML Developers
               </span>
             </h1>
 

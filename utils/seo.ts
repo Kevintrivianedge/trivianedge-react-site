@@ -73,7 +73,7 @@ export function buildOrganizationSchema(): object {
     '@id': `${SEO_CONFIG.siteUrl}/#organization`,
     name: 'TrivianEdge',
     legalName: 'TrivianEdge Inc.',
-    alternateName: ['TrivianEdge Global', 'TrivianEdge BPO'],
+    alternateName: ['TrivianEdge Global', 'TrivianEdge BPO', 'Trivian Edge', 'Trivian'],
     url: SEO_CONFIG.siteUrl,
     logo: {
       '@type': 'ImageObject',
