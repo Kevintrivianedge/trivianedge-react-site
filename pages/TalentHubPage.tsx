@@ -7,18 +7,18 @@ import RelatedLinks from '../components/RelatedLinks';
 import { TALENT_HUBS } from '../constants';
 import { CASE_STUDIES } from '../constants/proof';
 import { breadcrumbSchema, faqSchema, SEO_CONFIG } from '../utils/seo';
-import { slugifyCountry } from '../utils/talent';
+import { slugifyCountry, inCountry } from '../utils/talent';
 import { TalentHub } from '../types';
 
 /** Builds the per-hub FAQ set from data already published elsewhere on the site (TALENT_HUBS, EOR wording) rather than inventing hub-specific numbers we can't back up. */
 function buildHubFaqs(hub: TalentHub) {
   return [
     {
-      question: `Why hire in ${hub.country}?`,
+      question: `Why hire in ${inCountry(hub.country)}?`,
       answer: hub.description,
     },
     {
-      question: `What roles do TrivianEdge clients typically fill from ${hub.country}?`,
+      question: `What roles do TrivianEdge clients typically fill from ${inCountry(hub.country)}?`,
       answer: `${hub.country} is one of our six talent hubs, specializing in ${hub.specialty.toLowerCase()}. Common stacks and skill sets we place from here include ${hub.popularTech.join(', ')}.`,
     },
     {
@@ -26,15 +26,15 @@ function buildHubFaqs(hub: TalentHub) {
       answer: `${hub.timeZoneAlignment}. We match working hours to your business, not the other way around.`,
     },
     {
-      question: `What's English proficiency and communication like in ${hub.country}?`,
+      question: `What's English proficiency and communication like in ${inCountry(hub.country)}?`,
       answer: hub.communication,
     },
     {
-      question: `Do I need to set up a local entity to hire in ${hub.country}?`,
-      answer: `No. TrivianEdge coordinates employment through in-country employer-of-record and payroll partners, so you hire in ${hub.country} without registering a local company, opening a foreign payroll account, or navigating ${hub.country} employment law yourself.`,
+      question: `Do I need to set up a local entity to hire in ${inCountry(hub.country)}?`,
+      answer: `No. TrivianEdge coordinates employment through in-country employer-of-record and payroll partners, so you hire in ${inCountry(hub.country)} without registering a local company, opening a foreign payroll account, or navigating ${hub.country} employment law yourself.`,
     },
     {
-      question: `How long does it take to deploy a team in ${hub.country}?`,
+      question: `How long does it take to deploy a team in ${inCountry(hub.country)}?`,
       answer: `${hub.country} follows TrivianEdge's standard 30-day deployment model: sourcing, screening, legal setup, payroll, and onboarding included.`,
     },
   ];
@@ -70,9 +70,9 @@ const TalentHubPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title={`Hire in ${hub.country} | Offshore Talent via TrivianEdge`}
-        description={`Hire ${hub.specialty.toLowerCase()} talent in ${hub.country} in as little as 30 days. Time zone fit, English proficiency, employment structure, and typical roles. No foreign entity required.`}
-        keywords={`hire talent in ${hub.country}, offshore staffing ${hub.country}, ${hub.specialty.toLowerCase()} ${hub.country}, employer of record ${hub.country}, hire offshore team ${hub.country}, TrivianEdge ${hub.country}`}
+        title={`Hire in ${inCountry(hub.country)} | Offshore Talent via TrivianEdge`}
+        description={`Hire ${hub.specialty.toLowerCase()} talent in ${inCountry(hub.country)} in as little as 30 days. Time zone fit, English proficiency, employment structure, and typical roles. No foreign entity required.`}
+        keywords={`hire talent in ${inCountry(hub.country)}, offshore staffing ${hub.country}, ${hub.specialty.toLowerCase()} ${hub.country}, employer of record ${hub.country}, hire offshore team ${hub.country}, TrivianEdge ${hub.country}`}
         canonical={pageUrl}
         schema={[
           breadcrumbSchema([
@@ -85,7 +85,7 @@ const TalentHubPage: React.FC = () => {
             '@context': 'https://schema.org',
             '@type': 'Service',
             '@id': `${pageUrl}#service`,
-            name: `Offshore talent sourcing in ${hub.country}`,
+            name: `Offshore talent sourcing in ${inCountry(hub.country)}`,
             description: hub.description,
             areaServed: { '@type': 'Country', name: hub.country },
             provider: { '@type': 'Organization', '@id': `${SEO_CONFIG.siteUrl}/#organization`, name: 'TrivianEdge' },
@@ -96,7 +96,7 @@ const TalentHubPage: React.FC = () => {
 
       <div className="bg-background min-h-screen text-text">
         {/* Hero */}
-        <div className={`relative overflow-hidden bg-gradient-to-br ${hub.gradient} border-b border-border`}>
+        <div className={`relative overflow-hidden hero-mesh border-b border-border`}>
           <div className="absolute inset-0 bg-background/85" />
           <div className="max-w-5xl mx-auto px-4 md:px-6 pt-16 pb-14 md:pt-24 md:pb-20 relative z-10">
             <button
@@ -119,7 +119,7 @@ const TalentHubPage: React.FC = () => {
               />
               <span className="text-xs font-bold uppercase tracking-widest text-cyan-600">{hub.specialty}</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">Hire in {hub.country} in as little as 30 days.</h1>
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">Hire in {inCountry(hub.country)} in as little as 30 days.</h1>
             <p className="text-muted text-lg md:text-xl leading-relaxed max-w-3xl">{hub.description}</p>
           </div>
         </div>
@@ -179,9 +179,9 @@ const TalentHubPage: React.FC = () => {
 
           {/* Employment structure */}
           <div className="glass p-8 md:p-10 rounded-[2rem] border-border mb-16 reveal">
-            <h2 className="text-2xl font-bold mb-4">How hiring in {hub.country} actually works</h2>
+            <h2 className="text-2xl font-bold mb-4">How hiring in {inCountry(hub.country)} actually works</h2>
             <div className="space-y-3 text-muted leading-relaxed">
-              <p>You never register a local company or open a foreign payroll account. TrivianEdge coordinates employment in {hub.country} through in-country employer-of-record and payroll partners, and manages that relationship end to end: one point of contact for you.</p>
+              <p>You never register a local company or open a foreign payroll account. TrivianEdge coordinates employment in {inCountry(hub.country)} through in-country employer-of-record and payroll partners, and manages that relationship end to end: one point of contact for you.</p>
               <p>Standard deployment runs on TrivianEdge's 30-day model: sourcing, screening, legal setup, payroll, and onboarding. Cost is scoped per role and typically lands well below the equivalent fully loaded cost of a direct North American hire; <Link to="/savings-calculator" className="text-cyan-600 hover:underline font-medium">model it against your own roles on the savings calculator</Link> rather than a flat headline percentage.</p>
             </div>
           </div>
@@ -200,7 +200,7 @@ const TalentHubPage: React.FC = () => {
           {/* FAQ */}
           <div className="mb-16">
             <h2 className="text-3xl font-bold mb-4 text-center">Frequently asked questions</h2>
-            <p className="text-muted text-center mb-10">Everything you need to know about hiring in {hub.country} with TrivianEdge.</p>
+            <p className="text-muted text-center mb-10">Everything you need to know about hiring in {inCountry(hub.country)} with TrivianEdge.</p>
             <Accordion items={faqs} />
           </div>
 
@@ -215,7 +215,7 @@ const TalentHubPage: React.FC = () => {
           {/* CTA */}
           <div className="glass p-8 md:p-10 rounded-[2rem] border-border flex flex-col md:flex-row md:items-center md:justify-between gap-6 mt-16 reveal">
             <div>
-              <h2 className="text-2xl font-bold mb-2 flex items-center gap-2"><Globe2 className="w-5 h-5 text-cyan-600" /> Ready to hire in {hub.country}?</h2>
+              <h2 className="text-2xl font-bold mb-2 flex items-center gap-2"><Globe2 className="w-5 h-5 text-cyan-600" /> Ready to hire in {inCountry(hub.country)}?</h2>
               <p className="text-muted">Tell us the roles you need and we'll scope a plan within 30 days.</p>
             </div>
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-bold premium-button whitespace-nowrap">

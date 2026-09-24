@@ -773,8 +773,17 @@
                         inset 0 1px 0 rgba(255,255,255,1);
         }
         [data-theme="dark"] .glass {
-            border: 1px solid rgba(255,255,255,0.18);
-            box-shadow: 0 16px 42px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.18);
+            /* Colour system glass: flat near-black, restrained border and
+               shadow. Drops the base rule's 20-24% white sheen, which read as
+               cheap glassmorphism on true black. */
+            background: rgba(14, 18, 18, 0.72);
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            border: 1px solid rgba(237, 239, 238, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        [data-theme="dark"] .glass:hover {
+            border-color: rgba(237, 239, 238, 0.14);
         }
 
         /* --- 3D Card Tilt, JS-driven via CSS vars --- */
@@ -1075,9 +1084,14 @@
         textarea:focus-visible,
         select:focus-visible,
         [tabindex]:focus-visible {
-            outline: 2px solid var(--cyan);
+            /* Colour system: #8FE3CB on dark (14:1). On white it would be
+               1.5:1, so light theme uses deep jade #1F6655 (6:1). */
+            outline: 2px solid #8FE3CB;
             outline-offset: 2px;
             border-radius: 4px;
+        }
+        [data-theme="light"] :is(a, button, input, textarea, select, [tabindex]):focus-visible {
+            outline-color: #1F6655;
         }
 
         /* Native <option> lists render outside the page's translucent
@@ -1160,7 +1174,9 @@
             border-color: rgba(15,23,42,0.14) !important;
         }
         [data-theme="dark"] .card-lift:hover {
-            box-shadow: 0 24px 56px rgba(0, 0, 0, 0.5);
+            /* Colour system cards: brighter edge, no brand glow bloom. */
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+            border-color: #343C3C !important;
         }
         @media (hover: none) {
             .card-lift:hover {
@@ -1390,4 +1406,30 @@
 /* Safari < 15.4 / older Android lack dvh units; fall back to vh there. */
 @supports not (height: 100dvh) {
     .min-h-dvh { min-height: 100vh; }
+}
+
+/* ── Colour system: text and form fields ───────────────────────────────
+   Primary text on dark is #EDEFEE, not pure white (halation on OLED).
+   Tailwind's .text-white is used across dark sections; retint it here
+   rather than touching every component. */
+.text-white { color: #EDEFEE; }
+
+/* Form fields: recessed input surface, 3:1 border (WCAG 1.4.11), jade
+   focus with a soft halo, and a distinct error state. */
+[data-theme="dark"] :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), textarea, select) {
+    background-color: #0B0E0E;
+    border-color: #5A6462;
+    color: #EDEFEE;
+}
+[data-theme="light"] :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), textarea, select) {
+    border-color: #7C8684; /* 3.9:1 on white */
+}
+:is(input, textarea, select)::placeholder { color: #7C8684; }
+:is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), textarea, select):focus {
+    border-color: #4DBC9F;
+    box-shadow: 0 0 0 3px rgba(77, 188, 159, 0.10);
+}
+:is(input, textarea, select)[aria-invalid="true"] {
+    border-color: #F47C70;
+    box-shadow: 0 0 0 3px rgba(244, 124, 112, 0.14);
 }

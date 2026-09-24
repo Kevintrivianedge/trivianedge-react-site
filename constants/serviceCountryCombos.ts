@@ -34,6 +34,22 @@ export const SERVICE_COUNTRY_COMBOS: ServiceCountryCombo[] = [
     ],
   },
   {
+    service: 'it-outsourcing',
+    serviceName: 'IT Outsourcing',
+    metaTitle: 'Offshore Software Development in the Philippines | TrivianEdge',
+    serviceHref: '/services/it-outsourcing',
+    countrySlug: 'philippines',
+    hubId: 'phl',
+    angle: 'The Philippines suits Canadian companies that want offshore developers who integrate quickly with North American teams: native-level English, deep Western business alignment, and a mature IT-BPM ecosystem across Manila, Cebu City, and Davao. TrivianEdge contracts from Toronto and places dedicated Philippines-based engineers for web platforms, business systems, and the support engineering around them.',
+    typicalRoles: ['PHP / Laravel developers', 'Python developers', 'Salesforce developers & admins', 'NetSuite developers & consultants', 'QA & technical support engineers'],
+    keywords: 'offshore software development Philippines, offshore software development Canada Philippines, hire Filipino developers Canada, IT outsourcing Philippines, offshore developers Philippines',
+    faqs: [
+      { question: 'Why do Canadian companies outsource software development to the Philippines?', answer: 'Native-level English and strong Western cultural alignment keep communication overhead low, and the Philippines\' mature IT-BPM ecosystem supplies experienced engineers for web platforms and business systems. TrivianEdge adds a Toronto-based contract and client management, so you deal with a Canadian company throughout.' },
+      { question: 'What kind of development work fits a Philippines-based team?', answer: 'Web platforms (PHP/Laravel, Python), CRM and ERP work on Salesforce and NetSuite, QA, and the technical support engineering that keeps those systems running, especially where the team works closely with your customer-facing or operations staff.' },
+      { question: 'What is the time zone overlap between the Philippines and Canada?', answer: 'The Philippines is on GMT+8, so a Philippines team works during North American evenings and overnight. That suits follow-the-sun coverage, overnight QA and support, and async handoffs; for real-time collaboration, teams schedule a daily overlap window.' },
+    ],
+  },
+  {
     service: 'rpo',
     serviceName: 'RPO',
     metaTitle: 'RPO & Software Engineer Hiring in Sri Lanka | TrivianEdge',

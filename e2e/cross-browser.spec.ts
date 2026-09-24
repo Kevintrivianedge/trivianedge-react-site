@@ -10,6 +10,7 @@ const ROUTES = [
   '/services',
   '/services/ai-development',
   '/services/it-outsourcing',
+  '/services/it-outsourcing/philippines',
   '/about',
   '/proof',
   '/contact',

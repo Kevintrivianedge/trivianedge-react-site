@@ -39,13 +39,14 @@ export default {
           900: '#16433A',
           950: '#0B2620',
         },
-        // Logo leaf green, the gradient's start stop.
-        emerald: {
-          300: '#8FCB98',
-          400: '#60B46D',
-          500: '#4E9A5A',
-          600: '#3F7F4A',
-        },
+        // Status colours from the colour system, kept outside the brand's
+        // 129-180° hue band so "success" never reads as a brand accent.
+        // 400 = spec value (on dark); 600/700 are AA text shades on white.
+        emerald: { 300: '#BDE69B', 400: '#9BD86A', 500: '#86C653', 600: '#5C8F36', 700: '#4A7A2A' },
+        green:   { 300: '#BDE69B', 400: '#9BD86A', 500: '#86C653', 600: '#5C8F36', 700: '#4A7A2A' },
+        red:     { 300: '#F8A59D', 400: '#F47C70', 500: '#E8604F', 600: '#C0392E', 700: '#A13027' },
+        amber:   { 300: '#F6CC7A', 400: '#F2B544', 500: '#E09E24', 600: '#A8720C', 700: '#8A5E0A' },
+        yellow:  { 300: '#F6CC7A', 400: '#F2B544', 500: '#E09E24', 600: '#A8720C', 700: '#8A5E0A' },
         // Violet is retired (not in the logo); existing usages render as jade.
         violet: {
           100: '#D5F3EA',

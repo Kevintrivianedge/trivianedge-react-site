@@ -7,7 +7,7 @@ import RelatedLinks from '../components/RelatedLinks';
 import { SERVICE_COUNTRY_COMBOS } from '../constants/serviceCountryCombos';
 import { TALENT_HUBS } from '../constants';
 import { breadcrumbSchema, faqSchema, SEO_CONFIG } from '../utils/seo';
-import { slugifyCountry } from '../utils/talent';
+import { slugifyCountry, inCountry } from '../utils/talent';
 
 const ServiceCountryPage: React.FC = () => {
   const { service, country } = useParams<{ service: string; country: string }>();
@@ -38,8 +38,8 @@ const ServiceCountryPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title={combo.metaTitle ?? `${combo.serviceName} in ${hub.country} | TrivianEdge`}
-        description={`${combo.serviceName} teams sourced from ${hub.country}, ${hub.specialty.toLowerCase()}, ${hub.timeZoneAlignment}. Deployed in as little as 30 days, no foreign entity required.`}
+        title={combo.metaTitle ?? `${combo.serviceName} in ${inCountry(hub.country)} | TrivianEdge`}
+        description={`${combo.serviceName} teams sourced from ${inCountry(hub.country)}, ${hub.specialty.toLowerCase()}, ${hub.timeZoneAlignment}. Deployed in as little as 30 days, no foreign entity required.`}
         keywords={combo.keywords}
         canonical={pageUrl}
         schema={[
@@ -53,7 +53,7 @@ const ServiceCountryPage: React.FC = () => {
             '@context': 'https://schema.org',
             '@type': 'Service',
             '@id': `${pageUrl}#service`,
-            name: `${combo.serviceName} in ${hub.country}`,
+            name: `${combo.serviceName} in ${inCountry(hub.country)}`,
             description: combo.angle,
             areaServed: { '@type': 'Country', name: hub.country },
             provider: { '@type': 'Organization', '@id': `${SEO_CONFIG.siteUrl}/#organization`, name: 'TrivianEdge' },
@@ -63,7 +63,7 @@ const ServiceCountryPage: React.FC = () => {
       />
 
       <div className={`bg-background min-h-screen text-text`}>
-        <div className={`relative overflow-hidden bg-gradient-to-br ${hub.gradient} border-b border-border`}>
+        <div className={`relative overflow-hidden hero-mesh border-b border-border`}>
           <div className="absolute inset-0 bg-background/85" />
           <div className="max-w-5xl mx-auto px-4 md:px-6 pt-16 pb-14 md:pt-24 md:pb-20 relative z-10">
             <button
@@ -86,7 +86,7 @@ const ServiceCountryPage: React.FC = () => {
               />
               <span className="text-xs font-bold uppercase tracking-widest text-cyan-600">{hub.country} · {hub.specialty}</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">{combo.serviceName} in {hub.country}</h1>
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">{combo.serviceName} in {inCountry(hub.country)}</h1>
             <p className="text-muted text-lg md:text-xl leading-relaxed max-w-3xl">{combo.angle}</p>
           </div>
         </div>
@@ -120,7 +120,7 @@ const ServiceCountryPage: React.FC = () => {
 
           <div className="glass p-8 md:p-10 rounded-[2rem] border-border mb-16 reveal">
             <h2 className="text-2xl font-bold mb-4">How hiring works</h2>
-            <p className="text-muted leading-relaxed">You never register a local company or open a foreign payroll account. TrivianEdge coordinates employment in {hub.country} through in-country employer-of-record and payroll partners, and manages that relationship end to end: one point of contact for you. Cost is scoped per role; <Link to="/savings-calculator" className="text-cyan-600 hover:underline font-medium">model it against your own roles on the savings calculator</Link> rather than a flat headline percentage.</p>
+            <p className="text-muted leading-relaxed">You never register a local company or open a foreign payroll account. TrivianEdge coordinates employment in {inCountry(hub.country)} through in-country employer-of-record and payroll partners, and manages that relationship end to end: one point of contact for you. Cost is scoped per role; <Link to="/savings-calculator" className="text-cyan-600 hover:underline font-medium">model it against your own roles on the savings calculator</Link> rather than a flat headline percentage.</p>
           </div>
 
           <div className="mb-16">
@@ -139,7 +139,7 @@ const ServiceCountryPage: React.FC = () => {
 
           <div className="glass p-8 md:p-10 rounded-[2rem] border-border flex flex-col md:flex-row md:items-center md:justify-between gap-6 mt-16 reveal">
             <div>
-              <h2 className="text-2xl font-bold mb-2">Ready to build a {combo.serviceName} team in {hub.country}?</h2>
+              <h2 className="text-2xl font-bold mb-2">Ready to build a {combo.serviceName} team in {inCountry(hub.country)}?</h2>
               <p className="text-muted">Tell us the roles you need and we'll scope a plan within 30 days.</p>
             </div>
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-bold premium-button whitespace-nowrap">
