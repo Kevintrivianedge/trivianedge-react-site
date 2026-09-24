@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, startTransition } from 'react';
 
 type Theme = 'dark' | 'light';
 
@@ -10,17 +10,25 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('theme');
-      if (stored === 'dark' || stored === 'light') return stored;
-      // Default to light for a cleaner premium look.
-      return 'light'; 
-    }
-    return 'light';
-  });
+  // Server and first client render both use 'light' so hydration matches;
+  // a stored preference is applied right after mount.
+  const [theme, setTheme] = useState<Theme>('light');
+  // The stored preference, until it has been applied to state. While set,
+  // the DOM/storage sync below skips so the default never flashes or
+  // overwrites the saved choice.
+  const pending = useRef<Theme | null>(null);
 
   useEffect(() => {
+    const stored = localStorage.getItem('theme');
+    if (stored === 'dark') {
+      pending.current = stored;
+      startTransition(() => setTheme(stored));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (pending.current && pending.current !== theme) return;
+    pending.current = null;
     const root = document.documentElement;
     root.setAttribute('data-theme', theme);
     root.classList.toggle('dark', theme === 'dark');

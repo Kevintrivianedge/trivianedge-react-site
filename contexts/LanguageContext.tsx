@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
+import React, { createContext, useContext, useState, useMemo, useCallback, useEffect, startTransition } from 'react';
 import { SupportedLanguage } from '../types';
 import { getLanguageFromBrowser, isRTL as checkRTL } from '../utils/countryLanguageMap';
 
@@ -13,20 +13,19 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 const VALID_LANGUAGES: SupportedLanguage[] = ['en', 'fr', 'es', 'ar', 'si'];
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Initialize state synchronously to ensure children render immediately.
-  // This prevents race conditions with IntersectionObservers in parent components.
-  const [language, setLanguageState] = useState<SupportedLanguage>(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('user_language');
-      // Validate stored value against the known set of supported languages
-      // so tampered/outdated localStorage values don't cause undefined behaviour (#21).
-      if (stored && VALID_LANGUAGES.includes(stored as SupportedLanguage)) {
-        return stored as SupportedLanguage;
-      }
-      return getLanguageFromBrowser();
-    }
-    return 'en';
-  });
+  // 'en' on the server and the first client render so hydration matches; the
+  // stored or browser-detected language is applied right after mount.
+  const [language, setLanguageState] = useState<SupportedLanguage>('en');
+
+  useEffect(() => {
+    const stored = localStorage.getItem('user_language');
+    // Validate stored value against the known set of supported languages
+    // so tampered/outdated localStorage values don't cause undefined behaviour (#21).
+    const next = stored && VALID_LANGUAGES.includes(stored as SupportedLanguage)
+      ? (stored as SupportedLanguage)
+      : getLanguageFromBrowser();
+    if (next !== 'en') startTransition(() => setLanguageState(next));
+  }, []);
 
   const setLanguage = useCallback((lang: SupportedLanguage) => {
     setLanguageState(lang);
