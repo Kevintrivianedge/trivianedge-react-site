@@ -76,7 +76,7 @@ const AIChatbotDevelopmentPage: React.FC = () => {
     <>
       <SEOHead
         title="AI Chatbot Development Services Canada | TrivianEdge"
-        description="TrivianEdge builds custom AI chatbots grounded in your own data (support, sales, and internal assistants) deployed in as little as 30 days."
+        description="TrivianEdge builds custom AI chatbots grounded in your own data (support, sales, and internal assistants) deployed in around 30 days."
         keywords="AI chatbot development Canada, custom AI chatbot agency, AI customer support chatbot development, AI sales assistant development, offshore AI chatbot team, TrivianEdge AI chatbot"
         schema={[
           serviceSchema(
@@ -128,7 +128,7 @@ const AIChatbotDevelopmentPage: React.FC = () => {
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
               Support, sales, and internal assistants that answer from your actual knowledge
-              base and know when to hand off to a human: built and deployed in as little as 30 days.
+              base and know when to hand off to a human: built and deployed in around 30 days.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">

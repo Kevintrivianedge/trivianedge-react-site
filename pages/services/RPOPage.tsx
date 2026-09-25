@@ -29,7 +29,7 @@ const FAQS = [
   {
     question: 'How quickly can TrivianEdge RPO start delivering?',
     answer:
-      'We embed our RPO team and typically begin delivering shortlisted candidates within 30 days. The first week covers discovery and role briefing, weeks two and three cover active sourcing and screening, and by week four you are reviewing qualified candidates.',
+      'We embed our RPO team and typically begin delivering shortlisted candidates in around 30 days. The first week covers discovery and role briefing, weeks two and three cover active sourcing and screening, and by week four you are reviewing qualified candidates.',
   },
   {
     question: 'What types of roles can TrivianEdge RPO fill?',
@@ -125,7 +125,7 @@ const RPOPage: React.FC = () => {
     <>
       <SEOHead
         title="RPO Services in Canada & Toronto | Recruitment Process Outsourcing | TrivianEdge"
-        description="Toronto-based RPO company for Canadian tech and engineering hiring. We embed into your HR team, source globally, and deliver vetted shortlists in as little as 30 days."
+        description="Toronto-based RPO company for Canadian tech and engineering hiring. We embed into your HR team, source globally, and deliver vetted shortlists in around 30 days."
         keywords="RPO services Canada, recruitment process outsourcing Canada, embedded recruitment team, offshore hiring partner, global talent sourcing, RPO company Toronto, full-cycle recruitment outsourcing, TrivianEdge RPO"
         schema={[
           serviceSchema(
@@ -289,7 +289,7 @@ const RPOPage: React.FC = () => {
           <div className="max-w-3xl mx-auto reveal">
             <h2 className="text-3xl font-bold text-text mb-4">How Our RPO Process Works</h2>
             <p className="text-muted text-lg mb-12 leading-relaxed">
-              From your first conversation to your first hire, the whole process typically runs within 30 days.
+              From your first conversation to your first hire, the whole process typically takes around 30 days.
             </p>
             <div className="space-y-8">
               {[

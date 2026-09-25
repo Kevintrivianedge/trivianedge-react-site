@@ -24,7 +24,7 @@ const VENTURE_FAQS = [
   {
     question: 'What do I get from a Venture Studio engagement?',
     answer:
-      'Accepted ventures receive access to TrivianEdge\'s offshore software development team, AI engineering resources, product management support, and our 30-day MVP deployment methodology. We move fast and stay embedded until your product is live.',
+      'Accepted ventures receive access to TrivianEdge\'s offshore software development team, AI engineering resources, product management support, and our MVP deployment methodology, which typically ships in around 30 days. We move fast and stay embedded until your product is live.',
   },
   {
     question: 'Do I need to have funding to apply to the Venture Studio?',
@@ -455,7 +455,7 @@ const VentureStudioPage: React.FC = () => {
     <>
       <SEOHead
         title="Venture Studio | Build Your MVP with TrivianEdge"
-        description="TrivianEdge Venture Studio pairs early-stage founders with offshore engineering talent and AI development to ship your MVP in as little as 30 days. Apply now."
+        description="TrivianEdge Venture Studio pairs early-stage founders with offshore engineering talent and AI development to ship your MVP in around 30 days. Apply now."
         keywords="venture studio Canada, MVP development, startup build partner, offshore MVP development, AI startup, SaaS MVP, TrivianEdge venture studio"
         schema={[
           serviceSchema(

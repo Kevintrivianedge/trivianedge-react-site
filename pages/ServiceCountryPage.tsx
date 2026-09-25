@@ -39,7 +39,7 @@ const ServiceCountryPage: React.FC = () => {
     <>
       <SEOHead
         title={combo.metaTitle ?? `${combo.serviceName} in ${inCountry(hub.country)} | TrivianEdge`}
-        description={`${combo.serviceName} teams sourced from ${inCountry(hub.country)}, ${hub.specialty.toLowerCase()}, ${hub.timeZoneAlignment}. Deployed in as little as 30 days, no foreign entity required.`}
+        description={`${combo.serviceName} teams sourced from ${inCountry(hub.country)}, ${hub.specialty.toLowerCase()}, ${hub.timeZoneAlignment}. Deployed in around 30 days, no foreign entity required.`}
         keywords={combo.keywords}
         canonical={pageUrl}
         schema={[
@@ -105,7 +105,7 @@ const ServiceCountryPage: React.FC = () => {
                 <Sparkles className="w-5 h-5 text-cyan-600" />
               </div>
               <h2 className="font-bold text-lg mb-2">Deployment timeline</h2>
-              <p className="text-muted text-sm leading-relaxed">TrivianEdge's standard 30-day deployment model: sourcing, screening, legal setup, payroll, and onboarding included.</p>
+              <p className="text-muted text-sm leading-relaxed">TrivianEdge's typical deployment takes around 30 days, with sourcing, screening, legal setup, payroll, and onboarding included.</p>
             </div>
           </div>
 
@@ -140,7 +140,7 @@ const ServiceCountryPage: React.FC = () => {
           <div className="glass p-8 md:p-10 rounded-[2rem] border-border flex flex-col md:flex-row md:items-center md:justify-between gap-6 mt-16 reveal">
             <div>
               <h2 className="text-2xl font-bold mb-2">Ready to build a {combo.serviceName} team in {inCountry(hub.country)}?</h2>
-              <p className="text-muted">Tell us the roles you need and we'll scope a plan within 30 days.</p>
+              <p className="text-muted">Tell us the roles you need and we'll map out a plan to get them working in around 30 days.</p>
             </div>
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-bold premium-button whitespace-nowrap">
               Start your search <ArrowRight className="w-4 h-4" />

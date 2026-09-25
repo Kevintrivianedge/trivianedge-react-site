@@ -9,7 +9,7 @@ export const HOME_TITLE =
   'Microsoft & Google Cloud, AI & Offshore Teams | TrivianEdge';
 
 export const HOME_DESCRIPTION =
-  'Toronto-based partner for Microsoft 365, Azure, Google Workspace and Google Cloud, AI and custom software, and offshore teams live in about 30 days.';
+  'Toronto-based partner for Microsoft 365, Azure, Google Workspace and Google Cloud, AI and custom software, and offshore teams live in around 30 days.';
 
 export interface Pillar {
   id: string;
@@ -48,7 +48,7 @@ export const PILLARS: Pillar[] = [
     kicker: '03 · Global Teams',
     title: 'Offshore teams, hired and managed for you.',
     answer:
-      'We recruit, employ, and manage dedicated staff across six countries, covering technical and non-technical roles, typically live in about 30 days.',
+      'We recruit, employ, and manage dedicated staff across six countries, covering technical and non-technical roles, typically live in around 30 days.',
     items: ['Business process outsourcing (BPO)', 'Recruitment process outsourcing (RPO)', 'Offshore engineering teams', 'Payroll & local compliance'],
     href: '/services',
     cta: 'Explore team services',
@@ -59,7 +59,7 @@ export const PILLARS: Pillar[] = [
 export const HERO_FACTS = [
   { k: 'Headquarters', v: 'Toronto, Canada' },
   { k: 'Talent hubs', v: '6 countries' },
-  { k: 'Typical team deployment', v: '~30 days' },
+  { k: 'Typical team deployment', v: 'Around 30 days' },
   { k: 'Microsoft Partner ID', v: '7154428' },
 ];
 
