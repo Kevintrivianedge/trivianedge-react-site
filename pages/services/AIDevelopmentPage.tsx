@@ -33,7 +33,7 @@ const FAQS = [
   {
     question: 'How quickly can an AI development project start?',
     answer:
-      'We assemble and deploy a dedicated offshore AI development team in as little as 30 days. The first week is scoping and technical architecture, week two covers environment setup and sprint planning, and active development begins in week three.',
+      'We assemble and deploy a dedicated offshore AI development team in around 30 days. The first week is scoping and technical architecture, week two covers environment setup and sprint planning, and active development begins in week three.',
   },
   {
     question: 'Can TrivianEdge integrate OpenAI and Anthropic APIs into my existing software?',
@@ -131,7 +131,7 @@ const AIDevelopmentPage: React.FC = () => {
     <>
       <SEOHead
         title="AI Development Company in Canada | Offshore AI Developers | TrivianEdge"
-        description="Toronto-based AI development company. Hire offshore AI/ML developers for generative AI, LLM integration, and machine learning, deployed in as little as 30 days."
+        description="Toronto-based AI development company. Hire offshore AI/ML developers for generative AI, LLM integration, and machine learning, deployed in around 30 days."
         keywords="AI development company Canada, AI development services Canada, offshore AI development team, generative AI development, LLM integration services, machine learning development company, AI automation agency, hire AI developers, TrivianEdge AI development"
         schema={[
           serviceSchema(
@@ -202,7 +202,7 @@ const AIDevelopmentPage: React.FC = () => {
               What is AI Development Outsourcing?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              AI development outsourcing means partnering with an external team to design, build, and deploy AI products: generative AI features, LLM integrations, or custom machine learning models, instead of hiring an in-house AI team from scratch. TrivianEdge assembles a dedicated offshore AI engineering team in as little as 30 days, giving you senior AI talent at up to 40% lower cost than local hiring. Pair AI development with our{' '}
+              AI development outsourcing means partnering with an external team to design, build, and deploy AI products: generative AI features, LLM integrations, or custom machine learning models, instead of hiring an in-house AI team from scratch. TrivianEdge assembles a dedicated offshore AI engineering team in around 30 days, giving you senior AI talent at up to 40% lower cost than local hiring. Pair AI development with our{' '}
               <Link
                 to="/services/it-outsourcing"
                 className="text-cyan-400 hover:underline"
@@ -288,7 +288,7 @@ const AIDevelopmentPage: React.FC = () => {
         <section className="py-24 px-4 md:px-6">
           <div className="max-w-2xl mx-auto text-center reveal">
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
-              Launch Your AI Project in ~30 Days
+              Launch Your AI Project in Around 30 Days
             </h2>
             <p className="text-muted mb-8">
               Offshore AI engineering teams with up to 40% cost savings.

@@ -33,7 +33,7 @@ const SERVICES_HUB = [
     iconBg: 'from-cyan-400/20 to-cyan-400/5',
     iconBorder: 'border-cyan-400/25',
     glow: 'bg-cyan-400/8',
-    description: 'Offshore teams that handle your back-office, support, finance, and ops. Fully managed, 30-day deployment, no foreign entity needed.',
+    description: 'Offshore teams that handle your back-office, support, finance, and ops. Fully managed, live in around 30 days, no foreign entity needed.',
     tags: ['Back-Office', 'Customer Support', 'Finance & Accounting', 'HR Admin'],
   },
   {
@@ -82,7 +82,7 @@ const ServicesPage: React.FC = () => {
     <>
       <SEOHead
         title="Services | Cloud, AI & Software, Offshore Teams | TrivianEdge"
-        description="TrivianEdge services: Microsoft and Google cloud, AI and custom software development, and offshore teams (BPO, RPO, engineering) from six countries, typically live in about 30 days."
+        description="TrivianEdge services: Microsoft and Google cloud, AI and custom software development, and offshore teams (BPO, RPO, engineering) from six countries, typically live in around 30 days."
         keywords="TrivianEdge services, BPO RPO software development, outsourcing services Canada, offshore team services, AI development services, bespoke software development services"
         canonical="https://www.trivianedge.com/services"
         structuredData={[

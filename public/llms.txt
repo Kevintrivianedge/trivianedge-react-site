@@ -8,7 +8,7 @@ Cloud: we plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google
 
 AI and software: we build generative AI features, LLM integrations, AI agents and automations, and custom web applications. Clients own all the code.
 
-Global teams: we recruit, employ and manage dedicated staff in the Philippines, Vietnam, Sri Lanka, Turkey, South Africa and Costa Rica, for technical and non-technical roles, working through in-country employer-of-record and payroll partners. Teams are typically working within about 30 days, usually at up to 40% less than hiring locally in Canada, the US or the UK.
+Global teams: we recruit, employ and manage dedicated staff in the Philippines, Vietnam, Sri Lanka, Turkey, South Africa and Costa Rica, for technical and non-technical roles, working through in-country employer-of-record and payroll partners. Teams are typically working in around 30 days, usually at up to 40% less than hiring locally in Canada, the US or the UK.
 
 TrivianEdge was founded in 2025 by Kevin Vaz, who has spent more than 20 years in outsourcing and operations.
 
@@ -19,13 +19,13 @@ TrivianEdge was founded in 2025 by Kevin Vaz, who has spent more than 20 years i
 ## Services
 
 - [Services overview](https://www.trivianedge.com/services): Every TrivianEdge service line in one place.
-- [BPO](https://www.trivianedge.com/services/bpo): Business Process Outsourcing — offshore back-office, customer support, finance, and HR admin teams.
-- [RPO](https://www.trivianedge.com/services/rpo): Recruitment Process Outsourcing — embedded hiring, sourcing, screening, and onboarding.
+- [BPO](https://www.trivianedge.com/services/bpo): Business Process Outsourcing: offshore back-office, customer support, finance, and HR admin teams.
+- [RPO](https://www.trivianedge.com/services/rpo): Recruitment Process Outsourcing: embedded hiring, sourcing, screening, and onboarding.
   - [Full-Cycle RPO](https://www.trivianedge.com/services/rpo/full-cycle-rpo): Ongoing, embedded recruitment function for continuous hiring needs.
   - [Project-Based RPO](https://www.trivianedge.com/services/rpo/project-based-rpo): Defined, time-boxed hiring sprints for launches, funding rounds, and seasonal peaks.
   - [AI-Powered Recruitment](https://www.trivianedge.com/services/rpo/ai-powered-recruitment): AI-assisted sourcing and screening, with every shortlist reviewed by a human recruiter.
-- [Bespoke Software Development](https://www.trivianedge.com/services/it-outsourcing): Custom applications and platforms built by dedicated offshore engineering teams, plus the IT outsourcing layer around them — cloud/DevOps, QA, cybersecurity, and systems integration.
-- [AI Development](https://www.trivianedge.com/services/ai-development): Offshore AI engineering — generative AI, LLM integration, machine learning, and MLOps.
+- [Bespoke Software Development](https://www.trivianedge.com/services/it-outsourcing): Custom applications and platforms built by dedicated offshore engineering teams, plus the IT outsourcing layer around them (cloud/DevOps, QA, cybersecurity, and systems integration).
+- [AI Development](https://www.trivianedge.com/services/ai-development): Offshore AI engineering for generative AI, LLM integration, machine learning, and MLOps.
   - [Generative AI Development](https://www.trivianedge.com/services/ai-development/generative-ai): RAG systems, AI copilots, and content generation tools grounded in your own data.
   - [LLM Integration & Fine-Tuning](https://www.trivianedge.com/services/ai-development/llm-integration): Integrating and fine-tuning OpenAI, Anthropic Claude, and open-source models.
   - [Machine Learning & Data Science](https://www.trivianedge.com/services/ai-development/machine-learning): Predictive models, forecasting, and recommendation engines from your own data.
@@ -54,9 +54,9 @@ TrivianEdge was founded in 2025 by Kevin Vaz, who has spent more than 20 years i
 
 ## Talent Hubs
 
-- [Philippines](https://www.trivianedge.com/talent/philippines): Operational and service excellence — customer support, back-office, and finance ops talent.
-- [Sri Lanka](https://www.trivianedge.com/talent/sri-lanka): High-end software engineering — full-stack, data, and cloud engineers.
-- [Vietnam](https://www.trivianedge.com/talent/vietnam): Next-gen tech and development — AI/ML engineers and modern backend talent.
+- [Philippines](https://www.trivianedge.com/talent/philippines): Operational and service excellence: customer support, back-office, and finance ops talent.
+- [Sri Lanka](https://www.trivianedge.com/talent/sri-lanka): High-end software engineering: full-stack, data, and cloud engineers.
+- [Vietnam](https://www.trivianedge.com/talent/vietnam): Next-gen tech and development: AI/ML engineers and modern backend talent.
 - [Turkey](https://www.trivianedge.com/talent/turkey): Strategic bridge operations and tech, aligned to EU/UK working hours.
 - [South Africa](https://www.trivianedge.com/talent/south-africa): Financial and specialized operations talent, aligned to UK/EU working hours.
 - [Costa Rica](https://www.trivianedge.com/talent/costa-rica): Premium nearshore tech talent, aligned to US Central/Eastern time zones.

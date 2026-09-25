@@ -8,7 +8,7 @@ export const COMPARISONS: ComparisonPageData[] = [
     optionA: {
       name: 'TrivianEdge BPO',
       summary: 'A managed offshore team runs the function for you: TrivianEdge handles sourcing, employment, and day-to-day HR, while you keep control of the work itself.',
-      goodFor: ['Support functions you need running well but don\'t want to manage', 'Getting a function live in as little as 30 days instead of a multi-month hiring cycle', 'Scaling headcount up or down without renegotiating contracts each time'],
+      goodFor: ['Support functions you need running well but don\'t want to manage', 'Getting a function live in around 30 days instead of a multi-month hiring cycle', 'Scaling headcount up or down without renegotiating contracts each time'],
       tradeoffs: ['You are not building in-house institutional ownership of the function', 'Works best when the function has clear processes to hand off, not deep tacit knowledge held by one person'],
     },
     optionB: {
@@ -18,7 +18,7 @@ export const COMPARISONS: ComparisonPageData[] = [
       tradeoffs: ['Hiring, onboarding, and building management infrastructure typically takes months, not weeks', 'You absorb the full employer overhead (benefits, payroll admin, HR, compliance) on top of salary'],
     },
     rows: [
-      { factor: 'Time to a working team', a: 'TrivianEdge\'s standard 30-day deployment model', b: 'Typically several months once sourcing, interviewing, and onboarding are accounted for' },
+      { factor: 'Time to a working team', a: 'Around 30 days, TrivianEdge\'s typical deployment time', b: 'Typically several months once sourcing, interviewing, and onboarding are accounted for' },
       { factor: 'Who manages HR and compliance', a: 'TrivianEdge, via in-country EOR and payroll partners', b: 'You, directly: payroll, benefits, and local employment law become your responsibility' },
       { factor: 'Cost structure', a: 'One line item covering the team and its management overhead', b: 'Salary plus benefits, payroll taxes, office/equipment, and HR/legal time: usually adds 20-40% on top of salary alone' },
       { factor: 'Flexibility to scale', a: 'Scale up or down without renegotiating employment contracts', b: 'Headcount changes mean hiring or layoffs, each with its own cost and time' },
@@ -130,7 +130,7 @@ export const COMPARISONS: ComparisonPageData[] = [
       ],
     },
     rows: [
-      { factor: 'Time to first shipped feature', a: 'Team deployed in as little as 30 days', b: 'Often 3-6+ months once sourcing, interviewing, and onboarding senior AI talent is accounted for' },
+      { factor: 'Time to first shipped feature', a: 'Team deployed in around 30 days', b: 'Often 3-6+ months once sourcing, interviewing, and onboarding senior AI talent is accounted for' },
       { factor: 'Access to specialized skills', a: 'LLM integration, RAG, MLOps, and applied ML specialists available immediately', b: 'Limited by local talent pool and your ability to compete for scarce, high-demand roles' },
       { factor: 'Cost structure', a: 'One scoped engagement covering the team and delivery', b: 'Senior AI/ML salaries plus full employer overhead and recruiting cost' },
       { factor: 'Flexibility', a: 'Scale the team up or down as the roadmap changes', b: 'Headcount changes mean hiring or layoffs' },

@@ -63,7 +63,7 @@ const INCLUDED = [
 ];
 
 const STATS = [
-  { value: '~30 Days', label: 'Avg. To Deployed Team' },
+  { value: 'Around 30 Days', label: 'Avg. To Deployed Team' },
   { value: 'Up to 40%', label: 'Cost Reduction' },
   { value: '6', label: 'Sourcing Countries' },
   { value: '100%', label: 'IP Ownership' },
@@ -76,7 +76,7 @@ const GenerativeAIPage: React.FC = () => {
     <>
       <SEOHead
         title="Generative AI Development Services Canada | TrivianEdge"
-        description="TrivianEdge builds generative AI products (RAG systems, AI copilots, and content generation tools) with an offshore team deployed in as little as 30 days."
+        description="TrivianEdge builds generative AI products (RAG systems, AI copilots, and content generation tools) with an offshore team deployed in around 30 days."
         keywords="generative AI development Canada, generative AI development agency, RAG development services, AI copilot development, custom generative AI solutions, hire generative AI developers, TrivianEdge generative AI"
         schema={[
           serviceSchema(
@@ -128,12 +128,12 @@ const GenerativeAIPage: React.FC = () => {
             </h1>
             <p className="text-muted text-lg max-w-2xl mx-auto mb-8">
               RAG systems, AI copilots, and content generation tools built on current OpenAI, Anthropic,
-              and open-weight models: grounded in your data, deployed by an offshore team in as little as 30 days.
+              and open-weight models: grounded in your data, deployed by an offshore team in around 30 days.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">
               {[
-                { icon: Clock, label: '30-Day Deployment' },
+                { icon: Clock, label: 'Live in Around 30 Days' },
                 { icon: TrendingDown, label: 'Up to 40% Cost Reduction' },
                 { icon: Globe2, label: '6 Sourcing Countries' },
                 { icon: CheckCircle2, label: '100% IP Ownership' },
@@ -260,7 +260,7 @@ const GenerativeAIPage: React.FC = () => {
               Build Your Generative AI Product
             </h2>
             <p className="text-muted mb-8">
-              Let's scope the retrieval, the guardrails, and the team to ship it in as little as 30 days.
+              Let's scope the retrieval, the guardrails, and the team to ship it in around 30 days.
             </p>
             <Link
               to="/contact"

@@ -35,7 +35,7 @@ function buildHubFaqs(hub: TalentHub) {
     },
     {
       question: `How long does it take to deploy a team in ${inCountry(hub.country)}?`,
-      answer: `${hub.country} follows TrivianEdge's standard 30-day deployment model: sourcing, screening, legal setup, payroll, and onboarding included.`,
+      answer: `Hiring in ${hub.country} typically takes around 30 days, with sourcing, screening, legal setup, payroll, and onboarding included.`,
     },
   ];
 }
@@ -71,7 +71,7 @@ const TalentHubPage: React.FC = () => {
     <>
       <SEOHead
         title={`Hire in ${inCountry(hub.country)} | Offshore Talent via TrivianEdge`}
-        description={`Hire ${hub.specialty.toLowerCase()} talent in ${inCountry(hub.country)} in as little as 30 days. Time zone fit, English proficiency, employment structure, and typical roles. No foreign entity required.`}
+        description={`Hire ${hub.specialty.toLowerCase()} talent in ${inCountry(hub.country)} in around 30 days. Time zone fit, English proficiency, employment structure, and typical roles. No foreign entity required.`}
         keywords={`hire talent in ${inCountry(hub.country)}, offshore staffing ${hub.country}, ${hub.specialty.toLowerCase()} ${hub.country}, employer of record ${hub.country}, hire offshore team ${hub.country}, TrivianEdge ${hub.country}`}
         canonical={pageUrl}
         schema={[
@@ -119,7 +119,7 @@ const TalentHubPage: React.FC = () => {
               />
               <span className="text-xs font-bold uppercase tracking-widest text-cyan-600">{hub.specialty}</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">Hire in {inCountry(hub.country)} in as little as 30 days.</h1>
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">Hire in {inCountry(hub.country)} in around 30 days.</h1>
             <p className="text-muted text-lg md:text-xl leading-relaxed max-w-3xl">{hub.description}</p>
           </div>
         </div>
@@ -182,7 +182,7 @@ const TalentHubPage: React.FC = () => {
             <h2 className="text-2xl font-bold mb-4">How hiring in {inCountry(hub.country)} actually works</h2>
             <div className="space-y-3 text-muted leading-relaxed">
               <p>You never register a local company or open a foreign payroll account. TrivianEdge coordinates employment in {inCountry(hub.country)} through in-country employer-of-record and payroll partners, and manages that relationship end to end: one point of contact for you.</p>
-              <p>Standard deployment runs on TrivianEdge's 30-day model: sourcing, screening, legal setup, payroll, and onboarding. Cost is scoped per role and typically lands well below the equivalent fully loaded cost of a direct North American hire; <Link to="/savings-calculator" className="text-cyan-600 hover:underline font-medium">model it against your own roles on the savings calculator</Link> rather than a flat headline percentage.</p>
+              <p>Deployment typically takes around 30 days and covers sourcing, screening, legal setup, payroll, and onboarding. Cost is scoped per role and typically lands well below the equivalent fully loaded cost of a direct North American hire; <Link to="/savings-calculator" className="text-cyan-600 hover:underline font-medium">model it against your own roles on the savings calculator</Link> rather than a flat headline percentage.</p>
             </div>
           </div>
 
@@ -216,7 +216,7 @@ const TalentHubPage: React.FC = () => {
           <div className="glass p-8 md:p-10 rounded-[2rem] border-border flex flex-col md:flex-row md:items-center md:justify-between gap-6 mt-16 reveal">
             <div>
               <h2 className="text-2xl font-bold mb-2 flex items-center gap-2"><Globe2 className="w-5 h-5 text-cyan-600" /> Ready to hire in {inCountry(hub.country)}?</h2>
-              <p className="text-muted">Tell us the roles you need and we'll scope a plan within 30 days.</p>
+              <p className="text-muted">Tell us the roles you need and we'll map out a plan to get them working in around 30 days.</p>
             </div>
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-bold premium-button whitespace-nowrap">
               Start your search <ArrowRight className="w-4 h-4" />

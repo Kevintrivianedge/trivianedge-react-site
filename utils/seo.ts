@@ -283,7 +283,7 @@ export function buildSoftwareApplicationSchema(): object {
     name: 'Aria OS',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
-    description: 'The autonomous workforce operating system by TrivianEdge — hiring, payroll, compliance and performance, run by a single AI core.',
+    description: 'The autonomous workforce operating system by TrivianEdge. Hiring, payroll, compliance and performance, run by a single AI core.',
     url: 'https://trivian-aria.com',
     offers: [
       { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'USD', description: 'Free forever for the first 10 employees' },
@@ -514,12 +514,12 @@ export function buildServiceItemListSchema(): object {
     },
     {
       name: 'Bespoke Software Development & IT Outsourcing',
-      description: 'Bespoke software development and managed IT outsourcing for startups and enterprises, built by dedicated offshore engineering teams. 30-day deployment, up to 40% cost savings.',
+      description: 'Bespoke software development and managed IT outsourcing for startups and enterprises, built by dedicated offshore engineering teams. Teams live in around 30 days, up to 40% cost savings.',
       url: `${SEO_CONFIG.siteUrl}/#services`,
     },
     {
       name: 'Aria OS',
-      description: 'The autonomous workforce operating system by TrivianEdge — hiring, payroll, compliance, and performance run by one AI core. Free for the first 10 employees.',
+      description: 'The autonomous workforce operating system by TrivianEdge. Hiring, payroll, compliance, and performance run by one AI core. Free for the first 10 employees.',
       url: `${SEO_CONFIG.siteUrl}/ai-ventures/aria`,
     },
     {

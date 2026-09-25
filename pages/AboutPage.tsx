@@ -7,7 +7,7 @@ import { COMPANY_ONE_LINER, COMPANY_SHORT, COMPANY_LONG } from '../constants/com
 import { buildWebPageSchema, buildFounderPersonSchema, breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
 
 const STATS = [
-  { icon: Clock, label: 'Team deployed', value: 'In as little as 30 days' },
+  { icon: Clock, label: 'Team deployed', value: 'In around 30 days' },
   { icon: Building2, label: 'Cost savings vs. local hiring', value: 'Up to 40%' },
   { icon: Globe2, label: 'Time zones covered', value: '6' },
   { icon: Users, label: 'Founded', value: '2025' },

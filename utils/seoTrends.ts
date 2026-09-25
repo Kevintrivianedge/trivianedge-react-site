@@ -52,11 +52,11 @@ const TITLE_VARIANTS: Record<PageContext, string[]> = {
   home: [
     'TrivianEdge | BPO & Offshore Software Development | Canada',
     'TrivianEdge | Offshore Outsourcing & Software Development | Toronto Canada',
-    'TrivianEdge | BPO Company Canada — Global Talent & IT Outsourcing',
+    'TrivianEdge | BPO Company Canada | Global Talent & IT Outsourcing',
     'TrivianEdge | Business Process Outsourcing & Offshore Teams | Canada',
   ],
   blog: [
-    'Intelligence Feed | BPO & Outsourcing Insights — TrivianEdge',
+    'Intelligence Feed | BPO & Outsourcing Insights | TrivianEdge',
     'Global Talent & BPO Blog | TrivianEdge Outsourcing Insights',
     'Offshore Development & BPO Resources | TrivianEdge Global',
   ],
@@ -69,17 +69,17 @@ const TITLE_VARIANTS: Record<PageContext, string[]> = {
 
 const DESC_VARIANTS: Record<PageContext, string[]> = {
   home: [
-    'Canada\'s BPO and offshore software development company. Elite global talent deployed in as little as 30 days. Up to 40% cost savings across 6 time zones.',
-    'TrivianEdge: offshore BPO, software teams, and IT outsourcing from Canada. 30-day deployment, 6 time zones, 40% cost reduction.',
+    'Canada\'s BPO and offshore software development company. Elite global talent deployed in around 30 days. Up to 40% cost savings across 6 time zones.',
+    'TrivianEdge: offshore BPO, software teams, and IT outsourcing from Canada. Teams in around 30 days, 6 time zones, 40% cost reduction.',
     'TrivianEdge deploys dedicated software teams, managed BPO, and AI-driven staffing for startups worldwide. Canada\'s offshore partner.',
-    'Stop recruiting. Start deploying. Canada\'s BPO and offshore development company. Philippines, Sri Lanka, Vietnam & more. 30 days.',
+    'Stop recruiting. Start deploying. Canada\'s BPO and offshore development company. Philippines, Sri Lanka, Vietnam & more. Teams in around 30 days.',
   ],
   blog: [
-    'Expert insights on BPO, offshore software development, IT outsourcing, and global talent from TrivianEdge — Canada\'s premier outsourcing partner.',
+    'Expert insights on BPO, offshore software development, IT outsourcing, and global talent from TrivianEdge, Canada\'s premier outsourcing partner.',
     'Read TrivianEdge\'s intelligence feed for the latest on BPO trends, offshore team management, and software development outsourcing strategies.',
   ],
   'blog-post': [
-    'TrivianEdge BPO & outsourcing insights — expert analysis on offshore software development, global talent, and IT outsourcing.',
+    'TrivianEdge BPO & outsourcing insights: expert analysis on offshore software development, global talent, and IT outsourcing.',
   ],
   privacy: ['TrivianEdge Global privacy policy for BPO, outsourcing, and offshore services. PIPEDA and GDPR compliant.'],
   terms: ['TrivianEdge terms of service for BPO, outsourcing, and offshore software development engagements.'],

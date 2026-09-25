@@ -81,7 +81,7 @@ const ContactPage: React.FC = () => {
                 <ol className="list-decimal pl-5 space-y-2">
                   <li>We reply, same business day when possible, to book a scoping call with our Toronto team.</li>
                   <li>You get a written proposal covering team shape, talent hub, monthly cost, and start date.</li>
-                  <li>Once approved, vetted candidates are shortlisted and your team is typically working inside 30 days.</li>
+                  <li>Once approved, vetted candidates are shortlisted and your team is typically working in around 30 days.</li>
                 </ol>
                 <p>If you need compliance, security, or operating-model details first, review the <Link to="/trust" className="text-cyan-500 hover:underline">Trust page</Link>.</p>
               </div>

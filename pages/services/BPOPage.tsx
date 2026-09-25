@@ -32,7 +32,7 @@ const FAQS = [
   {
     question: 'How quickly can TrivianEdge deploy a BPO team?',
     answer:
-      'We deploy fully operational offshore BPO teams in as little as 30 days. After an initial discovery call, we identify the right talent, run screening, handle contracts and payroll setup, and integrate the team into your workflow, typically within a 30-day window.',
+      'We deploy fully operational offshore BPO teams in around 30 days. After an initial discovery call, we identify the right talent, run screening, handle contracts and payroll setup, and integrate the team into your workflow, typically in around 30 days.',
   },
   {
     question: 'What types of work does TrivianEdge BPO cover?',
@@ -91,7 +91,7 @@ const SERVICES = [
 ];
 
 const STATS = [
-  { value: '~30 Days', label: 'Avg. Deployment' },
+  { value: 'Around 30 Days', label: 'Avg. Deployment' },
   { value: 'Up to 40%', label: 'Cost Savings' },
   { value: '6', label: 'Time Zones' },
   { value: '100%', label: 'Embedded' },
@@ -104,7 +104,7 @@ const BPOPage: React.FC = () => {
     <>
       <SEOHead
         title="BPO Services Canada | Business Process Outsourcing | TrivianEdge"
-        description="Reduce costs by up to 40% with TrivianEdge's BPO services. Expert offshore teams deployed in as little as 30 days across 6 time zones. Free consultation."
+        description="Reduce costs by up to 40% with TrivianEdge's BPO services. Expert offshore teams deployed in around 30 days across 6 time zones. Free consultation."
         keywords="BPO services Canada, business process outsourcing Canada, offshore back-office team, outsourced customer support, offshore finance and accounting support, BPO company Toronto, offshore BPO provider, TrivianEdge BPO"
         schema={[
           serviceSchema(
@@ -157,7 +157,7 @@ const BPOPage: React.FC = () => {
             {/* Trust bar */}
             <div className="flex flex-wrap justify-center gap-3 mt-8">
               {[
-                { icon: Clock, label: '30-Day Deployment' },
+                { icon: Clock, label: 'Live in Around 30 Days' },
                 { icon: TrendingDown, label: 'Up to 40% Cost Savings' },
                 { icon: Globe2, label: '6 Time Zones' },
                 { icon: CheckCircle2, label: 'Canada-Based' },
@@ -181,7 +181,7 @@ const BPOPage: React.FC = () => {
               What is Business Process Outsourcing?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              Business Process Outsourcing (BPO) is the practice of hiring an external partner to run specific business operations, like customer support, back-office admin, or finance processing, on your behalf. TrivianEdge builds offshore BPO teams that plug into your business in as little as 30 days, handling the work cleanly so your team can focus on what matters most. Whether you need back-office support or full-cycle{' '}
+              Business Process Outsourcing (BPO) is the practice of hiring an external partner to run specific business operations, like customer support, back-office admin, or finance processing, on your behalf. TrivianEdge builds offshore BPO teams that plug into your business in around 30 days, handling the work cleanly so your team can focus on what matters most. Whether you need back-office support or full-cycle{' '}
               <Link
                 to="/services/rpo"
                 className="text-cyan-400 hover:underline"
@@ -246,7 +246,7 @@ const BPOPage: React.FC = () => {
               How TrivianEdge BPO Works
             </h2>
             <p className="text-muted text-lg mb-12 leading-relaxed">
-              From your first call to your team's first day of work, the whole process takes about 30 days.
+              From your first call to your team's first day of work, the whole process takes around 30 days.
             </p>
             <div className="space-y-8">
               {[
@@ -335,7 +335,7 @@ const BPOPage: React.FC = () => {
         <section className="py-24 px-4 md:px-6">
           <div className="max-w-2xl mx-auto text-center reveal">
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
-              Deploy Your BPO Team in ~30 Days
+              Deploy Your BPO Team in Around 30 Days
             </h2>
             <p className="text-muted mb-8">
               Reduce costs, scale faster, and focus on what you do best.

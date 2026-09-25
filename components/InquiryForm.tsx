@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, ChevronDown, Loader2 } from 'lucide-react';
 import { API_ENDPOINTS } from '../constants/api';
+import { BOOKING_URL } from '../constants';
 import { getCsrfToken, addCsrfTokenToFormData } from '../utils/csrf';
 import { storeFailedSubmission } from '../utils/serviceWorkerRegistry';
 
@@ -96,10 +97,19 @@ const InquiryForm: React.FC = () => {
         <div className="inline-flex items-center justify-center p-4 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-5">
           <CheckCircle2 className="w-8 h-8 text-cyan-400" />
         </div>
-        <h3 className="text-2xl font-bold text-text mb-3">Inquiry received.</h3>
+        <h3 className="text-2xl font-bold text-text mb-3">Got it. Thanks.</h3>
         <p className="text-muted leading-relaxed max-w-md mx-auto">
-          We will review your request and get back to you shortly with the next step.
+          Your brief is with our founder, and we usually reply the same business day. If you'd rather not wait, pick a time that suits you.
         </p>
+        <a
+          href={BOOKING_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-bold premium-button"
+        >
+          Book a 15-minute call
+          <ArrowRight className="w-4 h-4" />
+        </a>
       </div>
     );
   }
@@ -163,6 +173,7 @@ const InquiryForm: React.FC = () => {
                 className="w-full bg-background border border-border rounded-2xl px-4 py-3 pr-10 text-sm text-text focus:outline-none transition-colors appearance-none cursor-pointer"
               >
                 <option>Build a team</option>
+                <option>Microsoft or Google cloud</option>
                 <option>Build bespoke software</option>
                 <option>Outsource IT</option>
                 <option>Hire RPO support</option>

@@ -28,7 +28,7 @@ const IT_SERVICES = [
 ];
 
 const STATS = [
-  { value: '~30 Days', label: 'Avg. Deployment' },
+  { value: 'Around 30 Days', label: 'Avg. Deployment' },
   { value: 'Up to 40%', label: 'Cost Savings' },
   { value: '6', label: 'Time Zones' },
   { value: '100%', label: 'Embedded' },
@@ -43,7 +43,7 @@ const FAQS = [
   {
     question: 'How quickly can TrivianEdge deploy a bespoke software development team?',
     answer:
-      'TrivianEdge deploys offshore software development teams in as little as 30 days. After an initial discovery call, we search our network across the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica and present matched candidates within days. Once approved, your team is onboarded and embedded into your existing workflow within the 30-day window.',
+      'TrivianEdge deploys offshore software development teams in around 30 days. After an initial discovery call, we search our network across the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica and present matched candidates within days. Once approved, your team is onboarded and embedded into your existing workflow in around 30 days.',
   },
   {
     question: 'What bespoke software development services does TrivianEdge provide?',
@@ -63,7 +63,7 @@ const FAQS = [
   {
     question: 'How do Canadian startups hire offshore developers with TrivianEdge?',
     answer:
-      'Canadian startups hire a dedicated offshore development team through TrivianEdge in three steps: a scoping call from our Toronto office, a shortlist of vetted developers from the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, or Costa Rica, and onboarding into your repos and stand-ups in as little as 30 days. You can start with a single developer and scale; contracts, invoicing, and client management are handled in Canada.',
+      'Canadian startups hire a dedicated offshore development team through TrivianEdge in three steps: a scoping call from our Toronto office, a shortlist of vetted developers from the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, or Costa Rica, and onboarding into your repos and stand-ups in around 30 days. You can start with a single developer and scale; contracts, invoicing, and client management are handled in Canada.',
   },
   {
     question: 'Does TrivianEdge offer offshore software development in the Philippines?',
@@ -94,7 +94,7 @@ const ITOutsourcingPage: React.FC = () => {
     <>
       <SEOHead
         title="Offshore Software Development Company in Canada | TrivianEdge"
-        description="Toronto-based offshore software development company. Dedicated offshore developers for Canadian startups and scale-ups, from the Philippines to Vietnam, live in ~30 days."
+        description="Toronto-based offshore software development company. Dedicated offshore developers for Canadian startups and scale-ups, from the Philippines to Vietnam, live in around 30 days."
         keywords="offshore development company Canada, offshore developers for Canadian startups, offshore dedicated development team, offshore software development Canada Philippines, bespoke software development, bespoke software development Canada, custom software development company, IT outsourcing Canada, offshore software development, offshore development team, software development outsourcing, TrivianEdge bespoke software"
         schema={[
           serviceSchema(
@@ -147,7 +147,7 @@ const ITOutsourcingPage: React.FC = () => {
             {/* Trust bar */}
             <div className="flex flex-wrap justify-center gap-3 mt-8">
               {[
-                { icon: Clock, label: '30-Day Deployment' },
+                { icon: Clock, label: 'Live in Around 30 Days' },
                 { icon: TrendingDown, label: 'Up to 40% Cost Savings' },
                 { icon: Globe2, label: '6 Time Zones' },
                 { icon: CheckCircle2, label: 'Canada-Based' },
@@ -171,7 +171,7 @@ const ITOutsourcingPage: React.FC = () => {
               What is Bespoke Software Development?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              Bespoke software development means building custom applications, platforms, and internal tools designed specifically around your business, rather than adapting an off-the-shelf product to fit. TrivianEdge builds and maintains bespoke software as a Canada-based engineering partner, with offshore development teams sourced from six global talent hubs and matched to your exact tech stack. We deliver custom development, cloud infrastructure, DevOps, cybersecurity, and systems integration, so bespoke software can scale into a fully managed IT outsourcing function in as little as 30 days, and you keep full ownership of the code and IP throughout. Pair bespoke software development with our{' '}
+              Bespoke software development means building custom applications, platforms, and internal tools designed specifically around your business, rather than adapting an off-the-shelf product to fit. TrivianEdge builds and maintains bespoke software as a Canada-based engineering partner, with offshore development teams sourced from six global talent hubs and matched to your exact tech stack. We deliver custom development, cloud infrastructure, DevOps, cybersecurity, and systems integration, so bespoke software can scale into a fully managed IT outsourcing function in around 30 days, and you keep full ownership of the code and IP throughout. Pair bespoke software development with our{' '}
               <Link
                 to="/services/ai-development"
                 className="text-cyan-400 hover:underline"
@@ -268,7 +268,7 @@ const ITOutsourcingPage: React.FC = () => {
         <section className="py-24 px-4 md:px-6">
           <div className="max-w-2xl mx-auto text-center reveal">
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
-              Build Bespoke Software in ~30 Days
+              Build Bespoke Software in Around 30 Days
             </h2>
             <p className="text-muted mb-8">
               Cut costs, scale faster, and stay focused on your core product.

@@ -13,15 +13,23 @@ import InquiryForm from '../components/InquiryForm';
 // The globe is canvas-only and purely visual, so it loads after the hero text.
 const OpsGlobe = lazy(() => import('../components/OpsGlobe'));
 
-// Real named clients only. width/height are intrinsic sizes to avoid CLS.
+// Real named clients only, each linking to the live site we delivered.
+// width/height are intrinsic sizes to avoid CLS.
 const TRUST_CLIENTS = [
-  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', width: 86, height: 64 },
-  { name: 'Cargo Login', logo: '/logos/cargo-login.webp', width: 62, height: 64 },
-  { name: 'Keynotive', logo: '/logos/keynotive.webp', width: 201, height: 160 },
-  { name: 'Hub-Flx', logo: '/logos/hub-flx.webp', width: 250, height: 64 },
-  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', width: 69, height: 64 },
-  { name: 'MellieBugs', logo: '/logos/melliebugs.webp', width: 64, height: 64 },
+  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', href: 'https://www.capricorncollegeholbrook.lk/', width: 86, height: 64 },
+  { name: 'Cargo Login', logo: '/logos/cargo-login.webp', href: 'https://www.cargo-login.com/', width: 62, height: 64 },
+  { name: 'Keynotive', logo: '/logos/keynotive.webp', href: 'https://www.keynotive.io/', width: 201, height: 160 },
+  { name: 'Hub-Flx', logo: '/logos/hub-flx.webp', href: 'https://www.hub-flx.com/', width: 250, height: 64 },
+  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', href: 'https://keynesiasrilanka.com', width: 69, height: 64 },
+  { name: 'MellieBugs', logo: '/logos/melliebugs.webp', href: 'https://melliebugs.com', width: 64, height: 64 },
 ];
+
+// Full write-ups for the case-study cards. Clients without one fall back to /proof.
+const CASE_STUDY_LINKS: Record<string, string> = {
+  'Cargo Login': '/blog/cargo-login-case-study',
+  Keynotive: '/blog/keynotive-case-study',
+  'Hub-Flx': '/blog/hub-flx-case-study',
+};
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -78,12 +86,12 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
             {/* The one gradient headline on the page (colour system rule 07). */}
             <h1 className="display-hero font-semibold te-gradient-text">
-              Cloud, AI, and global teams. One partner runs all three.
+              One partner for cloud, AI and offshore teams.
             </h1>
 
             <p className="mt-8 text-lg md:text-xl text-[#B4BCBA] max-w-xl leading-relaxed">
-              TrivianEdge is a Toronto-based technology partner. We migrate and manage Microsoft and Google cloud, build AI and
-              custom software, and staff offshore teams from six talent hubs.
+              Most companies juggle a cloud reseller, a software agency and a staffing firm. TrivianEdge is a Toronto-based technology
+              partner that does all three, under one contract, with one person to call.
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
@@ -97,12 +105,13 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
               </a>
               <a
-                href="#services"
+                href="#contact"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-7 py-4 font-bold text-white transition-colors hover:border-white/40 hover:bg-white/5"
               >
-                What we do
+                Send us a quick brief
               </a>
             </div>
+            <p className="mt-4 text-sm text-white/45">Free, no obligation, and we usually reply the same business day.</p>
           </div>
 
           <div className="lg:col-span-5 relative aspect-square w-full max-w-[560px] mx-auto">
@@ -121,6 +130,34 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
           ))}
         </dl>
+
+        {/* Client strip: real named clients, each linking to the live site we delivered. */}
+        <div className="relative max-w-7xl mx-auto flex flex-col md:flex-row md:items-center gap-4 md:gap-10 border-t border-white/10 py-8">
+          <p className="text-[11px] uppercase tracking-[0.2em] text-white/40 shrink-0">Trusted by</p>
+          {/* Three copies so the -33.333% loop is seamless; copies 2-3 are hidden from assistive tech. */}
+          <div className="marquee-viewport flex-1 min-w-0" role="group" aria-label="Clients">
+            <div className="marquee-track">
+              {[0, 1, 2].map(rep => (
+                <ul key={rep} className="flex items-center gap-14 md:gap-16 pr-14 md:pr-16" aria-hidden={rep > 0 || undefined}>
+                  {TRUST_CLIENTS.map(c => (
+                    <li key={c.name} className="shrink-0">
+                    <a
+                      href={c.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${c.name} (opens in a new tab)`}
+                      tabIndex={rep > 0 ? -1 : undefined}
+                      className="block opacity-60 hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-300"
+                    >
+                      <img src={c.logo} alt="" width={c.width} height={c.height} loading="lazy" className="h-7 md:h-8 w-auto object-contain brightness-0 invert" />
+                    </a>
+                    </li>
+                  ))}
+                </ul>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ===== 2. SERVICES — editorial rows, not cards ===== */}
@@ -130,7 +167,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <SectionHead
               label="What we do"
               title={<>Three services. <span className="text-muted">One contract.</span></>}
-              intro="Most companies juggle a cloud reseller, a dev shop, and a staffing agency. We bring all three under one roof, so nothing falls between vendors."
+              intro="Hiring three vendors is like renovating a house with three contractors who never talk to each other. Every problem lands in the gap between them, and you end up as the project manager. We're the general contractor: one contract, one point of contact, and nothing falls between the cracks."
             />
           </div>
 
@@ -203,20 +240,32 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                     <li key={h} className="rounded-full border border-white/10 px-3 py-1 text-xs text-white/55">{h}</li>
                   ))}
                 </ul>
+                <Link
+                  to={CASE_STUDY_LINKS[study.client] ?? '/proof'}
+                  className="mt-8 inline-flex items-center gap-1.5 self-start text-sm font-bold text-cyan-400 hover:underline underline-offset-4"
+                  aria-label={`Read the ${study.client} case study`}
+                >
+                  Read the case study <ArrowRight className="h-4 w-4" aria-hidden />
+                </Link>
               </m.article>
             ))}
           </div>
-          <div className="mt-12 flex flex-col md:flex-row md:items-center gap-8">
-            <ul className="flex flex-wrap items-center gap-x-10 gap-y-6" aria-label="Clients">
-              {TRUST_CLIENTS.map(c => (
-                <li key={c.name}>
-                  <img src={c.logo} alt={c.name} width={c.width} height={c.height} loading="lazy" className="h-7 w-auto object-contain opacity-60 brightness-0 invert" />
-                </li>
-              ))}
-            </ul>
-            <Link to="/proof" className="md:ml-auto shrink-0 inline-flex items-center gap-1.5 text-sm font-bold text-cyan-400 hover:underline underline-offset-4">
-              Read the full case studies <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
+          <div className="mt-12 flex flex-col md:flex-row md:items-center gap-6">
+            <p className="text-lg text-white/80">Facing something similar? Let's talk it through.</p>
+            <div className="md:ml-auto flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+              <Link to="/proof" className="inline-flex items-center gap-1.5 text-sm font-bold text-white/70 hover:text-white hover:underline underline-offset-4">
+                All case studies <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-cyan-400 px-6 py-3 font-bold text-black transition-colors hover:bg-cyan-300"
+              >
+                Book a 15-minute call
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -225,7 +274,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section id="how-it-works" aria-labelledby="how-heading" className="section-shell px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
           <div id="how-heading">
-            <SectionHead label="How it works" title="From first call to live team in about 30 days." />
+            <SectionHead label="How it works" title="From first call to live team in around 30 days." />
           </div>
           <ol className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
             {STEPS.map(step => (
@@ -236,6 +285,18 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               </m.li>
             ))}
           </ol>
+          <m.div {...reveal} className="mt-14 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-text px-7 py-4 font-bold text-background transition-opacity hover:opacity-90"
+            >
+              Start with step 01
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+            </a>
+            <p className="text-sm text-muted">15 minutes, free, and no sales script.</p>
+          </m.div>
         </div>
       </section>
 
@@ -259,10 +320,19 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section id="contact" aria-labelledby="contact-heading" className="section-dark section-shell px-4 md:px-6">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-16">
           <div className="lg:col-span-5">
-            <h2 id="contact-heading" className="display-section font-semibold text-white">Tell us what you need.</h2>
+            <h2 id="contact-heading" className="display-section font-semibold text-white">Tell us what you’re trying to fix.</h2>
             <p className="mt-6 text-lg text-white/60 leading-relaxed">
-              A cloud migration, an AI build, or a team. We usually reply the same business day with next steps and a rough estimate.
+              A cloud migration, an AI build or a new team. Your message goes straight to our founder, Kevin Vaz, not a call centre,
+              and we usually reply the same business day with next steps and a rough estimate.
             </p>
+            <ul className="mt-8 space-y-2.5 text-white/70">
+              {['Free, with no obligation', 'You own 100% of the code we write', 'No foreign entity needed to hire abroad'].map(point => (
+                <li key={point} className="flex gap-3">
+                  <span className="mt-3 h-px w-4 shrink-0 bg-cyan-400" aria-hidden />
+                  {point}
+                </li>
+              ))}
+            </ul>
             <div className="mt-10 space-y-3 text-white/70">
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 font-bold text-cyan-400 hover:underline underline-offset-4">
                 Book a 15-minute call <ArrowRight className="h-4 w-4" aria-hidden />
