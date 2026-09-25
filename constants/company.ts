@@ -12,11 +12,11 @@
 
 /** One sentence. Use where there is room for a single line. */
 export const COMPANY_ONE_LINER =
-  'TrivianEdge is a Toronto-based technology partner that sets up and runs Microsoft and Google cloud, builds AI and custom software, and hires and manages offshore teams, all under one contract.';
+  'TrivianEdge is a Toronto-based technology partner that sets up and runs Microsoft and Google Cloud, builds AI and custom software, and hires and manages offshore teams, all under one contract.';
 
 /** About 50 words. Default meta/schema description length. */
 export const COMPANY_SHORT =
-  'TrivianEdge is a Toronto-based technology partner. We set up and manage Microsoft and Google cloud, build AI and custom software, and hire and run offshore teams from six countries. Companies use us instead of juggling a cloud reseller, a software agency and a staffing firm.';
+  'TrivianEdge is a Toronto-based technology partner. We set up and manage Microsoft and Google Cloud, build AI and custom software, and hire and run offshore teams from six countries. Companies use us instead of juggling a cloud reseller, a software agency and a staffing firm.';
 
 /** About 150 words. About page, llms.txt, press. */
 export const COMPANY_LONG = [

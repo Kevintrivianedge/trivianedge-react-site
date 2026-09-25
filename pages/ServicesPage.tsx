@@ -82,7 +82,7 @@ const ServicesPage: React.FC = () => {
     <>
       <SEOHead
         title="Services | Cloud, AI & Software, Offshore Teams | TrivianEdge"
-        description="TrivianEdge services: Microsoft and Google cloud, AI and custom software development, and offshore teams (BPO, RPO, engineering) from six countries, typically live in around 30 days."
+        description="TrivianEdge services: Microsoft and Google Cloud, AI and custom software development, and offshore teams (BPO, RPO, engineering) from six countries, typically live in around 30 days."
         keywords="TrivianEdge services, BPO RPO software development, outsourcing services Canada, offshore team services, AI development services, bespoke software development services"
         canonical="https://www.trivianedge.com/services"
         structuredData={[

@@ -9,7 +9,7 @@ export const HOME_TITLE =
   'Microsoft & Google Cloud, AI & Offshore Teams | TrivianEdge';
 
 export const HOME_DESCRIPTION =
-  'Toronto-based partner for Microsoft and Google cloud, AI and custom software, and offshore teams, typically live in around 30 days. Book a free 15-minute call.';
+  'Toronto-based partner for Microsoft and Google Cloud, AI and custom software, and offshore teams, typically live in around 30 days. Book a free 15-minute call.';
 
 export interface Pillar {
   id: string;
@@ -26,7 +26,7 @@ export const PILLARS: Pillar[] = [
   {
     id: 'cloud',
     kicker: '01 · Cloud',
-    title: 'Microsoft and Google cloud, set up and run properly.',
+    title: 'Microsoft and Google Cloud, set up and run properly.',
     answer:
       'We plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud, so your team stops fighting its tools and gets on with the work.',
     items: ['Microsoft 365 & Copilot rollout', 'Azure migration & cost review', 'Google Workspace migration', 'Google Cloud architecture', 'Identity, MFA & security baselines'],
@@ -74,7 +74,7 @@ export const HOME_FAQS = [
   {
     question: 'What does TrivianEdge do?',
     answer:
-      'TrivianEdge is a Toronto-based technology partner with three services: Microsoft and Google cloud implementation and management, AI and custom software development, and offshore team staffing (BPO and RPO). Clients use one contract and one point of contact for all three.',
+      'TrivianEdge is a Toronto-based technology partner with three services: Microsoft and Google Cloud implementation and management, AI and custom software development, and offshore team staffing (BPO and RPO). Clients use one contract and one point of contact for all three.',
   },
   {
     question: 'Is TrivianEdge a Microsoft partner?',
