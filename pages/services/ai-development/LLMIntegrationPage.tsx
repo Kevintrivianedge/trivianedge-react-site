@@ -63,7 +63,7 @@ const INCLUDED = [
 ];
 
 const STATS = [
-  { value: '~30 Days', label: 'Avg. To Deployed Team' },
+  { value: 'Around 30 Days', label: 'Avg. To Deployed Team' },
   { value: 'Up to 40%', label: 'Cost Reduction' },
   { value: '6', label: 'Sourcing Countries' },
   { value: '100%', label: 'IP Ownership' },
@@ -133,7 +133,7 @@ const LLMIntegrationPage: React.FC = () => {
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">
               {[
-                { icon: Clock, label: '30-Day Deployment' },
+                { icon: Clock, label: 'Live in Around 30 Days' },
                 { icon: TrendingDown, label: 'Up to 40% Cost Reduction' },
                 { icon: Globe2, label: '6 Sourcing Countries' },
                 { icon: CheckCircle2, label: '100% IP Ownership' },

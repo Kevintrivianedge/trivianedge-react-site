@@ -288,7 +288,7 @@ const AIDevelopmentPage: React.FC = () => {
         <section className="py-24 px-4 md:px-6">
           <div className="max-w-2xl mx-auto text-center reveal">
             <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
-              Launch Your AI Project in ~30 Days
+              Launch Your AI Project in Around 30 Days
             </h2>
             <p className="text-muted mb-8">
               Offshore AI engineering teams with up to 40% cost savings.
