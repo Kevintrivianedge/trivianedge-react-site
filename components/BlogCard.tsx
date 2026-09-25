@@ -35,7 +35,7 @@ const BlogCard: React.FC<{ post: BlogPost; onClick: (id: string) => void; index:
         </span>
         <span className="text-[10px] text-muted font-mono tracking-widest">{post.readTime}</span>
       </div>
-      <h3 className="text-2xl font-bold mb-4 group-hover:text-text transition-colors text-text">{post.title}</h3>
+      <h2 className="text-2xl font-bold mb-4 group-hover:text-text transition-colors text-text">{post.title}</h2>
       <p className="text-muted text-sm leading-relaxed mb-6 line-clamp-2">{post.excerpt}</p>
       <div className="flex items-center justify-between pt-6 border-t border-border">
         <div className="flex items-center gap-2">

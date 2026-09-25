@@ -9,6 +9,14 @@
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
   }
+
+  /* Links inside running text can't rely on colour alone (WCAG 1.4.1,
+     Lighthouse link-in-text-block). Base layer, so utilities still win. */
+  p a {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
 }
 
 /* Disable heavy hover transforms on touch devices for performance */
