@@ -13,14 +13,15 @@ import InquiryForm from '../components/InquiryForm';
 // The globe is canvas-only and purely visual, so it loads after the hero text.
 const OpsGlobe = lazy(() => import('../components/OpsGlobe'));
 
-// Real named clients only. width/height are intrinsic sizes to avoid CLS.
+// Real named clients only, each linking to the live site we delivered.
+// width/height are intrinsic sizes to avoid CLS.
 const TRUST_CLIENTS = [
-  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', width: 86, height: 64 },
-  { name: 'Cargo Login', logo: '/logos/cargo-login.webp', width: 62, height: 64 },
-  { name: 'Keynotive', logo: '/logos/keynotive.webp', width: 201, height: 160 },
-  { name: 'Hub-Flx', logo: '/logos/hub-flx.webp', width: 250, height: 64 },
-  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', width: 69, height: 64 },
-  { name: 'MellieBugs', logo: '/logos/melliebugs.webp', width: 64, height: 64 },
+  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', href: 'https://www.capricorncollegeholbrook.lk/', width: 86, height: 64 },
+  { name: 'Cargo Login', logo: '/logos/cargo-login.webp', href: 'https://www.cargo-login.com/', width: 62, height: 64 },
+  { name: 'Keynotive', logo: '/logos/keynotive.webp', href: 'https://www.keynotive.io/', width: 201, height: 160 },
+  { name: 'Hub-Flx', logo: '/logos/hub-flx.webp', href: 'https://www.hub-flx.com/', width: 250, height: 64 },
+  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', href: 'https://keynesiasrilanka.com', width: 69, height: 64 },
+  { name: 'MellieBugs', logo: '/logos/melliebugs.webp', href: 'https://melliebugs.com', width: 64, height: 64 },
 ];
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -207,13 +208,29 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             ))}
           </div>
           <div className="mt-12 flex flex-col md:flex-row md:items-center gap-8">
-            <ul className="flex flex-wrap items-center gap-x-10 gap-y-6" aria-label="Clients">
-              {TRUST_CLIENTS.map(c => (
-                <li key={c.name}>
-                  <img src={c.logo} alt={c.name} width={c.width} height={c.height} loading="lazy" className="h-7 w-auto object-contain opacity-60 brightness-0 invert" />
-                </li>
-              ))}
-            </ul>
+            {/* Three copies so the -33.333% loop is seamless; copies 2-3 are hidden from assistive tech. */}
+            <div className="marquee-viewport flex-1 min-w-0" role="group" aria-label="Clients">
+              <div className="marquee-track">
+                {[0, 1, 2].map(rep => (
+                  <ul key={rep} className="flex items-center gap-14 md:gap-16 pr-14 md:pr-16" aria-hidden={rep > 0 || undefined}>
+                    {TRUST_CLIENTS.map(c => (
+                      <li key={c.name} className="shrink-0">
+                        <a
+                          href={c.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${c.name} (opens in a new tab)`}
+                          tabIndex={rep > 0 ? -1 : undefined}
+                          className="block opacity-60 hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-300"
+                        >
+                          <img src={c.logo} alt="" width={c.width} height={c.height} loading="lazy" className="h-7 md:h-8 w-auto object-contain brightness-0 invert" />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ))}
+              </div>
+            </div>
             <Link to="/proof" className="md:ml-auto shrink-0 inline-flex items-center gap-1.5 text-sm font-bold text-cyan-400 hover:underline underline-offset-4">
               Read the full case studies <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
@@ -225,7 +242,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section id="how-it-works" aria-labelledby="how-heading" className="section-shell px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
           <div id="how-heading">
-            <SectionHead label="How it works" title="From first call to live team in about 30 days." />
+            <SectionHead label="How it works" title="From first call to live team in around 30 days." />
           </div>
           <ol className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
             {STEPS.map(step => (
