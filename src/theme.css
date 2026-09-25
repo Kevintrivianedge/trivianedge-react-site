@@ -1017,12 +1017,11 @@
             animation: dot-pulse 2s ease-in-out infinite;
         }
 
-        /* --- Grid column helper for Tailwind --- */
-        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-
+        /* --- Grid column helper for Tailwind ---
+           Base .grid-cols-N rules come from Tailwind itself. Re-declaring them
+           here (this file loads after Tailwind) silently overrode every
+           responsive variant, e.g. `grid-cols-2 md:grid-cols-4` stayed at 2
+           columns on desktop. Only the mobile collapse remains. */
         @media (max-width: 768px) {
             .grid-cols-4 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
             .grid-cols-3 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
