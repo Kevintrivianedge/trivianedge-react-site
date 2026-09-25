@@ -111,7 +111,7 @@ const CloudServicesPage: React.FC = () => (
             <span className="text-text">Cloud</span>
           </nav>
           <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-cyan-700 dark:text-cyan-400 mb-5">Cloud services</p>
-          <h1 className="display-hero font-semibold">Microsoft and Google cloud services, set up and run properly.</h1>
+          <h1 className="display-hero font-semibold">Microsoft and Google Cloud services, set up and run properly.</h1>
           <p className="mt-8 text-lg md:text-xl text-muted leading-relaxed max-w-3xl">
             TrivianEdge plans, migrates, secures and manages Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud
             for growing companies that don't have a full in-house IT team. We're based in Toronto and are a member of the

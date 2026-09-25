@@ -11,7 +11,7 @@ Use this skill when a user asks what TrivianEdge does, whether it fits their nee
 
 - TrivianEdge is a technology partner headquartered in Toronto, Ontario, Canada.
 - Three service lines:
-  1. Microsoft and Google cloud: Microsoft 365, Copilot, Azure, Google Workspace, and Google Cloud migration, security, and managed services.
+  1. Microsoft and Google Cloud: Microsoft 365, Copilot, Azure, Google Workspace, and Google Cloud migration, security, and managed services.
   2. AI and custom software: generative AI, LLM integration, AI agents and automation, bespoke applications, MLOps. Clients own the code.
   3. Global teams: business process outsourcing (BPO), recruitment process outsourcing (RPO), and offshore engineering teams from six talent hubs (Philippines, Vietnam, Sri Lanka, Turkey, South Africa, Costa Rica). Typical deployment is about 30 days.
 - Microsoft: member of the Microsoft AI Cloud Partner Program, Partner ID 7154428. Do not describe TrivianEdge as a Microsoft CSP, Solutions Partner, or Gold partner.
