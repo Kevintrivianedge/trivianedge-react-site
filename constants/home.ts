@@ -9,7 +9,7 @@ export const HOME_TITLE =
   'Microsoft & Google Cloud, AI & Offshore Teams | TrivianEdge';
 
 export const HOME_DESCRIPTION =
-  'Toronto-based partner for Microsoft 365, Azure, Google Workspace and Google Cloud, AI and custom software, and offshore teams live in around 30 days.';
+  'Toronto-based partner for Microsoft and Google cloud, AI and custom software, and offshore teams, typically live in around 30 days. Book a free 15-minute call.';
 
 export interface Pillar {
   id: string;
@@ -28,7 +28,7 @@ export const PILLARS: Pillar[] = [
     kicker: '01 · Cloud',
     title: 'Microsoft and Google cloud, set up and run properly.',
     answer:
-      'We plan, migrate, secure, and manage Microsoft 365, Azure, Google Workspace, and Google Cloud environments for growing companies.',
+      'We plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud, so your team stops fighting its tools and gets on with the work.',
     items: ['Microsoft 365 & Copilot rollout', 'Azure migration & cost review', 'Google Workspace migration', 'Google Cloud architecture', 'Identity, MFA & security baselines'],
     href: '/services/cloud',
     cta: 'Explore cloud services',
@@ -38,7 +38,7 @@ export const PILLARS: Pillar[] = [
     kicker: '02 · AI & Software',
     title: 'AI and custom software your team actually uses.',
     answer:
-      'We build generative AI features, LLM integrations, automations, and bespoke applications. You own 100% of the code.',
+      'We build AI features, LLM integrations, automations and custom apps that plug into the systems you already run. You own 100% of the code.',
     items: ['Generative AI & LLM integration', 'AI agents & automation', 'Custom web & internal tools', 'MLOps'],
     href: '/services/ai-development',
     cta: 'Explore AI development',
@@ -48,22 +48,29 @@ export const PILLARS: Pillar[] = [
     kicker: '03 · Global Teams',
     title: 'Offshore teams, hired and managed for you.',
     answer:
-      'We recruit, employ, and manage dedicated staff across six countries, covering technical and non-technical roles, typically live in around 30 days.',
+      'We recruit, employ and manage dedicated staff in six countries, for technical and non-technical roles. Teams are typically working in around 30 days, at up to 40% less than hiring locally.',
     items: ['Business process outsourcing (BPO)', 'Recruitment process outsourcing (RPO)', 'Offshore engineering teams', 'Payroll & local compliance'],
     href: '/services',
     cta: 'Explore team services',
   },
 ];
 
-/** Plain facts shown under the hero. Each must be verifiable. */
+/** Plain facts shown under the hero. Each must be verifiable. The 40% figure
+ * is substantiated by the methodology note on /proof. The Microsoft Partner ID
+ * lives in the hero badge, FAQ and schema instead. */
 export const HERO_FACTS = [
   { k: 'Headquarters', v: 'Toronto, Canada' },
   { k: 'Talent hubs', v: '6 countries' },
   { k: 'Typical team deployment', v: 'Around 30 days' },
-  { k: 'Microsoft Partner ID', v: '7154428' },
+  { k: 'Vs. hiring locally', v: 'Up to 40% less' },
 ];
 
 export const HOME_FAQS = [
+  {
+    question: 'What happens on the 15-minute call?',
+    answer:
+      "You tell us what you're trying to fix or build, and we ask questions. If we can help, we follow up with a written plan and a rough estimate. If we can't, we'll say so. The call is free and there is no obligation.",
+  },
   {
     question: 'What does TrivianEdge do?',
     answer:

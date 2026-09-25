@@ -57,11 +57,11 @@ export const SERVICES: ServiceCardProps[] = [
     title: "We Build Your Team",
     description: "Think of us as your global hiring department, except we already know everyone. Whether you need a software engineer in Vietnam, a customer support team in the Philippines, or an ops lead in Toronto, we find the right person and typically get them working for you in around 30 days.",
     icon: <Users className="w-8 h-8 text-cyan-400" />,
-    tags: ["Global Hiring", "24/7 Coverage", "30-Day Start"],
+    tags: ["Global Hiring", "24/7 Coverage", "Start in Around 30 Days"],
     features: [
       "Technical and Non-Technical Role Sourcing",
       "Cross-Timezone Team Design",
-      "30-Day Deployment Model",
+      "Deployment in Around 30 Days",
       "Full Onboarding and Integration"
     ],
     outcomes: [
@@ -258,26 +258,26 @@ export const ROLES: RoleCategory[] = [
 export const STEPS: Step[] = [
   {
     number: "01",
-    title: "You Tell Us What You Need",
-    description: "We spend time understanding your business, your goals, and exactly what kind of person would make a real difference. No guesswork, no generic job descriptions.",
+    title: "A 15-minute call",
+    description: "Tell us what's slowing you down. We ask a lot of questions and skip the pitch. If we're not the right fit, we'll tell you.",
     icon: <Search className="w-6 h-6 text-cyan-400" />
   },
   {
     number: "02",
-    title: "We Find the Right Person",
-    description: "Our network spans 6 countries and hundreds of vetted candidates. We search, screen, and shortlist the best match for your role, usually within a week.",
+    title: "A plan you can read",
+    description: "You get a written plan in plain English: what you need, where it happens, what it costs and how long it takes. No commitment until you say yes.",
     icon: <Globe className="w-6 h-6 text-cyan-400" />
   },
   {
     number: "03",
-    title: "They Start in ~30 Days",
-    description: "We onboard your new team member and make sure they fit right into your existing workflow. Day one feels like they have been there for months.",
+    title: "We hire, build or migrate",
+    description: "We run the search, the build or the move. For offshore teams that covers sourcing, screening, contracts, payroll and onboarding, typically in around 30 days.",
     icon: <Zap className="w-6 h-6 text-cyan-400" />
   },
   {
     number: "04",
-    title: "We Keep Making It Better",
-    description: "We track how things are going and scale your team as your business grows. Good results get built on. Anything that is not working gets fixed fast.",
+    title: "We stay accountable",
+    description: "One point of contact, regular check-ins, and fast fixes when something isn't working. As you grow, the team or the system grows with you.",
     icon: <TrendingUp className="w-6 h-6 text-cyan-400" />
   }
 ];
