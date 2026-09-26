@@ -15,13 +15,16 @@ const OpsGlobe = lazy(() => import('../components/OpsGlobe'));
 
 // Real named clients only, each linking to the live site we delivered.
 // width/height are intrinsic sizes to avoid CLS.
+// Logo files are pre-rendered white on transparent (crests keep their interior detail via
+// luminance-to-alpha), so no CSS filter is applied. A brightness-0 silhouette flattens crests into blobs.
+// Crests render a touch taller than wordmarks so their detail stays legible at the same visual weight.
 const TRUST_CLIENTS = [
-  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', href: 'https://www.capricorncollegeholbrook.lk/', width: 86, height: 64 },
+  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', href: 'https://www.capricorncollegeholbrook.lk/', width: 86, height: 64, crest: true },
   { name: 'Cargo Login', logo: '/logos/cargo-login.webp', href: 'https://www.cargo-login.com/', width: 62, height: 64 },
   { name: 'Keynotive', logo: '/logos/keynotive.webp', href: 'https://www.keynotive.io/', width: 201, height: 160 },
   { name: 'Hub-Flx', logo: '/logos/hub-flx.webp', href: 'https://www.hub-flx.com/', width: 250, height: 64 },
-  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', href: 'https://keynesiasrilanka.com', width: 69, height: 64 },
-  { name: 'MellieBugs', logo: '/logos/melliebugs.webp', href: 'https://melliebugs.com', width: 64, height: 64 },
+  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', href: 'https://keynesiasrilanka.com', width: 69, height: 64, crest: true },
+  { name: 'MellieBugs', logo: '/logos/melliebugs.webp', href: 'https://melliebugs.com', width: 64, height: 64, crest: true },
 ];
 
 // Full write-ups for the case-study cards. Clients without one fall back to /proof.
@@ -149,7 +152,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                       tabIndex={rep > 0 ? -1 : undefined}
                       className="block opacity-60 hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-300"
                     >
-                      <img src={c.logo} alt="" width={c.width} height={c.height} loading="lazy" className="h-7 md:h-8 w-auto object-contain brightness-0 invert" />
+                      <img src={c.logo} alt="" width={c.width} height={c.height} loading="lazy" className={`${c.crest ? 'h-9 md:h-10' : 'h-7 md:h-8'} w-auto object-contain`} />
                     </a>
                     </li>
                   ))}
