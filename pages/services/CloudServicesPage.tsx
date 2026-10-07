@@ -6,11 +6,12 @@ import Accordion from '../../components/Accordion';
 import RelatedLinks from '../../components/RelatedLinks';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '../../utils/seo';
 import { MICROSOFT_PARTNER } from '../../constants/microsoftPartner';
+import { GOOGLE_PARTNER } from '../../constants/googlePartner';
 import { BOOKING_URL } from '../../constants';
 
 // Claims policy (see constants/company.ts): Microsoft AI Cloud Partner Program
-// member, not CSP, so no licence resale or billing claims. Google is a
-// capability, not a partnership. Timelines are "typical", never promised.
+// member, not CSP, so no licence resale or billing claims. Google Partner
+// Network member, no tier or resale claims. Timelines are "typical", never promised.
 
 const URL = 'https://www.trivianedge.com/services/cloud';
 
@@ -60,6 +61,11 @@ const FAQS = [
       'Yes. TrivianEdge is a member of the Microsoft AI Cloud Partner Program (Partner ID 7154428) and a Microsoft Commercial Marketplace publisher.',
   },
   {
+    question: 'Is TrivianEdge a Google partner?',
+    answer:
+      'Yes. TrivianEdge is a member of the Google Partner Network (Partner ID eullM5rLyn). We plan, migrate and manage Google Workspace and Google Cloud.',
+  },
+  {
     question: 'Does TrivianEdge sell Microsoft or Google licences?',
     answer:
       'Not at the moment. You keep buying licences through your current provider or directly from Microsoft or Google, and TrivianEdge sets up, secures and manages the environment. We also review your licences and tell you where you are over-paying.',
@@ -85,7 +91,7 @@ const CloudServicesPage: React.FC = () => (
   <>
     <SEOHead
       title="Microsoft & Google Cloud Services in Canada | TrivianEdge"
-      description="TrivianEdge plans, migrates, secures and manages Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud. Toronto-based Microsoft AI Cloud Partner Program member."
+      description="TrivianEdge plans, migrates, secures and manages Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud. Toronto-based Microsoft and Google partner."
       keywords="Microsoft 365 migration Canada, Microsoft cloud partner Toronto, Copilot rollout, Azure migration Canada, Google Workspace migration, Google Workspace to Microsoft 365, Google Cloud services Canada, managed cloud services Toronto"
       canonical={URL}
       structuredData={[
@@ -115,7 +121,8 @@ const CloudServicesPage: React.FC = () => (
           <p className="mt-8 text-lg md:text-xl text-muted leading-relaxed max-w-3xl">
             TrivianEdge plans, migrates, secures and manages Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud
             for growing companies that don't have a full in-house IT team. We're based in Toronto and are a member of the
-            Microsoft AI Cloud Partner Program (Partner ID {MICROSOFT_PARTNER.partnerId}).
+            Microsoft AI Cloud Partner Program (Partner ID {MICROSOFT_PARTNER.partnerId})
+            {GOOGLE_PARTNER.enabled && <> and the Google Partner Network (Partner ID {GOOGLE_PARTNER.partnerId})</>}.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
             <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-cyan-400 px-7 py-4 font-bold text-black hover:bg-cyan-300 transition-colors">

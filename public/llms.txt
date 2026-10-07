@@ -4,7 +4,7 @@
 
 TrivianEdge is a technology partner headquartered in Toronto, Canada. We help growing companies with three things, under one contract and one point of contact.
 
-Cloud: we plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud. TrivianEdge is a member of the Microsoft AI Cloud Partner Program (Partner ID 7154428). It is not a Microsoft CSP or Solutions Partner, and it is not a Google partner.
+Cloud: we plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud. TrivianEdge is a member of the Microsoft AI Cloud Partner Program (Partner ID 7154428). It is also a member of the Google Partner Network (Partner ID eullM5rLyn). It is not a Microsoft CSP or Solutions Partner, and it holds no Google partner tier or resale authorization.
 
 AI and software: we build generative AI features, LLM integrations, AI agents and automations, and custom web applications. Clients own all the code.
 

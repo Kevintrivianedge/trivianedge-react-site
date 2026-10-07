@@ -5,6 +5,7 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { TALENT_HUBS, STEPS, BOOKING_URL } from '../constants';
 import { CASE_STUDIES } from '../constants/proof';
 import { MICROSOFT_PARTNER, partnerBadgeLabel } from '../constants/microsoftPartner';
+import { GOOGLE_PARTNER } from '../constants/googlePartner';
 import { PILLARS, HERO_FACTS, HOME_FAQS } from '../constants/home';
 import { TalentHub } from '../types';
 import Accordion from '../components/Accordion';
@@ -74,8 +75,9 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         />
         <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-6 items-center">
           <div className="lg:col-span-7">
-            {MICROSOFT_PARTNER.enabled && (
-              <div className="mb-8">
+            {(MICROSOFT_PARTNER.enabled || GOOGLE_PARTNER.enabled) && (
+              <div className="mb-8 flex flex-wrap gap-2.5">
+                {MICROSOFT_PARTNER.enabled && (
                 <Link
                   to={`/services#${MICROSOFT_PARTNER.anchor}`}
                   className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-white/70 backdrop-blur transition-colors hover:border-white/30 hover:text-white"
@@ -84,6 +86,17 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                   {partnerBadgeLabel()}
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
                 </Link>
+                )}
+                {GOOGLE_PARTNER.enabled && (
+                  <Link
+                    to="/services/cloud"
+                    className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-white/70 backdrop-blur transition-colors hover:border-white/30 hover:text-white"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#4DBC9F]" aria-hidden />
+                    {GOOGLE_PARTNER.badgeLabel}
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
+                  </Link>
+                )}
               </div>
             )}
 

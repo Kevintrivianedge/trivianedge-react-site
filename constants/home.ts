@@ -2,8 +2,8 @@
 // (built in App.tsx getSEOProps) read from one source.
 //
 // Claims policy: Microsoft wording must match constants/microsoftPartner.ts
-// (AI Cloud Partner Program member, not CSP). Google partnership is pending,
-// so Google Cloud is described as a capability only, never as a partnership.
+// (AI Cloud Partner Program member, not CSP). Google wording must match
+// constants/googlePartner.ts (Partner Network member, no tier or resale).
 
 export const HOME_TITLE =
   'Microsoft & Google Cloud, AI & Offshore Teams | TrivianEdge';
@@ -84,7 +84,7 @@ export const HOME_FAQS = [
   {
     question: 'Does TrivianEdge work with Google Workspace and Google Cloud?',
     answer:
-      'Yes. We plan and run Google Workspace migrations and administration, and design and manage workloads on Google Cloud. Many clients run both Microsoft and Google, and we manage the two side by side.',
+      'Yes. TrivianEdge is a member of the Google Partner Network. We plan and run Google Workspace migrations and administration, and design and manage workloads on Google Cloud. Many clients run both Microsoft and Google, and we manage the two side by side.',
   },
   {
     question: 'Can TrivianEdge migrate us from Google Workspace to Microsoft 365, or the other way?',

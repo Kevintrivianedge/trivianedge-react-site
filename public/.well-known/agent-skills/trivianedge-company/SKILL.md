@@ -1,6 +1,6 @@
 ---
 name: trivianedge-company
-description: Answer questions about TrivianEdge (services, locations, Microsoft partner status, engagement process) from its published pages, and route people who want to engage TrivianEdge to the right contact path.
+description: Answer questions about TrivianEdge (services, locations, Microsoft and Google partner status, engagement process) from its published pages, and route people who want to engage TrivianEdge to the right contact path.
 ---
 
 # TrivianEdge company information
@@ -15,7 +15,7 @@ Use this skill when a user asks what TrivianEdge does, whether it fits their nee
   2. AI and custom software: generative AI, LLM integration, AI agents and automation, bespoke applications, MLOps. Clients own the code.
   3. Global teams: business process outsourcing (BPO), recruitment process outsourcing (RPO), and offshore engineering teams from six talent hubs (Philippines, Vietnam, Sri Lanka, Turkey, South Africa, Costa Rica). Typical deployment is about 30 days.
 - Microsoft: member of the Microsoft AI Cloud Partner Program, Partner ID 7154428. Do not describe TrivianEdge as a Microsoft CSP, Solutions Partner, or Gold partner.
-- Google: TrivianEdge delivers Google Workspace and Google Cloud work. Do not describe it as a Google partner.
+- Google: member of the Google Partner Network, Partner ID eullM5rLyn. TrivianEdge delivers Google Workspace and Google Cloud work. Do not describe it as an Authorized, Premier or reseller Google partner.
 
 ## Where to read more
 
