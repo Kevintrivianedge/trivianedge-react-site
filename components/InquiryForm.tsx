@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, ChevronDown, Loader2 } from 'lucid
 import { API_ENDPOINTS } from '../constants/api';
 import { BOOKING_URL } from '../constants';
 import { getCsrfToken, addCsrfTokenToFormData } from '../utils/csrf';
+import { metaLeadFields, trackMetaLead } from '../utils/metaPixel';
 import { storeFailedSubmission } from '../utils/serviceWorkerRegistry';
 
 type InquiryFormState = {
@@ -44,8 +45,10 @@ const InquiryForm: React.FC = () => {
     setSubmitting(true);
     setError(null);
 
+    const metaFields = metaLeadFields();
+
     try {
-      const formDataWithCsrf = addCsrfTokenToFormData(form);
+      const formDataWithCsrf = addCsrfTokenToFormData({ ...form, ...metaFields });
       const response = await fetch(API_ENDPOINTS.INQUIRY, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -55,6 +58,7 @@ const InquiryForm: React.FC = () => {
       const data = await response.json() as { success: boolean; error?: string };
 
       if (data.success) {
+        trackMetaLead(metaFields);
         setSubmitted(true);
         setForm(initialState);
       } else {
@@ -62,7 +66,7 @@ const InquiryForm: React.FC = () => {
       }
     } catch (err) {
       console.error('[InquiryForm] submission error:', err);
-      const formDataWithCsrf = addCsrfTokenToFormData(form);
+      const formDataWithCsrf = addCsrfTokenToFormData({ ...form, ...metaFields });
       try {
         await storeFailedSubmission(API_ENDPOINTS.INQUIRY, formDataWithCsrf);
         setError('You appear to be offline. Your submission will be sent automatically when you reconnect.');
