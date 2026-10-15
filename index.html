@@ -99,8 +99,8 @@
     <!-- Meta Pixel Code (public/meta-pixel.js) is no longer loaded statically here.
          src/cookieConsent.ts injects it dynamically, only once the visitor has
          granted marketing consent through the cookie banner -- see that file.
-         The <noscript> fallback still lives in <body> below for no-JS visitors,
-         who can't run the consent banner either way. -->
+         There is deliberately no <noscript> pixel: no-JS visitors can't give
+         consent, so it would fire without it. -->
 
     <!-- Microsoft Clarity is initialized from index.tsx, deferred via
          requestIdleCallback the same way as GA4 and Amplitude below, instead
@@ -109,10 +109,6 @@
     
 </head>
 <body>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1763614258308992&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
     <!-- Skip to main content, visible on keyboard focus for screen reader / keyboard users (WCAG 2.1 AA) -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 

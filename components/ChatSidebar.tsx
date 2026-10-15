@@ -9,6 +9,7 @@ import { getTimeOfDay } from '../utils/getTimeOfDay';
 import { useGeo } from '../contexts/GeoContext';
 import { API_ENDPOINTS } from '../constants/api';
 import { getCsrfToken, addCsrfTokenToFormData } from '../utils/csrf';
+import { metaLeadFields, trackMetaLead } from '../utils/metaPixel';
 import { storeFailedSubmission } from '../utils/serviceWorkerRegistry';
 
 interface Message {
@@ -569,6 +570,7 @@ ${userContext}
             }
             if (lead?.email && !leadSentRef.current) {
                 leadSentRef.current = true;
+                const metaFields = metaLeadFields();
                 const leadData = {
                     name: lead.name || 'Aria chat visitor',
                     company: lead.company || 'Not provided',
@@ -577,11 +579,14 @@ ${userContext}
                     timeline: lead.timeline || 'Not specified',
                     message: lead.notes || 'Captured via the Aria chat assistant.',
                     csrf_token: getCsrfToken(),
+                    ...metaFields,
                 };
                 fetch(API_ENDPOINTS.INQUIRY, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(leadData),
+                }).then((res) => {
+                    if (res.ok) trackMetaLead(metaFields);
                 }).catch(async (err) => {
                     console.error('[Aria] lead capture failed', err);
                     try {

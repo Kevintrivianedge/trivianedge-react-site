@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import { API_ENDPOINTS } from '../constants/api';
+import { metaLeadFields, trackMetaLead } from '../utils/metaPixel';
+import { getCsrfToken } from '../utils/csrf';
 import { BOOKING_URL } from '../constants';
 import { SEO_CONFIG, breadcrumbSchema, buildWebPageSchema } from '../utils/seo';
 
@@ -92,6 +94,7 @@ const SavingsCalculatorPage: React.FC = () => {
     e.preventDefault();
     setLeadSubmitting(true);
     setLeadError(null);
+    const metaFields = metaLeadFields();
 
     try {
       const response = await fetch(API_ENDPOINTS.INQUIRY, {
@@ -103,6 +106,8 @@ const SavingsCalculatorPage: React.FC = () => {
           email: leadForm.email,
           need: 'Savings calculator estimate',
           timeline: '2-4 weeks',
+          ...metaFields,
+          csrf_token: getCsrfToken(),
           message: `Savings calculator result, role: ${roleType}, hires: ${hireCount}, current annual cost per hire: ${formatCurrency(costPerHire)}. Estimated offshore cost: ${formatCurrency(offshoreCost)}/yr. Estimated savings: ${formatCurrency(annualSavings)}/yr (${formatCurrency(threeYearSavings)} over 3 years).`,
         }),
       });
@@ -110,6 +115,7 @@ const SavingsCalculatorPage: React.FC = () => {
       const data = (await response.json()) as { success: boolean; error?: string };
 
       if (data.success) {
+        trackMetaLead(metaFields);
         setLeadSubmitted(true);
       } else {
         setLeadError(data.error ?? 'Something went wrong. Please try again.');

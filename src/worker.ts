@@ -14,6 +14,11 @@ export interface Env {
   HEALTH_CHECK_WEBHOOK_URL?: string; // Health check webhook (daily or on failure)
   ANALYTICS_KV?: KVNamespace;
   ASSETS?: Fetcher; // optional so missing binding won't crash
+  // Meta Conversions API (wrangler secret put META_CAPI_TOKEN). Leads are only
+  // sent server-side when this is set and the visitor gave marketing consent.
+  META_CAPI_TOKEN?: string;
+  // Optional: Events Manager > Test events code, to verify CAPI before launch.
+  META_CAPI_TEST_EVENT_CODE?: string;
 }
 
 import { negotiateMarkdown } from './markdown';
@@ -1186,7 +1191,7 @@ function addSecurityHeaders(response: Response, pathname: string, statusOverride
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
     // Canonical host is www — collapse bare-apex requests (http or https,
@@ -1309,7 +1314,7 @@ export default {
         return handleEarlyAccess(request, env, corsHeaders);
       }
       if (url.pathname === '/api/inquiry' && request.method === 'POST') {
-        return handleInquiry(request, env, corsHeaders);
+        return handleInquiry(request, env, corsHeaders, ctx);
       }
       if (url.pathname === '/api/analytics/events' && request.method === 'POST') {
         return handleAnalyticsEvent(request, env, corsHeaders);
@@ -1630,7 +1635,7 @@ async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record
   });
 }
 
-async function handleInquiry(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
+async function handleInquiry(request: Request, env: Env, corsHeaders: Record<string, string>, ctx: ExecutionContext): Promise<Response> {
   const parsed = await parseJsonBody<{
     name?: string;
     company?: string;
@@ -1643,6 +1648,7 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
     budget?: string;
     message?: string;
     csrf_token?: string;
+    meta_event_id?: string;
   }>(request);
   if (!parsed.ok) {
     return new Response(JSON.stringify({ success: false, error: parsed.error }), {
@@ -1737,10 +1743,79 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
     }
   }
 
+  // The client only sends meta_event_id when the visitor granted marketing
+  // consent; it's the same ID the browser pixel uses, so Meta dedupes the pair.
+  const metaEventId = typeof body.meta_event_id === 'string' ? body.meta_event_id.trim() : '';
+  if (env.META_CAPI_TOKEN && META_EVENT_ID_RE.test(metaEventId)) {
+    ctx.waitUntil(sendMetaLead(request, env, { eventId: metaEventId, email, name }));
+  }
+
   return new Response(JSON.stringify({ success: true }), {
     status: 200,
     headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
   });
+}
+
+// ---------------------------------------------------------------------------
+// Meta Conversions API. Pixel 2923354974693991 is the dataset in the
+// TrivianEdge Inc. Business account; utils/metaPixel.ts fires the browser half.
+// ---------------------------------------------------------------------------
+const META_PIXEL_ID = '2923354974693991';
+const META_GRAPH_VERSION = 'v23.0';
+const META_EVENT_ID_RE = /^[0-9a-f-]{36}$/i;
+
+async function sha256Hex(value: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+function readCookie(request: Request, name: string): string | undefined {
+  const match = (request.headers.get('Cookie') ?? '').match(new RegExp(`(?:^|;\\s*)${name}=([^;]+)`));
+  return match?.[1];
+}
+
+async function sendMetaLead(
+  request: Request,
+  env: Env,
+  lead: { eventId: string; email: string; name: string },
+): Promise<void> {
+  try {
+    // Meta wants identifiers normalised (trimmed, lowercase) before hashing.
+    // The chat assistant sends a placeholder name when it has none; don't hash that.
+    const realName = lead.name === 'Aria chat visitor' ? '' : lead.name;
+    const [firstName, ...rest] = realName.toLowerCase().split(/\s+/).filter(Boolean);
+    const lastName = rest.join('');
+    const userData: Record<string, unknown> = {
+      em: [await sha256Hex(lead.email.toLowerCase())],
+      client_ip_address: request.headers.get('CF-Connecting-IP') ?? undefined,
+      client_user_agent: request.headers.get('User-Agent') ?? undefined,
+      fbp: readCookie(request, '_fbp'),
+      fbc: readCookie(request, '_fbc'),
+    };
+    if (firstName) userData.fn = [await sha256Hex(firstName)];
+    if (lastName) userData.ln = [await sha256Hex(lastName)];
+
+    const payload: Record<string, unknown> = {
+      data: [{
+        event_name: 'Lead',
+        event_time: Math.floor(Date.now() / 1000),
+        event_id: lead.eventId,
+        action_source: 'website',
+        event_source_url: request.headers.get('Referer') ?? 'https://www.trivianedge.com/',
+        user_data: userData,
+      }],
+    };
+    if (env.META_CAPI_TEST_EVENT_CODE) payload.test_event_code = env.META_CAPI_TEST_EVENT_CODE;
+
+    const res = await fetch(
+      `https://graph.facebook.com/${META_GRAPH_VERSION}/${META_PIXEL_ID}/events?access_token=${encodeURIComponent(env.META_CAPI_TOKEN ?? '')}`,
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) },
+    );
+    if (!res.ok) console.error('[Trivian Worker] Meta CAPI error:', res.status, await res.text());
+  } catch (err) {
+    // Never let ad tracking affect the lead itself.
+    console.error('[Trivian Worker] Meta CAPI failed:', err);
+  }
 }
 
 async function handleAnalyticsEvent(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
