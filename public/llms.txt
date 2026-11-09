@@ -1,22 +1,21 @@
 # TrivianEdge
 
-> TrivianEdge is a Toronto-based technology partner that sets up and runs Microsoft and Google cloud, builds AI and custom software, and hires and manages offshore teams, all under one contract.
+> TrivianEdge is a Toronto-based offshore outsourcing company specializing in talent outsourcing, resource augmentation, and bespoke software development.
 
-TrivianEdge is a technology partner headquartered in Toronto, Canada. We help growing companies with three things, under one contract and one point of contact.
+TrivianEdge sources offshore professionals based on each client’s requirements. Clients can add specialists, such as software developers and QA engineers, to an existing team through IT staff augmentation or build a dedicated offshore team. We also provide business process outsourcing (BPO) and recruitment process outsourcing (RPO).
 
-Cloud: we plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud. TrivianEdge is a member of the Microsoft AI Cloud Partner Program (Partner ID 7154428). It is also a member of the Google Partner Network (Partner ID eullM5rLyn). It is not a Microsoft CSP or Solutions Partner, and it holds no Google partner tier or resale authorization.
+We recruit, employ and manage dedicated staff in the Philippines, Vietnam, Sri Lanka, Turkey, South Africa and Costa Rica, for technical and non-technical roles, working through in-country employer-of-record and payroll partners. Teams are typically working in around 30 days, usually at up to 40% less than hiring locally in Canada, the US or the UK.
 
-AI and software: we build generative AI features, LLM integrations, AI agents and automations, and custom web applications. Clients own all the code.
+Our bespoke software development services cover custom web applications, systems integration, and AI-powered automation. Clients own the code.
 
-Global teams: we recruit, employ and manage dedicated staff in the Philippines, Vietnam, Sri Lanka, Turkey, South Africa and Costa Rica, for technical and non-technical roles, working through in-country employer-of-record and payroll partners. Teams are typically working in around 30 days, usually at up to 40% less than hiring locally in Canada, the US or the UK.
+We also plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud. TrivianEdge is a member of the Microsoft AI Cloud Partner Program (Partner ID 7154428). It is also a member of the Google Partner Network (Partner ID eullM5rLyn). It is not a Microsoft CSP or Solutions Partner, and it holds no Google partner tier or resale authorization.
 
 TrivianEdge was founded in 2025 by Kevin Vaz, who has spent more than 20 years in outsourcing and operations.
 
-## Cloud
-
-- [Microsoft & Google cloud services](https://www.trivianedge.com/services/cloud): Microsoft 365 and Copilot rollout, Azure migration and cost review, Google Workspace migration (either direction), Google Cloud architecture, identity, MFA, and security baselines.
-
 ## Services
+
+- [Offshore staff augmentation](https://www.trivianedge.com/services/staff-augmentation): TrivianEdge sources offshore specialists for a client's existing team.
+- [Dedicated offshore teams](https://www.trivianedge.com/services/dedicated-offshore-teams): TrivianEdge recruits, onboards and supports a team for ongoing work.
 
 - [Services overview](https://www.trivianedge.com/services): Every TrivianEdge service line in one place.
 - [BPO](https://www.trivianedge.com/services/bpo): Business Process Outsourcing: offshore back-office, customer support, finance, and HR admin teams.
@@ -32,6 +31,10 @@ TrivianEdge was founded in 2025 by Kevin Vaz, who has spent more than 20 years i
   - [AI Automation Pipelines](https://www.trivianedge.com/services/ai-development/ai-automation): Document intelligence and agentic workflows integrated with your existing systems.
   - [AI Chatbot Development](https://www.trivianedge.com/services/ai-development/ai-chatbot-development): Custom support, sales, and internal assistants grounded in your own knowledge base.
   - [MLOps & AI Infrastructure](https://www.trivianedge.com/services/ai-development/mlops): Deployment, drift monitoring, and cost optimization for production AI/ML.
+
+## Cloud
+
+- [Microsoft & Google cloud services](https://www.trivianedge.com/services/cloud): Microsoft 365 and Copilot rollout, Azure migration and cost review, Google Workspace migration (either direction), Google Cloud architecture, identity, MFA, and security baselines.
 
 ## Compare
 

@@ -48,11 +48,7 @@ const Navbar: React.FC = () => {
     dropdownCloseTimer.current = setTimeout(() => setOpenDropdown(null), 150);
   };
 
-  // Only the homepage opens on a permanently-dark hero section, so the
-  // transparent, unscrolled navbar needs light text there specifically —
-  // every other route starts on a theme-aware light/dark background where
-  // the default theme-aware text colors are already correct.
-  const onDarkHero = location.pathname === '/' && !scrolled;
+  const onDarkHero = !scrolled && ['/', '/services/staff-augmentation', '/services/dedicated-offshore-teams'].includes(location.pathname);
 
   // Mobile drawer: trap focus, close on Escape, lock background scroll,
   // and restore focus to whatever triggered it (the hamburger button) on close.

@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import { m, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
@@ -11,24 +11,23 @@ import { TalentHub } from '../types';
 import Accordion from '../components/Accordion';
 import InquiryForm from '../components/InquiryForm';
 
-// The globe is canvas-only and purely visual, so it loads after the hero text.
-const OpsGlobe = lazy(() => import('../components/OpsGlobe'));
-
-// Real named clients only, each linking to the live site we delivered.
+// Real named clients.
 // width/height are intrinsic sizes to avoid CLS.
 // Logo files are pre-rendered white on transparent (crests keep their interior detail via
 // luminance-to-alpha), so no CSS filter is applied. A brightness-0 silhouette flattens crests into blobs.
 // Crests render a touch taller than wordmarks so their detail stays legible at the same visual weight.
 const TRUST_CLIENTS = [
-  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', href: 'https://www.capricorncollegeholbrook.lk/', width: 86, height: 64, crest: true },
-  { name: 'Cargo Login', logo: '/logos/cargo-login.webp', href: 'https://www.cargo-login.com/', width: 62, height: 64 },
-  { name: 'Keynotive', logo: '/logos/keynotive.webp', href: 'https://www.keynotive.io/', width: 201, height: 160 },
-  { name: 'Hub-Flx', logo: '/logos/hub-flx.webp', href: 'https://www.hub-flx.com/', width: 250, height: 64 },
-  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', href: 'https://keynesiasrilanka.com', width: 69, height: 64, crest: true },
-  { name: 'MellieBugs', logo: '/logos/melliebugs.webp', href: 'https://melliebugs.com', width: 64, height: 64, crest: true },
+  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', width: 86, height: 64, crest: true },
+  { name: 'Cargo Login', logo: '/logos/cargo-login.webp', width: 62, height: 64 },
+  { name: 'Keynotive', logo: '/logos/keynotive.webp', width: 201, height: 160 },
+  { name: 'Hub-Flx', logo: '/logos/hub-flx.webp', width: 250, height: 64 },
+  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', width: 69, height: 64, crest: true },
+  { name: 'MellieBugs', logo: '/logos/melliebugs.webp', width: 64, height: 64, crest: true },
 ];
 
 // Full write-ups for the case-study cards. Clients without one fall back to /proof.
+const FEATURED_CLIENT = 'Cargo Login';
+
 const CASE_STUDY_LINKS: Record<string, string> = {
   'Cargo Login': '/blog/cargo-login-case-study',
   Keynotive: '/blog/keynotive-case-study',
@@ -75,39 +74,16 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         />
         <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-6 items-center">
           <div className="lg:col-span-7">
-            {(MICROSOFT_PARTNER.enabled || GOOGLE_PARTNER.enabled) && (
-              <div className="mb-8 flex flex-wrap gap-2.5">
-                {MICROSOFT_PARTNER.enabled && (
-                <Link
-                  to={`/services#${MICROSOFT_PARTNER.anchor}`}
-                  className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-white/70 backdrop-blur transition-colors hover:border-white/30 hover:text-white"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" aria-hidden />
-                  {partnerBadgeLabel()}
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
-                </Link>
-                )}
-                {GOOGLE_PARTNER.enabled && (
-                  <Link
-                    to="/services/cloud"
-                    className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-white/70 backdrop-blur transition-colors hover:border-white/30 hover:text-white"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#4DBC9F]" aria-hidden />
-                    {GOOGLE_PARTNER.badgeLabel}
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
-                  </Link>
-                )}
-              </div>
-            )}
+            <p className="mb-6 text-xs font-bold uppercase tracking-[0.2em] text-cyan-400">Offshore outsourcing · Toronto, Canada</p>
 
             {/* The one gradient headline on the page (colour system rule 07). */}
             <h1 className="display-hero font-semibold te-gradient-text">
-              One partner for cloud, AI and offshore teams.
+              Offshore talent, staff augmentation, and bespoke software development
             </h1>
 
             <p className="mt-8 text-lg md:text-xl text-[#B4BCBA] max-w-xl leading-relaxed">
-              Most companies juggle a cloud reseller, a software agency and a staffing firm. TrivianEdge is a Toronto-based technology
-              partner that does all three, under one contract, with one person to call.
+              TrivianEdge is a Toronto-based offshore outsourcing company. We source offshore professionals for your existing team,
+              build dedicated offshore teams, and develop custom software. We also provide Microsoft and Google cloud services.
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
@@ -130,11 +106,23 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <p className="mt-4 text-sm text-white/45">Free, no obligation, and we usually reply the same business day.</p>
           </div>
 
-          <div className="lg:col-span-5 relative aspect-square w-full max-w-[560px] mx-auto">
-            <Suspense fallback={null}>
-              <OpsGlobe />
-            </Suspense>
-          </div>
+          <aside className="lg:col-span-5 rounded-3xl border border-white/15 bg-[#0d1b1c] p-6 md:p-8" aria-label="Featured client work">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-400">Client work · Cargo Login</p>
+            <p className="mt-4 text-2xl font-semibold text-white">One logistics operation across two time zones</p>
+            <ol className="mt-6 grid gap-3 sm:grid-cols-2">
+              <li className="rounded-2xl border border-white/15 p-4">
+                <p className="text-xs font-bold uppercase tracking-widest text-cyan-400">Canada</p>
+                <p className="mt-2 text-white">Client operations</p>
+              </li>
+              <li className="rounded-2xl border border-white/15 p-4">
+                <p className="text-xs font-bold uppercase tracking-widest text-cyan-400">Philippines</p>
+                <p className="mt-2 text-white">Offshore operations support</p>
+              </li>
+            </ol>
+            <Link to="/blog/cargo-login-case-study" className="mt-6 inline-flex items-center gap-2 font-bold text-cyan-400 hover:underline">
+              Read the Cargo Login case study <ArrowUpRight className="h-4 w-4" aria-hidden />
+            </Link>
+          </aside>
         </div>
 
         {/* Fact rail — plain, verifiable statements (also easy for AI search to quote) */}
@@ -150,69 +138,40 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         {/* Client strip: real named clients, each linking to the live site we delivered. */}
         <div className="relative max-w-7xl mx-auto flex flex-col md:flex-row md:items-center gap-4 md:gap-10 border-t border-white/10 py-8">
           <p className="text-[11px] uppercase tracking-[0.2em] text-white/40 shrink-0">Trusted by</p>
-          {/* Three copies so the -33.333% loop is seamless; copies 2-3 are hidden from assistive tech. */}
-          <div className="marquee-viewport flex-1 min-w-0" role="group" aria-label="Clients">
-            <div className="marquee-track">
-              {[0, 1, 2].map(rep => (
-                <ul key={rep} className="flex items-center gap-14 md:gap-16 pr-14 md:pr-16" aria-hidden={rep > 0 || undefined}>
-                  {TRUST_CLIENTS.map(c => (
-                    <li key={c.name} className="shrink-0">
-                    <a
-                      href={c.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${c.name} (opens in a new tab)`}
-                      tabIndex={rep > 0 ? -1 : undefined}
-                      className="block opacity-60 hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-300"
-                    >
-                      <img src={c.logo} alt="" width={c.width} height={c.height} loading="lazy" className={`${c.crest ? 'h-9 md:h-10' : 'h-7 md:h-8'} w-auto object-contain`} />
-                    </a>
-                    </li>
-                  ))}
-                </ul>
-              ))}
-            </div>
-          </div>
+          <ul className="flex flex-wrap items-center gap-x-7 gap-y-5 md:gap-x-10" aria-label="Clients">
+            {TRUST_CLIENTS.map(client => (
+              <li key={client.name}>
+                <img src={client.logo} alt={client.name} width={client.width} height={client.height} loading="lazy" className={`${client.crest ? 'h-9' : 'h-7'} w-auto object-contain`} />
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {/* ===== 2. SERVICES — editorial rows, not cards ===== */}
+      {/* ===== 2. CORE SERVICES ===== */}
       <section id="services" aria-labelledby="services-heading" className="section-shell px-4 md:px-6 scroll-mt-24">
         <div className="max-w-7xl mx-auto">
           <div id="services-heading">
             <SectionHead
               label="What we do"
-              title={<>Three services. <span className="text-muted">One contract.</span></>}
-              intro="Hiring three vendors is like renovating a house with three contractors who never talk to each other. Every problem lands in the gap between them, and you end up as the project manager. We're the general contractor: one contract, one point of contact, and nothing falls between the cracks."
+              title="How can we help?"
+              intro="Fill a skills gap, build a team for ongoing work, or give a software project to a delivery partner."
             />
           </div>
 
-          <div className="border-t border-border">
-            {PILLARS.map(p => (
-              <m.article key={p.id} {...reveal} className="group relative grid lg:grid-cols-12 gap-6 lg:gap-10 py-10 md:py-14 border-b border-border">
-                <p className="lg:col-span-3 text-sm font-semibold text-muted tabular-nums">{p.kicker}</p>
-                <div className="lg:col-span-5">
-                  <h3 className="text-2xl md:text-3xl font-semibold text-text leading-tight">
-                    <Link to={p.href} className="after:absolute after:inset-0 focus-visible:outline-none">
-                      {p.title}
-                    </Link>
-                  </h3>
-                  <p className="mt-4 text-muted leading-relaxed max-w-md">{p.answer}</p>
-                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-cyan-700 dark:text-cyan-400">
-                    {p.cta}
-                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
-                  </span>
-                </div>
-                <ul className="lg:col-span-4 space-y-2.5 text-text/80">
-                  {p.items.map(item => (
-                    <li key={item} className="flex gap-3 text-[15px]">
-                      <span className="mt-2.5 h-px w-4 shrink-0 bg-cyan-400" aria-hidden />
-                      {item}
-                    </li>
-                  ))}
+          <div className="grid gap-4 md:grid-cols-3">
+            {PILLARS.map(service => (
+              <article key={service.id} className="flex flex-col rounded-3xl border border-border bg-background p-6 md:p-8">
+                <p className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400">{service.kicker}</p>
+                <h3 className="mt-4 text-2xl font-semibold text-text">{service.title}</h3>
+                <p className="mt-3 leading-relaxed text-muted">{service.answer}</p>
+                <ul className="mb-6 mt-5 list-disc space-y-2 pl-5 text-sm text-text">
+                  {service.items.map(item => <li key={item}>{item}</li>)}
                 </ul>
-                <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-[-1px] h-px origin-left scale-x-0 bg-cyan-400 transition-transform duration-500 group-hover:scale-x-100" />
-              </m.article>
+                <Link to={service.href} className="mt-auto inline-flex items-center gap-2 self-start font-bold text-cyan-700 hover:underline dark:text-cyan-400">
+                  {service.cta} <ArrowUpRight className="h-4 w-4" aria-hidden />
+                </Link>
+              </article>
             ))}
           </div>
 
@@ -246,8 +205,8 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             <SectionHead dark label="Client work" title={<>Real engagements. <span className="text-white/45">Plain outcomes.</span></>} />
           </div>
           <div className="grid md:grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-3xl overflow-hidden">
-            {CASE_STUDIES.map(study => (
-              <m.article key={study.client} {...reveal} className="bg-[#07090a] p-8 md:p-10 flex flex-col">
+            {[...CASE_STUDIES].sort((first, second) => Number(second.client === FEATURED_CLIENT) - Number(first.client === FEATURED_CLIENT)).map(study => (
+              <m.article key={study.client} {...reveal} className={`bg-[#07090a] p-8 md:p-10 flex flex-col ${study.client === FEATURED_CLIENT ? "md:col-span-2" : ""}`}>
                 <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-400">{study.sector}</p>
                 <h3 className="mt-3 text-2xl font-semibold text-white">{study.client}</h3>
                 <p className="mt-5 text-white/65 leading-relaxed">{study.outcome}</p>
@@ -316,7 +275,41 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
         </div>
       </section>
 
-      {/* ===== 5. FAQ ===== */}
+      <section className="section-shell border-t border-border px-4 md:px-6" aria-labelledby="cloud-heading">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400">Additional capabilities</p>
+          <h2 id="cloud-heading" className="mt-3 text-3xl font-semibold text-text">Microsoft and Google cloud services</h2>
+          <p className="mt-4 max-w-2xl text-muted">We plan, migrate, secure and manage Microsoft 365, Azure, Google Workspace and Google Cloud.</p>
+          <Link to="/services/cloud" className="mt-5 inline-flex items-center gap-2 font-bold text-cyan-700 hover:underline dark:text-cyan-400">
+            Explore cloud services <ArrowUpRight className="h-4 w-4" aria-hidden />
+          </Link>
+            {(MICROSOFT_PARTNER.enabled || GOOGLE_PARTNER.enabled) && (
+              <div className="mt-5 flex flex-wrap gap-2.5">
+                {MICROSOFT_PARTNER.enabled && (
+                <Link
+                  to={`/services#${MICROSOFT_PARTNER.anchor}`}
+                  className="group inline-flex items-center gap-2.5 rounded-full border border-border px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-text backdrop-blur transition-colors hover:border-cyan-500"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" aria-hidden />
+                  {partnerBadgeLabel()}
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
+                </Link>
+                )}
+                {GOOGLE_PARTNER.enabled && (
+                  <Link
+                    to="/services/cloud"
+                    className="group inline-flex items-center gap-2.5 rounded-full border border-border px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-text backdrop-blur transition-colors hover:border-cyan-500"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#4DBC9F]" aria-hidden />
+                    {GOOGLE_PARTNER.badgeLabel}
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
+                  </Link>
+                )}
+              </div>
+            )}
+        </div>
+      </section>
+
       <section id="faq" aria-labelledby="faq-heading" className="section-tint section-shell px-4 md:px-6 border-t border-border">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-4 lg:sticky lg:top-28 self-start">
@@ -338,7 +331,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           <div className="lg:col-span-5">
             <h2 id="contact-heading" className="display-section font-semibold text-white">Tell us what you’re trying to fix.</h2>
             <p className="mt-6 text-lg text-white/60 leading-relaxed">
-              A cloud migration, an AI build or a new team. Your message goes straight to our founder, Kevin Vaz, not a call centre,
+              Tell us which role, team or software project you need help with. Your message goes straight to our founder, Kevin Vaz, not a call centre,
               and we usually reply the same business day with next steps and a rough estimate.
             </p>
             <ul className="mt-8 space-y-2.5 text-white/70">
@@ -361,7 +354,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </div>
           </div>
           <div className="lg:col-span-7 rounded-3xl bg-white dark:bg-white/5 p-6 md:p-10">
-            <InquiryForm />
+            <InquiryForm source="/#contact" />
           </div>
         </div>
       </section>

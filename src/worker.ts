@@ -1641,6 +1641,8 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
     company?: string;
     email?: string;
     need?: string;
+    source?: string;
+    inquiry_id?: string;
     timeline?: string;
     companySize?: string;
     headcount?: string;
@@ -1672,6 +1674,7 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
   const company = capLength(typeof body.company === 'string' ? body.company.trim() : '', MAX_FIELD_LENGTH);
   const email = capLength(typeof body.email === 'string' ? body.email.trim() : '', MAX_FIELD_LENGTH);
   const need = capLength(typeof body.need === 'string' ? body.need.trim() : '', MAX_FIELD_LENGTH);
+  const source = capLength(typeof body.source === 'string' ? body.source.trim() : '', MAX_FIELD_LENGTH);
   const timeline = capLength(typeof body.timeline === 'string' ? body.timeline.trim() : '', MAX_FIELD_LENGTH);
   const companySize = capLength(typeof body.companySize === 'string' ? body.companySize.trim() : '', MAX_FIELD_LENGTH);
   const headcount = capLength(typeof body.headcount === 'string' ? body.headcount.trim() : '', MAX_FIELD_LENGTH);
@@ -1693,7 +1696,19 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
     });
   }
 
-  if (env.RESEND_API_KEY) {
+  if (!env.RESEND_API_KEY) {
+    console.error('[Trivian Worker] RESEND_API_KEY missing for inquiry');
+    return new Response(JSON.stringify({ success: false, error: 'The inquiry form is temporarily unavailable. Please email kevin.v@trivianedge.com.' }), {
+      status: 503,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
+    });
+  }
+
+  const inquiryId = typeof body.inquiry_id === 'string' && /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(body.inquiry_id)
+    ? body.inquiry_id
+    : crypto.randomUUID();
+
+  try {
     const safeName = escapeHtml(name);
     const safeCompany = escapeHtml(company);
     const safeEmail = escapeHtml(email);
@@ -1710,10 +1725,12 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Idempotency-Key': `inquiry/${inquiryId}`,
       },
       body: JSON.stringify({
         from: 'TrivianEdge <inquiry@trivianedge.com>',
         to: ['kevin.v@trivianedge.com'],
+        reply_to: email,
         subject: `New inquiry | ${safeCompany}`,
         html: `
           <h2>New inquiry request</h2>
@@ -1722,6 +1739,7 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
             <tr><td><strong>Company</strong></td><td>${safeCompany}</td></tr>
             <tr><td><strong>Email</strong></td><td>${safeEmail}</td></tr>
             <tr><td><strong>Need</strong></td><td>${safeNeed || 'Not specified'}</td></tr>
+            <tr><td><strong>Inquiry source</strong></td><td>${escapeHtml(source) || 'Not specified'}</td></tr>
             <tr><td><strong>Timeline</strong></td><td>${safeTimeline || 'Not specified'}</td></tr>
             <tr><td><strong>Company size</strong></td><td>${safeCompanySize || 'Not specified'}</td></tr>
             <tr><td><strong>Headcount needed</strong></td><td>${safeHeadcount || 'Not specified'}</td></tr>
@@ -1738,9 +1756,15 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
       console.error('[Trivian Worker] Inquiry email error:', err);
       return new Response(JSON.stringify({ success: false, error: 'Failed to send your inquiry. Please try again.' }), {
         status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
       });
     }
+  } catch (error) {
+    console.error('[Trivian Worker] Inquiry notification failed:', error);
+    return new Response(JSON.stringify({ success: false, error: 'We could not confirm receipt. Please try again or email kevin.v@trivianedge.com.' }), {
+      status: 502,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
+    });
   }
 
   // The client only sends meta_event_id when the visitor granted marketing
@@ -1750,7 +1774,7 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
     ctx.waitUntil(sendMetaLead(request, env, { eventId: metaEventId, email, name }));
   }
 
-  return new Response(JSON.stringify({ success: true }), {
+  return new Response(JSON.stringify({ success: true, inquiryId }), {
     status: 200,
     headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
   });

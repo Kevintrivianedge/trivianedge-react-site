@@ -20,7 +20,7 @@ const AboutPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="About TrivianEdge | Toronto Technology Partner for Cloud, AI & Offshore Teams"
+        title="About TrivianEdge | Toronto Offshore Outsourcing Company"
         description={COMPANY_SHORT}
         keywords="about TrivianEdge, what does TrivianEdge do, Toronto technology partner, Microsoft cloud partner Toronto, AI development company Canada, offshore teams Canada, Kevin Vaz"
         canonical={aboutUrl}
@@ -53,7 +53,7 @@ const AboutPage: React.FC = () => {
               <Building2 className="w-3 h-3" />
               About TrivianEdge
             </span>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">A Toronto technology partner for cloud, AI and global teams.</h1>
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">A Toronto offshore outsourcing company.</h1>
             <p className="text-muted text-lg md:text-xl leading-relaxed">
               {COMPANY_ONE_LINER}
             </p>

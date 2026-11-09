@@ -6,10 +6,10 @@
 // constants/googlePartner.ts (Partner Network member, no tier or resale).
 
 export const HOME_TITLE =
-  'Microsoft & Google Cloud, AI & Offshore Teams | TrivianEdge';
+  'Offshore Outsourcing & Staff Augmentation | TrivianEdge';
 
 export const HOME_DESCRIPTION =
-  'Toronto-based partner for Microsoft and Google Cloud, AI and custom software, and offshore teams, typically live in around 30 days. Book a free 15-minute call.';
+  'Toronto-based TrivianEdge provides offshore outsourcing, talent outsourcing, IT staff augmentation, and bespoke software development.';
 
 export interface Pillar {
   id: string;
@@ -24,34 +24,31 @@ export interface Pillar {
 
 export const PILLARS: Pillar[] = [
   {
-    id: 'cloud',
-    kicker: '01 · Cloud',
-    title: 'Microsoft and Google Cloud, set up and run properly.',
-    answer:
-      'We plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud, so your team stops fighting its tools and gets on with the work.',
-    items: ['Microsoft 365 & Copilot rollout', 'Azure migration & cost review', 'Google Workspace migration', 'Google Cloud architecture', 'Identity, MFA & security baselines'],
-    href: '/services/cloud',
-    cta: 'Explore cloud services',
+    id: 'staff-augmentation',
+    kicker: '01 · Staff augmentation',
+    title: 'Add an offshore specialist',
+    answer: 'We source offshore professionals to fill skills gaps on your existing team.',
+    items: ['Software developers', 'QA engineers', 'Technical and operations specialists'],
+    href: '/services/staff-augmentation',
+    cta: 'Explore staff augmentation',
   },
   {
-    id: 'ai',
-    kicker: '02 · AI & Software',
-    title: 'AI and custom software your team actually uses.',
-    answer:
-      'We build AI features, LLM integrations, automations and custom apps that plug into the systems you already run. You own 100% of the code.',
-    items: ['Generative AI & LLM integration', 'AI agents & automation', 'Custom web & internal tools', 'MLOps'],
-    href: '/services/ai-development',
-    cta: 'Explore AI development',
+    id: 'dedicated-teams',
+    kicker: '02 · Talent outsourcing',
+    title: 'Build a dedicated offshore team',
+    answer: 'We recruit, onboard and support an offshore team for ongoing engineering, customer support or back-office work.',
+    items: ['Dedicated engineering teams', 'Customer support and back-office teams', 'Payroll and local compliance support'],
+    href: '/services/dedicated-offshore-teams',
+    cta: 'Explore dedicated teams',
   },
   {
-    id: 'teams',
-    kicker: '03 · Global Teams',
-    title: 'Offshore teams, hired and managed for you.',
-    answer:
-      'We recruit, employ and manage dedicated staff in six countries, for technical and non-technical roles. Teams are typically working in around 30 days, at up to 40% less than hiring locally.',
-    items: ['Business process outsourcing (BPO)', 'Recruitment process outsourcing (RPO)', 'Offshore engineering teams', 'Payroll & local compliance'],
-    href: '/services',
-    cta: 'Explore team services',
+    id: 'bespoke-software',
+    kicker: '03 · Software development',
+    title: 'Develop bespoke software',
+    answer: 'We scope and build custom software around your requirements. You own the code.',
+    items: ['Web applications and internal tools', 'Systems integration', 'AI development and automation'],
+    href: '/services/it-outsourcing',
+    cta: 'Explore bespoke software',
   },
 ];
 
@@ -74,7 +71,7 @@ export const HOME_FAQS = [
   {
     question: 'What does TrivianEdge do?',
     answer:
-      'TrivianEdge is a Toronto-based technology partner with three services: Microsoft and Google Cloud implementation and management, AI and custom software development, and offshore team staffing (BPO and RPO). Clients use one contract and one point of contact for all three.',
+      'TrivianEdge is a Toronto-based offshore outsourcing company. We source specialists for existing teams, build dedicated offshore teams, and develop bespoke software. We also provide Microsoft and Google cloud services.',
   },
   {
     question: 'Is TrivianEdge a Microsoft partner?',

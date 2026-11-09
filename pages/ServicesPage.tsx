@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Users2, ShieldCheck, Cpu, Server, Cloud } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
@@ -7,22 +7,36 @@ import RelatedLinks from '../components/RelatedLinks';
 import PremiumCloudShowcase from '../components/PremiumCloudShowcase';
 import { MICROSOFT_PARTNER } from '../constants/microsoftPartner';
 import { breadcrumbSchema } from '../utils/seo';
+import { PILLARS } from '../constants/home';
 import { COMPANY_SHORT } from '../constants/company';
 import { COMPARISONS } from '../constants/comparisons';
 import { INDUSTRIES } from '../constants/industries';
 
 const SERVICES_HUB = [
-  {
-    title: 'Microsoft & Google Cloud',
-    shortName: 'Cloud',
-    href: '/services/cloud',
-    icon: Cloud,
+  ...PILLARS.slice(0, 2).map((service, index) => ({
+    title: service.title,
+    shortName: index === 0 ? 'Staff Augmentation' : 'Dedicated Teams',
+    href: service.href,
+    icon: Users2,
     accent: 'text-cyan-400',
     iconBg: 'from-cyan-400/20 to-cyan-400/5',
     iconBorder: 'border-cyan-400/25',
     glow: 'bg-cyan-400/8',
-    description: 'We plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud, including moves between Microsoft and Google.',
-    tags: ['Microsoft 365 & Copilot', 'Azure', 'Google Workspace', 'Google Cloud'],
+    badge: undefined,
+    description: service.answer,
+    tags: service.items,
+  })),
+  {
+    title: 'Bespoke Software Development',
+    shortName: 'Bespoke',
+    href: '/services/it-outsourcing',
+    icon: Server,
+    accent: 'text-cyan-400',
+    iconBg: 'from-cyan-400/20 to-cyan-400/5',
+    iconBorder: 'border-cyan-400/25',
+    glow: 'bg-cyan-400/8',
+    description: 'Commission a custom application, internal tool, or integration. TrivianEdge scopes and delivers the project, and you own the code.',
+    tags: ['Custom Development', 'Full-Stack Engineering', 'DevOps & Cloud', 'QA & Testing'],
   },
   {
     title: 'Business Process Outsourcing',
@@ -49,18 +63,6 @@ const SERVICES_HUB = [
     tags: ['Full-Cycle Hiring', 'AI-Powered Screening', 'Executive Search', 'Volume Recruitment'],
   },
   {
-    title: 'Bespoke Software Development',
-    shortName: 'Bespoke',
-    href: '/services/it-outsourcing',
-    icon: Server,
-    accent: 'text-cyan-400',
-    iconBg: 'from-cyan-400/20 to-cyan-400/5',
-    iconBorder: 'border-cyan-400/25',
-    glow: 'bg-cyan-400/8',
-    description: 'Custom software, built by dedicated offshore engineering teams you own end to end, plus the DevOps, QA, and IT outsourcing to keep it running.',
-    tags: ['Custom Development', 'Full-Stack Engineering', 'DevOps & Cloud', 'QA & Testing'],
-  },
-  {
     title: 'AI Development',
     shortName: 'AI Development',
     badge: 'A Bespoke Software Specialty',
@@ -73,6 +75,18 @@ const SERVICES_HUB = [
     description: 'Custom AI products, LLM integrations, and machine learning pipelines, our deepest specialty within bespoke software. You own 100% of the code.',
     tags: ['LLM Integration', 'Generative AI', 'ML Pipelines', 'AI Automation'],
   },
+  {
+    title: 'Microsoft & Google Cloud',
+    shortName: 'Cloud',
+    href: '/services/cloud',
+    icon: Cloud,
+    accent: 'text-cyan-400',
+    iconBg: 'from-cyan-400/20 to-cyan-400/5',
+    iconBorder: 'border-cyan-400/25',
+    glow: 'bg-cyan-400/8',
+    description: 'We plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud, including moves between Microsoft and Google.',
+    tags: ['Microsoft 365 & Copilot', 'Azure', 'Google Workspace', 'Google Cloud'],
+  },
 ];
 
 const ServicesPage: React.FC = () => {
@@ -81,8 +95,8 @@ const ServicesPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="Services | Cloud, AI & Software, Offshore Teams | TrivianEdge"
-        description="TrivianEdge services: Microsoft and Google Cloud, AI and custom software development, and offshore teams (BPO, RPO, engineering) from six countries, typically live in around 30 days."
+        title="Offshore Outsourcing Services | TrivianEdge"
+        description="Explore offshore staff augmentation, dedicated offshore teams, bespoke software development, business process outsourcing, and recruitment process outsourcing."
         keywords="TrivianEdge services, BPO RPO software development, outsourcing services Canada, offshore team services, AI development services, bespoke software development services"
         canonical="https://www.trivianedge.com/services"
         structuredData={[
@@ -115,8 +129,8 @@ const ServicesPage: React.FC = () => {
               What we do
             </p>
             <h1 className="text-4xl md:text-6xl font-bold text-text mb-6 leading-tight">
-              Cloud, AI and software,{' '}
-              <span className="text-cyan-400">and global teams.</span>
+              Offshore talent and{' '}
+              <span className="text-cyan-400">bespoke software.</span>
             </h1>
             <p className="text-muted text-lg leading-relaxed max-w-2xl mx-auto mb-8">
               {COMPANY_SHORT}
@@ -213,5 +227,71 @@ const ServicesPage: React.FC = () => {
     </>
   );
 };
+
+const TALENT_SERVICES = {
+  'staff-augmentation': {
+    heading: 'Offshore staff augmentation',
+    action: 'Tell us the role',
+    description: 'Add a TrivianEdge-sourced offshore professional to your existing team. You define the role and direct their day-to-day work.',
+    steps: [
+      ['Define the role', 'Tell us the skills, working hours and responsibilities you need.'],
+      ['Review candidates', 'TrivianEdge sources and screens offshore professionals for you to interview.'],
+      ['Add them to your team', 'We support onboarding while your team directs the work and sets priorities.'],
+    ],
+  },
+  'dedicated-teams': {
+    heading: 'Dedicated offshore teams',
+    action: 'Scope your offshore team',
+    description: 'Build a dedicated offshore team for ongoing engineering, customer support or back-office work. TrivianEdge recruits, onboards and supports the team.',
+    steps: [
+      ['Scope the team', 'Agree on the function, roles, working hours and what a good handoff looks like.'],
+      ['Recruit and onboard', 'We source and screen candidates and coordinate onboarding and local payroll through in-country partners.'],
+      ['Run the engagement', 'Agree on day-to-day ownership and reporting. For a managed business function, explore our business process outsourcing service.'],
+    ],
+  },
+} as const;
+
+export function TalentServicePage() {
+  const { pathname } = useLocation();
+  const id = pathname === '/services/staff-augmentation' ? 'staff-augmentation' : 'dedicated-teams';
+  const service = TALENT_SERVICES[id];
+  const canonical = `https://www.trivianedge.com${pathname}`;
+  const inquiry = `/contact?${new URLSearchParams({ service: id, source: pathname })}`;
+
+  return (
+    <>
+      <SEOHead title={`${service.heading} | TrivianEdge`} description={service.description} canonical={canonical} />
+      <section className="hero-dark bg-[#081415] px-4 pb-20 pt-32 text-white md:px-6">
+        <div className="mx-auto max-w-7xl">
+          <Link to="/services" className="text-sm font-semibold text-cyan-400 hover:underline">All services</Link>
+          <h1 className="display-hero mt-6 max-w-4xl font-semibold">{service.heading}</h1>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/75">{service.description}</p>
+          <Link to={inquiry} className="mt-8 inline-flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-3 font-bold text-black hover:bg-cyan-300">
+            {service.action} <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
+        </div>
+      </section>
+      <section className="section-shell px-4 md:px-6" aria-labelledby="engagement-heading">
+        <div className="mx-auto max-w-7xl">
+          <h2 id="engagement-heading" className="display-section font-semibold text-text">How the engagement works</h2>
+          <ol className="mt-8 grid gap-4 md:grid-cols-3">
+            {service.steps.map(([heading, description], index) => (
+              <li key={heading} className="rounded-3xl border border-border p-6 md:p-8">
+                <span className="text-sm font-bold text-cyan-700 dark:text-cyan-400">0{index + 1}</span>
+                <h3 className="mt-4 text-xl font-semibold text-text">{heading}</h3>
+                <p className="mt-3 leading-relaxed text-muted">{description}</p>
+              </li>
+            ))}
+          </ol>
+          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
+            <Link to={inquiry} className="font-bold text-cyan-700 hover:underline dark:text-cyan-400">{service.action}</Link>
+            {id === 'dedicated-teams' && <Link to="/services/bpo" className="font-bold text-text hover:underline">Explore managed BPO</Link>}
+            <Link to="/proof" className="font-bold text-text hover:underline">See client work</Link>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
 
 export default ServicesPage;
