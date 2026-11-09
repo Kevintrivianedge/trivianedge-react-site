@@ -3,27 +3,13 @@ import { m, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { TALENT_HUBS, STEPS, BOOKING_URL } from '../constants';
-import { CASE_STUDIES } from '../constants/proof';
+import { CASE_STUDIES, WEBSITE_PROJECTS } from '../constants/proof';
 import { MICROSOFT_PARTNER, partnerBadgeLabel } from '../constants/microsoftPartner';
 import { GOOGLE_PARTNER } from '../constants/googlePartner';
 import { PILLARS, HERO_FACTS, HOME_FAQS } from '../constants/home';
 import { TalentHub } from '../types';
 import Accordion from '../components/Accordion';
 import InquiryForm from '../components/InquiryForm';
-
-// Real named clients.
-// width/height are intrinsic sizes to avoid CLS.
-// Logo files are pre-rendered white on transparent (crests keep their interior detail via
-// luminance-to-alpha), so no CSS filter is applied. A brightness-0 silhouette flattens crests into blobs.
-// Crests render a touch taller than wordmarks so their detail stays legible at the same visual weight.
-const TRUST_CLIENTS = [
-  { name: 'Capricorn College', logo: '/logos/capricorn-college.webp', width: 86, height: 64, crest: true },
-  { name: 'Cargo Login', logo: '/logos/cargo-login.webp', width: 62, height: 64 },
-  { name: 'Keynotive', logo: '/logos/keynotive.webp', width: 201, height: 160 },
-  { name: 'Hub-Flx', logo: '/logos/hub-flx.webp', width: 250, height: 64 },
-  { name: 'Keynesia International School', logo: '/logos/keynesia-international-school.webp', width: 69, height: 64, crest: true },
-  { name: 'MellieBugs', logo: '/logos/melliebugs.webp', width: 64, height: 64, crest: true },
-];
 
 // Full write-ups for the case-study cards. Clients without one fall back to /proof.
 const FEATURED_CLIENT = 'Cargo Login';
@@ -135,13 +121,19 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           ))}
         </dl>
 
-        {/* Client strip: real named clients, each linking to the live site we delivered. */}
-        <div className="relative max-w-7xl mx-auto flex flex-col md:flex-row md:items-center gap-4 md:gap-10 border-t border-white/10 py-8">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-white/40 shrink-0">Trusted by</p>
-          <ul className="flex flex-wrap items-center gap-x-7 gap-y-5 md:gap-x-10" aria-label="Clients">
-            {TRUST_CLIENTS.map(client => (
-              <li key={client.name}>
-                <img src={client.logo} alt={client.name} width={client.width} height={client.height} loading="lazy" className={`${client.crest ? 'h-9' : 'h-7'} w-auto object-contain`} />
+        <div className="relative mx-auto max-w-7xl border-t border-white/10 py-7">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/65">Selected client work</p>
+            <Link to="/proof#websites" className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-400 hover:underline">
+              Explore the website portfolio <ArrowUpRight className="h-4 w-4" aria-hidden />
+            </Link>
+          </div>
+          <ul className="grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-6" aria-label="Client website projects">
+            {WEBSITE_PROJECTS.map(client => (
+              <li key={client.id} className="min-w-0 bg-[#0b1415]">
+                <Link to={`/proof#${client.id}`} aria-label={`View ${client.name} project`} className="flex h-20 items-center justify-center px-3 transition-colors hover:bg-[#183334] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-400 md:h-24">
+                  <img src={client.logo} alt="" width={client.width} height={client.height} loading="lazy" className={`${client.crest ? 'h-9' : 'h-7'} w-auto max-w-full object-contain`} />
+                </Link>
               </li>
             ))}
           </ul>

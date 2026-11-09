@@ -1,10 +1,10 @@
-import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Star, ExternalLink, ArrowRight } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import RelatedLinks from '../components/RelatedLinks';
-import { CASE_STUDIES, TESTIMONIALS } from '../constants/proof';
+import { CASE_STUDIES, TESTIMONIALS, WEBSITE_PROJECTS } from '../constants/proof';
 import { INDUSTRIES } from '../constants/industries';
 import { breadcrumbSchema, reviewSchema, SEO_CONFIG } from '../utils/seo';
 
@@ -20,12 +20,22 @@ const PROOF_STATS = [
 
 const ProofPage: React.FC = () => {
   const navigate = useNavigate();
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    const id = hash.slice(1);
+    if (id !== 'websites' && !WEBSITE_PROJECTS.some(project => project.id === id)) return;
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'instant' });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [hash]);
 
   return (
     <>
       <SEOHead
-        title="Proof | TrivianEdge Case Studies and Client Feedback"
-        description="Case studies, testimonials, and proof of delivery from TrivianEdge's global outsourcing and talent operations work."
+        title="Website Portfolio and Client Case Studies | TrivianEdge"
+        description="Explore live websites delivered by TrivianEdge and see client case studies across bespoke software, offshore teams, and outsourced operations."
         keywords="TrivianEdge case studies, outsourcing client testimonials, BPO case study, RPO case study, offshore software development case study"
         canonical={`${SEO_CONFIG.siteUrl}/proof`}
         schema={[
@@ -52,7 +62,7 @@ const ProofPage: React.FC = () => {
               <Star className="w-3 h-3" />
               Proof over promises
             </span>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">Case studies that show how the model works.</h1>
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">Client work and case studies</h1>
             <p className="text-muted text-lg md:text-xl leading-relaxed">
               These are the kinds of engagements TrivianEdge is built for: cross-border operations, faster hiring, lower overhead, and clearer execution.
             </p>
@@ -63,6 +73,41 @@ const ProofPage: React.FC = () => {
               </p>
             </div>
           </div>
+
+          <section id="websites" aria-labelledby="websites-heading" className="mb-20 scroll-mt-24">
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400">Portfolio</p>
+                <h2 id="websites-heading" className="mt-2 text-3xl font-bold md:text-4xl">Websites we’ve built</h2>
+              </div>
+              <Link to="/contact?service=bespoke-software&amp;source=/proof" className="inline-flex items-center gap-2 font-bold text-cyan-700 hover:underline dark:text-cyan-400">
+                Discuss your website project <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+              {WEBSITE_PROJECTS.map(project => (
+                <article key={project.id} id={project.id} className="group scroll-mt-28 overflow-hidden rounded-3xl border border-border bg-surface">
+                  <div className="relative overflow-hidden bg-[#0d1b1c] p-3 pb-0">
+                    <div className="flex gap-1.5 rounded-t-xl border border-white/15 bg-white/10 p-3" aria-hidden>
+                      <span className="h-1.5 w-1.5 rounded-full bg-white/55" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-white/40" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-white/25" />
+                    </div>
+                    <div className="aspect-[8/5] overflow-hidden bg-[#152728]">
+                      <img src={`/portfolio/${project.id}.jpg`} alt={`${project.name} homepage preview`} width={1200} height={750} loading="lazy" decoding="async" className="h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-105" />
+                    </div>
+                  </div>
+                  <div className="p-5">
+                    <p className="text-xs font-bold uppercase tracking-widest text-muted">{project.category}</p>
+                    <h3 className="mt-2 text-xl font-bold">{project.name}</h3>
+                    <a href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.name} (opens in a new tab)`} className="mt-4 inline-flex items-center gap-2 font-semibold text-cyan-700 hover:underline dark:text-cyan-400">
+                      Visit live website <ExternalLink className="h-4 w-4" aria-hidden />
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {PROOF_STATS.map((stat, i) => (

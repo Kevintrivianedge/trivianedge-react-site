@@ -165,7 +165,7 @@ const ITOutsourcingPage: React.FC = () => {
               <p className="text-xs font-bold uppercase tracking-widest text-cyan-400">Client work · Capricorn College</p>
               <h2 id="software-case-heading" className="mt-4 text-3xl font-bold">A new school website and a verifiable attendance record</h2>
               <p className="mt-4 leading-relaxed text-white/75">Capricorn College needed to replace an outdated public website and manual teacher attendance. TrivianEdge rebuilt the site and gave school leadership a live record of on-campus check-ins.</p>
-              <Link to="/proof" className="mt-6 inline-flex font-bold text-cyan-400 hover:underline">Explore our client work</Link>
+              <Link to="/proof#websites" className="mt-6 inline-flex font-bold text-cyan-400 hover:underline">Explore our website portfolio</Link>
             </div>
             <ul className="relative grid gap-3" aria-label="What we delivered">
               {CAPRICORN_DELIVERABLES.map(({ icon: Icon, title, description }, index) => (
