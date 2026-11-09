@@ -10,6 +10,8 @@ import {
   GitBranch,
   Layers,
   CheckCircle2,
+  MapPin,
+  Users2,
 } from 'lucide-react';
 import SEOHead from '../../components/SEOHead';
 import Accordion from '../../components/Accordion';
@@ -28,6 +30,12 @@ const PROJECT_STEPS = [
   { title: 'Define the scope', description: 'Tell us who will use the software, what they need to do, and which systems it needs to work with.' },
   { title: 'Build and review', description: 'Review the work at agreed milestones so your team can give feedback before launch.' },
   { title: 'Launch and hand over', description: 'Get the code and agree on what documentation, training, or ongoing support you need.' },
+];
+
+const CAPRICORN_DELIVERABLES = [
+  { icon: Globe, title: 'Public website', description: 'Program information, staff directory, and gallery' },
+  { icon: Users2, title: 'Secure faculty portal', description: 'A private workspace for faculty' },
+  { icon: MapPin, title: 'GPS attendance verification', description: 'On-campus check-ins recorded in real time' },
 ];
 
 const FAQS = [
@@ -159,12 +167,24 @@ const ITOutsourcingPage: React.FC = () => {
               <p className="mt-4 leading-relaxed text-white/75">Capricorn College needed to replace an outdated public website and manual teacher attendance. TrivianEdge rebuilt the site and gave school leadership a live record of on-campus check-ins.</p>
               <Link to="/proof" className="mt-6 inline-flex font-bold text-cyan-400 hover:underline">Explore our client work</Link>
             </div>
-            <ul className="grid gap-3" aria-label="What we delivered">
-              {['Public website rebuild', 'Secure faculty portal', 'GPS-based attendance verification'].map(deliverable => (
-                <li key={deliverable} className="flex items-center gap-3 rounded-2xl border border-white/15 p-4">
-                  <CheckCircle2 className="h-5 w-5 shrink-0 text-cyan-400" aria-hidden />
-                  {deliverable}
-                </li>
+            <ul className="relative grid gap-3" aria-label="What we delivered">
+              {CAPRICORN_DELIVERABLES.map(({ icon: Icon, title, description }, index) => (
+                <motion.li
+                  key={title}
+                  initial={shouldReduceMotion ? false : { opacity: 0.72, x: 12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ duration: shouldReduceMotion ? 0 : 0.35, delay: shouldReduceMotion ? 0 : index * 0.12 }}
+                  className="flex items-center gap-4 rounded-2xl border border-white/15 bg-[#152728] p-4"
+                >
+                  <span className="rounded-xl bg-cyan-400/10 p-3">
+                    <Icon className="h-5 w-5 text-cyan-400" aria-hidden />
+                  </span>
+                  <div>
+                    <p className="font-semibold">{title}</p>
+                    <p className="mt-1 text-sm text-white/70">{description}</p>
+                  </div>
+                </motion.li>
               ))}
             </ul>
           </div>
