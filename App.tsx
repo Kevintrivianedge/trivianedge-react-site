@@ -69,6 +69,7 @@ const VentureStudioPage       = lazy(() => import('./pages/VentureStudioPage'));
 const AriaOSPage               = lazy(() => import('./pages/AriaOSPage'));
 const AetherLogisticsPage       = lazy(() => import('./pages/AetherLogisticsPage'));
 const ServicesPage            = lazy(() => import('./pages/ServicesPage'));
+const TalentServicePage       = lazy(() => import('./pages/ServicesPage').then(module => ({ default: module.TalentServicePage })));
 const SavingsCalculatorPage   = lazy(() => import('./pages/SavingsCalculatorPage'));
 const NotFoundPage            = lazy(() => import('./pages/NotFoundPage'));
 const ChatSidebar             = lazy(() => import('./components/ChatSidebar'));
@@ -312,6 +313,8 @@ export default function App() {
                       <Route path="/terms" element={<TermsPage />} />
                       <Route path="/cookie-policy" element={<CookiePolicyPage />} />
                       <Route path="/services" element={<ServicesPage />} />
+                      <Route path="/services/staff-augmentation" element={<TalentServicePage />} />
+                      <Route path="/services/dedicated-offshore-teams" element={<TalentServicePage />} />
                       <Route path="/services/cloud" element={<CloudServicesPage />} />
                       <Route path="/services/bpo" element={<BPOPage />} />
                       <Route path="/services/rpo" element={<RPOPage />} />

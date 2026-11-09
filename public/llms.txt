@@ -14,6 +14,9 @@ TrivianEdge was founded in 2025 by Kevin Vaz, who has spent more than 20 years i
 
 ## Services
 
+- [Offshore staff augmentation](https://www.trivianedge.com/services/staff-augmentation): TrivianEdge sources offshore specialists for a client's existing team.
+- [Dedicated offshore teams](https://www.trivianedge.com/services/dedicated-offshore-teams): TrivianEdge recruits, onboards and supports a team for ongoing work.
+
 - [Services overview](https://www.trivianedge.com/services): Every TrivianEdge service line in one place.
 - [BPO](https://www.trivianedge.com/services/bpo): Business Process Outsourcing: offshore back-office, customer support, finance, and HR admin teams.
 - [RPO](https://www.trivianedge.com/services/rpo): Recruitment Process Outsourcing: embedded hiring, sourcing, screening, and onboarding.

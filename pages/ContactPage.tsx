@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, CalendarDays, MapPin } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import InquiryForm from '../components/InquiryForm';
@@ -88,7 +88,7 @@ const ContactPage: React.FC = () => {
             </div>
 
             <div className="pb-16 sm:pb-0 reveal" style={{ transitionDelay: '100ms' }}>
-              <InquiryForm />
+              <ContactInquiryForm />
             </div>
           </div>
         </div>
@@ -96,5 +96,13 @@ const ContactPage: React.FC = () => {
     </>
   );
 };
+
+function ContactInquiryForm() {
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const service = params.get('service') ?? undefined;
+  const source = params.get('source') ?? '/contact';
+  return <InquiryForm key={search} service={service} source={source} />;
+}
 
 export default ContactPage;
