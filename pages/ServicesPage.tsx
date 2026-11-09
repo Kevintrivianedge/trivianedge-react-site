@@ -11,6 +11,7 @@ import { PILLARS } from '../constants/home';
 import { COMPANY_SHORT } from '../constants/company';
 import { COMPARISONS } from '../constants/comparisons';
 import { INDUSTRIES } from '../constants/industries';
+import { BOOKING_URL } from '../constants';
 
 const SERVICES_HUB = [
   ...PILLARS.slice(0, 2).map((service, index) => ({
@@ -233,6 +234,13 @@ const TALENT_SERVICES = {
     heading: 'Offshore staff augmentation',
     action: 'Tell us the role',
     description: 'Add a TrivianEdge-sourced offshore professional to your existing team. You define the role and direct their day-to-day work.',
+    fitHeading: 'Keep your team. Fill the skills gap.',
+    fit: [
+      ['Software development', 'Add a developer to an existing product team for a specific stack, backlog, or release.'],
+      ['QA and testing', 'Bring in a QA engineer to expand test coverage or support a busy release cycle.'],
+      ['Operations support', 'Add a specialist to an existing workflow where your team already owns priorities and performance.'],
+    ],
+    alternative: { label: 'Explore dedicated offshore teams', href: '/services/dedicated-offshore-teams' },
     steps: [
       ['Define the role', 'Tell us the skills, working hours and responsibilities you need.'],
       ['Review candidates', 'TrivianEdge sources and screens offshore professionals for you to interview.'],
@@ -243,6 +251,13 @@ const TALENT_SERVICES = {
     heading: 'Dedicated offshore teams',
     action: 'Scope your offshore team',
     description: 'Build a dedicated offshore team for ongoing engineering, customer support or back-office work. TrivianEdge recruits, onboards and supports the team.',
+    fitHeading: 'Build capacity for a function that needs ongoing support.',
+    fit: [
+      ['Engineering', 'Build a team around a product backlog, with roles and working hours agreed up front.'],
+      ['Customer support', 'Staff an offshore team around your channels, coverage hours, and escalation process.'],
+      ['Back-office operations', 'Build a team around repeatable workflows, with clear handoffs and reporting.'],
+    ],
+    alternative: { label: 'Explore offshore staff augmentation', href: '/services/staff-augmentation' },
     steps: [
       ['Scope the team', 'Agree on the function, roles, working hours and what a good handoff looks like.'],
       ['Recruit and onboard', 'We source and screen candidates and coordinate onboarding and local payroll through in-country partners.'],
@@ -271,6 +286,35 @@ export function TalentServicePage() {
           </Link>
         </div>
       </section>
+      <section className="section-shell px-4 md:px-6" aria-labelledby="talent-fit-heading">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400">Where this fits</p>
+          <h2 id="talent-fit-heading" className="mt-3 max-w-3xl text-3xl font-semibold text-text md:text-4xl">{service.fitHeading}</h2>
+          <ul className="mt-8 grid gap-4 md:grid-cols-3">
+            {service.fit.map(([heading, description]) => (
+              <li key={heading} className="rounded-3xl border border-border bg-surface p-6 md:p-8">
+                <h3 className="text-xl font-semibold text-text">{heading}</h3>
+                <p className="mt-3 leading-relaxed text-muted">{description}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+      {id === 'dedicated-teams' && (
+        <section className="px-4 md:px-6" aria-labelledby="keynotive-heading">
+          <div className="mx-auto grid max-w-7xl gap-8 rounded-3xl bg-[#0d1b1c] p-6 text-white md:grid-cols-2 md:items-center md:p-10">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-cyan-400">Client work · Keynotive</p>
+              <h2 id="keynotive-heading" className="mt-4 text-3xl font-semibold">Two offshore teams supporting one growth function</h2>
+              <p className="mt-4 max-w-xl leading-relaxed text-white/75">TrivianEdge set up one team for outbound calling and another for email and sign-up generation. They worked in parallel as an extension of Keynotive’s existing growth function.</p>
+              <Link to="/blog/keynotive-case-study" className="mt-6 inline-flex items-center gap-2 font-bold text-cyan-400 hover:underline">
+                Read the Keynotive case study <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </div>
+            <img src="/portfolio/keynotive.jpg" alt="Keynotive website homepage" width={1200} height={750} loading="lazy" decoding="async" className="w-full rounded-xl border border-white/15" />
+          </div>
+        </section>
+      )}
       <section className="section-shell px-4 md:px-6" aria-labelledby="engagement-heading">
         <div className="mx-auto max-w-7xl">
           <h2 id="engagement-heading" className="display-section font-semibold text-text">How the engagement works</h2>
@@ -283,8 +327,17 @@ export function TalentServicePage() {
               </li>
             ))}
           </ol>
-          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
-            <Link to={inquiry} className="font-bold text-cyan-700 hover:underline dark:text-cyan-400">{service.action}</Link>
+          <div className="mt-10 rounded-3xl border border-border bg-surface p-6 md:p-8">
+            <h3 className="text-2xl font-semibold text-text">{id === 'staff-augmentation' ? 'Which role do you need to fill?' : 'What should the team take on?'}</h3>
+            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-4">
+              <Link to={inquiry} className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-bold premium-button">
+                {service.action} <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-text hover:underline">Book a 15-minute call</a>
+            </div>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
+            <Link to={service.alternative.href} className="font-bold text-cyan-700 hover:underline dark:text-cyan-400">{service.alternative.label}</Link>
             {id === 'dedicated-teams' && <Link to="/services/bpo" className="font-bold text-text hover:underline">Explore managed BPO</Link>}
             <Link to="/proof" className="font-bold text-text hover:underline">See client work</Link>
           </div>
