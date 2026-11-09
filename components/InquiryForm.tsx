@@ -37,9 +37,16 @@ export const INQUIRY_SERVICES = {
   'bespoke-software': 'Develop bespoke software',
 } as const;
 
+const BRIEF_PROMPTS: Record<string, { label: string; placeholder: string }> = {
+  [INQUIRY_SERVICES['staff-augmentation']]: { label: 'Which role do you need?', placeholder: 'Role, skills, and when you’d like someone to start' },
+  [INQUIRY_SERVICES['dedicated-teams']]: { label: 'What should the team take on?', placeholder: 'Function, approximate team size, and coverage hours' },
+  [INQUIRY_SERVICES['bespoke-software']]: { label: 'What would you like to build?', placeholder: 'Who will use it and what should it help them do?' },
+};
+
 const InquiryForm: React.FC<{ service?: string; source?: string }> = ({ service, source }) => {
   const initialNeed = Object.entries(INQUIRY_SERVICES).find(([id]) => id === service)?.[1] ?? '';
   const [form, setForm] = useState<InquiryFormState>({ ...initialState, need: initialNeed });
+  const briefPrompt = BRIEF_PROMPTS[form.need];
   const [step, setStep] = useState<1 | 2>(1);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -196,6 +203,22 @@ const InquiryForm: React.FC<{ service?: string; source?: string }> = ({ service,
             </div>
           </div>
 
+          {briefPrompt && (
+            <div>
+              <label htmlFor="inquiry-brief" className="block text-sm font-semibold text-text mb-2">
+                {briefPrompt.label} <span className="font-normal text-muted">(optional)</span>
+              </label>
+              <textarea
+                id="inquiry-brief"
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                placeholder={briefPrompt.placeholder}
+                rows={3}
+                className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm text-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-600"
+              />
+            </div>
+          )}
+
           <p className="text-xs text-muted">
             One more short step for optional details, or{' '}
             <button
@@ -303,20 +326,18 @@ const InquiryForm: React.FC<{ service?: string; source?: string }> = ({ service,
             </div>
           </div>
 
-          <div>
-            <label htmlFor="inquiry-message" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Message <span className="normal-case font-normal">(optional)</span></label>
-            <textarea
-              id="inquiry-message"
-              value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
-              className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text placeholder:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-600 transition-colors min-h-[120px]"
-              placeholder={
-                form.need === INQUIRY_SERVICES['staff-augmentation'] ? 'Which role and skills do you need?'
-                  : form.need === INQUIRY_SERVICES['dedicated-teams'] ? 'What function or workload should the team support?'
-                  : 'What are you trying to build or fix?'
-              }
-            />
-          </div>
+          {!briefPrompt && (
+            <div>
+              <label htmlFor="inquiry-message" className="block text-xs font-bold uppercase tracking-widest text-muted mb-2">Message <span className="normal-case font-normal">(optional)</span></label>
+              <textarea
+                id="inquiry-message"
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                className="w-full bg-background border border-border rounded-2xl px-4 py-3 text-sm text-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-600 min-h-[120px]"
+                placeholder="What are you trying to build or fix?"
+              />
+            </div>
+          )}
         </>
       )}
 

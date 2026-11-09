@@ -1009,6 +1009,7 @@ async function buildSecurityHealthCheck(env: Env): Promise<Record<string, unknow
 
 async function buildAdminStats(env: Env): Promise<Record<string, unknown>> {
   const analytics = await getKvJsonRecords<{ event?: string; payload?: Record<string, unknown> }>(env, 'analytics:', 5000);
+  const acceptedInquiries = await getKvJsonRecords<{ service: string; source: string }>(env, 'inquiry_accepted:', 2000);
   const submissions = await getKvJsonRecords<{ qualified?: boolean; tier?: string; score?: number }>(env, 'venture_submission:', 2000);
   const crmHandoffs = await getKvJsonRecords<{ success?: boolean }>(env, 'crm_handoff:', 2000);
   const retries = await getKvJsonRecords<CrmRetryRecord>(env, 'crm_retry:', 2000);
@@ -1016,6 +1017,12 @@ async function buildAdminStats(env: Env): Promise<Record<string, unknown>> {
   const stepView: Record<string, number> = {};
   const stepCompleted: Record<string, number> = {};
   const dropoffByStep: Record<string, number> = {};
+  const inquiriesByService: Record<string, number> = {};
+  const inquiriesBySource: Record<string, number> = {};
+  for (const inquiry of acceptedInquiries) {
+    inquiriesByService[inquiry.service] = (inquiriesByService[inquiry.service] ?? 0) + 1;
+    inquiriesBySource[inquiry.source] = (inquiriesBySource[inquiry.source] ?? 0) + 1;
+  }
 
   for (const item of analytics) {
     const event = item.event ?? '';
@@ -1041,6 +1048,11 @@ async function buildAdminStats(env: Env): Promise<Record<string, unknown>> {
   const crmSuccess = crmHandoffs.filter(x => x.success).length;
 
   return {
+    inquiries: {
+      accepted: acceptedInquiries.length,
+      byService: inquiriesByService,
+      bySource: inquiriesBySource,
+    },
     funnel: {
       stepView,
       stepCompleted,
@@ -1772,6 +1784,20 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
   const metaEventId = typeof body.meta_event_id === 'string' ? body.meta_event_id.trim() : '';
   if (env.META_CAPI_TOKEN && META_EVENT_ID_RE.test(metaEventId)) {
     ctx.waitUntil(sendMetaLead(request, env, { eventId: metaEventId, email, name }));
+  }
+
+  if (env.ANALYTICS_KV) {
+    const services = ['Add an offshore specialist', 'Build a dedicated offshore team', 'Develop bespoke software'];
+    const sources = ['/', '/contact', '/proof', '/proof#story-capricorn-college', '/proof#story-trivianknot',
+      '/services/staff-augmentation', '/services/dedicated-offshore-teams', '/services/it-outsourcing'];
+    const sourcePath = source.split('#')[0];
+    const analyticsSource = sources.includes(source) ? source : sources.includes(sourcePath) ? sourcePath : 'other';
+    ctx.waitUntil(env.ANALYTICS_KV.put(`inquiry_accepted:${inquiryId}`, JSON.stringify({
+      service: services.includes(need) ? need : 'other',
+      source: analyticsSource,
+    }), { expirationTtl: 180 * 24 * 60 * 60 }).catch(error => {
+      console.error('[Trivian Worker] Inquiry count update failed:', error);
+    }));
   }
 
   return new Response(JSON.stringify({ success: true, inquiryId }), {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Star, ExternalLink, ArrowRight } from 'lucide-react';
@@ -18,13 +18,38 @@ const PROOF_STATS = [
   { value: '24/7', unit: '', label: 'Ops coverage', description: 'Global timezone alignment' },
 ];
 
+const PROJECT_STORIES = [
+  {
+    id: 'capricorn-college',
+    name: 'Capricorn College',
+    challenge: 'Replace an outdated school website and give leadership a reliable way to verify teacher attendance.',
+    build: 'TrivianEdge rebuilt the public site and delivered a secure faculty portal with GPS-based attendance verification.',
+    outcome: 'Families can find school information on the public site, and leadership can check a live record of on-campus attendance.',
+  },
+  {
+    id: 'trivianknot',
+    name: 'TrivianKnot',
+    challenge: 'Give Sri Lankans and their families a way to explore marriage proposals across languages and countries.',
+    build: 'The platform supports English, Sinhala, and Tamil, along with profiles, proposal browsing, and private chat after mutual interest.',
+    outcome: 'People can create a profile for themselves or a family member and explore proposals from Sri Lanka or abroad.',
+  },
+];
+
+const TRIVIANKNOT_STEPS = [
+  { label: 'Welcome', image: '/portfolio/trivianknot.jpg', caption: 'A public introduction for Sri Lankans at home and abroad.' },
+  { label: 'Languages', image: '/portfolio/trivianknot-languages.jpg', caption: 'The public introduction is available in English, Sinhala, and Tamil.' },
+  { label: 'Member journey', image: '/portfolio/trivianknot-journey.jpg', caption: 'The public guide explains how members create a profile, browse proposals, and chat when interest is mutual.' },
+];
+
 const ProofPage: React.FC = () => {
   const navigate = useNavigate();
   const { hash } = useLocation();
+  const [walkthroughStep, setWalkthroughStep] = useState(0);
+  const walkthrough = TRIVIANKNOT_STEPS[walkthroughStep];
 
   useEffect(() => {
     const id = hash.slice(1);
-    if (id !== 'websites' && !WEBSITE_PROJECTS.some(project => project.id === id)) return;
+    if (id !== 'websites' && !WEBSITE_PROJECTS.some(project => project.id === id) && !PROJECT_STORIES.some(project => `story-${project.id}` === id)) return;
     const frame = window.requestAnimationFrame(() => {
       document.getElementById(id)?.scrollIntoView({ behavior: 'instant' });
     });
@@ -103,7 +128,54 @@ const ProofPage: React.FC = () => {
                     <a href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.name} (opens in a new tab)`} className="mt-4 inline-flex items-center gap-2 font-semibold text-cyan-700 hover:underline dark:text-cyan-400">
                       Visit live website <ExternalLink className="h-4 w-4" aria-hidden />
                     </a>
+                    {PROJECT_STORIES.some(story => story.id === project.id) && (
+                      <Link to={`/proof#story-${project.id}`} className="mt-3 block font-semibold text-text hover:underline">
+                        View project story
+                      </Link>
+                    )}
                   </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="mb-20" aria-labelledby="project-stories-heading">
+            <p className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400">Behind the build</p>
+            <h2 id="project-stories-heading" className="mt-2 text-3xl font-bold md:text-4xl">From requirements to working software</h2>
+            <div className="mt-8 grid gap-6">
+              {PROJECT_STORIES.map(story => (
+                <article key={story.id} id={`story-${story.id}`} className="grid scroll-mt-28 gap-6 rounded-3xl border border-border bg-surface p-5 md:grid-cols-2 md:p-8">
+                  <div>
+                    <h3 className="text-2xl font-bold">{story.name}</h3>
+                    <dl className="mt-5 space-y-4">
+                      {[[ 'The brief', story.challenge ], [ 'What we built', story.build ], [ 'What it enables', story.outcome ]].map(([label, value]) => (
+                        <div key={label}>
+                          <dt className="font-semibold">{label}</dt>
+                          <dd className="mt-1 text-sm leading-relaxed text-muted">{value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                    <Link to={`/contact?${new URLSearchParams({ service: 'bespoke-software', source: `/proof#story-${story.id}` })}`} className="mt-6 inline-flex items-center gap-2 font-bold text-cyan-700 hover:underline dark:text-cyan-400">
+                      Discuss a similar project <ArrowRight className="h-4 w-4" aria-hidden />
+                    </Link>
+                  </div>
+                  {story.id === 'trivianknot' ? (
+                    <div className="min-w-0 rounded-2xl border border-border p-3">
+                      <div className="mb-3 flex flex-wrap gap-2" role="group" aria-label="TrivianKnot walkthrough steps">
+                        {TRIVIANKNOT_STEPS.map((step, index) => (
+                          <button key={step.label} type="button" aria-pressed={walkthroughStep === index} onClick={() => setWalkthroughStep(index)} className="rounded-full border border-border px-3 py-2 text-sm font-semibold aria-pressed:bg-cyan-400 aria-pressed:text-black">
+                            {step.label}
+                          </button>
+                        ))}
+                      </div>
+                      <figure className="m-0" aria-live="polite">
+                        <img key={walkthrough.image} src={walkthrough.image} alt={`TrivianKnot public website — ${walkthrough.label}`} loading="lazy" decoding="async" className="aspect-[8/5] w-full rounded-xl bg-background object-contain" />
+                        <figcaption className="mt-3 text-sm leading-relaxed text-muted">{walkthrough.caption}</figcaption>
+                      </figure>
+                    </div>
+                  ) : (
+                    <img src="/portfolio/capricorn-college.jpg" alt="Capricorn College public website" width={1200} height={750} loading="lazy" decoding="async" className="w-full self-start rounded-2xl border border-border" />
+                  )}
                 </article>
               ))}
             </div>
