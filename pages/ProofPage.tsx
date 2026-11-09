@@ -84,7 +84,7 @@ const ProofPage: React.FC = () => {
                 Discuss your website project <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </div>
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
               {WEBSITE_PROJECTS.map(project => (
                 <article key={project.id} id={project.id} className="group scroll-mt-28 overflow-hidden rounded-3xl border border-border bg-surface">
                   <div className="relative overflow-hidden bg-[#0d1b1c] p-3 pb-0">

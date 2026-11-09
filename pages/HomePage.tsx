@@ -131,11 +131,15 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               Explore the website portfolio <ArrowUpRight className="h-4 w-4" aria-hidden />
             </Link>
           </div>
-          <ul className="grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-6" aria-label="Client website projects">
+          <ul className="grid grid-cols-4 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 lg:grid-cols-8" aria-label="Client website projects">
             {WEBSITE_PROJECTS.map(client => (
               <li key={client.id} className="min-w-0 bg-[#0b1415]">
                 <Link to={`/proof#${client.id}`} aria-label={`View ${client.name} project`} className="flex h-20 items-center justify-center px-3 transition-colors hover:bg-[#183334] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-400 md:h-24">
-                  <img src={client.logo} alt="" width={client.width} height={client.height} loading="lazy" className={`${client.crest ? 'h-9' : 'h-7'} w-auto max-w-full object-contain`} />
+                  {client.logo ? (
+                    <img src={client.logo} alt="" width={client.width} height={client.height} loading="lazy" className={`${client.crest ? 'h-9' : 'h-7'} w-auto max-w-full object-contain`} />
+                  ) : (
+                    <span className="text-center text-xs font-semibold leading-tight text-white sm:text-sm">{client.name}</span>
+                  )}
                 </Link>
               </li>
             ))}
