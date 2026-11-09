@@ -1685,14 +1685,14 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
   if (!name || !company || !email) {
     return new Response(JSON.stringify({ success: false, error: 'Name, company, and email are required.' }), {
       status: 400,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
     });
   }
 
   if (!EMAIL_RE.test(email)) {
     return new Response(JSON.stringify({ success: false, error: 'Please provide a valid email address.' }), {
       status: 400,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
     });
   }
 

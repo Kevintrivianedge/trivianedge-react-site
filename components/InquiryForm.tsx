@@ -60,13 +60,17 @@ const InquiryForm: React.FC<{ service?: string; source?: string }> = ({ service,
         submission.current = { payload, id: crypto.randomUUID(), meta: metaLeadFields() };
       }
       const { id, meta } = submission.current;
-      const formDataWithCsrf = addCsrfTokenToFormData({ ...form, source, inquiry_id: id, ...meta });
-      const response = await fetch(API_ENDPOINTS.INQUIRY, {
+      const send = () => fetch(API_ENDPOINTS.INQUIRY, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formDataWithCsrf),
+        body: JSON.stringify(addCsrfTokenToFormData({ ...form, source, inquiry_id: id, ...meta })),
       });
 
+      let response = await send();
+      if (response.status === 403 && response.headers.has('X-CSRF-Token')) {
+        extractRotatedCsrfToken(response);
+        response = await send();
+      }
       extractRotatedCsrfToken(response);
       const data = await response.json() as { success: boolean; error?: string };
 
@@ -94,8 +98,8 @@ const InquiryForm: React.FC<{ service?: string; source?: string }> = ({ service,
     await submitInquiry();
   };
 
-  const handleSkipAndSend = async () => {
-    if (!step1Valid) return;
+  const handleSkipAndSend = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (!step1Valid || !event.currentTarget.form?.reportValidity()) return;
     await submitInquiry();
   };
 
