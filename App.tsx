@@ -202,7 +202,7 @@ function getSEOProps(pathname: string) {
         }),
         buildServiceSchema({
           name: 'Bespoke Software Development & IT Outsourcing',
-          description: 'Bespoke software development and managed IT outsourcing for startups and enterprises, built by dedicated offshore engineering teams. Teams live in around 30 days, up to 40% cost savings.',
+          description: 'Bespoke software development for startups and enterprises, including custom applications, internal tools, and systems integrations scoped around the client’s requirements.',
           keywords: [...KEYWORD_CLUSTERS.bespokeSoftware, ...KEYWORD_CLUSTERS.outsourcing],
           serviceType: 'IT Outsourcing',
         }),
