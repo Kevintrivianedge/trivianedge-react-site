@@ -12,18 +12,19 @@
 
 /** One sentence. Use where there is room for a single line. */
 export const COMPANY_ONE_LINER =
-  'TrivianEdge is a Toronto-based technology partner that sets up and runs Microsoft and Google Cloud, builds AI and custom software, and hires and manages offshore teams, all under one contract.';
+  'TrivianEdge is a Toronto-based offshore outsourcing company specializing in talent outsourcing, resource augmentation, and bespoke software development.';
 
 /** About 50 words. Default meta/schema description length. */
 export const COMPANY_SHORT =
-  'TrivianEdge is a Toronto-based technology partner. We set up and manage Microsoft and Google Cloud, build AI and custom software, and hire and run offshore teams from six countries. Companies use us instead of juggling a cloud reseller, a software agency and a staffing firm.';
+  'TrivianEdge is a Toronto-based offshore outsourcing company specializing in talent outsourcing, resource augmentation, and bespoke software development. We supply offshore professionals, build dedicated teams, and develop custom software. We also provide Microsoft and Google cloud services.';
 
 /** About 150 words. About page, llms.txt, press. */
 export const COMPANY_LONG = [
-  'TrivianEdge is a technology partner headquartered in Toronto, Canada. We help growing companies with three things, under one contract and one point of contact.',
-  'Cloud: we plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud. TrivianEdge is a member of the Microsoft AI Cloud Partner Program (Partner ID 7154428) and the Google Partner Network.',
-  'AI and software: we build generative AI features, LLM integrations, AI agents and automations, and custom web applications. Clients own all the code.',
-  'Global teams: we recruit, employ and manage dedicated staff in the Philippines, Vietnam, Sri Lanka, Turkey, South Africa and Costa Rica, for technical and non-technical roles. Teams are typically working in around 30 days, usually at up to 40% less than hiring locally in Canada, the US or the UK.',
+  'TrivianEdge is a Toronto-based offshore outsourcing company specializing in talent outsourcing, resource augmentation, and bespoke software development.',
+  'TrivianEdge sources offshore professionals based on each client\'s requirements. Clients can add specialists, such as software developers and QA engineers, to an existing team through IT staff augmentation or build a dedicated offshore team. We also provide business process outsourcing (BPO) and recruitment process outsourcing (RPO).',
+  'We recruit, employ and manage dedicated staff in the Philippines, Vietnam, Sri Lanka, Turkey, South Africa and Costa Rica, for technical and non-technical roles. Teams are typically working in around 30 days, usually at up to 40% less than hiring locally in Canada, the US or the UK.',
+  'Our bespoke software development services cover custom web applications, systems integration, and AI-powered automation. Clients own the code.',
+  'We also plan, migrate, secure and manage Microsoft 365, Copilot, Azure, Google Workspace and Google Cloud. TrivianEdge is a member of the Microsoft AI Cloud Partner Program (Partner ID 7154428) and the Google Partner Network.',
   'TrivianEdge was founded in 2025 by Kevin Vaz, who has spent more than 20 years in outsourcing and operations.',
 ];
 
