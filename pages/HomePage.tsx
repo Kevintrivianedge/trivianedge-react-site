@@ -102,12 +102,12 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
 
             {/* The one gradient headline on the page (colour system rule 07). */}
             <h1 className="display-hero font-semibold te-gradient-text">
-              One partner for cloud, AI and offshore teams.
+              Offshore talent, staff augmentation, and bespoke software development
             </h1>
 
             <p className="mt-8 text-lg md:text-xl text-[#B4BCBA] max-w-xl leading-relaxed">
-              Most companies juggle a cloud reseller, a software agency and a staffing firm. TrivianEdge is a Toronto-based technology
-              partner that does all three, under one contract, with one person to call.
+              TrivianEdge is a Toronto-based offshore outsourcing company. We source offshore professionals for your existing team,
+              build dedicated offshore teams, and develop custom software. We also provide Microsoft and Google cloud services.
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
