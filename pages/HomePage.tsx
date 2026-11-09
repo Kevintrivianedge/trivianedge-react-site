@@ -13,6 +13,9 @@ import InquiryForm from '../components/InquiryForm';
 
 // Full write-ups for the case-study cards. Clients without one fall back to /proof.
 const FEATURED_CLIENT = 'Cargo Login';
+const FEATURED_WEBSITES = WEBSITE_PROJECTS.filter(project =>
+  ['capricorn-college', 'cargo-login', 'melliebugs'].includes(project.id),
+);
 
 const CASE_STUDY_LINKS: Record<string, string> = {
   'Cargo Login': '/blog/cargo-login-case-study',
@@ -194,8 +197,43 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section id="proof" aria-labelledby="proof-heading" className="section-dark section-shell px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
           <div id="proof-heading">
-            <SectionHead dark label="Client work" title={<>Real engagements. <span className="text-white/45">Plain outcomes.</span></>} />
+            <SectionHead dark label="Client work" title="Websites we’ve built" intro="Explore the public sites we’ve delivered for clients in education, logistics, and retail." />
           </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {FEATURED_WEBSITES.map((project, index) => (
+              <Link
+                key={project.id}
+                to={`/proof#${project.id}`}
+                className={`group relative isolate block overflow-hidden rounded-3xl border border-white/15 bg-[#122425] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400 ${index === 0 ? 'md:row-span-2' : ''}`}
+              >
+                <img
+                  src={`/portfolio/${project.id}.jpg`}
+                  alt=""
+                  width={1200}
+                  height={750}
+                  loading="lazy"
+                  decoding="async"
+                  className={`w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.03] ${index === 0 ? 'aspect-[8/5] md:h-full' : 'aspect-[2/1]'}`}
+                />
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-black via-black/85 to-transparent px-5 pb-5 pt-16 md:px-7 md:pb-6">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-widest text-cyan-300">{project.category}</p>
+                    <h3 className="mt-1 text-xl font-bold text-white md:text-2xl">{project.name}</h3>
+                  </div>
+                  <ArrowUpRight className="h-5 w-5 shrink-0 text-white" aria-hidden />
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3">
+            <Link to="/proof#websites" className="inline-flex items-center gap-2 font-bold text-cyan-400 hover:underline">
+              View the full website portfolio <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+            <Link to="/contact?service=bespoke-software&amp;source=/%23proof" className="font-semibold text-white hover:underline">
+              Discuss your website project
+            </Link>
+          </div>
+          <h2 className="mb-6 mt-16 text-2xl font-semibold text-white md:text-3xl">Client case studies</h2>
           <div className="grid md:grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-3xl overflow-hidden">
             {[...CASE_STUDIES].sort((first, second) => Number(second.client === FEATURED_CLIENT) - Number(first.client === FEATURED_CLIENT)).map(study => (
               <m.article key={study.client} {...reveal} className={`bg-[#07090a] p-8 md:p-10 flex flex-col ${study.client === FEATURED_CLIENT ? "md:col-span-2" : ""}`}>
@@ -241,7 +279,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       <section id="how-it-works" aria-labelledby="how-heading" className="section-shell px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
           <div id="how-heading">
-            <SectionHead label="How it works" title="From first call to live team in around 30 days." />
+            <SectionHead label="How it works" title="From first call to a clear plan." intro="We agree on the work, milestones, and next steps before we start." />
           </div>
           <ol className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
             {STEPS.map(step => (
