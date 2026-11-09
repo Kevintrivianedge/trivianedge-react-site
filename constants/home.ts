@@ -6,10 +6,10 @@
 // constants/googlePartner.ts (Partner Network member, no tier or resale).
 
 export const HOME_TITLE =
-  'Microsoft & Google Cloud, AI & Offshore Teams | TrivianEdge';
+  'Offshore Outsourcing & Staff Augmentation | TrivianEdge';
 
 export const HOME_DESCRIPTION =
-  'Toronto-based partner for Microsoft and Google Cloud, AI and custom software, and offshore teams, typically live in around 30 days. Book a free 15-minute call.';
+  'Toronto-based TrivianEdge provides offshore outsourcing, talent outsourcing, IT staff augmentation, and bespoke software development.';
 
 export interface Pillar {
   id: string;
