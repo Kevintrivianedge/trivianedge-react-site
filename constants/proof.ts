@@ -1,10 +1,23 @@
-export const WEBSITE_PROJECTS = [
+interface WebsiteProject {
+  id: string;
+  name: string;
+  category: string;
+  href: string;
+  logo?: string;
+  width?: number;
+  height?: number;
+  crest?: boolean;
+}
+
+export const WEBSITE_PROJECTS: WebsiteProject[] = [
   { id: 'capricorn-college', name: 'Capricorn College', category: 'Education', logo: '/logos/capricorn-college.webp', width: 86, height: 64, crest: true, href: 'https://www.capricorncollegeholbrook.lk/' },
   { id: 'cargo-login', name: 'Cargo Login', category: 'Freight and logistics', logo: '/logos/cargo-login.webp', width: 62, height: 64, href: 'https://www.cargo-login.com/' },
   { id: 'keynotive', name: 'Keynotive', category: 'Events and training', logo: '/logos/keynotive.webp', width: 201, height: 160, href: 'https://www.keynotive.io/' },
   { id: 'hub-flx', name: 'Hub-Flx', category: 'Enterprise technology', logo: '/logos/hub-flx.webp', width: 250, height: 64, href: 'https://www.hub-flx.com/' },
   { id: 'keynesia', name: 'Keynesia International School', category: 'Education', logo: '/logos/keynesia-international-school.webp', width: 69, height: 64, crest: true, href: 'https://keynesiasrilanka.com/' },
   { id: 'melliebugs', name: 'MellieBugs', category: 'Website', logo: '/logos/melliebugs.webp', width: 64, height: 64, crest: true, href: 'https://melliebugs.com/' },
+  { id: 'tima-international', name: 'TIMA International', category: 'Exhibitions and events', href: 'https://tima-international.vercel.app/' },
+  { id: 'trivianknot', name: 'TrivianKnot', category: 'Matrimony platform', href: 'https://www.trivianknot.com/' },
 ];
 
 export interface CaseStudy {
