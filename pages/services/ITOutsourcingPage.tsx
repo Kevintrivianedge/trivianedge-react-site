@@ -9,9 +9,6 @@ import {
   Cloud,
   GitBranch,
   Layers,
-  Clock,
-  TrendingDown,
-  Globe2,
   CheckCircle2,
 } from 'lucide-react';
 import SEOHead from '../../components/SEOHead';
@@ -27,11 +24,10 @@ const IT_SERVICES = [
   { icon: Layers, label: 'Systems Integration' },
 ];
 
-const STATS = [
-  { value: 'Around 30 Days', label: 'Avg. Deployment' },
-  { value: 'Up to 40%', label: 'Cost Savings' },
-  { value: '6', label: 'Time Zones' },
-  { value: '100%', label: 'Embedded' },
+const PROJECT_STEPS = [
+  { title: 'Define the scope', description: 'Tell us who will use the software, what they need to do, and which systems it needs to work with.' },
+  { title: 'Build and review', description: 'Review the work at agreed milestones so your team can give feedback before launch.' },
+  { title: 'Launch and hand over', description: 'Get the code and agree on what documentation, training, or ongoing support you need.' },
 ];
 
 const FAQS = [
@@ -41,19 +37,19 @@ const FAQS = [
       'Bespoke software development means building custom applications, platforms, and internal tools designed specifically around your business, rather than adapting an off-the-shelf product to fit. TrivianEdge builds and maintains bespoke software as a Canada-based engineering partner, with offshore development teams sourced from six global talent hubs and matched to your exact tech stack. We also deliver the IT outsourcing layer around it, cloud infrastructure, DevOps, cybersecurity, and systems integration, so bespoke software can scale into a fully managed technology function instead of a one-off project.',
   },
   {
-    question: 'How quickly can TrivianEdge deploy a bespoke software development team?',
+    question: 'How long does a bespoke software project take?',
     answer:
-      'TrivianEdge deploys offshore software development teams in around 30 days. After an initial discovery call, we search our network across the Philippines, Sri Lanka, Vietnam, Turkey, South Africa, and Costa Rica and present matched candidates within days. Once approved, your team is onboarded and embedded into your existing workflow in around 30 days.',
+      'The timeline depends on the scope, integrations, and launch requirements. After the discovery call, we can propose milestones and identify what needs to be decided before we estimate a launch date.',
   },
   {
     question: 'What bespoke software development services does TrivianEdge provide?',
     answer:
-      'TrivianEdge delivers custom software development, web and mobile application development, cybersecurity and compliance support, cloud infrastructure and DevOps, CI/CD and engineering operations, and systems integration. All delivered as dedicated offshore teams built to match your tech stack and time zone, with the same team available for the broader IT outsourcing work around a build.',
+      'TrivianEdge builds custom software, including web and mobile applications, internal tools, and systems integrations. A project can also include DevOps, cloud infrastructure, or security support where the scope calls for it.',
   },
   {
-    question: 'How much can I save building bespoke software through TrivianEdge?',
+    question: 'How much does bespoke software development cost?',
     answer:
-      'Most clients save up to 40% on engineering costs compared to local hiring. Our offshore talent hubs in the Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica provide senior-level developers and engineers at significantly lower rates than North American or Western European markets, with no compromise on quality or communication.',
+      'Cost depends on the features, integrations, and support you need. Share your requirements and we can discuss the scope and prepare an estimate.',
   },
   {
     question: 'Is TrivianEdge a Canadian bespoke software development company?',
@@ -93,8 +89,8 @@ const ITOutsourcingPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="Offshore Software Development Company in Canada | TrivianEdge"
-        description="Toronto-based offshore software development company. Dedicated offshore developers for Canadian startups and scale-ups, from the Philippines to Vietnam, live in around 30 days."
+        title="Bespoke Software Development in Canada | TrivianEdge"
+        description="TrivianEdge builds custom web applications, internal tools, and systems integrations. Scope a bespoke software project with our Toronto-based team."
         keywords="offshore development company Canada, offshore developers for Canadian startups, offshore dedicated development team, offshore software development Canada Philippines, bespoke software development, bespoke software development Canada, custom software development company, IT outsourcing Canada, offshore software development, offshore development team, software development outsourcing, TrivianEdge bespoke software"
         schema={[
           serviceSchema(
@@ -151,25 +147,28 @@ const ITOutsourcingPage: React.FC = () => {
               Discuss your software project
             </Link>
 
-            {/* Trust bar */}
-            <div className="flex flex-wrap justify-center gap-3 mt-8">
-              {[
-                { icon: Clock, label: 'Live in Around 30 Days' },
-                { icon: TrendingDown, label: 'Up to 40% Cost Savings' },
-                { icon: Globe2, label: '6 Time Zones' },
-                { icon: CheckCircle2, label: 'Canada-Based' },
-              ].map(({ icon: Icon, label }) => (
-                <span
-                  key={label}
-                  className="flex items-center gap-2 px-4 py-2 glass rounded-full border-border text-sm font-medium text-muted"
-                >
-                  <Icon className="w-4 h-4 text-cyan-400" />
-                  {label}
-                </span>
-              ))}
-            </div>
+            <p className="mt-4 text-sm text-muted">Toronto-based project team · Client-owned code</p>
           </div>
         </motion.section>
+
+        <section className="px-4 py-16 md:px-6" aria-labelledby="software-case-heading">
+          <div className="mx-auto grid max-w-5xl gap-8 rounded-3xl bg-[#0d1b1c] p-6 text-white md:grid-cols-2 md:p-10">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-cyan-400">Client work · Capricorn College</p>
+              <h2 id="software-case-heading" className="mt-4 text-3xl font-bold">A new school website and a verifiable attendance record</h2>
+              <p className="mt-4 leading-relaxed text-white/75">Capricorn College needed to replace an outdated public website and manual teacher attendance. TrivianEdge rebuilt the site and gave school leadership a live record of on-campus check-ins.</p>
+              <Link to="/proof" className="mt-6 inline-flex font-bold text-cyan-400 hover:underline">Explore our client work</Link>
+            </div>
+            <ul className="grid gap-3" aria-label="What we delivered">
+              {['Public website rebuild', 'Secure faculty portal', 'GPS-based attendance verification'].map(deliverable => (
+                <li key={deliverable} className="flex items-center gap-3 rounded-2xl border border-white/15 p-4">
+                  <CheckCircle2 className="h-5 w-5 shrink-0 text-cyan-400" aria-hidden />
+                  {deliverable}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
         {/* What is Bespoke Software Development */}
         <section className="py-20 px-4 md:px-6">
@@ -178,21 +177,13 @@ const ITOutsourcingPage: React.FC = () => {
               What is Bespoke Software Development?
             </h2>
             <p className="text-muted text-lg leading-relaxed">
-              Bespoke software development means building custom applications, platforms, and internal tools designed specifically around your business, rather than adapting an off-the-shelf product to fit. TrivianEdge builds and maintains bespoke software as a Canada-based engineering partner, with offshore development teams sourced from six global talent hubs and matched to your exact tech stack. We deliver custom development, cloud infrastructure, DevOps, cybersecurity, and systems integration, so bespoke software can scale into a fully managed IT outsourcing function in around 30 days, and you keep full ownership of the code and IP throughout. Pair bespoke software development with our{' '}
+              Bespoke software development means commissioning an application, platform, or internal tool around how your business works. We can build a new product or integrate with the systems you already use. The scope can also include deployment and ongoing support. For projects that need automation or model integration, explore our{' '}
               <Link
                 to="/services/ai-development"
                 className="text-cyan-400 hover:underline"
               >
                 AI development services
-              </Link>{' '}
-              or{' '}
-              <Link
-                to="/services/rpo"
-                className="text-cyan-400 hover:underline"
-              >
-                RPO services
-              </Link>{' '}
-              to build a complete offshore operating model.
+              </Link>.
             </p>
           </div>
         </section>
@@ -220,23 +211,22 @@ const ITOutsourcingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Why Offshore */}
+        {/* Project delivery */}
         <section className="py-20 px-4 md:px-6">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-text mb-12 text-center reveal">
-              Why Offshore with TrivianEdge?
+              How your software project works
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {STATS.map(({ value, label }, idx) => (
+            <div className="grid gap-6 md:grid-cols-3">
+              {PROJECT_STEPS.map(({ title, description }, idx) => (
                 <div
-                  key={label}
+                  key={title}
                   style={{ transitionDelay: `${idx * 60}ms` }}
-                  className="glass rounded-2xl p-6 border-border text-center reveal"
+                  className="glass rounded-2xl p-6 border-border reveal"
                 >
-                  <p className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">
-                    {value}
-                  </p>
-                  <p className="text-muted text-sm font-medium">{label}</p>
+                  <p className="text-sm font-bold text-cyan-700 dark:text-cyan-400">0{idx + 1}</p>
+                  <h3 className="mt-3 text-xl font-bold text-text">{title}</h3>
+                  <p className="mt-2 text-muted">{description}</p>
                 </div>
               ))}
             </div>
