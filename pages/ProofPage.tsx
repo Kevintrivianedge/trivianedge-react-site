@@ -18,6 +18,12 @@ const PROOF_STATS = [
   { value: '24/7', unit: '', label: 'Ops coverage', description: 'Global timezone alignment' },
 ];
 
+const PORTFOLIO_PROJECTS = [
+  ...WEBSITE_PROJECTS.map(project => ({ ...project, inDevelopment: false })),
+  { id: 'trivianedge-global', name: 'Aether Logistics OS', category: 'Freight and customs software', href: 'https://www.trivianedgeglobal.com/', inDevelopment: true },
+  { id: 'helpnest', name: 'HelpNest', category: 'Childcare and tutoring', href: 'https://www.helpnest.ca/', inDevelopment: false },
+];
+
 const PROJECT_STORIES = [
   {
     id: 'capricorn-college',
@@ -49,7 +55,7 @@ const ProofPage: React.FC = () => {
 
   useEffect(() => {
     const id = hash.slice(1);
-    if (id !== 'websites' && !WEBSITE_PROJECTS.some(project => project.id === id) && !PROJECT_STORIES.some(project => `story-${project.id}` === id)) return;
+    if (id !== 'websites' && !PORTFOLIO_PROJECTS.some(project => project.id === id) && !PROJECT_STORIES.some(project => `story-${project.id}` === id)) return;
     const frame = window.requestAnimationFrame(() => {
       document.getElementById(id)?.scrollIntoView({ behavior: 'instant' });
     });
@@ -60,7 +66,7 @@ const ProofPage: React.FC = () => {
     <>
       <SEOHead
         title="Website Portfolio and Client Case Studies | TrivianEdge"
-        description="Explore live websites delivered by TrivianEdge and see client case studies across bespoke software, offshore teams, and outsourced operations."
+        description="Explore TrivianEdge website projects and see client case studies across bespoke software, offshore teams, and outsourced operations."
         keywords="TrivianEdge case studies, outsourcing client testimonials, BPO case study, RPO case study, offshore software development case study"
         canonical={`${SEO_CONFIG.siteUrl}/proof`}
         schema={[
@@ -103,14 +109,14 @@ const ProofPage: React.FC = () => {
             <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400">Portfolio</p>
-                <h2 id="websites-heading" className="mt-2 text-3xl font-bold md:text-4xl">Websites we’ve built</h2>
+                <h2 id="websites-heading" className="mt-2 text-3xl font-bold md:text-4xl">Website portfolio</h2>
               </div>
               <Link to="/contact?service=bespoke-software&amp;source=/proof" className="inline-flex items-center gap-2 font-bold text-cyan-700 hover:underline dark:text-cyan-400">
                 Discuss your website project <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-              {WEBSITE_PROJECTS.map(project => (
+              {PORTFOLIO_PROJECTS.map(project => (
                 <article key={project.id} id={project.id} className="group scroll-mt-28 overflow-hidden rounded-3xl border border-border bg-surface">
                   <div className="relative overflow-hidden bg-[#0d1b1c] p-3 pb-0">
                     <div className="flex gap-1.5 rounded-t-xl border border-white/15 bg-white/10 p-3" aria-hidden>
@@ -124,6 +130,9 @@ const ProofPage: React.FC = () => {
                   </div>
                   <div className="p-5">
                     <p className="text-xs font-bold uppercase tracking-widest text-muted">{project.category}</p>
+                    {project.inDevelopment && (
+                      <p className="mt-2 inline-flex rounded-full border border-cyan-500/30 px-2 py-1 text-xs font-semibold text-cyan-700 dark:text-cyan-400">In development by TrivianEdge</p>
+                    )}
                     <h3 className="mt-2 text-xl font-bold">{project.name}</h3>
                     <a href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.name} (opens in a new tab)`} className="mt-4 inline-flex items-center gap-2 font-semibold text-cyan-700 hover:underline dark:text-cyan-400">
                       Visit live website <ExternalLink className="h-4 w-4" aria-hidden />

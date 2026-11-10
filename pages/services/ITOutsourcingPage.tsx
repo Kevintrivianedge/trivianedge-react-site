@@ -204,6 +204,10 @@ const ITOutsourcingPage: React.FC = () => {
             </div>
             <img src="/portfolio/trivianknot.jpg" alt="TrivianKnot public homepage" width={1200} height={750} loading="lazy" decoding="async" className="w-full rounded-xl border border-border" />
           </article>
+          <div className="mx-auto mt-6 flex max-w-5xl flex-wrap gap-x-6 gap-y-3 text-sm font-semibold">
+            <Link to="/proof#helpnest" className="text-cyan-700 hover:underline dark:text-cyan-400">See HelpNest</Link>
+            <Link to="/proof#trivianedge-global" className="text-cyan-700 hover:underline dark:text-cyan-400">See Aether Logistics OS, in development</Link>
+          </div>
         </section>
 
         {/* What is Bespoke Software Development */}
