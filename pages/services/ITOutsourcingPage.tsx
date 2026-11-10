@@ -155,17 +155,24 @@ const ITOutsourcingPage: React.FC = () => {
               Discuss your software project
             </Link>
 
+            <a href="#software-examples" className="ml-0 mt-4 block font-semibold text-cyan-700 hover:underline dark:text-cyan-400 sm:ml-5 sm:inline-block">
+              See software we’ve built
+            </a>
             <p className="mt-4 text-sm text-muted">Toronto-based project team · Client-owned code</p>
           </div>
         </motion.section>
 
-        <section className="px-4 py-16 md:px-6" aria-labelledby="software-case-heading">
-          <div className="mx-auto grid max-w-5xl gap-8 rounded-3xl bg-[#0d1b1c] p-6 text-white md:grid-cols-2 md:p-10">
+        <section id="software-examples" className="scroll-mt-24 px-4 py-16 md:px-6" aria-labelledby="software-case-heading">
+          <div className="mx-auto max-w-5xl">
+            <p className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400">Project examples</p>
+            <h2 id="software-case-heading" className="mb-7 mt-3 text-3xl font-bold text-text md:text-4xl">See what we’ve built</h2>
+          </div>
+          <article className="mx-auto grid max-w-5xl gap-8 rounded-3xl bg-[#0d1b1c] p-6 text-white md:grid-cols-2 md:p-10">
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-cyan-400">Client work · Capricorn College</p>
-              <h2 id="software-case-heading" className="mt-4 text-3xl font-bold">A new school website and a verifiable attendance record</h2>
+              <h3 className="mt-4 text-2xl font-bold md:text-3xl">A new school website and a verifiable attendance record</h3>
               <p className="mt-4 leading-relaxed text-white/75">Capricorn College needed to replace an outdated public website and manual teacher attendance. TrivianEdge rebuilt the site and gave school leadership a live record of on-campus check-ins.</p>
-              <Link to="/proof#websites" className="mt-6 inline-flex font-bold text-cyan-400 hover:underline">Explore our website portfolio</Link>
+              <Link to="/proof#story-capricorn-college" className="mt-6 inline-flex font-bold text-cyan-400 hover:underline">Read the Capricorn College story</Link>
             </div>
             <ul className="relative grid gap-3" aria-label="What we delivered">
               {CAPRICORN_DELIVERABLES.map(({ icon: Icon, title, description }, index) => (
@@ -187,6 +194,20 @@ const ITOutsourcingPage: React.FC = () => {
                 </motion.li>
               ))}
             </ul>
+          </article>
+          <article className="mx-auto mt-5 grid max-w-5xl items-center gap-6 rounded-3xl border border-border bg-surface p-6 md:grid-cols-2 md:p-10">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400">Product build · TrivianKnot</p>
+              <h3 className="mt-4 text-2xl font-bold text-text md:text-3xl">A multilingual platform for Sri Lankan marriage proposals</h3>
+              <p className="mt-4 leading-relaxed text-muted">People can create profiles in English, Sinhala, or Tamil, browse proposals, and chat privately when interest is mutual.</p>
+              <Link to="/proof#story-trivianknot" className="mt-6 inline-flex font-bold text-cyan-700 hover:underline dark:text-cyan-400">Explore the TrivianKnot walkthrough</Link>
+            </div>
+            <img src="/portfolio/trivianknot.jpg" alt="TrivianKnot public homepage" width={1200} height={750} loading="lazy" decoding="async" className="w-full rounded-xl border border-border" />
+          </article>
+          <div className="mx-auto mt-6 flex max-w-5xl flex-wrap gap-x-6 gap-y-3 text-sm font-semibold">
+            <Link to="/proof#helpnest" className="text-cyan-700 hover:underline dark:text-cyan-400">See HelpNest</Link>
+            <Link to="/proof#trivianedge-global" className="text-cyan-700 hover:underline dark:text-cyan-400">See Aether Logistics OS, in development</Link>
+            <Link to="/proof#trivianedge-asia" className="text-cyan-700 hover:underline dark:text-cyan-400">See TrivianEdge Asia, in development</Link>
           </div>
         </section>
 
