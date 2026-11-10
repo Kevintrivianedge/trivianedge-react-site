@@ -56,7 +56,7 @@ const ProofPage: React.FC = () => {
 
   useEffect(() => {
     const id = hash.slice(1);
-    if (id !== 'websites' && !PORTFOLIO_PROJECTS.some(project => project.id === id) && !PROJECT_STORIES.some(project => `story-${project.id}` === id)) return;
+    if (id !== 'websites' && id !== 'story-tima-international' && !PORTFOLIO_PROJECTS.some(project => project.id === id) && !PROJECT_STORIES.some(project => `story-${project.id}` === id)) return;
     const frame = window.requestAnimationFrame(() => {
       document.getElementById(id)?.scrollIntoView({ behavior: 'instant' });
     });
@@ -75,6 +75,18 @@ const ProofPage: React.FC = () => {
             { name: 'Home', url: SEO_CONFIG.siteUrl },
             { name: 'Proof', url: `${SEO_CONFIG.siteUrl}/proof` },
           ]),
+          {
+            '@context': 'https://schema.org',
+            '@type': 'CreativeWork',
+            '@id': 'https://www.trivianedge.com/proof#story-tima-international',
+            url: 'https://www.trivianedge.com/proof#story-tima-international',
+            name: 'TIMA International website rebuild',
+            description: 'TrivianEdge rebuilt TIMA International’s exhibition website with a 360-degree Octanorm stall viewer, five footprint options, and a quote form that carries the selected stall specifications.',
+            image: 'https://www.trivianedge.com/portfolio/tima-stall-viewer.jpg',
+            creator: { '@type': 'Organization', name: 'TrivianEdge', url: SEO_CONFIG.siteUrl },
+            about: { '@type': 'Organization', name: 'TIMA International', url: 'https://www.timaevents.lk/' },
+            inLanguage: 'en',
+          },
           ...TESTIMONIALS.map(reviewSchema),
         ]}
       />
@@ -138,7 +150,7 @@ const ProofPage: React.FC = () => {
                     <a href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.name} (opens in a new tab)`} className="mt-4 inline-flex items-center gap-2 font-semibold text-cyan-700 hover:underline dark:text-cyan-400">
                       Visit live website <ExternalLink className="h-4 w-4" aria-hidden />
                     </a>
-                    {PROJECT_STORIES.some(story => story.id === project.id) && (
+                    {(project.id === 'tima-international' || PROJECT_STORIES.some(story => story.id === project.id)) && (
                       <Link to={`/proof#story-${project.id}`} className="mt-3 block font-semibold text-text hover:underline">
                         View project story
                       </Link>
@@ -147,6 +159,43 @@ const ProofPage: React.FC = () => {
                 </article>
               ))}
             </div>
+          </section>
+
+          <section id="story-tima-international" aria-labelledby="tima-story-heading" className="mb-20 scroll-mt-28 rounded-3xl border border-border bg-surface p-5 md:p-10">
+            <p className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400">Case study · TIMA International</p>
+            <h2 id="tima-story-heading" className="mt-3 max-w-3xl text-3xl font-bold md:text-4xl">From browsing exhibition stalls to planning one</h2>
+            <p className="mt-4 max-w-3xl leading-relaxed text-muted">TIMA International builds exhibition stalls and supports events in Sri Lanka. TrivianEdge rebuilt its website around the questions exhibitors ask before requesting a quote: which stall system suits the event, what size will fit, and what does that layout look like?</p>
+
+            <div className="mt-8 grid gap-5 md:grid-cols-2">
+              <figure className="overflow-hidden rounded-2xl border border-border bg-background">
+                <img src="/portfolio/tima-original.jpg" alt="Original TIMA Events homepage with an exhibition photo and Contact Us button" width={1265} height={712} loading="lazy" decoding="async" className="aspect-video w-full object-cover object-top" />
+                <figcaption className="p-4">
+                  <p className="font-semibold">Before · The original TIMA Events website</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">The site introduced the company, listed services, and offered a gallery and a general contact path.</p>
+                  <a href="https://www.timaevents.lk/" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-cyan-700 hover:underline dark:text-cyan-400">Visit the original site <ExternalLink className="h-4 w-4" aria-hidden /></a>
+                </figcaption>
+              </figure>
+              <figure className="overflow-hidden rounded-2xl border border-border bg-background">
+                <img src="/portfolio/tima-international.jpg" alt="TIMA International rebuild with paths to projects, 3D stalls, and a quote request" width={1200} height={750} loading="lazy" decoding="async" className="aspect-video w-full object-cover object-top" />
+                <figcaption className="p-4">
+                  <p className="font-semibold">After · The TrivianEdge rebuild</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">The new homepage gives exhibitors direct paths to projects, Octanorm and Maxima systems, an interactive stall viewer, and quote requests.</p>
+                  <a href="https://tima-international.vercel.app/" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-cyan-700 hover:underline dark:text-cyan-400">Open the new site preview <ExternalLink className="h-4 w-4" aria-hidden /></a>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div className="mt-8 grid items-center gap-6 rounded-2xl border border-border bg-background p-5 md:grid-cols-2">
+              <div>
+                <h3 className="text-xl font-bold">A quote request that carries the stall specification</h3>
+                <p className="mt-3 leading-relaxed text-muted">Exhibitors can rotate an illustrative 3D Octanorm stall and compare five footprints from 2 m × 1 m to 6 m × 6 m. Choosing a layout updates its dimensions and floor area.</p>
+                <p className="mt-3 leading-relaxed text-muted">For example, choosing the 6 m × 6 m stall fills the quote form with its footprint, 36 m² floor area, and nominal 2.5 m height. The exhibitor can then add their event details and requirements.</p>
+              </div>
+              <img src="/portfolio/tima-stall-viewer.jpg" alt="TIMA’s interactive 3D stall viewer with five footprint options" width={1265} height={712} loading="lazy" decoding="async" className="w-full rounded-xl border border-border" />
+            </div>
+            <Link to={`/contact?${new URLSearchParams({ service: 'bespoke-software', source: '/proof#story-tima-international' })}`} className="mt-6 inline-flex items-center gap-2 font-bold text-cyan-700 hover:underline dark:text-cyan-400">
+              Discuss a similar project <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
           </section>
 
           <section className="mb-20" aria-labelledby="project-stories-heading">
