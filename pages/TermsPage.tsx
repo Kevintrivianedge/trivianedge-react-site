@@ -38,7 +38,7 @@ const TermsPage: React.FC = () => {
         <div className="glass p-10 md:p-16 rounded-[3rem] border-border space-y-8 reveal" style={{ transitionDelay: '80ms' }}>
           <div>
             <p className="text-xs font-mono tracking-widest uppercase text-cyan-400 mb-2">Last Updated</p>
-            <p className="text-muted">March 2026</p>
+            <p className="text-muted">November 2026</p>
           </div>
 
           <div>
@@ -89,6 +89,18 @@ const TermsPage: React.FC = () => {
               We may update these terms from time to time to reflect service and legal changes. Updated terms apply from the date posted on this page unless a signed agreement states otherwise.
             </p>
           </div>
+
+          <section id="messaging-terms-and-conditions" aria-labelledby="messaging-terms-heading" className="scroll-mt-28">
+            <h2 id="messaging-terms-heading" className="mb-4 text-xl font-bold text-text">Messaging Terms &amp; Conditions</h2>
+            <p className="leading-relaxed text-muted">
+              By opting in, you agree to receive informational messages (appointment reminders, account notifications, etc.) from TrivianEdge Inc. Message frequency varies. Message and data rates may apply. For help, reply <strong>HELP</strong> or email us at{' '}
+              <a href="mailto:kevin.v@trivianedge.com" className="break-words underline">kevin.v@trivianedge.com</a>.
+              You can opt out at any time by replying <strong>STOP</strong>.
+            </p>
+            <p className="mt-3 leading-relaxed text-muted">
+              <a href="/privacy#mobile-sms-messaging-privacy-policy" className="underline">Read our Mobile SMS Messaging Privacy Policy</a>.
+            </p>
+          </section>
 
           <div className="p-6 rounded-2xl bg-cyan-500/5 border border-cyan-500/20">
             <p className="text-cyan-400 text-sm font-mono">
