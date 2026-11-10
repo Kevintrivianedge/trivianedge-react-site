@@ -207,6 +207,7 @@ const ITOutsourcingPage: React.FC = () => {
           <div className="mx-auto mt-6 flex max-w-5xl flex-wrap gap-x-6 gap-y-3 text-sm font-semibold">
             <Link to="/proof#helpnest" className="text-cyan-700 hover:underline dark:text-cyan-400">See HelpNest</Link>
             <Link to="/proof#trivianedge-global" className="text-cyan-700 hover:underline dark:text-cyan-400">See Aether Logistics OS, in development</Link>
+            <Link to="/proof#trivianedge-asia" className="text-cyan-700 hover:underline dark:text-cyan-400">See TrivianEdge Asia, in development</Link>
           </div>
         </section>
 

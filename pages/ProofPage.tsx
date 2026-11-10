@@ -22,6 +22,7 @@ const PORTFOLIO_PROJECTS = [
   ...WEBSITE_PROJECTS.map(project => ({ ...project, inDevelopment: false })),
   { id: 'trivianedge-global', name: 'Aether Logistics OS', category: 'Freight and customs software', href: 'https://www.trivianedgeglobal.com/', inDevelopment: true },
   { id: 'helpnest', name: 'HelpNest', category: 'Childcare and tutoring', href: 'https://www.helpnest.ca/', inDevelopment: false },
+  { id: 'trivianedge-asia', name: 'TrivianEdge Asia', category: 'Sales and lead enrichment tools', href: 'https://trivianedge.asia/', inDevelopment: true },
 ];
 
 const PROJECT_STORIES = [
