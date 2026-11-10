@@ -1,12 +1,17 @@
 import React from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { ArrowLeft, CalendarDays, MapPin } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { ArrowRight, CalendarDays, ClipboardList, MapPin } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
-import InquiryForm from '../components/InquiryForm';
+import InquiryForm, { INQUIRY_SERVICES } from '../components/InquiryForm';
+import { BOOKING_URL } from '../constants';
 import { buildLocalBusinessSchema, breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
 
 const ContactPage: React.FC = () => {
-  const navigate = useNavigate();
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const service = params.get('service') ?? undefined;
+  const source = params.get('source') ?? '/contact';
+  const selectedService = Object.entries(INQUIRY_SERVICES).find(([id]) => id === service)?.[1];
 
   return (
     <>
@@ -32,64 +37,50 @@ const ContactPage: React.FC = () => {
         ]}
       />
 
-      <div className="bg-background min-h-screen text-text px-4 md:px-6 py-16 md:py-24">
-        <div className="max-w-7xl mx-auto">
-          <button
-            onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-muted hover:text-cyan-500 transition-colors mb-10"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="text-xs font-bold uppercase tracking-widest">Back</span>
-          </button>
+      <div className="min-h-screen bg-background px-4 pb-20 pt-28 text-text md:px-6 md:pt-36">
+        <div className="mx-auto max-w-5xl">
+          <div className="max-w-2xl">
+            <p className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400">Contact TrivianEdge</p>
+            <h1 className="mt-3 text-4xl font-bold leading-tight md:text-6xl">Let’s talk about what you need.</h1>
+            <p className="mt-4 text-lg leading-relaxed text-muted">Tell us about a role, team, or software project. Pick a time to talk or send us the details.</p>
+            {selectedService && (
+              <p className="mt-4 text-sm text-muted">Your selected service <strong className="ml-1 text-text">{selectedService}</strong></p>
+            )}
+          </div>
 
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-start">
-            <div className="reveal">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-700 dark:text-cyan-400 text-xs font-bold uppercase tracking-widest mb-6">
-                <CalendarDays className="w-3 h-3" />
-                Booking and inquiry flow
-              </span>
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-                Start the conversation.
-              </h1>
-              <p className="text-muted text-lg md:text-xl leading-relaxed max-w-2xl mb-10">
-                Tell us what you want to build, outsource, or fix. Use the form for a real inquiry, or contact us directly if you need a faster response.
-              </p>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            <section aria-labelledby="book-heading" className="flex flex-col rounded-3xl border border-border bg-surface p-6 md:p-8">
+              <CalendarDays className="h-6 w-6 text-cyan-700 dark:text-cyan-400" aria-hidden />
+              <h2 id="book-heading" className="mt-4 text-2xl font-bold">Book a 15-minute call</h2>
+              <p className="mb-6 mt-2 text-muted">Choose a time in Microsoft Bookings. You’ll receive a Teams invite to discuss your needs with Kevin Vaz.</p>
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex w-fit items-center gap-2 rounded-full bg-cyan-400 px-5 py-3 font-bold text-black hover:bg-cyan-300">
+                Choose a time <ArrowRight className="h-4 w-4" aria-hidden />
+              </a>
+            </section>
+            <section aria-labelledby="send-heading" className="flex flex-col rounded-3xl border border-border bg-surface p-6 md:p-8">
+              <ClipboardList className="h-6 w-6 text-cyan-700 dark:text-cyan-400" aria-hidden />
+              <h2 id="send-heading" className="mt-4 text-2xl font-bold">Send a project brief</h2>
+              <p className="mb-6 mt-2 text-muted">Share what you need and we’ll reply with the next step, usually within one business day.</p>
+              <a href="#project-brief" className="mt-auto inline-flex w-fit items-center gap-2 rounded-full border border-border px-5 py-3 font-bold hover:bg-background">
+                Write a brief <ArrowRight className="h-4 w-4" aria-hidden />
+              </a>
+            </section>
+          </div>
 
-              <div className="grid sm:grid-cols-3 gap-4 mb-10">
-                <div className="glass p-6 rounded-3xl border-border min-w-0 reveal">
-                  <p className="text-xs uppercase tracking-widest font-bold text-muted mb-2">Response</p>
-                  <p className="text-text font-semibold">Same business day when possible</p>
-                </div>
-                <a href="tel:+18883472489" className="glass p-6 rounded-3xl border-border min-w-0 reveal block hover:border-cyan-500/30 transition-colors" style={{ transitionDelay: '60ms' }}>
-                  <p className="text-xs uppercase tracking-widest font-bold text-muted mb-2">Direct line</p>
-                  <p className="text-text font-semibold break-words">+1 888 347 2489</p>
-                </a>
-                <a href="mailto:kevin.v@trivianedge.com" className="glass p-6 rounded-3xl border-border min-w-0 reveal block hover:border-cyan-500/30 transition-colors" style={{ transitionDelay: '120ms' }}>
-                  <p className="text-xs uppercase tracking-widest font-bold text-muted mb-2">Email</p>
-                  <p className="text-text font-semibold break-words">kevin.v@trivianedge.com</p>
-                </a>
+          <div className="mt-12 grid items-start gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+            <section id="project-brief" aria-labelledby="brief-heading" className="min-w-0 scroll-mt-28">
+              <h2 id="brief-heading" className="mb-4 text-2xl font-bold">Tell us what you’re working on</h2>
+              <InquiryForm key={search} service={service} source={source} />
+            </section>
+            <aside aria-labelledby="direct-heading" className="min-w-0 rounded-3xl border border-border p-6">
+              <h2 id="direct-heading" className="text-lg font-bold">Contact us directly</h2>
+              <div className="mt-4 space-y-3 text-sm text-muted">
+                <p><a href="tel:+18883472489" className="hover:underline">+1 888 347 2489</a></p>
+                <p><a href="mailto:kevin.v@trivianedge.com" className="break-words hover:underline">kevin.v@trivianedge.com</a></p>
+                <p className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />37 Wiggens Ct, Toronto, ON M1B 1K3, Canada</p>
+                <p><Link to="/trust" className="hover:underline">Security and compliance</Link></p>
               </div>
-
-              <div className="flex items-start gap-3 text-sm text-muted max-w-2xl mb-6">
-                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-cyan-500" />
-                <span>37 Wiggens Ct, Toronto, ON M1B 1K3, Canada</span>
-              </div>
-
-              <div className="space-y-4 text-sm text-muted max-w-2xl">
-                <p>Use this page if you want to talk about hiring, outsourcing, AI delivery, or a market entry plan.</p>
-                <h2 className="text-text text-base font-semibold pt-2">What happens after you get in touch</h2>
-                <ol className="list-decimal pl-5 space-y-2">
-                  <li>We reply, same business day when possible, to book a scoping call with our Toronto team.</li>
-                  <li>You get a written proposal covering team shape, talent hub, monthly cost, and start date.</li>
-                  <li>Once approved, vetted candidates are shortlisted and your team is typically working in around 30 days.</li>
-                </ol>
-                <p>If you need compliance, security, or operating-model details first, review the <Link to="/trust" className="text-cyan-500 hover:underline">Trust page</Link>.</p>
-              </div>
-            </div>
-
-            <div className="pb-16 sm:pb-0 reveal" style={{ transitionDelay: '100ms' }}>
-              <ContactInquiryForm />
-            </div>
+            </aside>
           </div>
         </div>
       </div>
@@ -97,12 +88,5 @@ const ContactPage: React.FC = () => {
   );
 };
 
-function ContactInquiryForm() {
-  const { search } = useLocation();
-  const params = new URLSearchParams(search);
-  const service = params.get('service') ?? undefined;
-  const source = params.get('source') ?? '/contact';
-  return <InquiryForm key={search} service={service} source={source} />;
-}
 
 export default ContactPage;
