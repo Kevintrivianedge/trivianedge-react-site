@@ -8,6 +8,11 @@ on:
     branches:
       - main
 
+# Keep production deploys in one lane. Pull request checks use their own ref.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -39,13 +44,27 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to Cloudflare Workers
+      - name: Check current main before deploying
+        id: release
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          main_ref="$(git ls-remote --exit-code origin refs/heads/main)"
+          main_sha="${main_ref%%[[:space:]]*}"
+          if [[ "$GITHUB_SHA" != "$main_sha" ]]; then
+            echo "::notice::Skipping deploy because main has advanced."
+            echo "current=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "current=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy to Cloudflare Workers
+        if: steps.release.outputs.current == 'true'
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Notify IndexNow (Bing, Yandex, Naver, Seznam, Yep)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: steps.release.outputs.current == 'true'
         run: node scripts/indexnow-submit.mjs
