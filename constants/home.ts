@@ -6,10 +6,10 @@
 // constants/googlePartner.ts (Partner Network member, no tier or resale).
 
 export const HOME_TITLE =
-  'Offshore Outsourcing & Staff Augmentation | TrivianEdge';
+  'Offshore Software Development & IT Staffing | TrivianEdge';
 
 export const HOME_DESCRIPTION =
-  'Toronto-based TrivianEdge provides offshore outsourcing, talent outsourcing, IT staff augmentation, and bespoke software development.';
+  'TrivianEdge provides offshore outsourcing, bespoke software development, talent outsourcing, and IT staff augmentation for companies that need to scale.';
 
 export interface Pillar {
   id: string;
