@@ -152,51 +152,51 @@ const ServicesPage: React.FC = () => {
           { id: 'service-models', heading: 'Choose how you want to work with us', services: SERVICES_HUB.slice(0, 3), columns: 'lg:grid-cols-3' },
           { id: 'additional-services', heading: 'Other ways we can help', services: SERVICES_HUB.slice(3), columns: 'md:grid-cols-2' },
         ].map(group => (
-        <section key={group.id} aria-labelledby={group.id} className="px-4 py-10 md:px-6">
-          <div className="mx-auto max-w-7xl">
-          <h2 id={group.id} className="mb-6 text-2xl font-bold text-text md:text-3xl">{group.heading}</h2>
-          <div className={`grid gap-6 ${group.columns}`}>
-            {group.services.map((service, idx) => {
-              const Icon = service.icon;
-              return (
-                <motion.div
-                  key={service.shortName}
-                  className="h-full"
-                  initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: shouldReduceMotion ? 0.01 : 0.5, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <Link
-                    to={service.href}
-                    className="flex h-full flex-col bg-background rounded-[1.75rem] p-6 md:p-8 border border-border relative overflow-hidden group hover:border-cyan-400/30 transition-all duration-300"
-                    style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
-                  >
-                    <div className={`absolute -top-8 -right-8 w-32 h-32 ${service.glow} blur-3xl pointer-events-none rounded-full`} />
-                    <div className="flex items-start gap-4 mb-5">
-                      <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${service.iconBg} border ${service.iconBorder} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
-                        <Icon className={`w-6 h-6 ${service.accent}`} />
-                      </div>
-                      <div className="min-w-0">
-                        <span className={`text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border ${service.iconBorder} ${service.accent} opacity-70`}>
-                          {service.shortName}
-                        </span>
-                        {'badge' in service && service.badge && (
-                          <span className="ml-2 text-[9px] font-bold uppercase tracking-widest text-muted">
-                            {service.badge}
-                          </span>
+          <section key={group.id} aria-labelledby={group.id} className="px-4 py-10 md:px-6">
+            <div className="mx-auto max-w-7xl">
+              <h2 id={group.id} className="mb-6 text-2xl font-bold text-text md:text-3xl">{group.heading}</h2>
+              <div className={`grid gap-6 ${group.columns}`}>
+                {group.services.map((service, idx) => {
+                  const Icon = service.icon;
+                  return (
+                    <motion.div
+                      key={service.shortName}
+                      className="h-full"
+                      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: shouldReduceMotion ? 0.01 : 0.5, delay: shouldReduceMotion ? 0 : idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <Link
+                        to={service.href}
+                        className="flex h-full flex-col bg-background rounded-[1.75rem] p-6 md:p-8 border border-border relative overflow-hidden group hover:border-cyan-400/30 transition-all duration-300"
+                        style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
+                      >
+                        <div className={`absolute -top-8 -right-8 w-32 h-32 ${service.glow} blur-3xl pointer-events-none rounded-full`} />
+                        <div className="flex items-start gap-4 mb-5">
+                          <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${service.iconBg} border ${service.iconBorder} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                            <Icon className={`w-6 h-6 ${service.accent}`} />
+                          </div>
+                          <div className="min-w-0">
+                            <span className={`text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border ${service.iconBorder} ${service.accent} opacity-70`}>
+                              {service.shortName}
+                            </span>
+                            {'badge' in service && service.badge && (
+                              <span className="ml-2 text-[9px] font-bold uppercase tracking-widest text-muted">
+                                {service.badge}
+                              </span>
+                            )}
+                            <h3 className="text-xl font-bold text-text mt-2">{service.title}</h3>
+                          </div>
+                        </div>
+                        <p className="text-text/60 text-sm leading-relaxed mb-5">{service.description}</p>
+                        {'engagement' in service && (
+                          <p className="mb-5 border-l-2 border-cyan-500/50 pl-3 text-sm font-semibold text-text">{service.engagement}</p>
                         )}
-                        <h3 className="text-xl font-bold text-text mt-2">{service.title}</h3>
-                      </div>
-                    </div>
-                    <p className="text-text/60 text-sm leading-relaxed mb-5">{service.description}</p>
-                    {'engagement' in service && (
-                      <p className="mb-5 border-l-2 border-cyan-500/50 pl-3 text-sm font-semibold text-text">{service.engagement}</p>
-                    )}
-                    <div className="mt-auto flex flex-wrap gap-2 mb-6">
-                      {service.tags.map(tag => (
-                        <span key={tag} className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-surface border border-border text-muted">
-                          {tag}
-                        </span>
+                        <div className="mt-auto flex flex-wrap gap-2 mb-6">
+                          {service.tags.map(tag => (
+                            <span key={tag} className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-surface border border-border text-muted">
+                            {tag}
+                          </span>
                       ))}
                     </div>
                     <div className={`flex items-center gap-1.5 text-sm font-bold ${service.accent} group-hover:gap-3 transition-all duration-200`}>
