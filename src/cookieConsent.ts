@@ -18,6 +18,7 @@
 import * as CookieConsent from 'vanilla-cookieconsent';
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import './cookieConsentTheme.css';
+import { BOOKING_URL } from '../constants';
 
 declare global {
   interface Window {
@@ -87,7 +88,20 @@ export function reopenPreferences(): void {
   CookieConsent.showPreferences();
 }
 
+function trackBookingClick(event: MouseEvent): void {
+  if (event.defaultPrevented || !CookieConsent.acceptedCategory('analytics')) return;
+  const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+  if (link?.getAttribute('href') !== BOOKING_URL) return;
+
+  const path = window.location.pathname;
+  window.gtag?.('event', 'booking_click', {
+    page_location: window.location.origin + path,
+    booking_source: path,
+  });
+}
+
 export function initCookieConsent(): void {
+  document.addEventListener('click', trackBookingClick);
   CookieConsent.run({
     guiOptions: {
       consentModal: {
