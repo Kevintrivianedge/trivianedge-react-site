@@ -56,7 +56,7 @@ const ProofPage: React.FC = () => {
 
   useEffect(() => {
     const id = hash.slice(1);
-    if (id !== 'websites' && !PORTFOLIO_PROJECTS.some(project => project.id === id) && !PROJECT_STORIES.some(project => `story-${project.id}` === id)) return;
+    if (id !== 'websites' && id !== 'story-tima-international' && !PORTFOLIO_PROJECTS.some(project => project.id === id) && !PROJECT_STORIES.some(project => `story-${project.id}` === id)) return;
     const frame = window.requestAnimationFrame(() => {
       document.getElementById(id)?.scrollIntoView({ behavior: 'instant' });
     });
@@ -75,6 +75,18 @@ const ProofPage: React.FC = () => {
             { name: 'Home', url: SEO_CONFIG.siteUrl },
             { name: 'Proof', url: `${SEO_CONFIG.siteUrl}/proof` },
           ]),
+          {
+            '@context': 'https://schema.org',
+            '@type': 'CreativeWork',
+            '@id': 'https://www.trivianedge.com/proof#story-tima-international',
+            url: 'https://www.trivianedge.com/proof#story-tima-international',
+            name: 'TIMA International website rebuild',
+            description: 'TrivianEdge rebuilt TIMA International’s exhibition website with explicit AI crawler directives, clearer service metadata, organization structured data, and a 360-degree stall viewer linked to the quote form.',
+            image: 'https://www.trivianedge.com/portfolio/tima-stall-viewer.jpg',
+            creator: { '@type': 'Organization', name: 'TrivianEdge', url: SEO_CONFIG.siteUrl },
+            about: { '@type': 'Organization', name: 'TIMA International', url: 'https://www.timaevents.lk/' },
+            inLanguage: 'en',
+          },
           ...TESTIMONIALS.map(reviewSchema),
         ]}
       />
@@ -138,7 +150,7 @@ const ProofPage: React.FC = () => {
                     <a href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.name} (opens in a new tab)`} className="mt-4 inline-flex items-center gap-2 font-semibold text-cyan-700 hover:underline dark:text-cyan-400">
                       Visit live website <ExternalLink className="h-4 w-4" aria-hidden />
                     </a>
-                    {PROJECT_STORIES.some(story => story.id === project.id) && (
+                    {(project.id === 'tima-international' || PROJECT_STORIES.some(story => story.id === project.id)) && (
                       <Link to={`/proof#story-${project.id}`} className="mt-3 block font-semibold text-text hover:underline">
                         View project story
                       </Link>
@@ -147,6 +159,58 @@ const ProofPage: React.FC = () => {
                 </article>
               ))}
             </div>
+          </section>
+
+          <section id="story-tima-international" aria-labelledby="tima-story-heading" className="mb-20 scroll-mt-28 rounded-3xl border border-border bg-surface p-5 md:p-10">
+            <p className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400">Case study · TIMA International</p>
+            <h2 id="tima-story-heading" className="mt-3 max-w-3xl text-3xl font-bold md:text-4xl">Making TIMA easier to discover and its stalls easier to explore</h2>
+            <p className="mt-4 max-w-3xl leading-relaxed text-muted">TIMA International builds exhibition stalls and supports events in Sri Lanka. TrivianEdge rebuilt its website around the questions exhibitors ask before requesting a quote: which stall system suits the event, what size will fit, and what does that layout look like?</p>
+
+            <div className="mt-7 rounded-2xl border border-border bg-background p-5 md:p-6">
+              <h3 className="text-xl font-bold">What changed for AI discovery</h3>
+              <dl className="mt-4 grid gap-5 md:grid-cols-2">
+                <div>
+                  <dt className="font-semibold text-text">Original site</dt>
+                  <dd className="mt-2 text-sm leading-relaxed text-muted">The original site allows crawling and includes a sitemap and general page and website metadata. Its homepage title is “Home - timaevents.lk,” and its crawl rules contain no directives that name AI crawlers.</dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-text">TrivianEdge rebuild</dt>
+                  <dd className="mt-2 text-sm leading-relaxed text-muted">The rebuild names TIMA’s exhibition booth and stall rental services in the page title and description. It adds Organization structured data and explicitly allows GPTBot and PerplexityBot in robots.txt.</dd>
+                </div>
+              </dl>
+              <p className="mt-4 text-sm leading-relaxed text-muted">These are features of the preview. Its main content loads through JavaScript. Search indexing and inclusion in AI answers have yet to be verified.</p>
+            </div>
+
+            <div className="mt-8 grid gap-5 md:grid-cols-2">
+              <figure className="overflow-hidden rounded-2xl border border-border bg-background">
+                <img src="/portfolio/tima-original.jpg" alt="Original TIMA Events homepage with an exhibition photo and Contact Us button" width={1265} height={712} loading="lazy" decoding="async" className="aspect-video w-full object-cover object-top" />
+                <figcaption className="p-4">
+                  <p className="font-semibold">Before · The original TIMA Events website</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">The site introduced the company, listed services, and offered a gallery and a general contact path.</p>
+                  <a href="https://www.timaevents.lk/" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-cyan-700 hover:underline dark:text-cyan-400">Visit the original site <ExternalLink className="h-4 w-4" aria-hidden /></a>
+                </figcaption>
+              </figure>
+              <figure className="overflow-hidden rounded-2xl border border-border bg-background">
+                <img src="/portfolio/tima-international.jpg" alt="TIMA International rebuild with paths to projects, 3D stalls, and a quote request" width={1200} height={750} loading="lazy" decoding="async" className="aspect-video w-full object-cover object-top" />
+                <figcaption className="p-4">
+                  <p className="font-semibold">After · The TrivianEdge rebuild</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">The new homepage gives exhibitors direct paths to projects, Octanorm and Maxima systems, an interactive stall viewer, and quote requests.</p>
+                  <a href="https://tima-international.vercel.app/" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-cyan-700 hover:underline dark:text-cyan-400">Open the new site preview <ExternalLink className="h-4 w-4" aria-hidden /></a>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div className="mt-8 grid items-center gap-6 rounded-2xl border border-border bg-background p-5 md:grid-cols-2">
+              <div>
+                <h3 className="text-xl font-bold">A quote request that carries the stall specification</h3>
+                <p className="mt-3 leading-relaxed text-muted">Exhibitors can rotate an illustrative 3D Octanorm stall and compare five footprints from 2 m × 1 m to 6 m × 6 m. Choosing a layout updates its dimensions and floor area.</p>
+                <p className="mt-3 leading-relaxed text-muted">For example, choosing the 6 m × 6 m stall fills the quote form with its footprint, 36 m² floor area, and nominal 2.5 m height. The exhibitor can then add their event details and requirements.</p>
+              </div>
+              <img src="/portfolio/tima-stall-viewer.jpg" alt="TIMA’s interactive 3D stall viewer with five footprint options" width={1265} height={712} loading="lazy" decoding="async" className="w-full rounded-xl border border-border" />
+            </div>
+            <Link to={`/contact?${new URLSearchParams({ service: 'bespoke-software', source: '/proof#story-tima-international' })}`} className="mt-6 inline-flex items-center gap-2 font-bold text-cyan-700 hover:underline dark:text-cyan-400">
+              Discuss a similar project <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
           </section>
 
           <section className="mb-20" aria-labelledby="project-stories-heading">
