@@ -60,6 +60,27 @@ const PrivacyPage: React.FC = () => {
           </div>
         </div>
 
+        <section id="mobile-sms-messaging-privacy-policy" aria-labelledby="sms-privacy-heading" className="glass mb-8 scroll-mt-28 rounded-3xl border-border p-6 md:p-10">
+          <h2 id="sms-privacy-heading" className="mb-6 text-2xl font-bold text-text">Mobile SMS Messaging Privacy Policy</h2>
+          <div className="space-y-5 leading-relaxed text-muted">
+            <div>
+              <h3 className="font-semibold text-text">Information collected</h3>
+              <p>We may collect information, such as name, phone number, and email address.</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-text">Use of information collected</h3>
+              <p>We may use the information we collect to perform the services requested including billing, customer service, appointment reminders and other administrative requests.</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-text">Sharing of information collected</h3>
+              <p>Mobile information will not be shared with third parties/affiliates for marketing/promotional purposes. This includes text messaging opt-in data and consent.</p>
+            </div>
+            <p>As a current or prospective customer, you understand that you can text us <strong>STOP</strong> at any time to opt out of receiving SMS text messages from us. You can text us <strong>HELP</strong> at any time to receive help.</p>
+            <p>You understand that the messaging frequency may vary. Messaging &amp; data rates may apply.</p>
+            <p>All policies are followed as per CTIA guidelines 5.2.1. At any time if you want your information to be removed, you can contact us via our email address or regular mail.</p>
+          </div>
+        </section>
+
         <div ref={containerRef} className="glass p-10 md:p-16 rounded-[3rem] border-border reveal cookieyes-generated-content" style={{ transitionDelay: '80ms' }} />
 
         <div className="mt-16 text-center">
