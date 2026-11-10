@@ -69,7 +69,7 @@ TrivianEdge was founded in 2025 by Kevin Vaz, who has spent more than 20 years i
 - [About](https://www.trivianedge.com/about): Company overview, founding year, global talent hubs, and how to reach the team.
 - [Savings Calculator](https://www.trivianedge.com/savings-calculator): Free tool estimating annual and 3-year savings from building an offshore team with TrivianEdge.
 - [Proof](https://www.trivianedge.com/proof): Case studies and client testimonials.
-- [TIMA International website rebuild](https://www.trivianedge.com/proof#story-tima-international): TrivianEdge rebuilt TIMA International’s exhibition website with a 360-degree Octanorm stall viewer, five footprint options, and a quote form that carries the selected stall specifications.
+- [TIMA International website rebuild](https://www.trivianedge.com/proof#story-tima-international): TrivianEdge rebuilt TIMA International’s exhibition website with explicit AI crawler directives, clearer service metadata, organization structured data, and a 360-degree stall viewer linked to the quote form.
 - [Trust](https://www.trivianedge.com/trust): Security, compliance, and data-handling posture (PIPEDA, GDPR).
 - [Venture Studio](https://www.trivianedge.com/venture-studio): Free MVP builds for qualified startup founders.
 - [Contact](https://www.trivianedge.com/contact): Book a call or submit an inquiry.

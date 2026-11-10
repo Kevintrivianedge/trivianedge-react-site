@@ -81,7 +81,7 @@ const ProofPage: React.FC = () => {
             '@id': 'https://www.trivianedge.com/proof#story-tima-international',
             url: 'https://www.trivianedge.com/proof#story-tima-international',
             name: 'TIMA International website rebuild',
-            description: 'TrivianEdge rebuilt TIMA International’s exhibition website with a 360-degree Octanorm stall viewer, five footprint options, and a quote form that carries the selected stall specifications.',
+            description: 'TrivianEdge rebuilt TIMA International’s exhibition website with explicit AI crawler directives, clearer service metadata, organization structured data, and a 360-degree stall viewer linked to the quote form.',
             image: 'https://www.trivianedge.com/portfolio/tima-stall-viewer.jpg',
             creator: { '@type': 'Organization', name: 'TrivianEdge', url: SEO_CONFIG.siteUrl },
             about: { '@type': 'Organization', name: 'TIMA International', url: 'https://www.timaevents.lk/' },
@@ -163,8 +163,23 @@ const ProofPage: React.FC = () => {
 
           <section id="story-tima-international" aria-labelledby="tima-story-heading" className="mb-20 scroll-mt-28 rounded-3xl border border-border bg-surface p-5 md:p-10">
             <p className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400">Case study · TIMA International</p>
-            <h2 id="tima-story-heading" className="mt-3 max-w-3xl text-3xl font-bold md:text-4xl">From browsing exhibition stalls to planning one</h2>
+            <h2 id="tima-story-heading" className="mt-3 max-w-3xl text-3xl font-bold md:text-4xl">Making TIMA easier to discover and its stalls easier to explore</h2>
             <p className="mt-4 max-w-3xl leading-relaxed text-muted">TIMA International builds exhibition stalls and supports events in Sri Lanka. TrivianEdge rebuilt its website around the questions exhibitors ask before requesting a quote: which stall system suits the event, what size will fit, and what does that layout look like?</p>
+
+            <div className="mt-7 rounded-2xl border border-border bg-background p-5 md:p-6">
+              <h3 className="text-xl font-bold">What changed for AI discovery</h3>
+              <dl className="mt-4 grid gap-5 md:grid-cols-2">
+                <div>
+                  <dt className="font-semibold text-text">Original site</dt>
+                  <dd className="mt-2 text-sm leading-relaxed text-muted">The original site allows crawling and includes a sitemap and general page and website metadata. Its homepage title is “Home - timaevents.lk,” and its crawl rules contain no directives that name AI crawlers.</dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-text">TrivianEdge rebuild</dt>
+                  <dd className="mt-2 text-sm leading-relaxed text-muted">The rebuild names TIMA’s exhibition booth and stall rental services in the page title and description. It adds Organization structured data and explicitly allows GPTBot and PerplexityBot in robots.txt.</dd>
+                </div>
+              </dl>
+              <p className="mt-4 text-sm leading-relaxed text-muted">These are features of the preview. Its main content loads through JavaScript. Search indexing and inclusion in AI answers have yet to be verified.</p>
+            </div>
 
             <div className="mt-8 grid gap-5 md:grid-cols-2">
               <figure className="overflow-hidden rounded-2xl border border-border bg-background">
