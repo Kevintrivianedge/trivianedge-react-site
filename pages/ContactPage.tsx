@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, CalendarDays, ClipboardList, MapPin } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
@@ -8,7 +8,12 @@ import { buildLocalBusinessSchema, breadcrumbSchema, SEO_CONFIG } from '../utils
 
 const ContactPage: React.FC = () => {
   const { search } = useLocation();
-  const params = new URLSearchParams(search);
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
+
+  // The prerendered contact page has no query string.
+  const formSearch = ready ? search : '';
+  const params = new URLSearchParams(formSearch);
   const service = params.get('service') ?? undefined;
   const source = params.get('source') ?? '/contact';
   const selectedService = Object.entries(INQUIRY_SERVICES).find(([id]) => id === service)?.[1];
@@ -70,7 +75,7 @@ const ContactPage: React.FC = () => {
           <div className="mt-12 grid items-start gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
             <section id="project-brief" aria-labelledby="brief-heading" className="min-w-0 scroll-mt-28">
               <h2 id="brief-heading" className="mb-4 text-2xl font-bold">Tell us what you’re working on</h2>
-              <InquiryForm key={search} service={service} source={source} />
+              <InquiryForm key={formSearch} service={service} source={source} />
             </section>
             <aside aria-labelledby="direct-heading" className="min-w-0 rounded-3xl border border-border p-6">
               <h2 id="direct-heading" className="text-lg font-bold">Contact us directly</h2>
