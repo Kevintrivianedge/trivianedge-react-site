@@ -15,7 +15,7 @@ import { ServiceCardProps, RoleCategory, Step, BlogPost, TalentHub } from './typ
 
 /** Microsoft Bookings link used for the "Book a call" secondary CTA next to the inquiry form. */
 export const BOOKING_URL =
-  'https://outlook.office.com/bookwithme/user/48ce5d8759714368849f15db51a85e3d@Trivianedge.com/meetingtype/s7PQVr0JckW_iJXa78wY3g2?anonymous&ismsaljsauthenabled&ep=mlink';
+  'https://bookings.cloud.microsoft/book/TrivianEdge@Trivianedge.com/?ismsaljsauthenabled';
 
 export const NAV_LINKS = [
   {

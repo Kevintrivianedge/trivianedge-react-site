@@ -49,7 +49,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
   return (
     <>
       {/* ===== 1. HERO ===== */}
-      <section aria-label="Introduction" className="hero-dark relative overflow-hidden px-4 sm:px-6 pt-32 md:pt-40 pb-0" style={{ background: 'var(--te-gradient-hero)' }}>
+      <section aria-label="Introduction" className="hero-dark relative overflow-hidden px-4 sm:px-6 pt-24 pb-8 sm:pt-28 lg:py-16 lg:pt-28" style={{ background: 'var(--te-gradient-hero)' }}>
         {/* Hairline grid — reads as an engineering surface, fades out at the edges */}
         <div
           aria-hidden
@@ -61,112 +61,58 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 60% 40%, #000 30%, transparent 75%)',
           }}
         />
-        <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-6 items-center">
+        <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           <div className="lg:col-span-7">
-            <p className="mb-6 text-xs font-bold uppercase tracking-[0.2em] text-cyan-400">Offshore outsourcing · Toronto, Canada</p>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-cyan-400">Offshore outsourcing · Toronto, Canada</p>
 
             {/* The one gradient headline on the page (colour system rule 07). */}
             <h1 className="display-hero font-semibold te-gradient-text">
-              Offshore talent, staff augmentation, and bespoke software development
+              Build your offshore team or your next product
             </h1>
 
-            <p className="mt-8 text-lg md:text-xl text-[#B4BCBA] max-w-xl leading-relaxed">
-              TrivianEdge is a Toronto-based offshore outsourcing company. We source offshore professionals for your existing team,
-              build dedicated offshore teams, and develop custom software. We also provide Microsoft and Google cloud services.
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-[#B4BCBA] md:text-lg">
+              TrivianEdge helps businesses add offshore specialists, build dedicated teams, and deliver custom software.
             </p>
 
-            <div className="mt-10 flex flex-col sm:flex-row gap-3">
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
               <a
                 href={BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-cyan-400 px-7 py-4 font-bold text-black transition-colors hover:bg-cyan-300"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-cyan-400 px-5 py-3 font-bold text-black transition-colors hover:bg-cyan-300"
               >
                 Book a 15-minute call
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
               </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-7 py-4 font-bold text-white transition-colors hover:border-white/40 hover:bg-white/5"
-              >
-                Send us a quick brief
+              <a href="#proof" className="inline-flex items-center gap-2 py-2 text-sm font-semibold text-white hover:underline">
+                See our work <ArrowUpRight className="h-4 w-4" aria-hidden />
               </a>
             </div>
-            <p className="mt-4 text-sm text-white/45">Free, no obligation, and we usually reply the same business day.</p>
           </div>
 
-          <aside className="lg:col-span-5 rounded-3xl border border-white/15 bg-[#0d1b1c] p-6 md:p-8" aria-label="Featured client work">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-400">Client work · Cargo Login</p>
-            <p className="mt-4 text-2xl font-semibold text-white">One logistics operation across two time zones</p>
-            <ol className="mt-6 grid gap-3 sm:grid-cols-2">
-              <li className="rounded-2xl border border-white/15 p-4">
-                <p className="text-xs font-bold uppercase tracking-widest text-cyan-400">Canada</p>
-                <p className="mt-2 text-white">Client operations</p>
-              </li>
-              <li className="rounded-2xl border border-white/15 p-4">
-                <p className="text-xs font-bold uppercase tracking-widest text-cyan-400">Philippines</p>
-                <p className="mt-2 text-white">Offshore operations support</p>
-              </li>
-            </ol>
-            <Link to="/blog/cargo-login-case-study" className="mt-6 inline-flex items-center gap-2 font-bold text-cyan-400 hover:underline">
-              Read the Cargo Login case study <ArrowUpRight className="h-4 w-4" aria-hidden />
-            </Link>
-          </aside>
-        </div>
-
-        {/* Fact rail — plain, verifiable statements (also easy for AI search to quote) */}
-        <dl className="relative max-w-7xl mx-auto mt-12 lg:mt-4 grid grid-cols-2 md:grid-cols-4 border-t border-white/10">
-          {HERO_FACTS.map((f, i) => (
-            <div key={f.k} className={`py-6 md:py-8 ${i % 2 ? 'pl-5 md:pl-8' : ''} ${i > 0 ? 'md:pl-8 md:border-l md:border-white/10' : ''} ${i % 2 ? 'border-l border-white/10' : ''}`}>
-              <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">{f.k}</dt>
-              <dd className="mt-2 text-lg md:text-xl font-semibold text-white">{f.v}</dd>
-            </div>
-          ))}
-        </dl>
-
-        <div className="relative mx-auto max-w-7xl border-t border-white/10 py-7">
-          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/65">Selected client work</p>
-            <Link to="/proof#websites" className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-400 hover:underline">
-              Explore the website portfolio <ArrowUpRight className="h-4 w-4" aria-hidden />
-            </Link>
-          </div>
-          <ul className="grid grid-cols-4 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 lg:grid-cols-8" aria-label="Client website projects">
-            {WEBSITE_PROJECTS.map(client => (
-              <li key={client.id} className="min-w-0 bg-[#0b1415]">
-                <Link to={`/proof#${client.id}`} aria-label={`View ${client.name} project`} className="flex h-20 items-center justify-center px-3 transition-colors hover:bg-[#183334] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-400 md:h-24">
-                  {client.logo ? (
-                    <img src={client.logo} alt="" width={client.width} height={client.height} loading="lazy" className={`${client.crest ? 'h-9' : 'h-7'} w-auto max-w-full object-contain`} />
-                  ) : (
-                    <span className="text-center text-xs font-semibold leading-tight text-white sm:text-sm">{client.name}</span>
-                  )}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <Link
+            to="/blog/cargo-login-case-study"
+            className="group relative isolate overflow-hidden rounded-2xl border border-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400 lg:col-span-5"
+          >
+            <img src="/portfolio/cargo-login.jpg" alt="" width={1200} height={750} fetchPriority="high" className="aspect-[16/6] w-full object-cover object-top lg:aspect-[8/5]" />
+            <span className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 bg-gradient-to-t from-black via-black/85 to-transparent px-4 pb-3 pt-8 font-semibold text-white">
+              Cargo Login case study <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden />
+            </span>
+          </Link>
         </div>
       </section>
 
       {/* ===== 2. CORE SERVICES ===== */}
-      <section id="services" aria-labelledby="services-heading" className="section-shell px-4 md:px-6 scroll-mt-24">
+      <section id="services" aria-labelledby="services-heading" className="px-4 py-8 md:px-6 md:py-12 scroll-mt-24">
         <div className="max-w-7xl mx-auto">
-          <div id="services-heading">
-            <SectionHead
-              label="What we do"
-              title="How can we help?"
-              intro="Fill a skills gap, build a team for ongoing work, or give a software project to a delivery partner."
-            />
-          </div>
+          <h2 id="services-heading" className="mb-5 text-2xl font-semibold text-text md:text-3xl">Three ways to work with us</h2>
 
           <div className="grid gap-4 md:grid-cols-3">
             {PILLARS.map(service => (
-              <article key={service.id} className="flex flex-col rounded-3xl border border-border bg-background p-6 md:p-8">
+              <article key={service.id} className="flex flex-col rounded-3xl border border-border bg-background p-5">
                 <p className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400">{service.kicker}</p>
-                <h3 className="mt-4 text-2xl font-semibold text-text">{service.title}</h3>
-                <p className="mt-3 leading-relaxed text-muted">{service.answer}</p>
-                <ul className="mb-6 mt-5 list-disc space-y-2 pl-5 text-sm text-text">
-                  {service.items.map(item => <li key={item}>{item}</li>)}
-                </ul>
+                <h3 className="mt-2 text-xl font-semibold text-text">{service.title}</h3>
+                <p className="mb-4 mt-2 text-sm leading-relaxed text-muted">{service.answer}</p>
                 <Link to={service.href} className="mt-auto inline-flex items-center gap-2 self-start font-bold text-cyan-700 hover:underline dark:text-cyan-400">
                   {service.cta} <ArrowUpRight className="h-4 w-4" aria-hidden />
                 </Link>
@@ -237,6 +183,37 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               Discuss your website project
             </Link>
           </div>
+        {/* Fact rail — plain, verifiable statements (also easy for AI search to quote) */}
+        <dl className="relative max-w-7xl mx-auto mt-8 grid grid-cols-2 md:grid-cols-4 border-t border-white/10">
+          {HERO_FACTS.map((f, i) => (
+            <div key={f.k} className={`py-4 md:py-5 ${i % 2 ? 'pl-5 md:pl-8' : ''} ${i > 0 ? 'md:pl-8 md:border-l md:border-white/10' : ''} ${i % 2 ? 'border-l border-white/10' : ''}`}>
+              <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">{f.k}</dt>
+              <dd className="mt-2 text-lg md:text-xl font-semibold text-white">{f.v}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="relative mx-auto max-w-7xl border-t border-white/10 py-7">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/65">Selected client work</p>
+            <Link to="/proof#websites" className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-400 hover:underline">
+              Explore the website portfolio <ArrowUpRight className="h-4 w-4" aria-hidden />
+            </Link>
+          </div>
+          <ul className="grid grid-cols-4 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 lg:grid-cols-8" aria-label="Client website projects">
+            {WEBSITE_PROJECTS.map(client => (
+              <li key={client.id} className="min-w-0 bg-[#0b1415]">
+                <Link to={`/proof#${client.id}`} aria-label={`View ${client.name} project`} className="flex h-20 items-center justify-center px-3 transition-colors hover:bg-[#183334] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-400 md:h-24">
+                  {client.logo ? (
+                    <img src={client.logo} alt="" width={client.width} height={client.height} loading="lazy" className={`${client.crest ? 'h-9' : 'h-7'} w-auto max-w-full object-contain`} />
+                  ) : (
+                    <span className="text-center text-xs font-semibold leading-tight text-white sm:text-sm">{client.name}</span>
+                  )}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
           <h2 className="mb-6 mt-16 text-2xl font-semibold text-white md:text-3xl">Client case studies</h2>
           <div className="grid md:grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-3xl overflow-hidden">
             {[...CASE_STUDIES].sort((first, second) => Number(second.client === FEATURED_CLIENT) - Number(first.client === FEATURED_CLIENT)).map(study => (
