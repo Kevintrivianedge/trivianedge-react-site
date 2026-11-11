@@ -1,10 +1,9 @@
-const CACHE_NAME = 'trivianedge-v1';
+const CACHE_NAME = 'trivianedge-v2';
 const ASSET_CACHE = 'trivianedge-assets-v1';
-const API_CACHE = 'trivianedge-api-v1';
+const API_CACHE = 'trivianedge-api-v2';
 const OFFLINE_PAGE = '/offline.html';
 
 const ASSET_PATTERNS = ['/assets/', '.js', '.css', '.woff2', '.svg', '.png', '.jpg', '.jpeg', '.webp', '.avif'];
-const API_PATTERNS = ['/api/', '/talent-hubs', '/faq', '/team'];
 const STALE_WHILE_REVALIDATE_PATTERNS = ['/api/faq', '/api/team', '/api/talent-hubs'];
 
 self.addEventListener('install', (event) => {
@@ -23,7 +22,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (![CACHE_NAME, ASSET_CACHE, API_CACHE, 'offline-page'].includes(cacheName)) {
+          if (cacheName.startsWith('trivianedge-') && ![CACHE_NAME, ASSET_CACHE, API_CACHE].includes(cacheName)) {
             return caches.delete(cacheName);
           }
         })
@@ -35,6 +34,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
 
   if (request.method !== 'GET') {
     event.respondWith(fetch(request).catch(() => {
@@ -46,12 +46,16 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  if (url.pathname.startsWith('/api/')) {
+    if (isStaleWhileRevalidateRequest(url) && !request.headers.has('Authorization') &&
+        !request.headers.has('X-Admin-Token')) {
+      event.respondWith(staleWhileRevalidateStrategy(request, API_CACHE));
+    }
+    return;
+  }
+
   if (isAssetRequest(url)) {
     event.respondWith(cacheFirstStrategy(request, ASSET_CACHE));
-  } else if (isStaleWhileRevalidateRequest(url)) {
-    event.respondWith(staleWhileRevalidateStrategy(request, API_CACHE));
-  } else if (isApiRequest(url)) {
-    event.respondWith(networkFirstStrategy(request, API_CACHE));
   } else {
     event.respondWith(networkFirstStrategy(request, CACHE_NAME));
   }
@@ -61,12 +65,13 @@ function isAssetRequest(url) {
   return ASSET_PATTERNS.some((pattern) => url.pathname.includes(pattern));
 }
 
-function isApiRequest(url) {
-  return API_PATTERNS.some((pattern) => url.pathname.includes(pattern));
+function isStaleWhileRevalidateRequest(url) {
+  return STALE_WHILE_REVALIDATE_PATTERNS.includes(url.pathname);
 }
 
-function isStaleWhileRevalidateRequest(url) {
-  return STALE_WHILE_REVALIDATE_PATTERNS.some((pattern) => url.pathname.includes(pattern));
+function isCacheable(response) {
+  const directives = response.headers.get('Cache-Control') || '';
+  return response.ok && !/(?:^|,)\s*(?:private|no-store|no-cache)\b/i.test(directives);
 }
 
 async function cacheFirstStrategy(request, cacheName) {
@@ -79,7 +84,7 @@ async function cacheFirstStrategy(request, cacheName) {
 
   try {
     const response = await fetch(request);
-    if (response.ok) {
+    if (isCacheable(response)) {
       cache.put(request, response.clone());
     }
     return response;
@@ -96,7 +101,7 @@ async function networkFirstStrategy(request, cacheName) {
 
   try {
     const response = await fetch(request);
-    if (response.ok || response.status === 404) {
+    if (isCacheable(response)) {
       cache.put(request, response.clone());
     }
     return response;
@@ -107,7 +112,7 @@ async function networkFirstStrategy(request, cacheName) {
     }
 
     if (request.destination === 'document') {
-      return cache.match(OFFLINE_PAGE);
+      return (await caches.match(OFFLINE_PAGE, { cacheName: 'offline-page' })) || Response.error();
     }
 
     return new Response(JSON.stringify({ error: 'Offline' }), {
@@ -122,7 +127,7 @@ async function staleWhileRevalidateStrategy(request, cacheName) {
   const cached = await cache.match(request);
 
   const fetchPromise = fetch(request).then((response) => {
-    if (response.ok) {
+    if (isCacheable(response)) {
       cache.put(request, response.clone());
     }
     return response;
