@@ -25,6 +25,16 @@ describe('production Worker responses', () => {
     expect(await response.json()).toEqual({ status: 'ok', timestamp: expect.any(Number) });
   });
 
+  it('rejects cross-origin browser writes before processing the request', async () => {
+    const response = await worker.fetch(new Request(`${origin}/api/chat`, {
+      method: 'POST',
+      headers: { Origin: 'https://example.org' },
+      body: '{}',
+    }), env, context);
+    expect(response.status).toBe(403);
+    expect(await response.json()).toEqual({ error: 'Origin is not allowed.' });
+  });
+
   it('rejects invalid JSON object shapes and invalid conversation history before calling the provider', async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal('fetch', fetchMock);
