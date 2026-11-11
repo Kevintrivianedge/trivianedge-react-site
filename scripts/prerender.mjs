@@ -99,7 +99,7 @@ function applyHead(template, helmet) {
   const script = helmet.script.toString();
 
   let html = template;
-  if (title.replace(/<[^>]+>/g, '').trim()) html = html.replace(/<title>[\s\S]*?<\/title>/, '');
+  if (/<title\b[^>]*>\s*[^<\s]/i.test(title)) html = html.replace(/<title>[\s\S]*?<\/title>/, '');
 
   // Drop template <meta> tags whose name/property the page redefines.
   const keys = new Set([...meta.matchAll(/(?:name|property)="([^"]+)"/g)].map(m => m[1]));
