@@ -18,7 +18,7 @@ const blockTags = new Set(['P', 'DIV', 'SECTION', 'ARTICLE', 'TR', 'BR']);
 
 function textFor(node) {
   if (node.nodeType === 3) return node.nodeValue ?? '';
-  if (node.nodeType !== 1 || skipTags.has(node.tagName) ||
+  if (node.nodeType !== 1 || skipTags.has(node.tagName.toUpperCase()) ||
       node.hidden || node.getAttribute('aria-hidden') === 'true') return '';
   const text = Array.from(node.childNodes, textFor).join('');
   if (/^H[1-4]$/.test(node.tagName)) return `\n\n${'#'.repeat(Number(node.tagName[1]) + 1)} ${text}\n`;
