@@ -360,9 +360,9 @@ export const ChatSidebar: React.FC = () => {
     setIsTyping(true);
 
     // Build history from conversation messages, excluding the initial welcome message
-    const history = messages.filter(m => !m.isInitial).map(m => ({
+    const history = messages.filter(m => !m.isInitial).slice(-20).map(m => ({
         role: m.role === 'model' ? 'assistant' as const : 'user' as const,
-        content: m.text,
+        content: m.text.slice(0, 4000),
     }));
 
     try {
@@ -620,6 +620,7 @@ export const ChatSidebar: React.FC = () => {
             <div className="relative group">
                 <input 
                     ref={inputRef}
+                    maxLength={4000}
                     type="text" 
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
