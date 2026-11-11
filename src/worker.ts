@@ -1450,15 +1450,6 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
 
   const body = parsed.data;
 
-  // Validate and rotate CSRF token
-  const csrfResult = await validateAndRotateCsrfToken(body.csrf_token as string | null, env);
-  if (!csrfResult.valid) {
-    return new Response(JSON.stringify({ error: 'Invalid CSRF token. Please refresh and try again.' }), {
-      status: 403,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
-    });
-  }
-
   const message = typeof body.message === 'string' ? body.message : '';
   const history = Array.isArray(body.history) ? body.history : [];
   if (!message.trim()) return badRequest('Enter a message.', corsHeaders);
@@ -1472,6 +1463,15 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
   if (history.some(h => !h || !['user', 'assistant'].includes(h.role) ||
     typeof h.content !== 'string' || h.content.length > MAX_HISTORY_MESSAGE_LENGTH)) {
     return badRequest('Invalid conversation history.', corsHeaders);
+  }
+
+  // Validate and rotate CSRF token
+  const csrfResult = await validateAndRotateCsrfToken(typeof body.csrf_token === 'string' ? body.csrf_token : null, env);
+  if (!csrfResult.valid) {
+    return new Response(JSON.stringify({ error: 'Invalid CSRF token. Please refresh and try again.' }), {
+      status: 403,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
+    });
   }
 
   const messages: AnthropicMessage[] = [...history,
@@ -1494,10 +1494,10 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
       'anthropic-version': ANTHROPIC_VERSION,
     },
     body: JSON.stringify(anthropicPayload),
-  });
+  }).catch(() => null);
 
-  if (!anthropicRes.ok) {
-    return aiUpstreamError('chat', anthropicRes.status, { ...corsHeaders, 'X-CSRF-Token': csrfResult.newToken });
+  if (!anthropicRes?.ok) {
+    return aiUpstreamError('chat', anthropicRes?.status ?? 0, { ...corsHeaders, 'X-CSRF-Token': csrfResult.newToken });
   }
 
   return new Response(anthropicRes.body, {
@@ -1542,10 +1542,10 @@ async function handleGenerate(request: Request, env: Env, corsHeaders: Record<st
       max_tokens: ANTHROPIC_DEFAULT_MAX_TOKENS,
       messages: [{ role: 'user', content: prompt }],
     } satisfies AnthropicPayload),
-  });
+  }).catch(() => null);
 
-  if (!anthropicRes.ok) {
-    return aiUpstreamError('generate', anthropicRes.status, corsHeaders);
+  if (!anthropicRes?.ok) {
+    return aiUpstreamError('generate', anthropicRes?.status ?? 0, corsHeaders);
   }
 
   const data = await anthropicRes.json<{
