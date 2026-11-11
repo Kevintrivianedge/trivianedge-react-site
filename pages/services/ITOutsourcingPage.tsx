@@ -14,6 +14,7 @@ import {
   Users2,
 } from 'lucide-react';
 import SEOHead from '../../components/SEOHead';
+import ServiceVideo from '../../components/ServiceVideo';
 import Accordion from '../../components/Accordion';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '../../utils/seo';
 
@@ -210,6 +211,15 @@ const ITOutsourcingPage: React.FC = () => {
             <Link to="/proof#trivianedge-asia" className="text-cyan-700 hover:underline dark:text-cyan-400">See TrivianEdge Asia, in development</Link>
           </div>
         </section>
+
+        <div className="mx-auto max-w-5xl px-4 md:px-6">
+          <ServiceVideo
+            videoId="twFcKdWKjW0"
+            title="Bring your business idea to life with custom software"
+            description="A short introduction to building software around your business needs."
+            duration="0:11"
+          />
+        </div>
 
         {/* What is Bespoke Software Development */}
         <section className="py-20 px-4 md:px-6">
