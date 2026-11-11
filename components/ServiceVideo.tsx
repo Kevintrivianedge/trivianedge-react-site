@@ -13,7 +13,7 @@ export default function ServiceVideo({ videoId, title, description, duration }: 
   const [showPlayer, setShowPlayer] = useState(false);
 
   return (
-    <section aria-labelledby={headingId} className="grid items-center gap-6 rounded-3xl border border-border bg-surface p-5 md:grid-cols-2 md:gap-8 md:p-8">
+    <section id="service-video" aria-labelledby={headingId} className="scroll-mt-24 grid items-center gap-6 rounded-3xl border border-border bg-surface p-5 md:grid-cols-2 md:gap-8 md:p-8">
       <div>
         <h2 id={headingId} className="text-2xl font-semibold text-text md:text-3xl">{title}</h2>
         <p className="mt-3 max-w-prose leading-relaxed text-muted">{description}</p>
