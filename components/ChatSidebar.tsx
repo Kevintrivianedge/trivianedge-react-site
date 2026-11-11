@@ -2,13 +2,8 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { X, Send, MessageSquare, Terminal, Loader2, User, Bot, Sparkles, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SERVICES, TALENT_HUBS, ROLES } from '../constants';
-import { CASE_STUDIES } from '../constants/proof';
-import { getCountryGreeting, getCountryAffectionateName } from '../utils/greetings';
-import { getTimeOfDay } from '../utils/getTimeOfDay';
-import { useGeo } from '../contexts/GeoContext';
 import { API_ENDPOINTS } from '../constants/api';
-import { getCsrfToken, addCsrfTokenToFormData } from '../utils/csrf';
+import { getCsrfToken, addCsrfTokenToFormData, extractRotatedCsrfToken } from '../utils/csrf';
 import { metaLeadFields, trackMetaLead } from '../utils/metaPixel';
 import { storeFailedSubmission } from '../utils/serviceWorkerRegistry';
 
@@ -36,7 +31,7 @@ interface AriaLead {
 }
 
 // Matches the hidden <!--LEAD:{...}--> marker Aria appends to the end of a
-// response once it has captured an email + intent (see system prompt below).
+// response once it has captured an email + intent (see the Worker chat instructions).
 // It is stripped from the displayed text and used to silently notify a human
 // via the same /api/inquiry pipeline the contact form uses.
 const LEAD_MARKER_RE = /<!--LEAD:(\{[\s\S]*?\})-->\s*$/;
@@ -275,14 +270,12 @@ export const ChatSidebar: React.FC = () => {
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const systemContextRef = useRef<string>('');
   const leadSentRef = useRef(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const launcherRef = useRef<HTMLButtonElement>(null);
   const wasOpenRef = useRef(false);
-  const { geoData } = useGeo();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -291,115 +284,6 @@ export const ChatSidebar: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping]);
-
-  const initChat = () => {
-    if (!systemContextRef.current) {
-        try {
-            // Get user context from geo data provided by GeoContext
-            let userContext = "";
-            if (geoData) {
-                try {
-                    const timeOfDay = getTimeOfDay(geoData.timezone);
-                    const greeting = getCountryGreeting(geoData.country_code, 'en', timeOfDay);
-                    const affectionateName = getCountryAffectionateName(geoData.country_code, geoData.country_name);
-                    
-                    const formatter = new Intl.DateTimeFormat('en', {
-                        hour: 'numeric',
-                        minute: '2-digit',
-                        timeZone: geoData.timezone,
-                    });
-                    const localTime = formatter.format(new Date());
-
-                    userContext = `
-User Context:
-- Location: ${geoData.city ? geoData.city + ', ' : ''}${geoData.country_name} (also known as ${affectionateName})
-- Local Time: ${localTime} (${timeOfDay})
-- Appropriate Cultural Greeting: "${greeting}"
-
-CONVERSATIONAL FLOW INSTRUCTIONS:
-You must act highly conversational, human-like, and take things piece by piece. You are acting as a psychologist and consultant. Your ultimate goal is to uncover the user's pain points: what makes them agitated, angry, or frustrated in their work, and then immediately address those emotions by offering tailored solutions from TrivianEdge that will make their lives better. NEVER dump long paragraphs of information.
-
-CRITICAL RULE: Ask ONLY ONE question per response. You MUST wait for the user to answer that question before asking the next one or moving the conversation forward. Do not combine steps.
-
-Step 1 (Greeting & Intro): When the user first says hi, start with their Appropriate Cultural Greeting ("${greeting}"). Acknowledge their specific location and local time (${localTime}), throwing in a small cultural nuance. DO NOT explain your mission or list services yet. Simply end by asking ONE question: "How are you doing today? What line of work are you in?" WAIT FOR THEIR REPLY.
-
-Step 2 (Rapport Building): When they tell you their company (e.g., Unilever, HSBC) or role, use their known location (${geoData.city || geoData.country_name}) to sound intelligent. For example, "Oh, that's nice! Do you work out of the branch/office near ${geoData.city || 'your area'}?" WAIT FOR THEIR REPLY.
-
-Step 3 (Uncovering Pain Points): Ask a follow-up question specifically designed to uncover their frustrations. For example, "In your role at [Company], what's the biggest bottleneck or frustration you deal with on a daily basis?" or "What's the one thing about your current operations that makes you want to pull your hair out?" WAIT FOR THEIR REPLY.
-
-Step 4 (Addressing Emotions & Offering Solutions): Once they reveal their pain point, validate their feelings first (e.g., "I completely understand why that would be frustrating. Dealing with [Issue] can be incredibly draining."). Then, seamlessly introduce how TrivianEdge's specific services or solutions can directly alleviate that pain point and make their life easier. Give concrete examples based on our Knowledge Base. WAIT FOR THEIR REPLY.
-
-Step 5 (Scheduling): After offering solutions, ask if they would like to set up a quick discussion to explore this further. If they say yes, ask for their email address and a preferred date and time. WAIT FOR THEIR REPLY.
-
-Step 6 (Generating Invite): Once they provide a date and time, generate an Outlook Calendar link for them to click.
-Format the link EXACTLY like this:
-[Click here to add our discussion to your Outlook Calendar](https://outlook.office.com/calendar/0/deeplink/compose?subject=TrivianEdge%20Discussion&body=Discussion%20regarding%20TrivianEdge%20solutions&startdt=YYYY-MM-DDT10:00:00&enddt=YYYY-MM-DDT11:00:00)
-(Replace the YYYY-MM-DD and time with their requested date and time).
-
-LEAD CAPTURE (CRITICAL: do this or the conversation is lost): The moment you have the user's email address AND a clear signal of interest (they want a call, a quote, to move forward, or gave you a hiring/project request), append a hidden lead marker as the VERY LAST LINE of that same response, after your normal reply. Format EXACTLY like this, with no text after it:
-<!--LEAD:{"name":"their name or empty string","email":"their email","company":"their company or empty string","need":"one short phrase describing what they want, e.g. '5 developers in Sri Lanka' or 'AI agent for support tickets'","timeline":"their stated timeline or empty string","notes":"a 1-2 sentence summary of the conversation and pain point for the sales team"}-->
-This marker is stripped before the user sees it; it silently notifies a human. Emit it only once per conversation, the first time you have both an email and clear intent. Do not mention this marker to the user.
-
-SPECIFIC REQUEST HANDLING:
-- If a user gives a concrete request like "I need 5 developers in Sri Lanka" or "I need a BPO team in the Philippines," treat that as a strong buying signal. Acknowledge it specifically, ask one clarifying question (e.g. seniority, start timing), and move toward Step 5.
-- If a user asks "how much could I save" or similar, mention the "up to 40% cost reduction" range, and point them to the interactive savings calculator: [Run your own numbers on our savings calculator](/savings-calculator).
-- If a user asks for a country we do not source from (our six talent hubs are the Philippines, Vietnam, Sri Lanka, Turkey, South Africa, and Costa Rica; e.g. they ask about Saudi Arabia or another GCC country), be honest that it is not one of our standard sourcing hubs rather than claiming we do. Say we have done market-entry and delivery work in the GCC region before and offer to connect them with the team to discuss what is possible.
-- If a user asks "can you build an AI agent" or similar, confirm yes, briefly name the kind of work (RAG, agentic workflows, integrations with their existing product), and move toward uncovering their specific use case (Step 3/4).
-
-GENERAL RULE: Keep all responses extremely short (1-3 sentences max). NEVER ask more than one question in a single message. Never give unprompted lists of services.
-`;
-                } catch(e) {
-                    console.error("Failed to build geo context for chat", e);
-                }
-            }
-
-            systemContextRef.current = `
-You are Aria, the AI Intelligence Unit for TrivianEdge, a next-gen global talent and software solutions company.
-Your goal is to assist potential clients in understanding our offerings in a conversational, helpful, and highly personalized manner. You act like a consultant or psychologist, seeking to deeply understand the user's persona, psychology, and pain points before offering tailored solutions that make their lives better.
-
-Company Profile:
-TrivianEdge bridges the gap between Operations and HR using AI-driven sourcing and execution-first protocols.
-We provide "Recruitment-as-a-Service" and "Managed IT Services".
-
-Knowledge Base:
-
-1. Global Talent Hubs (Where we source):
-${TALENT_HUBS.map(h => `- ${h.country} (${h.flag}): Specialized in ${h.specialty}. Key tech: ${h.popularTech.join(', ')}.`).join('\n')}
-
-2. Core Services (What we do):
-${SERVICES.map(s => `- ${s.title}: ${s.description}`).join('\n')}
-
-3. Roles We Place:
-${ROLES.map(r => r.title + ": " + r.roles.join(', ')).join('\n')}
-
-4. Why Us (Client Results):
-${CASE_STUDIES.map(c => `- ${c.client} (${c.sector}): ${c.challenge} ${c.approach} Outcome: ${c.outcome}`).join('\n')}
-
-Guidelines:
-- Identity: You are Aria.
-- Tone: Conversational, warm, professional, empathetic, and highly personalized. Do not sound like a rigid corporate bot.
-- Behavior: Give information PIECE BY PIECE. Never send a wall of text.
-- Questioning: Ask ONLY ONE question at a time. Wait for the user to respond before asking another question or moving to the next topic.
-- Empathy: Validate the user's frustrations and emotions before offering solutions. Show that you understand their pain.
-- DO NOT bombard the user with long lists of information. Provide bite-sized, relevant answers (1-3 sentences).
-- If asked about pricing, mention "up to 40% cost reduction" but advise them to "Talk To Us" for a custom quote.
-- Do not make up facts. If unsure, ask the user to contact human support via the 'Talk To Us' button.
-- Format responses nicely using bullet points ("- ") for lists and bolding ("**text**") for emphasis.
-- Never use em dashes. Use commas, colons or full stops instead.
-- When asked how fast a team can start, say "around 30 days". Never promise a fixed deployment date.
-${userContext}
-`;
-        } catch (error) {
-            console.error("Failed to initialize chat context", error);
-        }
-    }
-  };
-
-  // Reset system context when geoData arrives so the next initChat call
-  // builds the prompt with accurate location context.
-  useEffect(() => {
-    systemContextRef.current = '';
-  }, [geoData]);
 
   // Real DOM `inert` (not just aria-hidden) so the panel's buttons/input are
   // neither focusable nor tab-reachable while translated off-screen — axe's
@@ -412,7 +296,6 @@ ${userContext}
 
   useEffect(() => {
     if (isOpen) {
-        initChat();
         // Focus input when sidebar opens (#9 — autoFocus only fires on mount, not re-open)
         setTimeout(() => inputRef.current?.focus(), 50);
         // Lock body scroll using a counter so concurrent overlays don't conflict (#16)
@@ -471,9 +354,6 @@ ${userContext}
   const handleSend = async () => {
     if (!input.trim() || isTyping) return;
     
-    // Initialize system context if not already done
-    if (!systemContextRef.current) initChat();
-
     const userMsg = input;
     setInput('');
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
@@ -492,11 +372,11 @@ ${userContext}
             body: JSON.stringify({
                 message: userMsg,
                 history,
-                systemInstruction: systemContextRef.current,
                 csrf_token: getCsrfToken(),
             }),
         });
 
+        extractRotatedCsrfToken(response);
         if (!response.ok || !response.body) {
             const apiError = new Error(`API error: ${response.status}`) as Error & { status?: number };
             apiError.status = response.status;
@@ -591,7 +471,6 @@ ${userContext}
                     console.error('[Aria] lead capture failed', err);
                     try {
                         await storeFailedSubmission(API_ENDPOINTS.INQUIRY, leadData);
-                        console.log('[Aria] lead stored for offline sync');
                     } catch (storageErr) {
                         console.error('[Aria] failed to store lead', storageErr);
                     }
@@ -618,7 +497,6 @@ ${userContext}
     setMessages([{ role: 'model', text: "Hi! I'm Aria, your AI guide from TrivianEdge.\n\nHow may I help you today?", isInitial: true }]);
     systemContextRef.current = '';
     leadSentRef.current = false;
-    initChat();
   };
 
   return (
