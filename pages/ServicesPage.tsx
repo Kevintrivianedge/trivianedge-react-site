@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Users2, ShieldCheck, Cpu, Server, Cloud } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import ServiceVideo from '../components/ServiceVideo';
 import RelatedLinks from '../components/RelatedLinks';
 import PremiumCloudShowcase from '../components/PremiumCloudShowcase';
 import { MICROSOFT_PARTNER } from '../constants/microsoftPartner';
@@ -327,6 +328,16 @@ export function TalentServicePage() {
             <img src="/portfolio/keynotive.jpg" alt="Keynotive website homepage" width={1200} height={750} loading="lazy" decoding="async" className="w-full rounded-xl border border-white/15" />
           </div>
         </section>
+      )}
+      {id === 'dedicated-teams' && (
+        <div className="mx-auto mt-8 max-w-7xl px-4 md:px-6">
+          <ServiceVideo
+            videoId="40roayDeKlM"
+            title="How dedicated offshore teams work"
+            description="See how an offshore team can extend your operating hours and how TrivianEdge handles hiring, onboarding, payroll and local compliance."
+            duration="1:15"
+          />
+        </div>
       )}
       <section className="section-shell px-4 md:px-6" aria-labelledby="engagement-heading">
         <div className="mx-auto max-w-7xl">
