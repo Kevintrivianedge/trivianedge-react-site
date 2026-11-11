@@ -3,7 +3,7 @@ const ASSET_CACHE = 'trivianedge-assets-v1';
 const API_CACHE = 'trivianedge-api-v2';
 const OFFLINE_PAGE = '/offline.html';
 
-const ASSET_PATTERNS = ['/assets/', '.js', '.css', '.woff2', '.svg', '.png', '.jpg', '.jpeg', '.webp', '.avif'];
+const MEDIA_EXTENSIONS = ['.woff2', '.svg', '.png', '.jpg', '.jpeg', '.webp', '.avif'];
 const STALE_WHILE_REVALIDATE_PATTERNS = ['/api/faq', '/api/team', '/api/talent-hubs'];
 
 self.addEventListener('install', (event) => {
@@ -62,16 +62,17 @@ self.addEventListener('fetch', (event) => {
 });
 
 function isAssetRequest(url) {
-  return ASSET_PATTERNS.some((pattern) => url.pathname.includes(pattern));
+  return url.pathname.startsWith('/assets/') || MEDIA_EXTENSIONS.some(extension => url.pathname.endsWith(extension));
 }
 
 function isStaleWhileRevalidateRequest(url) {
   return STALE_WHILE_REVALIDATE_PATTERNS.includes(url.pathname);
 }
 
-function isCacheable(response) {
+function isCacheable(response, revalidates = false) {
   const directives = response.headers.get('Cache-Control') || '';
-  return response.ok && !/(?:^|,)\s*(?:private|no-store|no-cache)\b/i.test(directives);
+  return response.ok && !/(?:^|,)\s*(?:private|no-store)\b/i.test(directives) &&
+    (revalidates || !/(?:^|,)\s*no-cache\b/i.test(directives));
 }
 
 async function cacheFirstStrategy(request, cacheName) {
@@ -101,7 +102,7 @@ async function networkFirstStrategy(request, cacheName) {
 
   try {
     const response = await fetch(request);
-    if (isCacheable(response)) {
+    if (isCacheable(response, true)) {
       cache.put(request, response.clone());
     }
     return response;
