@@ -27,11 +27,6 @@
     <!-- IndexNow verification for Bing Webmaster Tools -->
     <meta name="indexnow-verification" content="b60b3c2124cf4a91828dc2e07ce295aa">
 
-    <!-- Canonical and hreflang are intentionally omitted here: SEOHead
-         (react-helmet-async) injects the correct per-route canonical, and the
-         home route injects its own hreflang set, once React mounts. Static
-         tags here would always point at "/" and duplicate/conflict with those
-         on every route (including "/" itself, since SEOHead adds them too). -->
 
     <!-- Geo tags, important for "BPO Canada" and "outsourcing Canada" queries -->
     <meta name="geo.region" content="CA-ON">
@@ -76,7 +71,6 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.json">
-    <!-- CSP: 'unsafe-inline' in script-src is required for JSON-LD structured-data injected by react-helmet-async -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://static.cloudflareinsights.com https://*.clarity.ms https://widget.trustpilot.com; connect-src 'self' https://api.open-meteo.com https://api.resend.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net https://www.facebook.com https://cloudflareinsights.com https://*.clarity.ms https://widget.trustpilot.com; frame-src https://widget.trustpilot.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; worker-src 'self' blob:;">
 
     <link rel="preconnect" href="https://flagcdn.com" crossorigin>
@@ -89,22 +83,10 @@
     <link rel="preload" href="/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-    <!-- critical-loader.js swaps deferred (media="print") stylesheets to
-         media="all" once loaded. Deferred so every target <link> exists
-         when it runs; see that file for why it's external. -->
     <script src="/critical-loader.js" defer></script>
 
-<!-- Vite bundles all dependencies, no browser importmap needed -->
 
-    <!-- Meta Pixel Code (public/meta-pixel.js) is no longer loaded statically here.
-         src/cookieConsent.ts injects it dynamically, only once the visitor has
-         granted marketing consent through the cookie banner -- see that file.
-         There is deliberately no <noscript> pixel: no-JS visitors can't give
-         consent, so it would fire without it. -->
 
-    <!-- Microsoft Clarity is initialized from index.tsx, deferred via
-         requestIdleCallback the same way as GA4 and Amplitude below, instead
-         of running eagerly here at head-parse time. -->
 
     
 </head>
