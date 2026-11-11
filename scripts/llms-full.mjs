@@ -7,27 +7,29 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { JSDOM } from 'jsdom';
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..');
 const distDir = join(rootDir, 'dist');
 const SITE = 'https://www.trivianedge.com';
 
-const decode = s => s
-  .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-  .replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(n));
+const skipTags = new Set(['SCRIPT', 'STYLE', 'SVG', 'NOSCRIPT', 'TEMPLATE', 'NAV', 'FOOTER', 'FORM', 'IFRAME']);
+const blockTags = new Set(['P', 'DIV', 'SECTION', 'ARTICLE', 'TR', 'BR']);
 
-function pageText(html) {
-  const main = html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? html.match(/<body[\s\S]*<\/body>/)?.[0] ?? '';
-  return decode(main
-    .replace(/<(script|style|svg|noscript|nav|footer)[\s\S]*?<\/\1>/g, '')
-    .replace(/<h([1-4])[^>]*>/g, (_, n) => `\n\n${'#'.repeat(Number(n) + 1)} `)
-    .replace(/<\/h[1-4]>/g, '\n')
-    .replace(/<li[^>]*>/g, '\n- ')
-    .replace(/<(p|div|section|tr|br)[^>]*>/g, '\n')
-    .replace(/<!--[\s\S]*?-->/g, '')
-    .replace(/<[^>]+>/g, ''))
-    .split('\n').map(l => l.replace(/\s+/g, ' ').trim()).filter(Boolean)
-    .filter((l, i, a) => l !== a[i - 1])
+function textFor(node) {
+  if (node.nodeType === 3) return node.nodeValue ?? '';
+  if (node.nodeType !== 1 || skipTags.has(node.tagName) ||
+      node.hidden || node.getAttribute('aria-hidden') === 'true') return '';
+  const text = Array.from(node.childNodes, textFor).join('');
+  if (/^H[1-4]$/.test(node.tagName)) return `\n\n${'#'.repeat(Number(node.tagName[1]) + 1)} ${text}\n`;
+  if (node.tagName === 'LI') return `\n- ${text}`;
+  return blockTags.has(node.tagName) ? `\n${text}` : text;
+}
+
+function pageText(document) {
+  return textFor(document.querySelector('main') ?? document.body)
+    .split('\n').map(line => line.replace(/\s+/g, ' ').trim()).filter(Boolean)
+    .filter((line, index, lines) => line !== lines[index - 1])
     .join('\n')
     .replace(/\n(#+ )/g, '\n\n$1');
 }
@@ -42,10 +44,12 @@ let count = 0;
 for (const path of paths.filter(p => !legal.has(p))) {
   const file = join(distDir, path, 'index.html');
   if (!existsSync(file)) continue;
-  const html = readFileSync(file, 'utf-8');
-  const title = decode(html.match(/<title[^>]*>([^<]*)<\/title>/)?.[1] ?? path);
-  const desc = decode(html.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? '');
-  out.push('---', '', `## ${title}`, '', `URL: ${SITE}${path}`, desc && `> ${desc}`, '', pageText(html), '');
+  const { window } = new JSDOM(readFileSync(file, 'utf-8'));
+  const { document } = window;
+  const title = document.title || path;
+  const desc = document.querySelector('meta[name="description"]')?.content ?? '';
+  out.push('---', '', `## ${title}`, '', `URL: ${SITE}${path}`, desc && `> ${desc}`, '', pageText(document), '');
+  window.close();
   count++;
 }
 
