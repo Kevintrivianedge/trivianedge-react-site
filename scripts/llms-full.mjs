@@ -7,7 +7,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { JSDOM } from 'jsdom';
+import { Window } from 'happy-dom';
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..');
 const distDir = join(rootDir, 'dist');
@@ -40,18 +40,21 @@ const legal = new Set(['/privacy', '/terms', '/cookie-policy']);
 
 const intro = readFileSync(join(rootDir, 'public/llms.txt'), 'utf-8').split('\n## ')[0].trim();
 const out = [intro, '', `This file contains the full text of every public page on ${SITE}. The index is at ${SITE}/llms.txt.`, ''];
+const window = new Window({
+  settings: { disableJavaScriptEvaluation: true, disableJavaScriptFileLoading: true, disableCSSFileLoading: true },
+});
+const parser = new window.DOMParser();
 let count = 0;
 for (const path of paths.filter(p => !legal.has(p))) {
   const file = join(distDir, path, 'index.html');
   if (!existsSync(file)) continue;
-  const { window } = new JSDOM(readFileSync(file, 'utf-8'));
-  const { document } = window;
+  const document = parser.parseFromString(readFileSync(file, 'utf-8'), 'text/html');
   const title = document.title || path;
   const desc = document.querySelector('meta[name="description"]')?.content ?? '';
   out.push('---', '', `## ${title}`, '', `URL: ${SITE}${path}`, desc && `> ${desc}`, '', pageText(document), '');
-  window.close();
   count++;
 }
 
+await window.happyDOM.close();
 writeFileSync(join(distDir, 'llms-full.txt'), out.filter(l => l !== '').join('\n').replace(/\n(---|## |URL: |> )/g, '\n\n$1') + '\n');
 console.log(`llms-full.txt: ${count} pages`);
