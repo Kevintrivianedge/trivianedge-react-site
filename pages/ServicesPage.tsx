@@ -298,6 +298,11 @@ export function TalentServicePage() {
           <Link to={inquiry} className="mt-8 inline-flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-3 font-bold text-black hover:bg-cyan-300">
             {service.action} <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
+          {id === 'dedicated-teams' && (
+            <a href="#service-video" className="mt-4 block font-semibold text-cyan-400 hover:underline sm:ml-5 sm:inline-block">
+              Watch how offshore teams work
+            </a>
+          )}
         </div>
       </section>
       <section className="section-shell px-4 md:px-6" aria-labelledby="talent-fit-heading">
