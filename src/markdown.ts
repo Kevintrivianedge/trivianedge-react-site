@@ -71,10 +71,13 @@ export async function htmlToMarkdown(response: Response, pageUrl: string): Promi
   const emit = (s: string) => { if (active()) out.push(s); };
   const publicUrl = (value: string | null, image = false) => {
     if (!value?.trim() || value.trimStart().startsWith('#')) return null;
-    const url = URL.parse(value, pageUrl);
-    if (!url) return null;
-    const allowed = image ? ['https:', 'http:'] : ['https:', 'http:', 'mailto:', 'tel:'];
-    return allowed.includes(url.protocol) ? url.toString() : null;
+    try {
+      const url = new URL(value, pageUrl);
+      const allowed = image ? ['https:', 'http:'] : ['https:', 'http:', 'mailto:', 'tel:'];
+      return allowed.includes(url.protocol) ? url.toString() : null;
+    } catch {
+      return null;
+    }
   };
 
   const rewriter = new HTMLRewriter()
