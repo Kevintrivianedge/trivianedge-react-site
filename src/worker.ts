@@ -34,9 +34,9 @@ const ANTHROPIC_DEFAULT_MAX_TOKENS = 1024;
 const ALLOWED_ORIGIN = 'https://www.trivianedge.com';
 
 function makeCorsHeaders(requestOrigin: string | null): Record<string, string> {
-  // Allow the canonical production origin and localhost:3000 for development.
+  // Allow the canonical production origin and the Vite development origin.
   const origin =
-    requestOrigin === ALLOWED_ORIGIN || requestOrigin === 'http://localhost:3000'
+    requestOrigin === ALLOWED_ORIGIN || requestOrigin === 'http://localhost:5173'
       ? (requestOrigin as string)
       : ALLOWED_ORIGIN;
   return {
@@ -1283,6 +1283,16 @@ export default {
 
     // ALL /api/* routes, rate-limited and CORS-gated in one place
     if (url.pathname.startsWith('/api/')) {
+      // Browser writes belong to the same site even when persistent CSRF
+      // token storage is unavailable. Server clients may omit Origin.
+      const isLocalDev = url.hostname === 'localhost' && origin === 'http://localhost:5173';
+      const isCrossOrigin = origin !== null && origin !== url.origin && !isLocalDev;
+      if (request.method === 'POST' && isCrossOrigin) {
+        return new Response(JSON.stringify({ error: 'Origin is not allowed.' }), {
+          status: 403,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
+        });
+      }
       const ip =
         request.headers.get('CF-Connecting-IP') ??
         request.headers.get('X-Forwarded-For') ??
