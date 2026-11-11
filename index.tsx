@@ -206,9 +206,6 @@ const initServiceWorker = () => {
   import('./utils/serviceWorkerRegistry').then(({ registerServiceWorker }) => {
     registerServiceWorker({
       updateCheckInterval: 60 * 60 * 1000, // Check for updates hourly
-      onUpdate: () => {
-        console.log('Service Worker update available');
-      },
       onError: (error) => {
         console.error('Service Worker registration error:', error);
       },
