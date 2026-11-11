@@ -159,6 +159,9 @@ const ITOutsourcingPage: React.FC = () => {
             <a href="#software-examples" className="ml-0 mt-4 block font-semibold text-cyan-700 hover:underline dark:text-cyan-400 sm:ml-5 sm:inline-block">
               See software we’ve built
             </a>
+            <a href="#service-video" className="ml-0 mt-4 block font-semibold text-cyan-700 hover:underline dark:text-cyan-400 sm:ml-5 sm:inline-block">
+              Watch the software intro
+            </a>
             <p className="mt-4 text-sm text-muted">Toronto-based project team · Client-owned code</p>
           </div>
         </motion.section>

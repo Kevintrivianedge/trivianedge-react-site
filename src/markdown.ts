@@ -44,7 +44,7 @@ function decodeEntities(text: string): string {
   return text.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (match, code: string) => {
     if (code[0] === '#') {
       const n = code[1].toLowerCase() === 'x' ? Number.parseInt(code.slice(2), 16) : Number.parseInt(code.slice(1), 10);
-      return Number.isFinite(n) ? String.fromCodePoint(n) : match;
+      return Number.isInteger(n) && n > 0 && n <= 0x10ffff ? String.fromCodePoint(n) : match;
     }
     return ENTITIES[code.toLowerCase()] ?? match;
   });
@@ -69,8 +69,15 @@ export async function htmlToMarkdown(response: Response, pageUrl: string): Promi
 
   const active = () => mainDepth > 0 && skipDepth === 0;
   const emit = (s: string) => { if (active()) out.push(s); };
-  const absolute = (href: string) => {
-    try { return new URL(href, pageUrl).toString(); } catch { return href; }
+  const publicUrl = (value: string | null, image = false) => {
+    if (!value?.trim() || value.trimStart().startsWith('#')) return null;
+    try {
+      const url = new URL(value, pageUrl);
+      const allowed = image ? ['https:', 'http:'] : ['https:', 'http:', 'mailto:', 'tel:'];
+      return allowed.includes(url.protocol) ? url.toString() : null;
+    } catch {
+      return null;
+    }
   };
 
   const rewriter = new HTMLRewriter()
@@ -146,15 +153,15 @@ export async function htmlToMarkdown(response: Response, pageUrl: string): Promi
         } else if (tag === 'hr') {
           emit('\n\n---\n\n');
         } else if (tag === 'a') {
-          const href = el.getAttribute('href');
-          if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+          const href = publicUrl(el.getAttribute('href'));
+          if (href) {
             emit('[');
-            onEnd(`](${absolute(href)})`);
+            onEnd(`](<${href}>)`);
           }
         } else if (tag === 'img') {
           const alt = el.getAttribute('alt')?.trim();
-          const src = el.getAttribute('src');
-          if (alt && src) emit(`![${decodeEntities(alt)}](${absolute(src)})`);
+          const src = publicUrl(el.getAttribute('src'), true);
+          if (alt && src) emit(`![${decodeEntities(alt)}](<${src}>)`);
         }
       },
     })

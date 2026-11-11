@@ -214,7 +214,9 @@ const getSessionId = (): string => {
   const key = 'venture_studio_session_id';
   const existing = window.localStorage.getItem(key);
   if (existing) return existing;
-  const created = `vs-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  const random = window.crypto.getRandomValues(new Uint8Array(8));
+  const suffix = Array.from(random, byte => byte.toString(16).padStart(2, '0')).join('');
+  const created = `vs-${Date.now()}-${suffix}`;
   window.localStorage.setItem(key, created);
   return created;
 };

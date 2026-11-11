@@ -1,3 +1,5 @@
+import { buildChatInstructions } from './chat-instructions';
+
 export interface Env {
   ANTHROPIC_API_KEY: string;
   // TODO: Set RESEND_API_KEY in Cloudflare Workers secrets (wrangler secret put RESEND_API_KEY)
@@ -32,9 +34,9 @@ const ANTHROPIC_DEFAULT_MAX_TOKENS = 1024;
 const ALLOWED_ORIGIN = 'https://www.trivianedge.com';
 
 function makeCorsHeaders(requestOrigin: string | null): Record<string, string> {
-  // Allow the canonical production origin and localhost:3000 for development.
+  // Allow the canonical production origin and the Vite development origin.
   const origin =
-    requestOrigin === ALLOWED_ORIGIN || requestOrigin === 'http://localhost:3000'
+    requestOrigin === ALLOWED_ORIGIN || requestOrigin === 'http://localhost:5173'
       ? (requestOrigin as string)
       : ALLOWED_ORIGIN;
   return {
@@ -135,6 +137,9 @@ async function isRateLimited(ip: string, pathname: string, env: Env): Promise<bo
 async function parseJsonBody<T>(request: Request): Promise<{ ok: true; data: T } | { ok: false; error: string }> {
   try {
     const data = await request.json<T>();
+    if (typeof data !== 'object' || data === null || Array.isArray(data)) {
+      return { ok: false, error: 'Expected a JSON object.' };
+    }
     return { ok: true, data };
   } catch {
     return { ok: false, error: 'Invalid JSON payload.' };
@@ -1278,6 +1283,16 @@ export default {
 
     // ALL /api/* routes, rate-limited and CORS-gated in one place
     if (url.pathname.startsWith('/api/')) {
+      // Browser writes belong to the same site even when persistent CSRF
+      // token storage is unavailable. Server clients may omit Origin.
+      const isLocalDev = url.hostname === 'localhost' && origin === 'http://localhost:5173';
+      const isCrossOrigin = origin !== null && origin !== url.origin && !isLocalDev;
+      if (request.method === 'POST' && isCrossOrigin) {
+        return new Response(JSON.stringify({ error: 'Origin is not allowed.' }), {
+          status: 403,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
+        });
+      }
       const ip =
         request.headers.get('CF-Connecting-IP') ??
         request.headers.get('X-Forwarded-For') ??
@@ -1291,7 +1306,7 @@ export default {
 
       if (url.pathname === '/api/health') {
         return new Response(
-          JSON.stringify({ status: 'ok', timestamp: Date.now(), anthropic_key_set: !!env.ANTHROPIC_API_KEY }),
+          JSON.stringify({ status: 'ok', timestamp: Date.now() }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
         );
       }
@@ -1401,7 +1416,6 @@ export default {
 const MAX_MESSAGE_LENGTH = 4000;
 const MAX_HISTORY_MESSAGES = 20;
 const MAX_HISTORY_MESSAGE_LENGTH = 4000;
-const MAX_SYSTEM_INSTRUCTION_LENGTH = 2000;
 const MAX_GENERATE_PROMPT_LENGTH = 4000;
 
 function badRequest(error: string, corsHeaders: Record<string, string>): Response {
@@ -1422,12 +1436,18 @@ function capLength(value: string, max: number): string {
   return value.length > max ? value.slice(0, max) : value;
 }
 
+function aiUpstreamError(action: 'chat' | 'generate', status: number, headers: Record<string, string>): Response {
+  console.warn('AI provider request failed', { action, status });
+  return new Response(JSON.stringify({ error: 'The AI service could not respond. Please try again.' }), {
+    status: status === 429 ? 429 : 502,
+    headers: { ...headers, 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
+  });
+}
+
 async function handleChat(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
   const parsed = await parseJsonBody<{
     message: string;
     history?: AnthropicMessage[];
-    systemInstruction?: string;
-    model?: string;
     csrf_token?: string;
   }>(request);
 
@@ -1440,22 +1460,9 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
 
   const body = parsed.data;
 
-  // Validate and rotate CSRF token
-  const csrfResult = await validateAndRotateCsrfToken(body.csrf_token as string | null, env);
-  if (!csrfResult.valid) {
-    return new Response(JSON.stringify({ error: 'Invalid CSRF token. Please refresh and try again.' }), {
-      status: 403,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
-    });
-  }
-
   const message = typeof body.message === 'string' ? body.message : '';
   const history = Array.isArray(body.history) ? body.history : [];
-  const model =
-    typeof body.model === 'string' && body.model ? body.model : ANTHROPIC_DEFAULT_MODEL;
-
-  const systemText =
-    typeof body.systemInstruction === 'string' ? body.systemInstruction.trim() : '';
+  if (!message.trim()) return badRequest('Enter a message.', corsHeaders);
 
   if (message.length > MAX_MESSAGE_LENGTH) {
     return badRequest(`Message too long (max ${MAX_MESSAGE_LENGTH} characters).`, corsHeaders);
@@ -1463,11 +1470,18 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
   if (history.length > MAX_HISTORY_MESSAGES) {
     return badRequest(`Too much conversation history (max ${MAX_HISTORY_MESSAGES} messages).`, corsHeaders);
   }
-  if (history.some((h) => typeof h?.content === 'string' && h.content.length > MAX_HISTORY_MESSAGE_LENGTH)) {
-    return badRequest('One or more history messages exceed the length limit.', corsHeaders);
+  if (history.some(h => !h || !['user', 'assistant'].includes(h.role) ||
+    typeof h.content !== 'string' || h.content.length > MAX_HISTORY_MESSAGE_LENGTH)) {
+    return badRequest('Invalid conversation history.', corsHeaders);
   }
-  if (systemText.length > MAX_SYSTEM_INSTRUCTION_LENGTH) {
-    return badRequest(`System instruction too long (max ${MAX_SYSTEM_INSTRUCTION_LENGTH} characters).`, corsHeaders);
+
+  // Validate and rotate CSRF token
+  const csrfResult = await validateAndRotateCsrfToken(typeof body.csrf_token === 'string' ? body.csrf_token : null, env);
+  if (!csrfResult.valid) {
+    return new Response(JSON.stringify({ error: 'Invalid CSRF token. Please refresh and try again.' }), {
+      status: 403,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
+    });
   }
 
   const messages: AnthropicMessage[] = [...history,
@@ -1475,14 +1489,12 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
   ];
 
   const anthropicPayload: AnthropicPayload = {
-    model,
+    model: ANTHROPIC_DEFAULT_MODEL,
     max_tokens: ANTHROPIC_DEFAULT_MAX_TOKENS,
     messages,
     stream: true,
+    system: buildChatInstructions(request.cf),
   };
-  if (systemText.length > 0) {
-    anthropicPayload.system = systemText;
-  }
 
   const anthropicRes = await fetch(ANTHROPIC_API_BASE, {
     method: 'POST',
@@ -1492,14 +1504,10 @@ async function handleChat(request: Request, env: Env, corsHeaders: Record<string
       'anthropic-version': ANTHROPIC_VERSION,
     },
     body: JSON.stringify(anthropicPayload),
-  });
+  }).catch(() => null);
 
-  if (!anthropicRes.ok) {
-    const err = await anthropicRes.text();
-    return new Response(JSON.stringify({ error: err }), {
-      status: anthropicRes.status,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+  if (!anthropicRes?.ok) {
+    return aiUpstreamError('chat', anthropicRes?.status ?? 0, { ...corsHeaders, 'X-CSRF-Token': csrfResult.newToken });
   }
 
   return new Response(anthropicRes.body, {
@@ -1544,14 +1552,10 @@ async function handleGenerate(request: Request, env: Env, corsHeaders: Record<st
       max_tokens: ANTHROPIC_DEFAULT_MAX_TOKENS,
       messages: [{ role: 'user', content: prompt }],
     } satisfies AnthropicPayload),
-  });
+  }).catch(() => null);
 
-  if (!anthropicRes.ok) {
-    const err = await anthropicRes.text();
-    return new Response(JSON.stringify({ error: err }), {
-      status: anthropicRes.status,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+  if (!anthropicRes?.ok) {
+    return aiUpstreamError('generate', anthropicRes?.status ?? 0, corsHeaders);
   }
 
   const data = await anthropicRes.json<{
@@ -1632,8 +1636,7 @@ async function handleEarlyAccess(request: Request, env: Env, corsHeaders: Record
     });
 
     if (!resendRes.ok) {
-      const err = await resendRes.text();
-      console.error('[Trivian Worker] Resend API error:', err);
+      console.error('[Trivian Worker] Resend API error:', resendRes.status);
       return new Response(JSON.stringify({ success: false, error: 'Failed to send notification. Please try again.' }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -1764,8 +1767,7 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
     });
 
     if (!resendRes.ok) {
-      const err = await resendRes.text();
-      console.error('[Trivian Worker] Inquiry email error:', err);
+      console.error('[Trivian Worker] Inquiry email error:', resendRes.status);
       return new Response(JSON.stringify({ success: false, error: 'Failed to send your inquiry. Please try again.' }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfResult.newToken },
@@ -1861,7 +1863,7 @@ async function sendMetaLead(
       `https://graph.facebook.com/${META_GRAPH_VERSION}/${META_PIXEL_ID}/events?access_token=${encodeURIComponent(env.META_CAPI_TOKEN ?? '')}`,
       { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) },
     );
-    if (!res.ok) console.error('[Trivian Worker] Meta CAPI error:', res.status, await res.text());
+    if (!res.ok) console.error('[Trivian Worker] Meta CAPI error:', res.status);
   } catch (err) {
     // Never let ad tracking affect the lead itself.
     console.error('[Trivian Worker] Meta CAPI failed:', err);

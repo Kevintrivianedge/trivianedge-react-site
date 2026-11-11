@@ -10,7 +10,6 @@ let updateCheckInterval: NodeJS.Timeout | null = null;
 
 export async function registerServiceWorker(config: ServiceWorkerConfig = {}): Promise<ServiceWorkerRegistration | null> {
   if (!('serviceWorker' in navigator)) {
-    console.log('Service Workers not supported');
     return null;
   }
 
@@ -24,7 +23,6 @@ export async function registerServiceWorker(config: ServiceWorkerConfig = {}): P
       updateViaCache: 'none',
     });
 
-    console.log('Service Worker registered successfully');
 
     // Listen for updates
     registration.addEventListener('updatefound', () => {
@@ -48,11 +46,6 @@ export async function registerServiceWorker(config: ServiceWorkerConfig = {}): P
       }, interval);
     }
 
-    // Handle controller change
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      console.log('Service Worker controller changed');
-    });
-
     return registration;
   } catch (error) {
     const err = error instanceof Error ? error : new Error(String(error));
@@ -72,7 +65,6 @@ export function unregisterServiceWorker(): Promise<boolean> {
     if (registration) {
       registration.unregister().then((success) => {
         if (success) {
-          console.log('Service Worker unregistered');
           registration = null;
         }
         resolve(success);
@@ -129,7 +121,6 @@ export async function storeFailedSubmission(
       });
 
       transaction.oncomplete = () => {
-        console.log('Submission stored for offline retry');
         // Trigger background sync if available
         if ('serviceWorker' in navigator && 'SyncManager' in window) {
           const syncRegistration = registration as (ServiceWorkerRegistration & {

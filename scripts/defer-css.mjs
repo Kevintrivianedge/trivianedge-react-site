@@ -20,7 +20,8 @@ html = html.replace(
   /<link rel="stylesheet"([^>]*?)href="([^"]*)"([^>]*)>/g,
   (match, before, href, after) => {
     // Keep Google Fonts and other critical resources synchronous
-    if (href.includes('fonts.googleapis.com')) return match;
+    const stylesheet = URL.parse(href, 'https://www.trivianedge.com');
+    if (stylesheet?.origin === 'https://fonts.googleapis.com') return match;
     // The main app stylesheet (~17 KB gzipped) stays render-blocking: the
     // prerendered HTML can then paint styled on first frame, with no scrim
     // waiting on JS. Deferring it cost ~3.7s of LCP render delay on mobile.
