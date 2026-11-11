@@ -1,5 +1,5 @@
 const CACHE_NAME = 'trivianedge-v2';
-const ASSET_CACHE = 'trivianedge-assets-v1';
+const ASSET_CACHE = 'trivianedge-assets-v2';
 const API_CACHE = 'trivianedge-api-v2';
 const OFFLINE_PAGE = '/offline.html';
 
