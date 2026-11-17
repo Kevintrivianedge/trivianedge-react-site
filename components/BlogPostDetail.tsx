@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { BLOG_POSTS } from '../constants';
+import { BLOG_POSTS } from '../constants/blogPosts';
 import SEOHead from './SEOHead';
 import BlogMeta from './BlogMeta';
 import { articleSchema, breadcrumbSchema, faqSchema, SEO_CONFIG } from '../utils/seo';

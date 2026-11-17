@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, Search, ChevronLeft, ChevronRight } from 'lucide-react';
-import { BLOG_POSTS } from '../constants';
+import { BLOG_POSTS } from '../constants/blogPosts';
 import BlogCard from './BlogCard';
 
 const POSTS_PER_PAGE = 6;

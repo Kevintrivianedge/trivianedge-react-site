@@ -58,17 +58,19 @@ const Navbar: React.FC = () => {
     const previouslyFocused = document.activeElement as HTMLElement | null;
     document.body.style.overflow = 'hidden';
 
-    const focusable = drawerRef.current
-      ? Array.from(drawerRef.current.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'))
-      : [];
-    focusable[0]?.focus();
+    const getFocusable = () => Array.from(
+      drawerRef.current?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])') ?? [],
+    );
+    getFocusable()[0]?.focus();
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsOpen(false);
         return;
       }
-      if (e.key === 'Tab' && focusable.length > 0) {
+      if (e.key === 'Tab') {
+        const focusable = getFocusable();
+        if (!focusable.length) return;
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
         if (e.shiftKey && document.activeElement === first) {

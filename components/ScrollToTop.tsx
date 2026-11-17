@@ -16,6 +16,7 @@ const ScrollToTop = () => {
       }
     };
 
+    toggleVisibility();
     window.addEventListener('scroll', toggleVisibility, { passive: true });
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
@@ -23,7 +24,7 @@ const ScrollToTop = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
     });
   };
 
@@ -31,6 +32,8 @@ const ScrollToTop = () => {
     <div className={`fixed bottom-24 right-4 sm:bottom-28 sm:right-8 z-50 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}>
       <button
         onClick={scrollToTop}
+        tabIndex={isVisible ? 0 : -1}
+        aria-hidden={!isVisible}
         className="p-4 rounded-full bg-surface border border-border backdrop-blur-md hover-neon-glow group relative"
         aria-label="Scroll to top"
       >
