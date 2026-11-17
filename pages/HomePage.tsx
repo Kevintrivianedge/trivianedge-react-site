@@ -49,7 +49,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
   return (
     <>
       {/* ===== 1. HERO ===== */}
-      <section aria-label="Introduction" className="hero-dark relative overflow-hidden px-4 sm:px-6 pt-24 pb-8 sm:pt-28 lg:py-16 lg:pt-28" style={{ background: 'var(--te-gradient-hero)' }}>
+      <section aria-label="Introduction" className="home-hero hero-dark relative overflow-hidden px-4 sm:px-6 pt-24 pb-8 sm:pt-28 lg:py-16 lg:pt-28" style={{ background: 'var(--te-gradient-hero)' }}>
         {/* Hairline grid — reads as an engineering surface, fades out at the edges */}
         <div
           aria-hidden
@@ -61,7 +61,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 60% 40%, #000 30%, transparent 75%)',
           }}
         />
-        <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+        <div className="home-hero-layout relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           <div className="lg:col-span-7">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-cyan-400">Offshore outsourcing · Toronto, Canada</p>
 
@@ -74,7 +74,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               TrivianEdge helps businesses add offshore specialists, build dedicated teams, and deliver custom software.
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <div className="home-hero-actions mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
               <a
                 href={BOOKING_URL}
                 target="_blank"
@@ -84,7 +84,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
                 Book a 15-minute call
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
               </a>
-              <a href="#proof" className="inline-flex items-center gap-2 py-2 text-sm font-semibold text-white hover:underline">
+              <a href="#proof" className="inline-flex min-h-11 items-center gap-2 py-2 text-sm font-semibold text-white hover:underline">
                 See our work <ArrowUpRight className="h-4 w-4" aria-hidden />
               </a>
             </div>
@@ -144,7 +144,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       </section>
 
       {/* ===== 3. PROOF ===== */}
-      <section id="proof" aria-labelledby="proof-heading" className="section-dark section-shell px-4 md:px-6">
+      <section id="proof" aria-labelledby="proof-heading" className="section-dark section-shell scroll-mt-24 px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
           <div id="proof-heading">
             <SectionHead dark label="Client work" title="Websites we’ve built" intro="Explore the public sites we’ve delivered for clients in education, logistics, and retail." />
@@ -337,7 +337,7 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
       </section>
 
       {/* ===== 6. CONTACT ===== */}
-      <section id="contact" aria-labelledby="contact-heading" className="section-dark section-shell px-4 md:px-6">
+      <section id="contact" aria-labelledby="contact-heading" className="section-dark section-shell scroll-mt-24 px-4 md:px-6">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-16">
           <div className="lg:col-span-5">
             <h2 id="contact-heading" className="display-section font-semibold text-white">Tell us what you’re trying to fix.</h2>

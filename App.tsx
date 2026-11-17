@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
-import { AnimatePresence, m } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import ScrollProgressBar from './components/ScrollProgressBar';
+import ChatLauncher from './components/ChatLauncher';
 import { Mail, Linkedin, Twitter } from 'lucide-react';
 import { Routes, Route, useLocation, useNavigate, Link } from 'react-router-dom';
 import { TalentHub } from './types';
@@ -72,7 +73,6 @@ const ServicesPage            = lazy(() => import('./pages/ServicesPage'));
 const TalentServicePage       = lazy(() => import('./pages/ServicesPage').then(module => ({ default: module.TalentServicePage })));
 const SavingsCalculatorPage   = lazy(() => import('./pages/SavingsCalculatorPage'));
 const NotFoundPage            = lazy(() => import('./pages/NotFoundPage'));
-const ChatSidebar             = lazy(() => import('./components/ChatSidebar'));
 const CityLandingPage         = lazy(() => import('./components/CityLandingPage'));
 
 
@@ -286,62 +286,49 @@ export default function App() {
               into the gap and then violently reflow once the lazy chunk finishes
               evaluating — this was producing CLS above 1.0 on every lazy-loaded
               route under throttled mobile CPU, confirmed via a live Lighthouse run. */}
-          <main id="main-content" className="min-h-dvh">
+          <main id="main-content" tabIndex={-1} className="min-h-dvh scroll-mt-24">
             <ErrorBoundary fallback={null}>
               <Suspense fallback={null}>
-                {/* initial={false}: the first paint is the prerendered HTML; fading it
-                    in from opacity 0 on the client render hid the hero from LCP.
-                    Route changes still animate. */}
-                <AnimatePresence mode="wait" initial={false}>
-                  <m.div
-                    key={location.pathname}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -12 }}
-                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <Routes location={location}>
-                      <Route path="/" element={<HomePage setSelectedHub={setSelectedHub} />} />
-                      <Route path="/contact" element={<ContactPage />} />
-                      <Route path="/proof" element={<ProofPage />} />
-                      <Route path="/trust" element={<TrustPage />} />
-                      <Route path="/talent/:slug" element={<TalentHubPage />} />
-                      <Route path="/about" element={<AboutPage />} />
-                      <Route path="/blog" element={<BlogView />} />
-                      <Route path="/blog/:slug" element={<BlogPostDetail />} />
-                      <Route path="/privacy" element={<PrivacyPage />} />
-                      <Route path="/terms" element={<TermsPage />} />
-                      <Route path="/cookie-policy" element={<CookiePolicyPage />} />
-                      <Route path="/services" element={<ServicesPage />} />
-                      <Route path="/services/staff-augmentation" element={<TalentServicePage />} />
-                      <Route path="/services/dedicated-offshore-teams" element={<TalentServicePage />} />
-                      <Route path="/services/cloud" element={<CloudServicesPage />} />
-                      <Route path="/services/bpo" element={<BPOPage />} />
-                      <Route path="/services/rpo" element={<RPOPage />} />
-                      <Route path="/services/rpo/full-cycle-rpo" element={<FullCycleRPOPage />} />
-                      <Route path="/services/rpo/project-based-rpo" element={<ProjectBasedRPOPage />} />
-                      <Route path="/services/rpo/ai-powered-recruitment" element={<AIPoweredRecruitmentPage />} />
-                      <Route path="/services/ai-development" element={<AIDevelopmentPage />} />
-                      <Route path="/services/ai-development/generative-ai" element={<GenerativeAIPage />} />
-                      <Route path="/services/ai-development/llm-integration" element={<LLMIntegrationPage />} />
-                      <Route path="/services/ai-development/machine-learning" element={<MachineLearningPage />} />
-                      <Route path="/services/ai-development/ai-automation" element={<AIAutomationPage />} />
-                      <Route path="/services/ai-development/ai-chatbot-development" element={<AIChatbotDevelopmentPage />} />
-                      <Route path="/services/ai-development/mlops" element={<MLOpsPage />} />
-                      <Route path="/services/it-outsourcing" element={<ITOutsourcingPage />} />
-                      <Route path="/compare/:slug" element={<ComparisonPage />} />
-                      <Route path="/industries" element={<IndustriesIndexPage />} />
-                      <Route path="/industries/:slug" element={<IndustryPage />} />
-                      <Route path="/services/:service/:country" element={<ServiceCountryPage />} />
-                      <Route path="/savings-calculator" element={<SavingsCalculatorPage />} />
-                      <Route path="/venture-studio" element={<VentureStudioPage />} />
-                      <Route path="/ai-ventures/aria" element={<AriaOSPage />} />
-                      <Route path="/ai-ventures/aether-logistics" element={<AetherLogisticsPage />} />
-                      <Route path="/locations/:slug" element={<CityLandingPage />} />
-                      <Route path="*" element={<NotFoundPage />} />
-                    </Routes>
-                  </m.div>
-                </AnimatePresence>
+                <Routes location={location}>
+                  <Route path="/" element={<HomePage setSelectedHub={setSelectedHub} />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/proof" element={<ProofPage />} />
+                  <Route path="/trust" element={<TrustPage />} />
+                  <Route path="/talent/:slug" element={<TalentHubPage />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/blog" element={<BlogView />} />
+                  <Route path="/blog/:slug" element={<BlogPostDetail />} />
+                  <Route path="/privacy" element={<PrivacyPage />} />
+                  <Route path="/terms" element={<TermsPage />} />
+                  <Route path="/cookie-policy" element={<CookiePolicyPage />} />
+                  <Route path="/services" element={<ServicesPage />} />
+                  <Route path="/services/staff-augmentation" element={<TalentServicePage />} />
+                  <Route path="/services/dedicated-offshore-teams" element={<TalentServicePage />} />
+                  <Route path="/services/cloud" element={<CloudServicesPage />} />
+                  <Route path="/services/bpo" element={<BPOPage />} />
+                  <Route path="/services/rpo" element={<RPOPage />} />
+                  <Route path="/services/rpo/full-cycle-rpo" element={<FullCycleRPOPage />} />
+                  <Route path="/services/rpo/project-based-rpo" element={<ProjectBasedRPOPage />} />
+                  <Route path="/services/rpo/ai-powered-recruitment" element={<AIPoweredRecruitmentPage />} />
+                  <Route path="/services/ai-development" element={<AIDevelopmentPage />} />
+                  <Route path="/services/ai-development/generative-ai" element={<GenerativeAIPage />} />
+                  <Route path="/services/ai-development/llm-integration" element={<LLMIntegrationPage />} />
+                  <Route path="/services/ai-development/machine-learning" element={<MachineLearningPage />} />
+                  <Route path="/services/ai-development/ai-automation" element={<AIAutomationPage />} />
+                  <Route path="/services/ai-development/ai-chatbot-development" element={<AIChatbotDevelopmentPage />} />
+                  <Route path="/services/ai-development/mlops" element={<MLOpsPage />} />
+                  <Route path="/services/it-outsourcing" element={<ITOutsourcingPage />} />
+                  <Route path="/compare/:slug" element={<ComparisonPage />} />
+                  <Route path="/industries" element={<IndustriesIndexPage />} />
+                  <Route path="/industries/:slug" element={<IndustryPage />} />
+                  <Route path="/services/:service/:country" element={<ServiceCountryPage />} />
+                  <Route path="/savings-calculator" element={<SavingsCalculatorPage />} />
+                  <Route path="/venture-studio" element={<VentureStudioPage />} />
+                  <Route path="/ai-ventures/aria" element={<AriaOSPage />} />
+                  <Route path="/ai-ventures/aether-logistics" element={<AetherLogisticsPage />} />
+                  <Route path="/locations/:slug" element={<CityLandingPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
               </Suspense>
             </ErrorBoundary>
           </main>
@@ -410,7 +397,7 @@ export default function App() {
             </div>
             <div className="relative max-w-7xl mx-auto pt-8 pr-20 sm:pr-28 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest uppercase text-white/55">
               <p>© {new Date().getFullYear()} TrivianEdge Global, Canada's Offshore Operations Partner</p>
-              <div className="flex gap-8">
+              <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
                 <Link to="/privacy" className="hover:text-white/80 transition-colors">Privacy</Link>
                 <Link to="/terms" className="hover:text-white/80 transition-colors">Terms</Link>
                 <Link to="/cookie-policy" className="hover:text-white/80 transition-colors">Cookies</Link>
@@ -426,9 +413,7 @@ export default function App() {
           </footer>
           <ScrollToTop />
           <ErrorBoundary fallback={null}>
-            <Suspense fallback={null}>
-              <ChatSidebar />
-            </Suspense>
+            <ChatLauncher />
           </ErrorBoundary>
         </div>
         </GeoProvider>

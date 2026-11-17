@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { X, Send, MessageSquare, Terminal, Loader2, User, Bot, Sparkles, RefreshCw } from 'lucide-react';
+import { X, Send, Terminal, Loader2, User, Bot, Sparkles, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { API_ENDPOINTS } from '../constants/api';
 import { getCsrfToken, addCsrfTokenToFormData, extractRotatedCsrfToken } from '../utils/csrf';
@@ -263,8 +263,7 @@ const AriaAvatar = ({ isTyping = false, size = 'md' }) => {
     );
 };
 
-export const ChatSidebar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export const ChatSidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState<Message[]>([
     { role: 'model', text: "Hi! I'm Aria, your AI guide from TrivianEdge.\n\nHow may I help you today?", isInitial: true }
   ]);
@@ -274,16 +273,14 @@ export const ChatSidebar: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const launcherRef = useRef<HTMLButtonElement>(null);
-  const wasOpenRef = useRef(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, isTyping]);
+    if (isOpen) scrollToBottom();
+  }, [isOpen, messages, isTyping]);
 
   // Real DOM `inert` (not just aria-hidden) so the panel's buttons/input are
   // neither focusable nor tab-reachable while translated off-screen — axe's
@@ -295,24 +292,16 @@ export const ChatSidebar: React.FC = () => {
   }, [isOpen]);
 
   useEffect(() => {
-    if (isOpen) {
-        // Focus input when sidebar opens (#9 — autoFocus only fires on mount, not re-open)
-        setTimeout(() => inputRef.current?.focus(), 50);
-        // Lock body scroll using a counter so concurrent overlays don't conflict (#16)
-        const prev = parseInt(document.body.dataset.scrollLocks ?? '0', 10);
-        document.body.dataset.scrollLocks = String(prev + 1);
-        document.body.style.overflow = 'hidden';
-    } else {
-        const prev = parseInt(document.body.dataset.scrollLocks ?? '1', 10);
-        const next = Math.max(0, prev - 1);
-        document.body.dataset.scrollLocks = String(next);
-        if (next === 0) document.body.style.overflow = '';
-    }
+    if (!isOpen) return;
+    const focusTimer = window.setTimeout(() => inputRef.current?.focus(), 50);
+    const previousLocks = Number(document.body.dataset.scrollLocks ?? '0');
+    document.body.dataset.scrollLocks = String(previousLocks + 1);
+    document.body.style.overflow = 'hidden';
     return () => {
-        const prev = parseInt(document.body.dataset.scrollLocks ?? '1', 10);
-        const next = Math.max(0, prev - 1);
-        document.body.dataset.scrollLocks = String(next);
-        if (next === 0) document.body.style.overflow = '';
+      window.clearTimeout(focusTimer);
+      const locks = Math.max(0, Number(document.body.dataset.scrollLocks ?? '1') - 1);
+      document.body.dataset.scrollLocks = String(locks);
+      if (locks === 0) document.body.style.overflow = '';
     };
   }, [isOpen]);
 
@@ -320,7 +309,7 @@ export const ChatSidebar: React.FC = () => {
   useEffect(() => {
     if (!isOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') { setIsOpen(false); return; }
+        if (e.key === 'Escape') { onClose(); return; }
         if (e.key === 'Tab' && sidebarRef.current) {
             const focusable = Array.from(
                 sidebarRef.current.querySelectorAll<HTMLElement>(
@@ -339,17 +328,7 @@ export const ChatSidebar: React.FC = () => {
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen]);
-
-  // Return focus to the launcher button when the sidebar closes.
-  useEffect(() => {
-    if (isOpen) {
-        wasOpenRef.current = true;
-    } else if (wasOpenRef.current) {
-        wasOpenRef.current = false;
-        launcherRef.current?.focus();
-    }
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   const handleSend = async () => {
     if (!input.trim() || isTyping) return;
@@ -501,23 +480,10 @@ export const ChatSidebar: React.FC = () => {
 
   return (
     <>
-      {/* Trigger Button - Bottom Right */}
-      <button
-        ref={launcherRef}
-        onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-4 sm:bottom-10 sm:right-10 z-[150] p-4 rounded-full bg-gradient-to-tr from-cyan-600 to-violet-600 text-white shadow-[0_0_20px_rgba(64, 201, 200,0.5)] hover:scale-110 transition-all duration-300 group ${isOpen ? 'hidden' : 'flex'} items-center justify-center`}
-        aria-label="Open AI Assistant"
-      >
-        <MessageSquare className="w-6 h-6 animate-pulse" />
-        <span className="absolute right-full mr-4 bg-surface border border-border backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-widest text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-            AI Assistant
-        </span>
-      </button>
-
       {/* Backdrop */}
       <div 
         className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[190] transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        onClick={() => setIsOpen(false)}
+        onClick={onClose}
       />
 
       {/* Sidebar — full-width on mobile, 600px on larger screens */}
@@ -558,7 +524,7 @@ export const ChatSidebar: React.FC = () => {
                     <RefreshCw className="w-4 h-4" />
                 </button>
                 <button 
-                    onClick={() => setIsOpen(false)} 
+                    onClick={onClose}
                     className="p-2 hover:bg-white/10 rounded-lg transition-colors text-gray-400 hover:text-white min-w-[44px] min-h-[44px] flex items-center justify-center"
                     aria-label="Close AI Assistant"
                 >
