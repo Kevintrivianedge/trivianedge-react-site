@@ -215,26 +215,43 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
           </ul>
         </div>
           <h2 className="mb-6 mt-16 text-2xl font-semibold text-white md:text-3xl">Client case studies</h2>
-          <div className="grid md:grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-3xl overflow-hidden">
-            {[...CASE_STUDIES].sort((first, second) => Number(second.client === FEATURED_CLIENT) - Number(first.client === FEATURED_CLIENT)).map(study => (
-              <m.article key={study.client} {...reveal} className={`bg-[#07090a] p-8 md:p-10 flex flex-col ${study.client === FEATURED_CLIENT ? "md:col-span-2" : ""}`}>
-                <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-400">{study.sector}</p>
-                <h3 className="mt-3 text-2xl font-semibold text-white">{study.client}</h3>
-                <p className="mt-5 text-white/65 leading-relaxed">{study.outcome}</p>
-                <ul className="mt-auto pt-8 flex flex-wrap gap-2">
-                  {study.highlights.map(h => (
-                    <li key={h} className="rounded-full border border-white/10 px-3 py-1 text-xs text-white/55">{h}</li>
-                  ))}
-                </ul>
-                <Link
-                  to={CASE_STUDY_LINKS[study.client] ?? '/proof'}
-                  className="mt-8 inline-flex items-center gap-1.5 self-start text-sm font-bold text-cyan-400 hover:underline underline-offset-4"
-                  aria-label={`Read the ${study.client} case study`}
-                >
-                  Read the case study <ArrowRight className="h-4 w-4" aria-hidden />
-                </Link>
-              </m.article>
-            ))}
+          <div className="grid lg:grid-cols-3 gap-px bg-white/10 border border-white/10 rounded-3xl overflow-hidden">
+            {[...CASE_STUDIES].sort((first, second) => Number(second.client === FEATURED_CLIENT) - Number(first.client === FEATURED_CLIENT)).map(study => {
+              const featured = study.client === 'Capricorn College';
+              return (
+                <m.article key={study.client} {...reveal} className={`bg-[#07090a] p-6 sm:p-8 ${featured ? 'lg:col-span-full grid gap-6 md:grid-cols-2 md:gap-8 md:items-center' : 'flex flex-col'}`}>
+                  <div className="flex flex-1 flex-col">
+                    <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-400">{study.sector}</p>
+                    <h3 className="mt-3 text-2xl font-semibold text-white">{study.client}</h3>
+                    <p className="mt-4 text-white/75 leading-relaxed">{study.outcome}</p>
+                    <ul className="mt-auto pt-5 flex flex-wrap gap-2">
+                      {study.highlights.map(h => (
+                        <li key={h} className="rounded-full border border-white/10 px-3 py-1 text-xs text-white/55">{h}</li>
+                      ))}
+                    </ul>
+                    <Link
+                      to={featured ? '/proof#capricorn-college' : CASE_STUDY_LINKS[study.client] ?? '/proof'}
+                      reloadDocument={featured}
+                      className="mt-5 inline-flex items-center gap-1.5 self-start text-sm font-bold text-cyan-400 hover:underline underline-offset-4"
+                      aria-label={`Read the ${study.client} case study`}
+                    >
+                      Read the case study <ArrowRight className="h-4 w-4" aria-hidden />
+                    </Link>
+                  </div>
+                  {featured && (
+                    <img
+                      src="/capricorn-college-website.webp"
+                      alt="Capricorn College homepage with its main navigation and school climate panel"
+                      width={1120}
+                      height={700}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full rounded-2xl border border-white/10"
+                    />
+                  )}
+                </m.article>
+              );
+            })}
           </div>
           <div className="mt-12 flex flex-col md:flex-row md:items-center gap-6">
             <p className="text-lg text-white/80">Facing something similar? Let's talk it through.</p>

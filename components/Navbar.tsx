@@ -166,7 +166,7 @@ const Navbar: React.FC = () => {
     // forever without JS). Visible from the first paint instead.
     <m.nav
       aria-label="Main navigation"
-      className={`fixed top-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'bg-background/85 backdrop-blur-md border-b border-border py-4 shadow-[0_10px_30px_rgba(15,23,42,0.06)]' : 'bg-transparent py-8'}`}
+      className={`fixed top-0 w-full z-[100] border-b transition-[background-color,border-color,padding] duration-300 ${onDarkHero ? 'bg-transparent border-transparent' : 'bg-background border-border shadow-sm'} ${scrolled ? 'py-3' : 'py-5 md:py-7'}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex justify-between items-center relative z-[101] gap-4">
         <div className="shrink-0">
@@ -188,7 +188,7 @@ const Navbar: React.FC = () => {
                   onClick={() => setOpenDropdown(openDropdown === link.name ? null : link.name)}
                   aria-expanded={openDropdown === link.name}
                   aria-current={location.pathname.startsWith(link.href) ? 'page' : undefined}
-                  className={`group relative flex items-center gap-1 text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest hover:text-cyan-400 transition-colors ${onDarkHero ? 'text-white/70' : 'text-muted'} ${location.pathname.startsWith(link.href) ? '!text-cyan-400' : ''}`}
+                  className={`group relative flex items-center gap-1 text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest transition-colors ${onDarkHero ? 'text-white/90 hover:text-cyan-400' : 'text-text hover:text-cyan-700 dark:hover:text-cyan-400'} ${location.pathname.startsWith(link.href) ? (onDarkHero ? '!text-cyan-400' : '!text-cyan-700 dark:!text-cyan-400') : ''}`}
                 >
                   {link.name}
                   <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === link.name ? 'rotate-180' : ''}`} />
@@ -225,7 +225,7 @@ const Navbar: React.FC = () => {
                 href={link.href}
                 onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
                 aria-current={location.pathname === link.href ? 'page' : undefined}
-                className={`group relative text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest hover:text-cyan-400 transition-colors ${onDarkHero ? 'text-white/70' : 'text-muted'} ${location.pathname === link.href ? '!text-cyan-400' : ''}`}
+                className={`group relative text-[11px] xl:text-xs font-bold uppercase tracking-[0.12em] xl:tracking-widest transition-colors ${onDarkHero ? 'text-white/90 hover:text-cyan-400' : 'text-text hover:text-cyan-700 dark:hover:text-cyan-400'} ${location.pathname === link.href ? (onDarkHero ? '!text-cyan-400' : '!text-cyan-700 dark:!text-cyan-400') : ''}`}
               >
                 {link.name}
                 <span

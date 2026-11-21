@@ -56,7 +56,7 @@ const ProofPage: React.FC = () => {
 
   useEffect(() => {
     const id = hash.slice(1);
-    if (id !== 'websites' && id !== 'story-tima-international' && !PORTFOLIO_PROJECTS.some(project => project.id === id) && !PROJECT_STORIES.some(project => `story-${project.id}` === id)) return;
+    if (id !== 'capricorn-college' && id !== 'websites' && id !== 'story-tima-international' && !PORTFOLIO_PROJECTS.some(project => project.id === id) && !PROJECT_STORIES.some(project => `story-${project.id}` === id)) return;
     const frame = window.requestAnimationFrame(() => {
       document.getElementById(id)?.scrollIntoView({ behavior: 'instant' });
     });
@@ -281,9 +281,9 @@ const ProofPage: React.FC = () => {
             ))}
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-6 mb-16">
+          <div className="grid md:grid-cols-2 gap-6 mb-16">
             {CASE_STUDIES.map((study, idx) => (
-              <article key={study.client} style={{ transitionDelay: `${idx * 80}ms` }} className="glass p-8 rounded-[2rem] border-border reveal flex flex-col">
+              <article key={study.client} id={study.client === 'Capricorn College' ? 'capricorn-college' : undefined} style={{ transitionDelay: `${idx * 80}ms` }} className="glass p-6 sm:p-8 rounded-[2rem] border-border reveal flex flex-col scroll-mt-28">
                 <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 mb-3">{study.sector}</p>
                 <h2 className="text-2xl font-bold mb-4">{study.client}</h2>
                 <div className="space-y-4 text-muted leading-relaxed text-sm md:text-base">
