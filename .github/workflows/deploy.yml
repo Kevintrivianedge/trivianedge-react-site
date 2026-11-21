@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     name: Lint → Type-check → Test → Build → Deploy
     steps:
       - uses: actions/checkout@v7
