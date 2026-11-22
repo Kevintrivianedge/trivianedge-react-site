@@ -70,3 +70,41 @@ describe('production Worker responses', () => {
     expect(await response.text()).not.toContain('private provider diagnostic');
   });
 });
+
+describe('Bunzy blog integration', () => {
+  const requestBlog = (path: string) => new Request(`${origin}${path}`);
+  const bunzyEnv = { ...env, BUNZY_BLOG_API_KEY: 'test-blog-key' };
+
+  it('lists the newest Bunzy posts first and keeps existing article URLs reserved', async () => {
+    const summary = { title: 'Article', excerpt: 'Summary', tags: [], author: { name: 'Writer' }, readingMinutes: 3 };
+    const fetchMock = vi.fn().mockResolvedValue(Response.json({ data: [
+      { ...summary, slug: 'older-bunzy-post', publishedAt: '2026-10-01' },
+      { ...summary, slug: 'cargo-login-case-study', publishedAt: '2026-11-10' },
+      { ...summary, slug: 'newer-bunzy-post', publishedAt: '2026-11-01' },
+    ] }));
+    vi.stubGlobal('fetch', fetchMock);
+    const response = await worker.fetch(requestBlog('/api/blog/latest'), bunzyEnv, context);
+    expect(response.status).toBe(200);
+    expect((await response.json()).map((post: { slug: string }) => post.slug))
+      .toEqual(['newer-bunzy-post', 'older-bunzy-post']);
+    expect(fetchMock).toHaveBeenCalledOnce();
+  });
+
+  it('keeps the existing blog and article available during a Bunzy outage', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response(null, { status: 503 }));
+    vi.stubGlobal('fetch', fetchMock);
+    const assets = { fetch: vi.fn((request: Request) => Promise.resolve(
+      new URL(request.url).pathname.endsWith('/index.html')
+        ? new Response('Existing blog content')
+        : new Response(null, { status: 404 }),
+    )) };
+    const bindings = { ...bunzyEnv, ASSETS: assets };
+    for (const path of ['/blog', '/blog/cargo-login-case-study']) {
+      const response = await worker.fetch(requestBlog(path), bindings, context);
+      expect(response.status).toBe(200);
+      expect(await response.text()).toBe('Existing blog content');
+    }
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect((await worker.fetch(requestBlog('/api/blog/latest'), bindings, context)).status).toBe(502);
+  });
+});

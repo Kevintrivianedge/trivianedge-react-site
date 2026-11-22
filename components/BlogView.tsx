@@ -1,27 +1,50 @@
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { BLOG_POSTS } from '../constants/blogPosts';
 import BlogCard from './BlogCard';
+import type { BlogPost } from '../types';
 
 const POSTS_PER_PAGE = 6;
+type LatestPost = Pick<BlogPost, 'title' | 'excerpt' | 'category' | 'readTime' | 'author'> & { slug: string };
 
 const BlogView: React.FC = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [latestPosts, setLatestPosts] = useState<LatestPost[]>([]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch('/api/blog/latest', { signal: controller.signal })
+      .then(response => response.ok ? response.json() : [])
+      .then(posts => {
+        if (!controller.signal.aborted && Array.isArray(posts)) setLatestPosts(posts);
+      })
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
 
   const filteredPosts = useMemo(() => {
+    const posts = [
+      ...latestPosts.map(post => ({
+        ...post,
+        id: post.slug,
+        imageGradient: 'from-cyan-500/45 to-cyan-700/25',
+        href: `/blog/${encodeURIComponent(post.slug)}`,
+      })),
+      ...BLOG_POSTS.map(post => ({ ...post, href: undefined })),
+    ];
     const q = searchQuery.toLowerCase().trim();
-    if (!q) return BLOG_POSTS;
-    return BLOG_POSTS.filter(
+    if (!q) return posts;
+    return posts.filter(
       (post) =>
         post.title.toLowerCase().includes(q) ||
         post.excerpt.toLowerCase().includes(q) ||
         post.category.toLowerCase().includes(q) ||
         post.author.toLowerCase().includes(q)
     );
-  }, [searchQuery]);
+  }, [latestPosts, searchQuery]);
 
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE));
   const safePage = Math.min(currentPage, totalPages);
@@ -74,7 +97,7 @@ const BlogView: React.FC = () => {
         {paginatedPosts.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {paginatedPosts.map((post, idx) => (
-              <BlogCard key={post.id} post={post} onClick={handlePostClick} index={idx} />
+              <BlogCard key={post.id} post={post} onClick={handlePostClick} index={idx} href={post.href} />
             ))}
           </div>
         ) : (

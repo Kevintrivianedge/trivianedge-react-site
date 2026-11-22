@@ -25,6 +25,8 @@
   },
   "dependencies": {
     "framer-motion": "10.16.4",
+    "markdown-it": "^15.0.3",
+    "markdown-it-attrs": "^5.0.1",
     "lucide-react": "0.294.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -44,6 +46,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
+    "@types/markdown-it": "^14.2.0",
     "@types/node": "^22.14.0",
     "@types/react": "^18.3.28",
     "@types/react-dom": "^18.3.7",

@@ -1,6 +1,12 @@
+import { serveBunzyBlog } from './bunzyBlog';
+import { createBunzyApi, type BunzyEnv } from './bunzyApi';
+import { BLOG_POSTS } from '../constants/blogPosts';
+
+const existingBlogPaths = new Set(BLOG_POSTS.map(post => `/blog/${encodeURIComponent(post.slug ?? post.id)}`));
+
 import { buildChatInstructions } from './chat-instructions';
 
-export interface Env {
+export interface Env extends BunzyEnv {
   ANTHROPIC_API_KEY: string;
   // TODO: Set RESEND_API_KEY in Cloudflare Workers secrets (wrangler secret put RESEND_API_KEY)
   RESEND_API_KEY?: string;
@@ -1236,6 +1242,39 @@ export default {
       const canonical = new URL(request.url);
       canonical.pathname = url.pathname.replace(/\/+$/, '');
       return Response.redirect(canonical.toString(), 301);
+    }
+
+    if (url.pathname === '/api/blog/latest' && request.method === 'GET') {
+      const headers = { 'Cache-Control': 'no-store' };
+      if (!env.BUNZY_BLOG_API_KEY) return Response.json([], { headers });
+
+      try {
+        const { data } = await createBunzyApi(env).getPosts(1, 12);
+        const posts = data
+          .filter(post => post.slug && !existingBlogPaths.has(`/blog/${encodeURIComponent(post.slug)}`))
+          .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
+          .map(({ slug, title, excerpt, tags, author, readingMinutes }) => ({
+            slug, title, excerpt, category: tags[0] ?? 'Insights',
+            author: author.name, readTime: `${readingMinutes} min read`,
+          }));
+        return Response.json(posts, { headers });
+      } catch {
+        return Response.json([], { headers, status: 502 });
+      }
+    }
+
+    if (env.BUNZY_BLOG_API_KEY && url.pathname.startsWith('/blog/') && !existingBlogPaths.has(url.pathname)) {
+      if (request.method !== 'GET' && request.method !== 'HEAD') {
+        return new Response(null, { status: 405, headers: { Allow: 'GET, HEAD' } });
+      }
+      const page = await serveBunzyBlog(url, env, ALLOWED_ORIGIN);
+      const response = addSecurityHeaders(page, url.pathname);
+      response.headers.set('Cache-Control', 'no-store');
+      if (request.method === 'HEAD') {
+        await response.body?.cancel();
+        return new Response(null, { status: response.status, headers: response.headers });
+      }
+      return response;
     }
 
     // Legacy URL redirects — old slugs still turning up in Search Console /

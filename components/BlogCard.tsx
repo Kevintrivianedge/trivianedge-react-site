@@ -12,13 +12,17 @@ const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>
   'Remote Work': Wifi,
 };
 
-const BlogCard: React.FC<{ post: BlogPost; onClick: (id: string) => void; index: number }> = ({ post, onClick, index }) => {
+type CardPost = Pick<BlogPost, 'id' | 'title' | 'excerpt' | 'category' | 'readTime' | 'author' | 'imageGradient'>;
+
+const BlogCard: React.FC<{ post: CardPost; onClick: (id: string) => void; index: number; href?: string }> = ({ post, onClick, index, href }) => {
   const CategoryIcon = CATEGORY_ICONS[post.category] ?? Newspaper;
+  const Card = href ? 'a' : 'button';
 
   return (
-  <button
-    type="button"
-    onClick={() => onClick(post.id)}
+  <Card
+    href={href}
+    type={href ? undefined : 'button'}
+    onClick={href ? undefined : () => onClick(post.id)}
     className="reveal glass tilt-card group w-full text-left p-8 rounded-[2.5rem] border-border hover-neon-glow overflow-hidden relative"
     style={{ transitionDelay: `${index * 200}ms` }}
   >
@@ -47,7 +51,7 @@ const BlogCard: React.FC<{ post: BlogPost; onClick: (id: string) => void; index:
         <ArrowRight className="w-5 h-5 text-muted group-hover:text-text group-hover:translate-x-1 transition-all" />
       </div>
     </div>
-  </button>
+  </Card>
   );
 };
 

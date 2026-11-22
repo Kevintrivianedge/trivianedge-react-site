@@ -8,6 +8,10 @@ directory = "./dist"
 binding = "ASSETS"
 not_found_handling = "none"
 html_handling = "none"
+run_worker_first = ["/blog", "/blog/*", "/api/blog/latest"]
+
+[vars]
+BUNZY_BLOG_API_URL = "https://app.bunzy.io"
 
 [observability]
 enabled = true
