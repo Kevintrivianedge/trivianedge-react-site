@@ -74,20 +74,23 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
               TrivianEdge helps businesses add offshore specialists, build dedicated teams, and deliver custom software.
             </p>
 
-            <div className="home-hero-actions mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-              <a
-                href={BOOKING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-cyan-400 px-5 py-3 font-bold text-black transition-colors hover:bg-cyan-300"
+            <div className="home-hero-actions mt-6 flex flex-wrap items-center gap-3">
+              <Link
+                to="/services/dedicated-offshore-teams?from=home"
+                className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-cyan-400 px-5 py-3 font-bold text-black transition-colors hover:bg-cyan-300"
               >
-                Book a 15-minute call
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
-              </a>
-              <a href="#proof" className="inline-flex min-h-11 items-center gap-2 py-2 text-sm font-semibold text-white hover:underline">
-                See our work <ArrowUpRight className="h-4 w-4" aria-hidden />
-              </a>
+                I need a team <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+              </Link>
+              <Link
+                to="/services/it-outsourcing?from=home"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/35 px-5 py-3 font-bold text-white hover:bg-white/10"
+              >
+                I need software built <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
             </div>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-white/85 hover:underline">
+              Book a 15-minute call <ArrowUpRight className="h-4 w-4" aria-hidden />
+            </a>
           </div>
 
           <Link

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import RelatedLinks from '../../components/RelatedLinks';
+import { useServiceInquiryLink } from '../../hooks/useServiceInquiryLink';
 import {
   Code2,
   Globe,
@@ -94,6 +95,7 @@ const FAQS = [
 
 const ITOutsourcingPage: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
+  const inquiry = useServiceInquiryLink('bespoke-software', '/#need-software');
 
   return (
     <>
@@ -152,7 +154,7 @@ const ITOutsourcingPage: React.FC = () => {
             <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted">
               Commission a custom application, internal tool, or integration. We scope and deliver the project, and you own the code. If you need engineers to work under your direction, explore <Link to="/services/staff-augmentation" className="font-semibold underline">staff augmentation</Link>.
             </p>
-            <Link to="/contact?service=bespoke-software&amp;source=/services/it-outsourcing" className="mt-6 inline-flex rounded-2xl px-6 py-3 font-bold premium-button">
+            <Link to={inquiry} className="mt-6 inline-flex rounded-2xl px-6 py-3 font-bold premium-button">
               Discuss your software project
             </Link>
 
@@ -325,7 +327,7 @@ const ITOutsourcingPage: React.FC = () => {
               Cut costs, scale faster, and stay focused on your core product.
             </p>
             <Link
-              to="/contact?service=bespoke-software&amp;source=/services/it-outsourcing"
+              to={inquiry}
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold premium-button"
             >
               Get a free consultation

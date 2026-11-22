@@ -108,3 +108,30 @@ describe('Bunzy blog integration', () => {
     expect((await worker.fetch(requestBlog('/api/blog/latest'), bindings, context)).status).toBe(502);
   });
 });
+
+describe('homepage inquiry attribution', () => {
+  it.each([
+    ['/#need-team', 'Build a dedicated offshore team', true],
+    ['/#need-software', 'Develop bespoke software', true],
+    ['/#need-team', 'Build a dedicated offshore team', false],
+  ])('records accepted inquiries by source (%s, provider accepted %s)', async (source, need, accepted) => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(null, { status: accepted ? 202 : 500 })));
+    const inquiryId = crypto.randomUUID();
+    const response = await worker.fetch(new Request(`${origin}/api/inquiry`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Origin: origin },
+      body: JSON.stringify({
+        name: 'Test Buyer', company: 'Test Company', email: 'test@example.com', need, source,
+        csrf_token: 'test-token', inquiry_id: inquiryId,
+      }),
+    }), { ...env, RESEND_API_KEY: 'test-mail-key' }, context);
+    expect(response.status).toBe(accepted ? 200 : 500);
+    if (accepted) {
+      expect(log).toHaveBeenCalledWith({ event: 'inquiry_accepted', inquiryId, source, service: need });
+    } else {
+      expect(log).not.toHaveBeenCalled();
+    }
+  });
+});

@@ -7,9 +7,12 @@ import { BOOKING_URL } from '../constants';
 import { buildLocalBusinessSchema, breadcrumbSchema, SEO_CONFIG } from '../utils/seo';
 
 const ContactPage: React.FC = () => {
-  const { search } = useLocation();
+  const { search, hash } = useLocation();
   const [ready, setReady] = useState(false);
   useEffect(() => setReady(true), []);
+  useEffect(() => {
+    if (ready && hash === '#project-brief') document.getElementById('project-brief')?.scrollIntoView();
+  }, [ready, hash, search]);
 
   // The prerendered contact page has no query string.
   const formSearch = ready ? search : '';

@@ -1848,14 +1848,19 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
     ctx.waitUntil(sendMetaLead(request, env, { eventId: metaEventId, email, name }));
   }
 
+  const services = ['Add an offshore specialist', 'Build a dedicated offshore team', 'Develop bespoke software'];
+  const sources = ['/', '/contact', '/proof', '/proof#story-capricorn-college', '/proof#story-trivianknot',
+    '/services/staff-augmentation', '/services/dedicated-offshore-teams', '/services/it-outsourcing',
+    '/#need-team', '/#need-software'];
+  const sourcePath = source.split('#')[0];
+  const analyticsSource = sources.includes(source) ? source : sources.includes(sourcePath) ? sourcePath : 'other';
+  const analyticsService = services.includes(need) ? need : 'other';
+
+  // Logs let production count accepted inquiries by path without storing contact details.
+  console.log({ event: 'inquiry_accepted', inquiryId, source: analyticsSource, service: analyticsService });
   if (env.ANALYTICS_KV) {
-    const services = ['Add an offshore specialist', 'Build a dedicated offshore team', 'Develop bespoke software'];
-    const sources = ['/', '/contact', '/proof', '/proof#story-capricorn-college', '/proof#story-trivianknot',
-      '/services/staff-augmentation', '/services/dedicated-offshore-teams', '/services/it-outsourcing'];
-    const sourcePath = source.split('#')[0];
-    const analyticsSource = sources.includes(source) ? source : sources.includes(sourcePath) ? sourcePath : 'other';
     ctx.waitUntil(env.ANALYTICS_KV.put(`inquiry_accepted:${inquiryId}`, JSON.stringify({
-      service: services.includes(need) ? need : 'other',
+      service: analyticsService,
       source: analyticsSource,
     }), { expirationTtl: 180 * 24 * 60 * 60 }).catch(error => {
       console.error('[Trivian Worker] Inquiry count update failed:', error);

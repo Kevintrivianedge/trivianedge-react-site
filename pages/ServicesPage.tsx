@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Users2, ShieldCheck, Cpu, Server, Cloud } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import { useServiceInquiryLink } from '../hooks/useServiceInquiryLink';
 import ServiceVideo from '../components/ServiceVideo';
 import RelatedLinks from '../components/RelatedLinks';
 import PremiumCloudShowcase from '../components/PremiumCloudShowcase';
@@ -285,7 +286,7 @@ export function TalentServicePage() {
   const id = pathname === '/services/staff-augmentation' ? 'staff-augmentation' : 'dedicated-teams';
   const service = TALENT_SERVICES[id];
   const canonical = `https://www.trivianedge.com${pathname}`;
-  const inquiry = `/contact?${new URLSearchParams({ service: id, source: pathname })}`;
+  const inquiry = useServiceInquiryLink(id, id === 'dedicated-teams' ? '/#need-team' : undefined);
 
   return (
     <>
