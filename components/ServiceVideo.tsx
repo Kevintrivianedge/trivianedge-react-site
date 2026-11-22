@@ -8,9 +8,59 @@ interface ServiceVideoProps {
   duration: string;
 }
 
+interface YouTubePlayerProps {
+  videoId: string;
+  title: string;
+  duration?: string;
+  poster?: string;
+  priority?: boolean;
+  className?: string;
+}
+
+export function YouTubePlayer({ videoId, title, duration, poster, priority, className = '' }: YouTubePlayerProps) {
+  const [showPlayer, setShowPlayer] = useState(false);
+  return (
+    <div className={`relative aspect-video overflow-hidden rounded-2xl bg-[#0d1b1c] ${className}`}>
+      {showPlayer ? (
+        <iframe
+          ref={player => player?.focus()}
+          title={title}
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`}
+          className="absolute inset-0 h-full w-full"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+        />
+      ) : (
+        <button
+          type="button"
+          aria-label={`Play ${title}${duration ? ` (${duration})` : ''}`}
+          onClick={() => setShowPlayer(true)}
+          className="group absolute inset-0 grid w-full place-items-center focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-cyan-400"
+        >
+          <img
+            src={poster ?? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+            alt=""
+            width={480}
+            height={360}
+            loading={priority ? 'eager' : 'lazy'}
+            fetchPriority={priority ? 'high' : undefined}
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="absolute inset-0 h-full w-full object-cover opacity-80"
+          />
+          <span className="relative grid h-14 w-14 place-items-center rounded-full bg-cyan-400 text-black transition-colors group-hover:bg-cyan-300">
+            <Play className="h-6 w-6 fill-current" aria-hidden />
+          </span>
+          {duration && <span aria-hidden className="absolute bottom-3 right-3 rounded-md bg-black/85 px-2 py-1 text-xs font-semibold text-white">{duration}</span>}
+        </button>
+      )}
+    </div>
+  );
+}
+
 export default function ServiceVideo({ videoId, title, description, duration }: ServiceVideoProps) {
   const headingId = useId();
-  const [showPlayer, setShowPlayer] = useState(false);
 
   return (
     <section id="service-video" aria-labelledby={headingId} className="scroll-mt-24 grid items-center gap-6 rounded-3xl border border-border bg-surface p-5 md:grid-cols-2 md:gap-8 md:p-8">
@@ -26,41 +76,7 @@ export default function ServiceVideo({ videoId, title, description, duration }: 
           Watch on YouTube <ArrowUpRight className="h-4 w-4" aria-hidden />
         </a>
       </div>
-      <div className="relative aspect-video min-h-[200px] overflow-hidden rounded-2xl bg-[#0d1b1c]">
-        {showPlayer ? (
-          <iframe
-            ref={player => player?.focus()}
-            title={title}
-            src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`}
-            className="absolute inset-0 h-full w-full"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allow="autoplay; encrypted-media; picture-in-picture"
-            allowFullScreen
-          />
-        ) : (
-          <button
-            type="button"
-            aria-label={`Play ${title} (${duration})`}
-            onClick={() => setShowPlayer(true)}
-            className="group absolute inset-0 grid w-full place-items-center focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-cyan-400"
-          >
-            <img
-              src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
-              alt=""
-              width={480}
-              height={360}
-              loading="lazy"
-              decoding="async"
-              referrerPolicy="no-referrer"
-              className="absolute inset-0 h-full w-full object-cover opacity-80"
-            />
-            <span className="relative grid h-14 w-14 place-items-center rounded-full bg-cyan-400 text-black transition-colors group-hover:bg-cyan-300">
-              <Play className="h-6 w-6 fill-current" aria-hidden />
-            </span>
-            <span aria-hidden className="absolute bottom-3 right-3 rounded-md bg-black/85 px-2 py-1 text-xs font-semibold text-white">{duration}</span>
-          </button>
-        )}
-      </div>
+      <YouTubePlayer videoId={videoId} title={title} duration={duration} className="min-h-[200px]" />
     </section>
   );
 }

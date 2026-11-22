@@ -10,6 +10,7 @@ import { PILLARS, HERO_FACTS, HOME_FAQS } from '../constants/home';
 import { TalentHub } from '../types';
 import Accordion from '../components/Accordion';
 import InquiryForm from '../components/InquiryForm';
+import { YouTubePlayer } from '../components/ServiceVideo';
 
 // Full write-ups for the case-study cards. Clients without one fall back to /proof.
 const FEATURED_CLIENT = 'Cargo Login';
@@ -93,15 +94,23 @@ const HomePage: React.FC<{ setSelectedHub: (hub: TalentHub | null) => void }> = 
             </a>
           </div>
 
-          <Link
-            to="/blog/cargo-login-case-study"
-            className="group relative isolate overflow-hidden rounded-2xl border border-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400 lg:col-span-5"
-          >
-            <img src="/portfolio/cargo-login.jpg" alt="" width={1200} height={750} fetchPriority="high" className="aspect-[16/6] w-full object-cover object-top lg:aspect-[8/5]" />
-            <span className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 bg-gradient-to-t from-black via-black/85 to-transparent px-4 pb-3 pt-8 font-semibold text-white">
-              Cargo Login case study <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden />
-            </span>
-          </Link>
+          <div className="min-w-0 lg:col-span-5">
+            <YouTubePlayer
+              videoId="ckySD4dbeeY"
+              title="TrivianEdge One World One Team"
+              poster="https://i.ytimg.com/vi/ckySD4dbeeY/maxresdefault.jpg"
+              priority
+              className="border border-white/15"
+            />
+            <a
+              href="https://www.youtube.com/watch?v=ckySD4dbeeY"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-white/85 hover:underline"
+            >
+              Watch on YouTube <ArrowUpRight className="h-4 w-4" aria-hidden />
+            </a>
+          </div>
         </div>
       </section>
 
