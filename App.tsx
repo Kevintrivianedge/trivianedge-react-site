@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ScrollProgressBar from './components/ScrollProgressBar';
 import ChatLauncher from './components/ChatLauncher';
-import { Mail, Linkedin, Twitter } from 'lucide-react';
+import { Facebook, Mail, Linkedin, Twitter, Youtube } from 'lucide-react';
 import { Routes, Route, useLocation, useNavigate, Link } from 'react-router-dom';
 import { TalentHub } from './types';
 import { LanguageProvider } from './contexts/LanguageContext';
@@ -10,6 +10,7 @@ import { GeoProvider } from './contexts/GeoContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import SEOHead from './components/SEOHead';
 import AlgorithmMonitor from './components/AlgorithmMonitor';
+import { COMPANY_SOCIALS } from './constants/company';
 import { HOME_FAQS, HOME_TITLE, HOME_DESCRIPTION } from './constants/home';
 import { useAlgorithmIntelligence } from './hooks/useAlgorithmIntelligence';
 import {
@@ -348,7 +349,7 @@ export default function App() {
                   <Logo light onClick={() => { navigate('/'); window.scrollTo({top: 0, behavior: 'smooth'}); }} />
                 </div>
                 <p className="text-white/60 text-sm max-w-xs mb-8 leading-relaxed">Build offshore teams that run at full capacity. Hiring, payroll, compliance, and delivery, handled end to end.</p>
-                <div className="flex gap-3">
+                <div className="flex flex-wrap gap-3">
                   <a href="https://www.linkedin.com/company/trivianedge/" target="_blank" rel="noopener noreferrer" aria-label="TrivianEdge on LinkedIn"
                     className="w-9 h-9 rounded-xl bg-white/6 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200">
                     <Linkedin className="w-4 h-4" />
@@ -356,6 +357,14 @@ export default function App() {
                   <a href="https://x.com/trivianedge" target="_blank" rel="noopener noreferrer" aria-label="TrivianEdge on X (Twitter)"
                     className="w-9 h-9 rounded-xl bg-white/6 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200">
                     <Twitter className="w-4 h-4" />
+                  </a>
+                  <a href={COMPANY_SOCIALS.facebook} target="_blank" rel="noopener noreferrer" aria-label="TrivianEdge on Facebook"
+                    className="w-9 h-9 rounded-xl bg-white/6 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200">
+                    <Facebook className="w-4 h-4" aria-hidden />
+                  </a>
+                  <a href={COMPANY_SOCIALS.youtube} target="_blank" rel="noopener noreferrer" aria-label="TrivianEdge on YouTube"
+                    className="w-9 h-9 rounded-xl bg-white/6 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200">
+                    <Youtube className="w-4 h-4" aria-hidden />
                   </a>
                   <a href="mailto:kevin.v@trivianedge.com" aria-label="Email TrivianEdge"
                     className="w-9 h-9 rounded-xl bg-white/6 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200">

@@ -1,3 +1,4 @@
+import { COMPANY_SOCIALS } from '../constants/company';
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
@@ -47,6 +48,7 @@ const LocalBusinessSchema: React.FC<LocalBusinessSchemaProps> = ({ city, url }) 
         url: url,
         sameAs: [
           'https://www.linkedin.com/company/trivianedge',
+          ...Object.values(COMPANY_SOCIALS),
           'https://twitter.com/trivianedge',
         ],
         geo: {

@@ -38,3 +38,8 @@ export const COMPANY_FACTS = {
   microsoftPartnerId: '7154428',
   googlePartnerId: 'eullM5rLyn',
 };
+
+export const COMPANY_SOCIALS = {
+  facebook: 'https://www.facebook.com/profile.php?id=61594268482378',
+  youtube: 'https://www.youtube.com/@Trivianedgeinc',
+} as const;

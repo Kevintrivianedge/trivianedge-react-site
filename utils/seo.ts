@@ -1,4 +1,4 @@
-import { COMPANY_SHORT } from '../constants/company';
+import { COMPANY_SHORT, COMPANY_SOCIALS } from '../constants/company';
 /**
  * TrivianEdge SEO Configuration & Schema.org Utilities
  * Centralises all SEO constants, keyword clusters, and structured-data builders.
@@ -113,6 +113,7 @@ export function buildOrganizationSchema(): object {
     sameAs: [
       'https://www.linkedin.com/company/trivianedge/',
       'https://x.com/trivianedge',
+      ...Object.values(COMPANY_SOCIALS),
     ],
     knowsAbout: [
       'Microsoft 365', 'Microsoft Copilot', 'Microsoft Azure', 'Google Workspace', 'Google Cloud',

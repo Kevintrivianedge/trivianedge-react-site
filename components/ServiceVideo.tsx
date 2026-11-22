@@ -44,7 +44,7 @@ export function YouTubePlayer({ videoId, title, duration, poster, priority, clas
             width={480}
             height={360}
             loading={priority ? 'eager' : 'lazy'}
-            fetchPriority={priority ? 'high' : undefined}
+            {...(priority ? { fetchpriority: 'high' } : {})}
             decoding="async"
             referrerPolicy="no-referrer"
             className="absolute inset-0 h-full w-full object-cover opacity-80"
