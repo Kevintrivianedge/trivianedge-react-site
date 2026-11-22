@@ -44,6 +44,19 @@ Allow: /
 Crawl-delay: 2
 
 # AI crawlers — allow full public indexing for AEO visibility
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /payments/
+Disallow: /private/
+Disallow: /account/
+Disallow: /login/
+Disallow: /register/
+Disallow: /checkout/
+Disallow: /__404-snapshot
+
 User-agent: GPTBot
 Allow: /
 Disallow: /api/
@@ -129,6 +142,7 @@ User-agent: YouBot
 Allow: /
 
 Sitemap: https://www.trivianedge.com/sitemap.xml
+Sitemap: https://www.trivianedge.com/blog/sitemap.xml
 
 # llms.txt — structured summary for LLM/agent crawlers (llmstxt.org)
 # https://www.trivianedge.com/llms.txt

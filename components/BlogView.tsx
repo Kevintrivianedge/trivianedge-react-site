@@ -13,6 +13,10 @@ const BlogView: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [latestPosts, setLatestPosts] = useState<LatestPost[]>([]);
+  // Carry the Worker-rendered links through hydration until the cards load.
+  const [discoveryHtml] = useState(() => typeof document === 'undefined'
+    ? ''
+    : document.getElementById('bunzy-discovery')?.innerHTML ?? '');
 
   useEffect(() => {
     const controller = new AbortController();
@@ -93,6 +97,13 @@ const BlogView: React.FC = () => {
             />
           </div>
         </div>
+
+        <div
+          id="bunzy-discovery"
+          className="mb-8 space-y-2 empty:hidden"
+          hidden={latestPosts.length > 0}
+          dangerouslySetInnerHTML={{ __html: discoveryHtml }}
+        />
 
         {paginatedPosts.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">

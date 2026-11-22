@@ -1,4 +1,4 @@
-import { serveBunzyBlog } from './bunzyBlog';
+import { escapeText, serveBunzyBlog } from './bunzyBlog';
 import { createBunzyApi, type BunzyEnv } from './bunzyApi';
 import { BLOG_POSTS } from '../constants/blogPosts';
 
@@ -1213,6 +1213,32 @@ function addSecurityHeaders(response: Response, pathname: string, statusOverride
   return new Response(response.body, { status: statusOverride ?? response.status, headers });
 }
 
+async function getLatestBunzyPosts(env: Env) {
+  const { data } = await createBunzyApi(env).getPosts(1, 12);
+  return data
+    .filter(post => post.slug && !existingBlogPaths.has(`/blog/${encodeURIComponent(post.slug)}`))
+    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
+    .map(({ slug, title, excerpt, tags, author, readingMinutes }) => ({
+      slug, title, excerpt, category: tags[0] ?? 'Insights',
+      author: author.name, readTime: `${readingMinutes} min read`,
+    }));
+}
+
+async function addBunzyDiscovery(response: Response, env: Env) {
+  try {
+    const posts = await getLatestBunzyPosts(env);
+    if (!posts.length) return response;
+    const links = posts.map(post => `<li><a class="underline" href="/blog/${encodeURIComponent(post.slug)}">${escapeText(post.title)}</a></li>`).join('');
+    return new HTMLRewriter().on('#bunzy-discovery', {
+      element(element) {
+        element.setInnerContent(`<h2 class="text-xl font-semibold">Latest articles</h2><ul>${links}</ul>`, { html: true });
+      },
+    }).transform(response);
+  } catch {
+    return response;
+  }
+}
+
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
@@ -1249,15 +1275,7 @@ export default {
       if (!env.BUNZY_BLOG_API_KEY) return Response.json([], { headers });
 
       try {
-        const { data } = await createBunzyApi(env).getPosts(1, 12);
-        const posts = data
-          .filter(post => post.slug && !existingBlogPaths.has(`/blog/${encodeURIComponent(post.slug)}`))
-          .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
-          .map(({ slug, title, excerpt, tags, author, readingMinutes }) => ({
-            slug, title, excerpt, category: tags[0] ?? 'Insights',
-            author: author.name, readTime: `${readingMinutes} min read`,
-          }));
-        return Response.json(posts, { headers });
+        return Response.json(await getLatestBunzyPosts(env), { headers });
       } catch {
         return Response.json([], { headers, status: 502 });
       }
@@ -1426,7 +1444,10 @@ export default {
           new Request(new URL(snapshotPath, request.url).toString()),
         );
         if (snapshotResponse.status !== 404) {
-          return negotiateMarkdown(request, addSecurityHeaders(snapshotResponse, url.pathname));
+          const snapshot = request.method === 'GET' && url.pathname === '/blog' && env.BUNZY_BLOG_API_KEY
+            ? await addBunzyDiscovery(snapshotResponse, env)
+            : snapshotResponse;
+          return negotiateMarkdown(request, addSecurityHeaders(snapshot, url.pathname));
         }
 
         // Neither a real asset nor a prerendered snapshot exists for this path, so

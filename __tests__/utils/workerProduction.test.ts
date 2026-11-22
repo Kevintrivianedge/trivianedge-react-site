@@ -104,7 +104,7 @@ describe('Bunzy blog integration', () => {
       expect(response.status).toBe(200);
       expect(await response.text()).toBe('Existing blog content');
     }
-    expect(fetchMock).not.toHaveBeenCalled();
+    expect(fetchMock).toHaveBeenCalledOnce();
     expect((await worker.fetch(requestBlog('/api/blog/latest'), bindings, context)).status).toBe(502);
   });
 });

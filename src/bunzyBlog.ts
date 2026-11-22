@@ -7,7 +7,7 @@ const markdown = new MarkdownIt({ html: false, linkify: true })
 
 const pageSize = 12;
 
-function escapeText(text: string) {
+export function escapeText(text: string) {
   return text.replaceAll('&', '&amp;').replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
 }
@@ -64,14 +64,15 @@ function message(status: number, title: string, description: string) {
   return documentResponse(title, `<h1>${escapeText(title)}</h1><p>${escapeText(description)}</p><a href="/blog">Back to blog</a>`, { status });
 }
 
-function renderPost(post: Post) {
+function renderPost(post: Post, siteOrigin: string) {
   const title = post.seo.metaTitle || post.title;
   const description = escapeText(post.seo.metaDescription || post.excerpt);
-  const canonical = webUrl(post.seo.canonicalUrl);
+  const canonical = escapeText(new URL(postPath(post.slug), siteOrigin).href);
   const ogImage = webUrl(post.seo.ogImage) || webUrl(post.thumbnailUrl);
   const jsonLd = JSON.stringify(post.seo.jsonLd).replaceAll('<', '\\u003c');
   const head = `<meta name="description" content="${description}">
-${canonical ? `<link rel="canonical" href="${canonical}">` : ''}
+<link rel="canonical" href="${canonical}">
+<meta property="og:url" content="${canonical}">
 <meta property="og:title" content="${escapeText(title)}">
 <meta property="og:description" content="${description}">
 ${ogImage ? `<meta property="og:image" content="${ogImage}">` : ''}
@@ -88,6 +89,7 @@ ${ogImage ? `<meta property="og:image" content="${ogImage}">` : ''}
 <h1>${escapeText(post.title)}</h1>${byline(post)}
 ${image(post.thumbnailUrl, 'eager')}
 <div class="prose">${markdown.render(post.markdown)}${takeaways}${faq}</div>
+${post.slug === 'hire-a-dedicated-development-team-the-complete-guide' ? `<nav aria-label="Related resources"><h2>Planning a dedicated team?</h2><ul><li><a href="/services/dedicated-offshore-teams">Explore dedicated offshore teams</a></li><li><a href="/savings-calculator">Estimate your team costs</a></li></ul></nav>` : ''}
 </article>`, { head, lang: post.language });
 }
 
@@ -134,7 +136,7 @@ export async function serveBunzyBlog(url: URL, env: BunzyEnv, siteOrigin: string
     if (segments.length === 1) {
       const slug = decodeSegment(segments[0]);
       const post = slug && await api.getPost(slug);
-      return post ? renderPost(post) : notFound();
+      return post ? renderPost(post, siteOrigin) : notFound();
     }
 
     const tag = segments[0] === 'tag' && segments.length === 2 ? decodeSegment(segments[1]) : undefined;
