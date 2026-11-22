@@ -57,7 +57,7 @@ export function createBunzyApi(env: BunzyEnv) {
         Accept: 'application/json',
       },
       cache: 'no-store',
-      redirect: 'error',
+      redirect: 'manual',
       signal: AbortSignal.timeout(10_000),
     });
   }
