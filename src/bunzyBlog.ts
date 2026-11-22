@@ -6,6 +6,13 @@ const markdown = new MarkdownIt({ html: false, linkify: true })
   .use(markdownItAttrs, { allowedAttributes: ['id'] });
 
 const pageSize = 12;
+export const DEDICATED_TEAM_GUIDE_PATH = '/blog/hire-a-dedicated-development-team-the-complete-guide';
+
+const teamInquiryPath = `/contact?${new URLSearchParams({
+  service: 'dedicated-teams',
+  source: DEDICATED_TEAM_GUIDE_PATH,
+})}#project-brief`;
+const teamInquiryLink = `<a class="inquiry-link" href="${escapeText(teamInquiryPath)}">Get a team estimate</a>`;
 
 export function escapeText(text: string) {
   return text.replaceAll('&', '&amp;').replaceAll('<', '&lt;')
@@ -64,7 +71,26 @@ function message(status: number, title: string, description: string) {
   return documentResponse(title, `<h1>${escapeText(title)}</h1><p>${escapeText(description)}</p><a href="/blog">Back to blog</a>`, { status });
 }
 
+function renderTeamGuide(source: string) {
+  const env = {};
+  const tokens = markdown.parse(source, env);
+  const pricing = tokens.findIndex((token, index) =>
+    token.type === 'heading_open' && token.tag === 'h2' && token.level === 0 &&
+    tokens[index + 1]?.content === 'Engagement Models and How Pricing Typically Works',
+  );
+  const nextSection = tokens.findIndex((token, index) =>
+    index > pricing && token.type === 'heading_open' && token.tag === 'h2' && token.level === 0,
+  );
+
+  if (pricing === -1 || nextSection === -1) return markdown.renderer.render(tokens, markdown.options, env);
+  return markdown.renderer.render(tokens.slice(0, nextSection), markdown.options, env) +
+    `<p class="inquiry-inline">Want an estimate for your team? ${teamInquiryLink}</p>` +
+    markdown.renderer.render(tokens.slice(nextSection), markdown.options, env);
+}
+
 function renderPost(post: Post, siteOrigin: string) {
+  const isTeamGuide = postPath(post.slug) === DEDICATED_TEAM_GUIDE_PATH;
+  const content = isTeamGuide ? renderTeamGuide(post.markdown) : markdown.render(post.markdown);
   const title = post.seo.metaTitle || post.title;
   const description = escapeText(post.seo.metaDescription || post.excerpt);
   const canonical = escapeText(new URL(postPath(post.slug), siteOrigin).href);
@@ -88,8 +114,13 @@ ${ogImage ? `<meta property="og:image" content="${ogImage}">` : ''}
 <a href="/blog">Back to blog</a>
 <h1>${escapeText(post.title)}</h1>${byline(post)}
 ${image(post.thumbnailUrl, 'eager')}
-<div class="prose">${markdown.render(post.markdown)}${takeaways}${faq}</div>
-${post.slug === 'hire-a-dedicated-development-team-the-complete-guide' ? `<nav aria-label="Related resources"><h2>Planning a dedicated team?</h2><ul><li><a href="/services/dedicated-offshore-teams">Explore dedicated offshore teams</a></li><li><a href="/savings-calculator">Estimate your team costs</a></li></ul></nav>` : ''}
+<div class="prose">${content}${takeaways}${faq}</div>
+${isTeamGuide ? `<section class="inquiry-panel" aria-label="Get a team estimate">
+<h2>Let’s talk about the team you need</h2>
+<p>Tell us what you need help with and when you’d like to get started.</p>
+${teamInquiryLink}
+</section>
+<nav aria-label="Related resources"><h2>Related resources</h2><ul><li><a href="/services/dedicated-offshore-teams">Explore dedicated offshore teams</a></li><li><a href="/savings-calculator">Try the savings calculator</a></li></ul></nav>` : ''}
 </article>`, { head, lang: post.language });
 }
 

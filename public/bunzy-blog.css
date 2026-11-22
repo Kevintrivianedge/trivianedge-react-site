@@ -65,3 +65,9 @@ main { max-width: 76rem; margin: auto; padding: clamp(2rem, 6vw, 5rem) clamp(1re
 .prose table { border-collapse: collapse; }
 .prose th, .prose td { border: 1px solid var(--border); padding: .55rem .75rem; }
 .prose th { background: var(--surface); }
+.inquiry-inline, .inquiry-panel { margin: 2rem 0; border: 1px solid var(--border); border-radius: 1rem; background: var(--surface); padding: 1.25rem; }
+.inquiry-inline { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; }
+.inquiry-panel h2 { margin: 0; }
+.inquiry-panel p { color: var(--muted); }
+.inquiry-link { display: inline-flex; align-items: center; min-height: 44px; padding: .55rem 1rem; border-radius: 999px; background: var(--accent); color: var(--background); font-weight: 800; text-decoration: none; }
+.inquiry-link:hover { text-decoration: underline; }

@@ -1,4 +1,4 @@
-import { escapeText, serveBunzyBlog } from './bunzyBlog';
+import { DEDICATED_TEAM_GUIDE_PATH, escapeText, serveBunzyBlog } from './bunzyBlog';
 import { createBunzyApi, type BunzyEnv } from './bunzyApi';
 import { BLOG_POSTS } from '../constants/blogPosts';
 
@@ -1851,7 +1851,7 @@ async function handleInquiry(request: Request, env: Env, corsHeaders: Record<str
   const services = ['Add an offshore specialist', 'Build a dedicated offshore team', 'Develop bespoke software'];
   const sources = ['/', '/contact', '/proof', '/proof#story-capricorn-college', '/proof#story-trivianknot',
     '/services/staff-augmentation', '/services/dedicated-offshore-teams', '/services/it-outsourcing',
-    '/#need-team', '/#need-software'];
+    '/#need-team', '/#need-software', DEDICATED_TEAM_GUIDE_PATH];
   const sourcePath = source.split('#')[0];
   const analyticsSource = sources.includes(source) ? source : sources.includes(sourcePath) ? sourcePath : 'other';
   const analyticsService = services.includes(need) ? need : 'other';

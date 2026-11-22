@@ -113,6 +113,7 @@ describe('homepage inquiry attribution', () => {
   it.each([
     ['/#need-team', 'Build a dedicated offshore team', true],
     ['/#need-software', 'Develop bespoke software', true],
+    ['/blog/hire-a-dedicated-development-team-the-complete-guide', 'Build a dedicated offshore team', true],
     ['/#need-team', 'Build a dedicated offshore team', false],
   ])('records accepted inquiries by source (%s, provider accepted %s)', async (source, need, accepted) => {
     const log = vi.spyOn(console, 'log').mockImplementation(() => {});
